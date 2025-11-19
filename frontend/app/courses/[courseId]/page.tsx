@@ -45,18 +45,22 @@ export default async function CoursePage({ params }: { params: Promise<{ courseI
         <h1 className="text-4xl font-bold tracking-tight">{course.title}</h1>
         <p className="text-xl text-muted-foreground">{course.description}</p>
         
-        <div className="flex justify-center gap-4">
-          <Button size="lg" asChild>
-            <Link href={`/courses/${courseId}/lessons/${lessons[0]?.id || 1}`}>
+   <div className="flex justify-center gap-4">
+          {/* Tlačítko 1: Začít studovat */}
+          <Link href={`/courses/${courseId}/lessons/${lessons[0]?.id || 1}`}>
+            <Button size="lg">
               Začít studovat 🚀
-            </Link>
-          </Button>
-          <Button variant="outline" size="lg" asChild>
-            <Link href="/">Zpět na přehled</Link>
-          </Button>
-        </div>
-      </div>
+            </Button>
+          </Link>
 
+          {/* Tlačítko 2: Zpět na přehled */}
+          <Link href="/">
+            <Button variant="outline" size="lg">
+              Zpět na přehled
+            </Button>
+          </Link>
+        </div>
+        </div>
       {/* Seznam lekcí */}
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold mb-6">Osnova kurzu</h2>
