@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { MDXRemote } from 'next-mdx-remote/rsc'; // Server-side rendering MDX
-import { ArrowLeft, PlayCircle } from "lucide-react"; // Ikony (pokud máš lucide-react, jinak smaž)
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 
-export default function LessonPage({ params }: { params: { courseId: string; lessonId: string } }) {
+export default function LessonPage({ params }: { params: Promise<{ courseId: string; lessonId: string }> }) {
+  // Unwrap params Promise (Next.js 16 requirement)
+  const { courseId, lessonId } = use(params);
+  
   const { token } = useAuth();
   const [lesson, setLesson] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,7 @@ export default function LessonPage({ params }: { params: { courseId: string; les
       }
 
       try {
-        const res = await fetch(`http://localhost:8000/lessons/${params.lessonId}`, {
+        const res = await fetch(`http://localhost:8000/lessons/${lessonId}`, {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -37,7 +38,7 @@ export default function LessonPage({ params }: { params: { courseId: string; les
     }
 
     fetchLesson();
-  }, [params.lessonId, token]);
+  }, [lessonId, token]);
 
   if (loading) {
     return (
@@ -59,7 +60,7 @@ export default function LessonPage({ params }: { params: { courseId: string; les
       <div className="container mx-auto py-8 px-4 max-w-4xl">
         {/* Navigace zpět */}
         <div className="mb-8">
-          <Link href={`/courses/${params.courseId}`}>
+          <Link href={`/courses/${courseId}`}>
             <Button variant="outline" className="gap-2 pl-0 hover:pl-2 transition-all">
                &larr; Zpět na osnovu kurzu
             </Button>
@@ -89,11 +90,11 @@ export default function LessonPage({ params }: { params: { courseId: string; les
           </div>
         )}
 
-        {/* 📝 MDX Obsah (Text lekce) */}
+        {/* 📝 Obsah lekce (simple markdown rendering) */}
         <article className="prose prose-slate lg:prose-lg dark:prose-invert max-w-none">
-          {/* Zde se děje magie - renderování Markdownu z DB */}
-          <MDXRemote source={lesson.content} />
+          <div className="whitespace-pre-wrap">{lesson.content}</div>
         </article>
+
 
         {/* Footer navigace (Next/Prev by se řešilo tady) */}
         <div className="mt-16 pt-8 border-t flex justify-between">

@@ -4,10 +4,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 
-export default function CoursePage({ params }: { params: { courseId: string } }) {
+export default function CoursePage({ params }: { params: Promise<{ courseId: string }> }) {
+  // Unwrap params Promise (Next.js 16 requirement)
+  const { courseId } = use(params);
+  
   const { token } = useAuth();
   const [course, setCourse] = useState<any>(null);
   const [lessons, setLessons] = useState<any[]>([]);
@@ -22,7 +25,7 @@ export default function CoursePage({ params }: { params: { courseId: string } })
 
       try {
         // Fetch course with auth token
-        const courseRes = await fetch(`http://localhost:8000/courses/${params.courseId}`, {
+        const courseRes = await fetch(`http://localhost:8000/courses/${courseId}`, {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -40,7 +43,7 @@ export default function CoursePage({ params }: { params: { courseId: string } })
         if (lessonsRes.ok) {
           const allLessons = await lessonsRes.json();
           const filtered = allLessons
-            .filter((l: any) => l.course_id === parseInt(params.courseId))
+            .filter((l: any) => l.course_id === parseInt(courseId))
             .sort((a: any, b: any) => a.order - b.order);
           setLessons(filtered);
         }
@@ -52,7 +55,7 @@ export default function CoursePage({ params }: { params: { courseId: string } })
     }
 
     fetchData();
-  }, [params.courseId, token]);
+  }, [courseId, token]);
 
   if (loading) {
     return (
@@ -79,7 +82,7 @@ export default function CoursePage({ params }: { params: { courseId: string } })
           
      <div className="flex justify-center gap-4">
             {/* Tlačítko 1: Začít studovat */}
-            <Link href={`/courses/${params.courseId}/lessons/${lessons[0]?.id || 1}`}>
+            <Link href={`/courses/${courseId}/lessons/${lessons[0]?.id || 1}`}>
               <Button size="lg">
                 Začít studovat 🚀
               </Button>
@@ -101,7 +104,7 @@ export default function CoursePage({ params }: { params: { courseId: string } })
           ) : (
             lessons.map((lesson: any) => (
               <Card key={lesson.id} className="group hover:border-primary/50 transition-colors">
-                <Link href={`/courses/${params.courseId}/lessons/${lesson.id}`} className="flex items-center p-6">
+                <Link href={`/courses/${courseId}/lessons/${lesson.id}`} className="flex items-center p-6">
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold mr-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     {lesson.order}
                   </div>
