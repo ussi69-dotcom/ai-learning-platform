@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ai-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/learning_platform
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    container_name: ai-db
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=learning_platform
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # --- NOVÁ SEKCE PRO N8N ---
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: ai-n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=password
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_DATABASE=learning_platform
+      - DB_POSTGRESDB_HOST=db
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_USER=user
+      - DB_POSTGRESDB_PASSWORD=password
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+  n8n_data: # Nezapomeň přidat i volume sem dolů!
