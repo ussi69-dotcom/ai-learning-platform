@@ -1,5 +1,21 @@
 # Agent State Log
 
+## Day 6: Difficulty-Based Courses
+
+**Date**: 2025-11-19
+**Goal**: Implement difficulty-based course filtering.
+
+### Log
+- **[PLANNING]**: Created implementation plan for difficulty-based courses.
+- **[EXECUTION]**: Added `difficulty_level` field to Course model.
+- **[EXECUTION]**: Updated Course schema to include difficulty_level.
+- **[EXECUTION]**: Modified `GET /courses/` endpoint to filter by user difficulty.
+- **[EXECUTION]**: Created comprehensive seed data for all 4 difficulty levels.
+- **[EXECUTION]**: Converted homepage to client component with auth.
+- **[EXECUTION]**: Added difficulty badges and personalized course display.
+- **[VERIFICATION]**: Tested with admin account - shows Expert courses correctly.
+- **[COMMIT]**: Committed as `feat: difficulty-based courses (Day 6 complete)`.
+
 ## Day 5: Frontend Authentication & Route Protection
 
 **Date**: 2025-11-19
@@ -36,12 +52,12 @@
 - **[VERIFICATION]**: Ran tests: 3 passed. Verified `GET /lessons/` does not return content, `GET /lessons/{id}` does.
 - **[COMMIT]**: Committed changes as `agent: setup .ai-context + optimize lessons api endpoints`.
 
-## Next Steps (Day 6)
-- **Goal**: Difficulty-based Courses.
+## Next Steps (Day 7)
+- **Goal**: Progress Tracking System.
 - **Tasks**:
-    1.  **Courses**: Create different course sets for each difficulty level.
-    2.  **Filtering**: Backend endpoint to filter courses by user difficulty.
-    3.  **Seed**: Update `seed.py` to create courses for all difficulty levels.
-    4.  **Frontend**: Display courses based on logged-in user's difficulty.
-    5.  **Content**: Write actual course content for different difficulty levels.
+    1.  **Database**: Create `UserProgress` model (user_id, lesson_id, completed, completed_at).
+    2.  **API**: Endpoints to mark lessons complete and get user progress.
+    3.  **Frontend**: Progress indicators on course/lesson pages.
+    4.  **Dashboard**: User progress dashboard showing completion stats.
+    5.  **Achievements**: Basic achievement system (e.g., "Completed first course").
 
