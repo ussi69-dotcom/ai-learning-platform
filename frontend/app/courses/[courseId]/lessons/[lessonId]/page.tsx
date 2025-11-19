@@ -6,15 +6,26 @@ import { MDXRemote } from 'next-mdx-remote/rsc'; // Server-side rendering MDX
 import { ArrowLeft, PlayCircle } from "lucide-react"; // Ikony (pokud máš lucide-react, jinak smaž)
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LessonPage({ params }: { params: { courseId: string; lessonId: string } }) {
+  const { token } = useAuth();
   const [lesson, setLesson] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchLesson() {
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
       try {
-        const res = await fetch(`http://localhost:8000/lessons/${params.lessonId}`);
+        const res = await fetch(`http://localhost:8000/lessons/${params.lessonId}`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
         if (res.ok) {
           setLesson(await res.json());
         }
@@ -26,7 +37,7 @@ export default function LessonPage({ params }: { params: { courseId: string; les
     }
 
     fetchLesson();
-  }, [params.lessonId]);
+  }, [params.lessonId, token]);
 
   if (loading) {
     return (

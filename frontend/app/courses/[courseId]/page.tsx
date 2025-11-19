@@ -5,23 +5,38 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function CoursePage({ params }: { params: { courseId: string } }) {
+  const { token } = useAuth();
   const [course, setCourse] = useState<any>(null);
   const [lessons, setLessons] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
       try {
-        // Fetch course
-        const courseRes = await fetch(`http://localhost:8000/courses/${params.courseId}`);
+        // Fetch course with auth token
+        const courseRes = await fetch(`http://localhost:8000/courses/${params.courseId}`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
         if (courseRes.ok) {
           setCourse(await courseRes.json());
         }
 
-        // Fetch lessons
-        const lessonsRes = await fetch(`http://localhost:8000/lessons/`);
+        // Fetch lessons with auth token
+        const lessonsRes = await fetch(`http://localhost:8000/lessons/`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
         if (lessonsRes.ok) {
           const allLessons = await lessonsRes.json();
           const filtered = allLessons
@@ -37,7 +52,7 @@ export default function CoursePage({ params }: { params: { courseId: string } })
     }
 
     fetchData();
-  }, [params.courseId]);
+  }, [params.courseId, token]);
 
   if (loading) {
     return (

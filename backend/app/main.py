@@ -86,10 +86,19 @@ def read_courses(
     return courses
 
 @app.get("/courses/{course_id}", response_model=schemas.Course)
-def read_course(course_id: int, db: Session = Depends(get_db)):
+def read_course(
+    course_id: int, 
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
     course = db.query(models.Course).filter(models.Course.id == course_id).first()
     if course is None:
         raise HTTPException(status_code=404, detail="Course not found")
+    
+    # Check if course matches user's difficulty level
+    if course.difficulty_level != current_user.difficulty:
+        raise HTTPException(status_code=403, detail="You don't have access to this course")
+    
     return course
 
 # --- LESSONS ENDPOINTS ---
