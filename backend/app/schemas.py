@@ -12,6 +12,14 @@ class LessonCreate(LessonBase):
     content: str
     course_id: int
 
+class LessonSummary(LessonBase):
+    id: int
+    course_id: int
+    # content is explicitly excluded here
+
+    class Config:
+        from_attributes = True
+
 class Lesson(LessonBase):
     id: int
     course_id: int

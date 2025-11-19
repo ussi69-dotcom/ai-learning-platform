@@ -37,7 +37,7 @@ def read_course(course_id: int, db: Session = Depends(get_db)):
 
 # --- LESSONS ENDPOINTS ---
 
-@app.get("/lessons/", response_model=List[schemas.Lesson])
+@app.get("/lessons/", response_model=List[schemas.LessonSummary])
 def read_lessons(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     # Tento endpoint volá frontend pro získání všech lekcí
     lessons = db.query(models.Lesson).offset(skip).limit(limit).all()
