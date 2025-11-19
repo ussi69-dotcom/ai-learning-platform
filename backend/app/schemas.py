@@ -45,6 +45,14 @@ class Course(CourseBase):
     class Config:
         from_attributes = True
 
+# --- Token Schemas ---
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    email: Optional[str] = None
+
 # --- User Schemas ---
 class UserBase(BaseModel):
     email: str
@@ -52,9 +60,11 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
+    difficulty: str = "LETS_ROCK" # Default difficulty
 
 class User(UserBase):
     id: int
+    difficulty: str
     courses: List[Course] = []
 
     class Config:

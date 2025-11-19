@@ -1,6 +1,13 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text
+import enum
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text, Enum
 from sqlalchemy.orm import relationship
 from app.database import Base
+
+class DifficultyLevel(str, enum.Enum):
+    PIECE_OF_CAKE = "PIECE_OF_CAKE"
+    LETS_ROCK = "LETS_ROCK"
+    COME_GET_SOME = "COME_GET_SOME"
+    DAMN_IM_GOOD = "DAMN_IM_GOOD"
 
 class User(Base):
     __tablename__ = "users"
@@ -9,6 +16,7 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
+    difficulty = Column(Enum(DifficultyLevel), default=DifficultyLevel.LETS_ROCK)
 
     courses = relationship("Course", back_populates="owner")
 

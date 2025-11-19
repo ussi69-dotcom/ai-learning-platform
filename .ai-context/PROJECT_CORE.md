@@ -33,10 +33,16 @@
 - **Day 1**: Platform Setup (VPS, Docker, Next.js, FastAPI) ✅
 - **Day 2**: Core Data Flow & API (DB, FE/BE connection, n8n) ✅
 - **Day 3**: Lesson Engine (Dynamic routing, MDX, Video) ✅
-- **Day 4**: Agent Mode Setup & Lessons API (Current) 🚧
-- **Day 5**: Stripe Payments (Subscription model) - *Originally Day 4*
+- **Day 4**: Agent Mode Setup & Lessons API (Current) ✅
+- **Day 5**: Auth & User Profiles (JWT, "Duke Nukem" Difficulties) 🚧
 - **Day 6**: OpenAI API Integration
 - **Day 7**: Week 1 Review + Mini Project
+
+## 🎮 Gamification & Difficulties ("Duke Nukem" Style)
+- **Piece of Cake**: Easy mode, more hints, slower pace.
+- **Let's Rock**: Standard mode.
+- **Come Get Some**: Hard mode, less help.
+- **Damn I'm Good**: Expert mode, no AI hints, permadeath (maybe?).
 
 ### Week 2: AI Core (LLMs & RAG)
 - Day 8-14: LangChain, RAG, Prompt Engineering, Fine-tuning, Agents.

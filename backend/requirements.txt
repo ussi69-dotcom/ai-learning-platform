@@ -6,3 +6,6 @@ pydantic
 email-validator
 pytest
 httpx
+passlib[argon2]
+python-jose[cryptography]
+python-multipart
