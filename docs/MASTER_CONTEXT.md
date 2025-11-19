@@ -18,6 +18,12 @@
 9. **Tracking Historie:** Nemazat stavy předchozích dnů. Přejmenovat starý "AKTUÁLNÍ STAV" na "STAV (Konec Dne X)" a přesunout do historie. Vytvořit nový "AKTUÁLNÍ STAV".
 10. **🔄 Start-of-Day Sync:** Na začátku každé nové seance (nový Den) ověř aktuální stav kódu v repozitáři (pokud je dostupný nástroj), abychom navazovali na commitnutou verzi.
 11. **💾 Git Hygiene Reminders:** Při každém checkpointu nebo na konci seance **VŽDY připomeň uživateli**, aby provedl `git commit` a `git push`. Uživatel se učí, proto uváděj **přesné příkazy** k provedení.
+12. **📋 Šablona pro Next-Day Prompt:** Pokud jsi požádán o vygenerování promptu pro další den, VŽDY dodrž tuto strukturu:
+    - **Role:** (Senior Full-Stack Mentor...)
+    - **=== 🚨 KROK 1: NAČTENÍ KONTEXTU ===** (Instrukce k načtení `MASTER_CONTEXT.md` a `IDEAS.md` + Start-of-Day Sync).
+    - **=== 📊 STARTING POINT (Konec Dne X) ===** (Stručný technický souhrn: co funguje Backend/Frontend/Infra).
+    - **=== 🎯 CÍL PRO DNEŠEK (DEN Y): "[Téma]" ===** (Hlavní cíl + číslovaný seznam konkrétních kroků).
+    - **Instrukce:** (Specifický pokyn, čím začít).
 
 ## 🎯 Vize a Filosofie
 **Cíl:** Vytvořit 30-denní interaktivní platformu pro výuku AI developmentu.
@@ -59,6 +65,8 @@
 - **DB Persistence (CRITICAL):** Docker Volumes držely staré heslo. Při změně hesla v `.env` je nutný reset: `docker compose down -v`.
 - **Pydantic Email:** Chyběl `email-validator` -> Doplňeno do `requirements.txt`.
 - **Backend Importy:** Nutná struktura `backend/app/main.py` s `__init__.py`.
+- **Localhost vs Docker Networking:** Frontend v Dockeru nemůže volat `localhost:8000`. Musí volat `http://backend:8000` (nastaveno přes `OpenAPI.BASE`).
+- **React `asChild` warning:** `Button` se Shadcn/ui nemůže mít `asChild` pokud je obalen v `Link`.
 
 ## 📜 Historie Stavů (Milestones)
 
@@ -68,35 +76,51 @@
 2. **Backend:** Modely (User, Course, Lesson), API endpointy, Swagger UI.
 3. **Frontend:** Homepage dynamicky stahuje kurzy. UI komponenty (Card, Button).
 4. **Automation:** n8n běží a má přístup do databáze.
+**⚠️ TECH DEBT:**
+- Data vkládáme ručně přes Swagger (vyřešeno Dne 3).
+
+### 🏁 STAV (Konec Dne 3)
+**✅ HOTOVO:**
+1. **Backend:**
+    - DB Seeding (`seed.py`) automaticky plní kurzy a lekce.
+    - Modely upraveny (`image_url` v Course, `video_url` v Lesson).
+    - Opraveny importy a Pydantic schémata (`schemas.py`).
+2. **Frontend:**
+    - **Homepage:** Načítá kurzy z API (vyřešen problém s `localhost` vs `backend` URL).
+    - **Detail Kurzu:** Dynamická routa `/courses/[id]`, zobrazuje seznam lekcí.
+    - **Detail Lekce:** Dynamická routa `/lessons/[id]`, zobrazuje Video (YouTube embed) a Text (MDX Rendering).
+    - Vygenerován API klient (`npm run generate-client`).
 
 **⚠️ TECH DEBT:**
-- Data vkládáme ručně přes Swagger (potřebujeme Seed Script).
-- Next.js warning `url.parse()` (zatím ignorujeme).
+- Chybí tlačítka "Předchozí/Další" v lekci.
+- Platby nejsou implementovány (Den 4).
 
 ---
 
-## 📍 AKTUÁLNÍ STAV (Den 3 - Lesson Engine)
-### ✅ HOTOVO:
-1. **Backend:**
-    - Modely: `User`, `Course` (přidáno `image_url`), `Lesson` (MDX content).
-    - Seed Script: `backend/seed.py` funguje (fixnuty importy a vytváření tabulek) a plní DB testovacími daty.
-2. **Data:** Kurz "Build Your Own AI Platform" + 3 lekce v DB.
-
-### 🚧 ROZPRACOVÁNO:
-- **Frontend:** Zobrazit detail kurzu a lekci (Dynamic Routing).
-- **Tech Debt:** Next.js warning `url.parse()` (zatím ignorujeme).
+## 📍 AKTUÁLNÍ STAV (Start Dne 4)
+### 🎯 CÍL: Stripe Payments & Subscriptions
+- Implementace platební brány Stripe.
+- Omezení přístupu k lekcím (jen pro předplatitele).
 
 ## 🛠️ Build Log (Course Material)
 *Záznam "Aha!" momentů a chyb pro tvorbu obsahu lekcí.*
 
-### Den 3: Database Seeding & MDX
-- **Lekce:** "Jak dostat data do DB automaticky?"
-- **Problem 1 (DB Init):** Script `seed.py` padal na `relation does not exist`.
-    - **Řešení:** Museli jsme přidat `Base.metadata.create_all(bind=engine)` přímo do skriptu, protože při čistém startu tabulky neexistují.
-- **Problem 2 (Model Change):** Přidání sloupce `image_url` do modelu `Course` způsobilo chybu při seedování.
-    - **Řešení:** Protože nemáme migrace (Alembic), byl nutný reset volume: `docker compose down -v`, aby se vytvořilo nové schéma.
-- **Problem 3 (Nested Markdown):** Vkládání MDX obsahu (který obsahuje backticks) do Python stringu v `seed.py`.
-    - **Řešení:** Použití `r"""` (raw string) v Pythonu a při posílání přes chat obalení do 4 backticks.
+### Den 3: Lesson Engine & Docker Networking
+- **Lekce:** "Docker Networking pro začátečníky"
+- **Problem (Connection Refused):** Frontend (SSR) nemohl načíst data z Backendu přes `localhost`.
+    - **Řešení:** Vysvětlit rozdíl mezi `client-side` (browser -> localhost) a `server-side` (container -> container name). Nastavení `OpenAPI.BASE = "http://backend:8000"`.
+- **Problem (DB Init):** `seed.py` padal, protože tabulky neexistovaly.
+    - **Řešení:** Přidat `Base.metadata.create_all(bind=engine)` do `seed.py`.
+- **Problem (MDX):** Jak zobrazit Markdown z DB?
+    - **Řešení:** Knihovna `next-mdx-remote/rsc` pro Server Components.
+- **Problem (Git Auth):** "Password authentication removed".
+    - **Řešení:** Nutnost vygenerovat GitHub Personal Access Token (PAT) a použít ho místo hesla.
+- **Problem (UI Composition):** Warning `React does not recognize the asChild prop`.
+    - **Řešení:** Komponenta `Button` ze Shadcn UI nesnese `asChild`, pokud je obalená v `Link`. Řešením je odstranit `asChild` a nechat `Link` obalovat `Button`.
+- **Problem (Dev Experience):** VS Code nevidí balíčky instalované jen v Dockeru (`next-mdx-remote`).
+    - **Řešení:** Spustit `npm install` i lokálně, aby fungovalo IntelliSense.
+- **Problem (Dynamic Routes):** `undefined` parametry.
+    - **Řešení:** Pozor na Case Sensitivity! Složka `[courseId]` musí přesně odpovídat `params.courseId` v kódu. `[courseld]` (malé L místo I) je častý překlep.
 
 ## 📚 30-Denní Osnova (Core Curriculum)
 *Základní osnova ("Let's Rock").*
@@ -104,8 +128,8 @@
 ### Week 1: Foundation (Základy & Infrastruktura)
 - **Den 1:** Platform Setup (VPS, Docker, Next.js, FastAPI) ✅ *HOTOVO*
 - **Den 2:** Core Data Flow & API (Databáze, Propojení FE/BE, n8n) ✅ *HOTOVO*
-- **Den 3:** Lesson Engine (Dynamic routing, MDX rendering, Video player) 🚧 *AKTUÁLNÍ*
-- **Den 4:** Stripe Payments (Subscription model)
+- **Den 3:** Lesson Engine (Dynamic routing, MDX rendering, Video player) ✅ *HOTOVO*
+- **Den 4:** Stripe Payments (Subscription model) 🚧 *NEXT*
 - **Den 5:** OpenAI API Integration (První AI featury)
 - **Den 6:** Vector Database (Pinecone/Weaviate/Chroma)
 - **Den 7:** Week 1 Review + Mini Project
