@@ -16,8 +16,7 @@
     - Vytvořil nový soubor s kompletním obsahem.
     - Použil VS Code funkci "Compare Selected" pro ověření změn.
 9. **Tracking Historie:** Nemazat stavy předchozích dnů. Přejmenovat starý "AKTUÁLNÍ STAV" na "STAV (Konec Dne X)" a přesunout do historie. Vytvořit nový "AKTUÁLNÍ STAV".
-10. **🔄 Start-of-Day Sync:** Na začátku každé nové seance (nový Den) ověř aktuální stav kódu v repozitáři (pokud je dostupný nástroj), abychom navazovali na commitnutou verzi.
-11. **💾 Git Hygiene Reminders:** Při každém checkpointu nebo na konci seance **VŽDY připomeň uživateli**, aby provedl `git commit` a `git push`. Uživatel se učí, proto uváděj **přesné příkazy** k provedení.
+10. **🔄 Start-of-Day Sync:** Na začátku každé nové seance (nový Den) ověř aktuální stav kódu v repozitáři (pokud je dostupný nástroj), abychom navazovali na commitnutou verzi a nepracovali se zastaralou "halucinací".
 
 ## 🎯 Vize a Filosofie
 **Cíl:** Vytvořit 30-denní interaktivní platformu pro výuku AI developmentu.
