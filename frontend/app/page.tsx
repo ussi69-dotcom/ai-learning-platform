@@ -1,14 +1,16 @@
-import Link from 'next/link'
-import { Button } from '@/components/ui/Button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
-import { GraduationCap, ArrowRight } from 'lucide-react'
-import { DefaultService, OpenAPI } from '@/lib/api' 
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// Přidali jsme import 'Course' (typ)
+import { DefaultService, OpenAPI, Course } from "@/client"; 
 
-// Nastavení URL pro komunikaci s backendem (pro lokální vývoj)
-OpenAPI.BASE = 'http://localhost:8000'; 
+// Nastavení URL pro backend
+// Server komponenty v Dockeru vidí 'backend', klient (pokud by to běžel tam) vidí 'localhost'
+OpenAPI.BASE = process.env.NODE_ENV === 'development' ? "http://backend:8000" : "http://backend:8000";
 
 export default async function HomePage() {
-  let courses = [];
+  // 1. OPRAVA TYPU: Explicitně říkáme, že toto je pole objektů 'Course'
+  let courses: Course[] = [];
   let errorMsg = null;
 
   try {
@@ -31,11 +33,16 @@ export default async function HomePage() {
             Learning by doing. Postaveno na Next.js 16 + FastAPI.
           </p>
           <div className="space-x-4">
-             <Link href="/dashboard">
-              <Button size="lg" className='gap-2'>
-                Start Learning <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
+             {/* Pokud máme nějaký kurz, tlačítko vede na první lekci prvního kurzu */}
+             {courses.length > 0 ? (
+                <Link href={`/courses/${courses[0].id}`}>
+                  <Button size="lg" className='gap-2'>
+                    Start Learning 🚀
+                  </Button>
+                </Link>
+             ) : (
+                <Button size="lg" disabled>Loading...</Button>
+             )}
           </div>
         </div>
       </section>
@@ -53,22 +60,29 @@ export default async function HomePage() {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {courses.length > 0 ? (
               courses.map((course) => (
-                <Card key={course.id} className="border-2 border-slate-200 hover:border-slate-400 transition-colors">
+                <Card key={course.id} className="border-2 border-slate-200 hover:border-primary/50 transition-colors group">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <GraduationCap className="h-5 w-5" />
-                      {course.title}
+                      {/* Odkaz na detail kurzu */}
+                      <Link href={`/courses/${course.id}`} className="hover:underline">
+                        {course.title}
+                      </Link>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-slate-600 mb-4 text-sm min-h-[40px]">
+                    <p className="text-slate-600 mb-4 text-sm min-h-[40px] line-clamp-3">
                       {course.description || "Bez popisu"}
                     </p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs font-bold px-2 py-1 bg-slate-100 rounded uppercase tracking-wide">
-                        {course.difficulty}
-                      </span>
-                      <Button variant="outline" size="sm">Start</Button>
+                    <div className="flex justify-between items-center mt-4">
+                      {/* Odstranili jsme 'difficulty', v novém modelu není */}
+                      <span className="text-xs text-slate-400">ID: {course.id}</span>
+                      
+                      {/* Odkaz je okolo, tlačítko uvnitř. asChild jsme smazali. */}
+                    <Link href={`/courses/${course.id}`}>
+                      <Button variant="outline" size="sm">
+                         Detail
+                       </Button>
+                    </Link>
                     </div>
                   </CardContent>
                 </Card>
@@ -77,7 +91,7 @@ export default async function HomePage() {
               !errorMsg && (
                 <div className="col-span-3 p-12 border-2 border-dashed border-slate-200 rounded-xl text-center text-slate-500">
                   <p>Zatím tu nic není.</p>
-                  <p className="text-sm mt-2">Přidej první kurz přes <a href="http://localhost:8000/docs" className="underline text-blue-600" target="_blank">Swagger UI</a>.</p>
+                  <p className="text-sm mt-2">Spusť <code>seed.py</code> v backendu.</p>
                 </div>
               )
             )}
