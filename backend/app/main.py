@@ -73,8 +73,16 @@ def read_root():
 # --- COURSES ENDPOINTS ---
 
 @app.get("/courses/", response_model=List[schemas.Course])
-def read_courses(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    courses = db.query(models.Course).offset(skip).limit(limit).all()
+def read_courses(
+    skip: int = 0, 
+    limit: int = 100, 
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    # Filter courses by user's difficulty level
+    courses = db.query(models.Course)\
+        .filter(models.Course.difficulty_level == current_user.difficulty)\
+        .offset(skip).limit(limit).all()
     return courses
 
 @app.get("/courses/{course_id}", response_model=schemas.Course)

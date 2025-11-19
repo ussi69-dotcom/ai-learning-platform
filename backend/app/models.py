@@ -28,6 +28,7 @@ class Course(Base):
     title = Column(String, index=True)
     description = Column(Text)
     image_url = Column(String, nullable=True) 
+    difficulty_level = Column(Enum(DifficultyLevel), default=DifficultyLevel.LETS_ROCK, index=True)
     
     owner_id = Column(Integer, ForeignKey("users.id"))
     owner = relationship("User", back_populates="courses")

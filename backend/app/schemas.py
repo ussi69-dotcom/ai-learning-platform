@@ -35,11 +35,12 @@ class CourseBase(BaseModel):
     image_url: Optional[str] = None
 
 class CourseCreate(CourseBase):
-    pass
+    difficulty_level: str = "LETS_ROCK"
 
 class Course(CourseBase):
     id: int
     owner_id: int
+    difficulty_level: str
     # lessons: List[Lesson] = [] # Zatím necháme volitelné, abychom se nezacyklili
 
     class Config:
