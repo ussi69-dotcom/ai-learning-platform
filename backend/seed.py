@@ -1,6 +1,6 @@
 import logging
 from app.database import SessionLocal, engine, Base
-from app.models import User, Course, Lesson, DifficultyLevel
+from app.models import User, Course, Lesson, Quiz, DifficultyLevel
 from app.auth import get_password_hash
 
 # Nastavení logování
@@ -11,6 +11,7 @@ def reset_db(db):
     """Vyčistí data v tabulkách."""
     logger.info("🗑️  Mažu stará data...")
     try:
+        db.query(Quiz).delete()
         db.query(Lesson).delete()
         db.query(Course).delete()
         db.query(User).delete()
@@ -948,6 +949,317 @@ You've taken the first step into a world of endless possibilities.
     ]
     db.add_all(easy_lessons)
     db.commit()
+
+    # 📝 QUIZZES FOR PIECE_OF_CAKE LESSONS
+    logger.info("📝 Creating quizzes for PIECE_OF_CAKE lessons...")
+    
+    # Get lesson IDs
+    lesson1 = easy_lessons[0]
+    lesson2 = easy_lessons[1]
+    lesson3 = easy_lessons[2]
+    lesson4 = easy_lessons[3]
+    lesson5 = easy_lessons[4]
+    
+    # LESSON 1 QUIZZES - What is AI?
+    lesson1_quizzes = [
+        Quiz(
+            question="What is Artificial Intelligence?",
+            option_a="A type of computer virus",
+            option_b="When computers can do things that need human intelligence",
+            option_c="A programming language",
+            option_d="A video game",
+            correct_answer="B",
+            explanation="AI is when computers can perform tasks that typically require human intelligence, like recognizing images, understanding speech, or making decisions.",
+            order=1,
+            lesson_id=lesson1.id
+        ),
+        Quiz(
+            question="Which of these is an example of AI?",
+            option_a="A calculator adding numbers",
+            option_b="Microsoft Word spell checker",
+            option_c="Siri understanding your voice and answering questions",
+            option_d="A digital clock showing time",
+            correct_answer="C",
+            explanation="Siri uses AI to understand natural language, process meaning, and generate appropriate responses. A calculator just follows fixed mathematical rules.",
+            order=2,
+            lesson_id=lesson1.id
+        ),
+        Quiz(
+            question="What makes AI different from regular computer programs?",
+            option_a="AI is more expensive to build",
+            option_b="AI learns patterns from data",
+            option_c="AI was invented more recently",
+            option_d="AI only works on smartphones",
+            correct_answer="B",
+            explanation="The key difference is that AI learns from data and can improve over time, while regular programs just follow pre-programmed rules that never change.",
+            order=3,
+            lesson_id=lesson1.id
+        ),
+        Quiz(
+            question="When did ChatGPT launch and make AI mainstream?",
+            option_a="2018",
+            option_b="2020",
+            option_c="2022",
+            option_d="2024",
+            correct_answer="C",
+            explanation="ChatGPT launched in November 2022 and quickly became the fastest-growing consumer application in history, making AI accessible to millions of people.",
+            order=4,
+            lesson_id=lesson1.id
+        ),
+        Quiz(
+            question="True or False: AI can learn patterns from data just like humans learn from experience.",
+            option_a="True",
+            option_b="False",
+            option_c="Only for image recognition",
+            option_d="Only for voice assistants",
+            correct_answer="A",
+            explanation="True! AI learns from data (examples) just like humans learn from experience. The more data it sees, the better it gets at recognizing patterns.",
+            order=5,
+            lesson_id=lesson1.id
+        ),
+    ]
+    
+    # LESSON 2 QUIZZES - How Does AI Learn?
+    lesson2_quizzes = [
+        Quiz(
+            question="What is Machine Learning?",
+            option_a="Teaching humans about machines",
+            option_b="Teaching computers by showing them examples",
+            option_c="A type of robot",
+            option_d="A programming language",
+            correct_answer="B",
+            explanation="Machine Learning is teaching computers by showing them many examples, so they can learn patterns and make predictions on new data.",
+            order=1,
+            lesson_id=lesson2.id
+        ),
+        Quiz(
+            question="Which type of learning uses examples WITH correct answers (labels)?",
+            option_a="Unsupervised Learning",
+            option_b="Reinforcement Learning",
+            option_c="Supervised Learning",
+            option_d="Deep Learning",
+            correct_answer="C",
+            explanation="Supervised Learning is like having a teacher - you show the AI examples WITH answers (e.g., 'This is a cat', 'This is spam') so it learns to label new examples.",
+            order=2,
+            lesson_id=lesson2.id
+        ),
+        Quiz(
+            question="What type of learning do Netflix recommendations use?",
+            option_a="Supervised Learning",
+            option_b="Unsupervised Learning",
+            option_c="Reinforcement Learning",
+            option_d="None - it's random",
+            correct_answer="B",
+            explanation="Netflix uses Unsupervised Learning to find patterns in viewing habits without explicit labels, grouping similar users and recommending what they might like.",
+            order=3,
+            lesson_id=lesson2.id
+        ),
+        Quiz(
+            question="Why is data quality important for AI?",
+            option_a="More data is always better regardless of quality",
+            option_b="Bad data leads to bad AI predictions",
+            option_c="Data quality doesn't matter",
+            option_d="Only the amount of data matters",
+            correct_answer="B",
+            explanation="'Garbage in, garbage out' - if you train AI on bad, biased, or incorrect data, it will make bad predictions. Quality matters more than quantity!",
+            order=4,
+            lesson_id=lesson2.id
+        ),
+        Quiz(
+            question="What's the difference between Training and Running (Using) AI?",
+            option_a="Training is fast, using is slow",
+            option_b="Training is slow and expensive, using is fast and cheap",
+            option_c="They're the same thing",
+            option_d="Training happens every time you use AI",
+            correct_answer="B",
+            explanation="Training AI takes a long time and lots of computing power (sometimes months!), but once trained, using it is very fast (milliseconds).",
+            order=5,
+            lesson_id=lesson2.id
+        ),
+    ]
+    
+    # LESSON 3 QUIZZES - Prompting
+    lesson3_quizzes = [
+        Quiz(
+            question="What is a 'prompt' in AI?",
+            option_a="A type of AI model",
+            option_b="Your question or instruction to AI",
+            option_c="An error message",
+            option_d="A programming language",
+            correct_answer="B",
+            explanation="A prompt is how you communicate with AI - it's your question, instruction, or request that tells the AI what you want it to do.",
+            order=1,
+            lesson_id=lesson3.id
+        ),
+        Quiz(
+            question="According to the lesson, what makes a good prompt?",
+            option_a="Being as vague as possible",
+            option_b="Using technical jargon",
+            option_c="Being specific, giving context, and specifying format",
+            option_d="Making it as short as possible",
+            correct_answer="C",
+            explanation="Good prompts are specific (what you want), give context (who you are, what situation), and specify format (bullet points, table, etc.).",
+            order=2,
+            lesson_id=lesson3.id
+        ),
+        Quiz(
+            question="What is the 'Secret Formula' for effective prompts?",
+            option_a="Question + Answer + Format",
+            option_b="Role + Task + Context + Format",
+            option_c="Input + Output + Examples",
+            option_d="Subject + Verb + Object",
+            correct_answer="B",
+            explanation="The formula is: [Role] + [Task] + [Context] + [Format]. For example: 'You are a teacher (role). Explain quantum physics (task) to a 10-year-old (context) using a simple analogy (format).'",
+            order=3,
+            lesson_id=lesson3.id
+        ),
+        Quiz(
+            question="If AI's first answer isn't perfect, what should you do?",
+            option_a="Give up and start over",
+            option_b="Use a different AI tool",
+            option_c="Ask it to improve, simplify, or adjust the answer",
+            option_d="Accept it as-is",
+            correct_answer="C",
+            explanation="You can iterate! Ask AI to 'make it simpler', 'add more examples', 'make it longer', etc. Prompting is a conversation, not one-and-done.",
+            order=4,
+            lesson_id=lesson3.id
+        ),
+        Quiz(
+            question="What can AI help you with?",
+            option_a="Only writing essays",
+            option_b="Only answering questions",
+            option_c="Writing, brainstorming, learning, translating, summarizing, and more",
+            option_d="Only coding",
+            correct_answer="C",
+            explanation="AI is incredibly versatile! It can help with writing, editing, brainstorming ideas, explaining concepts, translating, summarizing text, coding, and much more.",
+            order=5,
+            lesson_id=lesson3.id
+        ),
+    ]
+    
+    # LESSON 4 QUIZZES - AI in Daily Life
+    lesson4_quizzes = [
+        Quiz(
+            question="How does Google Maps predict traffic?",
+            option_a="Random guessing",
+            option_b="AI analyzes patterns from millions of users' location data",
+            option_c="Traffic cameras only",
+            option_d="Government reports",
+            correct_answer="B",
+            explanation="Google Maps uses AI to analyze location data from millions of users in real-time, learning traffic patterns to predict delays and suggest faster routes.",
+            order=1,
+            lesson_id=lesson4.id
+        ),
+        Quiz(
+            question="What AI technology powers email spam filters?",
+            option_a="Random selection",
+            option_b="Simple keyword matching",
+            option_c="Machine Learning that learns from examples of spam vs real emails",
+            option_d="Human reviewers checking every email",
+            correct_answer="C",
+            explanation="Spam filters use Machine Learning, trained on millions of examples of spam and legitimate emails, to recognize patterns and filter out junk automatically.",
+            order=2,
+            lesson_id=lesson4.id
+        ),
+        Quiz(
+            question="According to the lesson, approximately how many times a day do you use AI?",
+            option_a="Once or twice",
+            option_b="5-10 times",
+            option_c="Dozens of times",
+            option_d="You don't use AI daily",
+            correct_answer="C",
+            explanation="From your morning alarm to bedtime apps, you use AI dozens of times daily - it's in your email, social media, navigation, music, shopping, banking, and more!",
+            order=3,
+            lesson_id=lesson4.id
+        ),
+        Quiz(
+            question="Which industry does NOT currently use AI significantly?",
+            option_a="Healthcare (disease diagnosis)",
+            option_b="Banking (fraud detection)",
+            option_c="Agriculture (crop monitoring)",
+            option_d="None - all these industries use AI extensively",
+            correct_answer="D",
+            explanation="AI is everywhere! Healthcare uses it for diagnosis, banking for fraud detection, agriculture for crop monitoring, and virtually every industry has AI applications.",
+            order=4,
+            lesson_id=lesson4.id
+        ),
+        Quiz(
+            question="What determines which videos YouTube recommends to you?",
+            option_a="Random selection",
+            option_b="AI analyzing your watch history and behavior patterns",
+            option_c="Only what's popular globally",
+            option_d="The upload date of videos",
+            correct_answer="B",
+            explanation="YouTube uses AI to analyze what you watch, how long you watch, what you search for, and patterns of similar users to personalize recommendations just for you.",
+            order=5,
+            lesson_id=lesson4.id
+        ),
+    ]
+    
+    # LESSON 5 QUIZZES - Course Summary
+    lesson5_quizzes = [
+        Quiz(
+            question="What is the MOST important thing you learned from this course?",
+            option_a="AI is scary and complicated",
+            option_b="AI is a tool that anyone can learn to use effectively",
+            option_c="Only programmers can use AI",
+            option_d="AI will replace all jobs",
+            correct_answer="B",
+            explanation="The key takeaway: AI is a powerful tool that ANYONE can learn to use! You don't need to be a programmer - you just need to understand the basics and practice.human",
+            order=1,
+            lesson_id=lesson5.id
+        ),
+        Quiz(
+            question="What skill is most important for using AI effectively?",
+            option_a="Programming ability",
+            option_b="Mathematics knowledge",
+            option_c="Writing good prompts (prompt engineering)",
+            option_d="Expensive equipment",
+            correct_answer="C",
+            explanation="Prompt engineering - knowing how to ask AI for what you want - is the #1 skill. Anyone can learn it, and it doesn't require technical knowledge!",
+            order=2,
+            lesson_id=lesson5.id
+        ),
+        Quiz(
+            question="After this course, what should be your next step?",
+            option_a="Stop learning about AI",
+            option_b="Practice using AI tools daily for 30 days",
+            option_c="Wait until you forget everything",
+            option_d="Only read more theory",
+            correct_answer="B",
+            explanation="Practice makes perfect! The lesson recommends using AI daily for 30 days - try different prompts, explore tools, and build your skills through hands-on experience.",
+            order=3,
+            lesson_id=lesson5.id
+        ),
+        Quiz(
+            question="Which statement about AI is TRUE?",
+            option_a="AI is perfect and never makes mistakes",
+            option_b="AI will replace human creativity",
+            option_c="AI is a tool to amplify human abilities, not replace them",
+            option_d="AI works without any human input",
+            correct_answer="C",
+            explanation="AI is best used to AMPLIFY human abilities - to make you more productive, creative, and effective. It's a tool to help you, not replace you!",
+            order=4,
+            lesson_id=lesson5.id
+        ),
+        Quiz(
+            question="What makes someone 'AI-literate' after this course?",
+            option_a="Knowing how to program AI",
+            option_b="Understanding what AI is, how it learns, and how to use it ethically",
+            option_c="Having expensive AI tools",
+            option_d="Working in tech",
+            correct_answer="B",
+            explanation="AI literacy means understanding the basics (what it is, how it works), being able to use AI tools effectively, and using them responsibly and ethically.",
+            order=5,
+            lesson_id=lesson5.id
+        ),
+    ]
+    
+    # Add all quizzes
+    all_quizzes = lesson1_quizzes + lesson2_quizzes + lesson3_quizzes + lesson4_quizzes + lesson5_quizzes
+    db.add_all(all_quizzes)
+    db.commit()
+    logger.info(f"✅ Created {len(all_quizzes)} quiz questions for PIECE_OF_CAKE course!")
 
     # 🎸 LETS_ROCK
     logger.info("🎸 Creating LETS_ROCK course...")
