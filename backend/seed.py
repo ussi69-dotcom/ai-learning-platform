@@ -44,7 +44,7 @@ def seed_data():
     easy_course = Course(
         title="AI Basics for Absolute Beginners",
         description="Start your AI journey from zero. Learn what AI is, how it works, and how to use it in your daily life. Perfect for complete beginners!",
-        image_url="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
+        image_url="/images/course-cover-beginner.png",
         owner_id=admin.id,
         difficulty_level=DifficultyLevel.PIECE_OF_CAKE
     )
@@ -63,89 +63,75 @@ Welcome! You're about to learn one of the most important technologies of our tim
 
 ## What is AI?
 
-**Artificial Intelligence (AI)** is when computers can do things that usually need human intelligence.
+> [!NOTE]
+> **Artificial Intelligence (AI)** is when computers can do things that usually need human intelligence.
 
 Think of it like this:
 - A **calculator** can add numbers → That's just following rules
 - **AI** can look at a photo and tell you what's in it → That's intelligence!
 
+![AI vs Regular Programs](/images/lessons/ai-vs-programming.png)
+
 ## Real Examples You Use Daily
 
 You already use AI every day! Here are some examples:
 
-### 🗣️ Voice Assistants
-- **Siri** (Apple)
-- **Alexa** (Amazon)
-- **Google Assistant**
+| AI Tool | What It Does | How Often You Use It |
+|---------|-------------|---------------------|
+| **Siri/Google Assistant** | Understands your voice and answers questions | Daily |
+| **Instagram Filters** | Recognizes your face and adds effects | Multiple times a day |
+| **Netflix Recommendations** | Learns what you like and suggests shows | Every time you open the app |
 
-*What makes it AI?* They understand your voice, know what you mean, and can have a conversation!
-
-### 📸 Photo Recognition
-- Your phone organizing photos by people's faces
-- Instagram filters that know where your eyes and mouth are
-- Google Photos searching for "dog" or "beach"
-
-*What makes it AI?* The computer "sees" and recognizes objects, just like you do!
-
-### 🎬 Recommendations
-- Netflix suggesting shows you'll love
-- Spotify creating playlists for you
-- YouTube knowing what videos you want to watch next
-
-*What makes it AI?* It learns your preferences and predicts what you'll like!
+> [!TIP]
+> ChatGPT reached 100 million users in just 2 months - faster than TikTok, Instagram, or any app in history!
 
 ## AI vs Regular Programs
 
-Let's make this super clear:
+Let's make this super clear with an example:
 
-| Regular Program | Artificial Intelligence |
-|----------------|------------------------|
-| Follows exact rules you program | Learns patterns from data |
-| Always does the same thing | Gets better over time |
-| Example: Calculator | Example: ChatGPT |
+```python
+# Regular Program (Calculator)
+result = 5 + 3  # Always returns 8
 
-## Quick History Lesson 📚
+# AI (Image Recognition)
+result = ai_model.predict(image)  # Learns from millions of examples
+```
+
+The key difference is **learning**. Regular programs do exactly what they are told. AI learns patterns from data to make decisions.
+
+## Quick Challenge 🎯
+
+**Task**: Name 3 AI tools you've used TODAY (hint: check your phone!)
+
+```tryit
+Identify AI Tools --- Name 3 AI tools you use daily --- Hint: Think about apps that recommend things or understand your voice!
+```
+
+> [!EXERCISE]
+> **Your Turn**: Open ChatGPT and ask it: "Explain what artificial intelligence is to a 5-year-old."
+> 
+> Notice how it adjusts its language to be simple and uses analogies!
+
+## History of AI (Quick Version)
+
+Let me take you on a 70-year journey in 30 seconds:
 
 - **1950s**: Alan Turing asks "Can machines think?"
 - **1997**: IBM's Deep Blue beats world chess champion
 - **2011**: IBM Watson wins Jeopardy!
 - **2016**: AlphaGo beats world Go champion
-- **2022**: ChatGPT launches - AI goes mainstream!
-- **Now**: AI is everywhere!
+- **2022**: ChatGPT launches and AI goes MAINSTREAM 🚀
 
-## Why Should You Care?
+![AI Timeline](/images/lessons/ai-timeline.png)
 
-AI is:
-- ✅ Making our lives easier (like autocorrect!)
-- ✅ Solving big problems (like finding diseases in X-rays)
-- ✅ Creating new jobs and opportunities
-- ✅ Changing how we work, learn, and create
+> [!SUCCESS]
+> **You now know**:
+> - ✅ What AI is (and what it isn't)
+> - ✅ Real examples you use daily
+> - ✅ The difference between AI and regular programs
+> - ✅ A bit of AI history
 
-**Bottom line**: Understanding AI is like understanding the internet in 1995 - it's going to be EVERYWHERE!
-
----
-
-## 🎯 Your First Challenge!
-
-Look around your home or check your phone. Can you find **3 examples of AI** that you use?
-
-Think about:
-- Apps that learn your habits
-- Devices that understand your voice
-- Features that predict what you want
-
-Write them down - we'll talk about them in the next lesson!
-
----
-
-## 💡 Key Takeaways
-
-1. **AI = Computers doing things that need intelligence**
-2. **You already use AI every day** (even if you didn't know it!)
-3. **AI learns from data** (unlike regular programs that just follow rules)
-4. **This is just the beginning!** AI is changing the world right now.
-
-Ready for the next lesson? Let's learn HOW AI actually learns! 🚀
+Next up: Let's learn HOW AI actually learns! 🚀
 """,
             video_url="https://www.youtube.com/embed/ad79nYk2keg",  # "AI Explained" by CGP Grey
             order=1,
@@ -174,6 +160,9 @@ Remember how you learned to recognize a dog?
 
 **Machine Learning** is teaching a computer by showing it examples.
 
+![Machine Learning Process](/images/lessons/ml-process.png)
+
+
 ### Example: Teaching AI to Recognize Cats 🐱
 
 **Step 1: Show it LOTS of cat photos**
@@ -195,6 +184,9 @@ Remember how you learned to recognize a dog?
 - "This has pointy ears + whiskers = It's a cat!"
 
 ## The Three Types of Learning
+
+![Types of Machine Learning](/images/lessons/ml-types.png)
+
 
 ### 1. Supervised Learning 👨‍🏫
 **Like having a teacher**
@@ -326,6 +318,9 @@ Think of AI like a super-smart assistant:
 
 ## The Anatomy of a Good Prompt
 
+![Bad vs Good Prompt](/images/lessons/bad-vs-good-prompt.png)
+
+
 ### 🎯 Be Specific!
 
 **Bad:** "Write about dogs"
@@ -351,6 +346,9 @@ Think of AI like a super-smart assistant:
 ## The Secret Formula
 
 Here's a simple formula for great prompts:
+
+![Prompt Formula](/images/lessons/prompt-formula.png)
+
 
 ```
 [Role] + [Task] + [Context] + [Format]
@@ -509,6 +507,9 @@ Ready to see AI in your daily life? Next lesson! 🚀
             content=r"""# AI in Your Daily Life 🌍
 
 AI isn't science fiction - it's in your pocket, your car, and your home RIGHT NOW!
+
+![AI in Daily Life Timeline](/images/lessons/ai-daily-timeline.png)
+
 
 ## Morning ☀️
 

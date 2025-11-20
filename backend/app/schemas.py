@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Optional
+from datetime import datetime
 
 # --- Lesson Schemas ---
 class LessonBase(BaseModel):
@@ -87,5 +88,21 @@ class Quiz(QuizBase):
     id: int
     lesson_id: int
     
+    class Config:
+        from_attributes = True
+
+# ===== USER PROGRESS SCHEMAS =====
+class UserProgressBase(BaseModel):
+    lesson_id: int
+    course_id: int
+
+class UserProgressCreate(UserProgressBase):
+    pass
+
+class UserProgress(UserProgressBase):
+    id: int
+    user_id: int
+    completed_at: datetime
+
     class Config:
         from_attributes = True

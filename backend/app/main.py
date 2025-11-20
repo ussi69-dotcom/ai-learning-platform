@@ -153,3 +153,76 @@ def update_user_difficulty(
     db.commit()
     db.refresh(current_user)
     return current_user
+
+
+# --- PROGRESS ENDPOINTS ---
+
+@app.post("/lessons/{lesson_id}/complete", response_model=schemas.UserProgress)
+def complete_lesson(
+    lesson_id: int,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Mark a lesson as completed"""
+    # Check if lesson exists
+    lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    
+    # Check if already completed
+    existing_progress = db.query(models.UserProgress).filter(
+        models.UserProgress.user_id == current_user.id,
+        models.UserProgress.lesson_id == lesson_id
+    ).first()
+    
+    if existing_progress:
+        return existing_progress
+    
+    # Create new progress entry
+    new_progress = models.UserProgress(
+        user_id=current_user.id,
+        lesson_id=lesson_id,
+        course_id=lesson.course_id
+    )
+    db.add(new_progress)
+    db.commit()
+    db.refresh(new_progress)
+    return new_progress
+
+@app.get("/users/me/progress", response_model=List[schemas.UserProgress])
+def get_user_progress(
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Get all completed lessons for the current user"""
+    progress = db.query(models.UserProgress).filter(
+        models.UserProgress.user_id == current_user.id
+    ).all()
+    return progress
+
+@app.get("/courses/{course_id}/progress")
+def get_course_progress(
+    course_id: int,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Get progress percentage for a specific course"""
+    # Get total lessons in course
+    total_lessons = db.query(models.Lesson).filter(models.Lesson.course_id == course_id).count()
+    
+    if total_lessons == 0:
+        return {"percentage": 0, "completed": 0, "total": 0}
+    
+    # Get completed lessons in course
+    completed_lessons = db.query(models.UserProgress).filter(
+        models.UserProgress.user_id == current_user.id,
+        models.UserProgress.course_id == course_id
+    ).count()
+    
+    percentage = int((completed_lessons / total_lessons) * 100)
+    
+    return {
+        "percentage": percentage,
+        "completed": completed_lessons,
+        "total": total_lessons
+    }

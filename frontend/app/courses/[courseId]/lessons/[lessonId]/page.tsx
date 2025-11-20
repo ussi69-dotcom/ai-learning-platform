@@ -7,6 +7,8 @@ import { use, useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Quiz from "@/components/Quiz";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
+import LessonComplete from "@/components/LessonComplete";
 
 export default function LessonPage({ params }: { params: Promise<{ courseId: string; lessonId: string }> }) {
   // Unwrap params Promise (Next.js 16 requirement)
@@ -179,100 +181,10 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
               </div>
             )}
 
-            {/* Formatted content */}
-            <article className="prose prose-lg prose-slate max-w-none prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:text-slate-700 prose-p:leading-relaxed prose-strong:text-slate-900 prose-table:w-full prose-table:border-collapse prose-th:bg-slate-100 prose-th:p-3 prose-th:border prose-th:border-slate-300 prose-td:p-3 prose-td:border prose-td:border-slate-200">
-              <div className="whitespace-pre-wrap">
-                {currentContent.split('\n').map((line, index) => {
-                  // Handle headings
-                  if (line.startsWith('# ')) {
-                    return <h1 key={index} className="text-3xl font-bold mt-0 mb-4">{line.substring(2)}</h1>;
-                  }
-                  if (line.startsWith('## ')) {
-                    return <h2 key={index} className="text-2xl font-bold mt-8 mb-4 first:mt-0">{line.substring(3)}</h2>;
-                  }
-                  if (line.startsWith('### ')) {
-                    return <h3 key={index} className="text-xl font-semibold mt-6 mb-3">{line.substring(4)}</h3>;
-                  }
-                  
-                  // Handle tables - detect table rows
-                  if (line.includes('|') && line.split('|').length > 2) {
-                    const cells = line.split('|').filter(c => c.trim());
-                    const isHeaderRow = line.includes('---');
-                    
-                    if (isHeaderRow) {
-                      return null; // Skip separator rows
-                    }
-                    
-                    // Check if this is first row of table (header)
-                    const prevLine = currentContent.split('\n')[index - 1] || '';
-                    const isFirstRow = !prevLine.includes('|');
-                    
-                    if (isFirstRow) {
-                      // Start a table and render header
-                      return (
-                        <div key={index} className="my-6 overflow-x-auto">
-                          <table className="min-w-full border-collapse border border-slate-300 rounded-lg overflow-hidden">
-                            <thead className="bg-slate-100">
-                              <tr>
-                                {cells.map((cell, i) => (
-                                  <th key={i} className="border border-slate-300 px-4 py-3 text-left font-semibold text-slate-900">
-                                    {cell.trim()}
-                                  </th>
-                                ))}
-                              </tr>
-                            </thead>
-                          </table>
-                        </div>
-                      );
-                    } else {
-                      // Continue table with body rows
-                      return (
-                        <div key={index} className="-mt-6 mb-6 overflow-x-auto">
-                          <table className="min-w-full border-collapse border border-slate-300">
-                            <tbody>
-                              <tr className="hover:bg-slate-50">
-                                {cells.map((cell, i) => (
-                                  <td key={i} className="border border-slate-200 px-4 py-3 text-slate-700">
-                                    {cell.trim()}
-                                  </td>
-                                ))}
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      );
-                    }
-                  }
-                  
-                  // Handle bold text
-                  if (line.includes('**')) {
-                    const parts = line.split('**');
-                    return (
-                      <p key={index} className="mb-4">
-                        {parts.map((part, i) => i % 2 === 1 ? <strong key={i}>{part}</strong> : part)}
-                      </p>
-                    );
-                  }
-                  
-                  // Handle bullet lists
-                  if (line.trim().startsWith('-') || line.trim().startsWith('*')) {
-                    return (
-                      <li key={index} className="ml-6 mb-2 text-slate-700">
-                        {line.trim().substring(1).trim()}
-                      </li>
-                    );
-                  }
-                  
-                  // Empty lines
-                  if (line.trim() === '') {
-                    return <br key={index} />;
-                  }
-                  
-                  // Regular paragraphs
-                  return <p key={index} className="mb-4 text-slate-700 leading-relaxed">{line}</p>;
-                })}
-              </div>
-            </article>
+            {/* Formatted content using MarkdownRenderer */}
+            <div className="prose prose-lg prose-slate max-w-none">
+              <MarkdownRenderer content={currentContent} />
+            </div>
 
             {/* Bottom pagination */}
             {totalPages > 1 && (
@@ -295,7 +207,15 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           </div>
 
           {/* Quiz Section - only on last page */}
-          {currentPage === totalPages - 1 && <Quiz lessonId={lessonId} />}
+          {currentPage === totalPages - 1 && (
+            <>
+              <Quiz lessonId={lessonId} />
+              <LessonComplete 
+                lessonId={parseInt(lessonId)} 
+                courseId={parseInt(courseId)} 
+              />
+            </>
+          )}
 
           {/* Lesson Navigation */}
           <div className="flex justify-between items-center gap-4 mt-12">

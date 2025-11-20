@@ -14,6 +14,8 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
   const { token } = useAuth();
   const [course, setCourse] = useState<any>(null);
   const [lessons, setLessons] = useState<any[]>([]);
+  const [progress, setProgress] = useState<any>(null);
+  const [completedLessonIds, setCompletedLessonIds] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -46,6 +48,24 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
             .filter((l: any) => l.course_id === parseInt(courseId))
             .sort((a: any, b: any) => a.order - b.order);
           setLessons(filtered);
+          setLessons(filtered);
+        }
+
+        // Fetch progress
+        const progressRes = await fetch(`http://localhost:8000/courses/${courseId}/progress`, {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        if (progressRes.ok) {
+          setProgress(await progressRes.json());
+        }
+
+        // Fetch completed lessons
+        const userProgressRes = await fetch(`http://localhost:8000/users/me/progress`, {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        if (userProgressRes.ok) {
+          const userProgress = await userProgressRes.json();
+          setCompletedLessonIds(userProgress.map((p: any) => p.lesson_id));
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -80,6 +100,25 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
           <h1 className="text-4xl font-bold tracking-tight">{course.title}</h1>
           <p className="text-xl text-muted-foreground">{course.description}</p>
           
+          {/* Progress Bar */}
+          {progress && (
+            <div className="max-w-md mx-auto mt-4">
+              <div className="flex justify-between text-sm mb-1">
+                <span className="font-medium">Course Progress</span>
+                <span className="font-bold text-blue-600">{progress.percentage}%</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div 
+                  className="bg-blue-600 h-2.5 rounded-full transition-all duration-500" 
+                  style={{ width: `${progress.percentage}%` }}
+                ></div>
+              </div>
+              <p className="text-xs text-gray-500 mt-1">
+                {progress.completed} of {progress.total} lessons completed
+              </p>
+            </div>
+          )}
+          
      <div className="flex justify-center gap-4">
             {/* Tlačítko 1: Začít studovat */}
             <Link href={`/courses/${courseId}/lessons/${lessons[0]?.id || 1}`}>
@@ -105,8 +144,12 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
             lessons.map((lesson: any) => (
               <Card key={lesson.id} className="group hover:border-primary/50 transition-colors">
                 <Link href={`/courses/${courseId}/lessons/${lesson.id}`} className="flex items-center p-6">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold mr-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                    {lesson.order}
+                  <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold mr-6 transition-colors ${
+                    completedLessonIds.includes(lesson.id)
+                      ? 'bg-green-100 text-green-600'
+                      : 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground'
+                  }`}>
+                    {completedLessonIds.includes(lesson.id) ? '✓' : lesson.order}
                   </div>
                   <div className="flex-grow">
                     <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">

@@ -27,6 +27,8 @@ export default function ProfilePage() {
   const [selectedDifficulty, setSelectedDifficulty] = useState(user?.difficulty || 'LETS_ROCK');
   const [updating, setUpdating] = useState(false);
   const [message, setMessage] = useState('');
+  const [myProgress, setMyProgress] = useState<any[]>([]);
+  const [courses, setCourses] = useState<any[]>([]);
 
   // Handle redirect in useEffect to avoid React error
   useEffect(() => {
@@ -34,6 +36,30 @@ export default function ProfilePage() {
       router.push('/login');
     }
   }, [isLoading, user, router]);
+
+  useEffect(() => {
+    async function fetchProgress() {
+      if (!token) return;
+      try {
+        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        
+        // Fetch user progress
+        const progressRes = await axios.get(`${API_BASE}/users/me/progress`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setMyProgress(progressRes.data);
+
+        // Fetch all courses to map IDs to titles
+        const coursesRes = await axios.get(`${API_BASE}/courses/`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setCourses(coursesRes.data);
+      } catch (err) {
+        console.error('Error fetching progress:', err);
+      }
+    }
+    fetchProgress();
+  }, [token]);
 
   if (isLoading) {
     return (
@@ -122,6 +148,32 @@ export default function ProfilePage() {
                 )}
               </p>
             </div>
+          </div>
+
+          {/* My Learning Section */}
+          <div className="pt-6 border-t">
+            <h3 className="text-lg font-semibold mb-4">My Learning 📚</h3>
+            {myProgress.length === 0 ? (
+              <p className="text-muted-foreground">You haven't completed any lessons yet. Start learning!</p>
+            ) : (
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground mb-2">
+                  You have completed <span className="font-bold text-blue-600">{myProgress.length}</span> lessons!
+                </p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-blue-50 p-4 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-blue-700">{myProgress.length}</div>
+                    <div className="text-xs text-blue-600">Lessons Done</div>
+                  </div>
+                  <div className="bg-green-50 p-4 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-green-700">
+                      {new Set(myProgress.map((p: any) => p.course_id)).size}
+                    </div>
+                    <div className="text-xs text-green-600">Active Courses</div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Difficulty Switcher Section */}

@@ -1,5 +1,6 @@
 import enum
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text, Enum
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text, Enum, DateTime
+from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from app.database import Base
 
@@ -19,6 +20,7 @@ class User(Base):
     difficulty = Column(Enum(DifficultyLevel), default=DifficultyLevel.LETS_ROCK)
 
     courses = relationship("Course", back_populates="owner")
+    progress = relationship("UserProgress", back_populates="user")
 
 
 class Course(Base):
@@ -67,3 +69,17 @@ class Quiz(Base):
     order = Column(Integer, default=1)
     
     lesson = relationship("Lesson", back_populates="quizzes")
+
+
+class UserProgress(Base):
+    __tablename__ = "user_progress"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    lesson_id = Column(Integer, ForeignKey("lessons.id"))
+    course_id = Column(Integer, ForeignKey("courses.id"))
+    completed_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    user = relationship("User", back_populates="progress")
+    lesson = relationship("Lesson")
+    course = relationship("Course")

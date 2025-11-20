@@ -1,0 +1,21 @@
+# Day 8: Progress Tracking System
+
+- [x] **Database Layer** <!-- id: 0 -->
+    - [x] Create `UserProgress` model in `backend/app/models.py` <!-- id: 1 -->
+    - [x] Create `UserProgress` schemas in `backend/app/schemas.py` <!-- id: 2 -->
+    - [x] Create migration/update database (if using alembic, or just rely on SQLModel startup) <!-- id: 3 -->
+- [x] **API Layer** <!-- id: 4 -->
+    - [x] Implement `POST /lessons/{lesson_id}/complete` endpoint <!-- id: 5 -->
+    - [x] Implement `GET /users/me/progress` endpoint <!-- id: 6 -->
+    - [x] Implement `GET /courses/{course_id}/progress` endpoint <!-- id: 7 -->
+- [x] **Frontend Integration** <!-- id: 8 -->
+    - [x] Create LessonComplete component <!-- id: 9 -->
+    - [x] Add "Mark as Complete" button to Lesson page <!-- id: 10 -->
+    - [x] Show progress indicators (checkmarks) on Course page <!-- id: 11 -->
+    - [x] Show overall course progress bar <!-- id: 12 -->
+- [x] **Dashboard** <!-- id: 13 -->
+    - [x] Add "My Learning" section to Profile page <!-- id: 14 -->
+    - [x] Display completed courses and active courses <!-- id: 15 -->
+- [ ] **Verification** <!-- id: 16 -->
+    - [ ] Test API endpoints <!-- id: 17 -->
+    - [ ] Verify frontend updates correctly <!-- id: 18 -->
