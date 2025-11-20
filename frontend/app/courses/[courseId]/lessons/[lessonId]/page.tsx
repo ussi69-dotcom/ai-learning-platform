@@ -75,14 +75,35 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
     return <div className="p-12 text-center">Lekce nenalezena 😢</div>;
   }
 
-  // Split content into sections for pagination
-  const sections = lesson.content.split('\n\n').filter((s: string) => s.trim());
-  const sectionsPerPage = 5;
-  const totalPages = Math.ceil(sections.length / sectionsPerPage);
-  const currentSections = sections.slice(
-    currentPage * sectionsPerPage,
-    (currentPage + 1) * sectionsPerPage
-  );
+  // Split content into logical slides based on main headings (##)
+  const splitIntoSlides = (content: string): string[] => {
+    const lines = content.split('\n');
+    const slides: string[] = [];
+    let currentSlide: string[] = [];
+
+    lines.forEach((line, index) => {
+      // Check if this is a main section heading (## but not ###)
+      if (line.match(/^##\s+[^#]/)) {
+        // If we have content, save the current slide
+        if (currentSlide.length > 0) {
+          slides.push(currentSlide.join('\n'));
+          currentSlide = [];
+        }
+      }
+      currentSlide.push(line);
+    });
+
+    // Don't forget the last slide
+    if (currentSlide.length > 0) {
+      slides.push(currentSlide.join('\n'));
+    }
+
+    return slides.filter(s => s.trim().length > 0);
+  };
+
+  const slides = splitIntoSlides(lesson.content);
+  const totalPages = slides.length;
+  const currentContent = slides[currentPage] || '';
 
   // Find current lesson index and neighbors
   const currentIndex = allLessons.findIndex(l => l.id === parseInt(lessonId));
@@ -159,41 +180,98 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             )}
 
             {/* Formatted content */}
-            <article className="prose prose-lg prose-slate max-w-none">
-              {currentSections.map((section: string, index: number) => {
-                // Check if section is a heading
-                if (section.trim().startsWith('#')) {
-                  const level = section.match(/^#+/)?.[0].length || 1;
-                  const text = section.replace(/^#+\s*/, '').trim();
+            <article className="prose prose-lg prose-slate max-w-none prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:text-slate-700 prose-p:leading-relaxed prose-strong:text-slate-900 prose-table:w-full prose-table:border-collapse prose-th:bg-slate-100 prose-th:p-3 prose-th:border prose-th:border-slate-300 prose-td:p-3 prose-td:border prose-td:border-slate-200">
+              <div className="whitespace-pre-wrap">
+                {currentContent.split('\n').map((line, index) => {
+                  // Handle headings
+                  if (line.startsWith('# ')) {
+                    return <h1 key={index} className="text-3xl font-bold mt-0 mb-4">{line.substring(2)}</h1>;
+                  }
+                  if (line.startsWith('## ')) {
+                    return <h2 key={index} className="text-2xl font-bold mt-8 mb-4 first:mt-0">{line.substring(3)}</h2>;
+                  }
+                  if (line.startsWith('### ')) {
+                    return <h3 key={index} className="text-xl font-semibold mt-6 mb-3">{line.substring(4)}</h3>;
+                  }
                   
-                  if (level === 1) {
+                  // Handle tables - detect table rows
+                  if (line.includes('|') && line.split('|').length > 2) {
+                    const cells = line.split('|').filter(c => c.trim());
+                    const isHeaderRow = line.includes('---');
+                    
+                    if (isHeaderRow) {
+                      return null; // Skip separator rows
+                    }
+                    
+                    // Check if this is first row of table (header)
+                    const prevLine = currentContent.split('\n')[index - 1] || '';
+                    const isFirstRow = !prevLine.includes('|');
+                    
+                    if (isFirstRow) {
+                      // Start a table and render header
+                      return (
+                        <div key={index} className="my-6 overflow-x-auto">
+                          <table className="min-w-full border-collapse border border-slate-300 rounded-lg overflow-hidden">
+                            <thead className="bg-slate-100">
+                              <tr>
+                                {cells.map((cell, i) => (
+                                  <th key={i} className="border border-slate-300 px-4 py-3 text-left font-semibold text-slate-900">
+                                    {cell.trim()}
+                                  </th>
+                                ))}
+                              </tr>
+                            </thead>
+                          </table>
+                        </div>
+                      );
+                    } else {
+                      // Continue table with body rows
+                      return (
+                        <div key={index} className="-mt-6 mb-6 overflow-x-auto">
+                          <table className="min-w-full border-collapse border border-slate-300">
+                            <tbody>
+                              <tr className="hover:bg-slate-50">
+                                {cells.map((cell, i) => (
+                                  <td key={i} className="border border-slate-200 px-4 py-3 text-slate-700">
+                                    {cell.trim()}
+                                  </td>
+                                ))}
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      );
+                    }
+                  }
+                  
+                  // Handle bold text
+                  if (line.includes('**')) {
+                    const parts = line.split('**');
                     return (
-                      <h2 key={index} className="text-3xl font-bold text-slate-900 mt-8 mb-4 first:mt-0">
-                        {text}
-                      </h2>
-                    );
-                  } else if (level === 2) {
-                    return (
-                      <h3 key={index} className="text-2xl font-semibold text-slate-800 mt-6 mb-3">
-                        {text}
-                      </h3>
-                    );
-                  } else {
-                    return (
-                      <h4 key={index} className="text-xl font-medium text-slate-700 mt-4 mb-2">
-                        {text}
-                      </h4>
+                      <p key={index} className="mb-4">
+                        {parts.map((part, i) => i % 2 === 1 ? <strong key={i}>{part}</strong> : part)}
+                      </p>
                     );
                   }
-                }
-                
-                // Regular paragraph
-                return (
-                  <div key={index} className="text-slate-700 leading-relaxed mb-4 whitespace-pre-wrap">
-                    {section}
-                  </div>
-                );
-              })}
+                  
+                  // Handle bullet lists
+                  if (line.trim().startsWith('-') || line.trim().startsWith('*')) {
+                    return (
+                      <li key={index} className="ml-6 mb-2 text-slate-700">
+                        {line.trim().substring(1).trim()}
+                      </li>
+                    );
+                  }
+                  
+                  // Empty lines
+                  if (line.trim() === '') {
+                    return <br key={index} />;
+                  }
+                  
+                  // Regular paragraphs
+                  return <p key={index} className="mb-4 text-slate-700 leading-relaxed">{line}</p>;
+                })}
+              </div>
             </article>
 
             {/* Bottom pagination */}
