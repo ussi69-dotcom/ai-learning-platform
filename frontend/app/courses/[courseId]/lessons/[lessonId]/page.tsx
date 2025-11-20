@@ -6,6 +6,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { use, useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import Quiz from "@/components/Quiz";
 
 export default function LessonPage({ params }: { params: Promise<{ courseId: string; lessonId: string }> }) {
   // Unwrap params Promise (Next.js 16 requirement)
@@ -119,6 +120,8 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           <div className="whitespace-pre-wrap">{lesson.content}</div>
         </article>
 
+        {/* 🧠 Quiz Section */}
+        <Quiz lessonId={lessonId} />
 
         {/* Footer navigace (Next/Prev by se řešilo tady) */}
         <div className="mt-16 pt-8 border-t flex justify-between items-center">
