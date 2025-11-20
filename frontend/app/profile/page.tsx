@@ -4,7 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const DIFFICULTY_LABELS: Record<string, string> = {
@@ -28,6 +28,13 @@ export default function ProfilePage() {
   const [updating, setUpdating] = useState(false);
   const [message, setMessage] = useState('');
 
+  // Handle redirect in useEffect to avoid React error
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/login');
+    }
+  }, [isLoading, user, router]);
+
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -37,8 +44,7 @@ export default function ProfilePage() {
   }
 
   if (!user) {
-    router.push('/login');
-    return null;
+    return null; // Will redirect via useEffect
   }
 
   const handleDifficultyChange = async () => {

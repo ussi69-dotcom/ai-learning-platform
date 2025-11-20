@@ -17,6 +17,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   const [lesson, setLesson] = useState<any>(null);
   const [allLessons, setAllLessons] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -74,6 +75,15 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
     return <div className="p-12 text-center">Lekce nenalezena 😢</div>;
   }
 
+  // Split content into sections for pagination
+  const sections = lesson.content.split('\n\n').filter((s: string) => s.trim());
+  const sectionsPerPage = 5;
+  const totalPages = Math.ceil(sections.length / sectionsPerPage);
+  const currentSections = sections.slice(
+    currentPage * sectionsPerPage,
+    (currentPage + 1) * sectionsPerPage
+  );
+
   // Find current lesson index and neighbors
   const currentIndex = allLessons.findIndex(l => l.id === parseInt(lessonId));
   const previousLesson = currentIndex > 0 ? allLessons[currentIndex - 1] : null;
@@ -82,78 +92,169 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
   return (
     <ProtectedRoute>
-      <div className="container mx-auto py-8 px-4 max-w-4xl">
-        {/* Navigace zpět */}
-        <div className="mb-8">
-          <Link href={`/courses/${courseId}`}>
-            <Button variant="outline" className="gap-2 pl-0 hover:pl-2 transition-all">
-               &larr; Zpět na osnovu kurzu
-            </Button>
-          </Link>
-        </div>
-
-        {/* Hlavička Lekce */}
-        <div className="space-y-4 mb-12 border-b pb-8">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground uppercase tracking-widest font-bold">
-            <span className="bg-primary/10 text-primary px-2 py-1 rounded">Lekce {lesson.order}</span>
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+        <div className="container mx-auto py-8 px-4 max-w-4xl">
+          {/* Navigation back */}
+          <div className="mb-8">
+            <Link href={`/courses/${courseId}`}>
+              <Button variant="ghost" className="gap-2 -ml-4">
+                ← Back to Course
+              </Button>
+            </Link>
           </div>
-          <h1 className="text-4xl font-bold tracking-tight">{lesson.title}</h1>
-          <p className="text-xl text-muted-foreground">{lesson.description}</p>
-        </div>
 
-        {/* 🎥 Video Player (Youtube Embed) */}
-        {lesson.video_url && (
-          <div className="mb-12 aspect-video bg-black rounded-xl overflow-hidden shadow-2xl">
-              {/* Jednoduchý parser pro YouTube embed (nahradí watch?v= za embed/) */}
-              <iframe 
+          {/* Hero Section */}
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 mb-8 text-white shadow-xl">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
+                Lesson {lesson.order}
+              </span>
+            </div>
+            <h1 className="text-4xl font-bold mb-3">{lesson.title}</h1>
+            <p className="text-xl text-blue-100">{lesson.description}</p>
+          </div>
+
+          {/* Video Section */}
+          {lesson.video_url && (
+            <div className="mb-12">
+              <div className="aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border-4 border-slate-200">
+                <iframe 
                   className="w-full h-full"
                   src={lesson.video_url} 
                   title={lesson.title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                   allowFullScreen
-              />
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Content with Pagination */}
+          <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-8 mb-8">
+            {/* Page indicator */}
+            {totalPages > 1 && (
+              <div className="flex justify-between items-center mb-6 pb-4 border-b">
+                <div className="text-sm text-slate-500">
+                  Section {currentPage + 1} of {totalPages}
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+                    disabled={currentPage === 0}
+                  >
+                    ← Prev
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(Math.min(totalPages - 1, currentPage + 1))}
+                    disabled={currentPage === totalPages - 1}
+                  >
+                    Next →
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Formatted content */}
+            <article className="prose prose-lg prose-slate max-w-none">
+              {currentSections.map((section: string, index: number) => {
+                // Check if section is a heading
+                if (section.trim().startsWith('#')) {
+                  const level = section.match(/^#+/)?.[0].length || 1;
+                  const text = section.replace(/^#+\s*/, '').trim();
+                  
+                  if (level === 1) {
+                    return (
+                      <h2 key={index} className="text-3xl font-bold text-slate-900 mt-8 mb-4 first:mt-0">
+                        {text}
+                      </h2>
+                    );
+                  } else if (level === 2) {
+                    return (
+                      <h3 key={index} className="text-2xl font-semibold text-slate-800 mt-6 mb-3">
+                        {text}
+                      </h3>
+                    );
+                  } else {
+                    return (
+                      <h4 key={index} className="text-xl font-medium text-slate-700 mt-4 mb-2">
+                        {text}
+                      </h4>
+                    );
+                  }
+                }
+                
+                // Regular paragraph
+                return (
+                  <div key={index} className="text-slate-700 leading-relaxed mb-4 whitespace-pre-wrap">
+                    {section}
+                  </div>
+                );
+              })}
+            </article>
+
+            {/* Bottom pagination */}
+            {totalPages > 1 && (
+              <div className="flex justify-center gap-2 mt-8 pt-6 border-t">
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentPage(i)}
+                    className={`w-8 h-8 rounded-full text-sm font-medium transition-all ${
+                      currentPage === i
+                        ? 'bg-blue-600 text-white shadow-md'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-        )}
 
-        {/* 📝 Obsah lekce (simple markdown rendering) */}
-        <article className="prose prose-slate lg:prose-lg dark:prose-invert max-w-none">
-          <div className="whitespace-pre-wrap">{lesson.content}</div>
-        </article>
+          {/* Quiz Section - only on last page */}
+          {currentPage === totalPages - 1 && <Quiz lessonId={lessonId} />}
 
-        {/* 🧠 Quiz Section */}
-        <Quiz lessonId={lessonId} />
-
-        {/* Footer navigace (Next/Prev by se řešilo tady) */}
-        <div className="mt-16 pt-8 border-t flex justify-between items-center">
+          {/* Lesson Navigation */}
+          <div className="flex justify-between items-center gap-4 mt-12">
             {previousLesson ? (
-              <Link href={`/courses/${courseId}/lessons/${previousLesson.id}`}>
-                <Button variant="outline" className="gap-2">
-                  ← Předchozí: {previousLesson.title}
+              <Link href={`/courses/${courseId}/lessons/${previousLesson.id}`} className="flex-1">
+                <Button variant="outline" className="w-full justify-start gap-2 group">
+                  <span className="group-hover:-translate-x-1 transition-transform">←</span>
+                  <div className="text-left">
+                    <div className="text-xs text-muted-foreground">Previous</div>
+                    <div className="font-semibold truncate">{previousLesson.title}</div>
+                  </div>
                 </Button>
               </Link>
             ) : (
-              <Button variant="outline" disabled>
-                ← Předchozí
-              </Button>
+              <div className="flex-1" />
             )}
 
             {nextLesson ? (
-              <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`}>
-                <Button className="gap-2">
-                  Další: {nextLesson.title} →
+              <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`} className="flex-1">
+                <Button className="w-full justify-end gap-2 group">
+                  <div className="text-right">
+                    <div className="text-xs">Next</div>
+                    <div className="font-semibold truncate">{nextLesson.title}</div>
+                  </div>
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </Button>
               </Link>
             ) : isLastLesson ? (
-              <Link href={`/courses/${courseId}`}>
-                <Button className="gap-2 bg-green-600 hover:bg-green-700">
-                  ✓ Dokončit kurz
+              <Link href={`/courses/${courseId}`} className="flex-1">
+                <Button className="w-full bg-green-600 hover:bg-green-700">
+                  ✓ Complete Course
                 </Button>
               </Link>
             ) : (
-              <Button disabled>
-                Další →
-              </Button>
+              <div className="flex-1" />
             )}
+          </div>
         </div>
       </div>
     </ProtectedRoute>
