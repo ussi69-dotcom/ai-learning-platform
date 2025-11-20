@@ -70,3 +70,22 @@ class User(UserBase):
 
     class Config:
         from_attributes = True
+
+
+# ===== QUIZ SCHEMAS =====
+class QuizBase(BaseModel):
+    question: str
+    option_a: str
+    option_b: str
+    option_c: str
+    option_d: str
+    correct_answer: str
+    explanation: Optional[str] = None
+    order: int = 1
+
+class Quiz(QuizBase):
+    id: int
+    lesson_id: int
+    
+    class Config:
+        from_attributes = True

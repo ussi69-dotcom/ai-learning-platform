@@ -48,3 +48,22 @@ class Lesson(Base):
 
     course_id = Column(Integer, ForeignKey("courses.id"))
     course = relationship("Course", back_populates="lessons")
+    
+    quizzes = relationship("Quiz", back_populates="lesson", cascade="all, delete-orphan")
+
+
+class Quiz(Base):
+    __tablename__ = "quizzes"
+
+    id = Column(Integer, primary_key=True, index=True)
+    lesson_id = Column(Integer, ForeignKey("lessons.id"))
+    question = Column(String, nullable=False)
+    option_a = Column(String, nullable=False)
+    option_b = Column(String, nullable=False)
+    option_c = Column(String, nullable=False)
+    option_d = Column(String, nullable=False)
+    correct_answer = Column(String, nullable=False)  # 'A', 'B', 'C', or 'D'
+    explanation = Column(Text, nullable=True)
+    order = Column(Integer, default=1)
+    
+    lesson = relationship("Lesson", back_populates="quizzes")

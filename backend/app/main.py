@@ -111,7 +111,45 @@ def read_lessons(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
 
 @app.get("/lessons/{lesson_id}", response_model=schemas.Lesson)
 def read_lesson(lesson_id: int, db: Session = Depends(get_db)):
+    # Detail lekce (vrací i `content`, na rozdíl od "/lessons/")
     lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
     if lesson is None:
         raise HTTPException(status_code=404, detail="Lesson not found")
     return lesson
+
+
+# --- QUIZ ENDPOINTS ---
+
+@app.get("/lessons/{lesson_id}/quizzes", response_model=List[schemas.Quiz])
+def get_lesson_quizzes(
+    lesson_id: int, 
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Get all quiz questions for a lesson"""
+    quizzes = db.query(models.Quiz)\
+        .filter(models.Quiz.lesson_id == lesson_id)\
+        .order_by(models.Quiz.order)\
+        .all()
+    return quizzes
+
+
+# --- USER PROFILE ENDPOINTS ---
+
+@app.put("/users/me/difficulty", response_model=schemas.User)
+def update_user_difficulty(
+    difficulty: str,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Update user's difficulty level"""
+    # Validate difficulty
+    valid_difficulties = ['PIECE_OF_CAKE', 'LETS_ROCK', 'COME_GET_SOME', 'DAMN_IM_GOOD']
+    if difficulty not in valid_difficulties:
+        raise HTTPException(status_code=400, detail=f"Invalid difficulty. Must be one of: {valid_difficulties}")
+    
+    # Update difficulty
+    current_user.difficulty = models.DifficultyLevel[difficulty]
+    db.commit()
+    db.refresh(current_user)
+    return current_user
