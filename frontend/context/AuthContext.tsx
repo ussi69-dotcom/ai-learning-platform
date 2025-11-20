@@ -48,11 +48,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         },
       });
       setUser(response.data);
-    } catch (error) {
-      console.error('Failed to fetch user:', error);
-      // Token might be invalid, clear it
+    } catch (error: any) {
+      // Silently clear invalid/expired tokens
+      if (error.response?.status === 401) {
+        console.log('Token expired, please login again');
+      } else {
+        console.error('Failed to fetch user:', error);
+      }
+      // Clear stored token
       localStorage.removeItem('auth_token');
       setToken(null);
+      setUser(null);
     } finally {
       setIsLoading(false);
     }
