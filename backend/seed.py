@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 from app.database import SessionLocal, engine, Base
-from app.models import User, Course, Lesson, Quiz, DifficultyLevel
+from app.models import User, Course, Lesson, Quiz, DifficultyLevel, UserProgress
 from app.auth import get_password_hash
 from app.services.content_loader import ContentLoader
 
@@ -13,6 +13,7 @@ def reset_db(db):
     """Vyčistí data v tabulkách."""
     logger.info("🗑️  Mažu stará data...")
     try:
+        db.query(UserProgress).delete()
         db.query(Quiz).delete()
         db.query(Lesson).delete()
         db.query(Course).delete()

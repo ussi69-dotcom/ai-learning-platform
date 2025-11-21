@@ -6,6 +6,7 @@ import Callout from './mdx/Callout';
 import Steps from './mdx/Steps';
 import ConceptCard from './mdx/ConceptCard';
 import CodeBlock from './CodeBlock';
+import Diagram from './mdx/Diagram';
 
 interface MarkdownRendererProps {
   content: string;
@@ -69,7 +70,20 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         continue;
       }
 
-      // 3. Handle Code Blocks (```)
+      // 3. Handle <Diagram> component
+      if (line.trim().startsWith('<Diagram')) {
+        const typeMatch = line.match(/type=['"](\w+-?\w+)['"]/);
+        const type = (typeMatch?.[1] as 'neural-network' | 'training-loop') || 'neural-network';
+        
+        elements.push(
+          <Diagram key={`diagram-${i}`} type={type} />
+        );
+        
+        i++;
+        continue;
+      }
+
+      // 4. Handle Code Blocks (```)
       if (line.trim().startsWith('```')) {
         const languageMatch = line.trim().match(/^```(\w+)?/);
         const language = languageMatch?.[1] || 'text';
