@@ -5,6 +5,7 @@ from datetime import datetime
 # --- Lesson Schemas ---
 class LessonBase(BaseModel):
     title: str
+    slug: str # Added slug
     description: str
     order: int
     video_url: Optional[str] = None
@@ -32,6 +33,7 @@ class Lesson(LessonBase):
 # --- Course Schemas ---
 class CourseBase(BaseModel):
     title: str
+    slug: str # Added slug
     description: str
     image_url: Optional[str] = None
 

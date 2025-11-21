@@ -41,6 +41,7 @@ class ContentLoader:
         if not course:
             course = Course(
                 title=meta["title"],
+                slug=course_dir.name, # Use directory name as slug
                 description=meta["description"],
                 image_url=meta["image_url"],
                 difficulty_level=DifficultyLevel[meta["difficulty_level"]],
@@ -51,6 +52,7 @@ class ContentLoader:
             db.refresh(course)
         else:
             # Update fields if needed
+            course.slug = course_dir.name # Ensure slug is set
             course.description = meta["description"]
             course.image_url = meta["image_url"]
             course.difficulty_level = DifficultyLevel[meta["difficulty_level"]]
@@ -82,6 +84,7 @@ class ContentLoader:
         if not lesson:
             lesson = Lesson(
                 title=meta["title"],
+                slug=lesson_dir.name, # Use directory name as slug
                 description=meta["description"],
                 content=content,
                 video_url=meta.get("video_url"),
@@ -92,6 +95,7 @@ class ContentLoader:
             db.commit()
             db.refresh(lesson)
         else:
+            lesson.slug = lesson_dir.name # Ensure slug is set
             lesson.description = meta["description"]
             lesson.content = content
             lesson.video_url = meta.get("video_url")

@@ -28,6 +28,7 @@ class Course(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
+    slug = Column(String, unique=True, index=True) # Added slug
     description = Column(Text)
     image_url = Column(String, nullable=True) 
     difficulty_level = Column(Enum(DifficultyLevel), default=DifficultyLevel.LETS_ROCK, index=True)
@@ -43,6 +44,7 @@ class Lesson(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
+    slug = Column(String, index=True) # Added slug
     description = Column(Text)
     content = Column(Text) # MDX obsah
     order = Column(Integer)

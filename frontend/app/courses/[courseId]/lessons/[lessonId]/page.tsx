@@ -17,6 +17,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   const { token } = useAuth();
   const router = useRouter();
   const [lesson, setLesson] = useState<any>(null);
+  const [course, setCourse] = useState<any>(null); // Added course state
   const [quizzes, setQuizzes] = useState<QuizQuestion[]>([]);
   const [allLessons, setAllLessons] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -38,6 +39,16 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
         });
         if (lessonRes.ok) {
           setLesson(await lessonRes.json());
+        }
+
+        // Fetch course (for slug)
+        const courseRes = await fetch(`http://localhost:8000/courses/${courseId}`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        if (courseRes.ok) {
+          setCourse(await courseRes.json());
         }
 
         // Fetch quizzes
@@ -126,34 +137,39 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentIndex + 1] : null;
   const isLastLesson = currentIndex === allLessons.length - 1;
 
-  return (
+    return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-        <div className="container mx-auto py-8 px-4 max-w-4xl">
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50">
+        <div className="container mx-auto py-6 px-4 max-w-4xl pb-32 md:pb-12">
           {/* Navigation back */}
-          <div className="mb-8">
+          <div className="mb-6">
             <Link href={`/courses/${courseId}`}>
-              <Button variant="ghost" className="gap-2 -ml-4">
+              <Button variant="ghost" className="gap-2 -ml-4 text-slate-600 hover:text-slate-900 hover:bg-white/50">
                 ← Back to Course
               </Button>
             </Link>
           </div>
 
-          {/* Hero Section */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 mb-8 text-white shadow-xl">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
+          {/* Header Section (Replaces Hero) */}
+          <div className="mb-8">
+             <div className="flex items-center gap-3 mb-4">
+              <span className="bg-blue-100/80 backdrop-blur-sm text-blue-700 px-3 py-1 rounded-full text-sm font-semibold border border-blue-200">
                 Lesson {lesson.order}
               </span>
+              {course && (
+                <span className="text-slate-500 text-sm font-medium">
+                  {course.title}
+                </span>
+              )}
             </div>
-            <h1 className="text-4xl font-bold mb-3">{lesson.title}</h1>
-            <p className="text-xl text-blue-100">{lesson.description}</p>
+            <h1 className="text-3xl md:text-5xl font-bold mb-4 text-slate-900 tracking-tight">{lesson.title}</h1>
+            <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl">{lesson.description}</p>
           </div>
 
           {/* Video Section */}
           {lesson.video_url && (
-            <div className="mb-12">
-              <div className="aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border-4 border-slate-200">
+            <div className="mb-10">
+              <div className="aspect-video bg-black rounded-2xl overflow-hidden shadow-xl border border-white/20 ring-1 ring-black/5">
                 <iframe 
                   className="w-full h-full"
                   src={lesson.video_url} 
@@ -165,12 +181,12 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             </div>
           )}
 
-          {/* Content with Pagination */}
-          <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-8 mb-8">
+          {/* Content Card (Liquid Glass) */}
+          <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-sm border border-white/50 p-6 md:p-10 mb-8 ring-1 ring-slate-900/5">
             {/* Page indicator */}
             {totalPages > 1 && (
-              <div className="flex justify-between items-center mb-6 pb-4 border-b">
-                <div className="text-sm text-slate-500">
+              <div className="flex justify-between items-center mb-8 pb-4 border-b border-slate-200/60">
+                <div className="text-sm font-medium text-slate-500">
                   Section {currentPage + 1} of {totalPages}
                 </div>
                 <div className="flex gap-2">
@@ -179,6 +195,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                     size="sm"
                     onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
                     disabled={currentPage === 0}
+                    className="bg-white/50 hover:bg-white"
                   >
                     ← Prev
                   </Button>
@@ -187,6 +204,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                     size="sm"
                     onClick={() => setCurrentPage(Math.min(totalPages - 1, currentPage + 1))}
                     disabled={currentPage === totalPages - 1}
+                    className="bg-white/50 hover:bg-white"
                   >
                     Next →
                   </Button>
@@ -196,8 +214,12 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
             {/* Formatted content using MarkdownRenderer */}
             {!isQuizPage ? (
-              <div className="prose prose-lg prose-slate max-w-none">
-                <MarkdownRenderer content={currentContent} />
+              <div className="prose prose-lg prose-slate max-w-none prose-headings:text-slate-900 prose-p:text-slate-700 prose-a:text-blue-600 hover:prose-a:text-blue-500">
+                <MarkdownRenderer 
+                  content={currentContent} 
+                  courseSlug={course?.slug}
+                  lessonSlug={lesson?.slug}
+                />
               </div>
             ) : (
               <Quiz 
@@ -206,25 +228,6 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                   // Optional: Auto-mark lesson as complete or show confetti
                 }} 
               />
-            )}
-
-            {/* Bottom pagination */}
-            {totalPages > 1 && (
-              <div className="flex justify-center gap-2 mt-8 pt-6 border-t">
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentPage(i)}
-                    className={`w-8 h-8 rounded-full text-sm font-medium transition-all ${
-                      currentPage === i
-                        ? 'bg-blue-600 text-white shadow-md'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                    }`}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
-              </div>
             )}
           </div>
 
@@ -236,15 +239,15 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
              />
           )}
 
-          {/* Lesson Navigation */}
-          <div className="flex justify-between items-center gap-4 mt-12">
+          {/* Desktop Lesson Navigation */}
+          <div className="hidden md:flex justify-between items-center gap-4 mt-12">
             {previousLesson ? (
               <Link href={`/courses/${courseId}/lessons/${previousLesson.id}`} className="flex-1">
-                <Button variant="outline" className="w-full justify-start gap-2 group">
-                  <span className="group-hover:-translate-x-1 transition-transform">←</span>
+                <Button variant="outline" className="w-full justify-start gap-2 group h-auto py-4 px-6 bg-white/50 hover:bg-white border-slate-200">
+                  <span className="group-hover:-translate-x-1 transition-transform text-xl">←</span>
                   <div className="text-left">
-                    <div className="text-xs text-muted-foreground">Previous</div>
-                    <div className="font-semibold truncate">{previousLesson.title}</div>
+                    <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Previous Lesson</div>
+                    <div className="font-semibold truncate text-lg">{previousLesson.title}</div>
                   </div>
                 </Button>
               </Link>
@@ -254,17 +257,17 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
             {nextLesson ? (
               <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`} className="flex-1">
-                <Button className="w-full justify-end gap-2 group">
+                <Button className="w-full justify-end gap-2 group h-auto py-4 px-6 bg-slate-900 hover:bg-slate-800 text-white shadow-lg hover:shadow-xl transition-all">
                   <div className="text-right">
-                    <div className="text-xs">Next</div>
-                    <div className="font-semibold truncate">{nextLesson.title}</div>
+                    <div className="text-xs text-slate-300 uppercase tracking-wider font-semibold">Next Lesson</div>
+                    <div className="font-semibold truncate text-lg">{nextLesson.title}</div>
                   </div>
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  <span className="group-hover:translate-x-1 transition-transform text-xl">→</span>
                 </Button>
               </Link>
             ) : isLastLesson ? (
               <Link href={`/courses/${courseId}`} className="flex-1">
-                <Button className="w-full bg-green-600 hover:bg-green-700">
+                <Button className="w-full bg-green-600 hover:bg-green-700 h-auto py-4 text-lg shadow-lg hover:shadow-green-900/20">
                   ✓ Complete Course
                 </Button>
               </Link>
@@ -272,6 +275,37 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
               <div className="flex-1" />
             )}
           </div>
+
+          {/* Mobile Sticky Navigation Bar */}
+          <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-200 md:hidden z-50 flex gap-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+             {/* Logic: If not last slide, show Next Slide. If last slide, show Next Lesson/Complete */}
+             {currentPage < totalPages - 1 ? (
+                <Button 
+                  className="w-full h-12 text-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-lg"
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                >
+                  Continue →
+                </Button>
+             ) : (
+                // We are at the end of the slides (or quiz)
+                <>
+                  {nextLesson ? (
+                    <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`} className="w-full">
+                      <Button className="w-full h-12 text-lg font-semibold bg-slate-900 hover:bg-slate-800 shadow-lg">
+                        Next Lesson →
+                      </Button>
+                    </Link>
+                  ) : isLastLesson ? (
+                    <Link href={`/courses/${courseId}`} className="w-full">
+                      <Button className="w-full h-12 text-lg font-semibold bg-green-600 hover:bg-green-700 shadow-lg">
+                        Finish Course ✓
+                      </Button>
+                    </Link>
+                  ) : null}
+                </>
+             )}
+          </div>
+          
         </div>
       </div>
     </ProtectedRoute>

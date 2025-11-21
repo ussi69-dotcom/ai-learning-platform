@@ -1,67 +1,48 @@
-# Implementation Plan - Cycle 9: Content Engine Refactor
+# Implementation Plan - Cycle 10: UX/UI Polish & Asset Pipeline
 
-## Goal
-Refactor the lesson content storage to solve scalability issues. Move hardcoded strings from `seed.py` into a structured file system (Markdown/JSON). This prepares the platform for scaling, localization (CZ/EN), and easier content updates.
+## 🎯 Goal
+Transform the raw functionality into a polished product. Replace the generic "Blue Banner" design with a modern "Liquid Glass" aesthetic, optimize mobile navigation, and establish a pipeline for serving images directly from the lesson content folders.
 
-## Architecture Change
-- **Current State**: `seed.py` instantiates `Lesson` objects with massive strings.
-- **Target State**: `seed.py` uses a `ContentLoader` service to iterate over a `/content` directory, parse MDX/JSON files, and sync the Database.
+## 🏗️ Architecture Changes
 
-## Directory Structure (Target)
-We will create a root-level `content/` directory:
-```text
-content/
-  courses/
-    ai-basics-beginner/          (Slug based on course title)
-      meta.json                  (Title: "AI Basics...", Difficulty: "PIECE_OF_CAKE", etc.)
-      lessons/
-        01-what-is-ai/           (Ordered folder)
-          content.mdx            (The lesson text)
-          meta.json              (Title, description, video_url)
-          quiz.json              (List of quiz questions for this lesson)
-    practical-prompt-engineering/
-      ...
+### 1. Backend: Content Asset Serving
+The content currently resides in `/app/content` (Docker volume). Frontend cannot access this directly.
+* **Action**: Mount a generic static file route in FastAPI.
+* **Route**: `/content/*` -> Maps to `/app/content/`.
+* **Implication**: Any image inside `content/courses/x/lessons/y/images/img.png` becomes accessible via `http://backend:8000/content/courses/x/lessons/y/images/img.png`.
 
-## Proposed Changes
-1. Content Migration
-Action: Create the content/ folder structure.
+### 2. Frontend: Asset Handling via MDX
+We need to intercept image tags in Markdown to point to the API.
+* **Component**: Create a custom `MDXImage` component.
+* **Logic**:
+    * If `src` starts with `http` (external): Render as is.
+    * If `src` is relative (`./images/foo.png`): Rewrite URL to `${API_BASE_URL}/content/${currentCourseId}/${currentLessonId}/${src}`.
 
-Task: Extract text from the current seed.py into .mdx files.
+### 3. UX/UI Redesign ("Liquid Glass")
+* **Header Removal**: Remove the solid blue hero section.
+* **New Layout**:
+    * **Background**: Subtle, dynamic gradient or abstract shape that persists behind the content.
+    * **Glass Cards**: Content containers will use `bg-background/60` (semi-transparent) with `backdrop-blur-md` and a thin border.
+    * **Typography**: Larger, cleaner fonts. Better spacing between paragraphs.
+* **Mobile Navigation**:
+    * Sticky footer bar for "Previous / Next" buttons on mobile viewports.
+    * Increase touch targets (min 44px height).
 
-Extract "AI Basics" lessons (1-5).
+## 📋 Technical Details
 
-Extract Quizzes into quiz.json for each lesson.
+### Backend (FastAPI)
+Update `backend/app/main.py`:
+```python
+from fastapi.staticfiles import StaticFiles
+# ...
+app.mount("/content", StaticFiles(directory="/app/content"), name="content")
+Frontend (Tailwind Config)
+Ensure we have a consistent glass utility class (or use arbitrary values):
 
-Create placeholders for other difficulty courses defined in seed.
+CSS
 
-2. Backend Logic (backend/app/services/content_loader.py)
-Implement ContentLoader class:
-
-load_courses(base_path: str): Scans directories.
-
-sync_to_db(db: Session): Updates or Creates records (Idempotent logic).
-
-Logic: Use folder names for ordering (01-... -> order=1).
-
-3. Update seed.py
-Delete the hardcoded lists (easy_lessons, lesson1_quizzes, etc.).
-
-Import ContentLoader and call loader.sync_to_db(db).
-
-Keep User (Admin) creation in seed.py as it is system data, not content.
-
-4. Frontend UX (Quiz Separation)
-Target: frontend/app/courses/[courseId]/lessons/[lessonId]/page.tsx
-
-Refactor:
-
-Currently, Quiz is rendered at the bottom of the content.
-
-New Flow: Treat Quiz as a separate "Slide" in the pagination.
-
-When user finishes the last text slide -> Show "Start Quiz" button -> Transition to Quiz Component.
-
-Verification Plan
-Data Integrity: Run docker compose exec backend python seed.py. Verify DB still contains all 5 lessons and quizzes.
-
-UX Check: Navigate through a lesson. Verify text renders correctly from MDX. Verify Quiz appears cleanly at the end.
+.glass-panel {
+  @apply bg-white/70 dark:bg-slate-950/70 backdrop-blur-lg border border-slate-200 dark:border-slate-800 shadow-sm;
+}
+Assets Checklist (Piece of Cake)
+We need to physically place the image files into the content/ structure for the "AI Basics" course to test the pipeline.

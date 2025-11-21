@@ -7,10 +7,16 @@ from datetime import timedelta
 
 from . import models, schemas, database, auth
 
+from fastapi.staticfiles import StaticFiles
+
 # Vytvoření tabulek (pro jistotu, i když to dělá seed)
 models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title="AI Learning Platform API")
+
+# Mount content directory for static assets (images, etc.)
+# This maps http://localhost:8000/content/ -> /app/content/
+app.mount("/content", StaticFiles(directory="/app/content"), name="content")
 
 # CORS middleware
 app.add_middleware(

@@ -11,14 +11,12 @@ Před jakoukoliv odpovědí nebo generováním kódu si **MUSÍŠ** načíst kon
 3.  **`.ai-context/AGENT-STATE.md`** -> Abychom věděli, kde jsme skončili.
 4.  **`.ai-context/implementation_plan.md`** (pokud existuje) -> Tvůj aktuální úkol.
 
-## 🐧 Environment & Shell (CRITICAL)
-- **Environment**: We are running natively inside **WSL2 (Ubuntu)**.
-- **Shell**: Always assume **Bash**.
-- **FORBIDDEN**:
-  - Do NOT use PowerShell.
-  - Do NOT use `wsl -c` or `wsl bash -c` wrappers.
-  - Do NOT use Windows paths (e.g., `C:\Users\...`).
-- **Docker**: Run docker commands directly (e.g., `docker compose up`), do not wrap them.
+# 🖥️ Environment Context (Smart Mode)
+You are working in a WSL2 environment via VS Code/IDE.
+1. **Check First**: Before running complex commands, check `uname -a` to see if you are already in Linux.
+2. **Prefer Native**: If in Linux, run commands directly (e.g., `npm install`).
+3. **Fallback Allowed**: If direct execution fails, you MAY use `wsl` wrappers or PowerShell if necessary to get the job done.
+4. **Goal**: Completion is more important than method. If a command fails, try an alternative approach immediately.
 
 # ⚙️ Workflow Rules
 - **Atomic Steps**: Implementuj vždy pouze jeden bod z `task.md` najednou.
