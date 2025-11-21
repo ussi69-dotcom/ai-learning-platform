@@ -1,23 +1,19 @@
-# Task List - Cycle 14: Deep Clean & Design
+# Task List - Cycle 14: Critical Fixes
 
-- [x] **Project: Establish Guidelines**
-    - [x] Create `CONTENT_GUIDELINES.md` in the root directory (content provided in prompt).
+- [ ] **Visual: Liquid Glass & Readability**
+    - [ ] Add `backdrop-blur-xl` to all glass containers
+    - [ ] Fix heading colors in MarkdownRenderer (text-slate-900 dark:text-slate-100)
+    - [ ] Ensure backgrounds are `bg-white/10` not solid
 
-- [x] **Frontend: CodeBlock Upgrade**
-    - [x] Update `components/CodeBlock.tsx`.
-    - [x] Style: Dark Glass theme.
-    - [x] Logic: Implement `navigator.clipboard.writeText`.
-    - [x] UI: Add Header bar with "Copy" button.
+- [ ] **Navigation: Button Logic**
+    - [ ] Fix sticky footer logic (Next Slide vs Finish Lesson)
+    - [ ] Ensure "Finish Lesson" only on last slide
 
-- [x] **Frontend: Liquid Glass UI**
-    - [x] Update `components/mdx/Callout.tsx` (Glass style + Accent border).
-    - [x] Update `components/mdx/ConceptCard.tsx` (Glass style).
-    - [x] Update `LessonPage` container (remove solid backgrounds).
+- [ ] **Assets: SVG Diagrams**
+    - [ ] Create `Diagram.tsx` component
+    - [ ] Implement `neural-network` type
+    - [ ] Implement `training-loop` type
 
-- [x] **Frontend: Sticky Mobile Nav**
-    - [x] Modify `LessonPage.tsx`.
-    - [x] Implement `fixed bottom-0` bar with `backdrop-blur-xl`.
-    - [x] Add logic: Show "Next Slide" normally, switch to "Finish Lesson" only on last slide.
-
-- [x] **Content: Purge Images**
-    - [x] Remove all image links from `content/courses/ai-basics-beginner/lessons/01-what-is-ai/content.mdx`.
+- [ ] **Content: Text Updates**
+    - [ ] Remove GPT-4, Claude 3 mentions
+    - [ ] Add "Theory Recap" slide

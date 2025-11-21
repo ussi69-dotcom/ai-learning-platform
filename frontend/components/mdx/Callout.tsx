@@ -11,19 +11,19 @@ interface CalloutProps {
 export default function Callout({ type = 'info', children }: CalloutProps) {
   const styles = {
     info: {
-      bg: 'bg-white/5',
+      bg: 'bg-white/10',
       border: 'border-l-4 border-blue-500',
       icon: 'text-blue-400',
       IconComponent: Info
     },
     warning: {
-      bg: 'bg-white/5',
+      bg: 'bg-white/10',
       border: 'border-l-4 border-amber-500',
       icon: 'text-amber-400',
       IconComponent: AlertTriangle
     },
     tip: {
-      bg: 'bg-white/5',
+      bg: 'bg-white/10',
       border: 'border-l-4 border-emerald-500',
       icon: 'text-emerald-400',
       IconComponent: Lightbulb
