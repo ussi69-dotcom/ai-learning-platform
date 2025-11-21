@@ -31,11 +31,11 @@ export default function Callout({ type = 'info', children }: CalloutProps) {
   const Icon = style.IconComponent;
 
   return (
-    <div className={`${style.bg} border-2 rounded-xl p-5 mb-6 backdrop-blur-sm shadow-sm flex gap-4`}>
+    <div className={`${style.bg} border-2 rounded-xl p-4 mb-6 backdrop-blur-sm shadow-sm flex gap-3`}>
       <div className="flex-shrink-0 mt-0.5">
-        <Icon className={`${style.icon} w-6 h-6`} />
+        <Icon className={`${style.icon} w-5 h-5`} />
       </div>
-      <div className="flex-1 prose prose-sm max-w-none prose-p:my-2 prose-p:text-slate-700">
+      <div className="flex-1 prose prose-sm max-w-none prose-p:my-1 prose-p:leading-relaxed prose-p:text-slate-700">
         {children}
       </div>
     </div>

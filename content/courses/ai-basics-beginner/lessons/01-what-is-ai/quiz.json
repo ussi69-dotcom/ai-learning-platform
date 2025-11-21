@@ -1,57 +1,57 @@
 [
   {
-    "question": "What is Artificial Intelligence?",
+    "question": "What is the fundamental difference between traditional programming and Machine Learning?",
     "options": [
-      "A type of computer virus",
-      "When computers can do things that need human intelligence",
-      "A programming language",
-      "A video game"
+      "Programming uses Python, ML uses R",
+      "Programming defines explicit rules, ML learns patterns from data",
+      "Programming is faster, ML is slower",
+      "Programming uses less memory than ML"
     ],
     "correct_answer": 1,
-    "explanation": "AI is when computers can perform tasks that typically require human intelligence, like recognizing images, understanding speech, or making decisions."
+    "explanation": "The key shift is that traditional programming requires you to write explicit rules (if/else), while Machine Learning learns patterns from examples (data) without being explicitly programmed."
   },
   {
-    "question": "Which of these is an example of AI?",
+    "question": "What are 'Parameters' in a neural network?",
     "options": [
-      "A calculator adding numbers",
-      "Microsoft Word spell checker",
-      "Siri understanding your voice and answering questions",
-      "A digital clock showing time"
+      "The number of layers in the network",
+      "The training dataset size",
+      "The 'knobs' or weights that store learned knowledge",
+      "The programming language used"
     ],
     "correct_answer": 2,
-    "explanation": "Siri uses AI to understand natural language, process meaning, and generate appropriate responses. A calculator just follows fixed mathematical rules."
+    "explanation": "Parameters are like 'knobs' in a switchboard - they are the weights that get tuned during training to store the model's knowledge. A model with '70 Billion Parameters' has 70 billion of these tuned knobs."
   },
   {
-    "question": "What makes AI different from regular computer programs?",
+    "question": "What is the difference between Training and Inference?",
     "options": [
-      "AI is more expensive to build",
-      "AI learns patterns from data",
-      "AI was invented more recently",
-      "AI only works on smartphones"
+      "Training is fast, Inference is slow",
+      "Training is the learning phase (months), Inference is the using phase (seconds)",
+      "Training uses CPU, Inference uses GPU",
+      "There is no difference"
     ],
     "correct_answer": 1,
-    "explanation": "The key difference is that AI learns from data and can improve over time, while regular programs just follow pre-programmed rules that never change."
+    "explanation": "Training is the intensive learning phase that takes months and thousands of GPUs. Inference is when you use the frozen model to get answers - it's fast (seconds) because the model is already trained."
   },
   {
-    "question": "When did ChatGPT launch and make AI mainstream?",
+    "question": "Why is AI called a 'Black Box'?",
     "options": [
-      "2018",
-      "2020",
-      "2022",
-      "2024"
+      "Because it runs in dark data centers",
+      "Because we don't know HOW it arrives at specific decisions, even though we know the math",
+      "Because it's encrypted",
+      "Because it's proprietary software"
     ],
-    "correct_answer": 2,
-    "explanation": "ChatGPT launched in November 2022 and quickly became the fastest-growing consumer application in history, making AI accessible to millions of people."
+    "correct_answer": 1,
+    "explanation": "We know the mathematics and code behind neural networks, but we don't understand WHY specific neurons fire for specific inputs. The decision-making process is opaque - hence 'black box'."
   },
   {
-    "question": "True or False: AI can learn patterns from data just like humans learn from experience.",
+    "question": "What is an AI 'Hallucination'?",
     "options": [
-      "True",
-      "False",
-      "Only for image recognition",
-      "Only for voice assistants"
+      "When AI generates images",
+      "When AI makes up plausible-sounding but false information",
+      "When AI crashes",
+      "When AI runs slowly"
     ],
-    "correct_answer": 0,
-    "explanation": "True! AI learns from data (examples) just like humans learn from experience. The more data it sees, the better it gets at recognizing patterns."
+    "correct_answer": 1,
+    "explanation": "Hallucination occurs when AI confidently generates false information because it's predicting the most statistically likely words, not checking facts. Example: inventing a biography for 'Reginald P. Crustworth' who doesn't exist."
   }
 ]

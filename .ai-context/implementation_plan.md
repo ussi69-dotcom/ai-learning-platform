@@ -1,18 +1,24 @@
-# Implementation Plan - Cycle 12: Content Standard & Mobile UX Fix
+# Implementation Plan - Cycle 13: Content Repair & Navigation Overhaul
 
 ## 🎯 Goal
-Establish the "Gold Standard" for lesson content (English, High Depth, 10+3 Structure) and finalize the Mobile UX (Sticky Navigation).
+Fix broken content assets (images, quiz) and redesign the navigation to prioritize intra-lesson reading flow (slides) over inter-lesson jumping.
 
-## 📝 Content Engineering (Lesson 1: What is AI?)
-We are reverting to English and expanding the content significantly.
-* **Structure**:
-    * **Phase 1: Theory (Mobile Friendly)** - Break down "Rule-based vs AI" into granular slides. Explain "Training", "Inference", "Black Box".
-    * **Phase 2: Lab (Desktop Friendly)** - A prompt engineering test to demonstrate hallucination or reasoning.
-* **Assets**: Verify `<MDXImage>` paths are correct (`./images/filename.png`).
-* **Components**: Use `<Callout>`, `<ConceptCard>`, and `<Steps>` extensively.
+## 🔧 Content Repair (The Blueprint)
+* **Images**: Replace broken local paths with curated Unsplash URLs.
+* **Structure**: Merge small sections to reduce slide count (target: 6-8 slides/lesson).
+* **Quiz**: Align questions with the new "Probability/Hallucination" content.
 
-## 🎨 UX/UI: The Sticky Footer
-* **Problem**: Navigation buttons are hard to reach on mobile.
-* **Solution**: Implement a fixed bottom bar for navigation on screens < 768px.
-    * **CSS**: `fixed bottom-0 w-full bg-background/80 backdrop-blur-md border-t p-4`.
-    * **Layout**: Space-between (Prev - Pagination - Next).
+## 🎨 UX/UI: The "Reading Mode" Navigation
+The current navigation mixes "Next Slide" and "Next Lesson" confusingly.
+* **New Sticky Bottom Bar Layout**:
+    * **Left**: Large "Prev Slide" button (Ghost variant).
+    * **Center**: **Progress Box**. Shows current lesson info + progress bar (e.g., "Slide 3/8").
+    * **Right**: Large "Next Slide" button (Primary variant).
+    * **Mobile**: Full width, easy to tap.
+* **Lesson Switching ("Prev/Next Course Lesson")**:
+    * De-emphasize. Move to the top header (small icons) or make them small text links/secondary buttons outside the main flow.
+    * Only when the lesson is **100% complete** (last slide), the "Next Slide" button transforms into a big "Finish & Next Lesson" button.
+
+## 🛠️ Technical Tasks
+* Update `LessonPage` state logic to differentiate between `nextSlide()` and `nextLesson()`.
+* Refactor `MarkdownRenderer` styles to fix spacing.

@@ -1,4 +1,4 @@
-# 🚀 SYSTEM BRIEFING - 2025-11-21 15:40:59
+# 🚀 SYSTEM BRIEFING - 2025-11-21 16:00:12
 
 **INSTRUCTION:** This is a context dump for the AI Architect (Gemini).
 Please load the following context, activate your role defined in GEMINI_PROMPT.md, and await instructions.
@@ -160,6 +160,58 @@ Cíl: Ty jsi "Mozek", soubory jsou "Paměť". Nic nesmí zůstat jen v chatu.
 ## 📄 FILE: AGENT-STATE.md
 ```markdown
 # Agent State Log
+
+## Cycle 12: Enhanced Mobile Navigation & Lesson 1 Rewrite
+
+**Date**: 2025-11-21
+**Goal**: Implement enhanced mobile sticky navigation and rewrite Lesson 1 with comprehensive English content following 10+3 structure.
+
+### Log
+
+#### Phase 1: Mobile Navigation Enhancement ✅
+- **[EXECUTION]**: Enhanced mobile sticky navigation bar in `LessonPage`:
+  - Added **Previous button** (was missing before)
+  - Added **pagination dots** for visual feedback (active page highlighted)
+  - Maintained **Next button** with smart logic (Next Slide → Next Lesson → Finish Course)
+  - All buttons are 48px height (h-12) for thumb-friendly interaction
+  - Glassmorphism effect with `backdrop-blur-xl`
+  - Layout: `justify-between` with Previous - Dots - Next
+
+#### Phase 2: Content Rewrite (English, 10+3 Structure) ✅
+- **[EXECUTION]**: Completely rewrote `content/courses/ai-basics-beginner/lessons/01-what-is-ai/content.mdx`:
+  - **Language**: Switched from Czech to English
+  - **Length**: 6380 characters (3x longer than before)
+  - **Structure**: 14 sections total
+    - **Theory Phase** (10 slides): Myth of Intelligence, Old vs New Way, Neural Networks, Training vs Inference, Black Box Problem, Hallucinations
+    - **Theory Recap**: Key takeaways summary
+    - **Practice Phase** (3 labs): Knowledge Cutoff Test, Hallucination Test, Reasoning Test
+    - **Lab Recap**: What we proved
+  - **Components Used**: `<Callout>`, `<ConceptCard>`, `<Steps>`
+  - **Tone**: Authoritative but accessible, engaging
+
+#### Phase 3: Database & Assets ✅
+- **[EXECUTION]**: Updated lesson content in database via Python script
+- **[VERIFICATION]**: Verified image assets exist:
+  - `ai-timeline.png` ✓
+  - `ai-vs-programming.png` ✓
+
+### Technical Improvements
+- ✅ Mobile UX significantly improved with Previous/Next + pagination
+- ✅ Content depth increased 3x with professional English writing
+- ✅ Theory/Practice split clearly defined with visual cues
+- ✅ Hands-on labs test AI's probabilistic nature
+
+### Files Modified
+**Frontend:**
+- `frontend/app/courses/[courseId]/lessons/[lessonId]/page.tsx` - Enhanced mobile sticky navigation
+
+**Content:**
+- `content/courses/ai-basics-beginner/lessons/01-what-is-ai/content.mdx` - Complete rewrite (English, 10+3 structure)
+
+### Commits
+- `feat(cycle-12): enhanced mobile navigation and Lesson 1 rewrite`
+
+---
 
 ## Cycle 10: Rich MDX Components & Content Rewrite
 
@@ -560,35 +612,43 @@ Cíl: Ty jsi "Mozek", soubory jsou "Paměť". Nic nesmí zůstat jen v chatu.
 
 ## 📄 FILE: implementation_plan.md
 ```markdown
-## 🎨 UX/UI & Content Strategy (Updated)
+# Implementation Plan - Cycle 12: Content Standard & Mobile UX Fix
 
-### 1. The "Train vs. Desktop" Split
-We will structure every lesson into two distinct phases within the MDX:
-* **Phase 1: The Concept (Theory)** - Consumable on mobile. Videos, text, diagrams, quizzes.
-* **Phase 2: The Lab (Practice)** - Requires interaction. Prompts, tools, exercises.
-* *Visual Cue*: A clear divider or "Mode Switch" visual in the lesson layout.
+## 🎯 Goal
+Establish the "Gold Standard" for lesson content (English, High Depth, 10+3 Structure) and finalize the Mobile UX (Sticky Navigation).
 
-### 2. Rich MDX Architecture
-To support "Modern" content, we need custom React components usable inside MDX files:
-* `<Callout type="warning|info|tip">`: Beautiful colored boxes with icons.
-* `<Steps>`: Vertical timeline for tutorials.
-* `<ConceptCard>`: Glassmorphism cards for key definitions.
-* `<MobileOnly>` / `<DesktopOnly>`: Utilities to hide complex practice tasks on mobile if needed.
+## 📝 Content Engineering (Lesson 1: What is AI?)
+We are reverting to English and expanding the content significantly.
+* **Structure**:
+    * **Phase 1: Theory (Mobile Friendly)** - Break down "Rule-based vs AI" into granular slides. Explain "Training", "Inference", "Black Box".
+    * **Phase 2: Lab (Desktop Friendly)** - A prompt engineering test to demonstrate hallucination or reasoning.
+* **Assets**: Verify `<MDXImage>` paths are correct (`./images/filename.png`).
+* **Components**: Use `<Callout>`, `<ConceptCard>`, and `<Steps>` extensively.
 
-### 3. Content Upgrade (Lesson 1 & 2)
-* **Length**: Increase word count by ~50-80% with deeper explanations.
-* **Tone**: More authoritative but accessible (Duke Nukem style touches for higher difficulties).
-* **Media**: Placeholders for now, but structured to be replaced by high-quality assets later.
+## 🎨 UX/UI: The Sticky Footer
+* **Problem**: Navigation buttons are hard to reach on mobile.
+* **Solution**: Implement a fixed bottom bar for navigation on screens < 768px.
+    * **CSS**: `fixed bottom-0 w-full bg-background/80 backdrop-blur-md border-t p-4`.
+    * **Layout**: Space-between (Prev - Pagination - Next).
 ```
 
 
 ## 📄 FILE: task.md
 ```markdown
-# Task List - Cycle 11: [Next Cycle Name]
+# Task List - Cycle 12
 
-- [ ] **[Feature/Task Name]**
-    - [ ] [Subtask 1]
-    - [ ] [Subtask 2]
+- [x] **Frontend: Sticky Navigation**
+    - [x] Modify `LessonPage` or navigation component.
+    - [x] On mobile: Hide the inline buttons, show the **Sticky Bottom Bar**.
+    - [x] Ensure buttons are large (min 44px height).
+
+- [x] **Content: Lesson 1 Overhaul (English)**
+    - [x] Replace `content/courses/ai-basics-beginner/lessons/01-what-is-ai/content.mdx` with the **NEW English content** provided in the prompt.
+    - [x] Ensure structure is: Theory (10 slides) -> Theory Summary -> Lab (3 slides) -> Lab Summary.
+    - [x] Check image paths (`./images/ai-vs-programming.png`, etc.).
+
+- [x] **Assets: Image Check**
+    - [x] Verify that images referenced in the new MDX actually exist in the folder.
 ```
 
 

@@ -2,7 +2,7 @@
 
 <Callout type="info">
 **Lesson Goal:** Understand the fundamental shift from "Programming" to "Training".
-⏳ **Reading Time:** 10 min | 📱 **Theory Phase**
+⏳ **Reading Time:** 8 min | 📱 **Theory Phase**
 </Callout>
 
 Welcome. You are about to enter a world that is changing faster than any technology in history. AI isn't just "smart software." It's a new way of computing.
@@ -13,19 +13,13 @@ Let's start by breaking a common myth.
 
 ## The Myth of "Intelligence" 🧠
 
-When we say "Artificial Intelligence," we imagine robots thinking like humans.
-But strictly speaking, current AI (LLMs like ChatGPT) doesn't "think." It **predicts**.
+When we say "Artificial Intelligence," we imagine robots thinking like humans. But strictly speaking, current AI (LLMs like ChatGPT) doesn't "think." It **predicts**.
 
 > **Fun Fact:** If you read every book in the Library of Congress, you still wouldn't be as "read" as a modern AI model. But you would understand what you read. The AI just knows which words likely follow each other.
 
----
+### The Old Way: Programming (The Recipe)
 
-## The Old Way: Programming (The Recipe) 📜
-
-For the last 50 years, software was built on **Rules**.
-
-Imagine you want to write a program to recognize a **Cat**.
-You, the programmer, have to define the rules:
+For the last 50 years, software was built on **Rules**. Imagine you want to write a program to recognize a **Cat**. You, the programmer, have to define the rules:
 1. Does it have triangular ears?
 2. Does it have whiskers?
 3. Is the shape roughly oval?
@@ -39,13 +33,13 @@ else:
 
 **The Problem:** If the cat is turned around, or hiding its ears, your program fails. You have to write infinite rules.
 
+![AI vs Programming](https://images.unsplash.com/photo-1555255707-c07966088b7b?w=800&auto=format&fit=crop)
+
 ---
 
-## The New Way: Machine Learning (The Student) 🎓
+## Machine Learning: The Student 🎓
 
-With AI, we don't write rules. We curate data.
-
-Instead of coding definitions, we show the computer 10,000 photos of cats and 10,000 photos of dogs. We say: "Figure it out."
+With AI, we don't write rules. We curate data. Instead of coding definitions, we show the computer 10,000 photos of cats and 10,000 photos of dogs. We say: "Figure it out."
 
 <ConceptCard title="Machine Learning">
 The science of getting computers to act without being explicitly programmed. The system learns patterns from data to make predictions.
@@ -53,9 +47,7 @@ The science of getting computers to act without being explicitly programmed. The
 
 The AI looks at the pixels and finds patterns you didn't even know existed (like the texture of the fur or the distance between eyes).
 
----
-
-## Neural Networks Explained Simply 🕸️
+### Neural Networks: The Switchboard
 
 How does it actually "store" this knowledge? Think of a Neural Network like a giant switchboard with millions of knobs.
 
@@ -65,6 +57,8 @@ How does it actually "store" this knowledge? Think of a Neural Network like a gi
 4. **Output:** It spits out a probability: "98% chance this is a Cat."
 
 When we say a model has "70 Billion Parameters," we mean it has 70 billion knobs that have been perfectly tuned.
+
+![Neural Network](https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&auto=format&fit=crop)
 
 ---
 
@@ -95,6 +89,8 @@ We know the math. We know the code. But we don't know why a specific neuron fire
 **Interpretation:** This is why AI can be unpredictable. It's a statistical black box, not a logical flowchart.
 </Callout>
 
+![Black Box AI](https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop)
+
 ---
 
 ## Why AI Hallucinates 😵‍💫
@@ -105,12 +101,9 @@ If you ask: "Who was the first person on Mars?" The AI looks at its patterns. It
 
 **It's not lying.** It's just predicting the most likely next word, regardless of truth.
 
----
-
-## Theory Recap: Key Takeaways 📝
+### Theory Recap: Key Takeaways
 
 Before we move to the Lab, ensure you understand these concepts:
-
 - **Programming vs. AI:** Rules vs. Examples.
 - **Parameters:** The "knobs" inside the model that store knowledge.
 - **Training:** The intense learning phase (months).
@@ -129,7 +122,7 @@ We are going to test the "Probabilistic" nature of AI.
 
 ---
 
-## Step 1: The Knowledge Cutoff Test
+## Lab 1: The Knowledge Cutoff Test
 
 AI models are frozen in time. Let's prove it.
 
@@ -145,7 +138,7 @@ Ask your AI model about a news event from yesterday.
 
 ---
 
-## Step 2: Forcing a Hallucination
+## Lab 2: Forcing a Hallucination
 
 Let's try to trick the "next word prediction." We will ask about something that sounds plausible but is fake.
 
@@ -165,7 +158,7 @@ If the AI writes a bio, you just witnessed a **Hallucination**. It filled the ga
 
 ---
 
-## Step 3: The Reasoning Test
+## Lab 3: The Reasoning Test
 
 AI struggles with simple logic that requires "common sense" if it's not in the training data.
 
@@ -179,9 +172,7 @@ Try this riddle:
 - Watch how the AI tries to calculate 3 - 1 = 2 or gets confused.
 </Steps>
 
----
-
-## Lab Recap: What did we prove? 🧪
+### Lab Recap: What did we prove?
 
 - **AI is confident but not always right.** It can lie convincingly about "Reginald P. Crustworth."
 - **AI relies on patterns.** It constructs sentences based on likelihood, not facts.

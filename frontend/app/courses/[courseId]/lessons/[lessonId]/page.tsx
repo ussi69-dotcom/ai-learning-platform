@@ -276,64 +276,77 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             )}
           </div>
 
-          {/* Mobile Sticky Navigation Bar */}
-          <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-200 md:hidden z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-            <div className="flex items-center justify-between gap-3">
-              {/* Previous Button */}
+          {/* Mobile Sticky Navigation Bar - Reading Mode */}
+          <div className="fixed bottom-0 left-0 right-0 p-3 bg-white/90 backdrop-blur-xl border-t border-slate-200 md:hidden z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+            <div className="flex items-center gap-2">
+              {/* Previous Slide Button */}
               <Button
-                variant="outline"
-                className="h-12 px-4 bg-white/50 hover:bg-white border-slate-300"
+                variant="ghost"
+                size="lg"
+                className="h-14 px-4 flex-shrink-0 text-slate-700 hover:bg-slate-100"
                 onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
                 disabled={currentPage === 0}
               >
-                ← Prev
+                <span className="text-2xl">←</span>
               </Button>
 
-              {/* Pagination Dots */}
-              <div className="flex gap-1.5">
-                {Array.from({ length: totalPages }).map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentPage(idx)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      idx === currentPage 
-                        ? 'bg-blue-600 w-6' 
-                        : 'bg-slate-300'
-                    }`}
-                    aria-label={`Go to page ${idx + 1}`}
+              {/* Progress Box (Center) */}
+              <div className="flex-1 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-3 border border-blue-100">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                    Lesson {lesson.order}
+                  </span>
+                  <span className="text-xs font-bold text-blue-600">
+                    {currentPage + 1}/{totalPages}
+                  </span>
+                </div>
+                {/* Progress Bar */}
+                <div className="w-full bg-white/60 rounded-full h-1.5 overflow-hidden">
+                  <div 
+                    className="bg-gradient-to-r from-blue-500 to-indigo-600 h-full transition-all duration-300 ease-out"
+                    style={{ width: `${((currentPage + 1) / totalPages) * 100}%` }}
                   />
-                ))}
+                </div>
               </div>
 
-              {/* Next Button */}
+              {/* Next Slide / Next Lesson Button */}
               {currentPage < totalPages - 1 ? (
+                // Not on last slide - show Next Slide
                 <Button 
-                  className="h-12 px-4 bg-blue-600 hover:bg-blue-700 shadow-lg"
+                  size="lg"
+                  className="h-14 px-4 flex-shrink-0 bg-blue-600 hover:bg-blue-700 shadow-lg"
                   onClick={() => setCurrentPage(currentPage + 1)}
                 >
-                  Next →
+                  <span className="text-2xl">→</span>
                 </Button>
               ) : (
-                // Last page - show lesson navigation
+                // On last slide - show Next Lesson or Finish
                 <>
                   {nextLesson ? (
                     <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`}>
-                      <Button className="h-12 px-4 bg-slate-900 hover:bg-slate-800 shadow-lg whitespace-nowrap">
+                      <Button 
+                        size="lg"
+                        className="h-14 px-3 flex-shrink-0 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-700 hover:to-slate-800 shadow-lg text-xs font-bold whitespace-nowrap"
+                      >
                         Next Lesson →
                       </Button>
                     </Link>
                   ) : isLastLesson ? (
                     <Link href={`/courses/${courseId}`}>
-                      <Button className="h-12 px-4 bg-green-600 hover:bg-green-700 shadow-lg whitespace-nowrap">
+                      <Button 
+                        size="lg"
+                        className="h-14 px-3 flex-shrink-0 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 shadow-lg text-xs font-bold whitespace-nowrap"
+                      >
                         Finish ✓
                       </Button>
                     </Link>
                   ) : (
                     <Button 
-                      className="h-12 px-4 bg-blue-600 hover:bg-blue-700 shadow-lg"
+                      size="lg"
+                      className="h-14 px-4 flex-shrink-0 bg-blue-600 hover:bg-blue-700 shadow-lg"
                       disabled
                     >
-                      Next →
+                      <span className="text-2xl">→</span>
                     </Button>
                   )}
                 </>
