@@ -11,12 +11,16 @@ Před jakoukoliv odpovědí nebo generováním kódu si **MUSÍŠ** načíst kon
 3.  **`.ai-context/AGENT-STATE.md`** -> Abychom věděli, kde jsme skončili.
 4.  **`.ai-context/implementation_plan.md`** (pokud existuje) -> Tvůj aktuální úkol.
 
-# 🖥️ Environment Context (Smart Mode)
-You are working in a WSL2 environment via VS Code/IDE.
-1. **Check First**: Before running complex commands, check `uname -a` to see if you are already in Linux.
-2. **Prefer Native**: If in Linux, run commands directly (e.g., `npm install`).
-3. **Fallback Allowed**: If direct execution fails, you MAY use `wsl` wrappers or PowerShell if necessary to get the job done.
-4. **Goal**: Completion is more important than method. If a command fails, try an alternative approach immediately.
+# 🖥️ Environment Strategy (Windows Host -> WSL Target)
+You are running on a Windows Host, but the project files and Docker are inside WSL2.
+
+1. **Execution**: It is SAFE and RECOMMENDED to use `wsl` wrappers to execute commands inside the Linux environment.
+2. **Patterns**:
+   - Instead of `ls -la`, use `wsl ls -la`.
+   - Instead of `python seed.py`, use `wsl python3 seed.py`.
+   - Instead of `npm install`, use `wsl npm install`.
+3. **Docker**: Docker commands usually work directly from Windows, but if they fail, try `wsl docker ...`.
+4. **Goal**: Completion is priority. If a direct command fails, try the `wsl` wrapper immediately.
 
 # ⚙️ Workflow Rules
 - **Atomic Steps**: Implementuj vždy pouze jeden bod z `task.md` najednou.
