@@ -12,7 +12,7 @@
 - [x] **Frontend UX**
     - [x] Update `LessonPage` to handle Quiz as a standalone slide.
     - [x] Verify "Next" button logic handles the transition to Quiz.
-- [/] **Verification**
+- [x] **Verification**
     - [x] Fixed Docker configuration for content directory access.
-    - [ ] Verify content matches the original text.
-    - [ ] Verify Quiz flow works in the browser.
+    - [x] Verify content matches the original text.
+    - [x] Verify Quiz flow works in the browser.

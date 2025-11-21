@@ -1,5 +1,67 @@
 # Agent State Log
 
+## Cycle 9: Content Migration & Dynamic Loading
+
+**Date**: 2025-11-21
+**Goal**: Migrate hardcoded lesson content to file-based structure and implement dynamic loading.
+
+### Log
+
+#### Phase 1: Content Migration ✅
+- **[EXECUTION]**: Created `content/courses/` directory structure.
+- **[EXECUTION]**: Migrated "AI Basics for Absolute Beginners" course:
+  - 5 lessons with `content.mdx`, `meta.json`, and `quiz.json` files
+  - Full content extracted from `seed.py`
+- **[EXECUTION]**: Created skeleton folders for remaining courses (Practical Prompt Engineering, Advanced AI Techniques, AI Engineering Deep Dive).
+
+#### Phase 2: Backend Logic ✅
+- **[EXECUTION]**: Created `ContentLoader` service (`backend/app/services/content_loader.py`):
+  - Parses `content/` directory structure
+  - Reads MDX, JSON files
+  - Syncs to database
+- **[EXECUTION]**: Refactored `seed.py` to use `ContentLoader` instead of hardcoded data.
+- **[VERIFICATION]**: Fixed Docker configuration:
+  - Added `- ./content:/app/content` volume mount to `docker-compose.yml`
+  - Updated `seed.py` to check `/app/content` first (Docker), then fallback to relative path
+
+#### Phase 3: Frontend UX ✅
+- **[EXECUTION]**: Refactored `Quiz` component:
+  - Removed internal data fetching
+  - Now accepts `quizzes` as prop
+  - Added `onComplete` callback
+- **[EXECUTION]**: Updated `LessonPage`:
+  - Fetches quizzes alongside lesson content
+  - Adds Quiz as standalone slide in pagination
+  - Shows `LessonComplete` on last slide
+- **[VERIFICATION]**: Fixed `canvas-confetti` dependency issue in Docker container.
+
+### Technical Improvements
+- ✅ Content now lives in version-controlled files (easier to edit)
+- ✅ `ContentLoader` enables dynamic course creation
+- ✅ Quiz integrated into slide-based navigation
+- ✅ Docker configuration supports content directory mounting
+
+### Files Modified
+**Backend:**
+- `backend/app/services/content_loader.py` - NEW: Dynamic content loader
+- `backend/seed.py` - Refactored to use ContentLoader
+- `docker-compose.yml` - Added content volume mount
+
+**Frontend:**
+- `frontend/components/Quiz.tsx` - Refactored to accept props
+- `frontend/app/courses/[courseId]/lessons/[lessonId]/page.tsx` - Quiz as slide
+
+**Content:**
+- `content/courses/ai-basics-beginner/` - Complete course migration
+- `content/courses/practical-prompt-engineering/` - Skeleton
+- `content/courses/advanced-ai-techniques/` - Skeleton
+- `content/courses/ai-engineering-deep-dive/` - Skeleton
+
+### Commits
+- `feat(cycle-9): content migration and docker config`
+
+---
+
 ## Day 8: Progress Tracking System
 
 **Date**: 2025-11-21
