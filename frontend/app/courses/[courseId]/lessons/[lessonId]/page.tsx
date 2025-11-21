@@ -245,22 +245,22 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             {currentPage > 0 ? (
               <Button 
                 variant="outline" 
-                className="w-full max-w-xs justify-start gap-2 group h-auto py-4 px-6 bg-white/50 hover:bg-white border-slate-200"
+                className="w-full max-w-xs justify-start gap-2 group h-auto py-3 px-5 bg-white hover:bg-slate-50 border-slate-200 text-slate-700"
                 onClick={() => setCurrentPage(currentPage - 1)}
               >
-                <span className="group-hover:-translate-x-1 transition-transform text-xl">←</span>
+                <span className="group-hover:-translate-x-1 transition-transform text-lg">←</span>
                 <div className="text-left">
-                  <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Go Back</div>
-                  <div className="font-semibold text-lg">Previous Page</div>
+                  <div className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Go Back</div>
+                  <div className="font-semibold text-base">Previous Page</div>
                 </div>
               </Button>
             ) : previousLesson ? (
               <Link href={`/courses/${courseId}/lessons/${previousLesson.id}`} className="flex-1 max-w-xs">
-                <Button variant="outline" className="w-full justify-start gap-2 group h-auto py-4 px-6 bg-white/50 hover:bg-white border-slate-200">
-                  <span className="group-hover:-translate-x-1 transition-transform text-xl">←</span>
+                <Button variant="outline" className="w-full justify-start gap-2 group h-auto py-3 px-5 bg-white hover:bg-slate-50 border-slate-200 text-slate-700">
+                  <span className="group-hover:-translate-x-1 transition-transform text-lg">←</span>
                   <div className="text-left">
-                    <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Previous Lesson</div>
-                    <div className="font-semibold truncate text-lg">{previousLesson.title}</div>
+                    <div className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Previous Lesson</div>
+                    <div className="font-medium truncate text-base">{previousLesson.title}</div>
                   </div>
                 </Button>
               </Link>
@@ -271,28 +271,28 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             {/* Right Side: Next Page OR Next Lesson OR Finish */}
             {currentPage < totalPages - 1 ? (
               <Button 
-                className="w-full max-w-xs justify-end gap-2 group h-auto py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all"
+                className="w-full max-w-xs justify-end gap-2 group h-auto py-3 px-5 bg-white hover:bg-blue-50 border border-blue-200 text-blue-700 shadow-sm hover:shadow-md transition-all"
                 onClick={() => setCurrentPage(currentPage + 1)}
               >
                 <div className="text-right">
-                  <div className="text-xs text-blue-100 uppercase tracking-wider font-semibold">Continue</div>
-                  <div className="font-semibold text-lg">Next Page</div>
+                  <div className="text-[10px] text-blue-400 uppercase tracking-wider font-bold">Continue</div>
+                  <div className="font-semibold text-base">Next Page</div>
                 </div>
-                <span className="group-hover:translate-x-1 transition-transform text-xl">→</span>
+                <span className="group-hover:translate-x-1 transition-transform text-lg">→</span>
               </Button>
             ) : nextLesson ? (
               <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`} className="flex-1 max-w-xs">
-                <Button className="w-full justify-end gap-2 group h-auto py-4 px-6 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white shadow-lg hover:shadow-xl transition-all">
+                <Button className="w-full justify-end gap-2 group h-auto py-3 px-5 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-700 hover:to-slate-800 text-white shadow-md hover:shadow-lg transition-all border border-slate-700">
                   <div className="text-right">
-                    <div className="text-xs text-emerald-100 uppercase tracking-wider font-semibold">Next Lesson</div>
-                    <div className="font-semibold truncate text-lg">{nextLesson.title}</div>
+                    <div className="text-[10px] text-slate-300 uppercase tracking-wider font-bold">Next Lesson</div>
+                    <div className="font-semibold truncate text-base">{nextLesson.title}</div>
                   </div>
-                  <span className="group-hover:translate-x-1 transition-transform text-xl">→</span>
+                  <span className="group-hover:translate-x-1 transition-transform text-lg">→</span>
                 </Button>
               </Link>
             ) : isLastLesson ? (
               <Link href={`/courses/${courseId}`} className="flex-1 max-w-xs">
-                <Button className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 h-auto py-4 text-lg shadow-lg hover:shadow-purple-900/20">
+                <Button className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 h-auto py-3 text-base shadow-md hover:shadow-lg">
                   ✓ Complete Course
                 </Button>
               </Link>
