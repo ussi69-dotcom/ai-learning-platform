@@ -8,6 +8,7 @@
 - [x] **Navigation: Button Logic**
     - [x] Fix sticky footer logic (Next Slide vs Finish Lesson)
     - [x] Ensure "Finish Lesson" only on last slide
+    - [x] Refine desktop navigation buttons (cleaner style)
 
 - [x] **Assets: SVG Diagrams**
     - [x] Create `Diagram.tsx` component
@@ -15,5 +16,6 @@
     - [x] Implement `training-loop` type
 
 - [x] **Content: Text Updates**
-    - [x] Remove GPT-4, Claude 3 mentions
+    - [x] Rewrite Lesson 1 content (Beginner Friendly)
+    - [x] Add Video Support via meta.json
     - [x] Add "Theory Recap" slide
