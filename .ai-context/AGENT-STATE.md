@@ -1,5 +1,57 @@
 # Agent State Log
 
+## Cycle 12: Enhanced Mobile Navigation & Lesson 1 Rewrite
+
+**Date**: 2025-11-21
+**Goal**: Implement enhanced mobile sticky navigation and rewrite Lesson 1 with comprehensive English content following 10+3 structure.
+
+### Log
+
+#### Phase 1: Mobile Navigation Enhancement ✅
+- **[EXECUTION]**: Enhanced mobile sticky navigation bar in `LessonPage`:
+  - Added **Previous button** (was missing before)
+  - Added **pagination dots** for visual feedback (active page highlighted)
+  - Maintained **Next button** with smart logic (Next Slide → Next Lesson → Finish Course)
+  - All buttons are 48px height (h-12) for thumb-friendly interaction
+  - Glassmorphism effect with `backdrop-blur-xl`
+  - Layout: `justify-between` with Previous - Dots - Next
+
+#### Phase 2: Content Rewrite (English, 10+3 Structure) ✅
+- **[EXECUTION]**: Completely rewrote `content/courses/ai-basics-beginner/lessons/01-what-is-ai/content.mdx`:
+  - **Language**: Switched from Czech to English
+  - **Length**: 6380 characters (3x longer than before)
+  - **Structure**: 14 sections total
+    - **Theory Phase** (10 slides): Myth of Intelligence, Old vs New Way, Neural Networks, Training vs Inference, Black Box Problem, Hallucinations
+    - **Theory Recap**: Key takeaways summary
+    - **Practice Phase** (3 labs): Knowledge Cutoff Test, Hallucination Test, Reasoning Test
+    - **Lab Recap**: What we proved
+  - **Components Used**: `<Callout>`, `<ConceptCard>`, `<Steps>`
+  - **Tone**: Authoritative but accessible, engaging
+
+#### Phase 3: Database & Assets ✅
+- **[EXECUTION]**: Updated lesson content in database via Python script
+- **[VERIFICATION]**: Verified image assets exist:
+  - `ai-timeline.png` ✓
+  - `ai-vs-programming.png` ✓
+
+### Technical Improvements
+- ✅ Mobile UX significantly improved with Previous/Next + pagination
+- ✅ Content depth increased 3x with professional English writing
+- ✅ Theory/Practice split clearly defined with visual cues
+- ✅ Hands-on labs test AI's probabilistic nature
+
+### Files Modified
+**Frontend:**
+- `frontend/app/courses/[courseId]/lessons/[lessonId]/page.tsx` - Enhanced mobile sticky navigation
+
+**Content:**
+- `content/courses/ai-basics-beginner/lessons/01-what-is-ai/content.mdx` - Complete rewrite (English, 10+3 structure)
+
+### Commits
+- `feat(cycle-12): enhanced mobile navigation and Lesson 1 rewrite`
+
+---
+
 ## Cycle 10: Rich MDX Components & Content Rewrite
 
 **Date**: 2025-11-21
