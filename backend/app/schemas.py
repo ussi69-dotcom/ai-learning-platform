@@ -74,6 +74,9 @@ class User(UserBase):
     class Config:
         from_attributes = True
 
+class UserDifficultyUpdate(BaseModel):
+    difficulty: str
+
 
 # ===== QUIZ SCHEMAS =====
 class QuizBase(BaseModel):

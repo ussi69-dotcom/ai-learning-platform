@@ -24,14 +24,17 @@ Welcome. You are about to learn one of the most important technologies of our ti
 
 You might not realize it, but you are already an AI power user.
 
-### 1. Voice Assistants
+<ConceptCard title="1. Voice Assistants 🗣️">
 When you talk to Siri or Alexa, they don't just record sound. They **understand** intent. They translate sound waves into meaning.
+</ConceptCard>
 
-### 2. Photo Recognition
+<ConceptCard title="2. Photo Recognition 📸">
 Open your phone's gallery and search for "Beach". It finds all the photos of beaches. You never tagged them. The AI "saw" the sand and water and recognized the pattern.
+</ConceptCard>
 
-### 3. Recommendation Engines
+<ConceptCard title="3. Recommendation Engines 🎬">
 Netflix and Spotify know what you like better than your friends do. They analyze the patterns in your history to predict your future behavior.
+</ConceptCard>
 
 ---
 
@@ -40,7 +43,7 @@ Netflix and Spotify know what you like better than your friends do. They analyze
 This is the most critical concept to grasp. We are moving from **Explicit Programming** to **Machine Learning**.
 
 | Traditional Program | AI Model |
-|----------------|------------------------|
+|---------------------|----------|
 | **Logic:** If X, then Y | **Logic:** Based on data, Y is likely |
 | **Updates:** Needs a programmer to rewrite code | **Updates:** Learns from new data |
 | **Example:** Excel Formula | **Example:** ChatGPT |
@@ -50,8 +53,9 @@ This is the most critical concept to grasp. We are moving from **Explicit Progra
 ---
 
 ## The "Black Box" Problem
-
 Here is the fascinating (and slightly scary) part. Because the AI figured out the patterns by itself—by tuning billions of parameters—we don't actually know *exactly* how it works.
+
+<Diagram type="black-box" />
 
 We know the math. We know the code. But we don't know why a specific neuron fired for a specific word.
 
@@ -68,12 +72,19 @@ AI models are frozen in time. They are trained on a dataset that ends at a speci
 <Steps>
 ### Action
 Ask your AI model (if it's offline/local) about a news event from yesterday.
-**Prompt:** "What were the major headlines in the news yesterday?"
+**Prompt:**
+```text
+What were the major headlines in the news yesterday?
+```
 
 ### Observation
 *   If it has access to the web (like Gemini), it will look it up.
 *   If it is a raw offline model, it will say "I don't know" or give you generic info.
 </Steps>
+
+<Callout type="info">
+**Did you know?** Training a model like GPT-4 takes months and costs over $100 million. That's why they can't update it every day!
+</Callout>
 
 ---
 
@@ -84,7 +95,10 @@ You will hear the term "Hallucination" often. This happens because the AI is **p
 <Steps>
 ### Action
 Let's try to trick it. Use this prompt:
-**Prompt:** "Write a short biography of the famous 19th-century toaster inventor, Reginald P. Crustworth."
+**Prompt:**
+```text
+Write a short biography of the famous 19th-century toaster inventor, Reginald P. Crustworth.
+```
 
 ### Observation
 *   Does the AI admit he doesn't exist?
@@ -104,12 +118,19 @@ AI struggles with simple logic that requires "common sense" if it hasn't seen si
 <Steps>
 ### Action
 Try this riddle:
-**Prompt:** "I have 3 apples today. Yesterday I ate one apple. How many apples do I have now?"
+**Prompt:**
+```text
+I have 3 apples today. Yesterday I ate one apple. How many apples do I have now?
+```
 
 ### Observation
 *   A human knows the answer depends on whether the eaten apple was part of the 3.
 *   Watch how the AI tries to calculate `3 - 1 = 2` or gets confused by the timeline.
 </Steps>
+
+<Callout type="tip">
+**Pro Tip:** AI is great at language, but sometimes bad at simple math or logic puzzles unless it has been specifically trained on them.
+</Callout>
 
 ---
 

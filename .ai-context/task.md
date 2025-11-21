@@ -14,8 +14,23 @@
     - [x] Create `Diagram.tsx` component
     - [x] Implement `neural-network` type
     - [x] Implement `training-loop` type
+    - [x] Implement `black-box` type
 
 - [x] **Content: Text Updates**
-    - [x] Rewrite Lesson 1 content (Beginner Friendly)
+    - [x] Hybrid Rewrite (Beginner + Labs + Guidelines)
     - [x] Add Video Support via meta.json
     - [x] Add "Theory Recap" slide
+
+- [x] **Bug Fixes**
+    - [x] Fix Profile Difficulty Update (Backend Endpoint)
+    - [x] Fix Markdown Table Rendering (Added Table Parser)
+    - [x] Fix Steps Component Numbering (1, 2, 3...)
+    - [x] Fix Nested Code Block Parsing in Steps
+
+- [x] **Visual Polish**
+    - [x] Enhance "Real World Magic" with ConceptCards
+    - [x] Add "Did you know?" facts to Lab pages
+    - [x] Fix "Next Page" button contrast (Solid Blue)
+    - [x] Redesign Callout Component (Glass Style)
+    - [x] Redesign Steps Component (Glass Numbers)
+    - [x] Use Code Blocks for Prompts

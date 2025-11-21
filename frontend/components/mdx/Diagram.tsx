@@ -55,39 +55,63 @@ export default function Diagram({ type }: DiagramProps) {
         <svg width="400" height="300" viewBox="0 0 400 300" className="w-full max-w-md">
           {/* Boxes */}
           <rect x="140" y="20" width="120" height="50" rx="8" fill="none" stroke="#60a5fa" strokeWidth="2" />
-          <text x="200" y="50" textAnchor="middle" className="text-sm font-semibold fill-slate-700">Data</text>
+          <text x="200" y="50" textAnchor="middle" className="text-sm font-semibold fill-slate-700 dark:fill-slate-200">Data</text>
           
           <rect x="280" y="110" width="100" height="50" rx="8" fill="none" stroke="#8b5cf6" strokeWidth="2" />
-          <text x="330" y="140" textAnchor="middle" className="text-sm font-semibold fill-slate-700">Model</text>
+          <text x="330" y="140" textAnchor="middle" className="text-sm font-semibold fill-slate-700 dark:fill-slate-200">Model</text>
           
           <rect x="140" y="200" width="120" height="50" rx="8" fill="none" stroke="#34d399" strokeWidth="2" />
-          <text x="200" y="230" textAnchor="middle" className="text-sm font-semibold fill-slate-700">Prediction</text>
+          <text x="200" y="230" textAnchor="middle" className="text-sm font-semibold fill-slate-700 dark:fill-slate-200">Prediction</text>
           
           <rect x="20" y="110" width="100" height="50" rx="8" fill="none" stroke="#f59e0b" strokeWidth="2" />
-          <text x="70" y="140" textAnchor="middle" className="text-sm font-semibold fill-slate-700">Error</text>
+          <text x="70" y="140" textAnchor="middle" className="text-sm font-semibold fill-slate-700 dark:fill-slate-200">Error</text>
           
           {/* Arrows */}
-          {/* Data -> Model */}
           <path d="M 230 70 L 280 110" stroke="#64748b" strokeWidth="2" fill="none" markerEnd="url(#arrowhead)" />
-          
-          {/* Model -> Prediction */}
           <path d="M 300 160 L 230 200" stroke="#64748b" strokeWidth="2" fill="none" markerEnd="url(#arrowhead)" />
-          
-          {/* Prediction -> Error */}
           <path d="M 140 225 L 120 225 L 120 135" stroke="#64748b" strokeWidth="2" fill="none" markerEnd="url(#arrowhead)" />
-          
-          {/* Error -> Model (Feedback) */}
           <path d="M 120 110 L 120 90 L 300 90 L 300 110" stroke="#64748b" strokeWidth="2" fill="none" markerEnd="url(#arrowhead)" strokeDasharray="4 4" />
           
-          {/* Arrow marker */}
           <defs>
             <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
               <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
             </marker>
           </defs>
           
-          {/* Label */}
           <text x="200" y="90" textAnchor="middle" className="text-xs italic fill-slate-500">Update</text>
+        </svg>
+      </div>
+    );
+  }
+
+  if (type === 'black-box') {
+    return (
+      <div className="my-8 flex justify-center">
+        <svg width="400" height="200" viewBox="0 0 400 200" className="w-full max-w-md">
+           {/* Inputs */}
+           <path d="M 50 60 L 120 60" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-bb)" />
+           <path d="M 50 100 L 120 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-bb)" />
+           <path d="M 50 140 L 120 140" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-bb)" />
+           <text x="40" y="105" textAnchor="end" className="text-sm font-medium fill-slate-500 dark:fill-slate-400">Inputs</text>
+           
+           {/* The Box */}
+           <rect x="130" y="30" width="140" height="140" rx="16" fill="#0f172a" stroke="#334155" strokeWidth="2" className="drop-shadow-xl" />
+           <text x="200" y="115" textAnchor="middle" className="text-5xl font-bold fill-white" opacity="0.9">?</text>
+           
+           {/* Neural connections inside (faint) */}
+           <circle cx="150" cy="50" r="3" fill="#3b82f6" opacity="0.4" />
+           <circle cx="250" cy="150" r="3" fill="#3b82f6" opacity="0.4" />
+           <line x1="150" y1="50" x2="250" y2="150" stroke="#3b82f6" strokeWidth="1" opacity="0.2" />
+           
+           {/* Output */}
+           <path d="M 270 100 L 340 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-bb)" />
+           <text x="350" y="105" textAnchor="start" className="text-sm font-medium fill-slate-500 dark:fill-slate-400">Output</text>
+
+           <defs>
+            <marker id="arrowhead-bb" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+            </marker>
+          </defs>
         </svg>
       </div>
     );

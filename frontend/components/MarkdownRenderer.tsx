@@ -216,6 +216,60 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         continue;
       }
 
+      // 9. Handle Tables
+      if (line.trim().startsWith('|')) {
+        const tableLines: string[] = [];
+        let j = i;
+        while (j < lines.length && lines[j].trim().startsWith('|')) {
+          tableLines.push(lines[j].trim());
+          j++;
+        }
+
+        if (tableLines.length >= 2) {
+          const headerLine = tableLines[0];
+          const separatorLine = tableLines[1];
+          const bodyLines = tableLines.slice(2);
+
+          const headers = headerLine.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
+          
+          // Simple validation of separator line
+          if (separatorLine.includes('-')) {
+             elements.push(
+              <div key={`table-${i}`} className="overflow-x-auto mb-6">
+                <table className="min-w-full border-collapse border border-slate-200 dark:border-slate-700">
+                  <thead>
+                    <tr className="bg-slate-50 dark:bg-slate-800">
+                      {headers.map((header, k) => (
+                        <th key={k} className="border border-slate-200 dark:border-slate-700 p-3 text-left font-semibold text-slate-900 dark:text-slate-100">
+                          {parseInlineText(header)}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bodyLines.map((rowLine, r) => {
+                      const cells = rowLine.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
+                      return (
+                        <tr key={r} className="even:bg-slate-50/50 dark:even:bg-slate-800/50">
+                          {cells.map((cell, c) => (
+                            <td key={c} className="border border-slate-200 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-300">
+                              {parseInlineText(cell)}
+                            </td>
+                          ))}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            );
+            i = j;
+            continue;
+          }
+        }
+        // If not a valid table, fall through to paragraph
+      }
+
       // 9. Regular Paragraphs
       if (line.trim() !== '') {
         elements.push(
@@ -266,7 +320,7 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
     ));
   };
 
-  // Parse steps content (h3 headings + paragraphs)
+  // Parse steps content (h3 headings + paragraphs + code blocks)
   const parseStepsContent = (text: string): React.ReactNode[] => {
     const lines = text.split('\n');
     const elements: React.ReactNode[] = [];
@@ -274,6 +328,28 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       
+      // Handle Code Blocks inside steps
+      if (line.trim().startsWith('```')) {
+        const languageMatch = line.trim().match(/^```(\w+)?/);
+        const language = languageMatch?.[1] || 'text';
+        
+        let j = i + 1;
+        const codeLines: string[] = [];
+        while (j < lines.length && !lines[j].trim().startsWith('```')) {
+          codeLines.push(lines[j]);
+          j++;
+        }
+        
+        elements.push(
+          <CodeBlock key={`step-code-${i}`} language={language}>
+            {codeLines.join('\n')}
+          </CodeBlock>
+        );
+        
+        i = j;
+        continue;
+      }
+
       if (line.startsWith('### ')) {
         elements.push(
           <h3 key={`step-h3-${i}`}>

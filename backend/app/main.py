@@ -27,16 +27,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Dependency pro získání DB session
-def get_db():
-    db = database.SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# Dependency pro získání DB session - ODSTRANĚNO, používáme database.get_db
 
 @app.post("/auth/register", response_model=schemas.User)
-def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+def register_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
     db_user = db.query(models.User).filter(models.User.email == user.email).first()
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
@@ -54,7 +48,7 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return new_user
 
 @app.post("/auth/token", response_model=schemas.Token)
-def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.email == form_data.username).first()
     if not user or not auth.verify_password(form_data.password, user.hashed_password):
         raise HTTPException(
@@ -82,7 +76,7 @@ def read_root():
 def read_courses(
     skip: int = 0, 
     limit: int = 100, 
-    db: Session = Depends(get_db),
+    db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
     # Filter courses by user's difficulty level
@@ -94,7 +88,7 @@ def read_courses(
 @app.get("/courses/{course_id}", response_model=schemas.Course)
 def read_course(
     course_id: int, 
-    db: Session = Depends(get_db),
+    db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
     course = db.query(models.Course).filter(models.Course.id == course_id).first()
@@ -110,13 +104,13 @@ def read_course(
 # --- LESSONS ENDPOINTS ---
 
 @app.get("/lessons/", response_model=List[schemas.LessonSummary])
-def read_lessons(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_lessons(skip: int = 0, limit: int = 100, db: Session = Depends(database.get_db)):
     # Tento endpoint volá frontend pro získání všech lekcí
     lessons = db.query(models.Lesson).offset(skip).limit(limit).all()
     return lessons
 
 @app.get("/lessons/{lesson_id}", response_model=schemas.Lesson)
-def read_lesson(lesson_id: int, db: Session = Depends(get_db)):
+def read_lesson(lesson_id: int, db: Session = Depends(database.get_db)):
     # Detail lekce (vrací i `content`, na rozdíl od "/lessons/")
     lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
     if lesson is None:
@@ -129,7 +123,7 @@ def read_lesson(lesson_id: int, db: Session = Depends(get_db)):
 @app.get("/lessons/{lesson_id}/quizzes", response_model=List[schemas.Quiz])
 def get_lesson_quizzes(
     lesson_id: int, 
-    db: Session = Depends(get_db),
+    db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
     """Get all quiz questions for a lesson"""
@@ -144,11 +138,12 @@ def get_lesson_quizzes(
 
 @app.put("/users/me/difficulty", response_model=schemas.User)
 def update_user_difficulty(
-    difficulty: str,
-    db: Session = Depends(get_db),
+    difficulty_update: schemas.UserDifficultyUpdate,
+    db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
     """Update user's difficulty level"""
+    difficulty = difficulty_update.difficulty
     # Validate difficulty
     valid_difficulties = ['PIECE_OF_CAKE', 'LETS_ROCK', 'COME_GET_SOME', 'DAMN_IM_GOOD']
     if difficulty not in valid_difficulties:
@@ -166,7 +161,7 @@ def update_user_difficulty(
 @app.post("/lessons/{lesson_id}/complete", response_model=schemas.UserProgress)
 def complete_lesson(
     lesson_id: int,
-    db: Session = Depends(get_db),
+    db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
     """Mark a lesson as completed"""
@@ -197,7 +192,7 @@ def complete_lesson(
 
 @app.get("/users/me/progress", response_model=List[schemas.UserProgress])
 def get_user_progress(
-    db: Session = Depends(get_db),
+    db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
     """Get all completed lessons for the current user"""
@@ -209,7 +204,7 @@ def get_user_progress(
 @app.get("/courses/{course_id}/progress")
 def get_course_progress(
     course_id: int,
-    db: Session = Depends(get_db),
+    db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
     """Get progress percentage for a specific course"""

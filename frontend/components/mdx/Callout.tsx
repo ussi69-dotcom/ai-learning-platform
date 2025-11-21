@@ -11,21 +11,18 @@ interface CalloutProps {
 export default function Callout({ type = 'info', children }: CalloutProps) {
   const styles = {
     info: {
-      bg: 'bg-white/10',
-      border: 'border-l-4 border-blue-500',
-      icon: 'text-blue-400',
+      container: 'bg-blue-500/5 border-blue-500/20 text-blue-900 dark:text-blue-100',
+      icon: 'text-blue-500',
       IconComponent: Info
     },
     warning: {
-      bg: 'bg-white/10',
-      border: 'border-l-4 border-amber-500',
-      icon: 'text-amber-400',
+      container: 'bg-amber-500/5 border-amber-500/20 text-amber-900 dark:text-amber-100',
+      icon: 'text-amber-500',
       IconComponent: AlertTriangle
     },
     tip: {
-      bg: 'bg-white/10',
-      border: 'border-l-4 border-emerald-500',
-      icon: 'text-emerald-400',
+      container: 'bg-emerald-500/5 border-emerald-500/20 text-emerald-900 dark:text-emerald-100',
+      icon: 'text-emerald-500',
       IconComponent: Lightbulb
     }
   };
@@ -34,11 +31,11 @@ export default function Callout({ type = 'info', children }: CalloutProps) {
   const Icon = style.IconComponent;
 
   return (
-    <div className={`${style.bg} ${style.border} backdrop-blur-xl border border-white/10 rounded-xl p-4 mb-6 shadow-lg flex gap-3`}>
-      <div className="flex-shrink-0 mt-0.5">
+    <div className={`${style.container} backdrop-blur-xl border rounded-xl p-5 mb-6 shadow-sm flex gap-4 items-start transition-all hover:shadow-md`}>
+      <div className="flex-shrink-0 mt-0.5 p-2 bg-white/50 dark:bg-slate-900/50 rounded-lg border border-white/20 shadow-sm">
         <Icon className={`${style.icon} w-5 h-5`} />
       </div>
-      <div className="flex-1 prose prose-sm max-w-none prose-p:my-1 prose-p:leading-relaxed prose-p:text-slate-700 prose-strong:text-slate-900">
+      <div className="flex-1 prose prose-sm max-w-none prose-p:my-1 prose-p:leading-relaxed prose-strong:font-bold">
         {children}
       </div>
     </div>

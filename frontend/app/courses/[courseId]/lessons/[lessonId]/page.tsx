@@ -271,11 +271,11 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             {/* Right Side: Next Page OR Next Lesson OR Finish */}
             {currentPage < totalPages - 1 ? (
               <Button 
-                className="w-full max-w-xs justify-end gap-2 group h-auto py-3 px-5 bg-white hover:bg-blue-50 border border-blue-200 text-blue-700 shadow-sm hover:shadow-md transition-all"
+                className="w-full max-w-xs justify-end gap-2 group h-auto py-3 px-5 bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all border border-blue-500"
                 onClick={() => setCurrentPage(currentPage + 1)}
               >
                 <div className="text-right">
-                  <div className="text-[10px] text-blue-400 uppercase tracking-wider font-bold">Continue</div>
+                  <div className="text-[10px] text-blue-100 uppercase tracking-wider font-bold">Continue</div>
                   <div className="font-semibold text-base">Next Page</div>
                 </div>
                 <span className="group-hover:translate-x-1 transition-transform text-lg">→</span>
