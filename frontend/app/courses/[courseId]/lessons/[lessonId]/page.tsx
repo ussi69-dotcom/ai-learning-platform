@@ -241,8 +241,21 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
           {/* Desktop Lesson Navigation */}
           <div className="hidden md:flex justify-between items-center gap-4 mt-12">
-            {previousLesson ? (
-              <Link href={`/courses/${courseId}/lessons/${previousLesson.id}`} className="flex-1">
+            {/* Left Side: Previous Page OR Previous Lesson */}
+            {currentPage > 0 ? (
+              <Button 
+                variant="outline" 
+                className="w-full max-w-xs justify-start gap-2 group h-auto py-4 px-6 bg-white/50 hover:bg-white border-slate-200"
+                onClick={() => setCurrentPage(currentPage - 1)}
+              >
+                <span className="group-hover:-translate-x-1 transition-transform text-xl">←</span>
+                <div className="text-left">
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Go Back</div>
+                  <div className="font-semibold text-lg">Previous Page</div>
+                </div>
+              </Button>
+            ) : previousLesson ? (
+              <Link href={`/courses/${courseId}/lessons/${previousLesson.id}`} className="flex-1 max-w-xs">
                 <Button variant="outline" className="w-full justify-start gap-2 group h-auto py-4 px-6 bg-white/50 hover:bg-white border-slate-200">
                   <span className="group-hover:-translate-x-1 transition-transform text-xl">←</span>
                   <div className="text-left">
@@ -252,27 +265,39 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                 </Button>
               </Link>
             ) : (
-              <div className="flex-1" />
+              <div className="flex-1 max-w-xs" />
             )}
 
-            {nextLesson ? (
-              <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`} className="flex-1">
-                <Button className="w-full justify-end gap-2 group h-auto py-4 px-6 bg-slate-900 hover:bg-slate-800 text-white shadow-lg hover:shadow-xl transition-all">
+            {/* Right Side: Next Page OR Next Lesson OR Finish */}
+            {currentPage < totalPages - 1 ? (
+              <Button 
+                className="w-full max-w-xs justify-end gap-2 group h-auto py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all"
+                onClick={() => setCurrentPage(currentPage + 1)}
+              >
+                <div className="text-right">
+                  <div className="text-xs text-blue-100 uppercase tracking-wider font-semibold">Continue</div>
+                  <div className="font-semibold text-lg">Next Page</div>
+                </div>
+                <span className="group-hover:translate-x-1 transition-transform text-xl">→</span>
+              </Button>
+            ) : nextLesson ? (
+              <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`} className="flex-1 max-w-xs">
+                <Button className="w-full justify-end gap-2 group h-auto py-4 px-6 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white shadow-lg hover:shadow-xl transition-all">
                   <div className="text-right">
-                    <div className="text-xs text-slate-300 uppercase tracking-wider font-semibold">Next Lesson</div>
+                    <div className="text-xs text-emerald-100 uppercase tracking-wider font-semibold">Next Lesson</div>
                     <div className="font-semibold truncate text-lg">{nextLesson.title}</div>
                   </div>
                   <span className="group-hover:translate-x-1 transition-transform text-xl">→</span>
                 </Button>
               </Link>
             ) : isLastLesson ? (
-              <Link href={`/courses/${courseId}`} className="flex-1">
-                <Button className="w-full bg-green-600 hover:bg-green-700 h-auto py-4 text-lg shadow-lg hover:shadow-green-900/20">
+              <Link href={`/courses/${courseId}`} className="flex-1 max-w-xs">
+                <Button className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 h-auto py-4 text-lg shadow-lg hover:shadow-purple-900/20">
                   ✓ Complete Course
                 </Button>
               </Link>
             ) : (
-              <div className="flex-1" />
+              <div className="flex-1 max-w-xs" />
             )}
           </div>
 
