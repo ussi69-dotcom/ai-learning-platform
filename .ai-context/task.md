@@ -24,11 +24,11 @@
     - [x] Add interactive hands-on lab
 
 ## Verification
-- [/] **Test Components**
-    - [ ] Run dev server and verify Callout renders correctly
-    - [ ] Verify Steps component displays numbered steps
-    - [ ] Verify ConceptCard highlights definitions
-    - [ ] Test mobile responsiveness
-- [ ] **Screenshot/Demo**
-    - [ ] Capture screenshot of new Lesson 1 with components
-    - [ ] Verify sticky footer on mobile (from previous task)
+- [x] **Test Components**
+    - [x] Run dev server and verify Callout renders correctly
+    - [x] Verify Steps component displays numbered steps
+    - [x] Verify ConceptCard highlights definitions
+    - [x] Test mobile responsiveness
+- [x] **Screenshot/Demo**
+    - [x] Capture screenshot of new Lesson 1 with components
+    - [x] Verify sticky footer on mobile (from previous task)

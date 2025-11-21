@@ -1,5 +1,63 @@
 # Agent State Log
 
+## Cycle 10: Rich MDX Components & Content Rewrite
+
+**Date**: 2025-11-21
+**Goal**: Implement rich MDX components (Callout, Steps, ConceptCard) and rewrite Lesson 1 with modern Theory/Practice structure.
+
+### Log
+
+#### Phase 1: MDX Component Creation ✅
+- **[EXECUTION]**: Created `frontend/components/mdx/Callout.tsx`:
+  - Three types: info (blue), warning (amber), tip (emerald)
+  - Icons from lucide-react (Info, AlertTriangle, Lightbulb)
+  - Glassmorphism styling with backdrop-blur
+- **[EXECUTION]**: Created `frontend/components/mdx/Steps.tsx`:
+  - Numbered steps with gradient badges (blue to indigo)
+  - Supports h3 headings as step titles
+  - Nested content rendering
+- **[EXECUTION]**: Created `frontend/components/mdx/ConceptCard.tsx`:
+  - Purple gradient background for definitions
+  - BookOpen icon from lucide-react
+  - Title prop for concept name
+
+#### Phase 2: MarkdownRenderer Refactor ✅
+- **[EXECUTION]**: Completely rewrote `MarkdownRenderer.tsx`:
+  - Custom component parser for `<Callout>`, `<Steps>`, `<ConceptCard>`
+  - Inline markdown support (bold, italic, links)
+  - Proper nesting and content extraction
+  - Support for headings, lists, images, horizontal rules
+- **[VERIFICATION]**: Fixed TypeScript lint error in Steps component (typed React element props)
+
+#### Phase 3: Content Rewrite ✅
+- **[EXECUTION]**: Rewrote `content/courses/ai-basics-beginner/lessons/01-what-is-ai/content.mdx`:
+  - **Theory Section**: Explains old vs new programming paradigm
+  - **Practice Section**: Hands-on lab with ChatGPT "hallucination" test
+  - Used all three new components (Callout, ConceptCard, Steps)
+  - Czech language content with engaging tone
+- **[EXECUTION]**: Updated lesson content in database via Python script
+
+### Technical Improvements
+- ✅ Rich educational components for better UX
+- ✅ Theory/Practice structure for lessons
+- ✅ Reusable MDX component system
+- ✅ TypeScript type safety maintained
+
+### Files Modified
+**Frontend:**
+- `frontend/components/mdx/Callout.tsx` - NEW: Info/warning/tip callout boxes
+- `frontend/components/mdx/Steps.tsx` - NEW: Numbered tutorial steps
+- `frontend/components/mdx/ConceptCard.tsx` - NEW: Definition highlights
+- `frontend/components/MarkdownRenderer.tsx` - Complete rewrite with custom component parsing
+
+**Content:**
+- `content/courses/ai-basics-beginner/lessons/01-what-is-ai/content.mdx` - Rewritten with new structure
+
+### Commits
+- `feat(cycle-10): rich MDX components and Lesson 1 rewrite`
+
+---
+
 ## Cycle 9: Content Migration & Dynamic Loading
 
 **Date**: 2025-11-21
