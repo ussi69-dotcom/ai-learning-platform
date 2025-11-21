@@ -1,4 +1,4 @@
-# 🚀 SYSTEM BRIEFING - 2025-11-21 12:09:50
+# 🚀 SYSTEM BRIEFING - 2025-11-21 13:54:14
 
 **INSTRUCTION:** This is a context dump for the AI Architect (Gemini).
 Please load the following context, activate your role defined in GEMINI_PROMPT.md, and await instructions.
@@ -502,74 +502,64 @@ Cíl: Ty jsi "Mozek", soubory jsou "Paměť". Nic nesmí zůstat jen v chatu.
 
 ## 📄 FILE: implementation_plan.md
 ```markdown
-# Implementation Plan - Cycle 10: Content Polish & Assets
+# Implementation Plan - Cycle 10: UX/UI Polish & Asset Pipeline
 
 ## 🎯 Goal
-Elevate the visual quality and educational value of the "AI Basics" course by implementing a robust asset pipeline, advanced MDX rendering (Alerts/Tables), and enhancing lesson content with actionable steps.
+Transform the raw functionality into a polished product. Replace the generic "Blue Banner" design with a modern "Liquid Glass" aesthetic, optimize mobile navigation, and establish a pipeline for serving images directly from the lesson content folders.
 
 ## 🏗️ Architecture Changes
 
-### 1. Backend: Static Asset Serving
-Since content is outside the Frontend's `public/` folder (it lives in `content/` volume), we need the Backend to serve these images.
-* **Mechanism**: Mount `StaticFiles` or create a specific GET endpoint in FastAPI.
-* **Route**: `GET /content/{course_id}/{lesson_slug}/images/{image_name}`
-* **Security**: Ensure path traversal protection (FastAPI handles this generally, but verify).
+### 1. Backend: Content Asset Serving
+The content currently resides in `/app/content` (Docker volume). Frontend cannot access this directly.
+* **Action**: Mount a generic static file route in FastAPI.
+* **Route**: `/content/*` -> Maps to `/app/content/`.
+* **Implication**: Any image inside `content/courses/x/lessons/y/images/img.png` becomes accessible via `http://backend:8000/content/courses/x/lessons/y/images/img.png`.
 
-### 2. Frontend: Advanced MDX Rendering
-We will move away from standard HTML mapping to custom React Components via `MDXRemote`.
-* **Image Handling**: Custom `img` component that detects relative paths (e.g., `./images/diagram.png`) and rewrites them to the Backend API URL defined above.
-* **Callouts/Alerts**:
-    * Parse standard GitHub Flavored Markdown (GFM) syntax: `> [!NOTE]`.
-    * Map `blockquote` element. Check if children text starts with `[!NOTE]`, `[!WARNING]`, etc.
-    * Render shadcn/ui `Alert` component instead of a gray blockquote.
-* **Tables**: Map `table`, `th`, `td` to Tailwind-styled equivalents (borders, padding, responsive overflow).
+### 2. Frontend: Asset Handling via MDX
+We need to intercept image tags in Markdown to point to the API.
+* **Component**: Create a custom `MDXImage` component.
+* **Logic**:
+    * If `src` starts with `http` (external): Render as is.
+    * If `src` is relative (`./images/foo.png`): Rewrite URL to `${API_BASE_URL}/content/${currentCourseId}/${currentLessonId}/${src}`.
 
-### 3. Content Structure
-* **File Structure**:
-    ```text
-    content/courses/ai-basics-beginner/
-    ├── lesson-01/
-    │   ├── content.mdx
-    │   └── images/        <-- NEW
-    │       └── ai-history-timeline.png
-    ```
-* **Enhancement**: Add a standardized "🚀 Actionable Step" section at the end of each lesson.
+### 3. UX/UI Redesign ("Liquid Glass")
+* **Header Removal**: Remove the solid blue hero section.
+* **New Layout**:
+    * **Background**: Subtle, dynamic gradient or abstract shape that persists behind the content.
+    * **Glass Cards**: Content containers will use `bg-background/60` (semi-transparent) with `backdrop-blur-md` and a thin border.
+    * **Typography**: Larger, cleaner fonts. Better spacing between paragraphs.
+* **Mobile Navigation**:
+    * Sticky footer bar for "Previous / Next" buttons on mobile viewports.
+    * Increase touch targets (min 44px height).
 
 ## 📋 Technical Details
 
-### Component Mapping (Frontend)
-We need to create a `MDXComponents.tsx` map:
-* `img`: Intercepts `src`. If starts with `./`, prepend `${API_BASE_URL}/content/...`.
-* `table`: Wrap in `<div className="overflow-x-auto">`.
-* `blockquote`: Logic to extract alert type and content.
+### Backend (FastAPI)
+Update `backend/app/main.py`:
+```python
+from fastapi.staticfiles import StaticFiles
+# ...
+app.mount("/content", StaticFiles(directory="/app/content"), name="content")
+Frontend (Tailwind Config)
+Ensure we have a consistent glass utility class (or use arbitrary values):
 
-### Dependency Check
-* Ensure `lucide-react` is available for icons in Alerts.
-* Ensure `clsx` or `tailwind-merge` is used for dynamic classes.
+CSS
+
+.glass-panel {
+  @apply bg-white/70 dark:bg-slate-950/70 backdrop-blur-lg border border-slate-200 dark:border-slate-800 shadow-sm;
+}
+Assets Checklist (Piece of Cake)
+We need to physically place the image files into the content/ structure for the "AI Basics" course to test the pipeline.
 ```
 
 
 ## 📄 FILE: task.md
 ```markdown
-# Task List - Cycle 9: Content Engine
+# Task List - Cycle 12: [Next Cycle Name]
 
-- [/] **Content Migration**
-    - [x] Create folder structure `content/courses/` in root.
-    - [x] Migrate "AI Basics" (Piece of Cake) from `seed.py` to MDX/JSON files.
-    - [x] Migrate Quizzes for "AI Basics" to JSON.
-    - [x] Create skeleton folders for other courses (Lets Rock, etc.).
-- [x] **Backend Logic**
-    - [x] Create `backend/app/services/content_loader.py` with parsing logic.
-    - [x] Update `backend/seed.py` to use `ContentLoader` instead of hardcoded lists.
-    - [x] Test seed script (`python seed.py`) - ensure no errors.
-- [x] **Frontend UX**
-    - [x] Update `LessonPage` to handle Quiz as a standalone slide.
-    - [x] Verify "Next" button logic handles the transition to Quiz.
-- [x] **Verification**
-    - [x] Fixed Docker configuration for content directory access.
-    - [x] Verify content matches the original text.
-    - [x] Verify Quiz flow works in the browser.
-
+- [ ] **[Feature/Task Name]**
+    - [ ] [Subtask 1]
+    - [ ] [Subtask 2]
 ```
 
 
@@ -615,6 +605,7 @@ We need to create a `MDXComponents.tsx` map:
 ## 📂 PROJECT FILE STRUCTURE (Current State)
 ```text
   📁 content/
+    📄 test.txt
     📁 courses/
       📁 practical-prompt-engineering/
         📄 meta.json
@@ -641,6 +632,9 @@ We need to create a `MDXComponents.tsx` map:
             📄 meta.json
             📄 quiz.json
             📄 content.mdx
+            📁 images/
+              📄 ai-vs-programming.png
+              📄 ai-timeline.png
           📁 05-course-summary/
             📄 meta.json
             📄 quiz.json
@@ -649,14 +643,22 @@ We need to create a `MDXComponents.tsx` map:
             📄 meta.json
             📄 quiz.json
             📄 content.mdx
+            📁 images/
+              📄 prompt-formula.png
+              📄 bad-vs-good-prompt.png
           📁 04-ai-in-daily-life/
             📄 meta.json
             📄 quiz.json
             📄 content.mdx
+            📁 images/
+              📄 ai-daily-timeline.png
           📁 02-how-does-ai-learn/
             📄 meta.json
             📄 quiz.json
             📄 content.mdx
+            📁 images/
+              📄 ml-process.png
+              📄 ml-types.png
       📁 ai-engineering-deep-dive/
         📄 meta.json
         📁 lessons/
@@ -678,6 +680,7 @@ We need to create a `MDXComponents.tsx` map:
     📄 task.md
     📄 implementation_plan.md
     📁 completed_cycles/
+      📄 cycle_10_ui_and_fixes.md
       📄 cycle_08.md
       📄 cycle_09.md
     📁 modules/
@@ -727,6 +730,7 @@ We need to create a `MDXComponents.tsx` map:
       📁 services/
         📄 DefaultService.ts
     📁 components/
+      📄 MDXImage.tsx
       📄 Quiz.tsx
       📄 LessonComplete.tsx
       📄 MarkdownRenderer.tsx
@@ -767,13 +771,6 @@ We need to create a `MDXComponents.tsx` map:
       📁 images/
         📄 course-cover-beginner.png
         📁 lessons/
-          📄 ml-process.png
-          📄 ai-vs-programming.png
-          📄 ml-types.png
-          📄 ai-daily-timeline.png
-          📄 ai-timeline.png
-          📄 prompt-formula.png
-          📄 bad-vs-good-prompt.png
     📁 context/
       📄 AuthContext.tsx
   📁 backend/
