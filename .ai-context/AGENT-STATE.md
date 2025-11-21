@@ -1,66 +1,73 @@
+# 📍 AGENT STATE
 
-## Cycle 14: Critical Fixes & Content Hybridization
+**Last Updated:** 2024-01-21 23:08 CET  
+**Current Cycle:** 15 (COMPLETED ✅)  
+**Status:** Ready for next cycle
 
-### 🎯 Goals
-- **Content Hybridization**: Combine beginner-friendly analogies with technical depth (Labs) for a 15-minute premium lesson.
-- **Guidelines Compliance**: Strict adherence to "Liquid Glass" visual philosophy and "Educational or Nothing" asset policy.
-- **Visual Polish**: Refine navigation buttons and glass effects.
-- **Navigation Logic**: Align desktop and mobile navigation.
+---
 
-### 🛠️ Implementation Details
+## 🎯 Latest Accomplishment
 
-#### 1. Content Hybridization (Lesson 1)
-- **Structure**:
-    - **Intro**: Calculator vs AI (Beginner Friendly).
-## Cycle 14: Critical Fixes & Content Hybridization
+**Cycle 15: Liquid Glass Refinements & Diagram Redesign**
+- ✅ CodeBlock redesigned to lighter adaptive glass style (better integration)
+- ✅ MDXImage wrapped in liquid glass container with hover effects
+- ✅ Added animated background blobs (subtle blue/purple/emerald gradients)
+- ✅ Integrated `ai-timeline.png` and `ai-vs-programming.png` into Lesson 1
+- ✅ Replaced confusing abstract neural network diagram with concrete "Cat Recognition" example
+- ✅ Fixed build error (missing `if` condition in Diagram component)
 
-### 🎯 Goals
-- **Content Hybridization**: Combine beginner-friendly analogies with technical depth (Labs) for a 15-minute premium lesson.
-- **Guidelines Compliance**: Strict adherence to "Liquid Glass" visual philosophy and "Educational or Nothing" asset policy.
-- **Visual Polish**: Refine navigation buttons and glass effects.
-- **Navigation Logic**: Align desktop and mobile navigation.
+**Key Learning:** Abstract diagrams are confusing even for creators. Concrete, relatable examples (🐱 → AI → "Cat") are far more effective for beginners.
 
-### 🛠️ Implementation Details
+---
 
-#### 1. Content Hybridization (Lesson 1)
-- **Structure**:
-    - **Intro**: Calculator vs AI (Beginner Friendly).
-    - **Real World**: Voice, Photo, Recommendations.
-    - **Theory**: Programming vs Training (Technical but clear).
-    - **Labs**: Knowledge Cutoff, Hallucination, Reasoning (Hands-on).
-    - **Conclusion**: Challenge & Recap.
-- **Guidelines Adherence**: Removed decorative emojis from headers. Used `ConceptCard` and `Callout` extensively.
+## 📚 Cycle History
 
-#### Current Cycle: 14 (Critical Fixes & Visual Polish)
-**Status:** ✅ Completed
-**Focus:** Visual Polish, Navigation Fixes, Content Rewrite (Lesson 1)
+### Cycle 15 (2024-01-21)
+**Focus:** Liquid Glass Refinements & Diagram Redesign
+- CodeBlock/MDXImage: Lighter glass style
+- Background: Animated gradient blobs
+- Images: Integrated timeline & comparison
+- Diagram: Abstract → Concrete (Cat Recognition)
 
-### Accomplishments
-- **Visuals:** Implemented "Liquid Glass" design (backdrop-blur, bg-white/10) for Callouts, Steps, and Cards.
-- **Navigation:** Fixed sticky footer logic, refined desktop buttons (Solid Blue for Next Page).
-- **Content:** Rewrote Lesson 1 (Hybrid approach), added SVG Diagrams (Neural Network, Training Loop, Black Box).
-- **Bug Fixes:**
-  - Fixed Markdown Table rendering (manual parser).
-  - Fixed Steps numbering logic.
-  - Fixed Nested Code Block parsing in Steps.
-  - Fixed Backend Session issue (InvalidRequestError).
+### Cycle 14 (2024-01-20)
+**Focus:** Critical UI/UX Fixes
+- Fixed markdown table rendering
+- Fixed Steps numbering
+- Redesigned Callout component
+- Added black-box diagram
+- Prompts to code blocks
+- Fixed nested parsing
 
-### Next Steps
-- **Cycle 15:** Incremental visual improvements (as requested by user).
-- **Lesson 2:** Begin content rewrite for Lesson 2.
+### Cycle 13 (2024-01-19)
+**Focus:** Content Hybridization
+- Rewrote Lesson 1 (beginner-friendly + Labs)
+- Added SVG diagrams (neural-network, training-loop)
+- Navigation logic fixes
 
-#### 2. Visual & UI Polish
-- **Buttons**: Refined desktop navigation buttons (clean white style).
-- **Glass UI**: Standardized `bg-white/10` + `backdrop-blur-xl`.
+---
 
-#### 3. Navigation Logic
-- **Consistent Behavior**: Desktop now matches mobile logic.
-    - "Next Lesson" button **only appears on the very last slide**.
-    - Intermediate slides show "Next Page".
+## 🔧 Tech Stack Knowledge
 
-### 📊 Verification
-- **Database**: Content updated via `seed.py`. New Course ID: 23, Lesson ID: 60.
-- **Frontend**: Code changes pushed.
+### Frontend
+- **Framework:** Next.js 14 (App Router)
+- **UI:** Tailwind CSS, Liquid Glass aesthetic
+- **Components:** React, custom MDX renderer
+- **Markdown:** Custom line-by-line parser (no react-markdown)
 
-### 🔗 Links
-- **New Lesson URL**: `http://localhost:3000/courses/23/lessons/60`
+### Backend
+- **API:** FastAPI
+- **Database:** PostgreSQL + SQLAlchemy
+- **Content:** File-based MDX system
+
+### Key Patterns
+- **Liquid Glass:** `bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20`
+- **Education First:** All assets must be educational (diagrams, images)
+- **Beginner-Friendly:** Analogies + hands-on Labs
+
+---
+
+## 📍 Current Status
+
+**Lesson 1:** ✅ Complete (polished, visual, engaging)
+**Next:** Lesson 2 content rewrite
+**Git:** All changes committed

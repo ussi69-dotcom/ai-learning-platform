@@ -1,53 +1,33 @@
-# Task List - Cycle 14: Critical Fixes
+# 📋 Current Tasks
 
-- [x] **Visual: Liquid Glass & Readability**
-    - [x] Add `backdrop-blur-xl` to all glass containers
-    - [x] Fix heading colors in MarkdownRenderer (text-slate-900 dark:text-slate-100)
-    - [x] Ensure backgrounds are `bg-white/10` not solid
+- [ ] **Lesson 2: Content Rewrite**
+    - [ ] Apply beginner-friendly tone
+    - [ ] Add visual components (ConceptCards, Callouts, Diagrams)
+    - [ ] Interactive Labs
 
-- [x] **Navigation: Button Logic**
-    - [x] Fix sticky footer logic (Next Slide vs Finish Lesson)
-    - [x] Ensure "Finish Lesson" only on last slide
-    - [x] Refine desktop navigation buttons (cleaner style)
+---
 
-- [x] **Assets: SVG Diagrams**
-    - [x] Create `Diagram.tsx` component
-    - [x] Implement `neural-network` type
-    - [x] Implement `training-loop` type
-    - [x] Implement `black-box` type
+# 📚 Completed Cycles
 
-- [x] **Content: Text Updates**
-    - [x] Hybrid Rewrite (Beginner + Labs + Guidelines)
-    - [x] Add Video Support via meta.json
-    - [x] Add "Theory Recap" slide
+## Cycle 15 (2024-01-21) ✅
+**Visual Polish & Diagram Redesign**
+- CodeBlock: Lighter adaptive glass style
+- MDXImage: Liquid glass container
+- Background: Animated gradient blobs
+- Images: Integrated timeline & comparison
+- Diagram: Abstract → Concrete Cat Recognition
 
-- [x] **Bug Fixes**
-    - [x] Fix Profile Difficulty Update (Backend Endpoint)
-    - [x] Fix Markdown Table Rendering (Added Table Parser)
-    - [x] Fix Steps Component Numbering (1, 2, 3...)
-    - [x] Fix Nested Code Block Parsing in Steps
+## Cycle 14 (2024-01-20) ✅
+**Critical UI/UX Fixes**
+- Fixed markdown table rendering
+- Fixed Steps numbering
+- Redesigned Callout component
+- Added black-box diagram
+- Prompts to code blocks
+- Fixed nested parsing
 
-- [x] **Visual Polish**
-    - [x] Enhance "Real World Magic" with ConceptCards
-    - [x] Add "Did you know?" facts to Lab pages
-    - [x] Fix "Next Page" button contrast (Solid Blue)
-    - [x] Redesign Callout Component (Glass Style)
-    - [x] Redesign Steps Component (Glass Numbers)
-    - [x] Use Code Blocks for Prompts
-
-# Task List - Cycle 15: Visual Polish & Images
-
-- [x] **Visual: Refinements**
-    - [x] Redesign CodeBlock (Lighter Glass Style)
-    - [x] Redesign MDXImage (Liquid Glass Container)
-    - [x] Add Background Blobs (Liquid Glass Effect)
-
-- [x] **Content: Image Integration**
-    - [x] Add `ai-timeline.png` to "The Big Idea"
-    - [x] Add `ai-vs-programming.png` to "Programming vs Training"
-    - [x] Restore missing "The Big Idea" section
-
-- [x] **Diagram: Neural Network Redesign**
-    - [x] Replace abstract nodes with concrete "Cat Recognition" example
-    - [x] Add Liquid Glass container with gradients
-    - [x] Clear labels: Input (🐱), Learning Patterns, Output ("Cat")
+## Cycle 13 (2024-01-19) ✅
+**Content Hybridization**
+- Rewrote Lesson 1 (beginner-friendly + Labs)
+- Added SVG diagrams (neural-network, training-loop)
+- Navigation logic fixes
