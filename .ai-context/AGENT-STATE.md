@@ -1,5 +1,64 @@
 # Agent State Log
 
+## Cycle 13: Reading Mode Navigation & Content Repair
+
+**Date**: 2025-11-21
+**Goal**: Redesign navigation to prioritize reading flow and repair broken content assets.
+
+### Log
+
+#### Phase 1: Navigation Redesign (Reading Mode) ✅
+- **[EXECUTION]**: Completely redesigned mobile sticky navigation bar:
+  - **Layout**: Prev Slide ← | Progress Box | → Next Slide
+  - **Left**: Large ghost button with `←` arrow (56px height)
+  - **Center**: Progress box with gradient background (blue-50 to indigo-50)
+    - Top row: "Lesson {order}" | "{current}/{total}"
+    - Bottom: Animated progress bar (gradient fill, smooth transition)
+  - **Right**: Large blue button with `→` arrow
+    - Transforms to "Next Lesson →" (dark gradient) on last slide
+    - Or "Finish ✓" (green gradient) if last lesson
+  - **Purpose**: Prioritize slide navigation over lesson switching
+
+#### Phase 2: Content Repair (Lesson 1) ✅
+- **[EXECUTION]**: Fixed broken assets in `01-what-is-ai/content.mdx`:
+  - **Images**: Replaced local paths with Unsplash URLs (3 images)
+    - AI vs Programming, Neural Network, Black Box AI
+    - Always available, high quality, responsive
+  - **Slides**: Reduced from 14 to 8 by merging sections
+    - Used `###` for subsections within slides
+    - Better pacing, less fragmentation
+  - **Quiz**: Rewrote `quiz.json` with 5 new questions
+    - Topics: Programming vs ML, Parameters, Training vs Inference, Black Box, Hallucination
+    - All questions aligned with updated content
+
+#### Phase 3: Visual Polish ✅
+- **[EXECUTION]**: Fixed `Callout.tsx` spacing:
+  - Reduced padding from `p-5` to `p-4`
+  - Reduced gap from `gap-4` to `gap-3`
+  - Smaller icons `w-5 h-5` (better proportion)
+  - Added `prose-p:my-1` and `prose-p:leading-relaxed` for better text flow
+
+### Technical Improvements
+- ✅ Reading Mode navigation with visual progress feedback
+- ✅ Animated progress bar (300ms smooth transition)
+- ✅ Content optimized (8 slides vs 14, working images)
+- ✅ Quiz aligned with current content topics
+- ✅ Better Callout text layout
+
+### Files Modified
+**Frontend:**
+- `frontend/app/courses/[courseId]/lessons/[lessonId]/page.tsx` - Reading Mode navigation
+- `frontend/components/mdx/Callout.tsx` - Spacing improvements
+
+**Content:**
+- `content/courses/ai-basics-beginner/lessons/01-what-is-ai/content.mdx` - Images, slide reduction
+- `content/courses/ai-basics-beginner/lessons/01-what-is-ai/quiz.json` - 5 new questions
+
+### Commits
+- `feat(cycle-13): reading mode navigation and content repair`
+
+---
+
 ## Cycle 12: Enhanced Mobile Navigation & Lesson 1 Rewrite
 
 **Date**: 2025-11-21
