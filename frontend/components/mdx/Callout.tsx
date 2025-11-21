@@ -38,7 +38,7 @@ export default function Callout({ type = 'info', children }: CalloutProps) {
       <div className="flex-shrink-0 mt-0.5">
         <Icon className={`${style.icon} w-5 h-5`} />
       </div>
-      <div className="flex-1 prose prose-sm max-w-none prose-p:my-1 prose-p:leading-relaxed prose-p:text-slate-200">
+      <div className="flex-1 prose prose-sm max-w-none prose-p:my-1 prose-p:leading-relaxed prose-p:text-slate-700 prose-strong:text-slate-900">
         {children}
       </div>
     </div>

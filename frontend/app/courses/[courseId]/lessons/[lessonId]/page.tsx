@@ -283,11 +283,11 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
               <Button
                 variant="ghost"
                 size="lg"
-                className="h-14 px-4 flex-shrink-0 text-slate-700 hover:bg-slate-100"
+                className="h-14 px-6 flex-shrink-0 text-slate-700 hover:bg-slate-100 font-semibold"
                 onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
                 disabled={currentPage === 0}
               >
-                <span className="text-2xl">←</span>
+                ← Previous Page
               </Button>
 
               {/* Progress Box (Center) */}
@@ -311,13 +311,13 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
               {/* Next Slide / Next Lesson Button */}
               {currentPage < totalPages - 1 ? (
-                // Not on last slide - show Next Slide
+                // Not on last slide - show Next Page
                 <Button 
                   size="lg"
-                  className="h-14 px-4 flex-shrink-0 bg-blue-600 hover:bg-blue-700 shadow-lg"
+                  className="h-14 px-6 flex-shrink-0 bg-blue-600 hover:bg-blue-700 shadow-lg font-semibold"
                   onClick={() => setCurrentPage(currentPage + 1)}
                 >
-                  <span className="text-2xl">→</span>
+                  Next Page →
                 </Button>
               ) : (
                 // On last slide - show Next Lesson or Finish
@@ -326,7 +326,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                     <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`}>
                       <Button 
                         size="lg"
-                        className="h-14 px-3 flex-shrink-0 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-700 hover:to-slate-800 shadow-lg text-xs font-bold whitespace-nowrap"
+                        className="h-14 px-6 flex-shrink-0 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 shadow-lg font-bold whitespace-nowrap"
                       >
                         Next Lesson →
                       </Button>
@@ -335,18 +335,18 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                     <Link href={`/courses/${courseId}`}>
                       <Button 
                         size="lg"
-                        className="h-14 px-3 flex-shrink-0 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 shadow-lg text-xs font-bold whitespace-nowrap"
+                        className="h-14 px-6 flex-shrink-0 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-lg font-bold whitespace-nowrap"
                       >
-                        Finish ✓
+                        Finish Course ✓
                       </Button>
                     </Link>
                   ) : (
                     <Button 
                       size="lg"
-                      className="h-14 px-4 flex-shrink-0 bg-blue-600 hover:bg-blue-700 shadow-lg"
+                      className="h-14 px-6 flex-shrink-0 bg-blue-600 hover:bg-blue-700 shadow-lg font-semibold"
                       disabled
                     >
-                      <span className="text-2xl">→</span>
+                      Next Page →
                     </Button>
                   )}
                 </>

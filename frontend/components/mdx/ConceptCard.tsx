@@ -15,9 +15,9 @@ export default function ConceptCard({ title, children }: ConceptCardProps) {
         <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border border-purple-400/30 flex items-center justify-center">
           <BookOpen className="w-5 h-5 text-purple-400" />
         </div>
-        <h4 className="text-lg font-bold text-slate-100 pt-0.5">{title}</h4>
+        <h4 className="text-lg font-bold text-slate-900 pt-0.5">{title}</h4>
       </div>
-      <div className="prose prose-sm max-w-none prose-p:text-slate-200 prose-p:my-2 prose-p:leading-relaxed">
+      <div className="prose prose-sm max-w-none prose-p:text-slate-700 prose-p:my-2 prose-p:leading-relaxed">
         {children}
       </div>
     </div>
