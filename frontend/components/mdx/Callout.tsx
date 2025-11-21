@@ -11,18 +11,21 @@ interface CalloutProps {
 export default function Callout({ type = 'info', children }: CalloutProps) {
   const styles = {
     info: {
-      bg: 'bg-blue-50/80 border-blue-200',
-      icon: 'text-blue-600',
+      bg: 'bg-white/5',
+      border: 'border-l-4 border-blue-500',
+      icon: 'text-blue-400',
       IconComponent: Info
     },
     warning: {
-      bg: 'bg-amber-50/80 border-amber-200',
-      icon: 'text-amber-600',
+      bg: 'bg-white/5',
+      border: 'border-l-4 border-amber-500',
+      icon: 'text-amber-400',
       IconComponent: AlertTriangle
     },
     tip: {
-      bg: 'bg-emerald-50/80 border-emerald-200',
-      icon: 'text-emerald-600',
+      bg: 'bg-white/5',
+      border: 'border-l-4 border-emerald-500',
+      icon: 'text-emerald-400',
       IconComponent: Lightbulb
     }
   };
@@ -31,11 +34,11 @@ export default function Callout({ type = 'info', children }: CalloutProps) {
   const Icon = style.IconComponent;
 
   return (
-    <div className={`${style.bg} border-2 rounded-xl p-4 mb-6 backdrop-blur-sm shadow-sm flex gap-3`}>
+    <div className={`${style.bg} ${style.border} backdrop-blur-xl border border-white/10 rounded-xl p-4 mb-6 shadow-lg flex gap-3`}>
       <div className="flex-shrink-0 mt-0.5">
         <Icon className={`${style.icon} w-5 h-5`} />
       </div>
-      <div className="flex-1 prose prose-sm max-w-none prose-p:my-1 prose-p:leading-relaxed prose-p:text-slate-700">
+      <div className="flex-1 prose prose-sm max-w-none prose-p:my-1 prose-p:leading-relaxed prose-p:text-slate-200">
         {children}
       </div>
     </div>

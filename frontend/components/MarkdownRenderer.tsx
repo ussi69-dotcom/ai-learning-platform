@@ -5,6 +5,7 @@ import MDXImage from './MDXImage';
 import Callout from './mdx/Callout';
 import Steps from './mdx/Steps';
 import ConceptCard from './mdx/ConceptCard';
+import CodeBlock from './CodeBlock';
 
 interface MarkdownRendererProps {
   content: string;
@@ -68,7 +69,30 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         continue;
       }
 
-      // 3. Handle <Steps> component
+      // 3. Handle Code Blocks (```)
+      if (line.trim().startsWith('```')) {
+        const languageMatch = line.trim().match(/^```(\w+)?/);
+        const language = languageMatch?.[1] || 'text';
+        
+        // Find closing ```
+        let j = i + 1;
+        const codeLines: string[] = [];
+        while (j < lines.length && !lines[j].trim().startsWith('```')) {
+          codeLines.push(lines[j]);
+          j++;
+        }
+        
+        elements.push(
+          <CodeBlock key={`code-${i}`} language={language}>
+            {codeLines.join('\n')}
+          </CodeBlock>
+        );
+        
+        i = j + 1;
+        continue;
+      }
+
+      // 4. Handle <Steps> component
       if (line.trim().startsWith('<Steps>')) {
         // Find closing tag
         let j = i + 1;
