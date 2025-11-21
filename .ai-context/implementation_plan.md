@@ -1,19 +1,18 @@
-## 🎨 UX/UI & Content Strategy (Updated)
+# Implementation Plan - Cycle 12: Content Standard & Mobile UX Fix
 
-### 1. The "Train vs. Desktop" Split
-We will structure every lesson into two distinct phases within the MDX:
-* **Phase 1: The Concept (Theory)** - Consumable on mobile. Videos, text, diagrams, quizzes.
-* **Phase 2: The Lab (Practice)** - Requires interaction. Prompts, tools, exercises.
-* *Visual Cue*: A clear divider or "Mode Switch" visual in the lesson layout.
+## 🎯 Goal
+Establish the "Gold Standard" for lesson content (English, High Depth, 10+3 Structure) and finalize the Mobile UX (Sticky Navigation).
 
-### 2. Rich MDX Architecture
-To support "Modern" content, we need custom React components usable inside MDX files:
-* `<Callout type="warning|info|tip">`: Beautiful colored boxes with icons.
-* `<Steps>`: Vertical timeline for tutorials.
-* `<ConceptCard>`: Glassmorphism cards for key definitions.
-* `<MobileOnly>` / `<DesktopOnly>`: Utilities to hide complex practice tasks on mobile if needed.
+## 📝 Content Engineering (Lesson 1: What is AI?)
+We are reverting to English and expanding the content significantly.
+* **Structure**:
+    * **Phase 1: Theory (Mobile Friendly)** - Break down "Rule-based vs AI" into granular slides. Explain "Training", "Inference", "Black Box".
+    * **Phase 2: Lab (Desktop Friendly)** - A prompt engineering test to demonstrate hallucination or reasoning.
+* **Assets**: Verify `<MDXImage>` paths are correct (`./images/filename.png`).
+* **Components**: Use `<Callout>`, `<ConceptCard>`, and `<Steps>` extensively.
 
-### 3. Content Upgrade (Lesson 1 & 2)
-* **Length**: Increase word count by ~50-80% with deeper explanations.
-* **Tone**: More authoritative but accessible (Duke Nukem style touches for higher difficulties).
-* **Media**: Placeholders for now, but structured to be replaced by high-quality assets later.
+## 🎨 UX/UI: The Sticky Footer
+* **Problem**: Navigation buttons are hard to reach on mobile.
+* **Solution**: Implement a fixed bottom bar for navigation on screens < 768px.
+    * **CSS**: `fixed bottom-0 w-full bg-background/80 backdrop-blur-md border-t p-4`.
+    * **Layout**: Space-between (Prev - Pagination - Next).

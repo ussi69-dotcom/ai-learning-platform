@@ -1,4 +1,4 @@
-# 🚀 SYSTEM BRIEFING - 2025-11-21 13:54:14
+# 🚀 SYSTEM BRIEFING - 2025-11-21 15:40:59
 
 **INSTRUCTION:** This is a context dump for the AI Architect (Gemini).
 Please load the following context, activate your role defined in GEMINI_PROMPT.md, and await instructions.
@@ -160,6 +160,64 @@ Cíl: Ty jsi "Mozek", soubory jsou "Paměť". Nic nesmí zůstat jen v chatu.
 ## 📄 FILE: AGENT-STATE.md
 ```markdown
 # Agent State Log
+
+## Cycle 10: Rich MDX Components & Content Rewrite
+
+**Date**: 2025-11-21
+**Goal**: Implement rich MDX components (Callout, Steps, ConceptCard) and rewrite Lesson 1 with modern Theory/Practice structure.
+
+### Log
+
+#### Phase 1: MDX Component Creation ✅
+- **[EXECUTION]**: Created `frontend/components/mdx/Callout.tsx`:
+  - Three types: info (blue), warning (amber), tip (emerald)
+  - Icons from lucide-react (Info, AlertTriangle, Lightbulb)
+  - Glassmorphism styling with backdrop-blur
+- **[EXECUTION]**: Created `frontend/components/mdx/Steps.tsx`:
+  - Numbered steps with gradient badges (blue to indigo)
+  - Supports h3 headings as step titles
+  - Nested content rendering
+- **[EXECUTION]**: Created `frontend/components/mdx/ConceptCard.tsx`:
+  - Purple gradient background for definitions
+  - BookOpen icon from lucide-react
+  - Title prop for concept name
+
+#### Phase 2: MarkdownRenderer Refactor ✅
+- **[EXECUTION]**: Completely rewrote `MarkdownRenderer.tsx`:
+  - Custom component parser for `<Callout>`, `<Steps>`, `<ConceptCard>`
+  - Inline markdown support (bold, italic, links)
+  - Proper nesting and content extraction
+  - Support for headings, lists, images, horizontal rules
+- **[VERIFICATION]**: Fixed TypeScript lint error in Steps component (typed React element props)
+
+#### Phase 3: Content Rewrite ✅
+- **[EXECUTION]**: Rewrote `content/courses/ai-basics-beginner/lessons/01-what-is-ai/content.mdx`:
+  - **Theory Section**: Explains old vs new programming paradigm
+  - **Practice Section**: Hands-on lab with ChatGPT "hallucination" test
+  - Used all three new components (Callout, ConceptCard, Steps)
+  - Czech language content with engaging tone
+- **[EXECUTION]**: Updated lesson content in database via Python script
+
+### Technical Improvements
+- ✅ Rich educational components for better UX
+- ✅ Theory/Practice structure for lessons
+- ✅ Reusable MDX component system
+- ✅ TypeScript type safety maintained
+
+### Files Modified
+**Frontend:**
+- `frontend/components/mdx/Callout.tsx` - NEW: Info/warning/tip callout boxes
+- `frontend/components/mdx/Steps.tsx` - NEW: Numbered tutorial steps
+- `frontend/components/mdx/ConceptCard.tsx` - NEW: Definition highlights
+- `frontend/components/MarkdownRenderer.tsx` - Complete rewrite with custom component parsing
+
+**Content:**
+- `content/courses/ai-basics-beginner/lessons/01-what-is-ai/content.mdx` - Rewritten with new structure
+
+### Commits
+- `feat(cycle-10): rich MDX components and Lesson 1 rewrite`
+
+---
 
 ## Cycle 9: Content Migration & Dynamic Loading
 
@@ -502,60 +560,31 @@ Cíl: Ty jsi "Mozek", soubory jsou "Paměť". Nic nesmí zůstat jen v chatu.
 
 ## 📄 FILE: implementation_plan.md
 ```markdown
-# Implementation Plan - Cycle 10: UX/UI Polish & Asset Pipeline
+## 🎨 UX/UI & Content Strategy (Updated)
 
-## 🎯 Goal
-Transform the raw functionality into a polished product. Replace the generic "Blue Banner" design with a modern "Liquid Glass" aesthetic, optimize mobile navigation, and establish a pipeline for serving images directly from the lesson content folders.
+### 1. The "Train vs. Desktop" Split
+We will structure every lesson into two distinct phases within the MDX:
+* **Phase 1: The Concept (Theory)** - Consumable on mobile. Videos, text, diagrams, quizzes.
+* **Phase 2: The Lab (Practice)** - Requires interaction. Prompts, tools, exercises.
+* *Visual Cue*: A clear divider or "Mode Switch" visual in the lesson layout.
 
-## 🏗️ Architecture Changes
+### 2. Rich MDX Architecture
+To support "Modern" content, we need custom React components usable inside MDX files:
+* `<Callout type="warning|info|tip">`: Beautiful colored boxes with icons.
+* `<Steps>`: Vertical timeline for tutorials.
+* `<ConceptCard>`: Glassmorphism cards for key definitions.
+* `<MobileOnly>` / `<DesktopOnly>`: Utilities to hide complex practice tasks on mobile if needed.
 
-### 1. Backend: Content Asset Serving
-The content currently resides in `/app/content` (Docker volume). Frontend cannot access this directly.
-* **Action**: Mount a generic static file route in FastAPI.
-* **Route**: `/content/*` -> Maps to `/app/content/`.
-* **Implication**: Any image inside `content/courses/x/lessons/y/images/img.png` becomes accessible via `http://backend:8000/content/courses/x/lessons/y/images/img.png`.
-
-### 2. Frontend: Asset Handling via MDX
-We need to intercept image tags in Markdown to point to the API.
-* **Component**: Create a custom `MDXImage` component.
-* **Logic**:
-    * If `src` starts with `http` (external): Render as is.
-    * If `src` is relative (`./images/foo.png`): Rewrite URL to `${API_BASE_URL}/content/${currentCourseId}/${currentLessonId}/${src}`.
-
-### 3. UX/UI Redesign ("Liquid Glass")
-* **Header Removal**: Remove the solid blue hero section.
-* **New Layout**:
-    * **Background**: Subtle, dynamic gradient or abstract shape that persists behind the content.
-    * **Glass Cards**: Content containers will use `bg-background/60` (semi-transparent) with `backdrop-blur-md` and a thin border.
-    * **Typography**: Larger, cleaner fonts. Better spacing between paragraphs.
-* **Mobile Navigation**:
-    * Sticky footer bar for "Previous / Next" buttons on mobile viewports.
-    * Increase touch targets (min 44px height).
-
-## 📋 Technical Details
-
-### Backend (FastAPI)
-Update `backend/app/main.py`:
-```python
-from fastapi.staticfiles import StaticFiles
-# ...
-app.mount("/content", StaticFiles(directory="/app/content"), name="content")
-Frontend (Tailwind Config)
-Ensure we have a consistent glass utility class (or use arbitrary values):
-
-CSS
-
-.glass-panel {
-  @apply bg-white/70 dark:bg-slate-950/70 backdrop-blur-lg border border-slate-200 dark:border-slate-800 shadow-sm;
-}
-Assets Checklist (Piece of Cake)
-We need to physically place the image files into the content/ structure for the "AI Basics" course to test the pipeline.
+### 3. Content Upgrade (Lesson 1 & 2)
+* **Length**: Increase word count by ~50-80% with deeper explanations.
+* **Tone**: More authoritative but accessible (Duke Nukem style touches for higher difficulties).
+* **Media**: Placeholders for now, but structured to be replaced by high-quality assets later.
 ```
 
 
 ## 📄 FILE: task.md
 ```markdown
-# Task List - Cycle 12: [Next Cycle Name]
+# Task List - Cycle 11: [Next Cycle Name]
 
 - [ ] **[Feature/Task Name]**
     - [ ] [Subtask 1]
@@ -683,6 +712,11 @@ We need to physically place the image files into the content/ structure for the 
       📄 cycle_10_ui_and_fixes.md
       📄 cycle_08.md
       📄 cycle_09.md
+    📁 archive/
+      📁 cycle-10/
+        📄 SUMMARY.md
+        📄 components_mockup.png
+        📄 walkthrough.md
     📁 modules/
       📄 module-learning-basics.md
   📁 frontend/
@@ -739,6 +773,10 @@ We need to physically place the image files into the content/ structure for the 
       📄 NavBar.tsx
       📄 CalloutBox.tsx
       📄 TryItYourself.tsx
+      📁 mdx/
+        📄 Callout.tsx
+        📄 Steps.tsx
+        📄 ConceptCard.tsx
       📁 ui/
         📄 card.tsx
         📄 button.tsx
@@ -797,6 +835,7 @@ We need to physically place the image files into the content/ structure for the 
       📄 rules.md
   📁 scripts/
     📄 context_builder.py
+    📄 export_content.py
 ```
 
 

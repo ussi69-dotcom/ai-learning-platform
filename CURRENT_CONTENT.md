@@ -60,81 +60,65 @@ Show AI examples of what you want.
 
 --- FILE: content/courses/ai-basics-beginner/lessons/01-what-is-ai/content.mdx ---
 ```
-# What is Artificial Intelligence? 🤖
+# Co je to vlastně AI? 🤖
 
-Welcome! You're about to learn one of the most important technologies of our time - and it's easier than you think!
+<Callout type="info">
+**Rychlý start:** V této lekci pochopíš rozdíl mezi "tupým" programem a "chytrou" AI.
+⏳ **Čas na čtení:** 5 min | 📱 **Vhodné do vlaku**
+</Callout>
 
-## What is AI?
+Vítej! Právě začínáš cestu, která ti pravděpodobně změní kariéru. AI není jen "hype". Je to nová elektřina. A ty se právě učíš, jak zapojit zástrčku.
 
-> [!NOTE]
-> **Artificial Intelligence (AI)** is when computers can do things that usually need human intelligence.
+## Část 1: Teorie (Jak to funguje) 🧠
 
-Think of it like this:
-- A **calculator** can add numbers → That's just following rules
-- **AI** can look at a photo and tell you what's in it → That's intelligence!
+Představ si, že chceš naučit počítač rozeznat **psa** od **kočky**.
 
-![AI vs Regular Programs](./images/ai-vs-programming.png)
+### Starý způsob (Programování)
+V klasickém programování (to, co se dělá posledních 50 let) bys musel napsat přesná pravidla:
+1. *Má to špičaté uši?*
+2. *Má to svislé zorničky?*
+3. *Dělá to Mňau?*
 
-## Real Examples You Use Daily
+Je to jako psát recept na bábovku. Když se spleteš v gramáži, bábovka se nepovede. Když kočka na fotce nemá vidět uši, program selže.
 
-You already use AI every day! Here are some examples:
+### Nový způsob (Umělá Inteligence)
+AI neprogramujeme pravidly. My ji **trénujeme**.
+Ukážeme jí 10 000 fotek psů a 10 000 fotek koček a řekneš: *"Na, tohle se nauč."*
 
-| AI Tool | What It Does | How Often You Use It |
-|---------|-------------|---------------------|
-| **Siri/Google Assistant** | Understands your voice and answers questions | Daily |
-| **Instagram Filters** | Recognizes your face and adds effects | Multiple times a day |
-| **Netflix Recommendations** | Learns what you like and suggests shows | Every time you open the app |
+<ConceptCard title="Machine Learning (Strojové učení)">
+Proces, kdy počítač sám hledá vzorce v datech, aniž by mu člověk musel říkat, co přesně má hledat. Je to statistika na steroidech.
+</ConceptCard>
 
-> [!TIP]
-> ChatGPT reached 100 million users in just 2 months - faster than TikTok, Instagram, or any app in history!
+AI si sama najde pravidla, která by člověka ani nenapadla (např. poměr vzdálenosti očí k čumáku).
 
-## AI vs Regular Programs
+---
 
-Let's make this super clear with an example:
+## Část 2: Praxe (Hands-on Lab) 🛠️
 
-```python
-# Regular Program (Calculator)
-result = 5 + 3  # Always returns 8
+<Callout type="warning">
+**Pozor:** Pro tuto část je lepší být u počítače nebo mít rozdělenou obrazovku. Budeme zkoušet AI v akci.
+</Callout>
 
-# AI (Image Recognition)
-result = ai_model.predict(image)  # Learns from millions of examples
-```
+Pojďme si dokázat, že AI není magie, ale nástroj.
 
-The key difference is **learning**. Regular programs do exactly what they are told. AI learns patterns from data to make decisions.
+<Steps>
+### Krok 1: Otevři si Chatbota
+Jdi na ChatGPT nebo Google Gemini.
 
-## Quick Challenge 🎯
+### Krok 2: Test "Halucinace"
+Zeptej se AI na něco, co neexistuje, abys viděl, jak se snaží vyhovět.
+**Prompt:** *"Napiš mi krátký životopis slavného českého vynálezce jménem 'Karel Vymyšlený', který v roce 1920 vynalezl nafukovací kladivo."*
 
-**Task**: Name 3 AI tools you've used TODAY (hint: check your phone!)
+### Krok 3: Analýza
+Sleduj, jak AI suverénně lže. Proč? Protože ona "neví", co je pravda. Ona jen doplňuje slova, která statisticky patří k sobě.
+</Steps>
 
-```tryit
-Identify AI Tools --- Name 3 AI tools you use daily --- Hint: Think about apps that recommend things or understand your voice!
-```
+### Co si z toho odnést?
+AI je **generátor**, ne encyklopedie. Je to extrémně sečtělý papoušek, který umí skládat básně, programovat i lhát. Tvým úkolem je být ten, kdo ho hlídá.
 
-> [!EXERCISE]
-> **Your Turn**: Open ChatGPT and ask it: "Explain what artificial intelligence is to a 5-year-old."
-> 
-> Notice how it adjusts its language to be simple and uses analogies!
-
-## History of AI (Quick Version)
-
-Let me take you on a 70-year journey in 30 seconds:
-
-- **1950s**: Alan Turing asks "Can machines think?"
-- **1997**: IBM's Deep Blue beats world chess champion
-- **2011**: IBM Watson wins Jeopardy!
-- **2016**: AlphaGo beats world Go champion
-- **2022**: ChatGPT launches and AI goes MAINSTREAM 🚀
-
-![AI Timeline](./images/ai-timeline.png)
-
-> [!SUCCESS]
-> **You now know**:
-> - ✅ What AI is (and what it isn't)
-> - ✅ Real examples you use daily
-> - ✅ The difference between AI and regular programs
-> - ✅ A bit of AI history
-
-Next up: Let's learn HOW AI actually learns! 🚀
+<Callout type="tip">
+**Pro pokročilé:** Zkus se AI zeptat na aktuální zprávy z dnešního dne. Všimni si, že většina modelů má "knowledge cutoff" - datum, za které nemají data.
+</Callout>
 
 ```
 

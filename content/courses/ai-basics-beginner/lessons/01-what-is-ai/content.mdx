@@ -1,59 +1,192 @@
-# Co je to vlastně AI? 🤖
+# What is AI, Really? 🤖
 
 <Callout type="info">
-**Rychlý start:** V této lekci pochopíš rozdíl mezi "tupým" programem a "chytrou" AI.
-⏳ **Čas na čtení:** 5 min | 📱 **Vhodné do vlaku**
+**Lesson Goal:** Understand the fundamental shift from "Programming" to "Training".
+⏳ **Reading Time:** 10 min | 📱 **Theory Phase**
 </Callout>
 
-Vítej! Právě začínáš cestu, která ti pravděpodobně změní kariéru. AI není jen "hype". Je to nová elektřina. A ty se právě učíš, jak zapojit zástrčku.
+Welcome. You are about to enter a world that is changing faster than any technology in history. AI isn't just "smart software." It's a new way of computing.
 
-## Část 1: Teorie (Jak to funguje) 🧠
-
-Představ si, že chceš naučit počítač rozeznat **psa** od **kočky**.
-
-### Starý způsob (Programování)
-V klasickém programování (to, co se dělá posledních 50 let) bys musel napsat přesná pravidla:
-1. *Má to špičaté uši?*
-2. *Má to svislé zorničky?*
-3. *Dělá to Mňau?*
-
-Je to jako psát recept na bábovku. Když se spleteš v gramáži, bábovka se nepovede. Když kočka na fotce nemá vidět uši, program selže.
-
-### Nový způsob (Umělá Inteligence)
-AI neprogramujeme pravidly. My ji **trénujeme**.
-Ukážeme jí 10 000 fotek psů a 10 000 fotek koček a řekneš: *"Na, tohle se nauč."*
-
-<ConceptCard title="Machine Learning (Strojové učení)">
-Proces, kdy počítač sám hledá vzorce v datech, aniž by mu člověk musel říkat, co přesně má hledat. Je to statistika na steroidech.
-</ConceptCard>
-
-AI si sama najde pravidla, která by člověka ani nenapadla (např. poměr vzdálenosti očí k čumáku).
+Let's start by breaking a common myth.
 
 ---
 
-## Část 2: Praxe (Hands-on Lab) 🛠️
+## The Myth of "Intelligence" 🧠
+
+When we say "Artificial Intelligence," we imagine robots thinking like humans.
+But strictly speaking, current AI (LLMs like ChatGPT) doesn't "think." It **predicts**.
+
+> **Fun Fact:** If you read every book in the Library of Congress, you still wouldn't be as "read" as a modern AI model. But you would understand what you read. The AI just knows which words likely follow each other.
+
+---
+
+## The Old Way: Programming (The Recipe) 📜
+
+For the last 50 years, software was built on **Rules**.
+
+Imagine you want to write a program to recognize a **Cat**.
+You, the programmer, have to define the rules:
+1. Does it have triangular ears?
+2. Does it have whiskers?
+3. Is the shape roughly oval?
+
+```python
+if ears == "triangular" and whiskers == True:
+    return "Cat"
+else:
+    return "Not a Cat"
+```
+
+**The Problem:** If the cat is turned around, or hiding its ears, your program fails. You have to write infinite rules.
+
+---
+
+## The New Way: Machine Learning (The Student) 🎓
+
+With AI, we don't write rules. We curate data.
+
+Instead of coding definitions, we show the computer 10,000 photos of cats and 10,000 photos of dogs. We say: "Figure it out."
+
+<ConceptCard title="Machine Learning">
+The science of getting computers to act without being explicitly programmed. The system learns patterns from data to make predictions.
+</ConceptCard>
+
+The AI looks at the pixels and finds patterns you didn't even know existed (like the texture of the fur or the distance between eyes).
+
+---
+
+## Neural Networks Explained Simply 🕸️
+
+How does it actually "store" this knowledge? Think of a Neural Network like a giant switchboard with millions of knobs.
+
+1. **Input:** Data comes in (an image of a cat).
+2. **Layers:** It passes through layers of "neurons" (mathematical functions).
+3. **Knobs (Weights):** As it learns, it turns these knobs slightly to get the right answer.
+4. **Output:** It spits out a probability: "98% chance this is a Cat."
+
+When we say a model has "70 Billion Parameters," we mean it has 70 billion knobs that have been perfectly tuned.
+
+---
+
+## Training vs. Inference 🏋️ vs ⚡
+
+It is crucial to understand these two stages.
+
+### 1. Training (The Gym)
+This is the hard part. It takes months and thousands of GPUs.
+- The model reads the internet.
+- It makes mistakes and corrects itself.
+- **Result:** A static "file" (the model weights).
+
+### 2. Inference (The Exam)
+This is what happens when you use ChatGPT.
+- The model is "frozen." It is not learning from you in real-time (mostly).
+- It just uses its frozen memory to answer your prompt.
+
+---
+
+## The "Black Box" Problem 📦
+
+Here is the scary part. Because the AI figured out the rules by itself (by tuning those billions of knobs), we don't actually know HOW it works.
+
+We know the math. We know the code. But we don't know why a specific neuron fired for a specific word.
 
 <Callout type="warning">
-**Pozor:** Pro tuto část je lepší být u počítače nebo mít rozdělenou obrazovku. Budeme zkoušet AI v akci.
+**Interpretation:** This is why AI can be unpredictable. It's a statistical black box, not a logical flowchart.
 </Callout>
 
-Pojďme si dokázat, že AI není magie, ale nástroj.
+---
 
-<Steps>
-### Krok 1: Otevři si Chatbota
-Jdi na ChatGPT nebo Google Gemini.
+## Why AI Hallucinates 😵‍💫
 
-### Krok 2: Test "Halucinace"
-Zeptej se AI na něco, co neexistuje, abys viděl, jak se snaží vyhovět.
-**Prompt:** *"Napiš mi krátký životopis slavného českého vynálezce jménem 'Karel Vymyšlený', který v roce 1920 vynalezl nafukovací kladivo."*
+You will hear the term "Hallucination" often. This happens because the AI is probabilistic, not truthful.
 
-### Krok 3: Analýza
-Sleduj, jak AI suverénně lže. Proč? Protože ona "neví", co je pravda. Ona jen doplňuje slova, která statisticky patří k sobě.
-</Steps>
+If you ask: "Who was the first person on Mars?" The AI looks at its patterns. It sees "First person on..." and usually follows with "Moon" or "Neil Armstrong." So it might confidently say: "Neil Armstrong was the first person on Mars."
 
-### Co si z toho odnést?
-AI je **generátor**, ne encyklopedie. Je to extrémně sečtělý papoušek, který umí skládat básně, programovat i lhát. Tvým úkolem je být ten, kdo ho hlídá.
+**It's not lying.** It's just predicting the most likely next word, regardless of truth.
+
+---
+
+## Theory Recap: Key Takeaways 📝
+
+Before we move to the Lab, ensure you understand these concepts:
+
+- **Programming vs. AI:** Rules vs. Examples.
+- **Parameters:** The "knobs" inside the model that store knowledge.
+- **Training:** The intense learning phase (months).
+- **Inference:** The fast using phase (seconds).
+- **Hallucination:** When the probability engine guesses wrong facts.
+
+---
+
+## Phase 2: The Lab (Practice) 🛠️
 
 <Callout type="tip">
-**Pro pokročilé:** Zkus se AI zeptat na aktuální zprávy z dnešního dne. Všimni si, že většina modelů má "knowledge cutoff" - datum, za které nemají data.
+**Switch to Desktop:** Ideally, open ChatGPT or Gemini in a separate window for this section.
 </Callout>
+
+We are going to test the "Probabilistic" nature of AI.
+
+---
+
+## Step 1: The Knowledge Cutoff Test
+
+AI models are frozen in time. Let's prove it.
+
+<Steps>
+### Action
+Ask your AI model about a news event from yesterday.
+**Prompt:** "What were the major headlines in the news yesterday?"
+
+### Observation
+- If it has access to the web (like Gemini or ChatGPT-4o), it will look it up.
+- If it is a raw offline model, it will say "I don't know" or give you generic info.
+</Steps>
+
+---
+
+## Step 2: Forcing a Hallucination
+
+Let's try to trick the "next word prediction." We will ask about something that sounds plausible but is fake.
+
+<Steps>
+### Action
+Use this prompt:
+**Prompt:** "Write a short biography of the famous 19th-century toaster inventor, Reginald P. Crustworth."
+
+### Observation
+- Does the AI admit he doesn't exist?
+- Or does it invent a story about how Reginald revolutionized breakfast in 1885?
+</Steps>
+
+<Callout type="warning">
+If the AI writes a bio, you just witnessed a **Hallucination**. It filled the gaps with statistically likely words ("born in London", "patented", "innovation").
+</Callout>
+
+---
+
+## Step 3: The Reasoning Test
+
+AI struggles with simple logic that requires "common sense" if it's not in the training data.
+
+<Steps>
+### Action
+Try this riddle:
+**Prompt:** "I have 3 apples today. Yesterday I ate one apple. How many apples do I have now?"
+
+### Observation
+- A human knows the answer depends on whether the eaten apple was part of the 3.
+- Watch how the AI tries to calculate 3 - 1 = 2 or gets confused.
+</Steps>
+
+---
+
+## Lab Recap: What did we prove? 🧪
+
+- **AI is confident but not always right.** It can lie convincingly about "Reginald P. Crustworth."
+- **AI relies on patterns.** It constructs sentences based on likelihood, not facts.
+- **You are the pilot.** You must verify the output. AI is the engine, but you steer.
+
+---
+
+**Next Lesson:** We will dive into How AI Learns (The Training Process).

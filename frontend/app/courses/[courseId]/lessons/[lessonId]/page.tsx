@@ -277,34 +277,70 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           </div>
 
           {/* Mobile Sticky Navigation Bar */}
-          <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-200 md:hidden z-50 flex gap-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-             {/* Logic: If not last slide, show Next Slide. If last slide, show Next Lesson/Complete */}
-             {currentPage < totalPages - 1 ? (
+          <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-200 md:hidden z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+            <div className="flex items-center justify-between gap-3">
+              {/* Previous Button */}
+              <Button
+                variant="outline"
+                className="h-12 px-4 bg-white/50 hover:bg-white border-slate-300"
+                onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+                disabled={currentPage === 0}
+              >
+                ← Prev
+              </Button>
+
+              {/* Pagination Dots */}
+              <div className="flex gap-1.5">
+                {Array.from({ length: totalPages }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentPage(idx)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      idx === currentPage 
+                        ? 'bg-blue-600 w-6' 
+                        : 'bg-slate-300'
+                    }`}
+                    aria-label={`Go to page ${idx + 1}`}
+                  />
+                ))}
+              </div>
+
+              {/* Next Button */}
+              {currentPage < totalPages - 1 ? (
                 <Button 
-                  className="w-full h-12 text-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-lg"
+                  className="h-12 px-4 bg-blue-600 hover:bg-blue-700 shadow-lg"
                   onClick={() => setCurrentPage(currentPage + 1)}
                 >
-                  Continue →
+                  Next →
                 </Button>
-             ) : (
-                // We are at the end of the slides (or quiz)
+              ) : (
+                // Last page - show lesson navigation
                 <>
                   {nextLesson ? (
-                    <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`} className="w-full">
-                      <Button className="w-full h-12 text-lg font-semibold bg-slate-900 hover:bg-slate-800 shadow-lg">
+                    <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`}>
+                      <Button className="h-12 px-4 bg-slate-900 hover:bg-slate-800 shadow-lg whitespace-nowrap">
                         Next Lesson →
                       </Button>
                     </Link>
                   ) : isLastLesson ? (
-                    <Link href={`/courses/${courseId}`} className="w-full">
-                      <Button className="w-full h-12 text-lg font-semibold bg-green-600 hover:bg-green-700 shadow-lg">
-                        Finish Course ✓
+                    <Link href={`/courses/${courseId}`}>
+                      <Button className="h-12 px-4 bg-green-600 hover:bg-green-700 shadow-lg whitespace-nowrap">
+                        Finish ✓
                       </Button>
                     </Link>
-                  ) : null}
+                  ) : (
+                    <Button 
+                      className="h-12 px-4 bg-blue-600 hover:bg-blue-700 shadow-lg"
+                      disabled
+                    >
+                      Next →
+                    </Button>
+                  )}
                 </>
-             )}
+              )}
+            </div>
           </div>
+
           
         </div>
       </div>
