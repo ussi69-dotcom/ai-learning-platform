@@ -1,0 +1,57 @@
+[
+  {
+    "question": "What is Artificial Intelligence?",
+    "options": [
+      "A type of computer virus",
+      "When computers can do things that need human intelligence",
+      "A programming language",
+      "A video game"
+    ],
+    "correct_answer": 1,
+    "explanation": "AI is when computers can perform tasks that typically require human intelligence, like recognizing images, understanding speech, or making decisions."
+  },
+  {
+    "question": "Which of these is an example of AI?",
+    "options": [
+      "A calculator adding numbers",
+      "Microsoft Word spell checker",
+      "Siri understanding your voice and answering questions",
+      "A digital clock showing time"
+    ],
+    "correct_answer": 2,
+    "explanation": "Siri uses AI to understand natural language, process meaning, and generate appropriate responses. A calculator just follows fixed mathematical rules."
+  },
+  {
+    "question": "What makes AI different from regular computer programs?",
+    "options": [
+      "AI is more expensive to build",
+      "AI learns patterns from data",
+      "AI was invented more recently",
+      "AI only works on smartphones"
+    ],
+    "correct_answer": 1,
+    "explanation": "The key difference is that AI learns from data and can improve over time, while regular programs just follow pre-programmed rules that never change."
+  },
+  {
+    "question": "When did ChatGPT launch and make AI mainstream?",
+    "options": [
+      "2018",
+      "2020",
+      "2022",
+      "2024"
+    ],
+    "correct_answer": 2,
+    "explanation": "ChatGPT launched in November 2022 and quickly became the fastest-growing consumer application in history, making AI accessible to millions of people."
+  },
+  {
+    "question": "True or False: AI can learn patterns from data just like humans learn from experience.",
+    "options": [
+      "True",
+      "False",
+      "Only for image recognition",
+      "Only for voice assistants"
+    ],
+    "correct_answer": 0,
+    "explanation": "True! AI learns from data (examples) just like humans learn from experience. The more data it sees, the better it gets at recognizing patterns."
+  }
+]

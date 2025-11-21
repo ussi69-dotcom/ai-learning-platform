@@ -26,3 +26,8 @@
 ## 🌍 Lokalizace & Security
 - **Jazyk:** CZ obsah + EN terminologie.
 - **Geo-blocking:** Povolit jen ČR/SR IP adresy (Cloudflare WAF).
+
+## 📊 Analýza & Výkonnost
+- **Dashboard:** Výkonnost uživatele (účet, kurzy, úspěšnost).
+- **Leaderboard:** Žebříček na Homepage.
+- **Analytics:** Google Analytics pro sledování výkonnosti.

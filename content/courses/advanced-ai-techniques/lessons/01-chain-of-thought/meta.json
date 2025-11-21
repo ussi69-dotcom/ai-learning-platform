@@ -1,0 +1,5 @@
+{
+  "title": "Chain-of-Thought Prompting",
+  "description": "Make AI show its reasoning step-by-step.",
+  "order": 1
+}

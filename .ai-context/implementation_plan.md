@@ -1,60 +1,67 @@
-# Implementation Plan - Day 8: Progress Tracking System
+# Implementation Plan - Cycle 9: Content Engine Refactor
 
 ## Goal
-Implement a comprehensive progress tracking system that allows users to mark lessons as completed, view their progress within a course, and see a summary of their learning achievements on their profile.
+Refactor the lesson content storage to solve scalability issues. Move hardcoded strings from `seed.py` into a structured file system (Markdown/JSON). This prepares the platform for scaling, localization (CZ/EN), and easier content updates.
 
-## User Review Required
-> [!IMPORTANT]
-> We are adding a new database table `UserProgress`. Ensure database migrations are handled or the database is reset if we are in dev mode without migrations.
+## Architecture Change
+- **Current State**: `seed.py` instantiates `Lesson` objects with massive strings.
+- **Target State**: `seed.py` uses a `ContentLoader` service to iterate over a `/content` directory, parse MDX/JSON files, and sync the Database.
+
+## Directory Structure (Target)
+We will create a root-level `content/` directory:
+```text
+content/
+  courses/
+    ai-basics-beginner/          (Slug based on course title)
+      meta.json                  (Title: "AI Basics...", Difficulty: "PIECE_OF_CAKE", etc.)
+      lessons/
+        01-what-is-ai/           (Ordered folder)
+          content.mdx            (The lesson text)
+          meta.json              (Title, description, video_url)
+          quiz.json              (List of quiz questions for this lesson)
+    practical-prompt-engineering/
+      ...
 
 ## Proposed Changes
+1. Content Migration
+Action: Create the content/ folder structure.
 
-### Backend
+Task: Extract text from the current seed.py into .mdx files.
 
-#### [MODIFY] [models.py](file://wsl$/Ubuntu/home/ussi/ai-learning-platform/backend/app/models.py)
-- Add `UserProgress` model:
-    - `id`: int (primary key)
-    - `user_id`: int (foreign key)
-    - `lesson_id`: int (foreign key)
-    - `completed_at`: datetime
-    - `course_id`: int (foreign key, for easier aggregation)
+Extract "AI Basics" lessons (1-5).
 
-#### [MODIFY] [schemas.py](file://wsl$/Ubuntu/home/ussi/ai-learning-platform/backend/app/schemas.py)
-- Add `UserProgressBase`, `UserProgressCreate`, `UserProgressRead`.
+Extract Quizzes into quiz.json for each lesson.
 
-#### [MODIFY] [main.py](file://wsl$/Ubuntu/home/ussi/ai-learning-platform/backend/app/main.py)
-- Add `POST /lessons/{lesson_id}/complete`: Mark lesson as complete.
-- Add `GET /courses/{course_id}/progress`: Get progress for a specific course (percentage, completed lessons).
-- Add `GET /users/me/progress`: Get all progress for the user.
+Create placeholders for other difficulty courses defined in seed.
 
-### Frontend
+2. Backend Logic (backend/app/services/content_loader.py)
+Implement ContentLoader class:
 
-#### [NEW] [LessonComplete.tsx](file://wsl$/Ubuntu/home/ussi/ai-learning-platform/frontend/components/LessonComplete.tsx)
-- Button component to mark lesson as complete.
-- Shows "Completed" state if already done.
-- Triggers confetti or visual celebration on completion.
+load_courses(base_path: str): Scans directories.
 
-#### [MODIFY] [page.tsx](file://wsl$/Ubuntu/home/ussi/ai-learning-platform/frontend/app/courses/[courseId]/lessons/[lessonId]/page.tsx)
-- Integrate `LessonComplete` component at the end of the lesson (after Quiz).
+sync_to_db(db: Session): Updates or Creates records (Idempotent logic).
 
-#### [MODIFY] [page.tsx](file://wsl$/Ubuntu/home/ussi/ai-learning-platform/frontend/app/courses/[courseId]/page.tsx)
-- Fetch user progress for the course.
-- Show checkmarks next to completed lessons in the list.
-- Show a progress bar for the course.
+Logic: Use folder names for ordering (01-... -> order=1).
 
-#### [MODIFY] [page.tsx](file://wsl$/Ubuntu/home/ussi/ai-learning-platform/frontend/app/profile/page.tsx)
-- Add "My Learning" section.
-- Display list of in-progress and completed courses.
+3. Update seed.py
+Delete the hardcoded lists (easy_lessons, lesson1_quizzes, etc.).
 
-## Verification Plan
+Import ContentLoader and call loader.sync_to_db(db).
 
-### Automated Tests
-- Create `backend/tests/test_progress.py` to test:
-    - Marking lesson as complete.
-    - Retrieving course progress.
-    - Ensuring no duplicate progress entries.
+Keep User (Admin) creation in seed.py as it is system data, not content.
 
-### Manual Verification
-1.  **Lesson Completion**: Go to a lesson, finish it, click "Mark Complete". Verify UI updates.
-2.  **Course Progress**: Go to course page, verify progress bar increases and checkmark appears.
-3.  **Profile**: Go to profile, verify course shows up in "My Learning".
+4. Frontend UX (Quiz Separation)
+Target: frontend/app/courses/[courseId]/lessons/[lessonId]/page.tsx
+
+Refactor:
+
+Currently, Quiz is rendered at the bottom of the content.
+
+New Flow: Treat Quiz as a separate "Slide" in the pagination.
+
+When user finishes the last text slide -> Show "Start Quiz" button -> Transition to Quiz Component.
+
+Verification Plan
+Data Integrity: Run docker compose exec backend python seed.py. Verify DB still contains all 5 lessons and quizzes.
+
+UX Check: Navigate through a lesson. Verify text renders correctly from MDX. Verify Quiz appears cleanly at the end.

@@ -1,0 +1,57 @@
+[
+  {
+    "question": "What is a 'prompt' in AI?",
+    "options": [
+      "A type of AI model",
+      "Your question or instruction to AI",
+      "An error message",
+      "A programming language"
+    ],
+    "correct_answer": 1,
+    "explanation": "A prompt is how you communicate with AI - it's your question, instruction, or request that tells the AI what you want it to do."
+  },
+  {
+    "question": "According to the lesson, what makes a good prompt?",
+    "options": [
+      "Being as vague as possible",
+      "Using technical jargon",
+      "Being specific, giving context, and specifying format",
+      "Making it as short as possible"
+    ],
+    "correct_answer": 2,
+    "explanation": "Good prompts are specific (what you want), give context (who you are, what situation), and specify format (bullet points, table, etc.)."
+  },
+  {
+    "question": "What is the 'Secret Formula' for effective prompts?",
+    "options": [
+      "Question + Answer + Format",
+      "Role + Task + Context + Format",
+      "Input + Output + Examples",
+      "Subject + Verb + Object"
+    ],
+    "correct_answer": 1,
+    "explanation": "The formula is: [Role] + [Task] + [Context] + [Format]. For example: 'You are a teacher (role). Explain quantum physics (task) to a 10-year-old (context) using a simple analogy (format).'"
+  },
+  {
+    "question": "If AI's first answer isn't perfect, what should you do?",
+    "options": [
+      "Give up and start over",
+      "Use a different AI tool",
+      "Ask it to improve, simplify, or adjust the answer",
+      "Accept it as-is"
+    ],
+    "correct_answer": 2,
+    "explanation": "You can iterate! Ask AI to 'make it simpler', 'add more examples', 'make it longer', etc. Prompting is a conversation, not one-and-done."
+  },
+  {
+    "question": "What can AI help you with?",
+    "options": [
+      "Only writing essays",
+      "Only answering questions",
+      "Writing, brainstorming, learning, translating, summarizing, and more",
+      "Only coding"
+    ],
+    "correct_answer": 2,
+    "explanation": "AI is incredibly versatile! It can help with writing, editing, brainstorming ideas, explaining concepts, translating, summarizing text, coding, and much more."
+  }
+]

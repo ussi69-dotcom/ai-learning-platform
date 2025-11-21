@@ -6,7 +6,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { use, useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import Quiz from "@/components/Quiz";
+import Quiz, { QuizQuestion } from "@/components/Quiz";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import LessonComplete from "@/components/LessonComplete";
 
@@ -17,6 +17,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   const { token } = useAuth();
   const router = useRouter();
   const [lesson, setLesson] = useState<any>(null);
+  const [quizzes, setQuizzes] = useState<QuizQuestion[]>([]);
   const [allLessons, setAllLessons] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -37,6 +38,16 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
         });
         if (lessonRes.ok) {
           setLesson(await lessonRes.json());
+        }
+
+        // Fetch quizzes
+        const quizzesRes = await fetch(`http://localhost:8000/lessons/${lessonId}/quizzes`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        if (quizzesRes.ok) {
+          setQuizzes(await quizzesRes.json());
         }
 
         // Fetch all lessons for navigation
@@ -104,8 +115,10 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   };
 
   const slides = splitIntoSlides(lesson.content);
-  const totalPages = slides.length;
-  const currentContent = slides[currentPage] || '';
+  const hasQuiz = quizzes.length > 0;
+  const totalPages = slides.length + (hasQuiz ? 1 : 0);
+  const isQuizPage = currentPage === slides.length;
+  const currentContent = !isQuizPage ? slides[currentPage] : '';
 
   // Find current lesson index and neighbors
   const currentIndex = allLessons.findIndex(l => l.id === parseInt(lessonId));
@@ -182,9 +195,18 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             )}
 
             {/* Formatted content using MarkdownRenderer */}
-            <div className="prose prose-lg prose-slate max-w-none">
-              <MarkdownRenderer content={currentContent} />
-            </div>
+            {!isQuizPage ? (
+              <div className="prose prose-lg prose-slate max-w-none">
+                <MarkdownRenderer content={currentContent} />
+              </div>
+            ) : (
+              <Quiz 
+                quizzes={quizzes} 
+                onComplete={() => {
+                  // Optional: Auto-mark lesson as complete or show confetti
+                }} 
+              />
+            )}
 
             {/* Bottom pagination */}
             {totalPages > 1 && (
@@ -206,15 +228,12 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             )}
           </div>
 
-          {/* Quiz Section - only on last page */}
+          {/* Lesson Complete - show on last page (quiz or content) */}
           {currentPage === totalPages - 1 && (
-            <>
-              <Quiz lessonId={lessonId} />
-              <LessonComplete 
-                lessonId={parseInt(lessonId)} 
-                courseId={parseInt(courseId)} 
-              />
-            </>
+             <LessonComplete 
+               lessonId={parseInt(lessonId)} 
+               courseId={parseInt(courseId)} 
+             />
           )}
 
           {/* Lesson Navigation */}

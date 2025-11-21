@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthContext";
 
-interface QuizQuestion {
+export interface QuizQuestion {
   id: number;
   question: string;
   option_a: string;
@@ -18,39 +18,19 @@ interface QuizQuestion {
 }
 
 interface QuizProps {
-  lessonId: string;
+  quizzes: QuizQuestion[];
+  onComplete?: (score: number) => void;
 }
 
-export default function Quiz({ lessonId }: QuizProps) {
-  const { token } = useAuth();
-  const [quizzes, setQuizzes] = useState<QuizQuestion[]>([]);
+export default function Quiz({ quizzes, onComplete }: QuizProps) {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(true);
 
+  // Reset state when quizzes change
   useEffect(() => {
-    async function fetchQuizzes() {
-      if (!token) return;
-
-      try {
-        const res = await fetch(`http://localhost:8000/lessons/${lessonId}/quizzes`, {
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setQuizzes(data);
-        }
-      } catch (error) {
-        console.error("Error fetching quizzes:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchQuizzes();
-  }, [lessonId, token]);
+    setAnswers({});
+    setSubmitted(false);
+  }, [quizzes]);
 
   const handleAnswer = (quizId: number, answer: string) => {
     if (!submitted) {
@@ -61,6 +41,16 @@ export default function Quiz({ lessonId }: QuizProps) {
   const handleSubmit = () => {
     if (Object.keys(answers).length === quizzes.length) {
       setSubmitted(true);
+      if (onComplete) {
+        // Calculate score immediately
+        let correct = 0;
+        quizzes.forEach(quiz => {
+          if (answers[quiz.id] === quiz.correct_answer) {
+            correct++;
+          }
+        });
+        onComplete(correct);
+      }
     } else {
       alert("Please answer all questions before submitting!");
     }
@@ -81,9 +71,7 @@ export default function Quiz({ lessonId }: QuizProps) {
     return correct;
   };
 
-  if (loading) {
-    return <div className="text-center py-8">Loading quiz...</div>;
-  }
+
 
   if (quizzes.length === 0) {
     return null; // No quiz for this lesson

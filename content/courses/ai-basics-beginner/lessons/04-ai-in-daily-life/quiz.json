@@ -1,0 +1,57 @@
+[
+  {
+    "question": "How does Google Maps predict traffic?",
+    "options": [
+      "Random guessing",
+      "AI analyzes patterns from millions of users' location data",
+      "Traffic cameras only",
+      "Government reports"
+    ],
+    "correct_answer": 1,
+    "explanation": "Google Maps uses AI to analyze location data from millions of users in real-time, learning traffic patterns to predict delays and suggest faster routes."
+  },
+  {
+    "question": "What AI technology powers email spam filters?",
+    "options": [
+      "Random selection",
+      "Simple keyword matching",
+      "Machine Learning that learns from examples of spam vs real emails",
+      "Human reviewers checking every email"
+    ],
+    "correct_answer": 2,
+    "explanation": "Spam filters use Machine Learning, trained on millions of examples of spam and legitimate emails, to recognize patterns and filter out junk automatically."
+  },
+  {
+    "question": "According to the lesson, approximately how many times a day do you use AI?",
+    "options": [
+      "Once or twice",
+      "5-10 times",
+      "Dozens of times",
+      "You don't use AI daily"
+    ],
+    "correct_answer": 2,
+    "explanation": "From your morning alarm to bedtime apps, you use AI dozens of times daily - it's in your email, social media, navigation, music, shopping, banking, and more!"
+  },
+  {
+    "question": "Which industry does NOT currently use AI significantly?",
+    "options": [
+      "Healthcare (disease diagnosis)",
+      "Banking (fraud detection)",
+      "Agriculture (crop monitoring)",
+      "None - all these industries use AI extensively"
+    ],
+    "correct_answer": 3,
+    "explanation": "AI is everywhere! Healthcare uses it for diagnosis, banking for fraud detection, agriculture for crop monitoring, and virtually every industry has AI applications."
+  },
+  {
+    "question": "What determines which videos YouTube recommends to you?",
+    "options": [
+      "Random selection",
+      "AI analyzing your watch history and behavior patterns",
+      "Only what's popular globally",
+      "The upload date of videos"
+    ],
+    "correct_answer": 1,
+    "explanation": "YouTube uses AI to analyze what you watch, how long you watch, what you search for, and patterns of similar users to personalize recommendations just for you."
+  }
+]

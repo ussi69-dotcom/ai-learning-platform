@@ -85,3 +85,49 @@ def test_read_lesson_detail():
 def test_read_lesson_not_found():
     response = client.get("/lessons/9999")
     assert response.status_code == 404
+
+# --- Auth & Progress Tests ---
+
+from app import auth
+
+def override_get_current_user():
+    db = TestingSessionLocal()
+    user = db.query(User).filter(User.email == "test@example.com").first()
+    db.close()
+    return user
+
+app.dependency_overrides[auth.get_current_user] = override_get_current_user
+
+def test_complete_lesson():
+    # Get lesson ID
+    list_resp = client.get("/lessons/")
+    lesson_id = list_resp.json()[0]["id"]
+    
+    # Complete lesson
+    response = client.post(f"/lessons/{lesson_id}/complete")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["lesson_id"] == lesson_id
+    assert data["user_id"] is not None
+
+def test_get_user_progress():
+    response = client.get("/users/me/progress")
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data) > 0
+    assert data[0]["lesson_id"] is not None
+
+def test_get_course_progress():
+    # Get course ID (assuming lesson is in course 1)
+    list_resp = client.get("/lessons/")
+    lesson = list_resp.json()[0]
+    course_id = lesson["course_id"]
+    
+    response = client.get(f"/courses/{course_id}/progress")
+    assert response.status_code == 200
+    data = response.json()
+    
+    # Since we completed 1 lesson out of 1 (in setup_data), it should be 100%
+    assert data["percentage"] == 100
+    assert data["completed"] == 1
+    assert data["total"] == 1

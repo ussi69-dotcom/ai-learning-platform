@@ -1,5 +1,30 @@
 # Agent State Log
 
+## Day 8: Progress Tracking System
+
+**Date**: 2025-11-21
+**Goal**: Implement progress tracking for lessons and courses.
+
+### Log
+
+#### Phase 1: Database & API ✅
+- **[EXECUTION]**: Created `UserProgress` model in `backend/app/models.py`.
+- **[EXECUTION]**: Added `POST /lessons/{lesson_id}/complete` endpoint.
+- **[EXECUTION]**: Added `GET /users/me/progress` and `GET /courses/{course_id}/progress` endpoints.
+- **[VERIFICATION]**: Added and ran tests in `backend/tests/test_api.py` (6 tests passed).
+
+#### Phase 2: Frontend Integration ✅
+- **[EXECUTION]**: Created `LessonComplete` component with confetti effect.
+- **[EXECUTION]**: Integrated "Mark as Complete" button in Lesson page.
+- **[EXECUTION]**: Added progress bar and checkmarks to Course page.
+- **[EXECUTION]**: Added "My Learning" section to Profile page.
+
+### Technical Improvements
+- ✅ Verified API endpoints with `pytest` inside Docker container.
+- ✅ Frontend components handle auth and loading states correctly.
+
+---
+
 ## Day 7: Quiz System, Design Improvements & Slide-Based Navigation
 
 **Date**: 2025-11-20

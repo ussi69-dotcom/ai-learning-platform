@@ -27,6 +27,7 @@ services:
       - DATABASE_URL=postgresql://user:password@db:5432/learning_platform
     volumes:
       - ./backend:/app
+      - ./content:/app/content
     depends_on:
       - db
 
