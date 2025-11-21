@@ -3,48 +3,74 @@
 import React from 'react';
 
 interface DiagramProps {
-  type: 'neural-network' | 'training-loop';
+  type: 'neural-network' | 'training-loop' | 'black-box';
 }
 
 export default function Diagram({ type }: DiagramProps) {
   if (type === 'neural-network') {
     return (
       <div className="my-8 flex justify-center">
-        <svg width="400" height="250" viewBox="0 0 400 250" className="w-full max-w-md">
-          {/* Input Layer */}
-          <circle cx="50" cy="60" r="12" fill="none" stroke="#94a3b8" strokeWidth="2" />
-          <circle cx="50" cy="125" r="12" fill="none" stroke="#94a3b8" strokeWidth="2" />
-          <circle cx="50" cy="190" r="12" fill="none" stroke="#94a3b8" strokeWidth="2" />
-          
-          {/* Hidden Layer */}
-          <circle cx="200" cy="40" r="12" fill="none" stroke="#60a5fa" strokeWidth="2" />
-          <circle cx="200" cy="95" r="12" fill="none" stroke="#60a5fa" strokeWidth="2" />
-          <circle cx="200" cy="155" r="12" fill="none" stroke="#60a5fa" strokeWidth="2" />
-          <circle cx="200" cy="210" r="12" fill="none" stroke="#60a5fa" strokeWidth="2" />
-          
-          {/* Output Layer */}
-          <circle cx="350" cy="80" r="12" fill="none" stroke="#34d399" strokeWidth="2" />
-          <circle cx="350" cy="170" r="12" fill="none" stroke="#34d399" strokeWidth="2" />
-          
-          {/* Connections Input -> Hidden */}
-          <line x1="62" y1="60" x2="188" y2="40" stroke="#cbd5e1" strokeWidth="1" opacity="0.4" />
-          <line x1="62" y1="60" x2="188" y2="95" stroke="#cbd5e1" strokeWidth="1" opacity="0.4" />
-          <line x1="62" y1="125" x2="188" y2="95" stroke="#cbd5e1" strokeWidth="1" opacity="0.4" />
-          <line x1="62" y1="125" x2="188" y2="155" stroke="#cbd5e1" strokeWidth="1" opacity="0.4" />
-          <line x1="62" y1="190" x2="188" y2="155" stroke="#cbd5e1" strokeWidth="1" opacity="0.4" />
-          <line x1="62" y1="190" x2="188" y2="210" stroke="#cbd5e1" strokeWidth="1" opacity="0.4" />
-          
-          {/* Connections Hidden -> Output */}
-          <line x1="212" y1="40" x2="338" y2="80" stroke="#cbd5e1" strokeWidth="1" opacity="0.4" />
-          <line x1="212" y1="95" x2="338" y2="80" stroke="#cbd5e1" strokeWidth="1" opacity="0.4" />
-          <line x1="212" y1="155" x2="338" y2="170" stroke="#cbd5e1" strokeWidth="1" opacity="0.4" />
-          <line x1="212" y1="210" x2="338" y2="170" stroke="#cbd5e1" strokeWidth="1" opacity="0.4" />
-          
-          {/* Labels */}
-          <text x="50" y="230" textAnchor="middle" className="text-xs font-medium fill-slate-600">Input</text>
-          <text x="200" y="230" textAnchor="middle" className="text-xs font-medium fill-slate-600">Hidden</text>
-          <text x="350" y="230" textAnchor="middle" className="text-xs font-medium fill-slate-600">Output</text>
-        </svg>
+        <div className="relative p-6 rounded-2xl bg-slate-50/50 dark:bg-slate-900/50 backdrop-blur-xl border border-slate-200/50 dark:border-white/10 shadow-lg">
+          <svg width="450" height="200" viewBox="0 0 450 200" className="w-full max-w-lg">
+            <defs>
+              <linearGradient id="blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#60a5fa" />
+                <stop offset="100%" stopColor="#3b82f6" />
+              </linearGradient>
+              <linearGradient id="green-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#34d399" />
+                <stop offset="100%" stopColor="#10b981" />
+              </linearGradient>
+              <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+              <marker id="arrowhead-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Input Section */}
+            <g transform="translate(50, 100)">
+              <circle r="30" fill="white" fillOpacity="0.1" stroke="#94a3b8" strokeWidth="1" />
+              <text x="0" y="5" textAnchor="middle" fontSize="24">🐱</text>
+              <text x="0" y="45" textAnchor="middle" className="text-xs font-bold fill-slate-500 dark:fill-slate-400 uppercase tracking-wider">Input</text>
+            </g>
+
+            {/* Arrow 1 */}
+            <path d="M 90 100 L 140 100" stroke="#cbd5e1" strokeWidth="2" markerEnd="url(#arrowhead-blue)" />
+
+            {/* Hidden Layers (The Brain) */}
+            <g transform="translate(225, 100)">
+              {/* Background Box */}
+              <rect x="-70" y="-60" width="140" height="120" rx="12" fill="url(#blue-grad)" fillOpacity="0.1" stroke="url(#blue-grad)" strokeOpacity="0.3" />
+              
+              {/* Nodes */}
+              <circle cx="-30" cy="-30" r="8" fill="url(#blue-grad)" />
+              <circle cx="-30" cy="30" r="8" fill="url(#blue-grad)" />
+              <circle cx="30" cy="-30" r="8" fill="url(#blue-grad)" />
+              <circle cx="30" cy="30" r="8" fill="url(#blue-grad)" />
+              
+              {/* Connections */}
+              <line x1="-30" y1="-30" x2="30" y2="-30" stroke="#60a5fa" strokeWidth="1" opacity="0.5" />
+              <line x1="-30" y1="-30" x2="30" y2="30" stroke="#60a5fa" strokeWidth="1" opacity="0.5" />
+              <line x1="-30" y1="30" x2="30" y2="-30" stroke="#60a5fa" strokeWidth="1" opacity="0.5" />
+              <line x1="-30" y1="30" x2="30" y2="30" stroke="#60a5fa" strokeWidth="1" opacity="0.5" />
+
+              <text x="0" y="80" textAnchor="middle" className="text-xs font-bold fill-blue-500 uppercase tracking-wider">Learning Patterns</text>
+            </g>
+
+            {/* Arrow 2 */}
+            <path d="M 305 100 L 355 100" stroke="#cbd5e1" strokeWidth="2" markerEnd="url(#arrowhead-blue)" />
+
+            {/* Output Section */}
+            <g transform="translate(400, 100)">
+              <circle r="30" fill="url(#green-grad)" fillOpacity="0.1" stroke="url(#green-grad)" strokeWidth="1" />
+              <text x="0" y="5" textAnchor="middle" className="text-sm font-bold fill-emerald-600 dark:fill-emerald-400">"Cat"</text>
+              <text x="0" y="45" textAnchor="middle" className="text-xs font-bold fill-emerald-600 dark:fill-emerald-400 uppercase tracking-wider">Output</text>
+            </g>
+          </svg>
+        </div>
       </div>
     );
   }

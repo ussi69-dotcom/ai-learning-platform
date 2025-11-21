@@ -34,3 +34,20 @@
     - [x] Redesign Callout Component (Glass Style)
     - [x] Redesign Steps Component (Glass Numbers)
     - [x] Use Code Blocks for Prompts
+
+# Task List - Cycle 15: Visual Polish & Images
+
+- [x] **Visual: Refinements**
+    - [x] Redesign CodeBlock (Lighter Glass Style)
+    - [x] Redesign MDXImage (Liquid Glass Container)
+    - [x] Add Background Blobs (Liquid Glass Effect)
+
+- [x] **Content: Image Integration**
+    - [x] Add `ai-timeline.png` to "The Big Idea"
+    - [x] Add `ai-vs-programming.png` to "Programming vs Training"
+    - [x] Restore missing "The Big Idea" section
+
+- [x] **Diagram: Neural Network Redesign**
+    - [x] Replace abstract nodes with concrete "Cat Recognition" example
+    - [x] Add Liquid Glass container with gradients
+    - [x] Clear labels: Input (🐱), Learning Patterns, Output ("Cat")

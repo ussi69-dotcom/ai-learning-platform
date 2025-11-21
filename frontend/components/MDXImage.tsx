@@ -20,12 +20,12 @@ export default function MDXImage({ src, alt, courseSlug, lessonSlug }: MDXImageP
   }
 
   return (
-    <div className="my-8">
-      <div className="rounded-xl overflow-hidden shadow-lg border border-slate-200 bg-slate-100">
+    <div className="my-8 group">
+      <div className="p-2 rounded-2xl bg-white/30 dark:bg-white/5 backdrop-blur-xl border border-white/20 shadow-xl transition-all hover:scale-[1.01] hover:shadow-2xl">
         <img 
           src={finalSrc} 
           alt={alt} 
-          className="w-full h-auto object-cover"
+          className="w-full h-auto object-cover rounded-xl"
           onError={(e) => {
             // Fallback or error handling could go here
             console.warn(`Failed to load image: ${finalSrc}`);
@@ -33,7 +33,7 @@ export default function MDXImage({ src, alt, courseSlug, lessonSlug }: MDXImageP
         />
       </div>
       {alt && (
-        <p className="text-center text-sm text-slate-500 mt-2 italic">
+        <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-3 font-medium tracking-wide">
           {alt}
         </p>
       )}
