@@ -30,4 +30,4 @@
 
 ## 🔌 Integration Points
 - **LLM Feedback**: Integrated via dedicated service or direct API call.
-- **Stripe**: (Planned) Payment processing.
+
