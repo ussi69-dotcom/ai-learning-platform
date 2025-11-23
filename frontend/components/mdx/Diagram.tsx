@@ -195,5 +195,58 @@ export default function Diagram({ type }: DiagramProps) {
     );
   }
 
+  if (type === 'supervised-learning-flow') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl overflow-x-auto">
+          <svg viewBox="0 0 700 150" className="w-full min-w-[600px] h-auto">
+            <defs>
+              <marker id="arrowhead-flow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Step 1: Input */}
+            <g transform="translate(50, 50)">
+              <rect x="0" y="0" width="120" height="60" rx="8" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" strokeWidth="2" />
+              <text x="60" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-800 dark:fill-slate-200" dominantBaseline="middle">1. Input</text>
+              <text x="60" y="45" textAnchor="middle" className="text-xs fill-slate-500 dark:fill-slate-400">Raw Data</text>
+            </g>
+
+            {/* Arrow 1 */}
+            <path d="M 170 80 L 210 80" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-flow)" />
+
+            {/* Step 2: Label */}
+            <g transform="translate(210, 50)">
+              <rect x="0" y="0" width="120" height="60" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" strokeWidth="2" />
+              <text x="60" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-800 dark:fill-slate-200" dominantBaseline="middle">2. Label</text>
+              <text x="60" y="45" textAnchor="middle" className="text-xs fill-slate-500 dark:fill-slate-400">Correct Answer</text>
+            </g>
+
+            {/* Arrow 2 */}
+            <path d="M 330 80 L 370 80" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-flow)" />
+
+            {/* Step 3: Training */}
+            <g transform="translate(370, 50)">
+              <rect x="0" y="0" width="120" height="60" rx="8" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" strokeWidth="2" />
+              <text x="60" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-800 dark:fill-slate-200" dominantBaseline="middle">3. Training</text>
+              <text x="60" y="45" textAnchor="middle" className="text-xs fill-slate-500 dark:fill-slate-400">Learn Pattern</text>
+            </g>
+
+            {/* Arrow 3 */}
+            <path d="M 490 80 L 530 80" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-flow)" />
+
+            {/* Step 4: Prediction */}
+            <g transform="translate(530, 50)">
+              <rect x="0" y="0" width="120" height="60" rx="8" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" strokeWidth="2" />
+              <text x="60" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-800 dark:fill-slate-200" dominantBaseline="middle">4. Prediction</text>
+              <text x="60" y="45" textAnchor="middle" className="text-xs fill-slate-500 dark:fill-slate-400">New Data</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }
