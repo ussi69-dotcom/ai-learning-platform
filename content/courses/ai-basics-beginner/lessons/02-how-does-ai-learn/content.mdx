@@ -233,23 +233,25 @@ This is exactly how reinforcement learning works. The AI is the dog. The reward 
 
 Not all learning methods are equal. Here's when to use each:
 
-<ConceptCard title="Supervised Learning: When You Have Answers">
-**Best For:** Labeled data scenarios  
-**Examples:** Spam filters, image recognition, translation  
-**Think:** Flashcards with questions AND answers
-</ConceptCard>
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
+  <ConceptCard title="Supervised Learning" className="h-full">
+    **Best For:** Labeled data scenarios  
+    **Examples:** Spam filters, image recognition, translation  
+    **Think:** Flashcards with questions AND answers
+  </ConceptCard>
 
-<ConceptCard title="Unsupervised Learning: Discovery Mode">
-**Best For:** Finding hidden patterns  
-**Examples:** Customer segmentation, anomaly detection, data compression  
-**Think:** Organizing a messy room without being told how
-</ConceptCard>
+  <ConceptCard title="Unsupervised Learning" className="h-full">
+    **Best For:** Finding hidden patterns  
+    **Examples:** Customer segmentation, anomaly detection, data compression  
+    **Think:** Organizing a messy room without being told how
+  </ConceptCard>
 
-<ConceptCard title="Reinforcement Learning: Learning by Doing">
-**Best For:** Goal-driven scenarios with simulation  
-**Examples:** Game AI, robotics, self-driving cars, recommendation systems  
-**Think:** Video game where you level up by trying strategies
-</ConceptCard>
+  <ConceptCard title="Reinforcement Learning" className="h-full">
+    **Best For:** Goal-driven scenarios with simulation  
+    **Examples:** Game AI, robotics, self-driving cars  
+    **Think:** Learning to ride a bike by falling and trying again
+  </ConceptCard>
+</div>
 
 <Callout type="info">
 **Hybrid Approach:** Many modern AI systems combine all three! ChatGPT uses supervised learning (labeled text), unsupervised learning (language patterns), and reinforcement learning (RLHF—Reinforcement Learning from Human Feedback).
