@@ -82,15 +82,17 @@ Our UI mimics a premium, futuristic interface. Content floats on glass panels.
 
 ### Must Use:
 - `<Callout>` - Important notes, warnings, tips
-- `<ConceptCard>` - Key concepts, comparisons
-- `<Diagram>` - Visual explanations (SVG only)
-- `<Steps>` - Sequential instructions for labs
-- `<MDXImage>` - Educational screenshots (rare)
+- `<ConceptCard>` - Key concepts. Use `grid-cols-1 md:grid-cols-2 lg:grid-cols-3` for groups.
+- `<Diagram>` - Visual explanations. Available types:
+  - `neural-network`, `training-loop`, `black-box`
+  - `learning-types-overview`, `supervised-learning-flow`
+  - `clustering-visualization`, `reinforcement-learning-loop`
+- `<Steps>` - Sequential instructions. Auto-detects "Action", "Observation", "Reflection" for icons.
+- `<LabBadge>` - XP notifications after labs.
+- `<ProgressDots>` - Visual lesson progress (desktop only).
 
 ### Nice to Have (Future):
 - `<QuickCheck>` - Inline mini-quizzes
-- `<LabBadge>` - XP notifications
-- `<ProgressIndicator>` - Visual lesson progress
 - `<TryItYourself>` - Interactive coding sandboxes
 
 ## 7. Writing Style 📝
