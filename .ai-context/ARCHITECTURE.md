@@ -31,3 +31,8 @@
 ## 🔌 Integration Points
 - **LLM Feedback**: Integrated via dedicated service or direct API call.
 
+---
+
+**Status:** Aktualizováno listopad 2025  
+**Agent Architecture:** Perplexity (Architect) + Antigravity (Executor)  
+**OSS/Gemini/ostatní agenti se NEpoužívají pro tento projekt**

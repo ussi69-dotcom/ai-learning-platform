@@ -153,3 +153,9 @@ Before publishing a lesson, verify:
 - [ ] Dark mode works
 - [ ] All code blocks have copy buttons
 - [ ] Links to next lesson work
+
+---
+
+**Status:** Aktualizováno listopad 2025  
+**Agent Architecture:** Perplexity (Architect) + Antigravity (Executor)  
+**OSS/Gemini/ostatní agenti se NEpoužívají pro tento projekt**

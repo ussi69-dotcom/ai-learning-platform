@@ -101,3 +101,9 @@ Students learn theory "on the commute" (15-30 min mobile-friendly content), then
 - **Backend**: Python 3.11+, FastAPI, Pydantic v2. Type hints everywhere.
 - **Frontend**: Next.js 16 (App Router), TypeScript, Tailwind CSS, Shadcn/ui.
 - **Naming**: `snake_case` (Python), `camelCase` (JS/TS), `PascalCase` (Classes).
+
+---
+
+**Status:** Aktualizováno listopad 2025  
+**Agent Architecture:** Perplexity (Architect) + Antigravity (Executor)  
+**OSS/Gemini/ostatní agenti se NEpoužívají pro tento projekt**

@@ -223,5 +223,7 @@ This curriculum is **living**. We iterate based on:
 
 ---
 
-**Last Updated:** Cycle 16 (Perplexity Era)  
+**Last Updated:** Cycle 17 (Listopad 2025)  
+**Agent Architecture:** Perplexity (Architect) + Antigravity (Executor)  
+**OSS/Gemini/ostatní agenti se NEpoužívají pro tento projekt**  
 **Next Review:** After first cohort completion
