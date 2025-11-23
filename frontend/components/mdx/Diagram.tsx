@@ -11,7 +11,7 @@ export default function Diagram({ type }: DiagramProps) {
     return (
       <div className="my-8 flex justify-center">
         <div className="relative p-6 rounded-2xl bg-slate-50/50 dark:bg-slate-900/50 backdrop-blur-xl border border-slate-200/50 dark:border-white/10 shadow-lg">
-          <svg width="450" height="200" viewBox="0 0 450 200" className="w-full max-w-lg">
+          <svg width="450" height="200" viewBox="0 0 450 200" className="w-full max-w-lg" role="img" aria-label="Neural Network Diagram: Input cat image -> Hidden Layers -> Output 'Cat' label">
             <defs>
               <linearGradient id="blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#60a5fa" />
@@ -78,7 +78,7 @@ export default function Diagram({ type }: DiagramProps) {
   if (type === 'training-loop') {
     return (
       <div className="my-8 flex justify-center">
-        <svg width="400" height="300" viewBox="0 0 400 300" className="w-full max-w-md">
+        <svg width="400" height="300" viewBox="0 0 400 300" className="w-full max-w-md" role="img" aria-label="Training Loop Diagram: Data -> Model -> Prediction -> Error -> Update Model">
           {/* Boxes */}
           <rect x="140" y="20" width="120" height="50" rx="8" fill="none" stroke="#60a5fa" strokeWidth="2" />
           <text x="200" y="50" textAnchor="middle" className="text-sm font-semibold fill-slate-700 dark:fill-slate-200">Data</text>
@@ -113,7 +113,7 @@ export default function Diagram({ type }: DiagramProps) {
   if (type === 'black-box') {
     return (
       <div className="my-8 flex justify-center">
-        <svg width="400" height="200" viewBox="0 0 400 200" className="w-full max-w-md">
+        <svg width="400" height="200" viewBox="0 0 400 200" className="w-full max-w-md" role="img" aria-label="Black Box Diagram: Inputs enter a mysterious box, Output comes out">
            {/* Inputs */}
            <path d="M 50 60 L 120 60" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-bb)" />
            <path d="M 50 100 L 120 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-bb)" />
@@ -147,7 +147,7 @@ export default function Diagram({ type }: DiagramProps) {
     return (
       <div className="my-8 flex justify-center">
         <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl">
-          <svg viewBox="0 0 600 300" className="w-full h-auto">
+          <svg viewBox="0 0 600 300" className="w-full h-auto" role="img" aria-label="AI Learning Types: Supervised (Labeled Data), Unsupervised (Patterns Only), Reinforcement (Trial & Error)">
             <defs>
               <marker id="arrowhead-gray" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
@@ -199,7 +199,7 @@ export default function Diagram({ type }: DiagramProps) {
     return (
       <div className="my-8 flex justify-center">
         <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl overflow-x-auto">
-          <svg viewBox="0 0 700 150" className="w-full min-w-[600px] h-auto">
+          <svg viewBox="0 0 700 150" className="w-full min-w-[600px] h-auto" role="img" aria-label="Supervised Learning Flow: Input -> Label -> Training -> Prediction">
             <defs>
               <marker id="arrowhead-flow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
@@ -254,7 +254,7 @@ export default function Diagram({ type }: DiagramProps) {
         {/* Before: Chaos */}
         <div className="relative p-4 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg">
           <h4 className="text-center text-sm font-bold mb-2 text-slate-500 dark:text-slate-400">Before AI</h4>
-          <svg width="200" height="200" viewBox="0 0 200 200">
+          <svg width="200" height="200" viewBox="0 0 200 200" role="img" aria-label="Random scattered dots representing chaotic data">
             <rect width="200" height="200" fill="none" />
             {/* Random dots */}
             <circle cx="45" cy="50" r="4" fill="#94a3b8" />
@@ -282,7 +282,7 @@ export default function Diagram({ type }: DiagramProps) {
         {/* After: Order */}
         <div className="relative p-4 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg">
           <h4 className="text-center text-sm font-bold mb-2 text-purple-500">After AI</h4>
-          <svg width="200" height="200" viewBox="0 0 200 200">
+          <svg width="200" height="200" viewBox="0 0 200 200" role="img" aria-label="Organized clusters of colored dots representing structured data">
             <rect width="200" height="200" fill="none" />
             
             {/* Cluster 1 (Blue) */}
@@ -322,7 +322,7 @@ export default function Diagram({ type }: DiagramProps) {
     return (
       <div className="my-8 flex justify-center">
         <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-md">
-          <svg viewBox="0 0 400 350" className="w-full h-auto">
+          <svg viewBox="0 0 400 350" className="w-full h-auto" role="img" aria-label="Reinforcement Learning Loop: Agent takes Action in Environment, receives Reward or Penalty, and Learns">
             <defs>
               <marker id="arrowhead-loop" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
