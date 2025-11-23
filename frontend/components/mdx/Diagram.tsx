@@ -318,5 +318,56 @@ export default function Diagram({ type }: DiagramProps) {
     );
   }
 
+  if (type === 'reinforcement-learning-loop') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-md">
+          <svg viewBox="0 0 400 350" className="w-full h-auto">
+            <defs>
+              <marker id="arrowhead-loop" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Agent (Bottom) */}
+            <g transform="translate(200, 300)">
+              <rect x="-60" y="-30" width="120" height="60" rx="12" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" strokeWidth="2" />
+              <text x="0" y="5" textAnchor="middle" className="text-sm font-bold fill-slate-800 dark:fill-slate-200" dominantBaseline="middle">Agent</text>
+              <text x="0" y="25" textAnchor="middle" className="text-xs fill-slate-500 dark:fill-slate-400">Learner</text>
+            </g>
+
+            {/* Environment (Top) */}
+            <g transform="translate(200, 50)">
+              <rect x="-60" y="-30" width="120" height="60" rx="12" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" strokeWidth="2" />
+              <text x="0" y="5" textAnchor="middle" className="text-sm font-bold fill-slate-800 dark:fill-slate-200" dominantBaseline="middle">Environment</text>
+              <text x="0" y="25" textAnchor="middle" className="text-xs fill-slate-500 dark:fill-slate-400">The World</text>
+            </g>
+
+            {/* Action Arrow (Left Up) */}
+            <path d="M 140 300 C 50 300, 50 50, 140 50" fill="none" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-loop)" />
+            <rect x="20" y="160" width="80" height="30" rx="4" fill="#slate-100" className="fill-white dark:fill-slate-900" stroke="#cbd5e1" />
+            <text x="60" y="180" textAnchor="middle" className="text-xs font-bold fill-slate-600 dark:fill-slate-300" dominantBaseline="middle">Action</text>
+
+            {/* Feedback Arrow (Right Down) */}
+            <path d="M 260 50 C 350 50, 350 300, 260 300" fill="none" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-loop)" />
+            
+            {/* Reward Label */}
+            <g transform="translate(320, 140)">
+              <rect x="-35" y="-15" width="70" height="30" rx="4" fill="#dcfce7" stroke="#22c55e" />
+              <text x="0" y="5" textAnchor="middle" className="text-xs font-bold fill-green-700" dominantBaseline="middle">+ Reward</text>
+            </g>
+
+            {/* Penalty Label */}
+            <g transform="translate(320, 200)">
+              <rect x="-35" y="-15" width="70" height="30" rx="4" fill="#fee2e2" stroke="#ef4444" />
+              <text x="0" y="5" textAnchor="middle" className="text-xs font-bold fill-red-700" dominantBaseline="middle">- Penalty</text>
+            </g>
+
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }
