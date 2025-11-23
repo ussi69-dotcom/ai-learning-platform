@@ -1,0 +1,249 @@
+# How Does AI Learn?
+
+<Callout type="info">
+**Lesson Goal:** Understand the three fundamental ways AI learns patterns—and see them in action with hands-on experiments.
+⏳ **Reading Time:** 15 min | 🧪 **Labs Included**
+</Callout>
+
+You just learned that AI doesn't follow rules—it learns patterns. But *how* does it learn? Does someone sit there teaching it, or does it figure things out on its own?
+
+The answer: **Both.** And there's a third way, too.
+
+## The Three Teachers
+
+Imagine you are learning to cook. There are three ways you could learn:
+
+<ConceptCard title="Method 1: The Recipe Book (Supervised Learning)">
+A chef gives you exact recipes with step-by-step instructions. You follow them precisely. "Add 2 cups of flour. Bake at 350°F." You learn by copying what works.
+</ConceptCard>
+
+<ConceptCard title="Method 2: The Pantry Challenge (Unsupervised Learning)">
+Someone dumps 50 random ingredients on your counter and says, "Organize these however you think makes sense." You group pasta with pasta, spices with spices. No one told you the categories—you discovered them yourself.
+</ConceptCard>
+
+<ConceptCard title="Method 3: Trial and Error (Reinforcement Learning)">
+You taste your dish. Too salty? You remember to use less salt next time. Perfect? You remember exactly what you did. You learn by rewards (delicious) and penalties (disgusting).
+</ConceptCard>
+
+These are the **three fundamental ways AI learns**. Let's dive into each one.
+
+<Diagram type="learning-types-overview" />
+
+---
+
+## Supervised Learning: The Teacher-Student Model
+
+This is the most common type of machine learning. A human labels thousands of examples, and the AI learns to predict the label for new data.
+
+**The Formula:**
+1. **Input:** Data (image, text, sound)
+2. **Label:** The correct answer (cat, positive sentiment, spam)
+3. **Training:** AI adjusts its parameters to match labels
+4. **Prediction:** AI guesses labels for new, unseen data
+
+<Diagram type="supervised-learning-flow" />
+
+### Real-World Example: Email Spam Filter
+
+You mark emails as "Spam" or "Not Spam." The AI learns patterns:
+- "Congratulations! You won!" → Spam
+- "Meeting at 3pm tomorrow" → Not Spam
+
+After seeing 10,000 labeled emails, it can predict whether a new email is spam with 95%+ accuracy.
+
+<Callout type="tip">
+**Key Insight:** Supervised learning is like flashcards. The AI sees the question (email text) and the answer (spam/not spam) thousands of times until it memorizes the pattern.
+</Callout>
+
+---
+
+## Lab 1: Supervised Learning in Action
+
+Let's prove supervised learning works with a simple experiment.
+
+<Steps>
+### Action
+Ask your AI model to classify the sentiment of these sentences as **Positive**, **Negative**, or **Neutral**:
+
+**Prompt:**
+```text
+Classify the sentiment of these sentences:
+1. "I love this product! Best purchase ever."
+2. "This is the worst customer service I've experienced."
+3. "The package arrived on Tuesday."
+```
+
+### Observation
+- The AI was trained on millions of labeled reviews (supervised learning).
+- It learned patterns: "love," "best" → Positive; "worst" → Negative; factual statements → Neutral.
+- It didn't need rules like "if sentence contains 'love', then positive." It learned the association from data.
+</Steps>
+
+<Callout type="info">
+**Fun Fact:** ChatGPT was trained using supervised learning on billions of labeled text examples. That's why it knows grammar, facts, and context—it saw patterns in its training data.
+</Callout>
+
+---
+
+## Unsupervised Learning: Finding Hidden Patterns
+
+What if you don't have labels? What if you just have a massive pile of data and want the AI to find patterns on its own?
+
+**Enter Unsupervised Learning.**
+
+The AI looks for structure in the data:
+- **Clustering:** Grouping similar items together
+- **Anomaly Detection:** Finding outliers
+- **Dimensionality Reduction:** Simplifying complex data
+
+<Diagram type="clustering-visualization" />
+
+### Real-World Example: Customer Segmentation
+
+An online store has 100,000 customers. They want to group them by behavior to target ads. But they don't know the groups in advance.
+
+The AI analyzes purchase history and discovers:
+- **Group A:** Budget shoppers (buy during sales)
+- **Group B:** Impulse buyers (add to cart immediately)
+- **Group C:** Researchers (view 20+ products before buying)
+
+No one told the AI these categories existed. It found them by analyzing patterns.
+
+<Callout type="warning">
+**Limitation:** Unsupervised learning can find patterns, but it can't tell you what they *mean*. A human still needs to interpret the clusters.
+</Callout>
+
+---
+
+## Lab 2: Clustering Experiment
+
+Let's see unsupervised learning in action.
+
+<Steps>
+### Action
+Give your AI this list and ask it to group them into categories:
+
+**Prompt:**
+```text
+Group these items into categories without me telling you what the categories are:
+Apple, Carrot, Banana, Broccoli, Orange, Spinach, Grapes, Lettuce, Strawberry, Kale
+```
+
+### Observation
+- Did it group by **color** (orange items, green items)?
+- Did it group by **type** (fruits vs. vegetables)?
+- Did it create unexpected groups?
+
+The AI used unsupervised learning to cluster similar items—even though you didn't provide labels.
+</Steps>
+
+<Callout type="tip">
+**Pro Tip:** Unsupervised learning is powerful for exploration. Use it when you don't know what you're looking for, but you suspect there are hidden patterns in your data.
+</Callout>
+
+---
+
+## Reinforcement Learning: The Trial-and-Error Master
+
+Now for the most futuristic type: **Reinforcement Learning (RL)**.
+
+Instead of learning from labeled examples, the AI learns by **doing** and getting **feedback**.
+
+**The Formula:**
+1. **Action:** AI tries something (move left, bid $5, recommend a video)
+2. **Reward or Penalty:** Environment gives feedback (+10 points, -5 points)
+3. **Learn:** AI adjusts strategy to maximize future rewards
+4. **Repeat:** Millions of times
+
+<Diagram type="reinforcement-learning-loop" />
+
+### Real-World Example: Game AI
+
+AlphaGo (the AI that beat the world Go champion) used reinforcement learning. It played millions of games against itself:
+- **Win?** Remember those moves.
+- **Lose?** Avoid that strategy.
+
+After billions of games, it became superhuman—better than any human player.
+
+<Callout type="info">
+**Key Difference:** Supervised learning needs labeled data. Reinforcement learning just needs a goal (win the game) and feedback (you won/lost).
+</Callout>
+
+---
+
+## Lab 3: The Dog Training Analogy
+
+This is a thought experiment to solidify your understanding of reinforcement learning.
+
+<Steps>
+### Scenario
+You are training a dog to sit on command. You have two tools:
+- **Treats** (reward)
+- **No treat** (penalty/neutral)
+
+### Your Job
+Every time the dog sits when you say "Sit," you give it a treat. If it doesn't sit, no treat.
+
+### Question
+After 100 repetitions:
+1. Will the dog learn to sit on command?
+2. What is the "reward"?
+3. What is the "policy" (strategy) the dog learns?
+
+### Reflection
+- **Reward:** Treat (dopamine hit)
+- **Policy:** "When I hear 'Sit' and sit down, I get food. Therefore, I should sit when I hear that word."
+- **Learning Process:** Trial and error with feedback
+
+This is exactly how reinforcement learning works. The AI is the dog. The reward is a number (+1, +10, -5). The policy is the strategy it learns.
+</Steps>
+
+<Callout type="warning">
+**Caution:** RL is powerful but tricky. If your reward function is poorly designed, the AI might "cheat" to maximize rewards. (Famous example: A cleaning robot that knocks over trash cans to have more to clean, maximizing its "cleaning score.")
+</Callout>
+
+---
+
+## Where Each Type Shines
+
+Not all learning methods are equal. Here's when to use each:
+
+| Learning Type | Best For | Examples |
+|---------------|----------|----------|
+| **Supervised Learning** | When you have labeled data | Spam filters, image recognition, translation |
+| **Unsupervised Learning** | When you want to discover patterns | Customer segmentation, anomaly detection, data compression |
+| **Reinforcement Learning** | When you have a goal and can simulate | Game AI, robotics, self-driving cars, recommendation systems |
+
+<Callout type="info">
+**Hybrid Approach:** Many modern AI systems combine all three! ChatGPT uses supervised learning (labeled text), unsupervised learning (language patterns), and reinforcement learning (RLHF—Reinforcement Learning from Human Feedback).
+</Callout>
+
+---
+
+## Your Mission
+
+Now that you understand how AI learns, you can start predicting its strengths and weaknesses.
+
+<Callout type="tip">
+**Challenge:** Think about Netflix's recommendation algorithm. Which type of learning does it use?
+
+*Answer:* It's a hybrid! Supervised learning (your ratings), unsupervised learning (clustering users by behavior), and reinforcement learning (if you watch a recommendation, that's a reward).
+</Callout>
+
+### Key Takeaways
+
+1. **Supervised Learning:** AI learns from labeled examples (teacher gives answers).
+2. **Unsupervised Learning:** AI finds patterns in unlabeled data (discovers structure on its own).
+3. **Reinforcement Learning:** AI learns by trial and error with rewards and penalties (learns by doing).
+4. **Real AI systems combine all three** for maximum power.
+5. **The quality of learning depends on the quality of data** (garbage in, garbage out).
+
+---
+
+## What's Next?
+
+You understand *what* AI is and *how* it learns. But how do you actually **use** it effectively?
+
+In Lesson 3, you will learn the art of **prompt engineering**—how to talk to AI to get exactly what you want. Because here's the secret: **The better your prompt, the smarter the AI seems.**
+
+Ready to become an AI whisperer? Let's go.
