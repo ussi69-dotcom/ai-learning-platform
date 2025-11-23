@@ -248,5 +248,75 @@ export default function Diagram({ type }: DiagramProps) {
     );
   }
 
+  if (type === 'clustering-visualization') {
+    return (
+      <div className="my-8 flex flex-col md:flex-row gap-8 justify-center items-center">
+        {/* Before: Chaos */}
+        <div className="relative p-4 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg">
+          <h4 className="text-center text-sm font-bold mb-2 text-slate-500 dark:text-slate-400">Before AI</h4>
+          <svg width="200" height="200" viewBox="0 0 200 200">
+            <rect width="200" height="200" fill="none" />
+            {/* Random dots */}
+            <circle cx="45" cy="50" r="4" fill="#94a3b8" />
+            <circle cx="150" cy="140" r="4" fill="#94a3b8" />
+            <circle cx="80" cy="160" r="4" fill="#94a3b8" />
+            <circle cx="120" cy="40" r="4" fill="#94a3b8" />
+            <circle cx="30" cy="120" r="4" fill="#94a3b8" />
+            <circle cx="170" cy="60" r="4" fill="#94a3b8" />
+            <circle cx="100" cy="100" r="4" fill="#94a3b8" />
+            <circle cx="60" cy="30" r="4" fill="#94a3b8" />
+            <circle cx="140" cy="170" r="4" fill="#94a3b8" />
+            <circle cx="20" cy="80" r="4" fill="#94a3b8" />
+            <circle cx="180" cy="110" r="4" fill="#94a3b8" />
+            <circle cx="90" cy="130" r="4" fill="#94a3b8" />
+          </svg>
+        </div>
+
+        {/* Arrow */}
+        <div className="hidden md:block text-slate-400">
+          <svg width="40" height="20" viewBox="0 0 40 20">
+            <path d="M 0 10 L 35 10" stroke="currentColor" strokeWidth="2" markerEnd="url(#arrowhead-gray)" />
+          </svg>
+        </div>
+
+        {/* After: Order */}
+        <div className="relative p-4 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg">
+          <h4 className="text-center text-sm font-bold mb-2 text-purple-500">After AI</h4>
+          <svg width="200" height="200" viewBox="0 0 200 200">
+            <rect width="200" height="200" fill="none" />
+            
+            {/* Cluster 1 (Blue) */}
+            <g>
+              <circle cx="50" cy="50" r="35" fill="#3b82f6" fillOpacity="0.1" />
+              <circle cx="45" cy="50" r="4" fill="#3b82f6" />
+              <circle cx="60" cy="30" r="4" fill="#3b82f6" />
+              <circle cx="30" cy="40" r="4" fill="#3b82f6" />
+              <circle cx="65" cy="60" r="4" fill="#3b82f6" />
+            </g>
+
+            {/* Cluster 2 (Purple) */}
+            <g>
+              <circle cx="150" cy="60" r="35" fill="#a855f7" fillOpacity="0.1" />
+              <circle cx="150" cy="60" r="4" fill="#a855f7" />
+              <circle cx="170" cy="50" r="4" fill="#a855f7" />
+              <circle cx="130" cy="70" r="4" fill="#a855f7" />
+              <circle cx="160" cy="80" r="4" fill="#a855f7" />
+            </g>
+
+            {/* Cluster 3 (Green) */}
+            <g>
+              <circle cx="100" cy="150" r="40" fill="#22c55e" fillOpacity="0.1" />
+              <circle cx="100" cy="150" r="4" fill="#22c55e" />
+              <circle cx="80" cy="140" r="4" fill="#22c55e" />
+              <circle cx="120" cy="160" r="4" fill="#22c55e" />
+              <circle cx="90" cy="170" r="4" fill="#22c55e" />
+              <circle cx="110" cy="130" r="4" fill="#22c55e" />
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }
