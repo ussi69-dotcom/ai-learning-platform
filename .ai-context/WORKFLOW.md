@@ -457,6 +457,201 @@ Antigravity: [Fixes → Tests → Commits]
 - ✅ Plans are clear and actionable
 - ✅ Execution happens without clarification questions
 - ✅ All commits are atomic and tested
+| File | Purpose | Readers | Writers |
+|------|---------|---------|---------|
+| `PROJECT_CORE.md` | Vision, MVP, curriculum | All | User |
+| `CONTENT_GUIDELINES.md` | Design system | All | User + Perplexity |
+| `ARCHITECTURE.md` | Tech stack, ports | All | User + Perplexity |
+| `AGENT-STATE.md` | Current status, history | All | Antigravity |
+
+### For Planning (Perplexity Creates):
+| File | Purpose | Readers | Writers |
+|------|---------|---------|---------|
+| `implementation_plan.md` | Technical design | User, Antigravity | Perplexity |
+| `task.md` | Step-by-step checklist | User, Antigravity | Perplexity |
+
+### For Execution (Antigravity Uses):
+| File | Purpose | Readers | Writers |
+|------|---------|---------|---------|
+| `implementation_plan.md` | What to build | Antigravity | Perplexity |
+| `task.md` | Progress tracking | Antigravity | Perplexity (creates), Antigravity (updates) |
+| `AGENT-STATE.md` | Status updates | All | Antigravity |
+
+### Archive (Historical Record):
+| Directory | Purpose |
+|-----------|---------|
+| `completed_cycles/` | Finished implementation plans |
+| `archive/` | Deprecated files (e.g., gemini-era) |
+
+---
+
+## 🔄 Workflow Comparison
+
+### ❌ Old Pattern (Gemini Era - Deprecated)
+
+```
+User
+  ↓ (runs context_builder.py)
+Gemini (Architect)
+  ↓ (creates plans in chat)
+User
+  ↓ (copy-paste to files)
+Antigravity (Executor)
+  ↓ (executes)
+User
+  ↓ (manual cycle closing)
+```
+
+**Issues:**
+- Manual context building required
+- Copy-paste friction
+- Manual cycle management
+- Gemini couldn't write files directly
+
+---
+
+### ✅ Current Pattern (Perplexity Era)
+
+```
+User
+  ↓ (describes feature)
+Perplexity (Architect)
+  ↓ (creates implementation_plan.md + task.md)
+User
+  ↓ (approves plan)
+Antigravity (Executor)
+  ↓ (reads files → executes → commits → closes cycle)
+User
+  ↓ (verifies on GitHub)
+```
+
+**Advantages:**
+- File-based (no context_builder.py)
+- Direct file creation by Perplexity
+- Autonomous execution by Antigravity
+- Automatic cycle closing
+- Better long-term memory
+
+---
+
+## 💡 Communication Patterns
+
+### User → Perplexity (Planning)
+```
+"I need [feature/change]"
+"Research best practices for [topic]"
+"Design architecture for [system]"
+"Create implementation plan for [feature]"
+```
+
+### User → Antigravity (Execution)
+```
+"Implement according to plan"
+"Continue with next task"
+"Fix [specific issue]"
+"Update [specific file]"
+```
+
+### Antigravity → User (Updates)
+```
+"✅ Task 1 complete: [description]"
+"⚠️ Issue found: [description], need clarification"
+"✅ Cycle XX complete, pushed to GitHub"
+```
+
+---
+
+## 🚫 What Changed from Gemini Era
+
+### Removed:
+- ❌ `context_builder.py` script
+- ❌ Manual copy-paste between agents
+- ❌ Gemini as architect
+- ❌ Manual cycle closing
+- ❌ `HISTORY.md` updates (now in `AGENT-STATE.md`)
+
+### Added:
+- ✅ Perplexity as architect
+- ✅ Direct file-based workflow
+- ✅ Autonomous cycle completion
+- ✅ Clearer role separation
+
+### Kept:
+- ✅ File-based context (`.ai-context/`)
+- ✅ Implementation plans and task checklists
+- ✅ Git hygiene (atomic commits)
+- ✅ Production-ready quality standards
+
+---
+
+## 🎯 Best Practices
+
+### For Users:
+- **Clear requests:** Specify planning vs execution
+- **Review plans:** Always check `implementation_plan.md` before approving
+- **Trust the system:** Let Antigravity work autonomously
+- **Monitor progress:** Check `AGENT-STATE.md` and `task.md`
+
+### For Perplexity:
+- **Clear plans:** Write detailed, actionable `implementation_plan.md`
+- **Specific tasks:** Create concrete `task.md` checklist
+- **Consider constraints:** Reference `ARCHITECTURE.md`
+- **User-friendly:** Plans should be reviewable by non-technical users
+
+### For Antigravity:
+- **Read context first:** Always load all `.ai-context/` files
+- **Test before commit:** NEVER commit broken code
+- **Atomic commits:** One task = one commit
+- **Update progress:** Mark tasks `[x]` in `task.md`
+- **Senior quality:** Production-ready code only
+- **Ask when unclear:** Don't guess, ask user
+
+---
+
+## 🆘 Troubleshooting
+
+### Antigravity Encounters Issues:
+
+**Unclear Requirements:**
+```
+Antigravity: "Task 3 is ambiguous. Should I use approach A or B?"
+User: [Clarifies or consults Perplexity]
+```
+
+**Technical Blocker:**
+```
+Antigravity: "Library X is not in ARCHITECTURE.md. Can I add it?"
+User: [Decides or asks Perplexity to research]
+```
+
+**Guideline Conflict:**
+```
+Antigravity: "implementation_plan.md says X, but CONTENT_GUIDELINES.md says Y"
+User: [Clarifies priority]
+```
+
+### User Needs Help:
+
+**Strategic Decision:**
+```
+User → Perplexity: "Should we use REST or GraphQL?"
+Perplexity: [Researches, recommends, creates plan]
+```
+
+**Quick Fix:**
+```
+User → Antigravity: "Fix typo in lesson 2"
+Antigravity: [Fixes → Tests → Commits]
+```
+
+---
+
+## 📊 Success Metrics
+
+### Workflow is Working When:
+- ✅ Plans are clear and actionable
+- ✅ Execution happens without clarification questions
+- ✅ All commits are atomic and tested
 - ✅ Cycles complete autonomously
 - ✅ No confusion about roles
 - ✅ User can track progress easily
@@ -469,6 +664,40 @@ Antigravity: [Fixes → Tests → Commits]
 
 ---
 
-**Last Updated:** Listopad 2025 (Cycle 17)  
+## 🗣️ Communication Requirements for Antigravity
+
+### During Task Execution:
+1. **Inform user** what task you're currently working on
+2. **Show results** before committing:
+   - Display code changes
+   - Show file previews
+   - Explain what was modified
+3. **Wait for user confirmation** before pushing to GitHub
+4. **One task at a time** - never batch multiple tasks in one commit
+5. **Be transparent** about what changes you're making
+
+### Example Good Communication:
+```
+Currently working on: Task 2 - Add "Why It Matters" to Lab 1
+
+Changes made:
+- Added Callout after line 84 in content.mdx
+- Explains importance of labeled data
+
+[Shows code block with changes]
+
+Ready to commit. Should I proceed?
+```
+
+### Example Bad Communication:
+```
+[Makes all changes silently]
+[Commits everything at once]
+[Pushes without showing user]
+```
+
+---
+
+**Last Updated:** Listopad 2025 (Cycle 18 - Added Communication Requirements)  
 **Agent Architecture:** Perplexity (Architect) + Antigravity (Executor)  
 **OSS/Gemini/ostatní agenti se NEpoužívají pro tento projekt**
