@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import Quiz, { QuizQuestion } from "@/components/Quiz";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import LessonComplete from "@/components/LessonComplete";
+import ProgressDots from "@/components/mdx/ProgressDots";
 
 export default function LessonPage({ params }: { params: Promise<{ courseId: string; lessonId: string }> }) {
   // Unwrap params Promise (Next.js 16 requirement)
@@ -140,6 +141,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
     return (
     <ProtectedRoute>
       <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50">
+        <ProgressDots />
         <div className="container mx-auto py-6 px-4 max-w-4xl pb-32 md:pb-12">
           {/* Navigation back */}
           <div className="mb-6">
