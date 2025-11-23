@@ -22,7 +22,7 @@
 - When all tasks are `[x]`:
   1. **Archive:** Move `task.md` & `implementation_plan.md` to `.ai-context/completed_cycles/`.
   2. **Update:** Update `AGENT-STATE.md` (status & history).
-  3. **Sync:** `git add . && git commit && git push`.
+  3. **Sync:** `git add . && git commit` then **Publish Branch** (`git push -u origin HEAD`).
   4. **Report:** "Cycle Complete. Ready for next."
 
 ---
@@ -35,6 +35,9 @@
 | `task.md` | The Checklist | **Antigravity** (Executor) |
 | `AGENT-STATE.md` | The Memory | **Antigravity** |
 | `PROJECT_CONTEXT.md` | The Facts | **Antigravity** |
+| `STRATEGY.md` | The Vision | **User** (Architect) |
+| `ARCHITECTURE.md` | The Structure | **Antigravity** |
+| `IDEAS.md` | The Backlog | **User** (Architect) |
 
 ---
 

@@ -1,20 +1,20 @@
 import os
 from datetime import datetime
-
 # ⚙️ KONFIGURACE
 CONTEXT_DIR = ".ai-context"
-OUTPUT_FILE = "CONTEXT_FOR_GEMINI.md"
+OUTPUT_FILE = "CONTEXT_FOR_ARCHITECT.md"
 
 # Soubory, které tvoří "Paměť projektu" (v tomto pořadí)
 CRITICAL_FILES = [
-    "GEMINI_PROMPT.md",        # 1. Role a instrukce
-    "PROJECT_CORE.md",         # 2. Vize a MVP
-    "HISTORY.md",              # 3. Strategická paměť
-    "AGENT-STATE.md",          # 4. Kde jsme skončili
+    "PROJECT_CONTEXT.md",      # 1. Vize a kontext
+    "STRATEGY.md",             # 2. Strategie a curriculum
+    "CONTENT_GUIDELINES.md",   # 3. Pravidla obsahu
+    "AGENT-STATE.md",          # 4. Stav agenta
     "ARCHITECTURE.md",         # 5. Tech stack
-    "implementation_plan.md",  # 6. Aktuální plán (pokud je)
-    "task.md",                 # 7. Checklist (pokud je)
-    "IDEAS.md"                 # 8. Backlog
+    "WORKFLOW.md",             # 6. Workflow
+    "IDEAS.md",                # 7. Backlog
+    "implementation_plan.md",  # 8. Aktuální plán
+    "task.md"                  # 9. Checklist
 ]
 
 # Složky, které ignorujeme při výpisu struktury
@@ -63,8 +63,8 @@ def generate_briefing():
     
     # 1. Hlavička promptu
     output = f"# 🚀 SYSTEM BRIEFING - {timestamp}\n\n"
-    output += "**INSTRUCTION:** This is a context dump for the AI Architect (Gemini).\n"
-    output += "Please load the following context, activate your role defined in GEMINI_PROMPT.md, and await instructions.\n"
+    output += "**INSTRUCTION:** This is a context dump for the AI Architect.\n"
+    output += "Please load the following context and await instructions.\n"
     output += "-" * 40 + "\n"
     
     # 2. Načtení kontextových souborů
@@ -103,4 +103,4 @@ if __name__ == "__main__":
         f.write(content)
         
     print(f"✅ HOTOVO! Soubor vytvořen: {OUTPUT_FILE}")
-    print("👉 Otevři ho, zkopíruj celý obsah a vlož do nového chatu s Gemini.")
+    print("👉 Otevři ho, zkopíruj celý obsah a vlož do nového chatu s AI Architectem.")
