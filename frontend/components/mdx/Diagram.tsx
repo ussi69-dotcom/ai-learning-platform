@@ -3,7 +3,7 @@
 import React from 'react';
 
 interface DiagramProps {
-  type: 'neural-network' | 'training-loop' | 'black-box';
+  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop';
 }
 
 export default function Diagram({ type }: DiagramProps) {
@@ -139,6 +139,58 @@ export default function Diagram({ type }: DiagramProps) {
             </marker>
           </defs>
         </svg>
+      </div>
+    );
+  }
+
+  if (type === 'learning-types-overview') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl">
+          <svg viewBox="0 0 600 300" className="w-full h-auto">
+            <defs>
+              <marker id="arrowhead-gray" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+              <filter id="glass-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            {/* Connections */}
+            <path d="M 300 60 L 100 150" stroke="#94a3b8" strokeWidth="2" fill="none" markerEnd="url(#arrowhead-gray)" />
+            <path d="M 300 60 L 300 150" stroke="#94a3b8" strokeWidth="2" fill="none" markerEnd="url(#arrowhead-gray)" />
+            <path d="M 300 60 L 500 150" stroke="#94a3b8" strokeWidth="2" fill="none" markerEnd="url(#arrowhead-gray)" />
+
+            {/* Root Node */}
+            <g transform="translate(300, 40)">
+              <rect x="-80" y="-25" width="160" height="50" rx="25" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" strokeWidth="2" />
+              <text x="0" y="5" textAnchor="middle" className="text-lg font-bold fill-slate-900 dark:fill-white" dominantBaseline="middle">AI Learning</text>
+            </g>
+
+            {/* Supervised Node */}
+            <g transform="translate(100, 180)">
+              <rect x="-80" y="-25" width="160" height="50" rx="12" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" strokeWidth="2" />
+              <text x="0" y="5" textAnchor="middle" className="text-sm font-bold fill-slate-800 dark:fill-slate-200" dominantBaseline="middle">Supervised</text>
+              <text x="0" y="40" textAnchor="middle" className="text-xs fill-slate-500 dark:fill-slate-400">Labeled Data</text>
+            </g>
+
+            {/* Unsupervised Node */}
+            <g transform="translate(300, 180)">
+              <rect x="-80" y="-25" width="160" height="50" rx="12" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" strokeWidth="2" />
+              <text x="0" y="5" textAnchor="middle" className="text-sm font-bold fill-slate-800 dark:fill-slate-200" dominantBaseline="middle">Unsupervised</text>
+              <text x="0" y="40" textAnchor="middle" className="text-xs fill-slate-500 dark:fill-slate-400">Patterns Only</text>
+            </g>
+
+            {/* Reinforcement Node */}
+            <g transform="translate(500, 180)">
+              <rect x="-80" y="-25" width="160" height="50" rx="12" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" strokeWidth="2" />
+              <text x="0" y="5" textAnchor="middle" className="text-sm font-bold fill-slate-800 dark:fill-slate-200" dominantBaseline="middle">Reinforcement</text>
+              <text x="0" y="40" textAnchor="middle" className="text-xs fill-slate-500 dark:fill-slate-400">Trial & Error</text>
+            </g>
+          </svg>
+        </div>
       </div>
     );
   }
