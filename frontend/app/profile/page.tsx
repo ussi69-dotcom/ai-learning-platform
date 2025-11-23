@@ -125,51 +125,51 @@ export default function ProfilePage() {
   const hasChanges = selectedDifficulty !== user.difficulty;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12">
-      <Card className="w-full max-w-2xl">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-900 px-4 py-12">
+      <Card className="w-full max-w-2xl dark:bg-slate-800 dark:border-slate-700">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Profile</CardTitle>
-          <CardDescription>Your account information and settings</CardDescription>
+          <CardTitle className="text-2xl font-bold dark:text-white">Profile</CardTitle>
+          <CardDescription className="dark:text-slate-400">Your account information and settings</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-4">
             <div>
-              <label className="text-sm font-medium text-slate-600">Email</label>
-              <p className="text-lg font-medium">{user.email}</p>
+              <label className="text-sm font-medium text-slate-600 dark:text-slate-400">Email</label>
+              <p className="text-lg font-medium dark:text-slate-200">{user.email}</p>
             </div>
 
             <div>
-              <label className="text-sm font-medium text-slate-600">Account Status</label>
-              <p className="text-lg font-medium">
+              <label className="text-sm font-medium text-slate-600 dark:text-slate-400">Account Status</label>
+              <p className="text-lg font-medium dark:text-slate-200">
                 {user.is_active ? (
-                  <span className="text-green-600">✓ Active</span>
+                  <span className="text-green-600 dark:text-green-400">✓ Active</span>
                 ) : (
-                  <span className="text-red-600">✗ Inactive</span>
+                  <span className="text-red-600 dark:text-red-400">✗ Inactive</span>
                 )}
               </p>
             </div>
           </div>
 
           {/* My Learning Section */}
-          <div className="pt-6 border-t">
-            <h3 className="text-lg font-semibold mb-4">My Learning 📚</h3>
+          <div className="pt-6 border-t dark:border-slate-700">
+            <h3 className="text-lg font-semibold mb-4 dark:text-white">My Learning 📚</h3>
             {myProgress.length === 0 ? (
-              <p className="text-muted-foreground">You haven't completed any lessons yet. Start learning!</p>
+              <p className="text-slate-600 dark:text-slate-400">You haven't completed any lessons yet. Start learning!</p>
             ) : (
               <div className="space-y-2">
-                <p className="text-sm text-muted-foreground mb-2">
-                  You have completed <span className="font-bold text-blue-600">{myProgress.length}</span> lessons!
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
+                  You have completed <span className="font-bold text-blue-600 dark:text-blue-400">{myProgress.length}</span> lessons!
                 </p>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-blue-50 p-4 rounded-lg text-center">
-                    <div className="text-2xl font-bold text-blue-700">{myProgress.length}</div>
-                    <div className="text-xs text-blue-600">Lessons Done</div>
+                  <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg text-center border dark:border-blue-800">
+                    <div className="text-2xl font-bold text-blue-700 dark:text-blue-300">{myProgress.length}</div>
+                    <div className="text-xs text-blue-600 dark:text-blue-400">Lessons Done</div>
                   </div>
-                  <div className="bg-green-50 p-4 rounded-lg text-center">
-                    <div className="text-2xl font-bold text-green-700">
+                  <div className="bg-green-50 dark:bg-green-950 p-4 rounded-lg text-center border dark:border-green-800">
+                    <div className="text-2xl font-bold text-green-700 dark:text-green-300">
                       {new Set(myProgress.map((p: any) => p.course_id)).size}
                     </div>
-                    <div className="text-xs text-green-600">Active Courses</div>
+                    <div className="text-xs text-green-600 dark:text-green-400">Active Courses</div>
                   </div>
                 </div>
               </div>
@@ -177,9 +177,9 @@ export default function ProfilePage() {
           </div>
 
           {/* Difficulty Switcher Section */}
-          <div className="pt-6 border-t">
-            <h3 className="text-lg font-semibold mb-4">Difficulty Level</h3>
-            <p className="text-sm text-muted-foreground mb-4">
+          <div className="pt-6 border-t dark:border-slate-700">
+            <h3 className="text-lg font-semibold mb-4 dark:text-white">Difficulty Level</h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
               Choose your learning level to see courses tailored to your experience.
             </p>
 
@@ -190,14 +190,14 @@ export default function ProfilePage() {
                   onClick={() => setSelectedDifficulty(option.value)}
                   className={`p-4 rounded-lg border-2 text-left transition-all ${
                     selectedDifficulty === option.value
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-950 dark:border-blue-400'
+                      : 'border-gray-200 dark:border-slate-600 hover:border-gray-300 dark:hover:border-slate-500 dark:bg-slate-900'
                   }`}
                 >
-                  <div className="font-semibold text-lg">{option.label}</div>
-                  <div className="text-sm text-muted-foreground">{option.description}</div>
+                  <div className="font-semibold text-lg dark:text-slate-200">{option.label}</div>
+                  <div className="text-sm text-slate-600 dark:text-slate-400">{option.description}</div>
                   {option.value === user.difficulty && (
-                    <div className="text-xs text-blue-600 mt-1">✓ Current</div>
+                    <div className="text-xs text-blue-600 dark:text-blue-400 mt-1">✓ Current</div>
                   )}
                 </button>
               ))}
@@ -205,7 +205,9 @@ export default function ProfilePage() {
 
             {message && (
               <div className={`p-3 rounded-lg mb-4 ${
-                message.includes('✅') ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
+                message.includes('✅') 
+                  ? 'bg-green-50 text-green-800 dark:bg-green-950 dark:text-green-200 dark:border dark:border-green-800' 
+                  : 'bg-red-50 text-red-800 dark:bg-red-950 dark:text-red-200 dark:border dark:border-red-800'
               }`}>
                 {message}
               </div>
@@ -214,24 +216,24 @@ export default function ProfilePage() {
             <Button
               onClick={handleDifficultyChange}
               disabled={!hasChanges || updating}
-              className="w-full"
+              className="w-full dark:bg-blue-600 dark:hover:bg-blue-700"
             >
               {updating ? 'Updating...' : hasChanges ? 'Update Difficulty' : 'No Changes'}
             </Button>
           </div>
 
           {/* Action Buttons */}
-          <div className="pt-4 border-t space-y-3">
+          <div className="pt-4 border-t dark:border-slate-700 space-y-3">
             <Button 
               variant="outline" 
-              className="w-full"
+              className="w-full dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700"
               onClick={() => router.push('/')}
             >
               Back to Home
             </Button>
             <Button 
               variant="destructive" 
-              className="w-full"
+              className="w-full dark:bg-red-700 dark:hover:bg-red-800"
               onClick={handleLogout}
             >
               Logout

@@ -5,6 +5,7 @@ import MDXImage from './MDXImage';
 import Callout from './mdx/Callout';
 import Steps from './mdx/Steps';
 import ConceptCard from './mdx/ConceptCard';
+import LabSection from './mdx/LabSection';
 import CodeBlock from './CodeBlock';
 import Diagram from './mdx/Diagram';
 
@@ -24,56 +25,91 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
     while (i < lines.length) {
       const line = lines[i];
 
-      // 1. Handle <Callout> component
-      if (line.trim().startsWith('<Callout')) {
-        const typeMatch = line.match(/type=['"](\w+)['"]/);
-        const type = (typeMatch?.[1] as 'info' | 'warning' | 'tip') || 'info';
-        
-        // Find closing tag
-        let j = i + 1;
+      // Helper to find closing tag
+      const findClosingTag = (startIndex: number, tagName: string): { end: number, content: string } => {
+        let j = startIndex + 1;
         const contentLines: string[] = [];
-        while (j < lines.length && !lines[j].trim().startsWith('</Callout>')) {
+        const closeTag = `</${tagName}>`;
+        
+        while (j < lines.length && !lines[j].trim().startsWith(closeTag)) {
           contentLines.push(lines[j]);
           j++;
         }
+        return { end: j + 1, content: contentLines.join('\n') };
+      };
+
+      // 1. Handle <Callout> component
+      if (line.trim().startsWith('<Callout')) {
+        const typeMatch = line.match(/type=['"](\w+)['"]/);
+        const type = (typeMatch?.[1] as any) || 'info';
+        
+        const { end, content: innerContent } = findClosingTag(i, 'Callout');
         
         elements.push(
           <Callout key={`callout-${i}`} type={type}>
-            {parseInlineMarkdown(contentLines.join('\n'))}
+            {parseInlineMarkdown(innerContent)}
           </Callout>
         );
         
-        i = j + 1;
+        i = end;
         continue;
       }
 
       // 2. Handle <ConceptCard> component
       if (line.trim().startsWith('<ConceptCard')) {
         const titleMatch = line.match(/title=['"]([^'"]+)['"]/);
-        const title = titleMatch?.[1] || 'Concept';
+        const iconMatch = line.match(/icon=['"]([^'"]+)['"]/);
+        const diffMatch = line.match(/difficulty=['"]([^'"]+)['"]/);
+        const jediMatch = line.match(/jediQuote=['"]([^'"]+)['"]/);
+        const sithMatch = line.match(/sithQuote=['"]([^'"]+)['"]/);
+
+        const props = {
+          title: titleMatch?.[1] || 'Concept',
+          icon: iconMatch?.[1] || '💡',
+          difficulty: (diffMatch?.[1] as any) || 'Beginner',
+          jediQuote: jediMatch?.[1],
+          sithQuote: sithMatch?.[1]
+        };
         
-        // Find closing tag
-        let j = i + 1;
-        const contentLines: string[] = [];
-        while (j < lines.length && !lines[j].trim().startsWith('</ConceptCard>')) {
-          contentLines.push(lines[j]);
-          j++;
-        }
+        const { end, content: innerContent } = findClosingTag(i, 'ConceptCard');
         
         elements.push(
-          <ConceptCard key={`concept-${i}`} title={title}>
-            {parseInlineMarkdown(contentLines.join('\n'))}
+          <ConceptCard key={`concept-${i}`} {...props}>
+            {parseInlineMarkdown(innerContent)}
           </ConceptCard>
         );
         
-        i = j + 1;
+        i = end;
         continue;
       }
 
-      // 3. Handle <Diagram> component
+      // 3. Handle <LabSection> component
+      if (line.trim().startsWith('<LabSection')) {
+        const titleMatch = line.match(/title=['"]([^'"]+)['"]/);
+        const diffMatch = line.match(/difficulty=['"]([^'"]+)['"]/);
+        
+        const title = titleMatch?.[1] || 'Lab';
+        const difficulty = diffMatch?.[1] || 'Builder';
+        
+        const { end, content: innerContent } = findClosingTag(i, 'LabSection');
+        
+        // LabSection content typically includes numbered steps
+        const parsedLabContent = parseLabContent(innerContent);
+
+        elements.push(
+          <LabSection key={`lab-${i}`} title={title} difficulty={difficulty}>
+            {parsedLabContent}
+          </LabSection>
+        );
+        
+        i = end;
+        continue;
+      }
+
+      // 4. Handle <Diagram> component
       if (line.trim().startsWith('<Diagram')) {
         const typeMatch = line.match(/type=['"]([\w-]+)['"]/);
-        const type = (typeMatch?.[1] as 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop') || 'neural-network';
+        const type = (typeMatch?.[1] as any) || 'neural-network';
         
         elements.push(
           <Diagram key={`diagram-${i}`} type={type} />
@@ -83,12 +119,11 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         continue;
       }
 
-      // 4. Handle Code Blocks (```)
+      // 5. Handle Code Blocks (```)
       if (line.trim().startsWith('```')) {
         const languageMatch = line.trim().match(/^```(\w+)?/);
         const language = languageMatch?.[1] || 'text';
         
-        // Find closing ```
         let j = i + 1;
         const codeLines: string[] = [];
         while (j < lines.length && !lines[j].trim().startsWith('```')) {
@@ -106,68 +141,53 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         continue;
       }
 
-      // 4. Handle <Steps> component
+      // 6. Handle <Steps> component
       if (line.trim().startsWith('<Steps>')) {
-        // Find closing tag
-        let j = i + 1;
-        const contentLines: string[] = [];
-        while (j < lines.length && !lines[j].trim().startsWith('</Steps>')) {
-          contentLines.push(lines[j]);
-          j++;
-        }
-        
-        // Parse steps content
-        const stepsContent = contentLines.join('\n');
-        const stepElements = parseStepsContent(stepsContent);
+        const { end, content: innerContent } = findClosingTag(i, 'Steps');
+        const stepElements = parseStepsContent(innerContent);
         
         elements.push(
-          <Steps key={`steps-${i}`}>
+          <Steps key={`steps-${i}`}> 
             {stepElements}
           </Steps>
         );
         
-        i = j + 1;
+        i = end;
         continue;
       }
 
-      // 4. Handle Headings
+      // 7. Headings
       if (line.startsWith('# ')) {
-        elements.push(<h1 key={`h1-${i}`} className="text-4xl font-bold mb-4 text-slate-900">{line.substring(2)}</h1>);
-        i++;
-        continue;
+        elements.push(<h1 key={`h1-${i}`} className="text-4xl font-bold mb-4 text-slate-900 dark:text-slate-100">{line.substring(2)}</h1>);
+        i++; continue;
       }
       if (line.startsWith('## ')) {
-        elements.push(<h2 key={`h2-${i}`} className="text-3xl font-bold mt-8 mb-4 text-slate-900">{line.substring(3)}</h2>);
-        i++;
-        continue;
+        elements.push(<h2 key={`h2-${i}`} className="text-3xl font-bold mt-8 mb-4 text-slate-900 dark:text-slate-100">{line.substring(3)}</h2>);
+        i++; continue;
       }
       if (line.startsWith('### ')) {
-        elements.push(<h3 key={`h3-${i}`} className="text-2xl font-semibold mt-6 mb-3 text-slate-800">{line.substring(4)}</h3>);
-        i++;
-        continue;
+        elements.push(<h3 key={`h3-${i}`} className="text-2xl font-semibold mt-6 mb-3 text-slate-800 dark:text-slate-200">{line.substring(4)}</h3>);
+        i++; continue;
       }
 
-      // 5. Handle Images
-      if (line.match(/^!\[.*\]\(.*\)/)) {
+      // 8. Images
+      if (line.match(/^!.*\]\(.*\)/)) {
         const match = line.match(/^!\[(.*)\]\((.*)\)/);
         if (match) {
-          const alt = match[1];
-          const src = match[2];
           elements.push(
             <MDXImage 
               key={`img-${i}`} 
-              src={src} 
-              alt={alt} 
+              src={match[2]} 
+              alt={match[1]} 
               courseSlug={courseSlug}
               lessonSlug={lessonSlug}
             />
           );
-          i++;
-          continue;
+          i++; continue;
         }
       }
 
-      // 6. Handle Lists
+      // 9. Lists
       if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
         const items: string[] = [];
         let j = i;
@@ -175,20 +195,15 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
           items.push(lines[j].trim().substring(2));
           j++;
         }
-        
         elements.push(
-          <ul key={`ul-${i}`} className="list-disc ml-6 mb-4 space-y-2 text-slate-700">
-            {items.map((item, k) => (
-              <li key={k}>{parseInlineText(item)}</li>
-            ))}
+          <ul key={`ul-${i}`} className="list-disc ml-6 mb-4 space-y-2 text-slate-700 dark:text-slate-300">
+            {items.map((item, k) => <li key={k}>{parseInlineText(item)}</li>)}
           </ul>
         );
-        
-        i = j;
-        continue;
+        i = j; continue;
       }
 
-      // 7. Handle numbered lists
+      // 10. Numbered Lists
       if (line.trim().match(/^\d+\.\s/)) {
         const items: string[] = [];
         let j = i;
@@ -196,131 +211,96 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
           items.push(lines[j].trim().replace(/^\d+\.\s/, ''));
           j++;
         }
-        
         elements.push(
-          <ol key={`ol-${i}`} className="list-decimal ml-6 mb-4 space-y-2 text-slate-700">
-            {items.map((item, k) => (
-              <li key={k}>{parseInlineText(item)}</li>
-            ))}
+          <ol key={`ol-${i}`} className="list-decimal ml-6 mb-4 space-y-2 text-slate-700 dark:text-slate-300">
+            {items.map((item, k) => <li key={k}>{parseInlineText(item)}</li>)}
           </ol>
         );
-        
-        i = j;
-        continue;
+        i = j; continue;
       }
 
-      // 8. Handle horizontal rules
+      // 11. Horizontal Rule
       if (line.trim() === '---') {
-        elements.push(<hr key={`hr-${i}`} className="my-8 border-slate-200" />);
-        i++;
-        continue;
+        elements.push(<hr key={`hr-${i}`} className="my-8 border-slate-200 dark:border-slate-700" />);
+        i++; continue;
       }
 
-      // 9. Handle Tables
+      // 12. Tables (Simplified)
       if (line.trim().startsWith('|')) {
-        const tableLines: string[] = [];
-        let j = i;
-        while (j < lines.length && lines[j].trim().startsWith('|')) {
-          tableLines.push(lines[j].trim());
-          j++;
-        }
-
-        if (tableLines.length >= 2) {
-          const headerLine = tableLines[0];
-          const separatorLine = tableLines[1];
-          const bodyLines = tableLines.slice(2);
-
-          const headers = headerLine.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
-          
-          // Simple validation of separator line
-          if (separatorLine.includes('-')) {
-             elements.push(
+         // ... (keeping table logic simple/same as before but handling lines)
+         const tableLines: string[] = [];
+         let j = i;
+         while (j < lines.length && lines[j].trim().startsWith('|')) {
+           tableLines.push(lines[j].trim());
+           j++;
+         }
+         if (tableLines.length >= 2 && tableLines[1].includes('-')) {
+            const headers = tableLines[0].split('|').filter(c => c.trim()).map(c => c.trim());
+            const rows = tableLines.slice(2).map(l => l.split('|').filter(c => c.trim()).map(c => c.trim()));
+            elements.push(
               <div key={`table-${i}`} className="overflow-x-auto mb-6">
                 <table className="min-w-full border-collapse border border-slate-200 dark:border-slate-700">
                   <thead>
                     <tr className="bg-slate-50 dark:bg-slate-800">
-                      {headers.map((header, k) => (
-                        <th key={k} className="border border-slate-200 dark:border-slate-700 p-3 text-left font-semibold text-slate-900 dark:text-slate-100">
-                          {parseInlineText(header)}
-                        </th>
+                      {headers.map((h, k) => (
+                        <th key={k} className="border border-slate-200 dark:border-slate-700 p-3 text-left font-semibold text-slate-900 dark:text-slate-100">{parseInlineText(h)}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
-                    {bodyLines.map((rowLine, r) => {
-                      const cells = rowLine.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
-                      return (
-                        <tr key={r} className="even:bg-slate-50/50 dark:even:bg-slate-800/50">
-                          {cells.map((cell, c) => (
-                            <td key={c} className="border border-slate-200 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-300">
-                              {parseInlineText(cell)}
-                            </td>
-                          ))}
-                        </tr>
-                      );
-                    })}
+                    {rows.map((row, r) => (
+                      <tr key={r} className="even:bg-slate-50/50 dark:even:bg-slate-800/50">
+                        {row.map((cell, c) => (
+                          <td key={c} className="border border-slate-200 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-300">{parseInlineText(cell)}</td>
+                        ))}
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
             );
-            i = j;
-            continue;
-          }
-        }
-        // If not a valid table, fall through to paragraph
+            i = j; continue;
+         }
       }
 
-      // 9. Regular Paragraphs
+      // 13. Paragraphs
       if (line.trim() !== '') {
         elements.push(
-          <p key={`p-${i}`} className="mb-4 text-slate-700 leading-relaxed">
+          <p key={`p-${i}`} className="mb-4 text-slate-700 dark:text-slate-300 leading-relaxed">
             {parseInlineText(line)}
           </p>
         );
       }
-
       i++;
     }
-
     return elements;
   };
 
-  // Parse inline markdown (bold, italic, links)
-  const parseInlineText = (text: string): React.ReactNode => {
-    // Handle bold (**text**)
-    if (text.includes('**')) {
-      const parts = text.split('**');
-      return (
-        <>
-          {parts.map((part, k) => k % 2 === 1 ? <strong key={k}>{part}</strong> : part)}
-        </>
-      );
-    }
-    
-    // Handle italic (*text*)
-    if (text.includes('*')) {
-      const parts = text.split('*');
-      return (
-        <>
-          {parts.map((part, k) => k % 2 === 1 ? <em key={k}>{part}</em> : part)}
-        </>
-      );
-    }
+  // --- Helper Parsing Functions ---
 
-    return text;
+  const parseInlineText = (text: string): React.ReactNode => {
+    // Note: Very basic parsing. Doesn't handle nested.
+    const parts = text.split(/(\**.*?\**|\*.*?\*|`.*?`)/g);
+    return parts.map((part, k) => {
+      if (part.startsWith('**') && part.endsWith('**')) return <strong key={k}>{part.slice(2, -2)}</strong>;
+      if (part.startsWith('*') && part.endsWith('*')) return <em key={k}>{part.slice(1, -1)}</em>;
+      if (part.startsWith('`') && part.endsWith('`')) return <code key={k} className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded text-sm font-mono text-pink-500">{part.slice(1, -1)}</code>;
+      return part;
+    });
   };
 
-  // Parse inline markdown for multi-line content (for Callout, ConceptCard)
   const parseInlineMarkdown = (text: string): React.ReactNode => {
-    const lines = text.split('\n').filter(l => l.trim());
-    return lines.map((line, i) => (
-      <p key={i} className="my-2">
-        {parseInlineText(line)}
-      </p>
+    return text.split('\n').filter(l => l.trim()).map((line, i) => (
+      <p key={i} className="my-2">{parseInlineText(line)}</p>
     ));
   };
 
-  // Parse steps content (h3 headings + paragraphs + code blocks)
+  // Lab Content = Steps but inside LabSection
+  const parseLabContent = (text: string): React.ReactNode[] => {
+     // Reuse parseStepsContent logic mostly, or handle special Lab formatting
+     return parseStepsContent(text);
+  };
+
   const parseStepsContent = (text: string): React.ReactNode[] => {
     const lines = text.split('\n');
     const elements: React.ReactNode[] = [];
@@ -328,43 +308,29 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       
-      // Handle Code Blocks inside steps
       if (line.trim().startsWith('```')) {
         const languageMatch = line.trim().match(/^```(\w+)?/);
         const language = languageMatch?.[1] || 'text';
-        
         let j = i + 1;
         const codeLines: string[] = [];
         while (j < lines.length && !lines[j].trim().startsWith('```')) {
           codeLines.push(lines[j]);
           j++;
         }
-        
         elements.push(
           <CodeBlock key={`step-code-${i}`} language={language}>
             {codeLines.join('\n')}
           </CodeBlock>
         );
-        
-        i = j;
-        continue;
+        i = j; continue;
       }
 
       if (line.startsWith('### ')) {
-        elements.push(
-          <h3 key={`step-h3-${i}`}>
-            {line.substring(4)}
-          </h3>
-        );
+        elements.push(<h3 key={`step-h3-${i}`} className="text-lg font-bold mt-4 mb-2">{line.substring(4)}</h3>);
       } else if (line.trim() !== '') {
-        elements.push(
-          <p key={`step-p-${i}`}>
-            {parseInlineText(line)}
-          </p>
-        );
+        elements.push(<p key={`step-p-${i}`} className="mb-2">{parseInlineText(line)}</p>);
       }
     }
-    
     return elements;
   };
 

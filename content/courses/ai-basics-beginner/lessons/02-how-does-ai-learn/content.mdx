@@ -11,19 +11,39 @@ The answer: **Both.** And there's a third way, too.
 
 ## The Three Teachers
 
+
 Imagine you are learning to cook. There are three ways you could learn:
 
-<ConceptCard title="Method 1: The Recipe Book (Supervised Learning)">
-A chef gives you exact recipes with step-by-step instructions. You follow them precisely. "Add 2 cups of flour. Bake at 350°F." You learn by copying what works.
+<ConceptCard 
+  title="The Recipe Book" 
+  icon="📖"
+  difficulty="Beginner"
+  jediQuote="Learn from labeled examples."
+  sithQuote="Knowledge is power. Power is freedom."
+>
+  **Supervised Learning:** A chef gives you exact recipes. "Add 2 cups of flour." You learn by copying what works.
 </ConceptCard>
 
-<ConceptCard title="Method 2: The Pantry Challenge (Unsupervised Learning)">
-Someone dumps 50 random ingredients on your counter and says, "Organize these however you think makes sense." You group pasta with pasta, spices with spices. No one told you the categories—you discovered them yourself.
+<ConceptCard 
+  title="The Pantry Challenge" 
+  icon="🧩"
+  difficulty="Builder"
+  jediQuote="Discover hidden patterns."
+  sithQuote="Find patterns. Exploit them."
+>
+  **Unsupervised Learning:** Someone dumps random ingredients. You organize them yourself. No rules—just patterns.
 </ConceptCard>
 
-<ConceptCard title="Method 3: Trial and Error (Reinforcement Learning)">
-You taste your dish. Too salty? You remember to use less salt next time. Perfect? You remember exactly what you did. You learn by rewards (delicious) and penalties (disgusting).
+<ConceptCard 
+  title="Trial and Error" 
+  icon="🔥"
+  difficulty="Expert"
+  jediQuote="Learn from rewards and penalties."
+  sithQuote="The strong learn from failure."
+>
+  **Reinforcement Learning:** You taste the dish. Too salty? Don't do that again. Perfect? Do it again.
 </ConceptCard>
+
 
 These are the **three fundamental ways AI learns**. Let's dive into each one.
 
@@ -70,29 +90,25 @@ After seeing 10,000 labeled emails, it can predict whether a new email is spam w
 
 ---
 
-## Lab 1: Supervised Learning in Action
+<LabSection title="Lab 1: Supervised Learning" id="lab-1">
+  <Steps>
+    ### Action
+    Ask your AI model to classify the sentiment of these sentences as **Positive**, **Negative**, or **Neutral**:
 
-Let's prove supervised learning works with a simple experiment.
+    **Prompt:**
+    ```text
+    Classify the sentiment of these sentences:
+    1. "I love this product! Best purchase ever."
+    2. "This is the worst customer service I've experienced."
+    3. "The package arrived on Tuesday."
+    ```
 
-<Steps>
-### Action
-Ask your AI model to classify the sentiment of these sentences as **Positive**, **Negative**, or **Neutral**:
-
-**Prompt:**
-```text
-Classify the sentiment of these sentences:
-1. "I love this product! Best purchase ever."
-2. "This is the worst customer service I've experienced."
-3. "The package arrived on Tuesday."
-```
-
-### Observation
-- The AI was trained on millions of labeled reviews (supervised learning).
-- It learned patterns: "love," "best" → Positive; "worst" → Negative; factual statements → Neutral.
-- It didn't need rules like "if sentence contains 'love', then positive." It learned the association from data.
-</Steps>
-
-<LabBadge xp={10} title="Lab 1 Complete: Supervised Learning" />
+    ### Observation
+    - The AI was trained on millions of labeled reviews (supervised learning).
+    - It learned patterns: "love," "best" → Positive; "worst" → Negative; factual statements → Neutral.
+    - It didn't need rules like "if sentence contains 'love', then positive." It learned the association from data.
+  </Steps>
+</LabSection>
 
 <Callout type="info">
 **Fun Fact:** ChatGPT was trained using supervised learning on billions of labeled text examples. That's why it knows grammar, facts, and context—it saw patterns in its training data.
@@ -134,29 +150,25 @@ No one told the AI these categories existed. It found them by analyzing patterns
 
 ---
 
-## Lab 2: Clustering Experiment
+<LabSection title="Lab 2: Clustering Experiment" id="lab-2">
+  <Steps>
+    ### Action
+    Give your AI this list and ask it to group them into categories:
 
-Let's see unsupervised learning in action.
+    **Prompt:**
+    ```text
+    Group these items into categories without me telling you what the categories are:
+    Apple, Carrot, Banana, Broccoli, Orange, Spinach, Grapes, Lettuce, Strawberry, Kale
+    ```
 
-<Steps>
-### Action
-Give your AI this list and ask it to group them into categories:
+    ### Observation
+    - Did it group by **color** (orange items, green items)?
+    - Did it group by **type** (fruits vs. vegetables)?
+    - Did it create unexpected groups?
 
-**Prompt:**
-```text
-Group these items into categories without me telling you what the categories are:
-Apple, Carrot, Banana, Broccoli, Orange, Spinach, Grapes, Lettuce, Strawberry, Kale
-```
-
-### Observation
-- Did it group by **color** (orange items, green items)?
-- Did it group by **type** (fruits vs. vegetables)?
-- Did it create unexpected groups?
-
-The AI used unsupervised learning to cluster similar items—even though you didn't provide labels.
-</Steps>
-
-<LabBadge xp={10} title="Lab 2 Complete: Unsupervised Learning" />
+    The AI used unsupervised learning to cluster similar items—even though you didn't provide labels.
+  </Steps>
+</LabSection>
 
 <Callout type="tip">
 **Pro Tip:** Unsupervised learning is powerful for exploration. Use it when you don't know what you're looking for, but you suspect there are hidden patterns in your data.
@@ -196,34 +208,30 @@ After billions of games, it became superhuman—better than any human player.
 
 ---
 
-## Lab 3: The Dog Training Analogy
+<LabSection title="Lab 3: The Dog Training Analogy" id="lab-3">
+  <Steps>
+    ### Scenario
+    You are training a dog to sit on command. You have two tools:
+    - **Treats** (reward)
+    - **No treat** (penalty/neutral)
 
-This is a thought experiment to solidify your understanding of reinforcement learning.
+    ### Your Job
+    Every time the dog sits when you say "Sit," you give it a treat. If it doesn't sit, no treat.
 
-<Steps>
-### Scenario
-You are training a dog to sit on command. You have two tools:
-- **Treats** (reward)
-- **No treat** (penalty/neutral)
+    ### Question
+    After 100 repetitions:
+    1. Will the dog learn to sit on command?
+    2. What is the "reward"?
+    3. What is the "policy" (strategy) the dog learns?
 
-### Your Job
-Every time the dog sits when you say "Sit," you give it a treat. If it doesn't sit, no treat.
+    ### Reflection
+    - **Reward:** Treat (dopamine hit)
+    - **Policy:** "When I hear 'Sit' and sit down, I get food. Therefore, I should sit when I hear that word."
+    - **Learning Process:** Trial and error with feedback
 
-### Question
-After 100 repetitions:
-1. Will the dog learn to sit on command?
-2. What is the "reward"?
-3. What is the "policy" (strategy) the dog learns?
-
-### Reflection
-- **Reward:** Treat (dopamine hit)
-- **Policy:** "When I hear 'Sit' and sit down, I get food. Therefore, I should sit when I hear that word."
-- **Learning Process:** Trial and error with feedback
-
-This is exactly how reinforcement learning works. The AI is the dog. The reward is a number (+1, +10, -5). The policy is the strategy it learns.
-</Steps>
-
-<LabBadge xp={10} title="Lab 3 Complete: Reinforcement Learning" />
+    This is exactly how reinforcement learning works. The AI is the dog. The reward is a number (+1, +10, -5). The policy is the strategy it learns.
+  </Steps>
+</LabSection>
 
 <Callout type="warning">
 **Caution:** RL is powerful but tricky. If your reward function is poorly designed, the AI might "cheat" to maximize rewards. (Famous example: A cleaning robot that knocks over trash cans to have more to clean, maximizing its "cleaning score.")
@@ -240,19 +248,19 @@ This is exactly how reinforcement learning works. The AI is the dog. The reward 
 Not all learning methods are equal. Here's when to use each:
 
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
-  <ConceptCard title="Supervised Learning" className="h-full">
+  <ConceptCard title="Supervised Learning" className="h-full" difficulty="Beginner">
     **Best For:** Labeled data scenarios  
     **Examples:** Spam filters, image recognition, translation  
     **Think:** Flashcards with questions AND answers
   </ConceptCard>
 
-  <ConceptCard title="Unsupervised Learning" className="h-full">
+  <ConceptCard title="Unsupervised Learning" className="h-full" difficulty="Builder">
     **Best For:** Finding hidden patterns  
     **Examples:** Customer segmentation, anomaly detection, data compression  
     **Think:** Organizing a messy room without being told how
   </ConceptCard>
 
-  <ConceptCard title="Reinforcement Learning" className="h-full">
+  <ConceptCard title="Reinforcement Learning" className="h-full" difficulty="Expert">
     **Best For:** Goal-driven scenarios with simulation  
     **Examples:** Game AI, robotics, self-driving cars  
     **Think:** Learning to ride a bike by falling and trying again

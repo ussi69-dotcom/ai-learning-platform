@@ -74,18 +74,18 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-slate-900">
+    <div className="flex min-h-screen flex-col bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100">
       {/* Hero Sekce */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-slate-50 border-b">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-slate-50 border-b dark:bg-slate-800 dark:border-slate-700">
         <div className="container px-4 md:px-6 mx-auto text-center">
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl mb-4">
             AI Learning Platform
           </h1>
-          <p className="mx-auto max-w-[700px] text-slate-600 md:text-xl mb-4">
+          <p className="mx-auto max-w-[700px] text-slate-600 md:text-xl mb-4 dark:text-slate-300">
             Learning by doing. Postaveno na Next.js 16 + FastAPI.
           </p>
           {user && (
-            <p className="text-sm text-slate-500 mb-8">
+            <p className="text-sm text-slate-500 mb-8 dark:text-slate-400">
               Your difficulty: <span className="font-semibold">{DIFFICULTY_LABELS[user.difficulty]}</span>
             </p>
           )}
@@ -93,20 +93,20 @@ export default function HomePage() {
              {!user ? (
                <>
                  <Link href="/login">
-                   <Button size="lg">Login to Start</Button>
+                   <Button size="lg" className="dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200">Login to Start</Button>
                  </Link>
                  <Link href="/register">
-                   <Button size="lg" variant="outline">Register</Button>
+                   <Button size="lg" variant="outline" className="dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-700">Register</Button>
                  </Link>
                </>
              ) : courses.length > 0 ? (
                 <Link href={`/courses/${courses[0].id}`}>
-                  <Button size="lg" className='gap-2'>
+                  <Button size="lg" className='gap-2 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200'>
                     Start Learning 🚀
                   </Button>
                 </Link>
              ) : (
-                <Button size="lg" disabled>No courses available</Button>
+                <Button size="lg" disabled className="dark:bg-slate-700 dark:text-slate-400">No courses available</Button>
              )}
           </div>
         </div>
@@ -119,13 +119,13 @@ export default function HomePage() {
           </h2>
           
           {error && (
-            <div className="p-4 border border-red-200 bg-red-50 text-red-600 rounded-lg mb-6">
+            <div className="p-4 border border-red-200 bg-red-50 text-red-600 rounded-lg mb-6 dark:border-red-700 dark:bg-red-950 dark:text-red-300">
               {error}
             </div>
           )}
 
           {!user ? (
-            <div className="col-span-3 p-12 border-2 border-dashed border-slate-200 rounded-xl text-center text-slate-500">
+            <div className="col-span-3 p-12 border-2 border-dashed border-slate-200 rounded-xl text-center text-slate-500 dark:border-slate-700 dark:text-slate-400 dark:bg-slate-800/50">
               <p className="text-lg mb-2">Please login to see courses</p>
               <p className="text-sm">Courses are personalized based on your difficulty level</p>
             </div>
@@ -133,10 +133,10 @@ export default function HomePage() {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {courses.length > 0 ? (
                 courses.map((course) => (
-                  <Card key={course.id} className="border-2 border-slate-200 hover:border-primary/50 transition-colors group">
+                  <Card key={course.id} className="border-2 border-slate-200 hover:border-primary/50 transition-colors group dark:bg-slate-800 dark:border-slate-700 dark:hover:border-primary/70">
                     <CardHeader>
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded font-semibold">
+                        <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded font-semibold dark:bg-primary/20 dark:text-primary-foreground">
                           {DIFFICULTY_LABELS[course.difficulty_level]}
                         </span>
                       </div>
@@ -147,14 +147,14 @@ export default function HomePage() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-slate-600 mb-4 text-sm min-h-[40px] line-clamp-3">
+                      <p className="text-slate-600 mb-4 text-sm min-h-[40px] line-clamp-3 dark:text-slate-300">
                         {course.description || "No description"}
                       </p>
                       <div className="flex justify-between items-center mt-4">
-                        <span className="text-xs text-slate-400">ID: {course.id}</span>
+                        <span className="text-xs text-slate-400 dark:text-slate-500">ID: {course.id}</span>
                         
                       <Link href={`/courses/${course.id}`}>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" className="dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-700">
                            Detail
                          </Button>
                       </Link>
