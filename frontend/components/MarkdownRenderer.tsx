@@ -72,8 +72,8 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
 
       // 3. Handle <Diagram> component
       if (line.trim().startsWith('<Diagram')) {
-        const typeMatch = line.match(/type=['"](\w+-?\w+)['"]/);
-        const type = (typeMatch?.[1] as 'neural-network' | 'training-loop') || 'neural-network';
+        const typeMatch = line.match(/type=['"]([\w-]+)['"]/);
+        const type = (typeMatch?.[1] as 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop') || 'neural-network';
         
         elements.push(
           <Diagram key={`diagram-${i}`} type={type} />

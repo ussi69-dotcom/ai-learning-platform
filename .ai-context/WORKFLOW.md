@@ -148,23 +148,6 @@ graph LR
     I --> J{More Tasks?}
     J -->|Yes| C
     J -->|No| K[Proceed to Completion]
-```
-
-**Steps:**
-1. User: "Implement according to plan"
-2. Antigravity reads all context files
-3. Antigravity follows `task.md` step-by-step
-4. For each task:
-   - Implement code
-   - Test thoroughly
-   - If tests pass → Commit
-   - If tests fail → Fix and re-test
-   - Mark task `[x]` in `task.md`
-5. Repeat until all tasks complete
-
-**Example:**
-```
-task.md:
 [ ] Task 1: Add xp_earned column to User model
 [ ] Task 2: Create XP calculation service
 [ ] Task 3: Update lesson completion endpoint

@@ -1,10 +1,10 @@
 "use client";
 
 import React from 'react';
-import { Info, AlertTriangle, Lightbulb } from 'lucide-react';
+import { Info, AlertTriangle, Lightbulb, CheckCircle } from 'lucide-react';
 
 interface CalloutProps {
-  type?: 'info' | 'warning' | 'tip';
+  type?: 'info' | 'warning' | 'tip' | 'success';
   children: React.ReactNode;
 }
 
@@ -24,10 +24,15 @@ export default function Callout({ type = 'info', children }: CalloutProps) {
       container: 'bg-emerald-500/5 border-emerald-500/20 text-emerald-900 dark:text-emerald-100',
       icon: 'text-emerald-500',
       IconComponent: Lightbulb
+    },
+    success: {
+      container: 'bg-green-500/5 border-green-500/20 text-green-900 dark:text-green-100',
+      icon: 'text-green-500',
+      IconComponent: CheckCircle
     }
   };
 
-  const style = styles[type];
+  const style = styles[type] || styles.info;
   const Icon = style.IconComponent;
 
   return (
