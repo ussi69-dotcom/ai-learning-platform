@@ -1,324 +1,295 @@
 # 🤖 AI Agent Selection Guide
 
-## Purpose
-This document helps you choose the right AI agent for different tasks in the AI Learning Platform project.
+> **Status:** Aktualizováno listopad 2025  
+> **Current Architecture:** Perplexity (Architect) + Antigravity (Executor)  
+> **Gemini a OSS agenti se NEpoužívají pro tento projekt.**
 
 ---
 
-## 🎯 Agent Profiles
+## 🎯 Current Agent Architecture
 
-### 1. Claude Sonnet 4.5 (Thinking) - Primary Production Agent
+### Default Workflow Pattern
 
-**Strengths:**
-- ✅ Excellent at following complex instructions
-- ✅ Strong context awareness (200K tokens)
-- ✅ Superior code review and debugging
-- ✅ Precise MDX/React/TypeScript work
-- ✅ "Thinking" mode for complex reasoning
-- ✅ Reliable documentation writing
+**Perplexity (AI Architect)**
+- **Role:** Strategic planning, architecture decisions, research
+- **When to use:**
+  - Need strategic direction for new feature
+  - Architecture decisions required
+  - Research complex topics or best practices
+  - Content strategy planning
+  - Creating implementation plans
+- **Output:**
+  - `implementation_plan.md` (technical design)
+  - `task.md` (step-by-step checklist for Antigravity)
+  - Research documents
+  - Strategic recommendations
 
-**Best For:**
-- Content changes (lessons, MDX files)
-- Component development
-- Following .ai-context/ rules strictly
-- Multi-step workflows
-- Code refactoring
-- Architecture decisions
-
-**Use When:**
-- Task requires precision + context awareness
-- Multiple files need coordination
-- Following detailed specifications
-- Quality over speed
-
-**Avoid When:**
-- Simple one-liner fixes
-- Rapid prototyping (use Gemini)
-
----
-
-### 2. Gemini 3 Pro (High) - Speed & Creativity
-
-**Strengths:**
-- ✅ Extremely fast responses
-- ✅ Great at research & summarization
-- ✅ Creative content generation
-- ✅ Long context window (1M+ tokens)
-- ✅ Good at brainstorming
-
-**Best For:**
-- Quick research tasks
-- Content ideation (lesson topics, analogies)
-- Rapid prototyping
-- Summarizing documents
-- Creative writing (blog posts, examples)
-
-**Use When:**
-- Speed is priority
-- Exploring multiple approaches
-- Need fresh ideas
-- Less strict requirements
-
-**Avoid When:**
-- Precise code implementation required
-- Strict rules must be followed
-- Production-critical changes
-
-**⚠️ Warning:**
-- Sometimes "improvises" instead of following rules exactly
-- May skip steps in detailed workflows
-- Better for creative tasks than precision work
+**Antigravity (AI Executor) - Claude Sonnet 4.5 Thinking**
+- **Role:** All implementation, testing, commits, deployment
+- **When to use:**
+  - Implementing features from plan
+  - Writing/modifying code
+  - Testing and debugging
+  - Following `task.md` checklist
+  - Routine development work
+  - **DEFAULT for all execution tasks**
+- **Output:**
+  - Working code
+  - Tests
+  - Git commits
+  - Updated `AGENT-STATE.md`
 
 ---
 
-### 3. Claude Sonnet 4.5 (Standard) - Balanced Option
+## 🔄 Typical Workflow
 
-**Strengths:**
-- ✅ Faster than Thinking mode
-- ✅ Still reliable and precise
-- ✅ Good context handling
-- ✅ Solid coding capabilities
+### 1. Planning Phase (Perplexity)
+```
+User requests feature
+↓
+Perplexity analyzes requirements
+↓
+Perplexity creates implementation_plan.md + task.md
+↓
+User reviews and approves
+```
 
-**Best For:**
-- Standard coding tasks
-- Bug fixes
-- Simple feature additions
-- Quick iterations
-- Documentation updates
+### 2. Execution Phase (Antigravity)
+```
+Antigravity reads implementation_plan.md
+↓
+Follows task.md step-by-step
+↓
+Implements → Tests → Commits (after each task)
+↓
+Updates AGENT-STATE.md
+↓
+Marks tasks complete [x]
+```
 
-**Use When:**
-- Task is straightforward
-- Don't need deep reasoning
-- Want Claude quality without Thinking overhead
-
-**Avoid When:**
-- Complex multi-step workflows
-- Heavy context needed
-- Architecture decisions
-
----
-
-### 4. GPT-OSS 1208 (Medium) - Experimental
-
-**Strengths:**
-- ✅ Open source model
-- ✅ Good for learning/testing
-- ✅ Cost-effective
-
-**Limitations:**
-- ❌ Smaller context window
-- ❌ Less reliable with complex instructions
-- ❌ May struggle with large codebases
-- ❌ Not recommended for production
-
-**Best For:**
-- Testing open-source models
-- Learning experiments
-- Simple scripts
-- Cost-sensitive prototyping
-
-**Use When:**
-- Experimenting with alternatives
-- Educational purposes
-- Budget constraints
-
-**Avoid When:**
-- Production work
-- Complex projects
-- Following detailed specifications
-
----
-
-## 📋 Task-Specific Recommendations
-
-### Content Work (Lessons, MDX)
-**Primary:** Claude Sonnet 4.5 (Thinking)
-**Backup:** Gemini 3 Pro (High) - for initial drafts
-
-**Why:** Content must follow CONTENT_GUIDELINES.md precisely, use correct components, maintain tone.
-
----
-
-### Component Development (React/TypeScript)
-**Primary:** Claude Sonnet 4.5 (Thinking)
-**Backup:** Claude Sonnet 4.5 (Standard) - for simple components
-
-**Why:** Type safety, proper hooks usage, accessibility, following design system.
-
----
-
-### Bug Fixes
-**Primary:** Claude Sonnet 4.5 (Standard)
-**Upgrade to:** Claude Sonnet 4.5 (Thinking) - if bug is complex
-
-**Why:** Most bugs are straightforward, don't need deep reasoning.
-
----
-
-### Research & Planning
-**Primary:** Gemini 3 Pro (High)
-**Backup:** Claude Sonnet 4.5 (Thinking) - for detailed analysis
-
-**Why:** Gemini excels at rapid research, summarization, finding patterns.
-
----
-
-### Documentation
-**Primary:** Claude Sonnet 4.5 (Thinking)
-**Alternative:** Claude Sonnet 4.5 (Standard) - for simple updates
-
-**Why:** Documentation must be precise, well-structured, comprehensive.
-
----
-
-### Rapid Prototyping
-**Primary:** Gemini 3 Pro (High)
-**Refine with:** Claude Sonnet 4.5 (Thinking)
-
-**Why:** Gemini is fast, generates many ideas. Sonnet refines to production quality.
-
----
-
-### Code Review
-**Primary:** Claude Sonnet 4.5 (Thinking)
-**Never:** GPT-OSS (not reliable enough)
-
-**Why:** Code review requires deep understanding, context awareness, spotting edge cases.
-
----
-
-## 🚀 Recommended Workflow
-
-### For New Features:
-1. **Research:** Gemini 3 Pro (High) - gather info, explore options
-2. **Planning:** Claude Sonnet 4.5 (Thinking) - write implementation plan
-3. **Implementation:** Claude Sonnet 4.5 (Thinking) - code the feature
-4. **Testing:** Claude Sonnet 4.5 (Standard) - write tests
-5. **Documentation:** Claude Sonnet 4.5 (Thinking) - document the feature
-
-### For Content Creation:
-1. **Brainstorm:** Gemini 3 Pro (High) - generate ideas, analogies
-2. **Outline:** Claude Sonnet 4.5 (Thinking) - structure content
-3. **Write:** Claude Sonnet 4.5 (Thinking) - follow guidelines
-4. **Review:** Claude Sonnet 4.5 (Standard) - quick edits
-
-### For Bug Fixes:
-1. **Diagnose:** Claude Sonnet 4.5 (Standard) - identify issue
-2. **Fix:** Claude Sonnet 4.5 (Standard) - implement fix
-3. **Test:** Claude Sonnet 4.5 (Standard) - verify fix
-4. **Document:** Claude Sonnet 4.5 (Standard) - update comments
-
----
-
-## 💰 Cost Optimization
-
-### High-Value Tasks (Use Premium):
-- Production code changes
-- Architecture decisions
-- Content that students see
-- Complex debugging
-- Security-related work
-
-### Lower-Value Tasks (Use Standard):
-- Simple bug fixes
-- Documentation updates
-- Routine refactoring
-- Test writing
-
-### Experimental Tasks (Use OSS):
-- Learning new approaches
-- Prototyping throwaway code
-- Testing ideas
-
----
-
-## ⚠️ Common Mistakes
-
-### ❌ Don't Use Gemini For:
-- Production code that must follow strict rules
-- Complex multi-file changes
-- Tasks requiring precise component usage
-- Anything touching .ai-context/ rules
-
-### ❌ Don't Use GPT-OSS For:
-- Production work
-- Complex projects
-- Tasks with many dependencies
-- Anything requiring deep context
-
-### ❌ Don't Use Sonnet Thinking For:
-- Simple one-line changes
-- Quick iterations during prototyping
-- Tasks where speed > precision
-
----
-
-## 🎯 Current Project Assignments
-
-### Primary Developer (80% of work):
-**Claude Sonnet 4.5 (Thinking)**
-- All content changes
-- Component development
-- Following .ai-context/ system
-- Implementation plans
-- Code review
-
-### Research & Ideation (15% of work):
-**Gemini 3 Pro (High)**
-- Topic research
-- Content brainstorming
-- Best practices discovery
-- Quick prototypes
-
-### Quick Fixes (5% of work):
-**Claude Sonnet 4.5 (Standard)**
-- Simple bugs
-- Typo fixes
-- Minor updates
-
-### Experimental (0% of production):
-**GPT-OSS 1208**
-- Testing only
-- Learning exercises
-- Not for commits
-
----
-
-## 📊 Performance Tracking
-
-Track which agent works best for your use cases:
-
-```markdown
-| Task Type | Agent Used | Success? | Notes |
-|-----------|------------|----------|-------|
-| Lesson 1 redesign | Sonnet Thinking | ✅ | Perfect adherence to guidelines |
-| Quick typo fix | Sonnet Standard | ✅ | Fast, accurate |
-| Research best practices | Gemini High | ✅ | Found great examples |
+### 3. Completion Phase (Antigravity)
+```
+All tasks marked [x]
+↓
+Archives cycle files to completed_cycles/
+↓
+Updates AGENT-STATE.md with cycle summary
+↓
+Pushes to GitHub
+↓
+Reports completion to user
 ```
 
 ---
 
-## 🔄 When to Switch Agents
+## 📋 Decision Tree
 
-### Escalate to Sonnet Thinking when:
-- Standard agent struggles with context
-- Task complexity increases
-- Multiple attempts needed
-- Precision is critical
+### When to Use Perplexity:
+- ✅ Strategic planning needed
+- ✅ Architecture design decisions
+- ✅ Research best practices or technologies
+- ✅ Content strategy (curriculum planning)
+- ✅ Complex problem analysis
+- ✅ Creating implementation roadmaps
 
-### Downgrade to Standard when:
-- Thinking mode is overkill
-- Simple, straightforward task
-- Speed is priority
-- Budget constraints
-
-### Try Gemini when:
-- Need fresh perspective
-- Brainstorming phase
-- Research task
-- Speed over precision
+### When to Use Antigravity:
+- ✅ **DEFAULT** - Any execution task
+- ✅ Implementing from existing plan
+- ✅ Writing/editing code
+- ✅ Testing and debugging
+- ✅ Following task checklist
+- ✅ Git operations (commit, push)
+- ✅ Updating documentation
+- ✅ Component development
+- ✅ Content creation (lessons, MDX)
+- ✅ Bug fixes
+- ✅ Refactoring
 
 ---
 
-**Last Updated:** Cycle 16 (Perplexity Era)
-**Review:** Update after every major project phase
+## 💡 When Role is Unclear
+
+**Antigravity determines role based on:**
+1. `implementation_plan.md` (primary reference)
+2. `CONTENT_GUIDELINES.md` (design decisions)
+3. `PROJECT_CORE.md` (strategic direction)
+
+**Default assumption:**  
+If task involves **code execution, testing, or implementation** → Antigravity executes.
+
+**Escalation rule:**  
+If Antigravity encounters unclear requirements or architectural ambiguity during execution → Request clarification from user, who may consult Perplexity.
+
+---
+
+## 🎯 Task-Specific Guidelines
+
+### Content Work (Lessons, MDX)
+**Agent:** Antigravity  
+**References:** `CONTENT_GUIDELINES.md`, `implementation_plan.md`  
+**Why:** Must follow design system precisely, use correct components, maintain tone
+
+### Component Development (React/TypeScript)
+**Agent:** Antigravity  
+**References:** `ARCHITECTURE.md`, design system docs  
+**Why:** Type safety, proper hooks, accessibility, following established patterns
+
+### Bug Fixes
+**Agent:** Antigravity  
+**Approach:** Diagnose → Fix → Test → Commit  
+**Why:** Straightforward execution task
+
+### Research & Planning
+**Agent:** Perplexity  
+**Output:** Documents, recommendations, implementation plans  
+**Why:** Strategic thinking, exploring options, gathering information
+
+### Architecture Decisions
+**Agent:** Perplexity (with user approval)  
+**Examples:** Choosing libraries, database schema, API design  
+**Why:** Long-term impact requires strategic analysis
+
+### Rapid Prototyping
+**Phase 1:** Perplexity (explore options, create plan)  
+**Phase 2:** Antigravity (implement prototype)  
+**Why:** Research first, then execute
+
+### Code Review
+**Agent:** Antigravity  
+**Approach:** Review changes, verify alignment with guidelines  
+**Why:** Context-aware validation against project standards
+
+---
+
+## 🚀 Best Practices
+
+### For Users:
+- **Clear requests:** Specify if you want planning (Perplexity) or execution (Antigravity)
+- **Approve plans:** Review `implementation_plan.md` before execution
+- **Monitor progress:** Check `AGENT-STATE.md` and `task.md` for status
+
+### For Antigravity:
+- **Always read context first:**
+  - `PROJECT_CORE.md` (vision, MVP)
+  - `CONTENT_GUIDELINES.md` (design system)
+  - `ARCHITECTURE.md` (tech stack)
+  - `implementation_plan.md` (current task)
+  - `task.md` (checklist)
+- **Test before commit:** Every change must be verified
+- **Atomic commits:** One task = one commit
+- **Update progress:** Mark tasks `[x]` in `task.md`
+- **Autonomous completion:** Close cycles automatically when done
+
+### For Perplexity:
+- **Clear plans:** Write detailed `implementation_plan.md`
+- **Actionable tasks:** Create specific `task.md` checklist
+- **Consider constraints:** Reference `ARCHITECTURE.md` for tech limitations
+- **User-friendly:** Plans should be reviewable by user
+
+---
+
+## 🚫 Archived Agents (Historical Reference Only)
+
+### Gemini 3 Pro
+- **Status:** ❌ No longer used for this project
+- **Era:** October 2024 - November 2025
+- **Archive:** See `.ai-context/archive/gemini-era/`
+- **Reason for change:** Moved to Perplexity for clearer architecture and better long-term planning
+
+### GPT-OSS 1208
+- **Status:** ❌ Never used in production
+- **Purpose:** Experimental testing only
+- **Reason:** Insufficient context window and reliability for production work
+
+### Claude Sonnet 4.5 (Standard Mode)
+- **Status:** ❌ Not currently used
+- **Note:** Antigravity uses Thinking mode for all tasks
+- **Reason:** Thinking mode provides superior context awareness and reasoning
+
+---
+
+## 📂 Key Reference Files
+
+### Must Read Before Every Task:
+1. **`PROJECT_CORE.md`** - Vision, MVP, curriculum philosophy
+2. **`CONTENT_GUIDELINES.md`** - Design system, component usage
+3. **`ARCHITECTURE.md`** - Tech stack, dependencies, ports
+4. **`AGENT-STATE.md`** - Current cycle status, history
+
+### Task-Specific:
+5. **`implementation_plan.md`** - Current cycle technical plan
+6. **`task.md`** - Step-by-step checklist
+
+### Reference as Needed:
+7. **`CURRICULUM_STRATEGY.md`** - Long-term learning path
+8. **`WORKFLOW.md`** - Collaboration patterns
+
+### Priority Order (If Conflicts):
+```
+implementation_plan.md > CONTENT_GUIDELINES.md > PROJECT_CORE.md > Other files
+```
+
+---
+
+## 🔄 Workflow Evolution
+
+### Old Pattern (Gemini Era - Deprecated):
+```
+User → Gemini (architect) → User (copy-paste) → Antigravity (executor)
+- Required context_builder.py
+- Manual handoff between agents
+- More steps, more friction
+```
+
+### Current Pattern (Perplexity Era):
+```
+User → Perplexity (architect) → Antigravity (executor)
+- File-based context
+- Direct execution from plans
+- Autonomous cycle completion
+- Less manual overhead
+```
+
+---
+
+## 📊 Success Indicators
+
+### Antigravity Working Well:
+- ✅ Follows plans precisely
+- ✅ Tests before committing
+- ✅ Atomic commits with clear messages
+- ✅ Updates task.md progress
+- ✅ Autonomous cycle completion
+- ✅ No deviation from guidelines
+
+### Perplexity Working Well:
+- ✅ Clear, actionable implementation plans
+- ✅ Comprehensive task breakdowns
+- ✅ Considers constraints and dependencies
+- ✅ User can make informed decisions
+
+### System Working Well:
+- ✅ No confusion about roles
+- ✅ Smooth handoff between planning and execution
+- ✅ Consistent quality across cycles
+- ✅ Easy onboarding for new contexts
+
+---
+
+## 🆘 When Things Go Wrong
+
+### Antigravity Encounters Issues:
+1. **Unclear requirements** → Ask user for clarification
+2. **Technical blockers** → Document in commit, ask user
+3. **Guideline conflicts** → Follow priority order, ask if unclear
+
+### User Needs Help:
+1. **Strategic decision** → Consult Perplexity
+2. **Quick execution** → Use Antigravity directly
+3. **Research needed** → Ask Perplexity first, then execute with Antigravity
+
+---
+
+**Last Updated:** Listopad 2025 (Cycle 17)  
+**Agent Architecture:** Perplexity (Architect) + Antigravity (Executor)  
+**OSS/Gemini/ostatní agenti se NEpoužívají pro tento projekt**
