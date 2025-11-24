@@ -15,6 +15,8 @@ engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     pool_pre_ping=True, # Ověří spojení před použitím (řeší "server closed the connection unexpectedly")
     pool_recycle=3600,  # Recykluje spojení po hodině
+    pool_size=50,       # Robustní pool pro desítky paralelních požadavků
+    max_overflow=30,    # Velká rezerva pro špičky (celkem max 80 spojení)
 )
 
 # Vytvoříme továrnu na "sessions" (relace). Každý požadavek od uživatele dostane svou session.
