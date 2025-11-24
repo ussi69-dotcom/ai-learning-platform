@@ -33,7 +33,7 @@ export default function JediSithToggle({ className = "" }: JediSithToggleProps) 
   };
 
   return (
-    <div className={`bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-red-900/50 rounded-full p-1 flex shadow-inner ${className}`}>
+    <div className={`bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-primary/50 rounded-full p-1 flex shadow-inner ${className}`}>
       <button
         onClick={() => toggleTheme('light')}
         className={`
@@ -52,7 +52,7 @@ export default function JediSithToggle({ className = "" }: JediSithToggleProps) 
         className={`
           flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all duration-300
           ${theme === 'dark' 
-            ? 'bg-red-950 text-red-500 shadow-sm scale-105 ring-1 ring-red-900' 
+            ? 'bg-primary/10 text-primary shadow-sm scale-105 ring-1 ring-primary' 
             : 'text-slate-400 hover:text-slate-600'}
         `}
       >

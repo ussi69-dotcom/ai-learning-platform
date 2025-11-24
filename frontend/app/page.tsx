@@ -101,7 +101,7 @@ export default function HomePage() {
                </>
              ) : courses.length > 0 ? (
                 <Link href={`/courses/${courses[0].id}`}>
-                  <Button size="lg" className='gap-2 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200'>
+                  <Button size="lg" className='gap-2 bg-red-600 hover:bg-red-700 text-white dark:bg-red-600 dark:hover:bg-red-700 dark:text-white border-none shadow-lg'>
                     Start Learning 🚀
                   </Button>
                 </Link>

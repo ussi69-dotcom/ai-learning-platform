@@ -28,7 +28,7 @@ export default function ProgressDots() {
           className={`
             w-2 h-2 rounded-full transition-all duration-300
             ${i <= activeDotIndex 
-              ? 'bg-purple-500 scale-125 shadow-[0_0_10px_rgba(168,85,247,0.5)]' 
+              ? 'bg-primary scale-125 shadow-[0_0_10px_var(--color-primary)]' 
               : 'bg-slate-300/20 dark:bg-white/10 scale-100'
             }
           `}

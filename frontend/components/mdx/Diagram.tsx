@@ -146,7 +146,7 @@ export default function Diagram({ type }: DiagramProps) {
   if (type === 'learning-types-overview') {
     return (
       <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl">
+        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 300" className="w-full h-auto" role="img" aria-label="AI Learning Types: Supervised (Labeled Data), Unsupervised (Patterns Only), Reinforcement (Trial & Error)">
             <defs>
               <marker id="arrowhead-gray" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
@@ -345,7 +345,7 @@ export default function Diagram({ type }: DiagramProps) {
 
             {/* Action Arrow (Left Up) */}
             <path d="M 140 300 C 50 300, 50 50, 140 50" fill="none" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-loop)" />
-            <rect x="20" y="160" width="80" height="30" rx="4" fill="#slate-100" className="fill-white dark:fill-slate-900" stroke="#cbd5e1" />
+            <rect x="20" y="160" width="80" height="30" rx="4" className="fill-white dark:fill-slate-900" stroke="#cbd5e1" />
             <text x="60" y="180" textAnchor="middle" className="text-xs font-bold fill-slate-600 dark:fill-slate-300" dominantBaseline="middle">Action</text>
 
             {/* Feedback Arrow (Right Down) */}

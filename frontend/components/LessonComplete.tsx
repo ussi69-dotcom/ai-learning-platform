@@ -66,10 +66,10 @@ export default function LessonComplete({ lessonId, courseId, onComplete }: Lesso
 
   if (isCompleted) {
     return (
-      <div className="mt-8 p-6 bg-green-50 border border-green-200 rounded-xl text-center animate-fade-in">
+      <div className="mt-8 p-6 bg-secondary/10 border border-secondary/20 rounded-xl text-center animate-fade-in">
         <div className="text-4xl mb-2">🎉</div>
-        <h3 className="text-xl font-bold text-green-800 mb-1">Lesson Completed!</h3>
-        <p className="text-green-600">Great job! You're making progress.</p>
+        <h3 className="text-xl font-bold text-secondary mb-1">Lesson Completed!</h3>
+        <p className="text-secondary/80">Great job! You're making progress.</p>
       </div>
     );
   }
@@ -83,7 +83,7 @@ export default function LessonComplete({ lessonId, courseId, onComplete }: Lesso
           px-8 py-4 rounded-full text-lg font-bold shadow-lg transform transition-all duration-200
           ${isLoading 
             ? 'bg-gray-400 cursor-not-allowed' 
-            : 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:scale-105 hover:shadow-xl active:scale-95'}
+            : 'bg-gradient-to-r from-secondary to-secondary/80 text-secondary-foreground hover:scale-105 hover:shadow-xl active:scale-95'}
         `}
       >
         {isLoading ? 'Marking...' : 'Mark as Complete ✅'}

@@ -70,7 +70,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
     return (
       <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-950">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500 dark:border-red-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-slate-600 dark:text-slate-400">Loading lesson...</p>
         </div>
       </div>
@@ -130,7 +130,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           {/* Header Section */}
           <div className="mb-8">
              <div className="flex items-center gap-3 mb-4">
-              <span className="bg-indigo-100 dark:bg-red-900/30 text-indigo-700 dark:text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-indigo-200 dark:border-red-900">
+              <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold border border-primary/20">
                 Lesson {lesson.order}
               </span>
               {course && (
@@ -247,11 +247,11 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             {/* Right Side */}
             {currentPage < totalPages - 1 ? (
               <Button 
-                className="w-full max-w-xs justify-end gap-2 h-auto py-4 px-6 rounded-2xl bg-indigo-600 dark:bg-red-700 hover:bg-indigo-700 dark:hover:bg-red-600 text-white shadow-xl shadow-indigo-200 dark:shadow-red-900/20 border-b-4 border-indigo-800 dark:border-red-900 active:border-b-0 active:translate-y-1 transition-all"
+                className="w-full max-w-xs justify-end gap-2 h-auto py-4 px-6 rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-xl shadow-primary/20 border-b-4 border-primary/50 active:border-b-0 active:translate-y-1 transition-all"
                 onClick={() => setCurrentPage(currentPage + 1)}
               >
                 <div className="text-right">
-                  <div className="text-[10px] text-indigo-200 dark:text-red-200 uppercase tracking-wider font-bold">Continue</div>
+                  <div className="text-[10px] text-primary-foreground/80 uppercase tracking-wider font-bold">Continue</div>
                   <div className="font-bold">Next Page</div>
                 </div>
                 <span>→</span>
@@ -288,14 +288,14 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
               
               {currentPage < totalPages - 1 ? (
                 <Button 
-                  className="flex-[2] h-12 rounded-xl font-bold bg-indigo-600 dark:bg-red-600 hover:bg-indigo-700 dark:hover:bg-red-500 text-white shadow-lg"
+                  className="flex-[2] h-12 rounded-xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg"
                   onClick={() => setCurrentPage(currentPage + 1)}
                 >
                   Next →
                 </Button>
               ) : (
                  <Link href={nextLesson ? `/courses/${courseId}/lessons/${nextLesson.id}` : `/courses/${courseId}`} className="flex-[2]">
-                    <Button className="w-full h-12 rounded-xl font-bold bg-green-600 hover:bg-green-700 text-white shadow-lg">
+                    <Button className="w-full h-12 rounded-xl font-bold bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg">
                       {nextLesson ? 'Next Lesson' : 'Finish'}
                     </Button>
                  </Link>

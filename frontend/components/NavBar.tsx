@@ -12,7 +12,7 @@ export default function NavBar() {
   const { user, logout, token } = useAuth();
   const [progressStats, setProgressStats] = useState({ level: 1, xp: 0, maxXp: 500 });
 
-  // Fetch simplified progress for the Navbar
+      // Fetch simplified progress for the Navbar
   useEffect(() => {
     if (!user || !token) return;
 
@@ -40,6 +40,10 @@ export default function NavBar() {
     };
 
     fetchStats();
+    
+    // Poll every 5 seconds to update XP
+    const interval = setInterval(fetchStats, 5000);
+    return () => clearInterval(interval);
   }, [user, token]);
 
   return (
@@ -48,7 +52,7 @@ export default function NavBar() {
         
         {/* Left: Logo */}
         <div className="flex-shrink-0">
-          <Link href="/" className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-red-500 dark:to-orange-500 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
+          <Link href="/" className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hover:opacity-80 transition-opacity">
             AI Learning
           </Link>
         </div>
@@ -60,7 +64,7 @@ export default function NavBar() {
               currentXP={progressStats.xp} 
               nextLevelXP={progressStats.maxXp} 
               level={progressStats.level}
-              className="w-full max-w-lg" // Limit width to ~50% effectively on large screens
+              className="w-full max-w-[200px]" // Reduced width significantly
             />
           </div>
         )}
@@ -95,7 +99,7 @@ export default function NavBar() {
                 </Button>
               </Link>
               <Link href="/register">
-                <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white border-none">
+                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground border-none">
                   Register
                 </Button>
               </Link>

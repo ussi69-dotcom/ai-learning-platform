@@ -29,15 +29,15 @@ export default function LabSection({ title, difficulty = "Builder", children }: 
       <div className={`
         relative overflow-hidden rounded-3xl
         bg-white dark:bg-slate-800
-        border-2 ${isCompleted ? 'border-green-500 dark:border-green-500' : 'border-indigo-200 dark:border-indigo-800'}
+        border-2 ${isCompleted ? 'border-green-500 dark:border-green-500' : 'border-indigo-200 dark:border-slate-700'}
         shadow-xl transition-all duration-500
-        ${isCompleted ? 'shadow-green-500/20' : 'shadow-indigo-500/10'}
+        ${isCompleted ? 'shadow-green-500/20' : 'shadow-indigo-500/10 dark:shadow-none'}
       `}>
         
         {/* Header */}
         <div className={`
           p-6 flex items-center justify-between
-          border-b ${isCompleted ? 'bg-green-50 dark:bg-green-900/20 border-green-100' : 'bg-slate-50 dark:bg-slate-900/50 border-slate-100'}
+          border-b ${isCompleted ? 'bg-green-50 dark:bg-green-900/20 border-green-100 dark:border-green-500/30' : 'bg-slate-50 dark:bg-slate-900/50 border-slate-100 dark:border-slate-700'}
         `}>
           <div className="flex items-center gap-3">
             <div className={`
@@ -72,7 +72,7 @@ export default function LabSection({ title, difficulty = "Builder", children }: 
         </div>
 
         {/* Footer / Action */}
-        <div className="p-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+        <div className="p-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-700 flex justify-end">
           <Button 
             size="lg"
             onClick={handleComplete}
@@ -80,8 +80,8 @@ export default function LabSection({ title, difficulty = "Builder", children }: 
             className={`
               font-bold text-base px-8 h-12 transition-all
               ${isCompleted 
-                ? 'bg-green-600 hover:bg-green-700 text-white' 
-                : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-0.5'
+                ? 'bg-green-600 hover:bg-green-700 text-white dark:bg-green-600 dark:hover:bg-green-700' 
+                : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-0.5 dark:from-indigo-500 dark:to-purple-500 dark:hover:from-indigo-400 dark:hover:to-purple-400'
               }
             `}
           >
