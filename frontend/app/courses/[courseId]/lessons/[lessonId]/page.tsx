@@ -276,7 +276,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
               <div className="flex w-full md:w-auto justify-end order-3">
                 <Button
-                  variant={currentPage === calculatedTotalPages - 1 ? "default" : "secondary"} 
+                  variant={currentPage === calculatedTotalPages - 1 ? "default" : "outline"} 
                   onClick={() => setCurrentPage(Math.min(calculatedTotalPages - 1, currentPage + 1))}
                   disabled={currentPage === calculatedTotalPages - 1}
                   className="min-w-[100px] h-12 text-base font-bold shadow-md" // Větší a výraznější

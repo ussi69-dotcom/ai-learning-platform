@@ -84,7 +84,7 @@ export default function ConceptCard({
   return (
     <div 
       className={`
-        group relative h-full my-8 p-8 rounded-3xl
+        group relative p-8 rounded-3xl
         bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl
         border border-slate-200 dark:border-slate-800
         shadow-xl hover:shadow-2xl hover:scale-[1.01]
