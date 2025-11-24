@@ -10,15 +10,11 @@ import Quiz, { QuizQuestion } from "@/components/Quiz";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import LessonComplete from "@/components/LessonComplete";
 import ProgressDots from "@/components/mdx/ProgressDots";
-import JediSithToggle from "@/components/JediSithToggle";
-import DifficultyBadge from "@/components/DifficultyBadge";
-import XPProgressBar from "@/components/XPProgressBar";
 
 export default function LessonPage({ params }: { params: Promise<{ courseId: string; lessonId: string }> }) {
-  // Unwrap params Promise (Next.js 16 requirement)
   const { courseId, lessonId } = use(params);
   
-  const { token, user } = useAuth();
+  const { token } = useAuth();
   const router = useRouter();
   const [lesson, setLesson] = useState<any>(null);
   const [course, setCourse] = useState<any>(null);
@@ -26,21 +22,6 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   const [allLessons, setAllLessons] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
-
-  // Gamification State (Mock/Derived)
-  const [xp, setXp] = useState(350);
-  
-  const getLevelInfo = () => {
-    const diff = user?.difficulty || 'PIECE_OF_CAKE';
-    switch (diff) {
-      case 'LETS_ROCK': return { level: 2, name: 'Builder', maxXp: 1000 };
-      case 'COME_GET_SOME': return { level: 3, name: 'Expert', maxXp: 2000 };
-      case 'DAMN_IM_GOOD': return { level: 4, name: 'Architect', maxXp: 5000 };
-      default: return { level: 1, name: 'Beginner', maxXp: 500 };
-    }
-  };
-
-  const levelInfo = getLevelInfo();
 
   useEffect(() => {
     async function fetchData() {
@@ -50,25 +31,21 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
       }
 
       try {
-        // Fetch current lesson
         const lessonRes = await fetch(`http://localhost:8000/lessons/${lessonId}`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
         if (lessonRes.ok) setLesson(await lessonRes.json());
 
-        // Fetch course
         const courseRes = await fetch(`http://localhost:8000/courses/${courseId}`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
         if (courseRes.ok) setCourse(await courseRes.json());
 
-        // Fetch quizzes
         const quizzesRes = await fetch(`http://localhost:8000/lessons/${lessonId}/quizzes`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
         if (quizzesRes.ok) setQuizzes(await quizzesRes.json());
 
-        // Fetch all lessons
         const allLessonsRes = await fetch(`http://localhost:8000/lessons/`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
@@ -91,9 +68,9 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-900">
+      <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-950">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500 dark:border-red-500 mx-auto mb-4"></div>
           <p className="text-slate-600 dark:text-slate-400">Loading lesson...</p>
         </div>
       </div>
@@ -136,23 +113,15 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-500">
-        {/* App Level Components */}
-        <JediSithToggle />
-        <DifficultyBadge />
-        <XPProgressBar 
-          currentXP={xp} 
-          nextLevelXP={levelInfo.maxXp} 
-          level={levelInfo.level} 
-          levelName={levelInfo.name} 
-        />
-
+        
+        {/* Progress Dots */}
         <ProgressDots />
         
         <div className="container mx-auto py-6 px-4 max-w-4xl pb-32 md:pb-24">
-          {/* Navigation back */}
-          <div className="mb-6 mt-8">
+          {/* Navigation back - UPDATED to outline for better visibility */}
+          <div className="mb-6 mt-4">
             <Link href={`/courses/${courseId}`}>
-              <Button variant="ghost" className="gap-2 -ml-4 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800">
+              <Button variant="outline" className="gap-2 -ml-4 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 dark:border-slate-700 border-slate-200">
                 ← Back to Course
               </Button>
             </Link>
@@ -161,7 +130,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           {/* Header Section */}
           <div className="mb-8">
              <div className="flex items-center gap-3 mb-4">
-              <span className="bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full text-sm font-semibold border border-indigo-200 dark:border-indigo-800">
+              <span className="bg-indigo-100 dark:bg-red-900/30 text-indigo-700 dark:text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-indigo-200 dark:border-red-900">
                 Lesson {lesson.order}
               </span>
               {course && (
@@ -189,7 +158,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             </div>
           )}
 
-          {/* Content Card (Duolingo Style - Solid) */}
+          {/* Content Card */}
           <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border-2 border-slate-200 dark:border-slate-800 p-6 md:p-10 mb-8">
             
             {/* Page indicator */}
@@ -221,7 +190,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
               </div>
             )}
 
-            {/* Formatted content using MarkdownRenderer */}
+            {/* Formatted content */}
             {!isQuizPage ? (
               <div className="min-h-[300px]">
                 <MarkdownRenderer 
@@ -234,14 +203,13 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
               <Quiz 
                 quizzes={quizzes} 
                 onComplete={() => {
-                  // Trigger XP gain?
-                  setXp(prev => prev + 50);
+                  // Quiz logic
                 }} 
               />
             )}
           </div>
 
-          {/* Lesson Complete - show on last page */}
+          {/* Lesson Complete */}
           {currentPage === totalPages - 1 && !isQuizPage && !hasQuiz && (
              <LessonComplete 
                lessonId={parseInt(lessonId)} 
@@ -279,11 +247,11 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             {/* Right Side */}
             {currentPage < totalPages - 1 ? (
               <Button 
-                className="w-full max-w-xs justify-end gap-2 h-auto py-4 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white shadow-xl shadow-indigo-200 dark:shadow-none border-b-4 border-indigo-800 active:border-b-0 active:translate-y-1 transition-all"
+                className="w-full max-w-xs justify-end gap-2 h-auto py-4 px-6 rounded-2xl bg-indigo-600 dark:bg-red-700 hover:bg-indigo-700 dark:hover:bg-red-600 text-white shadow-xl shadow-indigo-200 dark:shadow-red-900/20 border-b-4 border-indigo-800 dark:border-red-900 active:border-b-0 active:translate-y-1 transition-all"
                 onClick={() => setCurrentPage(currentPage + 1)}
               >
                 <div className="text-right">
-                  <div className="text-[10px] text-indigo-200 uppercase tracking-wider font-bold">Continue</div>
+                  <div className="text-[10px] text-indigo-200 dark:text-red-200 uppercase tracking-wider font-bold">Continue</div>
                   <div className="font-bold">Next Page</div>
                 </div>
                 <span>→</span>
@@ -307,11 +275,11 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             ) : <div className="flex-1 max-w-xs" />}
           </div>
 
-          {/* Mobile Navigation (Simplified) */}
+          {/* Mobile Navigation */}
           <div className="fixed bottom-0 left-0 right-0 p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 md:hidden z-30 flex gap-3">
              <Button
                 variant="outline"
-                className="flex-1 h-12 rounded-xl font-bold border-2"
+                className="flex-1 h-12 rounded-xl font-bold border-2 dark:border-slate-700 dark:text-white"
                 onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
                 disabled={currentPage === 0}
               >
@@ -320,7 +288,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
               
               {currentPage < totalPages - 1 ? (
                 <Button 
-                  className="flex-[2] h-12 rounded-xl font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg"
+                  className="flex-[2] h-12 rounded-xl font-bold bg-indigo-600 dark:bg-red-600 hover:bg-indigo-700 dark:hover:bg-red-500 text-white shadow-lg"
                   onClick={() => setCurrentPage(currentPage + 1)}
                 >
                   Next →

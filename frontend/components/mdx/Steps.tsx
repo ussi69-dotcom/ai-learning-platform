@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Target, Eye, Lightbulb, CheckCircle2 } from 'lucide-react';
+import { Target, Eye, Lightbulb, BookOpen, Briefcase, MessageCircleQuestion } from 'lucide-react';
 
 interface StepsProps {
   children: React.ReactNode;
@@ -17,16 +17,35 @@ export default function Steps({ children }: StepsProps) {
     if (lowerTitle.includes('action')) return <Target className="w-4 h-4" />;
     if (lowerTitle.includes('observation')) return <Eye className="w-4 h-4" />;
     if (lowerTitle.includes('reflection')) return <Lightbulb className="w-4 h-4" />;
-    return <span className="text-sm font-bold">{count}</span>;
+    if (lowerTitle.includes('scenario')) return <BookOpen className="w-4 h-4" />; // Changed to Book (Story/Context)
+    if (lowerTitle.includes('your job')) return <Briefcase className="w-4 h-4" />;
+    if (lowerTitle.includes('question')) return <MessageCircleQuestion className="w-4 h-4" />;
+    
+    // Default: Numbered blue badge
+    return (
+      <div className="w-full h-full rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 flex items-center justify-center">
+        <span className="text-sm font-bold">{count}</span>
+      </div>
+    );
   };
 
-  // Helper to get color based on title
+  // Helper to get color based on title (for border and shadow)
   const getStepColor = (title: string) => {
     const lowerTitle = title.toLowerCase();
-    if (lowerTitle.includes('action')) return 'bg-blue-500/10 text-blue-600 border-blue-500/20';
-    if (lowerTitle.includes('observation')) return 'bg-purple-500/10 text-purple-600 border-purple-500/20';
-    if (lowerTitle.includes('reflection')) return 'bg-amber-500/10 text-amber-600 border-amber-500/20';
-    return 'bg-slate-500/10 text-slate-600 border-slate-500/20';
+    if (lowerTitle.includes('action')) return 'border-blue-500/20 text-blue-600 dark:text-blue-400 bg-blue-500/10 dark:bg-blue-900/20';
+    if (lowerTitle.includes('observation')) return 'border-purple-500/20 text-purple-600 dark:text-purple-400 bg-purple-500/10 dark:bg-purple-900/20';
+    if (lowerTitle.includes('reflection')) return 'border-amber-500/20 text-amber-600 dark:text-amber-400 bg-amber-500/10 dark:bg-amber-900/20';
+    
+    // Scenario: Teal/Cyan
+    if (lowerTitle.includes('scenario')) return 'border-teal-500/20 text-teal-600 dark:text-teal-400 bg-teal-500/10 dark:bg-teal-900/20';
+    
+    // Your Job: Orange
+    if (lowerTitle.includes('your job')) return 'border-orange-500/20 text-orange-600 dark:text-orange-400 bg-orange-500/10 dark:bg-orange-900/20';
+    
+    // Question: Indigo (Standard question color)
+    if (lowerTitle.includes('question')) return 'border-indigo-500/20 text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 dark:bg-indigo-900/20';
+
+    return 'border-slate-500/20 text-slate-600 dark:text-slate-400 bg-slate-500/10 dark:bg-slate-900/20'; // Default for generic steps
   };
 
   return (
@@ -46,7 +65,7 @@ export default function Steps({ children }: StepsProps) {
             <div key={index} className="relative flex gap-4 items-start mb-2 mt-6 first:mt-0">
               <div className={`
                 relative z-10 flex-shrink-0 w-8 h-8 rounded-full 
-                flex items-center justify-center shadow-sm border backdrop-blur-md
+                flex items-center justify-center shadow-sm border
                 ${colorClass}
               `}>
                 {icon}

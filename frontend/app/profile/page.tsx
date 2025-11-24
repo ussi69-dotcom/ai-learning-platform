@@ -63,8 +63,8 @@ export default function ProfilePage() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p className="text-slate-600">Loading...</p>
+      <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-950 text-slate-900 dark:text-white">
+        <p className="text-slate-600 dark:text-slate-400">Loading...</p>
       </div>
     );
   }
@@ -81,7 +81,7 @@ export default function ProfilePage() {
 
     // Confirmation
     const confirmed = window.confirm(
-      `Are you sure you want to switch to ${DIFFICULTY_LABELS[selectedDifficulty]}?\n\nYou'll see different courses suited to your new difficulty level.`
+      `Are you sure you want to switch to ${DIFFICULTY_LABELS[selectedDifficulty]}?\n\nYou\'ll see different courses suited to your new difficulty level.`
     );
 
     if (!confirmed) return;
@@ -125,8 +125,8 @@ export default function ProfilePage() {
   const hasChanges = selectedDifficulty !== user.difficulty;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-900 px-4 py-12">
-      <Card className="w-full max-w-2xl dark:bg-slate-800 dark:border-slate-700">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 py-12 transition-colors duration-300">
+      <Card className="w-full max-w-2xl dark:bg-slate-900 dark:border-slate-800">
         <CardHeader>
           <CardTitle className="text-2xl font-bold dark:text-white">Profile</CardTitle>
           <CardDescription className="dark:text-slate-400">Your account information and settings</CardDescription>
@@ -161,11 +161,11 @@ export default function ProfilePage() {
                   You have completed <span className="font-bold text-blue-600 dark:text-blue-400">{myProgress.length}</span> lessons!
                 </p>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg text-center border dark:border-blue-800">
+                  <div className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg text-center border border-blue-100 dark:border-blue-800">
                     <div className="text-2xl font-bold text-blue-700 dark:text-blue-300">{myProgress.length}</div>
                     <div className="text-xs text-blue-600 dark:text-blue-400">Lessons Done</div>
                   </div>
-                  <div className="bg-green-50 dark:bg-green-950 p-4 rounded-lg text-center border dark:border-green-800">
+                  <div className="bg-green-50 dark:bg-green-950/30 p-4 rounded-lg text-center border border-green-100 dark:border-green-800">
                     <div className="text-2xl font-bold text-green-700 dark:text-green-300">
                       {new Set(myProgress.map((p: any) => p.course_id)).size}
                     </div>
@@ -188,26 +188,24 @@ export default function ProfilePage() {
                 <button
                   key={option.value}
                   onClick={() => setSelectedDifficulty(option.value)}
-                  className={`p-4 rounded-lg border-2 text-left transition-all ${
-                    selectedDifficulty === option.value
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-950 dark:border-blue-400'
-                      : 'border-gray-200 dark:border-slate-600 hover:border-gray-300 dark:hover:border-slate-500 dark:bg-slate-900'
+                  className={`p-4 rounded-lg border-2 text-left transition-all ${selectedDifficulty === option.value
+                      ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 dark:border-indigo-400'
+                      : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 dark:bg-slate-800'
                   }`}
                 >
                   <div className="font-semibold text-lg dark:text-slate-200">{option.label}</div>
                   <div className="text-sm text-slate-600 dark:text-slate-400">{option.description}</div>
                   {option.value === user.difficulty && (
-                    <div className="text-xs text-blue-600 dark:text-blue-400 mt-1">✓ Current</div>
+                    <div className="text-xs text-indigo-600 dark:text-indigo-400 mt-1">✓ Current</div>
                   )}
                 </button>
               ))}
             </div>
 
             {message && (
-              <div className={`p-3 rounded-lg mb-4 ${
-                message.includes('✅') 
-                  ? 'bg-green-50 text-green-800 dark:bg-green-950 dark:text-green-200 dark:border dark:border-green-800' 
-                  : 'bg-red-50 text-red-800 dark:bg-red-950 dark:text-red-200 dark:border dark:border-red-800'
+              <div className={`p-3 rounded-lg mb-4 ${message.includes('✅') 
+                  ? 'bg-green-50 text-green-800 dark:bg-green-950/30 dark:text-green-200 border border-green-200 dark:border-green-800' 
+                  : 'bg-red-50 text-red-800 dark:bg-red-950/30 dark:text-red-200 border border-red-200 dark:border-red-800'
               }`}>
                 {message}
               </div>
@@ -216,7 +214,7 @@ export default function ProfilePage() {
             <Button
               onClick={handleDifficultyChange}
               disabled={!hasChanges || updating}
-              className="w-full dark:bg-blue-600 dark:hover:bg-blue-700"
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white disabled:opacity-50"
             >
               {updating ? 'Updating...' : hasChanges ? 'Update Difficulty' : 'No Changes'}
             </Button>
@@ -226,14 +224,14 @@ export default function ProfilePage() {
           <div className="pt-4 border-t dark:border-slate-700 space-y-3">
             <Button 
               variant="outline" 
-              className="w-full dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700"
+              className="w-full dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
               onClick={() => router.push('/')}
             >
               Back to Home
             </Button>
             <Button 
               variant="destructive" 
-              className="w-full dark:bg-red-700 dark:hover:bg-red-800"
+              className="w-full bg-red-600 hover:bg-red-700 text-white"
               onClick={handleLogout}
             >
               Logout

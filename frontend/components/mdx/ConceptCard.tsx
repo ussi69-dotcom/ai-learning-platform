@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 interface ConceptCardProps {
   title: string;
   icon: string;
-  difficulty?: 'Beginner' | 'Builder' | 'Expert' | 'Architect';
   jediQuote?: string;
   sithQuote?: string;
   children: React.ReactNode;
@@ -15,7 +14,6 @@ interface ConceptCardProps {
 export default function ConceptCard({ 
   title, 
   icon, 
-  difficulty = 'Beginner', 
   jediQuote, 
   sithQuote, 
   children, 
@@ -23,22 +21,12 @@ export default function ConceptCard({
 }: ConceptCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Difficulty Color Mapping
-  const difficultyColors = {
-    Beginner: { border: 'border-green-500', bg: 'bg-green-50', text: 'text-green-700', darkBorder: 'dark:border-green-600' },
-    Builder: { border: 'border-blue-500', bg: 'bg-blue-50', text: 'text-blue-700', darkBorder: 'dark:border-blue-600' },
-    Expert: { border: 'border-purple-500', bg: 'bg-purple-50', text: 'text-purple-700', darkBorder: 'dark:border-purple-600' },
-    Architect: { border: 'border-red-500', bg: 'bg-red-50', text: 'text-red-700', darkBorder: 'dark:border-red-600' },
-  };
-
-  const colors = difficultyColors[difficulty] || difficultyColors.Beginner;
-
   return (
     <div 
       className={`
         group relative h-full my-6 p-6 rounded-2xl
         bg-white dark:bg-slate-800 
-        border-2 ${colors.border} ${colors.darkBorder}
+        border-2 border-slate-200 dark:border-slate-700
         shadow-lg hover:shadow-2xl hover:scale-[1.02]
         transition-all duration-300 ease-out
         flex flex-col
@@ -47,17 +35,6 @@ export default function ConceptCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Difficulty Badge (Top Right) */}
-      <div className={`
-        absolute -top-3 -right-3 
-        px-3 py-1 rounded-full 
-        bg-white dark:bg-slate-900 border-2 ${colors.border}
-        shadow-sm text-xs font-bold uppercase tracking-wider
-        ${colors.text}
-      `}>
-        {difficulty}
-      </div>
-
       {/* Header */}
       <div className="flex items-center gap-4 mb-4">
         <div className="text-4xl filter drop-shadow-md transition-transform group-hover:scale-110 duration-300">

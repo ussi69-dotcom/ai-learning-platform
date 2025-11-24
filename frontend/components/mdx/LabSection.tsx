@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Check, FlaskConical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import LabBadge from './LabBadge'; // We will create this next
+import LabBadge from './LabBadge'; 
 
 interface LabSectionProps {
   title: string;
@@ -63,15 +63,8 @@ export default function LabSection({ title, difficulty = "Builder", children }: 
 
         {/* Content */}
         <div className="p-6 md:p-8 space-y-6">
-          {/* We wrap children to style ordered lists as steps */}
+          {/* Removed prose-ol and prose-li styling as Steps component handles numbering */}
           <div className="prose prose-lg max-w-none dark:prose-invert
-            prose-ol:list-none prose-ol:pl-0 prose-ol:space-y-8
-            prose-li:relative prose-li:pl-12
-            prose-li:before:absolute prose-li:before:left-0 prose-li:before:top-0
-            prose-li:before:w-8 prose-li:before:h-8 prose-li:before:bg-indigo-100 prose-li:before:dark:bg-indigo-900
-            prose-li:before:text-indigo-700 prose-li:before:dark:text-indigo-300
-            prose-li:before:rounded-full prose-li:before:flex prose-li:before:items-center prose-li:before:justify-center
-            prose-li:before:font-bold prose-li:before:content-[counter(list-item)]
             prose-pre:bg-slate-900 prose-pre:border-2 prose-pre:border-slate-800
           ">
             {children}
