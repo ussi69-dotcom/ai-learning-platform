@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthContext";
 import { useParams } from "next/navigation";
 import axios from "axios";
-import LabBadge from "./mdx/LabBadge"; // Reusing the celebration modal
+import LabBadge from "./mdx/LabBadge"; 
 
 export interface QuizQuestion {
   id: number;
@@ -29,18 +28,40 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [showBadge, setShowBadge] = useState(false);
+  const [storedScore, setStoredScore] = useState<number | null>(null); // 0-100
   
   const { token, refreshUser } = useAuth();
   const params = useParams();
   const lessonId = parseInt(params.lessonId as string);
 
-  // ... (zbytek logiky answers/calculateScore zůstává stejný)
+  // Check initial status
+  useEffect(() => {
+    if (!token || !lessonId) return;
+    const checkStatus = async () => {
+        try {
+            const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+            const res = await axios.get(`${API_BASE}/users/me/progress`, {
+               headers: { Authorization: `Bearer ${token}` }
+            });
+            const progress = res.data.find((p: any) => p.lesson_id === lessonId);
+            
+            if (progress && progress.quiz_score !== null && progress.quiz_score !== undefined) {
+                setStoredScore(progress.quiz_score);
+                setSubmitted(true);
+            }
+        } catch (e) {
+            console.error("Failed to check quiz status", e);
+        }
+    };
+    checkStatus();
+  }, [token, lessonId]);
 
   // Reset state when quizzes change
   useEffect(() => {
     setAnswers({});
     setSubmitted(false);
     setShowBadge(false);
+    setStoredScore(null);
   }, [quizzes]);
 
   const handleAnswer = (quizId: number, answer: string) => {
@@ -65,7 +86,6 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
       const correct = calculateScore();
       const percentage = Math.round((correct / quizzes.length) * 100);
       
-      // Send to backend
       if (token && lessonId) {
         try {
           const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -73,7 +93,7 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
             { score: percentage },
             { headers: { Authorization: `Bearer ${token}` } }
           );
-          refreshUser(); // Update XP
+          refreshUser();
         } catch (e) {
           console.error("Failed to save quiz score", e);
         }
@@ -95,21 +115,26 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
     setAnswers({});
     setSubmitted(false);
     setShowBadge(false);
+    setStoredScore(null);
   };
 
   if (quizzes.length === 0) {
     return null; // No quiz for this lesson
   }
 
-  const score = submitted ? calculateScore() : 0;
-  const percentage = submitted ? Math.round((score / quizzes.length) * 100) : 0;
+  // Logic: If storedScore is present, use it. Otherwise calculate from current answers.
+  const percentage = storedScore !== null ? storedScore : (submitted ? Math.round((calculateScore() / quizzes.length) * 100) : 0);
+  // Reverse engineer correct count from percentage if restored
+  const correctCount = storedScore !== null ? Math.round((storedScore / 100) * quizzes.length) : (submitted ? calculateScore() : 0);
 
   return (
     <div className="mt-16 border-t border-border pt-12 relative">
       {showBadge && (
         <LabBadge 
           title="Quiz Master" 
-          onClose={() => setShowBadge(false)} 
+          onClose={() => setShowBadge(false)}
+          type="lesson"
+          xp={50}
         />
       )}
       
@@ -123,13 +148,14 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
       {submitted && (
         <div className="p-6 mb-8 glass-panel rounded-xl text-center animate-in fade-in zoom-in duration-300">
             <h3 className="text-2xl font-bold mb-2 text-primary">
-              Your Score: {score}/{quizzes.length} ({percentage}%)
+              Your Score: {correctCount}/{quizzes.length} ({percentage}%)
             </h3>
             <p className="text-lg mb-4 text-foreground">
               {percentage >= 80 ? "🎉 Excellent work!" :
                percentage >= 60 ? "✅ Good job!" :
                "📚 Keep practicing!"}
             </p>
+            {/* Only show 'Try Again' if not passed or if user wants to improve score (though backend won't award XP twice easily) */}
             <Button onClick={handleReset} variant="outline">
               Try Again
             </Button>

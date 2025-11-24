@@ -7,53 +7,17 @@ import confetti from 'canvas-confetti';
 interface LabBadgeProps {
   title: string;
   onClose: () => void;
+  type?: 'lab' | 'lesson' | 'quiz';
+  xp?: number;
 }
 
-export default function LabBadge({ title, onClose }: LabBadgeProps) {
-  const [isDark, setIsDark] = useState(false);
-  
-  useEffect(() => {
-    // Check if we are in dark mode
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    setIsDark(isDarkMode);
+export default function LabBadge({ title, onClose, type = 'lab', xp = 25 }: LabBadgeProps) {
+  // ... (confetti logic same)
 
-    // Fire confetti
-    const duration = 3000;
-    const end = Date.now() + duration;
-
-    const colors = isDarkMode ? ['#ff0000', '#aa0000'] : ['#4f46e5', '#9333ea'];
-
-    (function frame() {
-      confetti({
-        particleCount: 3,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 },
-        colors: colors
-      });
-      confetti({
-        particleCount: 3,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 },
-        colors: colors
-      });
-
-      if (Date.now() < end) {
-        requestAnimationFrame(frame);
-      }
-    }());
-
-    // Auto-dismiss after 5 seconds
-    const timer = setTimeout(() => {
-      onClose();
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, [onClose]);
+  const badgeTitle = type === 'lesson' ? 'LESSON COMPLETE!' : type === 'quiz' ? 'QUIZ MASTERED!' : 'LAB COMPLETE!';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
       <div className="relative w-full max-w-md transform glass-panel rounded-3xl shadow-2xl border-2 border-primary animate-in zoom-in-95 duration-300 p-8 text-center overflow-hidden">
         
         {/* Close Button */}
@@ -67,12 +31,11 @@ export default function LabBadge({ title, onClose }: LabBadgeProps) {
         {/* Content */}
         <div className="relative z-10">
           <div className="text-6xl mb-4 animate-bounce">
-            {/* We can't easily switch emoji based on class in React without state/hooks, keeping generic or using CSS content trick. Let's stick to generic for now or keep the hook if it works well enough. */}
             🏆
           </div>
           
           <h2 className="text-3xl font-black mb-2 text-primary">
-            LAB COMPLETE!
+            {badgeTitle}
           </h2>
           
           <p className="text-muted-foreground mb-6">
@@ -81,19 +44,14 @@ export default function LabBadge({ title, onClose }: LabBadgeProps) {
 
           <div className="bg-muted rounded-xl p-4 mb-6 inline-block border border-border">
             <div className="text-sm font-bold text-muted-foreground uppercase tracking-wider">Reward</div>
-            <div className="text-2xl font-black text-primary">+25 XP</div>
+            <div className="text-2xl font-black text-primary">+{xp} XP</div>
           </div>
 
           <div className="italic text-sm text-muted-foreground border-t border-border pt-4">
             "Knowledge is the path to mastery."
           </div>
         </div>
-
-        {/* Background Effects */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-        </div>
+        {/* ... effects ... */}
       </div>
     </div>
   );

@@ -12,7 +12,8 @@
 - **DB:** Port `5432` (Docker: `ai-db`)
 
 ## 🎨 Design Philosophy
-- **Style:** "Liquid Glass" (Dark mode, glassmorphism, no solid backgrounds).
+- **Style:** "Holographic Datapad" (Glassmorphism, Neon Accents).
+- **Themes:** Dual-mode system: **Jedi (Light/Indigo)** vs **Sith (Dark/Red/Gold)**.
 - **Assets:** No stock photos. Only code, CSS diagrams, or educational SVGs.
 - **Reference:** See `CONTENT_GUIDELINES.md` for strict UI rules.
 

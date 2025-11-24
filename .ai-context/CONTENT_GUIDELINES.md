@@ -1,163 +1,72 @@
 # 🎨 AI Learning Platform - Content & Design Guidelines
 
-## 1. Visual Philosophy: "Liquid Glass" 💧
-Our UI mimics a premium, futuristic interface. Content floats on glass panels.
-* **Glass Effect:** Use `bg-background/60` (or `white/5` in dark mode) + `backdrop-blur-xl` + `border-white/10`.
-* **No Solid Cards:** Avoid fully opaque backgrounds that hide the app wallpaper.
-* **Typography:** Crisp, high-contrast text. Headings should be prominent.
-
-## 2. Asset Policy: "Educational or Nothing" 🚫
-* **FORBIDDEN:**
-    * Generic stock photos (3D robots, glowing brains, matrix rain).
-    * "Decorative" images that add no information.
-* **ALLOWED:**
-    * **Diagrams:** Mermaid.js flowcharts or clean SVGs (simple shapes).
-    * **Screenshots:** Real UI screenshots if explaining a tool.
-* **Rule of Thumb:** If you can't generate a perfect diagram, use **NO IMAGE**. Text and typography are beautiful enough.
-
-## 3. Interactive Elements 🧩
-* **Code Blocks:** Must be Dark Glass (`bg-slate-950/80`) with a functional **Copy Button**.
-* **Callouts:** Glass panels with colored accent borders (Blue=Info, Amber=Warning). Never use solid alert colors.
-* **Quiz:** The entire quiz container must be a Glass Panel.
-
-## 4. Mobile Navigation (Sticky Footer) 📱
-* **Requirement:** On mobile (< md), navigation buttons MUST be in a fixed bottom bar (`fixed bottom-0`).
-* **Layout:**
-    * [Left]: Previous Slide (Ghost Icon)
-    * [Center]: Progress Indicator (Text or Bar)
-    * [Right]: Next Slide (Primary Icon)
-* **Logic:** "Next Lesson" button only appears on the very last slide.
-
-## 5. Lesson Length & Structure by Difficulty 📏
-
-### Beginner (IM_A_ROOKIE)
-* **Reading Time:** 15-20 minutes
-* **Labs:** 10-15 minutes (guided, step-by-step)
-* **Total:** ~30 minutes
-* **Goal:** Build confidence, explain concepts with analogies
-* **Pacing:** 1 lesson per day
-* **Content Style:**
-  - Use simple analogies (Calculator vs Student, Recipe vs Chef)
-  - Break complex ideas into visual cards (`<ConceptCard>`)
-  - Include "Try This Now" prompts for immediate engagement
-  - Labs are observational (no coding required)
-
-### Intermediate (LETS_ROCK)
-* **Reading Time:** 15-20 minutes (mobile-friendly)
-* **Labs:** 45-60 minutes (hands-on coding)
-* **Total:** ~75 minutes
-* **Goal:** Apply concepts, build real tools
-* **Pacing:** Theory in commute, lab in evening
-* **Content Style:**
-  - Concise theory with links to deep dives
-  - Step-by-step coding labs with copy-paste code
-  - "Change X and observe Y" exercises
-  - Deploy working demos
-
-### Advanced (COME_GET_SOME)
-* **Reading Time:** 10-15 minutes (brief, reference-style)
-* **Projects:** 90-120 minutes (multi-step implementations)
-* **Total:** ~2 hours
-* **Goal:** Production-ready skills, debugging, optimization
-* **Pacing:** 2-3 days per lesson
-* **Content Style:**
-  - Requirements-only (minimal hand-holding)
-  - Multiple solution paths
-  - Real-world datasets and APIs
-  - Production deployment required
-
-### Expert (DAMN_IM_GOOD)
-* **Reading Time:** 5-10 minutes (just requirements & context)
-* **Projects:** Multi-day real-world builds
-* **Total:** 1 week per project
-* **Goal:** Ship production code, contribute to open source
-* **Final Project:** Build this AI Learning Platform (meta-learning)
-* **Content Style:**
-  - Open-ended challenges
-  - No provided code
-  - Research and problem-solving required
-  - Code review and feedback loops
-
-## 6. Component Usage 🧱
-
-### Must Use:
-- `<Callout>` - Important notes, warnings, tips
-- `<ConceptCard>` - Key concepts. Use `grid-cols-1 md:grid-cols-2 lg:grid-cols-3` for groups.
-- `<Diagram>` - Visual explanations. Available types:
-  - `neural-network`, `training-loop`, `black-box`
-  - `learning-types-overview`, `supervised-learning-flow`
-  - `clustering-visualization`, `reinforcement-learning-loop`
-- `<Steps>` - Sequential instructions. Auto-detects "Action", "Observation", "Reflection" for icons.
-- `<LabBadge>` - XP notifications after labs.
-- `<ProgressDots>` - Visual lesson progress (desktop only).
-
-### Nice to Have (Future):
-- `<QuickCheck>` - Inline mini-quizzes
-- `<TryItYourself>` - Interactive coding sandboxes
-
-## 7. Writing Style 📝
-
-### Beginner Content:
-- ✅ Conversational tone ("You might not realize it...")
-- ✅ Use "you" and "we" (not "one should")
-- ✅ Real-world examples ("Open your phone gallery...")
-- ✅ Analogies over jargon ("AI is like a student, not a calculator")
-- ❌ Avoid: Academic language, passive voice, unnecessary complexity
-
-### Advanced Content:
-- ✅ Technical precision
-- ✅ Link to documentation
-- ✅ Industry best practices
-- ✅ Real production examples
-- ❌ Avoid: Over-simplification, hand-holding
-
-## 8. Lab Design Philosophy 🧪
-
-### Beginner Labs: Observation & Interaction
-- "Try this prompt"
-- "Spot the hallucination"
-- "Compare outputs"
-- **No coding required**
-
-### Intermediate Labs: Guided Building
-- Step-by-step instructions
-- Copy-paste friendly code
-- "Change X and observe Y"
-- **Coding with guardrails**
-
-### Advanced Labs: Independent Projects
-- Requirements-only (no step-by-step)
-- Multiple solution paths
-- Debugging required
-- **Real developer experience**
-
-### Expert Labs: Open-Ended Challenges
-- "Build X with these constraints"
-- No provided code
-- Research required
-- **Production-ready outputs**
-
-## 9. Accessibility & Responsiveness ♿
-
-* **Mobile-First:** All content must be readable on mobile (commute learning)
-* **Dark Mode:** All components must support dark mode
-* **Keyboard Navigation:** All interactive elements must be keyboard accessible
-* **Screen Readers:** Use semantic HTML and ARIA labels where needed
-
-## 10. Quality Checklist ✅
-
-Before publishing a lesson, verify:
-- [ ] Reading time matches difficulty level
-- [ ] All components follow "Liquid Glass" design
-- [ ] No decorative/stock images
-- [ ] Labs are appropriate for skill level
-- [ ] Mobile-friendly (test on phone)
-- [ ] Dark mode works
-- [ ] All code blocks have copy buttons
-- [ ] Links to next lesson work
+> **Philosophy:** "Holographic Datapad" 🌌
+> The UI mimics a futuristic, technical interface used by Jedi or Sith. Content sits on semi-transparent glass panels with neon accents.
 
 ---
 
-**Status:** Aktualizováno listopad 2025  
-**Agent Architecture:** Perplexity (Architect) + Antigravity (Executor)  
-**OSS/Gemini/ostatní agenti se NEpoužívají pro tento projekt**
+## 1. Visual Aesthetic: The Holographic Datapad
+*   **Theme Engine:** The app switches between **Jedi (Light/Indigo)** and **Sith (Dark/Red)** modes.
+    *   **Jedi:** Clean white glass, indigo accents, green success states. Optimistic & wise.
+    *   **Sith:** Deep slate/black background, red neon glows, golden success states. Powerful & technical.
+*   **Glass Panels:** All content containers must use the `.glass-panel` utility. Never use solid opaque white/black backgrounds for cards.
+*   **Glow Effects:** In Dark mode, active elements emit a subtle glow (`box-shadow`) instead of flat borders.
+
+## 2. Lesson Structure (The Template) 📏
+Every lesson must follow this structure to work with the **Pagination System**:
+
+1.  **Hook (Page 1):** Title, short description, maybe a video or an intro `<ConceptCard>`.
+2.  **Core Concepts (Pages 2-N):** Break content into digestible slides.
+    *   **IMPORTANT:** The splitter splits content by `## ` (H2) headings.
+    *   Each `## Headline` starts a new "page" in the reader.
+    *   Keep pages short (mobile-friendly).
+3.  **Interactive Lab (Middle/End):** A `<LabSection>` where users try things out.
+4.  **Final Challenge (Last Page):** A `<Quiz>`. This is the climax of the lesson.
+
+## 3. Component Usage 🧱
+
+### `<LabSection>`
+*   **Purpose:** Hands-on practice. Awards **25 XP** once per lesson.
+*   **Requirement:** **Must have a unique Title** within the lesson. The backend generates a unique ID from the title to track completion.
+*   **Behavior:**
+    *   Unfinished: "I Finished This Lab" button (Primary color).
+    *   Finished: Button turns Green (Jedi) or Gold (Sith) and disables. State is persisted forever.
+
+### `<Quiz>`
+*   **Purpose:** Verify knowledge. Awards **50 XP** if score >= 70%.
+*   **Placement:** MUST be the very last element of the lesson.
+*   **Behavior:**
+    *   Persists the score in the database.
+    *   On success (>= 70%), triggers a "QUIZ MASTERED" confetti modal.
+    *   Allows retries, but XP is awarded only for the first success/improvement.
+
+### `<ConceptCard>`
+*   **Purpose:** Explaining definitions or key ideas.
+*   **Props:** `title`, `icon`, `difficulty`.
+*   **Style:** Uses the glass panel look.
+
+### `<Callout>`
+*   **Purpose:** Warnings, Tips, or Info.
+*   **Style:** Bordered glass panel.
+
+### Images & Assets
+*   **Preferred:** CSS-based `<Diagram>` components or Code Blocks.
+*   **Images:** Only use if strictly necessary (e.g., screenshot of an interface). No decorative stock photos.
+
+## 4. Navigation & UX 🧭
+*   **Pagination:** Users navigate via "Prev/Next" buttons or the **Segmented Progress Bar** (top/bottom).
+*   **Resume Capability:** The system remembers the exact page (`current_page`) where the user left off.
+*   **XP & Leveling:**
+    *   Levels are calculated dynamically based on XP (not difficulty setting).
+    *   Level 1: 0-500 XP | Level 2: 500-1200 XP | Level 3: 1200-2500 XP | Level 4: 2500+ XP.
+
+## 5. Quality Checklist for New Lessons ✅
+- [ ] Does the content split logically with `## ` headings?
+- [ ] Is there at least one `<LabSection>`?
+- [ ] Is there a `<Quiz>` at the end?
+- [ ] Are long tables handled with `whitespace-nowrap` headers?
+- [ ] Does the content look good in both Jedi and Sith modes?
+
+---
+**Status:** Updated Nov 2025 (Cycle 23)
+**Architecture:** Next.js 16 + FastAPI + Postgres
