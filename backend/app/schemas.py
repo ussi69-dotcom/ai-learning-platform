@@ -69,6 +69,7 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     difficulty: str
+    xp: int = 0
     courses: List[Course] = []
 
     class Config:
@@ -76,6 +77,9 @@ class User(UserBase):
 
 class UserDifficultyUpdate(BaseModel):
     difficulty: str
+
+class UserXPUpdate(BaseModel):
+    xp_amount: int
 
 
 # ===== QUIZ SCHEMAS =====
@@ -104,10 +108,20 @@ class UserProgressBase(BaseModel):
 class UserProgressCreate(UserProgressBase):
     pass
 
+class LabCompletion(BaseModel):
+    lab_id: str
+
+class QuizCompletion(BaseModel):
+    score: int
+
 class UserProgress(UserProgressBase):
     id: int
     user_id: int
-    completed_at: datetime
+    completed_at: Optional[datetime] = None
+    last_accessed: datetime
+    completed_labs: List[str] = []
+    quiz_score: Optional[int] = None
+    current_page: int = 0
 
     class Config:
         from_attributes = True

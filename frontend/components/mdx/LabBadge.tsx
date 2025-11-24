@@ -54,12 +54,12 @@ export default function LabBadge({ title, onClose }: LabBadgeProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="relative w-full max-w-md transform bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border-4 border-primary animate-in zoom-in-95 duration-300 p-8 text-center overflow-hidden">
+      <div className="relative w-full max-w-md transform glass-panel rounded-3xl shadow-2xl border-2 border-primary animate-in zoom-in-95 duration-300 p-8 text-center overflow-hidden">
         
         {/* Close Button */}
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+          className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-muted"
         >
           <X className="w-6 h-6" />
         </button>
@@ -67,24 +67,25 @@ export default function LabBadge({ title, onClose }: LabBadgeProps) {
         {/* Content */}
         <div className="relative z-10">
           <div className="text-6xl mb-4 animate-bounce">
-            {isDark ? '⚡' : '🎉'}
+            {/* We can't easily switch emoji based on class in React without state/hooks, keeping generic or using CSS content trick. Let's stick to generic for now or keep the hook if it works well enough. */}
+            🏆
           </div>
           
-          <h2 className="text-3xl font-black mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <h2 className="text-3xl font-black mb-2 text-primary">
             LAB COMPLETE!
           </h2>
           
-          <p className="text-slate-600 dark:text-slate-300 mb-6">
-            You've mastered <strong>{title}</strong>
+          <p className="text-muted-foreground mb-6">
+            You've mastered <strong className="text-foreground">{title}</strong>
           </p>
 
-          <div className="bg-slate-100 dark:bg-slate-800 rounded-xl p-4 mb-6 inline-block border border-slate-200 dark:border-slate-700">
-            <div className="text-sm font-bold text-slate-500 uppercase tracking-wider">Reward</div>
+          <div className="bg-muted rounded-xl p-4 mb-6 inline-block border border-border">
+            <div className="text-sm font-bold text-muted-foreground uppercase tracking-wider">Reward</div>
             <div className="text-2xl font-black text-primary">+25 XP</div>
           </div>
 
-          <div className="italic text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-700 pt-4">
-            "{isDark ? 'Power grows through understanding.' : 'Knowledge is the path to mastery.'}"
+          <div className="italic text-sm text-muted-foreground border-t border-border pt-4">
+            "Knowledge is the path to mastery."
           </div>
         </div>
 

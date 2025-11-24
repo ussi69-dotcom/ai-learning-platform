@@ -27,6 +27,40 @@
 
 ---
 
+## 🚨 Development Protocols (SOP)
+
+**Follow these procedures strictly to avoid regression.**
+
+### 1. Database Schema Changes (`models.py`)
+When modifying SQL models (adding columns, tables):
+1.  **The Nuclear Option:** You MUST reset the database volume.
+    ```bash
+    docker-compose down -v
+    docker-compose up -d --build
+    ```
+2.  **Wait for Seed:** The backend has an `entrypoint.sh` that **automatically** waits for DB and runs `seed.py`.
+    *   *DO NOT* run `seed.py` manually via `exec` (it causes race conditions).
+    *   Check logs: `docker-compose logs -f backend` until you see "Application startup complete".
+3.  **Login:** Admin credentials are reset to `admin@ai-platform.com` / `admin123`.
+
+### 2. Frontend State & Caching
+If UI changes (e.g., Tailwind classes, new components) do not appear:
+1.  **Restart Container:**
+    ```bash
+    docker-compose restart frontend
+    ```
+2.  **Browser:** Clear Local Storage (`auth_token`) if login behaves weirdly.
+
+### 3. Content Updates (`/content` folder)
+The `content` folder is mounted to the backend at runtime.
+1.  **Apply Changes:**
+    ```bash
+    docker-compose restart backend
+    ```
+    (This triggers `seed.py` again, which syncs MDX files to DB).
+
+---
+
 ## 📂 File Roles
 
 | File | Role | Maintained By |

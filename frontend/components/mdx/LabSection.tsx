@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import { Check, FlaskConical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LabBadge from './LabBadge'; 
+import { useAuth } from '@/context/AuthContext';
+import axios from 'axios'; 
+import { useParams } from 'next/navigation';
 
 interface LabSectionProps {
   title: string;
@@ -14,12 +17,51 @@ interface LabSectionProps {
 export default function LabSection({ title, difficulty = "Builder", children }: LabSectionProps) {
   const [isCompleted, setIsCompleted] = useState(false);
   const [showBadge, setShowBadge] = useState(false);
+  const { token, refreshUser } = useAuth();
+  const params = useParams();
+  const lessonId = parseInt(params.lessonId as string);
+  
+  // Generate stable ID from title
+  const labId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
-  const handleComplete = () => {
-    if (!isCompleted) {
-      setIsCompleted(true);
-      setShowBadge(true);
-      // TODO: Trigger XP gain or API call here
+  // Check initial status from server
+  React.useEffect(() => {
+    if (!token || !lessonId) return;
+
+    const checkStatus = async () => {
+      try {
+        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const res = await axios.get(`${API_BASE}/users/me/progress`, {
+           headers: { Authorization: `Bearer ${token}` }
+        });
+        const progress = res.data.find((p: any) => p.lesson_id === lessonId);
+        
+        if (progress && progress.completed_labs && progress.completed_labs.includes(labId)) {
+          setIsCompleted(true);
+        }
+      } catch (e) {
+        console.error("Failed to check lab status", e);
+      }
+    };
+    checkStatus();
+  }, [token, lessonId, labId]);
+
+  const handleComplete = async () => {
+    if (!isCompleted && token && lessonId) {
+      try {
+        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        // Call secure endpoint with lab_id
+        await axios.post(`${API_BASE}/lessons/${lessonId}/lab/complete`, 
+          { lab_id: labId }, 
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        
+        setIsCompleted(true);
+        setShowBadge(true);
+        refreshUser(); // Update XP bar
+      } catch (e) {
+        console.error("Failed to complete lab", e);
+      }
     }
   };
 
@@ -28,33 +70,32 @@ export default function LabSection({ title, difficulty = "Builder", children }: 
       {/* Lab Container */}
       <div className={`
         relative overflow-hidden rounded-3xl
-        bg-white dark:bg-slate-800
-        border-2 ${isCompleted ? 'border-green-500 dark:border-green-500' : 'border-indigo-200 dark:border-slate-700'}
-        shadow-xl transition-all duration-500
-        ${isCompleted ? 'shadow-green-500/20' : 'shadow-indigo-500/10 dark:shadow-none'}
+        glass-panel
+        transition-all duration-500
+        ${isCompleted ? 'border-green-500/50 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'hover:border-primary/50'}
       `}>
         
         {/* Header */}
         <div className={`
           p-6 flex items-center justify-between
-          border-b ${isCompleted ? 'bg-green-50 dark:bg-green-900/20 border-green-100 dark:border-green-500/30' : 'bg-slate-50 dark:bg-slate-900/50 border-slate-100 dark:border-slate-700'}
+          border-b border-border
+          ${isCompleted ? 'bg-green-500/5' : 'bg-muted/30'}
         `}>
           <div className="flex items-center gap-3">
             <div className={`
-              w-10 h-10 rounded-xl flex items-center justify-center
-              ${isCompleted ? 'bg-green-500 text-white' : 'bg-indigo-600 text-white'}
-              shadow-lg
+              w-10 h-10 rounded-xl flex items-center justify-center shadow-lg
+              ${isCompleted ? 'bg-green-500 text-white dark:bg-yellow-500 dark:text-yellow-950' : 'bg-primary text-primary-foreground'}
             `}>
               <FlaskConical className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Interactive Lab</div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">{title}</h3>
+              <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Interactive Lab</div>
+              <h3 className="text-xl font-bold text-foreground">{title}</h3>
             </div>
           </div>
           
           {isCompleted && (
-            <div className="flex items-center gap-2 text-green-600 font-bold bg-white px-3 py-1 rounded-full shadow-sm">
+            <div className="flex items-center gap-2 text-green-600 dark:text-yellow-400 font-bold bg-background/80 px-3 py-1 rounded-full shadow-sm border border-border">
               <Check className="w-4 h-4" />
               Completed
             </div>
@@ -63,25 +104,25 @@ export default function LabSection({ title, difficulty = "Builder", children }: 
 
         {/* Content */}
         <div className="p-6 md:p-8 space-y-6">
-          {/* Removed prose-ol and prose-li styling as Steps component handles numbering */}
           <div className="prose prose-lg max-w-none dark:prose-invert
-            prose-pre:bg-slate-900 prose-pre:border-2 prose-pre:border-slate-800
+            prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground
+            prose-pre:bg-muted prose-pre:border prose-pre:border-border
           ">
             {children}
           </div>
         </div>
 
         {/* Footer / Action */}
-        <div className="p-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-700 flex justify-end">
+        <div className="p-6 bg-muted/30 border-t border-border flex justify-end">
           <Button 
             size="lg"
             onClick={handleComplete}
             disabled={isCompleted}
             className={`
-              font-bold text-base px-8 h-12 transition-all
+              font-bold text-base px-8 h-12 transition-all shadow-lg
               ${isCompleted 
-                ? 'bg-green-600 hover:bg-green-700 text-white dark:bg-green-600 dark:hover:bg-green-700' 
-                : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-0.5 dark:from-indigo-500 dark:to-purple-500 dark:hover:from-indigo-400 dark:hover:to-purple-400'
+                ? 'bg-green-600 text-white hover:bg-green-700 dark:bg-yellow-500 dark:text-yellow-950 dark:hover:bg-yellow-400' 
+                : 'bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 active:scale-95'
               }
             `}
           >

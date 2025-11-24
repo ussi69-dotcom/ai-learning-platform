@@ -18,6 +18,11 @@ def reset_db(db):
         db.query(Lesson).delete()
         db.query(Course).delete()
         db.query(User).delete()
+        
+        # Force drop tables to ensure schema update (XP column)
+        # Base.metadata.drop_all(bind=engine)
+        Base.metadata.create_all(bind=engine)
+        
         db.commit()
     except Exception as e:
         logger.warning(f"Mazání přeskočeno: {e}")
@@ -28,20 +33,25 @@ def seed_data():
     Base.metadata.create_all(bind=engine)
 
     db = SessionLocal()
-    reset_db(db)
+    # reset_db(db)
     logger.info("🌱 Sázím nová data...")
 
     # Admin
-    admin = User(
-        email="admin@ai-platform.com",
-        hashed_password=get_password_hash("admin123"),
-        is_active=True,
-        difficulty=DifficultyLevel.DAMN_IM_GOOD
-    )
-    db.add(admin)
-    db.commit()
-    db.refresh(admin)
-    logger.info(f"👤 Created admin user: {admin.email}")
+    admin = db.query(User).filter(User.email == "admin@ai-platform.com").first()
+    if not admin:
+        admin = User(
+            email="admin@ai-platform.com",
+            hashed_password=get_password_hash("admin123"),
+            is_active=True,
+            difficulty=DifficultyLevel.DAMN_IM_GOOD,
+            xp=100
+        )
+        db.add(admin)
+        db.commit()
+        db.refresh(admin)
+        logger.info(f"👤 Created admin user: {admin.email}")
+    else:
+        logger.info(f"👤 Admin user already exists: {admin.email}")
 
     # Load Content
     # Try Docker path first, then local development path

@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 from datetime import timedelta
 
 from . import models, schemas, database, auth
@@ -49,17 +49,35 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(database.get_d
 
 @app.post("/auth/token", response_model=schemas.Token)
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
+    print(f"DEBUG: Login attempt for username: {form_data.username}")
     user = db.query(models.User).filter(models.User.email == form_data.username).first()
-    if not user or not auth.verify_password(form_data.password, user.hashed_password):
+    
+    if not user:
+        print("DEBUG: User not found in DB")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    
+    print(f"DEBUG: User found: {user.email}, Hash in DB: {user.hashed_password[:20]}...")
+    
+    is_valid = auth.verify_password(form_data.password, user.hashed_password)
+    print(f"DEBUG: Password verification result: {is_valid}")
+    
+    if not is_valid:
+        print("DEBUG: Password invalid")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
     access_token_expires = timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = auth.create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
+    print("DEBUG: Token generated successfully")
     return {"access_token": access_token, "token_type": "bearer"}
 
 @app.get("/users/me", response_model=schemas.User)
@@ -102,6 +120,17 @@ def read_course(
     return course
 
 # --- LESSONS ENDPOINTS ---
+
+@app.get("/users/me/last-lesson", response_model=Optional[schemas.UserProgress])
+def get_user_last_lesson(
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Get the last accessed lesson and page for the current user"""
+    progress = db.query(models.UserProgress).filter(
+        models.UserProgress.user_id == current_user.id
+    ).order_by(models.UserProgress.last_accessed.desc()).first()
+    return progress
 
 @app.get("/lessons/", response_model=List[schemas.LessonSummary])
 def read_lessons(skip: int = 0, limit: int = 100, db: Session = Depends(database.get_db)):
@@ -154,6 +183,18 @@ def update_user_difficulty(
     db.commit()
     db.refresh(current_user)
     return current_user
+    
+@app.post("/users/me/xp", response_model=schemas.User)
+def add_user_xp(
+    xp_update: schemas.UserXPUpdate,
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Add XP to current user"""
+    current_user.xp += xp_update.xp_amount
+    db.commit()
+    db.refresh(current_user)
+    return current_user
 
 
 # --- PROGRESS ENDPOINTS ---
@@ -186,9 +227,142 @@ def complete_lesson(
         course_id=lesson.course_id
     )
     db.add(new_progress)
+    
+    # Award XP for lesson completion
+    current_user.xp += 50
+    
     db.commit()
     db.refresh(new_progress)
+    db.refresh(current_user)
     return new_progress
+
+@app.post("/lessons/{lesson_id}/progress", response_model=schemas.UserProgress)
+def update_lesson_progress(
+    lesson_id: int,
+    page: int,
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Update user's current page in a lesson"""
+    # Check if lesson exists
+    lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    
+    # Find existing progress or create new
+    progress = db.query(models.UserProgress).filter(
+        models.UserProgress.user_id == current_user.id,
+        models.UserProgress.lesson_id == lesson_id
+    ).first()
+    
+    if not progress:
+        progress = models.UserProgress(
+            user_id=current_user.id,
+            lesson_id=lesson_id,
+            course_id=lesson.course_id,
+            current_page=page
+        )
+        db.add(progress)
+    else:
+        progress.current_page = page
+        # last_accessed is updated automatically by SQLAlchemy onupdate
+    
+    db.commit()
+    db.refresh(progress)
+    return progress
+
+@app.post("/lessons/{lesson_id}/lab/complete", response_model=schemas.UserProgress)
+def complete_lesson_lab(
+    lesson_id: int,
+    completion: schemas.LabCompletion,
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Mark a specific lab within a lesson as completed"""
+    # Check if lesson exists
+    lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    
+    progress = db.query(models.UserProgress).filter(
+        models.UserProgress.user_id == current_user.id,
+        models.UserProgress.lesson_id == lesson_id
+    ).first()
+    
+    lab_id = completion.lab_id
+    
+    if not progress:
+        progress = models.UserProgress(
+            user_id=current_user.id,
+            lesson_id=lesson_id,
+            course_id=lesson.course_id,
+            completed_labs=[lab_id]
+        )
+        db.add(progress)
+        current_user.xp += 25
+    else:
+        # Check if lab already completed
+        # Note: SQLAlchemy JSON mutation tracking can be tricky, so we make a copy
+        current_labs = list(progress.completed_labs) if progress.completed_labs else []
+        
+        if lab_id not in current_labs:
+            current_labs.append(lab_id)
+            progress.completed_labs = current_labs
+            # Explicitly flag as modified for some DBs/Drivers
+            from sqlalchemy.orm.attributes import flag_modified
+            flag_modified(progress, "completed_labs")
+            
+            current_user.xp += 25
+    
+    db.commit()
+    db.refresh(progress)
+    db.refresh(current_user)
+    return progress
+
+@app.post("/lessons/{lesson_id}/quiz/complete", response_model=schemas.UserProgress)
+def complete_lesson_quiz(
+    lesson_id: int,
+    completion: schemas.QuizCompletion,
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Save quiz score and award XP if passed (>70%)"""
+    lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    
+    progress = db.query(models.UserProgress).filter(
+        models.UserProgress.user_id == current_user.id,
+        models.UserProgress.lesson_id == lesson_id
+    ).first()
+    
+    xp_award = 0
+    
+    if not progress:
+        progress = models.UserProgress(
+            user_id=current_user.id,
+            lesson_id=lesson_id,
+            course_id=lesson.course_id,
+            quiz_score=completion.score
+        )
+        db.add(progress)
+        if completion.score >= 70:
+            xp_award = 50
+    else:
+        # Only award XP if improving from failing to passing, or first time passing
+        previous_score = progress.quiz_score or 0
+        progress.quiz_score = completion.score
+        
+        if completion.score >= 70 and previous_score < 70:
+            xp_award = 50
+            
+    if xp_award > 0:
+        current_user.xp += xp_award
+    
+    db.commit()
+    db.refresh(progress)
+    db.refresh(current_user)
+    return progress
 
 @app.get("/users/me/progress", response_model=List[schemas.UserProgress])
 def get_user_progress(

@@ -7,12 +7,12 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "default", size = "default", ...props }, ref) => {
-    const baseStyles = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+    const baseStyles = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
     const variants = {
-      default: "bg-slate-900 text-white hover:bg-slate-900/90 shadow",
-      outline: "border border-slate-200 bg-transparent shadow-sm hover:bg-slate-100 text-slate-900",
-      destructive: "bg-red-600 text-white hover:bg-red-700 shadow",
-      ghost: "hover:bg-slate-100 text-slate-900"
+      default: "bg-primary text-primary-foreground shadow hover:opacity-90",
+      outline: "border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground dark:border-primary/50 dark:text-primary dark:hover:bg-primary/10 dark:hover:shadow-[0_0_10px_rgba(220,38,38,0.3)]",
+      destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+      ghost: "hover:bg-accent hover:text-accent-foreground"
     }
     const sizes = {
       default: "h-9 px-4 py-2",

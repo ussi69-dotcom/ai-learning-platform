@@ -66,10 +66,10 @@ export default function LessonComplete({ lessonId, courseId, onComplete }: Lesso
 
   if (isCompleted) {
     return (
-      <div className="mt-8 p-6 bg-secondary/10 border border-secondary/20 rounded-xl text-center animate-fade-in">
+      <div className="mt-8 p-6 bg-primary/10 border border-primary/20 rounded-xl text-center animate-fade-in glass-panel">
         <div className="text-4xl mb-2">🎉</div>
-        <h3 className="text-xl font-bold text-secondary mb-1">Lesson Completed!</h3>
-        <p className="text-secondary/80">Great job! You're making progress.</p>
+        <h3 className="text-xl font-bold text-primary mb-1">Lesson Completed!</h3>
+        <p className="text-muted-foreground">Great job! You're making progress.</p>
       </div>
     );
   }
@@ -82,8 +82,10 @@ export default function LessonComplete({ lessonId, courseId, onComplete }: Lesso
         className={`
           px-8 py-4 rounded-full text-lg font-bold shadow-lg transform transition-all duration-200
           ${isLoading 
-            ? 'bg-gray-400 cursor-not-allowed' 
-            : 'bg-gradient-to-r from-secondary to-secondary/80 text-secondary-foreground hover:scale-105 hover:shadow-xl active:scale-95'}
+            ? 'bg-muted text-muted-foreground cursor-not-allowed' 
+            : 'bg-green-600 text-white hover:bg-green-500 hover:scale-105 hover:shadow-xl active:scale-95 hover:shadow-green-500/20 ' +
+              'dark:bg-yellow-500 dark:text-yellow-950 dark:hover:bg-yellow-400 dark:hover:shadow-yellow-500/20' /* Sith Gold */
+          }
         `}
       >
         {isLoading ? 'Marking...' : 'Mark as Complete ✅'}

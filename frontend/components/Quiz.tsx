@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthContext";
+import { useParams } from "next/navigation";
+import axios from "axios";
+import LabBadge from "./mdx/LabBadge"; // Reusing the celebration modal
 
 export interface QuizQuestion {
   id: number;
@@ -25,40 +28,25 @@ interface QuizProps {
 export default function Quiz({ quizzes, onComplete }: QuizProps) {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [showBadge, setShowBadge] = useState(false);
+  
+  const { token, refreshUser } = useAuth();
+  const params = useParams();
+  const lessonId = parseInt(params.lessonId as string);
+
+  // ... (zbytek logiky answers/calculateScore zůstává stejný)
 
   // Reset state when quizzes change
   useEffect(() => {
     setAnswers({});
     setSubmitted(false);
+    setShowBadge(false);
   }, [quizzes]);
 
   const handleAnswer = (quizId: number, answer: string) => {
     if (!submitted) {
       setAnswers({ ...answers, [quizId]: answer });
     }
-  };
-
-  const handleSubmit = () => {
-    if (Object.keys(answers).length === quizzes.length) {
-      setSubmitted(true);
-      if (onComplete) {
-        // Calculate score immediately
-        let correct = 0;
-        quizzes.forEach(quiz => {
-          if (answers[quiz.id] === quiz.correct_answer) {
-            correct++;
-          }
-        });
-        onComplete(correct);
-      }
-    } else {
-      alert("Please answer all questions before submitting!");
-    }
-  };
-
-  const handleReset = () => {
-    setAnswers({});
-    setSubmitted(false);
   };
 
   const calculateScore = () => {
@@ -71,7 +59,43 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
     return correct;
   };
 
+  const handleSubmit = async () => {
+    if (Object.keys(answers).length === quizzes.length) {
+      setSubmitted(true);
+      const correct = calculateScore();
+      const percentage = Math.round((correct / quizzes.length) * 100);
+      
+      // Send to backend
+      if (token && lessonId) {
+        try {
+          const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+          await axios.post(`${API_BASE}/lessons/${lessonId}/quiz/complete`, 
+            { score: percentage },
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          refreshUser(); // Update XP
+        } catch (e) {
+          console.error("Failed to save quiz score", e);
+        }
+      }
 
+      if (percentage >= 70) {
+        setShowBadge(true);
+      }
+
+      if (onComplete) {
+        onComplete(correct);
+      }
+    } else {
+      alert("Please answer all questions before submitting!");
+    }
+  };
+
+  const handleReset = () => {
+    setAnswers({});
+    setSubmitted(false);
+    setShowBadge(false);
+  };
 
   if (quizzes.length === 0) {
     return null; // No quiz for this lesson
@@ -81,21 +105,27 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
   const percentage = submitted ? Math.round((score / quizzes.length) * 100) : 0;
 
   return (
-    <div className="mt-16 border-t pt-12">
+    <div className="mt-16 border-t border-border pt-12 relative">
+      {showBadge && (
+        <LabBadge 
+          title="Quiz Master" 
+          onClose={() => setShowBadge(false)} 
+        />
+      )}
+      
       <div className="mb-8">
-        <h2 className="text-3xl font-bold mb-2">Test Your Knowledge 🧠</h2>
+        <h2 className="text-3xl font-bold mb-2 text-foreground">Test Your Knowledge 🧠</h2>
         <p className="text-muted-foreground">
           Answer all {quizzes.length} questions to see how well you understood this lesson!
         </p>
       </div>
 
       {submitted && (
-        <Card className="p-6 mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold mb-2">
+        <div className="p-6 mb-8 glass-panel rounded-xl text-center animate-in fade-in zoom-in duration-300">
+            <h3 className="text-2xl font-bold mb-2 text-primary">
               Your Score: {score}/{quizzes.length} ({percentage}%)
             </h3>
-            <p className="text-lg mb-4">
+            <p className="text-lg mb-4 text-foreground">
               {percentage >= 80 ? "🎉 Excellent work!" :
                percentage >= 60 ? "✅ Good job!" :
                "📚 Keep practicing!"}
@@ -103,8 +133,7 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
             <Button onClick={handleReset} variant="outline">
               Try Again
             </Button>
-          </div>
-        </Card>
+        </div>
       )}
 
       <div className="space-y-8">
@@ -114,12 +143,12 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
           const isWrong = submitted && userAnswer && userAnswer !== quiz.correct_answer;
 
           return (
-            <Card key={quiz.id} className={`p-6 ${
-              submitted && isCorrect ? 'border-green-500 bg-green-50' :
-              submitted && isWrong ? 'border-red-500 bg-red-50' :
-              ''
+            <div key={quiz.id} className={`p-6 rounded-xl glass-panel transition-all duration-300 ${
+              submitted && isCorrect ? 'border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.1)]' :
+              submitted && isWrong ? 'border-destructive/50 shadow-[0_0_15px_rgba(239,68,68,0.1)]' :
+              'hover:border-primary/30'
             }`}>
-              <h3 className="text-lg font-bold mb-4">
+              <h3 className="text-lg font-bold mb-4 text-foreground">
                 Question {index + 1}: {quiz.question}
               </h3>
 
@@ -129,24 +158,29 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
                   const isSelected = userAnswer === option;
                   const isCorrectAnswer = quiz.correct_answer === option;
 
+                  let buttonStyle = "border-border hover:bg-accent hover:text-accent-foreground"; // Default
+                  
+                  if (submitted) {
+                    if (isCorrectAnswer) buttonStyle = "border-green-500 bg-green-500/10 text-green-700 dark:text-green-400";
+                    else if (isSelected && !isCorrectAnswer) buttonStyle = "border-destructive bg-destructive/10 text-destructive dark:text-red-400";
+                    else buttonStyle = "border-border opacity-50";
+                  } else if (isSelected) {
+                    buttonStyle = "border-primary bg-primary/10 text-primary ring-1 ring-primary/20";
+                  }
+
                   return (
                     <button
                       key={option}
                       onClick={() => handleAnswer(quiz.id, option)}
                       disabled={submitted}
-                      className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                        submitted && isCorrectAnswer ? 'border-green-500 bg-green-100 dark:bg-green-900/30 dark:border-green-500 dark:text-green-300' :
-                        submitted && isSelected && !isCorrectAnswer ? 'border-red-500 bg-red-100 dark:bg-red-900/30 dark:border-red-500 dark:text-red-300' :
-                        isSelected ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 dark:border-indigo-500 dark:text-white' :
-                        'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 dark:text-slate-200'
-                      } ${submitted ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                      className={`w-full text-left p-4 rounded-lg border-2 transition-all ${buttonStyle} ${submitted ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                     >
                       <span className="font-semibold">{option}.</span> {optionText}
                       {submitted && isCorrectAnswer && (
                         <span className="ml-2 text-green-600 dark:text-green-400">✓ Correct</span>
                       )}
                       {submitted && isSelected && !isCorrectAnswer && (
-                        <span className="ml-2 text-red-600 dark:text-red-400">✗ Wrong</span>
+                        <span className="ml-2 text-destructive">✗ Wrong</span>
                       )}
                     </button>
                   );
@@ -154,12 +188,12 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
               </div>
 
               {submitted && (
-                <div className="mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r">
-                  <p className="text-sm font-semibold text-blue-900 mb-1">Explanation:</p>
-                  <p className="text-sm text-blue-800">{quiz.explanation}</p>
+                <div className="mt-4 p-4 rounded bg-muted/50 border-l-4 border-primary">
+                  <p className="text-sm font-semibold text-primary mb-1">Explanation:</p>
+                  <p className="text-sm text-muted-foreground">{quiz.explanation}</p>
                 </div>
               )}
-            </Card>
+            </div>
           );
         })}
       </div>
@@ -170,6 +204,7 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
             onClick={handleSubmit}
             size="lg"
             disabled={Object.keys(answers).length < quizzes.length}
+            className="w-full sm:w-auto min-w-[200px]"
           >
             Submit Quiz ({Object.keys(answers).length}/{quizzes.length} answered)
           </Button>

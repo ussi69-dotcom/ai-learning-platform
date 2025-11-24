@@ -18,6 +18,7 @@ class User(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
     difficulty = Column(Enum(DifficultyLevel), default=DifficultyLevel.LETS_ROCK)
+    xp = Column(Integer, default=0)
 
     courses = relationship("Course", back_populates="owner")
     progress = relationship("UserProgress", back_populates="user")
@@ -73,6 +74,11 @@ class Quiz(Base):
     lesson = relationship("Lesson", back_populates="quizzes")
 
 
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text, Enum, DateTime, JSON
+# ... imports ...
+
+# ... (User, Course, Lesson, Quiz classes remain same) ...
+
 class UserProgress(Base):
     __tablename__ = "user_progress"
 
@@ -80,7 +86,16 @@ class UserProgress(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     lesson_id = Column(Integer, ForeignKey("lessons.id"))
     course_id = Column(Integer, ForeignKey("courses.id"))
-    completed_at = Column(DateTime(timezone=True), server_default=func.now())
+    completed_at = Column(DateTime(timezone=True), nullable=True)
+    last_accessed = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+    
+    # JSON list of completed lab IDs e.g. ["intro-lab", "advanced-lab"]
+    completed_labs = Column(JSON, default=list) 
+    
+    # Quiz score (0-100), null if not attempted
+    quiz_score = Column(Integer, nullable=True)
+    
+    current_page = Column(Integer, default=0)
 
     user = relationship("User", back_populates="progress")
     lesson = relationship("Lesson")

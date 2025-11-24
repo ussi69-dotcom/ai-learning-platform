@@ -12,39 +12,18 @@ export default function NavBar() {
   const { user, logout, token } = useAuth();
   const [progressStats, setProgressStats] = useState({ level: 1, xp: 0, maxXp: 500 });
 
-      // Fetch simplified progress for the Navbar
   useEffect(() => {
-    if (!user || !token) return;
+    if (!user) return;
 
-    const fetchStats = async () => {
-      try {
-        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-        const res = await axios.get(`${API_BASE}/users/me/progress`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        
-        // Calculate Level based on difficulty
-        let level = 1;
-        let maxXp = 500;
-        if (user.difficulty === 'LETS_ROCK') { level = 2; maxXp = 1000; }
-        if (user.difficulty === 'COME_GET_SOME') { level = 3; maxXp = 2000; }
-        if (user.difficulty === 'DAMN_IM_GOOD') { level = 4; maxXp = 5000; }
+    // Calculate Level based on difficulty
+    let level = 1;
+    let maxXp = 500;
+    if (user.difficulty === 'LETS_ROCK') { level = 2; maxXp = 1000; }
+    if (user.difficulty === 'COME_GET_SOME') { level = 3; maxXp = 2000; }
+    if (user.difficulty === 'DAMN_IM_GOOD') { level = 4; maxXp = 5000; }
 
-        // Calculate XP (Simple mock: 50 XP per lesson)
-        const xp = res.data.length * 50;
-
-        setProgressStats({ level, xp, maxXp });
-      } catch (e) {
-        console.error("Nav stats error", e);
-      }
-    };
-
-    fetchStats();
-    
-    // Poll every 5 seconds to update XP
-    const interval = setInterval(fetchStats, 5000);
-    return () => clearInterval(interval);
-  }, [user, token]);
+    setProgressStats({ level, xp: user.xp || 0, maxXp });
+  }, [user]);
 
   return (
     <nav className="border-b bg-white/80 dark:bg-slate-950/90 backdrop-blur-md border-slate-200 dark:border-slate-800 sticky top-0 z-50 transition-colors duration-300">

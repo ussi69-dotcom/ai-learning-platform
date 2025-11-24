@@ -28,6 +28,7 @@ services:
     volumes:
       - ./backend:/app
       - ./content:/app/content
+    command: ["./entrypoint.sh"]
     depends_on:
       - db
 

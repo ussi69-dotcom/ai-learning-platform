@@ -8,6 +8,7 @@ import ConceptCard from './mdx/ConceptCard';
 import LabSection from './mdx/LabSection';
 import CodeBlock from './CodeBlock';
 import Diagram from './mdx/Diagram';
+import KeyTakeaway from './mdx/KeyTakeaway';
 
 interface MarkdownRendererProps {
   content: string;
@@ -85,7 +86,7 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         const props = {
           title: titleMatch?.[1] || 'Concept',
           icon: iconMatch?.[1] || '💡',
-          difficulty: (diffMatch?.[1] as any) || 'Beginner',
+          difficulty: diffMatch?.[1],
           jediQuote: jediMatch?.[1],
           sithQuote: sithMatch?.[1]
         };
@@ -137,6 +138,32 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         );
         
         i = openEnd + 1;
+        continue;
+      }
+
+      // 4.5 Handle <KeyTakeaway> component
+      if (line.trim().startsWith('<KeyTakeaway')) {
+        const { endIndex: openEnd, tagContent } = readOpeningTag(i);
+
+        const titleMatch = tagContent.match(/title=['"]([^'"']+)['"]/);
+        const iconMatch = tagContent.match(/icon=['"]([^'"']+)['"]/);
+        const colorMatch = tagContent.match(/color=['"]([^'"']+)['"]/);
+
+        const props = {
+          title: titleMatch?.[1] || 'Takeaway',
+          icon: iconMatch?.[1] || '🔑',
+          color: (colorMatch?.[1] as any) || 'slate'
+        };
+        
+        const { end: closeEnd, content: innerContent } = findClosingTag(openEnd, 'KeyTakeaway');
+        
+        elements.push(
+          <KeyTakeaway key={`takeaway-${i}`} {...props}>
+            {parseInlineMarkdown(innerContent)}
+          </KeyTakeaway>
+        );
+        
+        i = closeEnd;
         continue;
       }
 
@@ -201,15 +228,15 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
       // 7. Headings
       const trimmedLine = line.trim();
       if (trimmedLine.startsWith('# ')) {
-        elements.push(<h1 key={`h1-${i}`} className="text-4xl font-bold mb-4 text-slate-900 dark:text-slate-100">{trimmedLine.substring(2)}</h1>);
+        elements.push(<h1 key={`h1-${i}`} className="text-4xl font-bold mb-4 text-foreground text-wrap">{trimmedLine.substring(2)}</h1>);
         i++; continue;
       }
       if (trimmedLine.startsWith('## ')) {
-        elements.push(<h2 key={`h2-${i}`} className="text-3xl font-bold mt-8 mb-4 text-slate-900 dark:text-slate-100">{trimmedLine.substring(3)}</h2>);
+        elements.push(<h2 key={`h2-${i}`} className="text-3xl font-bold mt-8 mb-4 text-foreground text-wrap">{trimmedLine.substring(3)}</h2>);
         i++; continue;
       }
       if (trimmedLine.startsWith('### ')) {
-        elements.push(<h3 key={`h3-${i}`} className="text-2xl font-semibold mt-6 mb-3 text-slate-800 dark:text-slate-200">{trimmedLine.substring(4)}</h3>);
+        elements.push(<h3 key={`h3-${i}`} className="text-2xl font-semibold mt-6 mb-3 text-foreground text-wrap">{trimmedLine.substring(4)}</h3>);
         i++; continue;
       }
 
@@ -283,17 +310,17 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
               <div key={`table-${i}`} className="overflow-x-auto mb-6">
                 <table className="min-w-full border-collapse border border-slate-200 dark:border-slate-700">
                   <thead>
-                    <tr className="bg-slate-50 dark:bg-slate-800">
+                    <tr className="bg-muted/50">
                       {headers.map((h, k) => (
-                        <th key={k} className="border border-slate-200 dark:border-slate-700 p-3 text-left font-semibold text-slate-900 dark:text-slate-100">{parseInlineText(h)}</th>
+                        <th key={k} className="border border-border p-2 text-left text-sm font-semibold text-foreground whitespace-nowrap">{parseInlineText(h)}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
                     {rows.map((row, r) => (
-                      <tr key={r} className="even:bg-slate-50/50 dark:even:bg-slate-800/50">
+                      <tr key={r} className="even:bg-muted/20">
                         {row.map((cell, c) => (
-                          <td key={c} className="border border-slate-200 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-300">{parseInlineText(cell)}</td>
+                          <td key={c} className="border border-border p-2 text-muted-foreground min-w-[100px]">{parseInlineText(cell)}</td>
                         ))}
                       </tr>
                     ))}
@@ -326,7 +353,7 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
     return parts.map((part, k) => {
       if (part.startsWith('**') && part.endsWith('**')) return <strong key={k}>{part.slice(2, -2)}</strong>;
       if (part.startsWith('*') && part.endsWith('*')) return <em key={k}>{part.slice(1, -1)}</em>;
-      if (part.startsWith('`') && part.endsWith('`')) return <code key={k} className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded text-sm font-mono text-pink-500">{part.slice(1, -1)}</code>;
+      if (part.startsWith('`') && part.endsWith('`')) return <code key={k} className="bg-muted px-1 py-0.5 rounded text-sm font-mono text-primary">{part.slice(1, -1)}</code>;
       return part;
     });
   };
