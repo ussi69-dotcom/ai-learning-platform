@@ -135,18 +135,18 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
                       onClick={() => handleAnswer(quiz.id, option)}
                       disabled={submitted}
                       className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                        submitted && isCorrectAnswer ? 'border-green-500 bg-green-100' :
-                        submitted && isSelected && !isCorrectAnswer ? 'border-red-500 bg-red-100' :
-                        isSelected ? 'border-blue-500 bg-blue-50' :
-                        'border-gray-200 hover:border-gray-300'
+                        submitted && isCorrectAnswer ? 'border-green-500 bg-green-100 dark:bg-green-900/30 dark:border-green-500 dark:text-green-300' :
+                        submitted && isSelected && !isCorrectAnswer ? 'border-red-500 bg-red-100 dark:bg-red-900/30 dark:border-red-500 dark:text-red-300' :
+                        isSelected ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 dark:border-indigo-500 dark:text-white' :
+                        'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 dark:text-slate-200'
                       } ${submitted ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                     >
                       <span className="font-semibold">{option}.</span> {optionText}
                       {submitted && isCorrectAnswer && (
-                        <span className="ml-2 text-green-600">✓ Correct</span>
+                        <span className="ml-2 text-green-600 dark:text-green-400">✓ Correct</span>
                       )}
                       {submitted && isSelected && !isCorrectAnswer && (
-                        <span className="ml-2 text-red-600">✗ Wrong</span>
+                        <span className="ml-2 text-red-600 dark:text-red-400">✗ Wrong</span>
                       )}
                     </button>
                   );
