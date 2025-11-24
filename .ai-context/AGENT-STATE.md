@@ -10,18 +10,21 @@
 - **DB:** PostgreSQL 15. **Managed via `entrypoint.sh`**.
 - **Theme:** Jedi (Light) / Sith (Dark). Semantic colors `oklch`.
 
+## 📜 History Log (Condensed)
+*   **Cycles 1-10:** Initial Setup, Docker infrastructure, Basic Frontend/Backend connection.
+*   **Cycle 13:** Navigation Mockups.
+*   **Cycle 16-18:** Content injection, MDX parsing logic.
+*   **Cycle 19 (Clippy Learns AI):** First gamification attempts, basic Dark Mode.
+*   **Cycle 20:** "Holographic Datapad" UI Overhaul (Glassmorphism).
+*   **Cycle 21-22:** Smart Progress (Resume Learning, Pagination), DB Pool fix.
+*   **Cycle 23:** Final Gamification Polish (Lab/Quiz persistence, Badges).
+
 ## 🔑 Critical Knowledge (SOP)
 1.  **DB Changes:** ALWAYS `docker-compose down -v && docker-compose up --build`. Never seed manually.
 2.  **Progress:** Logic is in `UserProgress` (JSON `completed_labs`, `quiz_score`, `current_page`).
 3.  **Content:** `content/` folder is mounted. Edits require backend restart.
 
-## 📝 Recent Accomplishments
-- Implemented "Smart Progress" (resume where left off).
-- Fixed "XP Farming" (labs tracked individually).
-- Polished UI (Holographic glass, mobile navigation).
-- Documented everything in `CONTENT_GUIDELINES.md`.
-
 ## ⏭️ Next Steps (Backlog)
-- **Content:** Create more lessons using the new template.
-- **Mobile App:** Maybe wrap this in Capacitor?
+- **Content Creation:** Create more lessons using `CONTENT_GUIDELINES.md` template.
+- **Mobile App:** Consider wrapping via Capacitor.
 - **AI Integration:** Connect real LLM for open-ended lab feedback (currently mocked).
