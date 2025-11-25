@@ -1,0 +1,259 @@
+# AI at Work: The Enterprise Era 💼
+
+The steam engine replaced muscle. The computer replaced calculation. **AI is replacing drudgery.**
+We are entering a new Industrial Revolution. This time, it's not about working harder; it's about working smarter.
+
+## 🏭 1. The Productivity Gap
+
+We are drowning in data.
+*   **28%** of work time is spent on email.
+*   **31%** is spent in meetings.
+*   **19%** is searching for information.
+That leaves only **22%** for actual creative work.
+
+![Enterprise AI Dashboard](images/dashboard.png)
+
+<ConceptCard title="The New Equation" icon="📈">
+*   **Old Way:** You do the research + You write the draft + You edit the final + You format the slides.
+*   **AI Way:** AI does the research + AI writes the draft -> **You edit and refine.**
+</ConceptCard>
+
+---
+
+## 🤖 2. Tool 1: The Meeting Assistant
+
+Meetings are necessary, but taking notes is not.
+Modern tools like **Microsoft Copilot**, **Zoom AI Companion**, or **Otter.ai** act as your personal secretary.
+
+### What they do:
+1.  **Real-time Transcription:** Every word is recorded.
+2.  **Speaker Recognition:** It knows *who* said *what*.
+3.  **Action Item Extraction:** It listens for "I will send that report" and adds it to your to-do list.
+
+<Diagram type="meeting-timeline" />
+
+<Callout type="info">
+**As seen in the video:** Copilot isn't just for live meetings. You can use it to **"Catch Up"** on a meeting you missed by asking: *"Summarize what I missed in the last 15 minutes."*
+</Callout>
+
+---
+
+## 🔬 Lab 1: The Meeting Minute Master
+
+**Objective:** Turn a messy transcript into clean minutes.
+
+**The Prompt:**
+Copy this prompt. We will simulate a chaotic meeting transcript.
+
+```text
+Act as a professional secretary. Summarize this transcript into:
+1. Key Decisions
+2. Action Items (Who - What - Deadline)
+
+Transcript:
+John: "We need to launch by Friday."
+Sarah: "I can't, the server is down. I need until Monday."
+John: "Fine, Monday. But Mike needs to update the graphics."
+Mike: "I'll do it tonight."
+```
+
+**Analysis:**
+Did it correctly identify the new deadline (Monday) and Mike's task?
+
+---
+
+## ✍️ 3. Tool 2: The Writing Partner
+
+The "Blank Page Syndrome" is the enemy of speed.
+Whether it's an email, a report, or a blog post, starting from zero is hard.
+
+### The "Co-Pilot" Workflow
+Don't ask AI to "write an email". Be specific.
+*   **Drafting:** "Draft a polite decline to this invitation."
+*   **Tone Shift:** "Rewrite this angry email to be professional and diplomatic."
+*   **Summarizing:** "Summarize this 50-page PDF into 3 bullet points."
+
+![Office Copilot Robot](images/copilot-robot.png)
+
+---
+
+## 🔬 Lab 2: Email Polish
+
+**Objective:** Turn a rude email into a professional one.
+
+**The Prompt:**
+```text
+Rewrite this email to be professional, diplomatic, but firm.
+
+"Hey, your report is garbage. It's late and full of errors. Fix it now or you're fired."
+```
+
+**Analysis:**
+See how the AI keeps the message ("fix it") but removes the toxicity. This saves relationships.
+
+---
+
+## 📊 4. Tool 3: The Data Analyst
+
+Excel is powerful, but formulas are scary.
+AI tools (like **Copilot for Excel** or **ChatGPT Data Analyst**) allow you to talk to your data.
+
+### No More Formulas
+Instead of writing `=VLOOKUP(...)`, you can type:
+> *"Show me the sales trend for Q3 compared to Q4."*
+
+![AI Data Analyst](images/data-analyst.png)
+
+### Finding the Invisible
+AI can scan thousands of rows to find:
+*   **Outliers:** "Which transaction looks suspicious?"
+*   **Trends:** "Is customer churn increasing?"
+*   **Correlations:** "Do we sell more umbrellas on Tuesdays?"
+
+---
+
+## 🔬 Lab 3: Data Interrogation
+
+**Objective:** Simulate analyzing a dataset.
+
+**The Prompt:**
+```text
+I have a dataset of 1000 sales.
+Column A: Date
+Column B: Product
+Column C: Amount
+
+Write an Excel formula to sum the total Amount for "Widgets" sold in "January".
+```
+
+**Analysis:**
+It should generate a `SUMIFS` formula for you. You didn't need to memorize the syntax.
+
+---
+
+## 🧠 5. Tool 4: The Knowledge Base (RAG)
+
+Imagine if ChatGPT knew your company's secrets (safely).
+**RAG (Retrieval Augmented Generation)** connects the AI to your internal files:
+*   SharePoint
+*   Google Drive
+*   PDF Contracts
+
+### The "Search" Revolution
+Instead of searching for "Holiday Policy 2024.pdf" and reading 20 pages, you ask:
+> *"How many days of paternity leave do I get?"*
+
+The AI finds the document, reads the relevant paragraph, and gives you the answer with a citation.
+
+<Diagram type="rag-architecture" />
+
+### 🆕 New Feature: Copilot Pages
+As highlighted in the tutorial, **Copilot Pages** allows you to turn a fleeting AI conversation into a persistent, multiplayer document.
+*   **Chat:** Brainstorm ideas with AI.
+*   **Edit:** Click "Edit in Pages" to save the output.
+*   **Collaborate:** Share the Page with your team so everyone can add to it.
+
+---
+
+## 🛡️ 6. Safety & Privacy at Work
+
+**Rule #1: Your Data is Your Data.**
+When using AI at work, you must understand the difference between **Public** and **Enterprise** models.
+
+### 🚫 Public AI (ChatGPT Free, Personal Accounts)
+*   **Risk:** Anything you type is sent to the cloud and *may* be used to train future models.
+*   **Danger:** If you paste a confidential roadmap, it could theoretically leak to a competitor.
+*   **Rule:** Never paste PII (Personally Identifiable Information), passwords, or trade secrets.
+
+### ✅ Enterprise AI (Copilot, ChatGPT Enterprise)
+*   **Safety:** Your data stays within your company's "tenant" (secure bubble).
+*   **No Training:** Microsoft/OpenAI explicitly guarantees they do *not* train on your data.
+*   **Compliance:** It respects your company's existing permissions (e.g., you can't search for the CEO's salary unless you have access).
+
+<Callout type="warning">
+**The "Samsung Incident":** Engineers pasted proprietary code into a public chatbot to fix it. That code became part of the model's training data. Don't be that guy.
+</Callout>
+
+---
+
+## 🚀 7. Efficiency Tips & Tricks
+
+AI is a force multiplier. Here are three hacks to save you an hour today.
+
+### 1. The "Draft, Don't Create" Rule 📝
+Never write a document from scratch. Ask AI for an outline or a first draft. It is easier to edit bad text than to write new text from nothing.
+> *Prompt: "Draft an agenda for a 30-minute kick-off meeting for Project X."*
+
+### 2. The "Summarize First" Rule 📉
+Before reading a long email chain or a 50-page PDF, ask AI: *"Summarize the conflict in this thread"* or *"What are the 3 key risks in this contract?"*.
+*   **Benefit:** You enter the deep reading phase with a mental map of what matters.
+
+### 3. The "Meeting Prep" Hack 🤝
+Before a meeting with a client, ask AI: *"Search the web for recent news about [Company Name]. What are their current challenges?"*
+*   **Result:** You walk in looking like you did 2 hours of research.
+
+---
+
+## 🎭 8. Specialized Tools
+
+It's not just about text. AI is transforming every department.
+
+### 🎨 Design & Marketing
+*   **Adobe Firefly / Midjourney:** Generate assets for slide decks or social media instantly.
+*   **Canva Magic Studio:** "Make this presentation look professional" with one click.
+
+### 💻 IT & Development
+*   **GitHub Copilot:** Writes ~46% of new code for developers. It's like having a senior engineer pair-programming with you.
+*   **Text-to-SQL:** Analysts can write "Show me active users" and get the SQL query automatically.
+
+### 👥 Human Resources
+*   **Textio:** Analyzes job descriptions for hidden bias (e.g., words that discourage women from applying).
+*   **Resume Screening:** AI can parse thousands of resumes to find matching skills (but beware of bias!).
+
+### 🤖 Custom Agents
+The video introduces **Copilot Agents**—specialized bots you can build for specific tasks.
+*   **Example:** A "Travel Agent" that only knows your company's travel policy and booking codes.
+*   **Power:** You can create these agents just by describing what you want them to do, grounded in your specific SharePoint folders.
+
+---
+
+## 📝 9. The "CO-STAR" Prompt Framework
+
+To get professional results, use a professional structure. A vague prompt gets a vague answer.
+
+| Letter | Meaning | Example |
+| :--- | :--- | :--- |
+| **C** | **Context** | "I am a Project Manager launching a new app..." |
+| **O** | **Objective** | "Write a status update email..." |
+| **S** | **Style** | "Concise, bullet points, no fluff..." |
+| **T** | **Tone** | "Professional but urgent..." |
+| **A** | **Audience** | "For the Executive Team..." |
+| **R** | **Response** | "Format as a table with columns for Risk and Mitigation." |
+
+<Callout type="tip">
+**Try it:** Next time you need an email, don't just say "Write an email". Say: *"I am a [Context], write a [Objective] for [Audience] in a [Style] style."*
+</Callout>
+
+---
+
+## 🏆 10. Final Mission Report
+
+You are now equipped for the modern workplace.
+The goal is not to let AI do your job. It is to let AI do the **boring parts** of your job, so you can focus on the **human parts** (strategy, creativity, empathy).
+
+<ConceptCard title="Holocron: Enterprise AI" icon="💼">
+
+### 🛠️ The Toolkit
+*   **Meeting Assistant:** Transcribes & Summarizes (Teams/Zoom). *Never take minutes again.*
+*   **Writing Partner:** Drafts & Polishes (Word/Docs). *Cure blank page syndrome.*
+*   **Data Analyst:** Finds trends without formulas (Excel). *Talk to your data.*
+*   **Knowledge Base:** Chats with internal docs (RAG). *Find answers in seconds.*
+
+### 🛡️ The Rules
+1.  **Verify:** AI makes mistakes. You are responsible.
+2.  **Privacy:** Use Enterprise tools for secrets. Public AI = Public Data.
+3.  **Prompt:** Use CO-STAR for best results. Context is King.
+
+</ConceptCard>
+
+Go forth and be productive.

@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What is the primary advantage of using an AI Meeting Assistant?",
+    "option_a": "It makes the meeting longer.",
+    "option_b": "It allows you to skip the meeting entirely and never talk to humans.",
+    "option_c": "It generates transcripts, summaries, and action items, allowing you to focus on the conversation.",
+    "option_d": "It votes on your behalf.",
+    "correct_answer": "C",
+    "explanation": "AI assistants like Copilot or Zoom AI Companion handle the administrative burden (notes, action items), freeing you to engage in the actual discussion.",
+    "order": 1
+  },
+  {
+    "question": "When using AI to analyze data in Excel/Sheets, what is a key benefit?",
+    "option_a": "It changes the numbers to look better.",
+    "option_b": "It can identify trends and patterns that might be invisible to the human eye.",
+    "option_c": "It deletes old files.",
+    "option_d": "It prevents you from using formulas.",
+    "correct_answer": "B",
+    "explanation": "AI excels at pattern recognition. It can scan thousands of rows to find outliers, trends, or correlations that a human might miss.",
+    "order": 2
+  },
+  {
+    "question": "What is 'RAG' (Retrieval Augmented Generation) in a workplace context?",
+    "option_a": "A cleaning cloth for monitors.",
+    "option_b": "A way for AI to search your company's internal documents (PDFs, SharePoint) to answer questions accurately.",
+    "option_c": "A type of computer virus.",
+    "option_d": "A random number generator.",
+    "correct_answer": "B",
+    "explanation": "RAG allows the AI to look up information in your private company data before answering, ensuring the answer is relevant to your specific business.",
+    "order": 3
+  },
+  {
+    "question": "Why is the 'Human in the Loop' still critical when using AI for work?",
+    "option_a": "Because AI gets lonely.",
+    "option_b": "To verify accuracy, tone, and ensure no sensitive secrets are leaked.",
+    "option_c": "To press the 'Send' button only.",
+    "option_d": "It is not critical; AI is perfect.",
+    "correct_answer": "B",
+    "explanation": "AI can hallucinate or miss context. You are the pilot; the AI is the co-pilot. You are responsible for the final output.",
+    "order": 4
+  },
+  {
+    "question": "What is the 'Blank Page Syndrome' that AI helps solve?",
+    "option_a": "When your printer runs out of paper.",
+    "option_b": "The difficulty of starting a document from scratch.",
+    "option_c": "A screen glitch.",
+    "option_d": "Forgetting your password.",
+    "correct_answer": "B",
+    "explanation": "AI is excellent at generating a 'First Draft'. It is easier to edit bad text than to write new text from nothing.",
+    "order": 5
+  }
+]

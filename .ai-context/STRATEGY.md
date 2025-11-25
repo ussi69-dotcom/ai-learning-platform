@@ -19,11 +19,13 @@ Students start as **Padawans** (Users) and graduate as **Jedi Knights** (Builder
     *   *Lab:* Tokenizer visualizer (Text -> Numbers)
 4.  **Jedi Mind Tricks: Prompt Engineering** (Context, Persona, Constraints)
     *   *Lab:* "Fix the broken prompt"
-5.  **The Dark Side: Hallucinations & Bias** (Why AI lies and discriminates)
+5.  **The Dark Side: Hallucinations & Bias** (Why AI lies and discriminates) - *Completed*
     *   *Lab:* "Trick the AI into revealing secrets" (Safety basics)
-6.  **Multimodal Creativity** (Image & Audio Generation)
-    *   *Lab:* Generate a Star Wars character consistent across 3 images.
-7.  **The Padawan Trials** (Review + Final Non-Code Challenge)
+6.  **AI at Work: The Enterprise Era** (Copilot, Meeting Intel, HR Tools)
+    *   *Focus:* Microsoft Ecosystem, Transcription, Summarization, RAG Chatbots.
+    *   *Lab:* "The Meeting Minute Master" & "Email Polish".
+7.  **The Grand Trial** (Course Summary & Final Exam)
+    *   *Challenge:* A comprehensive test of all Padawan skills.
 
 **Success Criteria:**
 - Understands Training vs Inference.

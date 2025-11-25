@@ -1,8 +1,8 @@
 # 🧠 Agent State & Memory
 
 ## 📍 Current Status
-**Cycle:** 27 Completed (Lesson 5 Reboot)
-**Focus:** The Dark Side: Hallucinations, Bias & Safety.
+**Cycle:** 28 Completed (Lesson 6: AI at Work)
+**Focus:** Enterprise AI, Copilot, Productivity Tools.
 
 ## 🛠️ System Snapshot
 - **Frontend:** Next.js 16, Tailwind v4, "Holographic Datapad".
@@ -11,6 +11,7 @@
     - Lesson 3: **Gold Standard**.
     - Lesson 4: **Masterpiece** (13 pages, 6 Labs).
     - Lesson 5: **Masterpiece** (10+ pages, 3 Labs).
+    - Lesson 6: **Masterpiece** (20+ pages, RAG Diagram, Video Integration).
 
 ## 🔑 Critical Protocols (SOP)
 1.  **Content Generation:** Follow `CONTENT_GUIDELINES.md`. **Quiz in JSON, not MDX.**
@@ -18,5 +19,5 @@
 3.  **Visuals:** No walls of text. Use `<Diagram>`, `<ConceptCard>`, or Emoji.
 
 ## ⏭️ Next Steps (Backlog)
-- **Lesson 6:** Course Summary & Final Exam (The Grand Trial).
+- **Lesson 7:** Course Summary & Final Exam (The Grand Trial).
 - **Phase 2 (Coding):** Setup Python sandbox environment.
