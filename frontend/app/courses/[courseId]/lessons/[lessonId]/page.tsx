@@ -93,8 +93,13 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
         await axios.post(`${API_BASE}/lessons/${lessonId}/progress?page=${currentPage}`, {}, {
           headers: { "Authorization": `Bearer ${token}` }
         });
-      } catch (e) {
-        console.error("Failed to save progress", e);
+      } catch (e: any) {
+        if (e.response?.status === 401) {
+          console.warn("Session expired while saving progress. Redirecting to login...");
+          router.push('/login');
+        } else {
+          console.error("Failed to save progress", e);
+        }
       }
     }, 1000); // Debounce 1s
 

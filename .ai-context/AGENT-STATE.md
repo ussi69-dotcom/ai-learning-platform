@@ -1,16 +1,16 @@
 # 🧠 Agent State & Memory
 
 ## 📍 Current Status
-**Cycle:** 25 Completed (Lesson 3 Reboot)
-**Focus:** High-Quality Content Production & Workflow Standardization.
+**Cycle:** 27 Completed (Lesson 5 Reboot)
+**Focus:** The Dark Side: Hallucinations, Bias & Safety.
 
 ## 🛠️ System Snapshot
 - **Frontend:** Next.js 16, Tailwind v4, "Holographic Datapad".
 - **Backend:** FastAPI, PostgreSQL (Auto-seed via `entrypoint.sh`).
 - **Content:** 
-    - Lesson 1-2: Legacy (Good enough).
-    - Lesson 3: **Gold Standard** (Diagrams, Video, Deep Dive).
-    - Lesson 4-6: Placeholders/Legacy (Need update).
+    - Lesson 3: **Gold Standard**.
+    - Lesson 4: **Masterpiece** (13 pages, 6 Labs).
+    - Lesson 5: **Masterpiece** (10+ pages, 3 Labs).
 
 ## 🔑 Critical Protocols (SOP)
 1.  **Content Generation:** Follow `CONTENT_GUIDELINES.md`. **Quiz in JSON, not MDX.**
@@ -18,6 +18,5 @@
 3.  **Visuals:** No walls of text. Use `<Diagram>`, `<ConceptCard>`, or Emoji.
 
 ## ⏭️ Next Steps (Backlog)
-- **Lesson 4 (Prompting):** Needs "Reboot" to match Lesson 3 quality.
-- **Lesson 5 (Hallucinations):** Needs "Reboot".
-- **Phase 2 (Coding):** Setup Python sandbox environment (future).
+- **Lesson 6:** Course Summary & Final Exam (The Grand Trial).
+- **Phase 2 (Coding):** Setup Python sandbox environment.

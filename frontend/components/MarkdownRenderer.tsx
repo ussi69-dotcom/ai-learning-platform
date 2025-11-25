@@ -9,6 +9,7 @@ import LabSection from './mdx/LabSection';
 import CodeBlock from './CodeBlock';
 import Diagram from './mdx/Diagram';
 import KeyTakeaway from './mdx/KeyTakeaway';
+import { YouTube } from './mdx/YouTube';
 
 interface MarkdownRendererProps {
   content: string;
@@ -53,6 +54,24 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
 
     while (i < lines.length) {
       const line = lines[i];
+
+      // 0. Handle <YouTube> component
+      if (line.trim().startsWith('<YouTube')) {
+        const { endIndex: openEnd, tagContent } = readOpeningTag(i);
+        
+        const idMatch = tagContent.match(/id=['"]([^'"']+)['"]/);
+        const titleMatch = tagContent.match(/title=['"]([^'"']+)['"]/);
+        
+        const id = idMatch?.[1] || '';
+        const title = titleMatch?.[1] || 'YouTube Video';
+        
+        elements.push(
+          <YouTube key={`youtube-${i}`} id={id} title={title} />
+        );
+        
+        i = openEnd + 1;
+        continue;
+      }
 
       // 1. Handle <Callout> component
       if (line.trim().startsWith('<Callout')) {
