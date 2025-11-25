@@ -1,0 +1,32 @@
+[
+  {
+    "question": "What is the fundamental core function of a Large Language Model?",
+    "option_a": "To understand human emotions.",
+    "option_b": "To predict the next token in a sequence.",
+    "option_c": "To search the Google database.",
+    "option_d": "To store every book ever written.",
+    "correct_answer": "B",
+    "explanation": "At its heart, an LLM is a prediction engine. It calculates the probability of the next token based on the previous ones.",
+    "order": 1
+  },
+  {
+    "question": "Which of the following is TRUE about Tokens?",
+    "option_a": "One token is always exactly one word.",
+    "option_b": "Tokens are how AI processes images.",
+    "option_c": "A token can be a word, part of a word, or punctuation.",
+    "option_d": "Tokens are only used in the Sith language.",
+    "correct_answer": "C",
+    "explanation": "Tokens are the 'atoms' of language for AI. They break down text into efficient numerical chunks.",
+    "order": 2
+  },
+  {
+    "question": "If you want the AI to be factual, precise, and consistent (like for coding), what Temperature should you use?",
+    "option_a": "High Temperature (0.8 - 1.0)",
+    "option_b": "Low Temperature (0.0 - 0.2)",
+    "option_c": "Room Temperature (20°C)",
+    "option_d": "Negative Temperature",
+    "correct_answer": "B",
+    "explanation": "Low temperature forces the model to choose the most probable next token, making it deterministic and precise.",
+    "order": 3
+  }
+]

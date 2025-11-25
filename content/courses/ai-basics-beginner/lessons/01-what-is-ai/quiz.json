@@ -1,57 +1,52 @@
 [
   {
     "question": "What is the fundamental difference between traditional programming and Machine Learning?",
-    "options": [
-      "Programming uses Python, ML uses R",
-      "Programming defines explicit rules, ML learns patterns from data",
-      "Programming is faster, ML is slower",
-      "Programming uses less memory than ML"
-    ],
-    "correct_answer": 1,
-    "explanation": "The key shift is that traditional programming requires you to write explicit rules (if/else), while Machine Learning learns patterns from examples (data) without being explicitly programmed."
+    "option_a": "Programming uses Python, ML uses R",
+    "option_b": "Programming defines explicit rules, ML learns patterns from data",
+    "option_c": "Programming is faster, ML is slower",
+    "option_d": "Programming uses less memory than ML",
+    "correct_answer": "B",
+    "explanation": "The key shift is that traditional programming requires you to write explicit rules (if/else), while Machine Learning learns patterns from examples (data) without being explicitly programmed.",
+    "order": 1
   },
   {
     "question": "What are 'Parameters' in a neural network?",
-    "options": [
-      "The number of layers in the network",
-      "The training dataset size",
-      "The 'knobs' or weights that store learned knowledge",
-      "The programming language used"
-    ],
-    "correct_answer": 2,
-    "explanation": "Parameters are like 'knobs' in a switchboard - they are the weights that get tuned during training to store the model's knowledge. A model with '70 Billion Parameters' has 70 billion of these tuned knobs."
+    "option_a": "The number of layers in the network",
+    "option_b": "The training dataset size",
+    "option_c": "The 'knobs' or weights that store learned knowledge",
+    "option_d": "The programming language used",
+    "correct_answer": "C",
+    "explanation": "Parameters are like 'knobs' in a switchboard - they are the weights that get tuned during training to store the model's knowledge. A model with '70 Billion Parameters' has 70 billion of these tuned knobs.",
+    "order": 2
   },
   {
     "question": "What is the difference between Training and Inference?",
-    "options": [
-      "Training is fast, Inference is slow",
-      "Training is the learning phase (months), Inference is the using phase (seconds)",
-      "Training uses CPU, Inference uses GPU",
-      "There is no difference"
-    ],
-    "correct_answer": 1,
-    "explanation": "Training is the intensive learning phase that takes months and thousands of GPUs. Inference is when you use the frozen model to get answers - it's fast (seconds) because the model is already trained."
+    "option_a": "Training is fast, Inference is slow",
+    "option_b": "Training is the learning phase (months), Inference is the using phase (seconds)",
+    "option_c": "Training uses CPU, Inference uses GPU",
+    "option_d": "There is no difference",
+    "correct_answer": "B",
+    "explanation": "Training is the intensive learning phase that takes months and thousands of GPUs. Inference is when you use the frozen model to get answers - it's fast (seconds) because the model is already trained.",
+    "order": 3
   },
   {
     "question": "Why is AI called a 'Black Box'?",
-    "options": [
-      "Because it runs in dark data centers",
-      "Because we don't know HOW it arrives at specific decisions, even though we know the math",
-      "Because it's encrypted",
-      "Because it's proprietary software"
-    ],
-    "correct_answer": 1,
-    "explanation": "We know the mathematics and code behind neural networks, but we don't understand WHY specific neurons fire for specific inputs. The decision-making process is opaque - hence 'black box'."
+    "option_a": "Because it runs in dark data centers",
+    "option_b": "Because we don't know HOW it arrives at specific decisions, even though we know the math",
+    "option_c": "Because it's encrypted",
+    "option_d": "Because it's proprietary software",
+    "correct_answer": "B",
+    "explanation": "We know the mathematics and code behind neural networks, but we don't understand WHY specific neurons fire for specific inputs. The decision-making process is opaque - hence 'black box'.",
+    "order": 4
   },
   {
     "question": "What is an AI 'Hallucination'?",
-    "options": [
-      "When AI generates images",
-      "When AI makes up plausible-sounding but false information",
-      "When AI crashes",
-      "When AI runs slowly"
-    ],
-    "correct_answer": 1,
-    "explanation": "Hallucination occurs when AI confidently generates false information because it's predicting the most statistically likely words, not checking facts. Example: inventing a biography for 'Reginald P. Crustworth' who doesn't exist."
+    "option_a": "When AI generates images",
+    "option_b": "When AI makes up plausible-sounding but false information",
+    "option_c": "When AI crashes",
+    "option_d": "When AI runs slowly",
+    "correct_answer": "B",
+    "explanation": "Hallucination occurs when AI confidently generates false information because it's predicting the most statistically likely words, not checking facts. Example: inventing a biography for 'Reginald P. Crustworth' who doesn't exist.",
+    "order": 5
   }
 ]

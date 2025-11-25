@@ -1,57 +1,52 @@
 [
   {
     "question": "What is the defining characteristic of Supervised Learning?",
-    "options": [
-      "The AI discovers patterns on its own without labels",
-      "The AI is trained on labeled data with correct answers provided",
-      "The AI learns by trial and error with rewards",
-      "The AI needs no training data"
-    ],
-    "correct_answer": 1,
-    "explanation": "Supervised learning requires labeled data—each input (email, image) has a corresponding correct answer (spam/not spam, cat/dog). The AI learns to predict labels for new data by studying these examples."
+    "option_a": "The AI discovers patterns on its own without labels",
+    "option_b": "The AI is trained on labeled data with correct answers provided",
+    "option_c": "The AI learns by trial and error with rewards",
+    "option_d": "The AI needs no training data",
+    "correct_answer": "B",
+    "explanation": "Supervised learning requires labeled data—each input (email, image) has a corresponding correct answer (spam/not spam, cat/dog). The AI learns to predict labels for new data by studying these examples.",
+    "order": 1
   },
   {
     "question": "Which learning type would you use to group customers by behavior when you DON'T know the categories in advance?",
-    "options": [
-      "Supervised Learning",
-      "Unsupervised Learning",
-      "Reinforcement Learning",
-      "Transfer Learning"
-    ],
-    "correct_answer": 1,
-    "explanation": "Unsupervised learning is perfect for discovering hidden patterns when you don't have predefined categories. The AI clusters similar data points together (e.g., customer segmentation)."
+    "option_a": "Supervised Learning",
+    "option_b": "Unsupervised Learning",
+    "option_c": "Reinforcement Learning",
+    "option_d": "Transfer Learning",
+    "correct_answer": "B",
+    "explanation": "Unsupervised learning is perfect for discovering hidden patterns when you don't have predefined categories. The AI clusters similar data points together (e.g., customer segmentation).",
+    "order": 2
   },
   {
     "question": "What is the 'reward' in Reinforcement Learning?",
-    "options": [
-      "The labeled dataset",
-      "Feedback signal that tells the AI if an action was good or bad",
-      "The number of parameters in the model",
-      "The training time"
-    ],
-    "correct_answer": 1,
-    "explanation": "In reinforcement learning, the reward (or penalty) is feedback from the environment. If the AI wins a game, it gets +10 points. If it loses, it gets -5 points. It adjusts its strategy to maximize future rewards."
+    "option_a": "The labeled dataset",
+    "option_b": "Feedback signal that tells the AI if an action was good or bad",
+    "option_c": "The number of parameters in the model",
+    "option_d": "The training time",
+    "correct_answer": "B",
+    "explanation": "In reinforcement learning, the reward (or penalty) is feedback from the environment. If the AI wins a game, it gets +10 points. If it loses, it gets -5 points. It adjusts its strategy to maximize future rewards.",
+    "order": 3
   },
   {
     "question": "Which type of learning does a spam filter primarily use?",
-    "options": [
-      "Unsupervised Learning",
-      "Reinforcement Learning",
-      "Supervised Learning",
-      "Self-Supervised Learning"
-    ],
-    "correct_answer": 2,
-    "explanation": "Spam filters use supervised learning. They are trained on thousands of emails labeled as 'spam' or 'not spam' and learn to predict the label for new emails based on patterns in the text."
+    "option_a": "Unsupervised Learning",
+    "option_b": "Reinforcement Learning",
+    "option_c": "Supervised Learning",
+    "option_d": "Self-Supervised Learning",
+    "correct_answer": "C",
+    "explanation": "Spam filters use supervised learning. They are trained on thousands of emails labeled as 'spam' or 'not spam' and learn to predict the label for new emails based on patterns in the text.",
+    "order": 4
   },
   {
     "question": "What is the main limitation of Unsupervised Learning?",
-    "options": [
-      "It's too slow",
-      "It can find patterns but can't explain what they mean",
-      "It requires labeled data",
-      "It can't handle large datasets"
-    ],
-    "correct_answer": 1,
-    "explanation": "Unsupervised learning can discover clusters and patterns in data, but it doesn't know what those patterns represent. A human still needs to interpret the results (e.g., 'Group A are budget shoppers')."
+    "option_a": "It's too slow",
+    "option_b": "It can find patterns but can't explain what they mean",
+    "option_c": "It requires labeled data",
+    "option_d": "It can't handle large datasets",
+    "correct_answer": "B",
+    "explanation": "Unsupervised learning can discover clusters and patterns in data, but it doesn't know what those patterns represent. A human still needs to interpret the results (e.g., 'Group A are budget shoppers').",
+    "order": 5
   }
 ]

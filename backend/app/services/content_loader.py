@@ -111,19 +111,19 @@ class ContentLoader:
         with open(quiz_path, "r", encoding="utf-8") as f:
             quizzes_data = json.load(f)
 
-        # Clear existing quizzes for this lesson to avoid duplicates/ordering issues
+        # Clear existing quizzes for this lesson
         db.query(Quiz).filter(Quiz.lesson_id == lesson_id).delete()
         
-        for i, q_data in enumerate(quizzes_data):
+        for q_data in quizzes_data:
             quiz = Quiz(
                 question=q_data["question"],
-                option_a=q_data["options"][0],
-                option_b=q_data["options"][1],
-                option_c=q_data["options"][2],
-                option_d=q_data["options"][3],
-                correct_answer=["A", "B", "C", "D"][q_data["correct_answer"]],
+                option_a=q_data["option_a"],
+                option_b=q_data["option_b"],
+                option_c=q_data["option_c"],
+                option_d=q_data["option_d"],
+                correct_answer=q_data["correct_answer"],
                 explanation=q_data["explanation"],
-                order=i + 1,
+                order=q_data["order"],
                 lesson_id=lesson_id
             )
             db.add(quiz)

@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What is the MOST important thing you learned from this course?",
+    "option_a": "AI is scary and complicated",
+    "option_b": "AI is a tool that anyone can learn to use effectively",
+    "option_c": "Only programmers can use AI",
+    "option_d": "AI will replace all jobs",
+    "correct_answer": "B",
+    "explanation": "The key takeaway: AI is a powerful tool that ANYONE can learn to use! You don't need to be a programmer - you just need to understand the basics and practice.",
+    "order": 1
+  },
+  {
+    "question": "What skill is most important for using AI effectively?",
+    "option_a": "Programming ability",
+    "option_b": "Mathematics knowledge",
+    "option_c": "Writing good prompts (prompt engineering)",
+    "option_d": "Expensive equipment",
+    "correct_answer": "C",
+    "explanation": "Prompt engineering - knowing how to ask AI for what you want - is the #1 skill. Anyone can learn it, and it doesn't require technical knowledge!",
+    "order": 2
+  },
+  {
+    "question": "After this course, what should be your next step?",
+    "option_a": "Stop learning about AI",
+    "option_b": "Practice using AI tools daily for 30 days",
+    "option_c": "Wait until you forget everything",
+    "option_d": "Only read more theory",
+    "correct_answer": "B",
+    "explanation": "Practice makes perfect! The lesson recommends using AI daily for 30 days - try different prompts, explore tools, and build your skills through hands-on experience.",
+    "order": 3
+  },
+  {
+    "question": "Which statement about AI is TRUE?",
+    "option_a": "AI is perfect and never makes mistakes",
+    "option_b": "AI will replace human creativity",
+    "option_c": "AI is a tool to amplify human abilities, not replace them",
+    "option_d": "AI works without any human input",
+    "correct_answer": "C",
+    "explanation": "AI is best used to AMPLIFY human abilities - to make you more productive, creative, and effective. It's a tool to help you, not replace you!",
+    "order": 4
+  },
+  {
+    "question": "What makes someone 'AI-literate' after this course?",
+    "option_a": "Knowing how to program AI",
+    "option_b": "Understanding what AI is, how it learns, and how to use it ethically",
+    "option_c": "Having expensive AI tools",
+    "option_d": "Working in tech",
+    "correct_answer": "B",
+    "explanation": "AI literacy means understanding the basics (what it is, how it works), being able to use AI tools effectively, and using them responsibly and ethically.",
+    "order": 5
+  }
+]

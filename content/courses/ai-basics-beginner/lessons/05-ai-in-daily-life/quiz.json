@@ -1,0 +1,52 @@
+[
+  {
+    "question": "How does Google Maps predict traffic?",
+    "option_a": "Random guessing",
+    "option_b": "AI analyzes patterns from millions of users' location data",
+    "option_c": "Traffic cameras only",
+    "option_d": "Government reports",
+    "correct_answer": "B",
+    "explanation": "Google Maps uses AI to analyze location data from millions of users in real-time, learning traffic patterns to predict delays and suggest faster routes.",
+    "order": 1
+  },
+  {
+    "question": "What AI technology powers email spam filters?",
+    "option_a": "Random selection",
+    "option_b": "Simple keyword matching",
+    "option_c": "Machine Learning that learns from examples of spam vs real emails",
+    "option_d": "Human reviewers checking every email",
+    "correct_answer": "C",
+    "explanation": "Spam filters use Machine Learning, trained on millions of examples of spam and legitimate emails, to recognize patterns and filter out junk automatically.",
+    "order": 2
+  },
+  {
+    "question": "According to the lesson, approximately how many times a day do you use AI?",
+    "option_a": "Once or twice",
+    "option_b": "5-10 times",
+    "option_c": "Dozens of times",
+    "option_d": "You don't use AI daily",
+    "correct_answer": "C",
+    "explanation": "From your morning alarm to bedtime apps, you use AI dozens of times daily - it's in your email, social media, navigation, music, shopping, banking, and more!",
+    "order": 3
+  },
+  {
+    "question": "Which industry does NOT currently use AI significantly?",
+    "option_a": "Healthcare (disease diagnosis)",
+    "option_b": "Banking (fraud detection)",
+    "option_c": "Agriculture (crop monitoring)",
+    "option_d": "None - all these industries use AI extensively",
+    "correct_answer": "D",
+    "explanation": "AI is everywhere! Healthcare uses it for diagnosis, banking for fraud detection, agriculture for crop monitoring, and virtually every industry has AI applications.",
+    "order": 4
+  },
+  {
+    "question": "What determines which videos YouTube recommends to you?",
+    "option_a": "Random selection",
+    "option_b": "AI analyzing your watch history and behavior patterns",
+    "option_c": "Only what's popular globally",
+    "option_d": "The upload date of videos",
+    "correct_answer": "B",
+    "explanation": "YouTube uses AI to analyze what you watch, how long you watch, what you search for, and patterns of similar users to personalize recommendations just for you.",
+    "order": 5
+  }
+]

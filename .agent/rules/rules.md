@@ -151,6 +151,36 @@ git push origin main
 
 ---
 
+# 📚 Lesson Generation Protocol
+
+When creating new content, follow this strict protocol:
+
+1.  **Structure**:
+    - **Hook**: Video (< 20 min) + Intro.
+    - **Concepts**: Split by `## Heading` (short slides).
+    - **Lab**: `<LabSection>` with unique title.
+    - **Mission Report**: Mandatory summary before quiz.
+    - **Quiz**: DO NOT put `<Quiz>` tag in MDX. Quiz data goes into `quiz.json` and is rendered automatically.
+
+2.  **Visual Richness**:
+    - Every slide MUST have a visual element (Diagram, Icon, CodeBlock).
+    - Use new diagram types: `llm-next-token`, `tokenization-viz`, `training-pipeline`.
+
+3.  **Technical**:
+    - Use `docker-compose restart backend` to apply content changes (seed runs on startup).
+
+# 🗄️ Database Management Protocol
+
+1.  **Schema Changes**:
+    - If you modify `models.py`, you MUST reset the DB volume: `docker-compose down -v && docker-compose up -d --build`.
+2.  **Seeding**:
+    - Seeding is AUTOMATED via `entrypoint.sh`.
+    - **NEVER** run `python seed.py` manually inside a running container (race conditions).
+3.  **Login**:
+    - Default admin: `admin@ai-platform.com` / `admin123`.
+
+---
+
 # 🎨 Design System Compliance
 
 When working on frontend:

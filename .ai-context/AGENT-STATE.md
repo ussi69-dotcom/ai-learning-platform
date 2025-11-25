@@ -1,30 +1,23 @@
 # 🧠 Agent State & Memory
 
 ## 📍 Current Status
-**Cycle:** 23 Completed (Gamification & Progress)
-**Focus:** Stable, Gamified Learning Platform with "Holographic Datapad" UI.
+**Cycle:** 25 Completed (Lesson 3 Reboot)
+**Focus:** High-Quality Content Production & Workflow Standardization.
 
 ## 🛠️ System Snapshot
-- **Frontend:** Next.js 16 (App Router), Tailwind v4, Lucide Icons.
-- **Backend:** FastAPI, SQLAlchemy (Async-ish logic but Sync DB driver `psycopg2`).
-- **DB:** PostgreSQL 15. **Managed via `entrypoint.sh`**.
-- **Theme:** Jedi (Light) / Sith (Dark). Semantic colors `oklch`.
+- **Frontend:** Next.js 16, Tailwind v4, "Holographic Datapad".
+- **Backend:** FastAPI, PostgreSQL (Auto-seed via `entrypoint.sh`).
+- **Content:** 
+    - Lesson 1-2: Legacy (Good enough).
+    - Lesson 3: **Gold Standard** (Diagrams, Video, Deep Dive).
+    - Lesson 4-6: Placeholders/Legacy (Need update).
 
-## 📜 History Log (Condensed)
-*   **Cycles 1-10:** Initial Setup, Docker infrastructure, Basic Frontend/Backend connection.
-*   **Cycle 13:** Navigation Mockups.
-*   **Cycle 16-18:** Content injection, MDX parsing logic.
-*   **Cycle 19 (Clippy Learns AI):** First gamification attempts, basic Dark Mode.
-*   **Cycle 20:** "Holographic Datapad" UI Overhaul (Glassmorphism).
-*   **Cycle 21-22:** Smart Progress (Resume Learning, Pagination), DB Pool fix.
-*   **Cycle 23:** Final Gamification Polish (Lab/Quiz persistence, Badges).
-
-## 🔑 Critical Knowledge (SOP)
-1.  **DB Changes:** ALWAYS `docker-compose down -v && docker-compose up --build`. Never seed manually.
-2.  **Progress:** Logic is in `UserProgress` (JSON `completed_labs`, `quiz_score`, `current_page`).
-3.  **Content:** `content/` folder is mounted. Edits require backend restart.
+## 🔑 Critical Protocols (SOP)
+1.  **Content Generation:** Follow `CONTENT_GUIDELINES.md`. **Quiz in JSON, not MDX.**
+2.  **DB Changes:** Nuclear reset only. `docker-compose down -v`.
+3.  **Visuals:** No walls of text. Use `<Diagram>`, `<ConceptCard>`, or Emoji.
 
 ## ⏭️ Next Steps (Backlog)
-- **Content Creation:** Create more lessons using `CONTENT_GUIDELINES.md` template.
-- **Mobile App:** Consider wrapping via Capacitor.
-- **AI Integration:** Connect real LLM for open-ended lab feedback (currently mocked).
+- **Lesson 4 (Prompting):** Needs "Reboot" to match Lesson 3 quality.
+- **Lesson 5 (Hallucinations):** Needs "Reboot".
+- **Phase 2 (Coding):** Setup Python sandbox environment (future).
