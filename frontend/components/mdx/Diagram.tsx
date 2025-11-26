@@ -3,7 +3,7 @@
 import React from 'react';
 
 interface DiagramProps {
-  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop';
+  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop' | 'prompt-cheat-sheet';
 }
 
 export default function Diagram({ type }: DiagramProps) {
@@ -421,13 +421,13 @@ export default function Diagram({ type }: DiagramProps) {
 
             {/* --- WAVE 1: DISCRIMINATIVE --- */}
             <g transform="translate(50, 40)">
-              <text x="0" y="0" className="text-sm font-bold fill-slate-400 uppercase tracking-widest">Wave 1: Discriminative AI</text>
+              <text x="0" y="0" className="text-sm font-bold fill-slate-600 dark:fill-slate-400 uppercase tracking-widest">Wave 1: Discriminative AI</text>
               
               {/* Input: Cat Photo */}
               <g transform="translate(0, 30)">
                 <rect x="0" y="0" width="60" height="60" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
                 <text x="30" y="35" textAnchor="middle" className="text-2xl">🐱</text>
-                <text x="30" y="75" textAnchor="middle" className="text-xs fill-slate-400">Data</text>
+                <text x="30" y="75" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">Data</text>
               </g>
 
               {/* Arrow */}
@@ -437,7 +437,7 @@ export default function Diagram({ type }: DiagramProps) {
               <g transform="translate(140, 30)">
                 <polygon points="30,0 60,30 30,60 0,30" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" />
                 <text x="30" y="35" textAnchor="middle" className="text-xl">⚖️</text>
-                <text x="30" y="75" textAnchor="middle" className="text-xs fill-purple-300">The Judge</text>
+                <text x="30" y="75" textAnchor="middle" className="text-xs fill-purple-700 dark:fill-purple-300">The Judge</text>
               </g>
 
               {/* Arrow */}
@@ -446,7 +446,7 @@ export default function Diagram({ type }: DiagramProps) {
               {/* Output: Label */}
               <g transform="translate(270, 40)">
                 <rect x="0" y="0" width="80" height="40" rx="20" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
-                <text x="40" y="25" textAnchor="middle" className="text-sm font-bold fill-green-300">"Cat"</text>
+                <text x="40" y="25" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">"Cat"</text>
               </g>
             </g>
 
@@ -455,13 +455,13 @@ export default function Diagram({ type }: DiagramProps) {
 
             {/* --- WAVE 2: GENERATIVE --- */}
             <g transform="translate(50, 180)">
-              <text x="0" y="0" className="text-sm font-bold fill-slate-400 uppercase tracking-widest">Wave 2: Generative AI</text>
+              <text x="0" y="0" className="text-sm font-bold fill-slate-600 dark:fill-slate-400 uppercase tracking-widest">Wave 2: Generative AI</text>
               
               {/* Input: Prompt */}
               <g transform="translate(0, 30)">
                 <rect x="0" y="0" width="100" height="60" rx="4" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" />
-                <text x="50" y="25" textAnchor="middle" className="text-[10px] fill-amber-200">"Paint a cyberpunk cat"</text>
-                <text x="50" y="75" textAnchor="middle" className="text-xs fill-slate-400">Prompt</text>
+                <text x="50" y="25" textAnchor="middle" className="text-xs font-bold fill-amber-700 dark:fill-amber-200">"Paint a cyberpunk cat"</text>
+                <text x="50" y="75" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">Prompt</text>
               </g>
 
               {/* Arrow */}
@@ -471,7 +471,7 @@ export default function Diagram({ type }: DiagramProps) {
               <g transform="translate(170, 30)">
                 <circle cx="30" cy="30" r="30" fill="#ec4899" fillOpacity="0.1" stroke="#ec4899" className="animate-pulse" />
                 <text x="30" y="35" textAnchor="middle" className="text-xl">🎨</text>
-                <text x="30" y="75" textAnchor="middle" className="text-xs fill-pink-300">The Creator</text>
+                <text x="30" y="75" textAnchor="middle" className="text-xs fill-pink-700 dark:fill-pink-300">The Creator</text>
               </g>
 
               {/* Arrow */}
@@ -794,12 +794,12 @@ export default function Diagram({ type }: DiagramProps) {
             <g transform="translate(200, 40)">
               <rect x="0" y="0" width="200" height="120" rx="8" fill="url(#box-grad)" stroke="#475569" strokeWidth="2" />
               <text x="100" y="60" textAnchor="middle" className="text-4xl font-bold fill-white opacity-50">???</text>
-              <text x="100" y="90" textAnchor="middle" className="text-xs fill-slate-400">Hidden Layers</text>
+              <text x="100" y="90" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">Hidden Layers</text>
               
               {/* Math symbols floating */}
-              <text x="30" y="30" className="text-[10px] fill-slate-600">∑</text>
-              <text x="170" y="100" className="text-[10px] fill-slate-600">∫</text>
-              <text x="160" y="30" className="text-[10px] fill-slate-600">w</text>
+              <text x="30" y="30" className="text-[10px] fill-slate-600 dark:fill-slate-400">∑</text>
+              <text x="170" y="100" className="text-[10px] fill-slate-600 dark:fill-slate-400">∫</text>
+              <text x="160" y="30" className="text-[10px] fill-slate-600 dark:fill-slate-400">w</text>
             </g>
 
             {/* Arrow */}
@@ -832,7 +832,7 @@ export default function Diagram({ type }: DiagramProps) {
             <g transform="translate(50, 120)">
               <rect x="0" y="0" width="80" height="60" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
               <text x="40" y="35" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">Input</text>
-              <text x="40" y="55" textAnchor="middle" className="text-[10px] fill-slate-500">"The cat"</text>
+              <text x="40" y="55" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"The cat"</text>
             </g>
 
             {/* Arrow */}
@@ -846,7 +846,7 @@ export default function Diagram({ type }: DiagramProps) {
               {/* Self Attention */}
               <rect x="40" y="50" width="160" height="50" rx="4" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" />
               <text x="120" y="80" textAnchor="middle" className="text-xs font-bold fill-amber-700 dark:fill-amber-300">Self-Attention</text>
-              <text x="120" y="95" textAnchor="middle" className="text-[8px] fill-slate-500">"Cat looks at The"</text>
+              <text x="120" y="95" textAnchor="middle" className="text-[8px] fill-slate-600 dark:fill-slate-400">"Cat looks at The"</text>
 
               {/* Arrow Down */}
               <path d="M 120 100 L 120 120" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-transformer)" />
@@ -854,7 +854,7 @@ export default function Diagram({ type }: DiagramProps) {
               {/* Feed Forward */}
               <rect x="40" y="130" width="160" height="50" rx="4" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
               <text x="120" y="160" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">Feed Forward</text>
-              <text x="120" y="175" textAnchor="middle" className="text-[8px] fill-slate-500">"Process Meaning"</text>
+              <text x="120" y="175" textAnchor="middle" className="text-[8px] fill-slate-600 dark:fill-slate-400">"Process Meaning"</text>
             </g>
 
             {/* Arrow */}
@@ -864,7 +864,7 @@ export default function Diagram({ type }: DiagramProps) {
             <g transform="translate(470, 120)">
               <rect x="0" y="0" width="80" height="60" rx="4" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" />
               <text x="40" y="35" textAnchor="middle" className="text-xs font-bold fill-red-700 dark:fill-red-300">Output</text>
-              <text x="40" y="55" textAnchor="middle" className="text-[10px] fill-slate-500">"sat"</text>
+              <text x="40" y="55" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"sat"</text>
             </g>
 
           </svg>
@@ -882,28 +882,28 @@ export default function Diagram({ type }: DiagramProps) {
             <g transform="translate(100, 220)">
               <path d="M 0 60 L 400 60 L 350 0 L 50 0 Z" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" />
               <text x="200" y="40" textAnchor="middle" className="text-sm font-bold fill-blue-700 dark:fill-blue-300">1. Context (The Foundation)</text>
-              <text x="200" y="55" textAnchor="middle" className="text-[10px] fill-slate-500">"Act as a Teacher..."</text>
+              <text x="200" y="55" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Act as a Teacher..."</text>
             </g>
 
             {/* Layer 2: Instruction */}
             <g transform="translate(150, 160)">
               <path d="M 0 60 L 300 60 L 250 0 L 50 0 Z" fill="#a855f7" fillOpacity="0.2" stroke="#a855f7" />
               <text x="150" y="40" textAnchor="middle" className="text-sm font-bold fill-purple-700 dark:fill-purple-300">2. Instruction (The Verb)</text>
-              <text x="150" y="55" textAnchor="middle" className="text-[10px] fill-slate-500">"Explain Quantum Physics..."</text>
+              <text x="150" y="55" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Explain Quantum Physics..."</text>
             </g>
 
             {/* Layer 3: Data */}
             <g transform="translate(200, 100)">
               <path d="M 0 60 L 200 60 L 150 0 L 50 0 Z" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
               <text x="100" y="40" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">3. Data (The Input)</text>
-              <text x="100" y="55" textAnchor="middle" className="text-[10px] fill-slate-500">"Using this text..."</text>
+              <text x="100" y="55" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Using this text..."</text>
             </g>
 
             {/* Top: Format */}
             <g transform="translate(250, 40)">
               <path d="M 0 60 L 100 60 L 50 0 Z" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" />
               <text x="50" y="40" textAnchor="middle" className="text-xs font-bold fill-amber-700 dark:fill-amber-300">4. Format</text>
-              <text x="50" y="55" textAnchor="middle" className="text-[8px] fill-slate-500">"As JSON"</text>
+              <text x="50" y="55" textAnchor="middle" className="text-[8px] fill-slate-600 dark:fill-slate-400">"As JSON"</text>
             </g>
           </svg>
         </div>
@@ -924,7 +924,7 @@ export default function Diagram({ type }: DiagramProps) {
 
             {/* Start Point */}
             <circle cx="50" cy="125" r="10" fill="#3b82f6" />
-            <text x="50" y="155" textAnchor="middle" className="text-xs font-bold fill-slate-500">Start</text>
+            <text x="50" y="155" textAnchor="middle" className="text-xs font-bold fill-slate-600 dark:fill-slate-500">Start</text>
 
             {/* Human Goal (Green Path) */}
             <path d="M 60 125 Q 200 125 500 50" fill="none" stroke="#22c55e" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrowhead-align)" />
@@ -939,7 +939,7 @@ export default function Diagram({ type }: DiagramProps) {
             <text x="520" y="205" textAnchor="middle" className="text-xl">💀</text>
 
             {/* Divergence Label */}
-            <text x="150" y="125" textAnchor="middle" className="text-xs fill-slate-400 italic">"Misalignment"</text>
+            <text x="150" y="125" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400 italic">"Misalignment"</text>
           </svg>
         </div>
       </div>
@@ -962,7 +962,7 @@ export default function Diagram({ type }: DiagramProps) {
               <rect x="0" y="0" width="120" height="80" rx="8" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" />
               <text x="60" y="30" textAnchor="middle" className="text-2xl">🤖</text>
               <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-purple-700 dark:fill-purple-300">1. AI Draft</text>
-              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-500">"80% Done"</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"80% Done"</text>
             </g>
 
             {/* Arrow */}
@@ -973,7 +973,7 @@ export default function Diagram({ type }: DiagramProps) {
               <rect x="0" y="0" width="120" height="80" rx="8" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
               <text x="60" y="30" textAnchor="middle" className="text-2xl">👩‍💻</text>
               <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">2. Review</text>
-              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-500">"Fact Check & Tone"</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Fact Check & Tone"</text>
             </g>
 
             {/* Arrow */}
@@ -984,12 +984,113 @@ export default function Diagram({ type }: DiagramProps) {
               <rect x="0" y="0" width="120" height="80" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" />
               <text x="60" y="30" textAnchor="middle" className="text-2xl">✨</text>
               <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">3. Final</text>
-              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-500">"Ready to Send"</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Ready to Send"</text>
             </g>
 
             {/* Loop Back (Iterate) */}
             <path d="M 350 140 Q 350 170 290 170 Q 230 170 230 140" fill="none" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#arrowhead-hitl)" />
             <text x="290" y="185" textAnchor="middle" className="text-[10px] fill-amber-600 dark:fill-amber-400 font-bold">Iterate if needed</text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'prompt-cheat-sheet') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-0 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-2xl w-full max-w-4xl overflow-hidden">
+          <svg viewBox="0 0 800 450" className="w-full h-auto" role="img" aria-label="Prompt Engineering Cheat Sheet">
+            
+            {/* Background Header */}
+            <rect x="0" y="0" width="800" height="60" fill="#3b82f6" fillOpacity="0.1" />
+            <text x="400" y="40" textAnchor="middle" className="text-2xl font-bold fill-blue-700 dark:fill-blue-300 uppercase tracking-widest">Prompt Engineering Master Key</text>
+
+            {/* --- LEFT COLUMN: THE 6 PILLARS --- */}
+            <g transform="translate(40, 90)">
+              <text x="0" y="0" className="text-lg font-bold fill-slate-700 dark:fill-slate-200">The 6 Pillars</text>
+              
+              {/* Pillar 1: Persona */}
+              <g transform="translate(0, 30)">
+                <circle cx="15" cy="15" r="15" fill="#a855f7" fillOpacity="0.2" />
+                <text x="15" y="20" textAnchor="middle" className="text-lg">🎭</text>
+                <text x="40" y="12" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Persona</text>
+                <text x="40" y="28" className="text-xs fill-slate-500">"Act as a..."</text>
+              </g>
+
+              {/* Pillar 2: Task */}
+              <g transform="translate(0, 80)">
+                <circle cx="15" cy="15" r="15" fill="#ef4444" fillOpacity="0.2" />
+                <text x="15" y="20" textAnchor="middle" className="text-lg">⚔️</text>
+                <text x="40" y="12" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Task</text>
+                <text x="40" y="28" className="text-xs fill-slate-500">"Write/Create..."</text>
+              </g>
+
+              {/* Pillar 3: Context */}
+              <g transform="translate(0, 130)">
+                <circle cx="15" cy="15" r="15" fill="#3b82f6" fillOpacity="0.2" />
+                <text x="15" y="20" textAnchor="middle" className="text-lg">🌍</text>
+                <text x="40" y="12" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Context</text>
+                <text x="40" y="28" className="text-xs fill-slate-500">"For who? Why?"</text>
+              </g>
+
+              {/* Pillar 4: Exemplars */}
+              <g transform="translate(180, 30)">
+                <circle cx="15" cy="15" r="15" fill="#f59e0b" fillOpacity="0.2" />
+                <text x="15" y="20" textAnchor="middle" className="text-lg">👯</text>
+                <text x="40" y="12" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Exemplars</text>
+                <text x="40" y="28" className="text-xs fill-slate-500">"Like this..."</text>
+              </g>
+
+              {/* Pillar 5: Format */}
+              <g transform="translate(180, 80)">
+                <circle cx="15" cy="15" r="15" fill="#22c55e" fillOpacity="0.2" />
+                <text x="15" y="20" textAnchor="middle" className="text-lg">📐</text>
+                <text x="40" y="12" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Format</text>
+                <text x="40" y="28" className="text-xs fill-slate-500">"Table/JSON"</text>
+              </g>
+
+              {/* Pillar 6: Tone */}
+              <g transform="translate(180, 130)">
+                <circle cx="15" cy="15" r="15" fill="#ec4899" fillOpacity="0.2" />
+                <text x="15" y="20" textAnchor="middle" className="text-lg">🎨</text>
+                <text x="40" y="12" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Tone</text>
+                <text x="40" y="28" className="text-xs fill-slate-500">"Professional"</text>
+              </g>
+            </g>
+
+            {/* Divider Line */}
+            <line x1="380" y1="80" x2="380" y2="420" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
+
+            {/* --- RIGHT COLUMN: THE TEMPLATE --- */}
+            <g transform="translate(420, 90)">
+              <text x="0" y="0" className="text-lg font-bold fill-slate-700 dark:fill-slate-200">The Master Template</text>
+              
+              {/* Terminal Window */}
+              <g transform="translate(0, 20)">
+                <rect x="0" y="0" width="340" height="300" rx="8" fill="#1e293b" stroke="#334155" />
+                
+                {/* Window Controls */}
+                <circle cx="20" cy="20" r="4" fill="#ef4444" />
+                <circle cx="35" cy="20" r="4" fill="#f59e0b" />
+                <circle cx="50" cy="20" r="4" fill="#22c55e" />
+                
+                {/* Code Text */}
+                <text x="20" y="60" className="text-xs font-mono fill-purple-400">Act as a [PERSONA]</text>
+                <text x="20" y="90" className="text-xs font-mono fill-blue-400">Your task is to [TASK]</text>
+                <text x="20" y="120" className="text-xs font-mono fill-green-400">This is for [CONTEXT]</text>
+                
+                <text x="20" y="160" className="text-xs font-mono fill-slate-400"># Examples (Few-Shot)</text>
+                <text x="20" y="180" className="text-xs font-mono fill-amber-400">Here are examples: [EXEMPLARS]</text>
+                
+                <text x="20" y="220" className="text-xs font-mono fill-pink-400">Output format: [FORMAT]</text>
+                <text x="20" y="250" className="text-xs font-mono fill-cyan-400">Tone: [TONE]</text>
+                
+                {/* Cursor */}
+                <rect x="20" y="270" width="8" height="14" fill="#3b82f6" className="animate-pulse" />
+              </g>
+            </g>
+
           </svg>
         </div>
       </div>

@@ -366,7 +366,26 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
          }
       }
 
-      // 13. Paragraphs
+      // 13. Code Blocks
+      if (line.trim().startsWith('```')) {
+        const languageMatch = line.trim().match(/^```(\w+)?/);
+        const language = languageMatch?.[1] || 'text';
+        let j = i + 1;
+        const codeLines: string[] = [];
+        while (j < lines.length && !lines[j].trim().startsWith('```')) {
+          codeLines.push(lines[j]);
+          j++;
+        }
+        elements.push(
+          <CodeBlock key={`code-${i}`} language={language}>
+            {codeLines.join('\n')}
+          </CodeBlock>
+        );
+        i = j + 1; // Skip the closing ``` marker
+        continue;
+      }
+
+      // 14. Paragraphs
       if (line.trim() !== '') {
         elements.push(
           <p key={`p-${i}`} className="mb-4 text-slate-700 dark:text-slate-300 leading-relaxed">

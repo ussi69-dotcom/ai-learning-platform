@@ -65,3 +65,43 @@ Write a poem about a robot who loves gardening.
 *   **Empowering:** You are the Jedi Master guiding a Padawan.
 *   **Precise:** No fluff. Short paragraphs.
 *   **Formatted:** Use **Bold** for key terms. Use lists often.
+
+## 7. Technical Best Practices 🔧
+
+### Diagram Design
+*   **Light Mode Contrast:** ALWAYS use dark-mode-aware color classes for text:
+    ```tsx
+    // ✅ CORRECT
+    className="fill-slate-600 dark:fill-slate-400"
+    
+    // ❌ WRONG (unreadable in light mode)
+    className="fill-slate-400"
+    ```
+*   **Font Sizes:** Minimum `text-xs` for body text, `text-[10px]` for labels.
+*   **Test Both Modes:** Verify diagrams in both light and dark themes before committing.
+
+### Component Limitations
+*   **ConceptCard Restriction:** `<Diagram>` components DO NOT render inside `<ConceptCard>`.
+    *   **Solution:** Use icon-based lists or text formatting instead.
+    *   **Pattern:**
+      ```markdown
+      ### 🔑 Key Points
+      *   🎭 **Item 1:** Description
+      *   ⚔️ **Item 2:** Description
+      ```
+
+### Code Blocks
+*   **Language Identifier:** Always specify language for syntax highlighting:
+    ```markdown
+    ```python  ← Specify language
+    def example():
+        pass
+    ```  ← Close properly
+    ```
+*   **Where They Work:** Code blocks are supported everywhere (not just `<Steps>`).
+*   **Styling:** Code blocks automatically get Mac-style window dots (🔴🟡🟢) and a Copy button.
+
+### Summary Section Pattern
+*   **Inspiration:** Use Lesson 3's Holocron as the gold standard.
+*   **Icon Usage:** One icon per key concept improves scannability.
+*   **Avoid:** Long paragraphs, walls of text, ASCII art dividers.
