@@ -51,7 +51,7 @@ export default function Diagram({ type }: DiagramProps) {
   if (type === 'training-pipeline') {
     return (
       <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl overflow-x-auto">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl overflow-x-auto">
           <svg viewBox="0 0 700 200" className="w-full min-w-[600px] h-auto" role="img" aria-label="Training Pipeline: Internet Data -> Pre-training -> Base Model -> Fine-tuning -> Chat Model">
             <defs>
               <marker id="arrowhead-pipeline" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
@@ -64,7 +64,7 @@ export default function Diagram({ type }: DiagramProps) {
               <path d="M 10 10 L 70 10 L 70 70 L 10 70 Z" fill="#f1f5f9" fillOpacity="0.1" stroke="#94a3b8" />
               <path d="M 15 15 L 75 15 L 75 75 L 15 75 Z" fill="#f1f5f9" fillOpacity="0.1" stroke="#94a3b8" />
               <path d="M 20 20 L 80 20 L 80 80 L 20 80 Z" fill="#f1f5f9" fillOpacity="0.1" stroke="#94a3b8" />
-              <text x="50" y="110" textAnchor="middle" className="text-xs font-bold fill-slate-400 uppercase tracking-wider">The Internet</text>
+              <text x="50" y="110" textAnchor="middle" className="text-xs font-bold fill-slate-600 dark:fill-slate-400 uppercase tracking-wider">The Internet</text>
             </g>
 
             {/* Arrow */}
@@ -73,8 +73,8 @@ export default function Diagram({ type }: DiagramProps) {
             {/* Step 2: Pre-training */}
             <g transform="translate(160, 20)">
               <rect x="0" y="0" width="120" height="80" rx="8" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" strokeWidth="2" />
-              <text x="60" y="30" textAnchor="middle" className="text-sm font-bold fill-blue-400">Pre-training</text>
-              <text x="60" y="55" textAnchor="middle" className="text-[10px] fill-blue-300">Months of GPU</text>
+              <text x="60" y="30" textAnchor="middle" className="text-sm font-bold fill-blue-700 dark:fill-blue-400">Pre-training</text>
+              <text x="60" y="55" textAnchor="middle" className="text-[10px] fill-blue-600 dark:fill-blue-300">Months of GPU</text>
             </g>
 
             {/* Arrow */}
@@ -83,8 +83,8 @@ export default function Diagram({ type }: DiagramProps) {
             {/* Step 3: Base Model */}
             <g transform="translate(350, 20)">
               <circle cx="40" cy="40" r="35" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" strokeWidth="2" />
-              <text x="40" y="45" textAnchor="middle" className="text-sm font-bold fill-purple-400">Base Model</text>
-              <text x="40" y="95" textAnchor="middle" className="text-[10px] fill-slate-400">"GPT-4 Raw"</text>
+              <text x="40" y="45" textAnchor="middle" className="text-sm font-bold fill-purple-700 dark:fill-purple-400">Base Model</text>
+              <text x="40" y="95" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"GPT-4 Raw"</text>
             </g>
 
             {/* Arrow */}
@@ -93,12 +93,12 @@ export default function Diagram({ type }: DiagramProps) {
             {/* Step 4: Fine-tuning */}
             <g transform="translate(500, 20)">
               <rect x="0" y="0" width="140" height="80" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" strokeWidth="2" />
-              <text x="70" y="30" textAnchor="middle" className="text-sm font-bold fill-green-400">RLHF / Fine-tuning</text>
-              <text x="70" y="55" textAnchor="middle" className="text-[10px] fill-green-300">Teaching it to chat</text>
+              <text x="70" y="30" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-400">RLHF / Fine-tuning</text>
+              <text x="70" y="55" textAnchor="middle" className="text-[10px] fill-green-600 dark:fill-green-300">Teaching it to chat</text>
             </g>
 
             {/* Final Output Label */}
-            <text x="570" y="120" textAnchor="middle" className="text-lg font-bold fill-white">ChatGPT</text>
+            <text x="570" y="120" textAnchor="middle" className="text-lg font-bold fill-slate-800 dark:fill-white">ChatGPT</text>
 
           </svg>
         </div>
@@ -314,11 +314,11 @@ export default function Diagram({ type }: DiagramProps) {
   if (type === 'llm-next-token') {
     return (
       <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="LLM Prediction: Calculating probabilities for the next token">
             {/* Input Context */}
-            <text x="50" y="40" className="text-sm font-bold fill-slate-400">Context:</text>
-            <text x="50" y="70" className="text-2xl font-mono fill-white">"The sky is"</text>
+            <text x="50" y="40" className="text-sm font-bold fill-slate-600 dark:fill-slate-400">Context:</text>
+            <text x="50" y="70" className="text-2xl font-mono fill-slate-800 dark:fill-white">"The sky is"</text>
 
             {/* Arrows */}
             <path d="M 200 60 L 250 60" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
@@ -333,12 +333,12 @@ export default function Diagram({ type }: DiagramProps) {
               {/* Option 2: Gray */}
               <rect x="0" y="40" width="200" height="30" rx="4" fill="#94a3b8" fillOpacity="0.2" />
               <rect x="0" y="40" width="20" height="30" rx="4" fill="#94a3b8" />
-              <text x="10" y="60" className="text-sm font-bold fill-white">gray (5%)</text>
+              <text x="10" y="60" className="text-sm font-bold fill-slate-800 dark:fill-white">gray (5%)</text>
 
               {/* Option 3: Green */}
               <rect x="0" y="80" width="200" height="30" rx="4" fill="#22c55e" fillOpacity="0.2" />
               <rect x="0" y="80" width="10" height="30" rx="4" fill="#22c55e" />
-              <text x="10" y="100" className="text-sm font-bold fill-white">green (1%)</text>
+              <text x="10" y="100" className="text-sm font-bold fill-slate-800 dark:fill-white">green (1%)</text>
             </g>
           </svg>
         </div>
@@ -499,7 +499,7 @@ export default function Diagram({ type }: DiagramProps) {
   if (type === 'few-shot-learning') {
     return (
       <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Few-Shot Learning: Showing examples to guide the AI">
             <defs>
               <marker id="arrowhead-fewshot" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
@@ -509,30 +509,30 @@ export default function Diagram({ type }: DiagramProps) {
 
             {/* Zero-Shot (Left) */}
             <g transform="translate(50, 50)">
-              <text x="80" y="0" textAnchor="middle" className="text-sm font-bold fill-slate-400 uppercase">Zero-Shot</text>
+              <text x="80" y="0" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-400 uppercase">Zero-Shot</text>
               <rect x="0" y="20" width="160" height="120" rx="8" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" strokeDasharray="4 4" />
               
-              <text x="20" y="50" className="text-xs fill-slate-300">Input: "Translate"</text>
+              <text x="20" y="50" className="text-xs fill-slate-700 dark:fill-slate-300">Input: "Translate"</text>
               <path d="M 80 70 L 80 100" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrowhead-fewshot)" />
-              <text x="80" y="130" textAnchor="middle" className="text-xs font-bold fill-red-300">? (Random)</text>
+              <text x="80" y="130" textAnchor="middle" className="text-xs font-bold fill-red-700 dark:fill-red-300">? (Random)</text>
             </g>
 
             {/* Few-Shot (Right) */}
             <g transform="translate(250, 50)">
-              <text x="150" y="0" textAnchor="middle" className="text-sm font-bold fill-green-400 uppercase">Few-Shot (Exemplars)</text>
+              <text x="150" y="0" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-400 uppercase">Few-Shot (Exemplars)</text>
               <rect x="0" y="20" width="300" height="160" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" />
 
               {/* Examples */}
               <g transform="translate(20, 40)">
-                <text x="0" y="0" className="text-[10px] fill-green-200">Ex 1: Hello &rarr; Hola</text>
-                <text x="0" y="20" className="text-[10px] fill-green-200">Ex 2: Good &rarr; Bueno</text>
-                <text x="0" y="40" className="text-[10px] fill-green-200">Ex 3: Red &rarr; Rojo</text>
+                <text x="0" y="0" className="text-[10px] fill-green-800 dark:fill-green-200">Ex 1: Hello &rarr; Hola</text>
+                <text x="0" y="20" className="text-[10px] fill-green-800 dark:fill-green-200">Ex 2: Good &rarr; Bueno</text>
+                <text x="0" y="40" className="text-[10px] fill-green-800 dark:fill-green-200">Ex 3: Red &rarr; Rojo</text>
                 
                 <line x1="0" y1="55" x2="260" y2="55" stroke="#22c55e" strokeWidth="1" />
                 
-                <text x="0" y="80" className="text-xs font-bold fill-white">Input: "Blue"</text>
+                <text x="0" y="80" className="text-xs font-bold fill-slate-800 dark:fill-white">Input: "Blue"</text>
                 <path d="M 150 75 L 200 75" stroke="#22c55e" strokeWidth="2" markerEnd="url(#arrowhead-fewshot)" />
-                <text x="210" y="80" className="text-xs font-bold fill-green-300">"Azul"</text>
+                <text x="210" y="80" className="text-xs font-bold fill-green-700 dark:fill-green-300">"Azul"</text>
               </g>
             </g>
           </svg>
@@ -544,40 +544,46 @@ export default function Diagram({ type }: DiagramProps) {
   if (type === 'chain-of-thought') {
     return (
       <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
-          <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="Chain of Thought: Step-by-step reasoning">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Chain of Thought: Step-by-step reasoning">
+            <defs>
+              <marker id="arrowhead-cot" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
             {/* Standard Prompting */}
             <g transform="translate(50, 50)">
-              <text x="100" y="0" textAnchor="middle" className="text-sm font-bold fill-slate-400">Standard Prompt</text>
+              <text x="100" y="0" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-400">Standard Prompt</text>
               <rect x="0" y="20" width="200" height="40" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
-              <text x="100" y="45" textAnchor="middle" className="text-xs fill-blue-200">"Question"</text>
+              <text x="100" y="45" textAnchor="middle" className="text-xs fill-blue-700 dark:fill-blue-200">"Question"</text>
               
-              <path d="M 100 60 L 100 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
+              <path d="M 100 60 L 100 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-cot)" />
               
               <rect x="0" y="100" width="200" height="40" rx="4" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" />
-              <text x="100" y="125" textAnchor="middle" className="text-xs fill-red-300">"Wrong Answer"</text>
-              <text x="100" y="150" textAnchor="middle" className="text-[10px] fill-slate-500">(Rushed)</text>
+              <text x="100" y="125" textAnchor="middle" className="text-xs fill-red-700 dark:fill-red-300">"Wrong Answer"</text>
+              <text x="100" y="150" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-500">(Rushed)</text>
             </g>
 
             {/* Chain of Thought */}
             <g transform="translate(300, 50)">
-              <text x="125" y="0" textAnchor="middle" className="text-sm font-bold fill-purple-400">Chain of Thought</text>
+              <text x="125" y="0" textAnchor="middle" className="text-sm font-bold fill-purple-700 dark:fill-purple-400">Chain of Thought</text>
               <rect x="0" y="20" width="250" height="40" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
-              <text x="125" y="45" textAnchor="middle" className="text-xs fill-blue-200">"Let's think step by step"</text>
+              <text x="125" y="45" textAnchor="middle" className="text-xs fill-blue-700 dark:fill-blue-200">"Let's think step by step"</text>
 
-              <path d="M 125 60 L 125 80" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
+              <path d="M 125 60 L 125 80" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-cot)" />
 
               {/* Steps */}
               <g transform="translate(50, 80)">
                 <rect x="0" y="0" width="150" height="60" rx="4" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" strokeDasharray="2 2" />
-                <text x="75" y="20" textAnchor="middle" className="text-[10px] fill-purple-200">Step 1: Logic...</text>
-                <text x="75" y="40" textAnchor="middle" className="text-[10px] fill-purple-200">Step 2: Calc...</text>
+                <text x="75" y="20" textAnchor="middle" className="text-[10px] fill-purple-700 dark:fill-purple-200">Step 1: Logic...</text>
+                <text x="75" y="40" textAnchor="middle" className="text-[10px] fill-purple-700 dark:fill-purple-200">Step 2: Calc...</text>
               </g>
 
-              <path d="M 125 140 L 125 150" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
+              <path d="M 125 140 L 125 150" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-cot)" />
 
               <rect x="50" y="150" width="150" height="30" rx="4" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
-              <text x="125" y="170" textAnchor="middle" className="text-xs font-bold fill-green-300">"Correct Answer"</text>
+              <text x="125" y="170" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">"Correct Answer"</text>
             </g>
           </svg>
         </div>
@@ -654,6 +660,108 @@ export default function Diagram({ type }: DiagramProps) {
             <g transform="translate(420, 20)">
               <rect x="0" y="0" width="100" height="30" rx="4" fill="#1e293b" stroke="#ef4444" />
               <text x="50" y="20" textAnchor="middle" className="text-xs fill-white font-bold">AI Insight: +15%</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'training-loop') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 700 250" className="w-full h-auto" role="img" aria-label="Training Loop: Guess -> Error -> Update">
+            <defs>
+              <marker id="arrowhead-loop" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Step 1: Guess */}
+            <g transform="translate(50, 50)">
+              <rect x="0" y="0" width="120" height="80" rx="8" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
+              <text x="60" y="30" textAnchor="middle" className="text-2xl">🤔</text>
+              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">1. Guess</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Is it a Dog?"</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 180 90 L 220 90" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-loop)" />
+
+            {/* Step 2: Error (Loss) */}
+            <g transform="translate(230, 50)">
+              <rect x="0" y="0" width="120" height="80" rx="8" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" />
+              <text x="60" y="30" textAnchor="middle" className="text-2xl">❌</text>
+              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-red-700 dark:fill-red-300">2. Error</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Wrong! It's a Cat."</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 360 90 L 400 90" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-loop)" />
+
+            {/* Step 3: Update (Optimizer) */}
+            <g transform="translate(410, 50)">
+              <rect x="0" y="0" width="120" height="80" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" />
+              <text x="60" y="30" textAnchor="middle" className="text-2xl">🔧</text>
+              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">3. Update</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">Tweak Weights</text>
+            </g>
+
+            {/* Loop Back Arrow */}
+            <path d="M 470 140 Q 470 180 350 180 Q 110 180 110 140" fill="none" stroke="#a855f7" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowhead-loop)" />
+            <text x="290" y="170" textAnchor="middle" className="text-xs font-bold fill-purple-700 dark:fill-purple-300">Repeat 1,000,000x</text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'black-box') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="The Black Box Problem: Input -> ??? -> Output">
+            <defs>
+              <marker id="arrowhead-box" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+              <linearGradient id="box-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#0f172a" />
+                <stop offset="100%" stopColor="#334155" />
+              </linearGradient>
+            </defs>
+
+            {/* Input */}
+            <g transform="translate(50, 60)">
+              <rect x="0" y="0" width="80" height="80" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
+              <text x="40" y="45" textAnchor="middle" className="text-2xl">🐱</text>
+              <text x="40" y="70" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">Input</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 140 100 L 190 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-box)" />
+
+            {/* The Black Box */}
+            <g transform="translate(200, 40)">
+              <rect x="0" y="0" width="200" height="120" rx="8" fill="url(#box-grad)" stroke="#475569" strokeWidth="2" />
+              <text x="100" y="60" textAnchor="middle" className="text-4xl font-bold fill-white opacity-50">???</text>
+              <text x="100" y="90" textAnchor="middle" className="text-xs fill-slate-400">Hidden Layers</text>
+              
+              {/* Math symbols floating */}
+              <text x="30" y="30" className="text-[10px] fill-slate-600">∑</text>
+              <text x="170" y="100" className="text-[10px] fill-slate-600">∫</text>
+              <text x="160" y="30" className="text-[10px] fill-slate-600">w</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 410 100 L 460 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-box)" />
+
+            {/* Output */}
+            <g transform="translate(470, 60)">
+              <rect x="0" y="0" width="80" height="80" rx="4" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" />
+              <text x="40" y="45" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">"Cat"</text>
+              <text x="40" y="70" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">Output</text>
             </g>
           </svg>
         </div>

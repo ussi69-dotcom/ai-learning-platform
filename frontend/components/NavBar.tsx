@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import JediSithToggle from './JediSithToggle';
 import XPProgressBar from './XPProgressBar';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { getAvatar } from '@/components/AvatarSelector';
 
 export default function NavBar() {
   const { user, logout, token } = useAuth();
@@ -25,8 +25,23 @@ export default function NavBar() {
     setProgressStats({ level, xp: user.xp || 0, maxXp });
   }, [user]);
 
+  // Get Avatar Icon
+  const avatarObj = user ? getAvatar(user.avatar) : null;
+  const AvatarIcon = avatarObj?.type === 'ICON' ? avatarObj.icon : null;
+
   return (
     <nav className="border-b bg-white/80 dark:bg-slate-950/90 backdrop-blur-md border-slate-200 dark:border-slate-800 sticky top-0 z-50 transition-colors duration-300">
+      {/* Inject Gradients for Navbar Icons */}
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <linearGradient id="grad-jedi" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#60a5fa" /><stop offset="100%" stopColor="#ffffff" /></linearGradient>
+          <linearGradient id="grad-sith" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#ef4444" /><stop offset="100%" stopColor="#f59e0b" /></linearGradient>
+          <linearGradient id="grad-cyber" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#d946ef" /><stop offset="100%" stopColor="#06b6d4" /></linearGradient>
+          <linearGradient id="grad-gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#fbbf24" /><stop offset="100%" stopColor="#fef3c7" /></linearGradient>
+          <linearGradient id="grad-tech" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#10b981" /><stop offset="100%" stopColor="#3b82f6" /></linearGradient>
+        </defs>
+      </svg>
+
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
         
         {/* Left: Logo */}
@@ -57,8 +72,18 @@ export default function NavBar() {
           {user ? (
             <>
               <Link href="/profile">
-                <Button variant="outline" size="sm" className="dark:bg-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 hidden sm:flex">
-                  Profile
+                <Button variant="ghost" size="sm" className="gap-2 h-10 rounded-full pl-2 pr-4 border border-transparent hover:border-slate-200 dark:hover:border-slate-700">
+                  {avatarObj && (
+                    avatarObj.type === 'IMAGE' ? (
+                      <img src={avatarObj.src} alt="Avatar" className="w-6 h-6 rounded-full" />
+                    ) : (
+                      <AvatarIcon 
+                        className="w-6 h-6" 
+                        style={{ stroke: avatarObj.gradient }}
+                      />
+                    )
+                  )}
+                  <span className="hidden sm:inline">Profile</span>
                 </Button>
               </Link>
               <Button 

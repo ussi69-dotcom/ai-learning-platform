@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import AvatarSelector from '@/components/AvatarSelector';
 
 const DIFFICULTY_LEVELS = [
   { value: 'PIECE_OF_CAKE', label: '🍰 Piece of Cake', description: 'Easy mode for beginners' },
@@ -19,6 +20,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [difficulty, setDifficulty] = useState('LETS_ROCK');
+  const [avatar, setAvatar] = useState('jedi_1'); // Default avatar
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
@@ -42,7 +44,7 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      await register(email, password, difficulty);
+      await register(email, password, difficulty, avatar);
       router.push('/'); // Redirect to home after successful registration
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Registration failed. Email might already be registered.');
@@ -61,13 +63,24 @@ export default function RegisterPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="p-3 text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900 rounded-lg">
                 {error}
               </div>
             )}
             
+            {/* --- Avatar Selection --- */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 block">
+                Choose your Avatar
+              </label>
+              <AvatarSelector 
+                selectedAvatar={avatar} 
+                onSelect={setAvatar} 
+              />
+            </div>
+
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                 Email

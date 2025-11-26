@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import AvatarSelector, { getAvatar } from '@/components/AvatarSelector';
+import { X } from 'lucide-react'; // Import X icon
 
 const DIFFICULTY_LABELS: Record<string, string> = {
   'PIECE_OF_CAKE': '🍰 Piece of Cake',
@@ -25,6 +27,8 @@ export default function ProfilePage() {
   const { user, logout, isLoading, token } = useAuth();
   const router = useRouter();
   const [selectedDifficulty, setSelectedDifficulty] = useState(user?.difficulty || 'LETS_ROCK');
+  const [selectedAvatar, setSelectedAvatar] = useState(user?.avatar || 'jedi_1');
+  const [showAvatarModal, setShowAvatarModal] = useState(false); // Modal state
   const [updating, setUpdating] = useState(false);
   const [message, setMessage] = useState('');
   const [myProgress, setMyProgress] = useState<any[]>([]);
@@ -35,97 +39,99 @@ export default function ProfilePage() {
     if (!isLoading && !user) {
       router.push('/login');
     }
+    if (user && user.difficulty) setSelectedDifficulty(user.difficulty);
+    if (user && user.avatar) setSelectedAvatar(user.avatar);
   }, [isLoading, user, router]);
 
+  // ... (fetchProgress effect remains same) ...
   useEffect(() => {
     async function fetchProgress() {
       if (!token) return;
       try {
         const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-        
-        // Fetch user progress
-        const progressRes = await axios.get(`${API_BASE}/users/me/progress`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const progressRes = await axios.get(`${API_BASE}/users/me/progress`, { headers: { Authorization: `Bearer ${token}` } });
         setMyProgress(progressRes.data);
-
-        // Fetch all courses to map IDs to titles
-        const coursesRes = await axios.get(`${API_BASE}/courses/`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const coursesRes = await axios.get(`${API_BASE}/courses/`, { headers: { Authorization: `Bearer ${token}` } });
         setCourses(coursesRes.data);
-      } catch (err) {
-        console.error('Error fetching progress:', err);
-      }
+      } catch (err) { console.error('Error fetching progress:', err); }
     }
     fetchProgress();
   }, [token]);
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-950 text-slate-900 dark:text-white">
-        <p className="text-slate-600 dark:text-slate-400">Loading...</p>
-      </div>
-    );
-  }
+  if (isLoading) return <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-950 text-slate-900 dark:text-white"><p>Loading...</p></div>;
+  if (!user) return null;
 
-  if (!user) {
-    return null; // Will redirect via useEffect
-  }
-
-  const handleDifficultyChange = async () => {
-    if (selectedDifficulty === user.difficulty) {
-      setMessage('This is already your current difficulty!');
-      return;
-    }
-
-    // Confirmation
-    const confirmed = window.confirm(
-      `Are you sure you want to switch to ${DIFFICULTY_LABELS[selectedDifficulty]}?\n\nYou\'ll see different courses suited to your new difficulty level.`
-    );
-
-    if (!confirmed) return;
-
+  const handleAvatarChange = async (newAvatar: string) => {
+    setSelectedAvatar(newAvatar);
+    setShowAvatarModal(false); // Close modal immediately on select
     setUpdating(true);
     setMessage('');
 
     try {
       const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      await axios.put(
-        `${API_BASE}/users/me/difficulty`,
-        { difficulty: selectedDifficulty },
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          params: { difficulty: selectedDifficulty }
-        }
-      );
-
-      setMessage('✅ Difficulty updated! Redirecting...');
-      
-      // Refresh page to reload user data
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (error: any) {
-      console.error('Error updating difficulty:', error);
-      setMessage('❌ Failed to update difficulty. Please try again.');
+      await axios.put(`${API_BASE}/users/me/avatar`, { avatar: newAvatar }, { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } });
+      setMessage('✅ Avatar updated!');
+      setTimeout(() => window.location.reload(), 500);
+    } catch (error) {
+      console.error('Error updating avatar:', error);
+      setMessage('❌ Failed to update avatar.');
     } finally {
       setUpdating(false);
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    router.push('/');
+  // ... (handleDifficultyChange remains same) ...
+  const handleDifficultyChange = async () => {
+    if (selectedDifficulty === user.difficulty) { setMessage('This is already your current difficulty!'); return; }
+    const confirmed = window.confirm(`Are you sure you want to switch to ${DIFFICULTY_LABELS[selectedDifficulty]}?\n\nYou\'ll see different courses suited to your new difficulty level.`);
+    if (!confirmed) return;
+    setUpdating(true); setMessage('');
+    try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      await axios.put(`${API_BASE}/users/me/difficulty`, { difficulty: selectedDifficulty }, { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, params: { difficulty: selectedDifficulty } });
+      setMessage('✅ Difficulty updated! Redirecting...');
+      setTimeout(() => { window.location.reload(); }, 1000);
+    } catch (error: any) { console.error('Error updating difficulty:', error); setMessage('❌ Failed to update difficulty. Please try again.'); } finally { setUpdating(false); }
   };
 
+  const handleLogout = () => { logout(); router.push('/'); };
   const hasChanges = selectedDifficulty !== user.difficulty;
+  
+  // Get current avatar object
+  const avatarObj = getAvatar(selectedAvatar);
+  const AvatarIcon = avatarObj.type === 'ICON' ? avatarObj.icon : null;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 py-12 transition-colors duration-300">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 py-12 transition-colors duration-300 relative">
+      
+      {/* Inject Gradients for Profile Icon if needed */}
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <linearGradient id="grad-jedi" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#60a5fa" /><stop offset="100%" stopColor="#ffffff" /></linearGradient>
+          <linearGradient id="grad-sith" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#ef4444" /><stop offset="100%" stopColor="#f59e0b" /></linearGradient>
+          <linearGradient id="grad-cyber" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#d946ef" /><stop offset="100%" stopColor="#06b6d4" /></linearGradient>
+          <linearGradient id="grad-gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#fbbf24" /><stop offset="100%" stopColor="#fef3c7" /></linearGradient>
+          <linearGradient id="grad-tech" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#10b981" /><stop offset="100%" stopColor="#3b82f6" /></linearGradient>
+        </defs>
+      </svg>
+
+      {/* --- AVATAR MODAL --- */}
+      {showAvatarModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-3xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+              <h3 className="text-lg font-bold dark:text-white">Choose your Avatar</h3>
+              <button onClick={() => setShowAvatarModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                <X className="w-5 h-5 dark:text-slate-400" />
+              </button>
+            </div>
+            <div className="p-6 bg-slate-50 dark:bg-slate-950/50">
+               <AvatarSelector selectedAvatar={selectedAvatar} onSelect={handleAvatarChange} />
+            </div>
+          </div>
+        </div>
+      )}
+
       <Card className="w-full max-w-2xl dark:bg-slate-900 dark:border-slate-800">
         <CardHeader>
           <CardTitle className="text-2xl font-bold dark:text-white">Profile</CardTitle>
@@ -133,9 +139,31 @@ export default function ProfilePage() {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium text-slate-600 dark:text-slate-400">Email</label>
-              <p className="text-lg font-medium dark:text-slate-200">{user.email}</p>
+            <div className="flex items-center justify-between">
+               <div>
+                  <label className="text-sm font-medium text-slate-600 dark:text-slate-400">Email</label>
+                  <p className="text-lg font-medium dark:text-slate-200">{user.email}</p>
+               </div>
+               {/* Avatar Button */}
+               <div className="text-center">
+                  <button 
+                    onClick={() => setShowAvatarModal(true)}
+                    className={`group relative w-24 h-24 rounded-2xl border-4 ${avatarObj.bg} border-slate-200 dark:border-slate-700 hover:border-indigo-500 transition-all duration-300 flex items-center justify-center overflow-hidden shadow-lg`}
+                  >
+                    {avatarObj.type === 'IMAGE' ? (
+                      <img src={avatarObj.src} alt={avatarObj.label} className="w-20 h-20 object-contain group-hover:scale-110 transition-transform" />
+                    ) : (
+                      <AvatarIcon 
+                        className="w-14 h-14 group-hover:scale-110 transition-transform" 
+                        style={{ stroke: avatarObj.gradient, strokeWidth: 1.5 }}
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                      <span className="text-xs text-white font-bold">EDIT</span>
+                    </div>
+                  </button>
+                  <p className="text-xs text-slate-500 mt-2">{avatarObj.label}</p>
+               </div>
             </div>
 
             <div>

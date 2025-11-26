@@ -3,17 +3,20 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import confetti from 'canvas-confetti';
+import LabBadge from './mdx/LabBadge';
 
 interface LessonCompleteProps {
   lessonId: number;
   courseId: number;
+  lessonTitle?: string;
   onComplete?: () => void;
 }
 
-export default function LessonComplete({ lessonId, courseId, onComplete }: LessonCompleteProps) {
+export default function LessonComplete({ lessonId, courseId, lessonTitle = "This Lesson", onComplete }: LessonCompleteProps) {
   const { token } = useAuth();
   const [isCompleted, setIsCompleted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showBadge, setShowBadge] = useState(false);
 
   useEffect(() => {
     // Check if already completed
@@ -46,7 +49,7 @@ export default function LessonComplete({ lessonId, courseId, onComplete }: Lesso
       
       if (res.ok) {
         setIsCompleted(true);
-        triggerConfetti();
+        setShowBadge(true);
         if (onComplete) onComplete();
       }
     } catch (err) {
@@ -56,15 +59,7 @@ export default function LessonComplete({ lessonId, courseId, onComplete }: Lesso
     }
   };
 
-  const triggerConfetti = () => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
-  };
-
-  if (isCompleted) {
+  if (isCompleted && !showBadge) {
     return (
       <div className="mt-8 p-6 bg-primary/10 border border-primary/20 rounded-xl text-center animate-fade-in glass-panel">
         <div className="text-4xl mb-2">🎉</div>
@@ -75,21 +70,32 @@ export default function LessonComplete({ lessonId, courseId, onComplete }: Lesso
   }
 
   return (
-    <div className="mt-8 flex justify-center">
-      <button
-        onClick={handleComplete}
-        disabled={isLoading}
-        className={`
-          px-8 py-4 rounded-full text-lg font-bold shadow-lg transform transition-all duration-200
-          ${isLoading 
-            ? 'bg-muted text-muted-foreground cursor-not-allowed' 
-            : 'bg-green-600 text-white hover:bg-green-500 hover:scale-105 hover:shadow-xl active:scale-95 hover:shadow-green-500/20 ' +
-              'dark:bg-yellow-500 dark:text-yellow-950 dark:hover:bg-yellow-400 dark:hover:shadow-yellow-500/20' /* Sith Gold */
-          }
-        `}
-      >
-        {isLoading ? 'Marking...' : 'Mark as Complete ✅'}
-      </button>
+    <div className="mt-8 flex justify-center relative">
+      {showBadge && (
+        <LabBadge 
+          title={lessonTitle} 
+          onClose={() => setShowBadge(false)} 
+          type="lesson"
+          xp={100}
+        />
+      )}
+      
+      {!isCompleted && (
+        <button
+          onClick={handleComplete}
+          disabled={isLoading}
+          className={`
+            px-8 py-4 rounded-full text-lg font-bold shadow-lg transform transition-all duration-200
+            ${isLoading 
+              ? 'bg-muted text-muted-foreground cursor-not-allowed' 
+              : 'bg-green-600 text-white hover:bg-green-500 hover:scale-105 hover:shadow-xl active:scale-95 hover:shadow-green-500/20 ' +
+                'dark:bg-yellow-500 dark:text-yellow-950 dark:hover:bg-yellow-400 dark:hover:shadow-yellow-500/20' /* Sith Gold */
+            }
+          `}
+        >
+          {isLoading ? 'Marking...' : 'Mark as Complete ✅'}
+        </button>
+      )}
     </div>
   );
 }

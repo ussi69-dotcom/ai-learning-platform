@@ -12,7 +12,41 @@ interface LabBadgeProps {
 }
 
 export default function LabBadge({ title, onClose, type = 'lab', xp = 25 }: LabBadgeProps) {
-  // ... (confetti logic same)
+  
+  useEffect(() => {
+    // Trigger Confetti
+    const duration = 3000;
+    const end = Date.now() + duration;
+
+    const frame = () => {
+      confetti({
+        particleCount: 5,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: ['#6366f1', '#ec4899', '#10b981']
+      });
+      confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: ['#6366f1', '#ec4899', '#10b981']
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    };
+    frame();
+
+    // Auto-dismiss after 5 seconds
+    const timer = setTimeout(() => {
+      onClose();
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [onClose]);
 
   const badgeTitle = type === 'lesson' ? 'LESSON COMPLETE!' : type === 'quiz' ? 'QUIZ MASTERED!' : 'LAB COMPLETE!';
 

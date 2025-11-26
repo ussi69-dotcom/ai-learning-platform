@@ -10,13 +10,14 @@ interface User {
   difficulty: string;
   is_active: boolean;
   xp: number;
+  avatar: string;
 }
 
 interface AuthContextType {
   user: User | null;
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, difficulty: string) => Promise<void>;
+  register: (email: string, password: string, difficulty: string, avatar: string) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
   refreshUser: () => Promise<void>;
@@ -85,11 +86,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await fetchCurrentUser(access_token);
   };
 
-  const register = async (email: string, password: string, difficulty: string) => {
+  const register = async (email: string, password: string, difficulty: string, avatar: string) => {
     const response = await axios.post(`${API_BASE}/auth/register`, {
       email,
       password,
       difficulty,
+      avatar,
       is_active: true,
     });
 

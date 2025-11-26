@@ -78,7 +78,23 @@ class ContentLoader:
         with open(content_path, "r", encoding="utf-8") as f:
             content = f.read()
 
-        logger.info(f"  📖 Processing lesson: {meta.get('title')}")
+        # Extract Metadata from MDX (Mission Goal Callout)
+        # Format: ⏳ **Reading Time:** 15 min | 🧪 **[3] Labs Included**
+        import re
+        duration = "15 min" # Default
+        lab_count = 0 # Default
+
+        # Regex for Time
+        time_match = re.search(r"⏳ \*\*Reading Time:\*\* (.+?) \|", content)
+        if time_match:
+            duration = time_match.group(1).strip()
+        
+        # Regex for Labs (supports "[3]" or "3")
+        lab_match = re.search(r"🧪 \*\*\[?(\d+)\]? Labs? Included\*\*", content)
+        if lab_match:
+            lab_count = int(lab_match.group(1))
+
+        logger.info(f"  📖 Processing lesson: {meta.get('title')} ({duration}, {lab_count} labs)")
 
         lesson = db.query(Lesson).filter(Lesson.title == meta["title"], Lesson.course_id == course_id).first()
         if not lesson:
@@ -89,7 +105,9 @@ class ContentLoader:
                 content=content,
                 video_url=meta.get("video_url"),
                 order=meta["order"],
-                course_id=course_id
+                course_id=course_id,
+                duration=duration,
+                lab_count=lab_count
             )
             db.add(lesson)
             db.commit()
@@ -100,6 +118,8 @@ class ContentLoader:
             lesson.content = content
             lesson.video_url = meta.get("video_url")
             lesson.order = meta["order"]
+            lesson.duration = duration
+            lesson.lab_count = lab_count
             db.commit()
 
         # Process Quizzes

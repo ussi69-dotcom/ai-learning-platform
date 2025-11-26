@@ -1,5 +1,5 @@
 import enum
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text, Enum, DateTime
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text, Enum, DateTime, Float, UniqueConstraint
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from app.database import Base
@@ -19,9 +19,11 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     difficulty = Column(Enum(DifficultyLevel), default=DifficultyLevel.LETS_ROCK)
     xp = Column(Integer, default=0)
+    avatar = Column(String, default="droid_1") # Default avatar identifier
 
     courses = relationship("Course", back_populates="owner")
     progress = relationship("UserProgress", back_populates="user")
+    feedback_items = relationship("FeedbackItem", back_populates="author")
 
 
 class Course(Base):
@@ -50,11 +52,14 @@ class Lesson(Base):
     content = Column(Text) # MDX obsah
     order = Column(Integer)
     video_url = Column(String, nullable=True)
+    duration = Column(String, nullable=True) # e.g. "15 min"
+    lab_count = Column(Integer, default=0)
 
     course_id = Column(Integer, ForeignKey("courses.id"))
     course = relationship("Course", back_populates="lessons")
     
     quizzes = relationship("Quiz", back_populates="lesson", cascade="all, delete-orphan")
+    feedback_items = relationship("FeedbackItem", back_populates="lesson")
 
 
 class Quiz(Base):
@@ -100,3 +105,49 @@ class UserProgress(Base):
     user = relationship("User", back_populates="progress")
     lesson = relationship("Lesson")
     course = relationship("Course")
+
+# --- NEW MODELS FOR FEEDBACK SYSTEM ---
+
+class FeedbackType(str, enum.Enum):
+    BUG = "BUG"
+    FEATURE = "FEATURE"
+    NOTE = "NOTE"
+    QUESTION = "QUESTION"
+
+class FeedbackItem(Base):
+    __tablename__ = "feedback_items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    lesson_id = Column(Integer, ForeignKey("lessons.id"), nullable=True)
+    slide_index = Column(Integer, nullable=True)
+    x_pos = Column(Float, nullable=False) # Relative X position (0.0 to 1.0)
+    y_pos = Column(Float, nullable=False) # Relative Y position (0.0 to 1.0)
+    type = Column(Enum(FeedbackType), nullable=False)
+    message = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    is_resolved = Column(Boolean, default=False)
+    parent_id = Column(Integer, ForeignKey("feedback_items.id"), nullable=True) # For replies
+    votes = Column(Integer, default=0)
+
+    author = relationship("User", back_populates="feedback_items")
+    lesson = relationship("Lesson", back_populates="feedback_items")
+    replies = relationship("FeedbackItem", back_populates="parent_feedback")
+    parent_feedback = relationship("FeedbackItem", back_populates="replies", remote_side=[id])
+    votes_list = relationship("FeedbackVote", back_populates="feedback_item", cascade="all, delete-orphan")
+
+class FeedbackVote(Base):
+    __tablename__ = "feedback_votes"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    feedback_id = Column(Integer, ForeignKey("feedback_items.id"), nullable=False)
+    vote_type = Column(String, nullable=False) # "up" or "down"
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    user = relationship("User")
+    feedback_item = relationship("FeedbackItem", back_populates="votes_list")
+
+    __table_args__ = (
+        UniqueConstraint('user_id', 'feedback_id', name='unique_user_feedback_vote'),
+    )

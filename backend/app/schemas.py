@@ -1,6 +1,8 @@
+import enum
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
+from app.models import FeedbackType
 
 # --- Lesson Schemas ---
 class LessonBase(BaseModel):
@@ -9,6 +11,8 @@ class LessonBase(BaseModel):
     description: str
     order: int
     video_url: Optional[str] = None
+    duration: Optional[str] = None
+    lab_count: int = 0
 
 class LessonCreate(LessonBase):
     content: str
@@ -64,12 +68,14 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
-    difficulty: str = "LETS_ROCK" # Default difficulty
+    difficulty: str = "LETS_ROCK"
+    avatar: str = "droid_1"
 
 class User(UserBase):
     id: int
     difficulty: str
     xp: int = 0
+    avatar: str = "droid_1"
     courses: List[Course] = []
 
     class Config:
@@ -80,6 +86,9 @@ class UserDifficultyUpdate(BaseModel):
 
 class UserXPUpdate(BaseModel):
     xp_amount: int
+
+class UserAvatarUpdate(BaseModel):
+    avatar: str
 
 
 # ===== QUIZ SCHEMAS =====
@@ -125,3 +134,50 @@ class UserProgress(UserProgressBase):
 
     class Config:
         from_attributes = True
+
+# --- FEEDBACK SCHEMAS ---
+
+class FeedbackType(str, enum.Enum):
+    BUG = "BUG"
+    FEATURE = "FEATURE"
+    NOTE = "NOTE"
+    QUESTION = "QUESTION"
+
+# Simplified User for Feedback Author display
+class FeedbackUser(BaseModel):
+    id: int
+    email: str
+    avatar: str
+
+    class Config:
+        from_attributes = True
+
+class FeedbackItemBase(BaseModel):
+    lesson_id: Optional[int] = None
+    slide_index: Optional[int] = None
+    x_pos: float
+    y_pos: float
+    type: FeedbackType
+    message: str
+    parent_id: Optional[int] = None # For replies
+
+class FeedbackItemCreate(FeedbackItemBase):
+    pass
+
+class FeedbackItemResponse(FeedbackItemBase):
+    id: int
+    user_id: int
+    created_at: datetime
+    is_resolved: bool
+    votes: int
+    
+    author: FeedbackUser # Include author details
+    
+    replies: Optional[List['FeedbackItemResponse']] = []
+    user_vote: Optional[str] = None # "up", "down", or None
+
+    class Config:
+        from_attributes = True
+
+# Update forward refs for recursive schema definition
+FeedbackItemResponse.model_rebuild()

@@ -1,14 +1,64 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 interface CourseIconProps {
   courseId?: number;
   slug?: string;
   className?: string;
+  imageUrl?: string;
+  objectFit?: "cover" | "contain";
 }
 
-export default function CourseIcon({ courseId, slug, className = "w-full h-full" }: CourseIconProps) {
+export default function CourseIcon({ courseId, slug, className = "w-full h-full", imageUrl, objectFit = "cover" }: CourseIconProps) {
+  const [isDark, setIsDark] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    
+    // Detect dark mode
+    const checkDarkMode = () => {
+      // Rely ONLY on the class, as the app toggle controls this
+      setIsDark(document.documentElement.classList.contains('dark'));
+    };
+    
+    checkDarkMode();
+    
+    // Watch for theme changes
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+
+  // Use theme-specific image if available
+  if (imageUrl && mounted) {
+    // Replace extension with _dark or _light variant
+    const themeImage = imageUrl.replace(
+      /\.(jpg|jpeg|png|webp)$/i, 
+      isDark ? '_dark.$1' : '_light.$1'
+    );
+    
+    return (
+      <div className={className + " relative"}>
+        <Image 
+          key={themeImage}
+          src={themeImage} 
+          alt="Course cover" 
+          fill 
+          className={`object-${objectFit}`}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
+        />
+      </div>
+    );
+  }
+
   // Logic to map ID or Slug to a visual type
   // Defaults based on current seed data
   // 1: AI Engineering (Deep Dive)
@@ -25,38 +75,129 @@ export default function CourseIcon({ courseId, slug, className = "w-full h-full"
   // --- SVG DEFINITIONS ---
 
   if (type === 'beginner') {
-    // Concept: Glowing Brain / Neural Network Spark
+    // Concept: Space Fighter (X-Wing inspired) - Clean & Recognizable
     return (
       <svg viewBox="0 0 200 200" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="grad-beginner" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#3b82f6" />
-            <stop offset="1" stopColor="#8b5cf6" />
+          <linearGradient id="grad-ship" x1="0" y1="0" x2="200" y2="0">
+            <stop offset="0%" stopColor="#1e3a8a" />
+            <stop offset="50%" stopColor="#3b82f6" />
+            <stop offset="100%" stopColor="#60a5fa" />
           </linearGradient>
-          <filter id="glow-beginner">
-            <feGaussianBlur stdDeviation="5" result="coloredBlur" />
+          
+          <radialGradient id="engine-glow">
+            <stop offset="0%" stopColor="#60a5fa" stopOpacity="1" />
+            <stop offset="100%" stopColor="#60a5fa" stopOpacity="0" />
+          </radialGradient>
+          
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
             <feMerge>
-              <feMergeNode in="coloredBlur" />
-              <feMergeNode in="SourceGraphic" />
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
             </feMerge>
           </filter>
         </defs>
         
-        <g filter="url(#glow-beginner)">
-          {/* Brain Outline */}
-          <path d="M100 40 C 60 40, 40 70, 40 100 C 40 140, 70 160, 100 160 C 130 160, 160 140, 160 100 C 160 70, 140 40, 100 40" 
-                stroke="url(#grad-beginner)" strokeWidth="4" strokeLinecap="round" fill="none" />
+        {/* UPPER WINGS (2x) */}
+        <g>
+          {/* Top Right Wing */}
+          <path d="M90 70 L170 40 L175 45 L95 75 Z" 
+                fill="url(#grad-ship)" 
+                stroke="#1e3a8a" 
+                strokeWidth="2" 
+                opacity="0.9" />
+          <circle cx="172" cy="42" r="8" fill="#1e40af" stroke="#60a5fa" strokeWidth="1.5" />
+          <circle cx="175" cy="42" r="6" fill="url(#engine-glow)" filter="url(#glow)" />
           
-          {/* Nodes */}
-          <circle cx="100" cy="100" r="8" fill="#ffffff" fillOpacity="0.8" />
-          <circle cx="70" cy="80" r="5" fill="#3b82f6" />
-          <circle cx="130" cy="80" r="5" fill="#8b5cf6" />
-          <circle cx="70" cy="120" r="5" fill="#3b82f6" />
-          <circle cx="130" cy="120" r="5" fill="#8b5cf6" />
-          
-          {/* Connections */}
-          <path d="M100 100 L70 80 M100 100 L130 80 M100 100 L70 120 M100 100 L130 120" stroke="#ffffff" strokeOpacity="0.3" strokeWidth="2" />
+          {/* Top Left Wing */}
+          <path d="M90 70 L170 30 L175 35 L95 65 Z" 
+                fill="url(#grad-ship)" 
+                stroke="#1e3a8a" 
+                strokeWidth="2" 
+                opacity="0.9" />
+          <circle cx="172" cy="32" r="8" fill="#1e40af" stroke="#60a5fa" strokeWidth="1.5" />
+          <circle cx="175" cy="32" r="6" fill="url(#engine-glow)" filter="url(#glow)" />
         </g>
+        
+        {/* LOWER WINGS (2x) */}
+        <g>
+          {/* Bottom Right Wing */}
+          <path d="M90 130 L170 160 L175 155 L95 125 Z" 
+                fill="url(#grad-ship)" 
+                stroke="#1e3a8a" 
+                strokeWidth="2" 
+                opacity="0.9" />
+          <circle cx="172" cy="158" r="8" fill="#1e40af" stroke="#60a5fa" strokeWidth="1.5" />
+          <circle cx="175" cy="158" r="6" fill="url(#engine-glow)" filter="url(#glow)" />
+          
+          {/* Bottom Left Wing */}
+          <path d="M90 130 L170 170 L175 165 L95 135 Z" 
+                fill="url(#grad-ship)" 
+                stroke="#1e3a8a" 
+                strokeWidth="2" 
+                opacity="0.9" />
+          <circle cx="172" cy="168" r="8" fill="#1e40af" stroke="#60a5fa" strokeWidth="1.5" />
+          <circle cx="175" cy="168" r="6" fill="url(#engine-glow)" filter="url(#glow)" />
+        </g>
+        
+        {/* MAIN BODY */}
+        <g>
+          {/* Fuselage */}
+          <ellipse cx="80" cy="100" rx="50" ry="16" 
+                   fill="url(#grad-ship)" 
+                   stroke="#3b82f6" 
+                   strokeWidth="2.5" 
+                   opacity="0.95" />
+          
+          {/* Nose Cone */}
+          <path d="M125 95 L145 100 L125 105 Z" 
+                fill="#60a5fa" 
+                stroke="#3b82f6" 
+                strokeWidth="1.5" />
+          
+          {/* Cockpit */}
+          <ellipse cx="95" cy="100" rx="14" ry="10" 
+                   fill="#60a5fa" 
+                   opacity="0.7" 
+                   filter="url(#glow)" />
+          <ellipse cx="95" cy="100" rx="9" ry="6" 
+                   fill="#93c5fd" 
+                   opacity="0.9" 
+                   className="animate-pulse" />
+          
+          {/* Droid Bay */}
+          <circle cx="75" cy="100" r="10" 
+                  fill="#f97316" 
+                  stroke="#ea580c" 
+                  strokeWidth="2" 
+                  opacity="0.95" />
+          <circle cx="75" cy="97" r="5" 
+                  fill="#60a5fa" 
+                  opacity="0.9" />
+          <circle cx="75" cy="97" r="2" 
+                  fill="#3b82f6" 
+                  className="animate-pulse" />
+          
+          {/* Rear Engine */}
+          <ellipse cx="35" cy="100" rx="10" ry="14" 
+                   fill="#1e40af" 
+                   stroke="#60a5fa" 
+                   strokeWidth="2" />
+          <circle cx="28" cy="100" r="12" 
+                  fill="url(#engine-glow)" 
+                  filter="url(#glow)" />
+        </g>
+        
+        {/* DETAILS */}
+        <line x1="50" y1="100" x2="120" y2="100" 
+              stroke="#3b82f6" 
+              strokeWidth="1" 
+              opacity="0.4" />
+        
+        {/* Weapons */}
+        <circle cx="140" cy="97" r="3" fill="#dc2626" opacity="0.9" filter="url(#glow)" />
+        <circle cx="140" cy="103" r="3" fill="#dc2626" opacity="0.9" filter="url(#glow)" />
       </svg>
     );
   }

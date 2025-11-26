@@ -6,6 +6,7 @@ import Callout from './mdx/Callout';
 import Steps from './mdx/Steps';
 import ConceptCard from './mdx/ConceptCard';
 import LabSection from './mdx/LabSection';
+import LabComplete from './mdx/LabComplete';
 import CodeBlock from './CodeBlock';
 import Diagram from './mdx/Diagram';
 import KeyTakeaway from './mdx/KeyTakeaway';
@@ -143,6 +144,20 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         );
         
         i = closeEnd;
+        continue;
+      }
+
+      // 3.5 Handle <LabComplete> component
+      if (line.includes('<LabComplete')) {
+        const { endIndex: openEnd, tagContent } = readOpeningTag(i);
+        const labIdMatch = tagContent.match(/labId=['"]([^'"']+)['"]/);
+        const labId = labIdMatch?.[1] || 'unknown-lab';
+        
+        elements.push(
+          <LabComplete key={`lab-complete-${i}`} labId={labId} />
+        );
+        
+        i = openEnd + 1;
         continue;
       }
 

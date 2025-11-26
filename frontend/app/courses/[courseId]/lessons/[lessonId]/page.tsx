@@ -1,17 +1,42 @@
 "use client";
 
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import { use, useEffect, useState, useCallback } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
-import Quiz, { QuizQuestion } from "@/components/Quiz";
-import MarkdownRenderer from "@/components/MarkdownRenderer";
-import LessonComplete from "@/components/LessonComplete";
+import { useState, useEffect, use } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import { useAuth } from '@/context/AuthContext';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
+import Quiz, { QuizQuestion } from '@/components/Quiz';
+import LessonComplete from '@/components/LessonComplete';
 import ProgressDots from "@/components/mdx/ProgressDots";
 import LessonProgressBar from "@/components/LessonProgressBar";
+import FeedbackFAB from "@/components/FeedbackFAB";
+import FeedbackSubmissionModal from "@/components/FeedbackSubmissionModal";
+import FeedbackDetailModal from "@/components/FeedbackDetailModal";
+import FeedbackMarker from "@/components/FeedbackMarker";
 import axios from 'axios';
+
+// Helper function moved outside component
+const splitIntoSlides = (content: string): string[] => {
+  const lines = content.split('\n');
+  const slides: string[] = [];
+  let currentSlide: string[] = [];
+
+  lines.forEach((line) => {
+    if (line.match(/^##\s+[^#]/)) {
+      if (currentSlide.length > 0) {
+        slides.push(currentSlide.join('\n'));
+        currentSlide = [];
+      }
+    }
+    currentSlide.push(line);
+  });
+  if (currentSlide.length > 0) slides.push(currentSlide.join('\n'));
+  return slides.filter(s => s.trim().length > 0);
+};
+
+type FeedbackMode = 'idle' | 'placing' | 'viewing';
 
 export default function LessonPage({ params }: { params: Promise<{ courseId: string; lessonId: string }> }) {
   const { courseId, lessonId } = use(params);
@@ -24,7 +49,17 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   const [allLessons, setAllLessons] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
+
+  const [feedbackMode, setFeedbackMode] = useState<FeedbackMode>('idle');
+  const [feedbackToPlace, setFeedbackToPlace] = useState<{ x: number; y: number; slideIndex: number } | null>(null);
+  const [feedbackItems, setFeedbackItems] = useState<any[]>([]);
+  const [selectedFeedback, setSelectedFeedback] = useState<any>(null);
+
+
+  // Derive total pages immediately (safe calculation)
+  const slides = lesson ? splitIntoSlides(lesson.content) : [];
+  const hasQuiz = quizzes.length > 0;
+  const calculatedTotalPages = slides.length + (hasQuiz ? 1 : 0);
 
   // Fetch all data
   useEffect(() => {
@@ -106,6 +141,45 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
     return () => clearTimeout(saveProgress);
   }, [currentPage, lessonId, token, loading]);
 
+  // Fetch Feedback when entering viewing mode or page changes
+  useEffect(() => {
+    if (feedbackMode !== 'viewing' || !token) return;
+
+    const fetchFeedback = async () => {
+      try {
+        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const res = await axios.get(`${API_BASE}/feedback`, {
+          params: { lesson_id: lessonId, slide_index: currentPage },
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        setFeedbackItems(res.data);
+      } catch (error) {
+        console.error("Failed to fetch feedback:", error);
+      }
+    };
+
+    fetchFeedback();
+  }, [feedbackMode, currentPage, lessonId, token]);
+
+  // Keyboard Navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+         if (currentPage < calculatedTotalPages - 1) {
+            setCurrentPage(p => p + 1);
+         }
+      }
+      if (e.key === 'ArrowLeft') {
+         if (currentPage > 0) {
+            setCurrentPage(p => p - 1);
+         }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentPage, calculatedTotalPages]);
+
 
   if (loading) {
     return (
@@ -122,29 +196,6 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
     return <div className="p-12 text-center text-muted-foreground">Lesson not found 😢</div>;
   }
 
-  // Content Splitting logic
-  const splitIntoSlides = (content: string): string[] => {
-    const lines = content.split('\n');
-    const slides: string[] = [];
-    let currentSlide: string[] = [];
-
-    lines.forEach((line) => {
-      if (line.match(/^##\s+[^#]/)) {
-        if (currentSlide.length > 0) {
-          slides.push(currentSlide.join('\n'));
-          currentSlide = [];
-        }
-      }
-      currentSlide.push(line);
-    });
-    if (currentSlide.length > 0) slides.push(currentSlide.join('\n'));
-    return slides.filter(s => s.trim().length > 0);
-  };
-
-  const slides = splitIntoSlides(lesson.content);
-  const hasQuiz = quizzes.length > 0;
-  const calculatedTotalPages = slides.length + (hasQuiz ? 1 : 0);
-  
   // Ensure currentPage doesn't exceed bounds (e.g. if content changed)
   if (currentPage >= calculatedTotalPages && calculatedTotalPages > 0) {
       setCurrentPage(calculatedTotalPages - 1);
@@ -157,6 +208,94 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   const previousLesson = currentIndex > 0 ? allLessons[currentIndex - 1] : null;
   const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentIndex + 1] : null;
 
+  const handlePlaceFeedback = (x: number, y: number, slideIdx: number) => {
+    setFeedbackToPlace({ x, y, slideIndex: slideIdx });
+    setFeedbackMode('idle'); // Back to idle after placing
+  };
+
+  const handleVote = async (id: number, direction: 'up' | 'down') => {
+    try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      await axios.post(`${API_BASE}/feedback/${id}/vote`, null, {
+        params: { direction },
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      // Refresh feedback
+      const res = await axios.get(`${API_BASE}/feedback`, {
+          params: { lesson_id: lessonId, slide_index: currentPage },
+          headers: { "Authorization": `Bearer ${token}` }
+      });
+      setFeedbackItems(res.data);
+      
+      // Update selected item if open
+      if (selectedFeedback && selectedFeedback.id === id) {
+         const updated = res.data.find((i: any) => i.id === id);
+         setSelectedFeedback(updated);
+      }
+    } catch (error) {
+      console.error("Vote failed:", error);
+    }
+  };
+
+  const handleReply = async (parentId: number, message: string) => {
+     try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      // We need to construct the full object, but the endpoint expects FeedbackItemCreate
+      // which needs lesson_id, slide_index, x_pos, y_pos, type, message.
+      // For a reply, x/y/type might be inherited or irrelevant but required by schema.
+      // Let's find the parent to copy context.
+      const parent = feedbackItems.find(i => i.id === parentId) || selectedFeedback;
+      if (!parent) return;
+
+      await axios.post(`${API_BASE}/feedback/${parentId}/reply`, {
+        lesson_id: parseInt(lessonId),
+        slide_index: parent.slide_index,
+        x_pos: parent.x_pos,
+        y_pos: parent.y_pos,
+        type: parent.type, // Inherit type or make it NOTE? Let's inherit for now or use NOTE.
+        message: message,
+        parent_id: parentId
+      }, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+
+      // Refresh
+      const res = await axios.get(`${API_BASE}/feedback`, {
+          params: { lesson_id: lessonId, slide_index: currentPage },
+          headers: { "Authorization": `Bearer ${token}` }
+      });
+      setFeedbackItems(res.data);
+       // Update selected item if open
+      if (selectedFeedback && selectedFeedback.id === parentId) {
+         const updated = res.data.find((i: any) => i.id === parentId);
+         setSelectedFeedback(updated);
+      }
+    } catch (error) {
+      console.error("Reply failed:", error);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      await axios.delete(`${API_BASE}/feedback/${id}`, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      
+      // Refresh
+      const res = await axios.get(`${API_BASE}/feedback`, {
+          params: { lesson_id: lessonId, slide_index: currentPage },
+          headers: { "Authorization": `Bearer ${token}` }
+      });
+      setFeedbackItems(res.data);
+      if (selectedFeedback && selectedFeedback.id === id) {
+        setSelectedFeedback(null); // Close modal if deleted
+      }
+    } catch (error) {
+      console.error("Delete failed:", error);
+    }
+  };
+
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-background transition-colors duration-500">
@@ -167,11 +306,23 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           
           {/* Lesson Navigation (TOP) */}
           <div className="flex items-center justify-between gap-4 mb-8 p-3 -mx-3 rounded-lg bg-card/50 border border-border backdrop-blur-sm">
-            <Link href={`/courses/${courseId}`}>
-              <Button variant="outline" size="sm" className="gap-2">
-                ← Back to Course
-              </Button>
-            </Link>
+            <div className="flex gap-2">
+               <Link href={`/courses/${courseId}`}>
+                 <Button variant="outline" size="sm" className="gap-2">
+                   ← Back to Course
+                 </Button>
+               </Link>
+               {currentPage > 0 && (
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="gap-2 text-muted-foreground hover:text-foreground"
+                    onClick={() => setCurrentPage(0)}
+                  >
+                    Back to Page 1
+                  </Button>
+               )}
+            </div>
 
             <div className="flex gap-2">
               <Button
@@ -225,7 +376,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           )}
 
           {/* Content Card */}
-          <div className="glass-panel rounded-3xl p-6 md:p-10 mb-8 min-h-[400px] relative">
+          <div id="lesson-content-container" className="glass-panel rounded-3xl p-6 md:p-10 mb-8 min-h-[400px] relative">
             
             {/* Page Indicator (Top) */}
             <div className="flex justify-between items-center mb-6 text-xs font-bold text-muted-foreground uppercase tracking-wider">
@@ -253,7 +404,30 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
             {/* Lesson Complete (Embedded on last page if no quiz, or after quiz) */}
             {currentPage === calculatedTotalPages - 1 && !isQuizPage && !hasQuiz && (
-                <LessonComplete lessonId={parseInt(lessonId)} courseId={parseInt(courseId)} />
+                <LessonComplete 
+                  lessonId={parseInt(lessonId)} 
+                  courseId={parseInt(courseId)} 
+                  lessonTitle={lesson.title}
+                />
+            )}
+
+            {/* Feedback Markers Overlay */}
+            {feedbackMode === 'viewing' && (
+              <div className="absolute inset-0 z-20 pointer-events-none">
+                 {feedbackItems.map((item) => (
+                    <div key={item.id} className="pointer-events-auto">
+                      <FeedbackMarker 
+                        x={item.x_pos} 
+                        y={item.y_pos} 
+                        type={item.type} 
+                        message={item.message} 
+                        author={item.author}
+                        isResolved={item.is_resolved}
+                        onClick={() => setSelectedFeedback(item)}
+                      />
+                    </div>
+                 ))}
+              </div>
             )}
           </div>
 
@@ -279,12 +453,12 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                 />
               </div>
 
-              <div className="flex w-full md:w-auto justify-end order-3">
+              <div className="flex w-full md:w-auto justify-end order-3 h-12">
                 <Button
                   variant={currentPage === calculatedTotalPages - 1 ? "default" : "outline"} 
                   onClick={() => setCurrentPage(Math.min(calculatedTotalPages - 1, currentPage + 1))}
                   disabled={currentPage === calculatedTotalPages - 1}
-                  className="min-w-[100px] h-12 text-base font-bold shadow-md" // Větší a výraznější
+                  className="w-full md:w-auto min-w-[120px] h-full text-base font-bold shadow-md" 
                 >
                   Next Page →
                 </Button>
@@ -335,6 +509,39 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
           </div>
         </div>
+        <FeedbackFAB 
+          onModeChange={setFeedbackMode} 
+          currentMode={feedbackMode} 
+          onPlaceFeedback={handlePlaceFeedback}
+          lessonId={parseInt(lessonId)}
+          slideIndex={currentPage}
+        />
+
+        <FeedbackSubmissionModal 
+          isOpen={feedbackToPlace !== null}
+          onClose={() => {
+            setFeedbackToPlace(null);
+            setFeedbackMode('idle');
+          }}
+          onSubmitSuccess={() => {
+            setFeedbackToPlace(null);
+            setFeedbackMode('idle');
+          }}
+          lessonId={parseInt(lessonId)}
+          slideIndex={feedbackToPlace?.slideIndex || 0}
+          x={feedbackToPlace?.x || 0}
+          y={feedbackToPlace?.y || 0}
+        />
+
+        <FeedbackDetailModal 
+          isOpen={selectedFeedback !== null}
+          onClose={() => setSelectedFeedback(null)}
+          feedbackItem={selectedFeedback}
+          onVote={handleVote}
+          onReply={handleReply}
+          onDelete={handleDelete}
+          onUpdate={() => {}} // Not implemented yet
+        />
       </div>
     </ProtectedRoute>
   );

@@ -155,10 +155,12 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
                percentage >= 60 ? "✅ Good job!" :
                "📚 Keep practicing!"}
             </p>
-            {/* Only show 'Try Again' if not passed or if user wants to improve score (though backend won't award XP twice easily) */}
-            <Button onClick={handleReset} variant="outline">
-              Try Again
-            </Button>
+            {/* Only show 'Try Again' if score is low */}
+            {percentage < 70 && (
+              <Button onClick={handleReset} variant="outline">
+                Try Again
+              </Button>
+            )}
         </div>
       )}
 

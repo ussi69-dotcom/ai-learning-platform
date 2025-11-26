@@ -7,6 +7,12 @@ import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import CourseIcon from "@/components/CourseIcon";
+import FeedbackFAB from "@/components/FeedbackFAB";
+import FeedbackSubmissionModal from "@/components/FeedbackSubmissionModal";
+import FeedbackDetailModal from "@/components/FeedbackDetailModal";
+import FeedbackMarker from "@/components/FeedbackMarker";
+
+type FeedbackMode = 'idle' | 'placing' | 'viewing';
 
 // Difficulty level labels with emojis
 const DIFFICULTY_LABELS: Record<string, string> = {
@@ -39,6 +45,12 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null);
   const [lastLesson, setLastLesson] = useState<UserProgress | null>(null);
   const [loadingResume, setLoadingResume] = useState(true);
+
+  // Feedback State
+  const [feedbackMode, setFeedbackMode] = useState<FeedbackMode>('idle');
+  const [feedbackToPlace, setFeedbackToPlace] = useState<{ x: number; y: number } | null>(null);
+  const [feedbackItems, setFeedbackItems] = useState<any[]>([]);
+  const [selectedFeedback, setSelectedFeedback] = useState<any>(null);
 
 
   useEffect(() => {
@@ -95,6 +107,103 @@ export default function HomePage() {
     }
   }, [token, isLoading]);
 
+  // Fetch Global Feedback
+  useEffect(() => {
+    if (feedbackMode !== 'viewing' || !token) return;
+
+    const fetchFeedback = async () => {
+      try {
+        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const res = await axios.get(`${API_BASE}/feedback`, {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        setFeedbackItems(res.data);
+      } catch (error) {
+        console.error("Failed to fetch feedback:", error);
+      }
+    };
+
+    fetchFeedback();
+  }, [feedbackMode, token]);
+
+  const handlePlaceFeedback = (x: number, y: number) => {
+    setFeedbackToPlace({ x, y });
+    setFeedbackMode('idle');
+  };
+
+  const handleVote = async (id: number, direction: 'up' | 'down') => {
+    try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      await axios.post(`${API_BASE}/feedback/${id}/vote`, null, {
+        params: { direction },
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      // Refresh
+      const res = await axios.get(`${API_BASE}/feedback`, {
+          headers: { "Authorization": `Bearer ${token}` }
+      });
+      setFeedbackItems(res.data);
+      if (selectedFeedback && selectedFeedback.id === id) {
+         const updated = res.data.find((i: any) => i.id === id);
+         setSelectedFeedback(updated);
+      }
+    } catch (error) {
+      console.error("Vote failed:", error);
+    }
+  };
+
+  const handleReply = async (parentId: number, message: string) => {
+     try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const parent = feedbackItems.find(i => i.id === parentId) || selectedFeedback;
+      if (!parent) return;
+
+      await axios.post(`${API_BASE}/feedback/${parentId}/reply`, {
+        lesson_id: parent.lesson_id,
+        slide_index: parent.slide_index,
+        x_pos: parent.x_pos,
+        y_pos: parent.y_pos,
+        type: parent.type,
+        message: message,
+        parent_id: parentId
+      }, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+
+      // Refresh
+      const res = await axios.get(`${API_BASE}/feedback`, {
+          headers: { "Authorization": `Bearer ${token}` }
+      });
+      setFeedbackItems(res.data);
+      if (selectedFeedback && selectedFeedback.id === parentId) {
+         const updated = res.data.find((i: any) => i.id === parentId);
+         setSelectedFeedback(updated);
+      }
+    } catch (error) {
+      console.error("Reply failed:", error);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      await axios.delete(`${API_BASE}/feedback/${id}`, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      
+      // Refresh
+      const res = await axios.get(`${API_BASE}/feedback`, {
+          headers: { "Authorization": `Bearer ${token}` }
+      });
+      setFeedbackItems(res.data);
+      if (selectedFeedback && selectedFeedback.id === id) {
+        setSelectedFeedback(null);
+      }
+    } catch (error) {
+      console.error("Delete failed:", error);
+    }
+  };
+
   if (isLoading || loadingCourses || loadingResume) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
@@ -107,7 +216,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-screen flex-col bg-background text-foreground relative" id="lesson-content-container">
       {/* Hero Sekce */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-card/50 border-b border-border">
         <div className="container px-4 md:px-6 mx-auto text-center">
@@ -180,8 +289,8 @@ export default function HomePage() {
                         <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity">
                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.3),transparent_50%)]" />
                         </div>
-                        <div className="w-32 h-32 transform group-hover:scale-110 transition-transform duration-500 drop-shadow-2xl">
-                           <CourseIcon courseId={course.id} slug={course.slug} />
+                        <div className="absolute inset-0 w-full h-full flex items-center justify-center transform group-hover:scale-105 transition-transform duration-500">
+                           <CourseIcon courseId={course.id} slug={course.slug} imageUrl={course.image_url} objectFit="cover" />
                         </div>
                         <span className="absolute top-3 right-3 text-[10px] font-bold bg-black/50 backdrop-blur-md text-white px-2 py-1 rounded-full border border-white/10">
                           {DIFFICULTY_LABELS[course.difficulty_level]}
@@ -220,6 +329,62 @@ export default function HomePage() {
             </div>
           )}
       </section>
+
+      {/* Feedback System */}
+      {user && (
+        <>
+          <FeedbackFAB 
+            onModeChange={setFeedbackMode} 
+            currentMode={feedbackMode} 
+            onPlaceFeedback={(x, y) => handlePlaceFeedback(x, y)}
+            lessonId={0} // Dummy or ignored
+            slideIndex={0} // Dummy or ignored
+          />
+
+          <FeedbackSubmissionModal 
+            isOpen={feedbackToPlace !== null}
+            onClose={() => {
+              setFeedbackToPlace(null);
+              setFeedbackMode('idle');
+            }}
+            onSubmitSuccess={() => {
+              setFeedbackToPlace(null);
+              setFeedbackMode('idle');
+            }}
+            x={feedbackToPlace?.x || 0}
+            y={feedbackToPlace?.y || 0}
+          />
+
+          <FeedbackDetailModal 
+            isOpen={selectedFeedback !== null}
+            onClose={() => setSelectedFeedback(null)}
+            feedbackItem={selectedFeedback}
+            onVote={handleVote}
+            onReply={handleReply}
+            onDelete={handleDelete}
+            onUpdate={() => {}} 
+          />
+
+          {/* Markers */}
+          {feedbackMode === 'viewing' && (
+              <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden h-full w-full">
+                 {feedbackItems.map((item) => (
+                    <div key={item.id} className="pointer-events-auto">
+                      <FeedbackMarker 
+                        x={item.x_pos} 
+                        y={item.y_pos} 
+                        type={item.type} 
+                        message={item.message} 
+                        author={item.author}
+                        isResolved={item.is_resolved}
+                        onClick={() => setSelectedFeedback(item)}
+                      />
+                    </div>
+                 ))}
+              </div>
+            )}
+        </>
+      )}
     </div>
   )
 }
