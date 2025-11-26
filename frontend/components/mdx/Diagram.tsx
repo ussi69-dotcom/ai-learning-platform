@@ -3,12 +3,135 @@
 import React from 'react';
 
 interface DiagramProps {
-  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop' | 'prompt-cheat-sheet';
+  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop' | 'prompt-cheat-sheet' | 'traditional-vs-ml';
 }
 
 export default function Diagram({ type }: DiagramProps) {
   // ... (existing diagrams) ...
 
+  if (type === 'traditional-vs-ml') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 700 300" className="w-full h-auto" role="img" aria-label="Traditional Programming vs Machine Learning">
+             <defs>
+              <marker id="arrowhead-tvm" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+            
+            {/* Divider */}
+            <line x1="350" y1="20" x2="350" y2="280" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
+
+            {/* LEFT: TRADITIONAL */}
+            <g transform="translate(50, 40)">
+              <text x="120" y="0" textAnchor="middle" className="text-lg font-bold fill-blue-600 dark:fill-blue-400 uppercase">Traditional</text>
+              
+              {/* Inputs */}
+              <g transform="translate(0, 40)">
+                <rect x="0" y="0" width="100" height="40" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
+                <text x="50" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Rules</text>
+                
+                <rect x="140" y="0" width="100" height="40" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
+                <text x="190" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Data</text>
+              </g>
+
+              {/* Process */}
+              <path d="M 50 80 L 100 120" stroke="#94a3b8" strokeWidth="2" />
+              <path d="M 190 80 L 140 120" stroke="#94a3b8" strokeWidth="2" />
+              
+              <rect x="70" y="120" width="100" height="60" rx="8" fill="#1e293b" stroke="#334155" />
+              <text x="120" y="155" textAnchor="middle" className="text-2xl">💻</text>
+
+              {/* Output */}
+              <path d="M 120 180 L 120 210" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-tvm)" />
+              
+              <rect x="70" y="210" width="100" height="40" rx="4" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
+              <text x="120" y="235" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">Answers</text>
+            </g>
+
+            {/* RIGHT: MACHINE LEARNING */}
+             <g transform="translate(400, 40)">
+              <text x="120" y="0" textAnchor="middle" className="text-lg font-bold fill-purple-600 dark:fill-purple-400 uppercase">Machine Learning</text>
+              
+              {/* Inputs */}
+              <g transform="translate(0, 40)">
+                <rect x="0" y="0" width="100" height="40" rx="4" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" />
+                <text x="50" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Answers</text>
+                
+                <rect x="140" y="0" width="100" height="40" rx="4" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" />
+                <text x="190" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Data</text>
+              </g>
+
+              {/* Process */}
+              <path d="M 50 80 L 100 120" stroke="#94a3b8" strokeWidth="2" />
+              <path d="M 190 80 L 140 120" stroke="#94a3b8" strokeWidth="2" />
+              
+              <rect x="70" y="120" width="100" height="60" rx="8" fill="#1e293b" stroke="#334155" />
+              <text x="120" y="155" textAnchor="middle" className="text-2xl">🧠</text>
+
+              {/* Output */}
+              <path d="M 120 180 L 120 210" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-tvm)" />
+              
+              <rect x="70" y="210" width="100" height="40" rx="4" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" />
+              <text x="120" y="235" textAnchor="middle" className="text-sm font-bold fill-amber-700 dark:fill-amber-300">Rules</text>
+            </g>
+
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'training-loop') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 700 250" className="w-full h-auto" role="img" aria-label="Training Loop: Guess -> Error -> Update">
+            <defs>
+              <marker id="arrowhead-loop" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Step 1: Guess */}
+            <g transform="translate(50, 50)">
+              <rect x="0" y="0" width="120" height="80" rx="8" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
+              <text x="60" y="30" textAnchor="middle" className="text-2xl">🤔</text>
+              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">1. Guess</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Is it a Dog?"</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 180 90 L 220 90" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-loop)" />
+
+            {/* Step 2: Error (Loss) */}
+            <g transform="translate(230, 50)">
+              <rect x="0" y="0" width="120" height="80" rx="8" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" />
+              <text x="60" y="30" textAnchor="middle" className="text-2xl">❌</text>
+              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-red-700 dark:fill-red-300">2. Error</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Wrong! It's a Cat."</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 360 90 L 400 90" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-loop)" />
+
+            {/* Step 3: Update (Optimizer) */}
+            <g transform="translate(410, 50)">
+              <rect x="0" y="0" width="120" height="80" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" />
+              <text x="60" y="30" textAnchor="middle" className="text-2xl">🔧</text>
+              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">3. Update</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">Tweak Weights</text>
+            </g>
+
+            {/* Loop Back Arrow - MOVED LOWER to avoid text overlap */}
+            <path d="M 470 140 Q 470 200 350 200 Q 110 200 110 140" fill="none" stroke="#a855f7" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowhead-loop)" />
+            <text x="290" y="190" textAnchor="middle" className="text-xs font-bold fill-purple-700 dark:fill-purple-300">Repeat 1,000,000x</text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
   if (type === 'tokenization-viz') {
     return (
       <div className="my-8 flex justify-center">
@@ -715,55 +838,7 @@ export default function Diagram({ type }: DiagramProps) {
     );
   }
 
-  if (type === 'training-loop') {
-    return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
-          <svg viewBox="0 0 700 250" className="w-full h-auto" role="img" aria-label="Training Loop: Guess -> Error -> Update">
-            <defs>
-              <marker id="arrowhead-loop" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
-              </marker>
-            </defs>
 
-            {/* Step 1: Guess */}
-            <g transform="translate(50, 50)">
-              <rect x="0" y="0" width="120" height="80" rx="8" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
-              <text x="60" y="30" textAnchor="middle" className="text-2xl">🤔</text>
-              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">1. Guess</text>
-              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Is it a Dog?"</text>
-            </g>
-
-            {/* Arrow */}
-            <path d="M 180 90 L 220 90" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-loop)" />
-
-            {/* Step 2: Error (Loss) */}
-            <g transform="translate(230, 50)">
-              <rect x="0" y="0" width="120" height="80" rx="8" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" />
-              <text x="60" y="30" textAnchor="middle" className="text-2xl">❌</text>
-              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-red-700 dark:fill-red-300">2. Error</text>
-              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Wrong! It's a Cat."</text>
-            </g>
-
-            {/* Arrow */}
-            <path d="M 360 90 L 400 90" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-loop)" />
-
-            {/* Step 3: Update (Optimizer) */}
-            <g transform="translate(410, 50)">
-              <rect x="0" y="0" width="120" height="80" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" />
-              <text x="60" y="30" textAnchor="middle" className="text-2xl">🔧</text>
-              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">3. Update</text>
-              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">Tweak Weights</text>
-            </g>
-
-            {/* Loop Back Arrow */}
-            <path d="M 470 140 Q 470 180 350 180 Q 110 180 110 140" fill="none" stroke="#a855f7" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowhead-loop)" />
-            <text x="290" y="170" textAnchor="middle" className="text-xs font-bold fill-purple-700 dark:fill-purple-300">Repeat 1,000,000x</text>
-          </svg>
-        </div>
-      </div>
-    );
-  }
 
   if (type === 'black-box') {
     return (
