@@ -165,6 +165,7 @@ When creating new content, follow this strict protocol:
 2.  **Visual Richness**:
     - Every slide MUST have a visual element (Diagram, Icon, CodeBlock).
     - Use new diagram types: `llm-next-token`, `tokenization-viz`, `training-pipeline`.
+    - **Diagram Check**: Before creating a new diagram, check `Diagram.tsx` for existing ones to avoid duplication. Ensure SVG paths do not overlap text.
 
 3.  **Technical**:
     - Use `docker-compose restart backend` to apply content changes (seed runs on startup).

@@ -25,7 +25,8 @@ Every lesson MUST follow this structure:
 ## 3. Visual Rules (SVG First) 🎨
 *   **NO Raster Images:** Do not use `.png` or `.jpg` files unless absolutely necessary (and approved).
 *   **Use Diagrams:** Use the `<Diagram type="...">` component.
-    *   *Available Types:* `neural-network`, `training-loop`, `ai-timeline`, `dashboard-ui`, `data-analysis-chart`, etc.
+    *   **Check First:** Before creating a new diagram, check `frontend/components/mdx/Diagram.tsx` to see if a suitable one already exists. **Do not create duplicates.**
+    *   *Available Types:* `neural-network`, `training-loop`, `traditional-vs-ml`, `ai-timeline`, `dashboard-ui`, `data-analysis-chart`, etc.
     *   *Why?* Scales perfectly, respects Dark Mode, editable via code.
 *   **Icons:** Use `LessonIcon` and `CourseIcon` components for UI elements.
 
@@ -77,18 +78,21 @@ Write a poem about a robot who loves gardening.
     // ❌ WRONG (unreadable in light mode)
     className="fill-slate-400"
     ```
+*   **Legibility:** Ensure SVG paths (arrows, lines) DO NOT overlap with text labels. Test visually.
+*   **Context Match:** Ensure the diagram fits the specific pedagogical goal (e.g., use `traditional-vs-ml` for rule-based vs learning, and `training-loop` for the feedback cycle).
 *   **Font Sizes:** Minimum `text-xs` for body text, `text-[10px]` for labels.
 *   **Test Both Modes:** Verify diagrams in both light and dark themes before committing.
 
-### Component Limitations
-*   **ConceptCard Restriction:** `<Diagram>` components DO NOT render inside `<ConceptCard>`.
-    *   **Solution:** Use icon-based lists or text formatting instead.
+### Component Capabilities
+*   **Nested Markdown:** `<ConceptCard>` and `<Callout>` support complex Markdown (Lists, Code Blocks, Headings) thanks to recursive parsing.
+    *   **Requirement:** Ensure valid Markdown structure.
     *   **Pattern:**
       ```markdown
+      <ConceptCard ...>
       ### 🔑 Key Points
-      *   🎭 **Item 1:** Description
-      *   ⚔️ **Item 2:** Description
+      *   **Item 1:** Description
       ```
+*   **Diagrams in Cards:** While possible, avoid putting heavy `<Diagram>` components inside `<ConceptCard>` to prevent layout clutter. Use them *between* cards.
 
 ### Code Blocks
 *   **Language Identifier:** Always specify language for syntax highlighting:
