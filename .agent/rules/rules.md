@@ -153,22 +153,13 @@ git push origin main
 
 # 📚 Lesson Generation Protocol
 
-When creating new content, follow this strict protocol:
+When creating new content:
 
-1.  **Structure**:
-    - **Hook**: Video (< 20 min) + Intro.
-    - **Concepts**: Split by `## Heading` (short slides).
-    - **Lab**: `<LabSection>` with unique title.
-    - **Mission Report**: Mandatory summary before quiz.
+1.  **Structure & Design**: Strictly follow the **"Structure of a Lesson"** and **"Visual Rules"** defined in `.ai-context/CONTENT_GUIDELINES.md`.
+2.  **Diagram Check**: Before creating a new diagram, check `Diagram.tsx` for existing ones to avoid duplication. Ensure SVG paths do not overlap text.
+3.  **Technical Constraints**:
     - **Quiz**: DO NOT put `<Quiz>` tag in MDX. Quiz data goes into `quiz.json` and is rendered automatically.
-
-2.  **Visual Richness**:
-    - Every slide MUST have a visual element (Diagram, Icon, CodeBlock).
-    - Use new diagram types: `llm-next-token`, `tokenization-viz`, `training-pipeline`.
-    - **Diagram Check**: Before creating a new diagram, check `Diagram.tsx` for existing ones to avoid duplication. Ensure SVG paths do not overlap text.
-
-3.  **Technical**:
-    - Use `docker-compose restart backend` to apply content changes (seed runs on startup).
+    - **Updates**: Use `docker-compose restart backend` to apply content changes (seed runs on startup).
 
 # 🗄️ Database Management Protocol
 
@@ -184,23 +175,13 @@ When creating new content, follow this strict protocol:
 
 # 🎨 Design System Compliance
 
-When working on frontend:
+## Primary Directive:
+**Adhere strictly to `.ai-context/CONTENT_GUIDELINES.md` for all UI, Component, and Content decisions.**
 
-## Must Follow:
-- **"Liquid Glass" effect**: `bg-white/10 backdrop-blur-xl border-white/10`
-- **No stock images**: Only SVG diagrams or educational screenshots
-- **Mobile-first**: Test on mobile viewport
-- **Dark mode**: All components must support dark mode
-- **Component usage**: Use existing components from `frontend/components/mdx/`
-
-## Component Hierarchy:
-1. `<Callout>` - Important notes
-2. `<ConceptCard>` - Key concepts
-3. `<Diagram>` - Visual explanations
-4. `<Steps>` - Sequential instructions
-5. `<MDXImage>` - Educational screenshots (rare)
-
-Refer to `CONTENT_GUIDELINES.md` for detailed rules.
+## Critical Reminders:
+- **"Liquid Glass" Aesthetic**: Use `bg-white/10 backdrop-blur-xl` styles as defined in guidelines.
+- **Mobile-First**: Always test layout on mobile viewports.
+- **Dark Mode**: Ensure all components render correctly in dark mode.
 
 ---
 
