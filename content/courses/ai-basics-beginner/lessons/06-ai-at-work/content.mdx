@@ -1,5 +1,10 @@
 # AI at Work: The Enterprise Era 💼
 
+<Callout type="info">
+**Mission Goal:** Stop drowning in busywork. Learn to use AI for meetings, writing, and data analysis.
+⏳ **Reading Time:** 20 min | 🧪 **3 Labs Included**
+</Callout>
+
 The steam engine replaced muscle. The computer replaced calculation. **AI is replacing drudgery.**
 We are entering a new Industrial Revolution. This time, it's not about working harder; it's about working smarter.
 
@@ -11,7 +16,7 @@ We are drowning in data.
 *   **19%** is searching for information.
 That leaves only **22%** for actual creative work.
 
-![Enterprise AI Dashboard](images/dashboard.png)
+<Diagram type="dashboard-ui" />
 
 <ConceptCard title="The New Equation" icon="📈">
 *   **Old Way:** You do the research + You write the draft + You edit the final + You format the slides.
@@ -102,7 +107,7 @@ AI tools (like **Copilot for Excel** or **ChatGPT Data Analyst**) allow you to t
 Instead of writing `=VLOOKUP(...)`, you can type:
 > *"Show me the sales trend for Q3 compared to Q4."*
 
-![AI Data Analyst](images/data-analyst.png)
+<Diagram type="data-analysis-chart" />
 
 ### Finding the Invisible
 AI can scan thousands of rows to find:
@@ -158,17 +163,22 @@ As highlighted in the tutorial, **Copilot Pages** allows you to turn a fleeting 
 ## 🛡️ 6. Safety & Privacy at Work
 
 **Rule #1: Your Data is Your Data.**
-When using AI at work, you must understand the difference between **Public** and **Enterprise** models.
+Follow this workflow before pasting any company data into an AI tool.
 
-### 🚫 Public AI (ChatGPT Free, Personal Accounts)
-*   **Risk:** Anything you type is sent to the cloud and *may* be used to train future models.
-*   **Danger:** If you paste a confidential roadmap, it could theoretically leak to a competitor.
-*   **Rule:** Never paste PII (Personally Identifiable Information), passwords, or trade secrets.
+<Steps>
+### 1. Check the Tool Type 🔍
+Is it **Public** (ChatGPT Free, Personal Account) or **Enterprise** (Copilot, ChatGPT Enterprise)?
+*   **Public:** Training data is collected. Unsafe for secrets.
+*   **Enterprise:** Data stays in your tenant. Safe for work.
 
-### ✅ Enterprise AI (Copilot, ChatGPT Enterprise)
-*   **Safety:** Your data stays within your company's "tenant" (secure bubble).
-*   **No Training:** Microsoft/OpenAI explicitly guarantees they do *not* train on your data.
-*   **Compliance:** It respects your company's existing permissions (e.g., you can't search for the CEO's salary unless you have access).
+### 2. Assess Data Sensitivity 🔐
+Are you working with public info (marketing copy) or secret info (roadmap, passwords, PII)?
+*   **Never** paste passwords or PII (Personally Identifiable Information) into ANY AI.
+
+### 3. The Samsung Test 📱
+Ask yourself: *"If this conversation leaked to a competitor tomorrow, would I be fired?"*
+If yes, do not type it.
+</Steps>
 
 <Callout type="warning">
 **The "Samsung Incident":** Engineers pasted proprietary code into a public chatbot to fix it. That code became part of the model's training data. Don't be that guy.

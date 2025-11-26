@@ -1,81 +1,67 @@
-# 🎨 AI Learning Platform - Content & Design Guidelines
-> **Standard Version:** "The Masterpiece" (Cycle 26+)
-> **Benchmark:** ALWAYS refer to **Lesson 4** (`04-your-first-prompt`) as the visual and structural gold standard.
+# 📜 Content Guidelines (The Golden Standard)
 
----
+This document defines the "Masterpiece" quality standard for all course content.
 
-## 1. The "Masterpiece" Structure 📏
-Every lesson must feel like a deep-dive manual.
-**Target Length:** 10-15 Sections (Pages).
+## 1. Core Philosophy
+*   **"Liquid Glass" Aesthetic:** Content must look native to the dark-mode, neon-accented UI.
+*   **Interactive First:** No passive reading. Labs and Quizzes drive engagement.
+*   **Jedi/Sith Theme:** Use analogies (The Force, Droids, Holocrons) but keep it professional.
 
-1.  **The Briefing (Header Only):**
-    *   **Video:** Defined in `meta.json` ONLY.
-    *   **Source:** Top-tier educational (IBM, Jeff Su). No sales promo.
-    *   **Rule:** **NEVER** embed the video `<YouTube>` inside the MDX body. It creates duplicates.
-    *   **Integration:** The text MUST explicitly reference concepts from the video ("As seen in the video..."). Do not just place the video and ignore it.
-2.  **The Hook:** Start with a Star Wars analogy or strong "Why".
-3.  **The Core Pillars:** Break topic into 3-5 concepts. Use Visual Anchors for each.
-4.  **The Labs:** "Copy & Paste" ready.
-5.  **The Summary (Holocron):** A structured Cheat Sheet.
+## 2. Structure of a Lesson
+Every lesson MUST follow this structure:
 
----
+1.  **Header Callout:**
+    ```markdown
+    <Callout type="info">
+    **Mission Goal:** [One sentence goal]
+    ⏳ **Reading Time:** 15 min | 🧪 **[X] Labs Included**
+    </Callout>
+    ```
+2.  **The Hook:** Why does this matter? (Star Wars analogy allowed).
+3.  **Core Concepts:** Broken down into sections with **Visual Anchors**.
+4.  **Interactive Labs:** Copy-Paste ready prompts.
+5.  **The Holocron:** A summary ConceptCard at the end.
 
-## 2. The Lab Protocol (Crucial) 🧪
-Interactive Labs must be frictionless.
+## 3. Visual Rules (SVG First) 🎨
+*   **NO Raster Images:** Do not use `.png` or `.jpg` files unless absolutely necessary (and approved).
+*   **Use Diagrams:** Use the `<Diagram type="...">` component.
+    *   *Available Types:* `neural-network`, `training-loop`, `ai-timeline`, `dashboard-ui`, `data-analysis-chart`, etc.
+    *   *Why?* Scales perfectly, respects Dark Mode, editable via code.
+*   **Icons:** Use `LessonIcon` and `CourseIcon` components for UI elements.
 
-*   **❌ The Wrong Way:**
-    *   Putting instructions inside the code block.
-    *   *Example:*
-        ```text
-        Step 1: Copy this prompt.
-        Act as a bot...
-        ```
-*   **✅ The Masterpiece Way:**
-    *   Instructions outside. Payload inside.
-    *   *Example:*
-        "Copy this prompt exactly:"
-        ```text
-        Act as a bot...
-        ```
+## 4. Component Usage
 
----
+### `<ConceptCard>`
+Use for key definitions or summaries.
+```tsx
+<ConceptCard title="The Student" icon="🎓" jediQuote="Much to learn...">
+  Content...
+</ConceptCard>
+```
 
-## 3. Visual Strategy & Formatting 🎨
-*   **Visual Anchors:** Every scroll MUST have a visual element.
-    *   `<ConceptCard>`, `<Diagram>`, `<Callout>`, or **Icon Lists** (🎭, ⚔️).
-    *   **Rule:** **NO RECYCLED IMAGES.** Generate new, specific images for every lesson.
-    *   **Rule:** **NO WALLS OF TEXT.** No slide should be shorter than 4 lines (too empty) or longer than 2 paragraphs without a visual break.
-*   **Tables:** Use Markdown tables for "Weak vs. Strong" comparisons.
-*   **Formatting:**
-    *   Use **Bold** for key terms.
-    *   Use `Code Style` for technical terms.
-    *   Use Delimiters (`---`) to separate sections within cards.
+### `<Steps>`
+Use for sequential instructions or lab analysis.
 
----
+### `<Callout>`
+Use for warnings (Hallucinations) or tips.
+*   `type="info"`: General info (Blue)
+*   `type="warning"`: Risks/Hallucinations (Yellow/Red)
+*   `type="success"`: Achievements (Green)
+*   `type="tip"`: Pro Tips (Purple)
 
-## 4. The "No Wipe" Rule (Iteration) 🔄
-*   **Evolution, not Revolution:** When asked to "expand" or "improve", **DO NOT DELETE** existing high-quality content unless explicitly told to.
-*   **Integrate:** Merge new concepts (e.g., from a video) with existing technical sections (e.g., Delimiters, JSON).
-*   **Incrementalism:** If asked to fix one section, **DO NOT** rewrite the whole lesson. Fix only what is broken.
+## 5. Lab Standards
+Labs must be "Copy-Paste" ready. Don't describe the prompt. Write it.
 
----
+**Bad:** "Ask the AI to write a poem."
+**Good:**
+```markdown
+**The Prompt:**
+```text
+Write a poem about a robot who loves gardening.
+```
+```
 
-## 5. The Summary Protocol (The Holocron) 🏆
-The final page is not a goodbye; it is a **Cheat Sheet**.
-*   **Format:** Inside a `<ConceptCard>`.
-*   **Structure:**
-    *   ### Category 1
-    *   *   **Concept:** Definition.
-    *   ### Category 2
-    *   *   **Concept:** Definition.
-*   **Goal:** The user should want to screenshot this page.
-
----
-
-## 6. Technical Protocols 🛠️
-*   **Quizzes:** `quiz.json` (5+ questions, focus on logic/reasoning).
-*   **Metadata:** Update `meta.json` (Video URL, Description).
-*   **Database:** `docker-compose restart backend` after content changes.
-
----
-**Status:** Updated Cycle 27 (Refined after Lesson 4 Iterations)
+## 6. Tone & Voice
+*   **Empowering:** You are the Jedi Master guiding a Padawan.
+*   **Precise:** No fluff. Short paragraphs.
+*   **Formatted:** Use **Bold** for key terms. Use lists often.

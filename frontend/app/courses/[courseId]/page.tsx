@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/card";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { use, useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import CourseIcon from "@/components/CourseIcon";
+import LessonIcon from "@/components/LessonIcon";
 
 export default function CoursePage({ params }: { params: Promise<{ courseId: string }> }) {
   // Unwrap params Promise (Next.js 16 requirement)
@@ -96,6 +98,9 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
       <div className="container mx-auto py-12 px-4 max-w-4xl bg-white dark:bg-slate-950 transition-colors duration-300 min-h-screen">
         {/* Header */}
         <div className="mb-12 text-center space-y-6">
+          <div className="w-24 h-24 mx-auto mb-6 animate-in zoom-in-50 duration-500">
+             <CourseIcon courseId={course.id} slug={course.slug} />
+          </div>
           <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">{course.title}</h1>
           <p className="text-xl text-slate-600 dark:text-slate-400">{course.description}</p>
           
@@ -144,22 +149,26 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
             lessons.map((lesson: any) => (
               <Card key={lesson.id} className="group hover:border-indigo-500 dark:hover:border-red-500 transition-colors">
                 <Link href={`/courses/${courseId}/lessons/${lesson.id}`} className="flex items-center p-6">
-                  <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold mr-6 transition-colors ${
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center mr-6 transition-colors duration-300 ${
                     completedLessonIds.includes(lesson.id)
-                      ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400'
-                      : 'bg-indigo-50 text-indigo-600 dark:bg-slate-800 dark:text-indigo-400 group-hover:bg-indigo-100 dark:group-hover:bg-slate-700'
+                      ? 'bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400 shadow-[0_0_10px_rgba(34,197,94,0.2)]'
+                      : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 group-hover:bg-indigo-50 dark:group-hover:bg-slate-700'
                   }`}>
-                    {completedLessonIds.includes(lesson.id) ? '✓' : lesson.order}
+                    <LessonIcon 
+                      title={lesson.title} 
+                      completed={completedLessonIds.includes(lesson.id)} 
+                      className="w-6 h-6"
+                    />
                   </div>
-                  <div className="flex-grow">
-                    <h3 className="text-lg font-semibold group-hover:text-indigo-600 dark:group-hover:text-red-500 transition-colors text-slate-900 dark:text-white">
+                  <div className="flex-grow min-w-0 pr-4">
+                    <h3 className="text-lg font-semibold group-hover:text-indigo-600 dark:group-hover:text-red-500 transition-colors text-slate-900 dark:text-white truncate">
                       {lesson.title}
                     </h3>
                     <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-1">
                       {lesson.description}
                     </p>
                   </div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400 font-mono">
+                  <div className="text-sm text-slate-500 dark:text-slate-400 font-mono whitespace-nowrap flex-shrink-0">
                      Start &rarr;
                   </div>
                 </Link>

@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import CourseIcon from "@/components/CourseIcon";
 
 // Difficulty level labels with emojis
 const DIFFICULTY_LABELS: Record<string, string> = {
@@ -18,6 +19,7 @@ const DIFFICULTY_LABELS: Record<string, string> = {
 interface Course {
   id: number;
   title: string;
+  slug: string;
   description: string;
   image_url?: string;
   difficulty_level: string;
@@ -172,29 +174,37 @@ export default function HomePage() {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {courses.length > 0 ? (
                 courses.map((course) => (
-                  <Card key={course.id} className="hover:border-primary/50 transition-colors group">
-                    <CardHeader>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded font-semibold border border-primary/20">
+                  <Card key={course.id} className="hover:border-primary/50 transition-all duration-300 group overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm">
+                    {/* Course Image / Icon Area */}
+                    <div className="h-48 w-full bg-gradient-to-br from-slate-900 to-slate-800 relative p-4 flex items-center justify-center overflow-hidden">
+                        <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity">
+                           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.3),transparent_50%)]" />
+                        </div>
+                        <div className="w-32 h-32 transform group-hover:scale-110 transition-transform duration-500 drop-shadow-2xl">
+                           <CourseIcon courseId={course.id} slug={course.slug} />
+                        </div>
+                        <span className="absolute top-3 right-3 text-[10px] font-bold bg-black/50 backdrop-blur-md text-white px-2 py-1 rounded-full border border-white/10">
                           {DIFFICULTY_LABELS[course.difficulty_level]}
                         </span>
-                      </div>
-                      <CardTitle className="flex items-center gap-2">
-                        <Link href={`/courses/${course.id}`} className="hover:underline">
+                    </div>
+
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-xl">
+                        <Link href={`/courses/${course.id}`} className="hover:text-primary transition-colors">
                           {course.title}
                         </Link>
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground mb-4 text-sm min-h-[40px] line-clamp-3">
-                        {course.description || "No description"}
+                      <p className="text-muted-foreground mb-6 text-sm line-clamp-2 h-[40px]">
+                        {course.description || "No description available."}
                       </p>
-                      <div className="flex justify-between items-center mt-4">
-                        <span className="text-xs text-muted-foreground">ID: {course.id}</span>
+                      <div className="flex justify-between items-center pt-4 border-t border-border/50">
+                        <span className="text-xs text-muted-foreground font-mono">ID: {course.id}</span>
                         
                       <Link href={`/courses/${course.id}`}>
-                        <Button variant="outline" size="sm">
-                           Detail
+                        <Button size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                           Start Course →
                          </Button>
                       </Link>
                       </div>

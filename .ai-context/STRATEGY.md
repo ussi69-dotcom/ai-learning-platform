@@ -6,38 +6,31 @@ Students start as **Padawans** (Users) and graduate as **Jedi Knights** (Builder
 
 ---
 
-## 🎯 Learning Curve Design
+## 🗺️ Roadmap Status
 
-### Phase 1: The Padawan (Foundations & Prompting)
-**Goal:** Master the tools (ChatGPT, Claude) and understand the underlying mechanics without coding.
+### ✅ Phase 1: The Padawan (AI Basics) - COMPLETED
+**Goal:** Master the tools and understand the mechanics. "Golden Standard" achieved in Cycle 27.
 
-**Topics:**
-1.  **What is AI?** (Programming vs Training) - *Completed*
-2.  **How Machines Learn** (Neural Networks & Training Data) - *Completed*
-3.  **The Brains: LLMs Explained** (Tokens, Probability, Context Window)
-    *   *Video:* "Large Language Models in 5 minutes"
-    *   *Lab:* Tokenizer visualizer (Text -> Numbers)
-4.  **Jedi Mind Tricks: Prompt Engineering** (Context, Persona, Constraints)
-    *   *Lab:* "Fix the broken prompt"
-5.  **The Dark Side: Hallucinations & Bias** (Why AI lies and discriminates) - *Completed*
-    *   *Lab:* "Trick the AI into revealing secrets" (Safety basics)
-6.  **AI at Work: The Enterprise Era** (Copilot, Meeting Intel, HR Tools)
-    *   *Focus:* Microsoft Ecosystem, Transcription, Summarization, RAG Chatbots.
-    *   *Lab:* "The Meeting Minute Master" & "Email Polish".
-7.  **The Grand Trial** (Course Summary & Final Exam)
-    *   *Challenge:* A comprehensive test of all Padawan skills.
+**The Completed Curriculum:**
+1.  **What is AI?** (Programming vs Training) - *SVG Visualized*
+2.  **How Machines Learn** (Supervised/Unsupervised/RL) - *Visual Workflows*
+3.  **LLMs Explained** (Tokens, Context, Temperature) - *Interactive Labs*
+4.  **Prompt Engineering** (6 Pillars of Precision) - *Few-Shot Diagrams*
+5.  **The Dark Side** (Hallucinations & Bias) - *Safety First*
+6.  **AI at Work** (Enterprise Tools) - *Dashboard Simulation*
+7.  **Mission Summary** (Toolkit & Next Steps) - *Grand Finale*
 
-**Success Criteria:**
-- Understands Training vs Inference.
-- Can write structured, effective prompts (Chain of Thought).
-- Can identify hallucinations.
+**Key Features:**
+- **SVG-First Design:** No raster images dependencies.
+- **Copy-Paste Labs:** Immediate actionable learning.
+- **Liquid Glass UI:** Optimized for Dark Mode (Sith Theme).
 
 ---
 
-### Phase 2: The Jedi Knight (Building with APIs)
+### 🚧 Phase 2: The Jedi Knight (Building with APIs) - NEXT
 **Goal:** Code your first AI-powered Python applications. "Build your own Lightsaber".
 
-**Topics:**
+**Planned Topics:**
 1.  **Connecting to the Force (API Basics)**
     *   *Lab:* Your first `client.chat.completions.create` call.
 2.  **Droid Memory (Context & History)**
@@ -51,11 +44,6 @@ Students start as **Padawans** (Users) and graduate as **Jedi Knights** (Builder
 6.  **Project: The Holocron Assistant**
     *   *Multi-stage Lab:* Build a web-based helper using Streamlit/Gradio + OpenAI.
 
-**Success Criteria:**
-- Comfortable with Python `openai` / `anthropic` libraries.
-- Built a functional RAG system.
-- Deployed a simple AI web app.
-
 ---
 
 ### Phase 3: The Master (Production Systems)
@@ -64,25 +52,17 @@ Students start as **Padawans** (Users) and graduate as **Jedi Knights** (Builder
 1.  **Vector Databases** (Pinecone/Chroma deep dive)
 2.  **AI Agents & Swarms** (LangChain/CrewAI basics)
 3.  **Eval & Monitoring** (How to know if your Jedi is failing)
-4.  **Prompt Injection Defense** (Security)
-5.  **Local LLMs** (Running Llama 3 on your laptop)
+4.  **Local LLMs** (Running Llama 3 on your laptop)
 
 ---
 
-### Phase 4: The Grandmaster (Meta-Project)
-**Goal:** Rebuild THIS platform.
-*   Next.js Frontend + FastAPI Backend + Postgres + Vector DB.
+## 📚 "Golden Standard" Content Rules
+*   **Header:** Every lesson starts with a Mission Goal Callout.
+*   **Video:** Embedded YouTube video in `meta.json`.
+*   **Visuals:** Use `<Diagram type="...">`. No external images.
+*   **Labs:** Instructions must be copy-paste ready code blocks.
+*   **Summary:** End with a `<ConceptCard title="Holocron">`.
 
 ---
 
-## 📚 Content Rules (Cycle 24 Update)
-*   **Video First:** Every lesson starts with a curated YouTube video (<20 min).
-*   **Star Wars Easter Eggs:** Mandatory. Use quotes, names (Tatooine, Coruscant), and analogies.
-*   **Interactive Labs:**
-    *   Phase 1: Embedded `<LabSection>` (Quick wins).
-    *   Phase 2+: Multi-step project labs.
-*   **Visuals:** Use CSS Diagrams and Code Blocks. No generic stock photos.
-
----
-
-**Last Updated:** Cycle 24 (November 2025)
+**Last Updated:** Cycle 27 (Beginner Course Finalized)

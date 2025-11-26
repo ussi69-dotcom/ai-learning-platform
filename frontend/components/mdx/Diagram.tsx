@@ -3,7 +3,7 @@
 import React from 'react';
 
 interface DiagramProps {
-  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline';
+  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart';
 }
 
 export default function Diagram({ type }: DiagramProps) {
@@ -305,6 +305,356 @@ export default function Diagram({ type }: DiagramProps) {
               <text x="95" y="78" textAnchor="middle" className="text-[8px] fill-white font-bold">Action</text>
             </g>
 
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'llm-next-token') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="LLM Prediction: Calculating probabilities for the next token">
+            {/* Input Context */}
+            <text x="50" y="40" className="text-sm font-bold fill-slate-400">Context:</text>
+            <text x="50" y="70" className="text-2xl font-mono fill-white">"The sky is"</text>
+
+            {/* Arrows */}
+            <path d="M 200 60 L 250 60" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
+
+            {/* Probabilities */}
+            <g transform="translate(270, 20)">
+              {/* Option 1: Blue */}
+              <rect x="0" y="0" width="200" height="30" rx="4" fill="#3b82f6" fillOpacity="0.2" />
+              <rect x="0" y="0" width="180" height="30" rx="4" fill="#3b82f6" />
+              <text x="10" y="20" className="text-sm font-bold fill-white">blue (90%)</text>
+
+              {/* Option 2: Gray */}
+              <rect x="0" y="40" width="200" height="30" rx="4" fill="#94a3b8" fillOpacity="0.2" />
+              <rect x="0" y="40" width="20" height="30" rx="4" fill="#94a3b8" />
+              <text x="10" y="60" className="text-sm font-bold fill-white">gray (5%)</text>
+
+              {/* Option 3: Green */}
+              <rect x="0" y="80" width="200" height="30" rx="4" fill="#22c55e" fillOpacity="0.2" />
+              <rect x="0" y="80" width="10" height="30" rx="4" fill="#22c55e" />
+              <text x="10" y="100" className="text-sm font-bold fill-white">green (1%)</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'context-window') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 150" className="w-full h-auto" role="img" aria-label="Context Window: Moving window of attention">
+            {/* Text Stream */}
+            <g transform="translate(50, 60)">
+              <text x="0" y="0" className="text-lg font-mono fill-slate-600">Once upon a time there was a droid...</text>
+            </g>
+            
+            {/* The Window */}
+            <rect x="180" y="30" width="300" height="50" rx="8" fill="none" stroke="#a855f7" strokeWidth="3" strokeDasharray="6 6" />
+            <text x="330" y="20" textAnchor="middle" className="text-xs font-bold fill-purple-400">Context Window (Attention)</text>
+
+            {/* Fog of War (Forgotten) */}
+            <rect x="40" y="30" width="130" height="50" fill="url(#fog-grad)" />
+            <defs>
+              <linearGradient id="fog-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#0f172a" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#0f172a" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <text x="100" y="100" textAnchor="middle" className="text-xs fill-slate-500">Forgotten / Dropped</text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'temperature-scale') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="Temperature Scale: Precise vs Creative">
+            {/* Gradient Line */}
+            <defs>
+              <linearGradient id="temp-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#ef4444" />
+              </linearGradient>
+            </defs>
+            <rect x="50" y="90" width="500" height="20" rx="10" fill="url(#temp-grad)" />
+
+            {/* Low Temp */}
+            <g transform="translate(50, 50)">
+              <text x="0" y="0" className="text-xl font-bold fill-blue-400">0.0</text>
+              <text x="0" y="25" className="text-xs fill-blue-300">Precise / Logical</text>
+              <text x="0" y="130" className="text-xs fill-slate-400">"Math, Coding"</text>
+            </g>
+
+            {/* High Temp */}
+            <g transform="translate(500, 50)">
+              <text x="0" y="0" textAnchor="end" className="text-xl font-bold fill-red-400">1.0</text>
+              <text x="0" y="25" textAnchor="end" className="text-xs fill-red-300">Creative / Random</text>
+              <text x="0" y="130" textAnchor="end" className="text-xs fill-slate-400">"Poetry, Brainstorming"</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'ai-timeline') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 700 300" className="w-full h-auto" role="img" aria-label="The Two Waves of AI: Discriminative vs Generative">
+            <defs>
+              <marker id="arrowhead-timeline" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* --- WAVE 1: DISCRIMINATIVE --- */}
+            <g transform="translate(50, 40)">
+              <text x="0" y="0" className="text-sm font-bold fill-slate-400 uppercase tracking-widest">Wave 1: Discriminative AI</text>
+              
+              {/* Input: Cat Photo */}
+              <g transform="translate(0, 30)">
+                <rect x="0" y="0" width="60" height="60" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
+                <text x="30" y="35" textAnchor="middle" className="text-2xl">🐱</text>
+                <text x="30" y="75" textAnchor="middle" className="text-xs fill-slate-400">Data</text>
+              </g>
+
+              {/* Arrow */}
+              <path d="M 80 60 L 130 60" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
+
+              {/* The Model (Judge) */}
+              <g transform="translate(140, 30)">
+                <polygon points="30,0 60,30 30,60 0,30" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" />
+                <text x="30" y="35" textAnchor="middle" className="text-xl">⚖️</text>
+                <text x="30" y="75" textAnchor="middle" className="text-xs fill-purple-300">The Judge</text>
+              </g>
+
+              {/* Arrow */}
+              <path d="M 210 60 L 260 60" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
+
+              {/* Output: Label */}
+              <g transform="translate(270, 40)">
+                <rect x="0" y="0" width="80" height="40" rx="20" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
+                <text x="40" y="25" textAnchor="middle" className="text-sm font-bold fill-green-300">"Cat"</text>
+              </g>
+            </g>
+
+            {/* Divider */}
+            <line x1="50" y1="150" x2="650" y2="150" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
+
+            {/* --- WAVE 2: GENERATIVE --- */}
+            <g transform="translate(50, 180)">
+              <text x="0" y="0" className="text-sm font-bold fill-slate-400 uppercase tracking-widest">Wave 2: Generative AI</text>
+              
+              {/* Input: Prompt */}
+              <g transform="translate(0, 30)">
+                <rect x="0" y="0" width="100" height="60" rx="4" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" />
+                <text x="50" y="25" textAnchor="middle" className="text-[10px] fill-amber-200">"Paint a cyberpunk cat"</text>
+                <text x="50" y="75" textAnchor="middle" className="text-xs fill-slate-400">Prompt</text>
+              </g>
+
+              {/* Arrow */}
+              <path d="M 110 60 L 160 60" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
+
+              {/* The Model (Artist) */}
+              <g transform="translate(170, 30)">
+                <circle cx="30" cy="30" r="30" fill="#ec4899" fillOpacity="0.1" stroke="#ec4899" className="animate-pulse" />
+                <text x="30" y="35" textAnchor="middle" className="text-xl">🎨</text>
+                <text x="30" y="75" textAnchor="middle" className="text-xs fill-pink-300">The Creator</text>
+              </g>
+
+              {/* Arrow */}
+              <path d="M 240 60 L 290 60" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
+
+              {/* Output: New Image */}
+              <g transform="translate(300, 20)">
+                <rect x="0" y="0" width="80" height="80" rx="4" fill="url(#cyber-grad)" stroke="#ec4899" strokeWidth="2" />
+                <text x="40" y="45" textAnchor="middle" className="text-2xl">🐱🤖</text>
+                <defs>
+                  <linearGradient id="cyber-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#ec4899" stopOpacity="0.2" />
+                    <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.2" />
+                  </linearGradient>
+                </defs>
+              </g>
+            </g>
+
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'few-shot-learning') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Few-Shot Learning: Showing examples to guide the AI">
+            <defs>
+              <marker id="arrowhead-fewshot" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Zero-Shot (Left) */}
+            <g transform="translate(50, 50)">
+              <text x="80" y="0" textAnchor="middle" className="text-sm font-bold fill-slate-400 uppercase">Zero-Shot</text>
+              <rect x="0" y="20" width="160" height="120" rx="8" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" strokeDasharray="4 4" />
+              
+              <text x="20" y="50" className="text-xs fill-slate-300">Input: "Translate"</text>
+              <path d="M 80 70 L 80 100" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrowhead-fewshot)" />
+              <text x="80" y="130" textAnchor="middle" className="text-xs font-bold fill-red-300">? (Random)</text>
+            </g>
+
+            {/* Few-Shot (Right) */}
+            <g transform="translate(250, 50)">
+              <text x="150" y="0" textAnchor="middle" className="text-sm font-bold fill-green-400 uppercase">Few-Shot (Exemplars)</text>
+              <rect x="0" y="20" width="300" height="160" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" />
+
+              {/* Examples */}
+              <g transform="translate(20, 40)">
+                <text x="0" y="0" className="text-[10px] fill-green-200">Ex 1: Hello &rarr; Hola</text>
+                <text x="0" y="20" className="text-[10px] fill-green-200">Ex 2: Good &rarr; Bueno</text>
+                <text x="0" y="40" className="text-[10px] fill-green-200">Ex 3: Red &rarr; Rojo</text>
+                
+                <line x1="0" y1="55" x2="260" y2="55" stroke="#22c55e" strokeWidth="1" />
+                
+                <text x="0" y="80" className="text-xs font-bold fill-white">Input: "Blue"</text>
+                <path d="M 150 75 L 200 75" stroke="#22c55e" strokeWidth="2" markerEnd="url(#arrowhead-fewshot)" />
+                <text x="210" y="80" className="text-xs font-bold fill-green-300">"Azul"</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'chain-of-thought') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="Chain of Thought: Step-by-step reasoning">
+            {/* Standard Prompting */}
+            <g transform="translate(50, 50)">
+              <text x="100" y="0" textAnchor="middle" className="text-sm font-bold fill-slate-400">Standard Prompt</text>
+              <rect x="0" y="20" width="200" height="40" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
+              <text x="100" y="45" textAnchor="middle" className="text-xs fill-blue-200">"Question"</text>
+              
+              <path d="M 100 60 L 100 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
+              
+              <rect x="0" y="100" width="200" height="40" rx="4" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" />
+              <text x="100" y="125" textAnchor="middle" className="text-xs fill-red-300">"Wrong Answer"</text>
+              <text x="100" y="150" textAnchor="middle" className="text-[10px] fill-slate-500">(Rushed)</text>
+            </g>
+
+            {/* Chain of Thought */}
+            <g transform="translate(300, 50)">
+              <text x="125" y="0" textAnchor="middle" className="text-sm font-bold fill-purple-400">Chain of Thought</text>
+              <rect x="0" y="20" width="250" height="40" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
+              <text x="125" y="45" textAnchor="middle" className="text-xs fill-blue-200">"Let's think step by step"</text>
+
+              <path d="M 125 60 L 125 80" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
+
+              {/* Steps */}
+              <g transform="translate(50, 80)">
+                <rect x="0" y="0" width="150" height="60" rx="4" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" strokeDasharray="2 2" />
+                <text x="75" y="20" textAnchor="middle" className="text-[10px] fill-purple-200">Step 1: Logic...</text>
+                <text x="75" y="40" textAnchor="middle" className="text-[10px] fill-purple-200">Step 2: Calc...</text>
+              </g>
+
+              <path d="M 125 140 L 125 150" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
+
+              <rect x="50" y="150" width="150" height="30" rx="4" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
+              <text x="125" y="170" textAnchor="middle" className="text-xs font-bold fill-green-300">"Correct Answer"</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'dashboard-ui') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-2 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl w-full max-w-2xl">
+          <svg viewBox="0 0 600 300" className="w-full h-auto" role="img" aria-label="AI Dashboard Interface">
+            {/* Sidebar */}
+            <rect x="0" y="0" width="100" height="300" fill="#1e293b" />
+            <circle cx="50" cy="40" r="20" fill="#3b82f6" opacity="0.5" />
+            <rect x="20" y="80" width="60" height="10" rx="2" fill="#475569" />
+            <rect x="20" y="100" width="60" height="10" rx="2" fill="#475569" />
+            <rect x="20" y="120" width="60" height="10" rx="2" fill="#475569" />
+
+            {/* Top Bar */}
+            <rect x="100" y="0" width="500" height="50" fill="#0f172a" />
+            <rect x="120" y="15" width="200" height="20" rx="4" fill="#334155" />
+            <circle cx="570" cy="25" r="15" fill="#22c55e" />
+
+            {/* Content Area */}
+            <rect x="100" y="50" width="500" height="250" fill="#020617" />
+            
+            {/* Widget 1 */}
+            <rect x="120" y="70" width="220" height="100" rx="8" fill="#1e293b" stroke="#334155" />
+            <text x="140" y="100" className="text-xs fill-slate-400 font-bold">USER GROWTH</text>
+            <path d="M 140 140 L 180 130 L 220 150 L 260 110 L 300 120" stroke="#3b82f6" strokeWidth="3" fill="none" />
+
+            {/* Widget 2 */}
+            <rect x="360" y="70" width="220" height="100" rx="8" fill="#1e293b" stroke="#334155" />
+            <text x="380" y="100" className="text-xs fill-slate-400 font-bold">AI TASKS</text>
+            <rect x="380" y="120" width="150" height="10" rx="2" fill="#22c55e" />
+            <rect x="380" y="140" width="100" height="10" rx="2" fill="#f59e0b" />
+
+            {/* Widget 3 */}
+            <rect x="120" y="190" width="460" height="90" rx="8" fill="#1e293b" stroke="#334155" />
+            <text x="140" y="220" className="text-xs fill-slate-400 font-bold">RECENT ACTIVITY</text>
+            <rect x="140" y="240" width="400" height="8" rx="2" fill="#334155" />
+            <rect x="140" y="260" width="350" height="8" rx="2" fill="#334155" />
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'data-analysis-chart') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl">
+          <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Data Analysis Visualization">
+            {/* Grid Lines */}
+            <line x1="50" y1="50" x2="550" y2="50" stroke="#334155" strokeDasharray="4 4" />
+            <line x1="50" y1="100" x2="550" y2="100" stroke="#334155" strokeDasharray="4 4" />
+            <line x1="50" y1="150" x2="550" y2="150" stroke="#334155" strokeDasharray="4 4" />
+            <line x1="50" y1="200" x2="550" y2="200" stroke="#334155" strokeWidth="2" />
+
+            {/* Bars */}
+            <rect x="80" y="120" width="40" height="80" fill="#3b82f6" opacity="0.8" />
+            <rect x="160" y="80" width="40" height="120" fill="#3b82f6" opacity="0.8" />
+            <rect x="240" y="150" width="40" height="50" fill="#3b82f6" opacity="0.8" />
+            <rect x="320" y="60" width="40" height="140" fill="#3b82f6" opacity="0.8" />
+            <rect x="400" y="90" width="40" height="110" fill="#3b82f6" opacity="0.8" />
+            <rect x="480" y="40" width="40" height="160" fill="#3b82f6" opacity="0.8" />
+
+            {/* Trend Line (AI Prediction) */}
+            <path d="M 100 120 L 180 80 L 260 150 L 340 60 L 420 90 L 500 40" stroke="#ef4444" strokeWidth="3" fill="none" />
+            <circle cx="500" cy="40" r="5" fill="#ef4444" className="animate-pulse" />
+            
+            {/* Tooltip */}
+            <g transform="translate(420, 20)">
+              <rect x="0" y="0" width="100" height="30" rx="4" fill="#1e293b" stroke="#ef4444" />
+              <text x="50" y="20" textAnchor="middle" className="text-xs fill-white font-bold">AI Insight: +15%</text>
+            </g>
           </svg>
         </div>
       </div>

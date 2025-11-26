@@ -117,3 +117,12 @@ fastapi dev app/main.py
 *   **State Management:** React Context (`AuthContext`) for global state; local state for UI components.
 *   **Type Safety:** TypeScript for frontend, Pydantic for backend. Strict typing is enforced.
 *   **Gamification:** "Clippy" is the mascot. Experience points (XP) and badges are central to the user journey.
+
+## 🧰 Capabilities & Tools
+- **Visual Inspection Capability:** Established a workflow using Docker + Playwright to generate UI screenshots (`.ai-context/VISUAL_INSPECTION.md`), allowing me to "see" and verify frontend designs.
+- **Cycle 27 (Beginner Golden Standard):** COMPLETED.
+    -   Finalized Course 1 (AI Basics) Lessons 1-7.
+    -   Implemented "SVG First" architecture (CourseIcon, LessonIcon, Diagrams).
+    -   Removed external image dependencies.
+    -   Verified Dark Mode "Liquid Glass" UI.
+--- End of Context from: ../.gemini/GEMINI.md ---
