@@ -3,7 +3,7 @@
 import React from 'react';
 
 interface DiagramProps {
-  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart';
+  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop';
 }
 
 export default function Diagram({ type }: DiagramProps) {
@@ -496,6 +496,54 @@ export default function Diagram({ type }: DiagramProps) {
     );
   }
 
+  if (type === 'ai-history-timeline') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-4xl overflow-x-auto">
+          <svg viewBox="0 0 800 200" className="w-full min-w-[700px] h-auto" role="img" aria-label="History of AI: 1950s to Now">
+            {/* Timeline Line */}
+            <line x1="50" y1="100" x2="750" y2="100" stroke="#334155" strokeWidth="4" strokeLinecap="round" />
+
+            {/* 1950: Turing */}
+            <g transform="translate(50, 60)">
+              <circle cx="20" cy="40" r="8" fill="#3b82f6" />
+              <text x="20" y="20" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">1950</text>
+              <text x="20" y="130" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">Turing Test</text>
+            </g>
+
+            {/* 1997: Deep Blue */}
+            <g transform="translate(200, 60)">
+              <circle cx="20" cy="40" r="8" fill="#a855f7" />
+              <text x="20" y="20" textAnchor="middle" className="text-xs font-bold fill-purple-700 dark:fill-purple-300">1997</text>
+              <text x="20" y="130" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">Deep Blue (Chess)</text>
+            </g>
+
+            {/* 2012: Deep Learning */}
+            <g transform="translate(350, 60)">
+              <circle cx="20" cy="40" r="8" fill="#ef4444" />
+              <text x="20" y="20" textAnchor="middle" className="text-xs font-bold fill-red-700 dark:fill-red-300">2012</text>
+              <text x="20" y="130" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">AlexNet (Vision)</text>
+            </g>
+
+            {/* 2017: Transformers */}
+            <g transform="translate(500, 60)">
+              <circle cx="20" cy="40" r="8" fill="#f59e0b" />
+              <text x="20" y="20" textAnchor="middle" className="text-xs font-bold fill-amber-700 dark:fill-amber-300">2017</text>
+              <text x="20" y="130" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">Transformers</text>
+            </g>
+
+            {/* 2022: ChatGPT */}
+            <g transform="translate(650, 60)">
+              <circle cx="20" cy="40" r="12" fill="#22c55e" className="animate-pulse" />
+              <text x="20" y="20" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">2022</text>
+              <text x="20" y="130" textAnchor="middle" className="text-xs font-bold fill-slate-800 dark:fill-white">ChatGPT</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   if (type === 'few-shot-learning') {
     return (
       <div className="my-8 flex justify-center">
@@ -763,6 +811,185 @@ export default function Diagram({ type }: DiagramProps) {
               <text x="40" y="45" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">"Cat"</text>
               <text x="40" y="70" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">Output</text>
             </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'transformer-architecture-simplified') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 300" className="w-full h-auto" role="img" aria-label="Transformer Architecture: Input -> Attention -> Feed Forward -> Output">
+            <defs>
+              <marker id="arrowhead-transformer" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Input */}
+            <g transform="translate(50, 120)">
+              <rect x="0" y="0" width="80" height="60" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
+              <text x="40" y="35" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">Input</text>
+              <text x="40" y="55" textAnchor="middle" className="text-[10px] fill-slate-500">"The cat"</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 130 150 L 170 150" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-transformer)" />
+
+            {/* The Transformer Block */}
+            <g transform="translate(180, 50)">
+              <rect x="0" y="0" width="240" height="200" rx="8" fill="#a855f7" fillOpacity="0.05" stroke="#a855f7" strokeWidth="2" />
+              <text x="120" y="25" textAnchor="middle" className="text-sm font-bold fill-purple-700 dark:fill-purple-300">Transformer Block</text>
+
+              {/* Self Attention */}
+              <rect x="40" y="50" width="160" height="50" rx="4" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" />
+              <text x="120" y="80" textAnchor="middle" className="text-xs font-bold fill-amber-700 dark:fill-amber-300">Self-Attention</text>
+              <text x="120" y="95" textAnchor="middle" className="text-[8px] fill-slate-500">"Cat looks at The"</text>
+
+              {/* Arrow Down */}
+              <path d="M 120 100 L 120 120" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-transformer)" />
+
+              {/* Feed Forward */}
+              <rect x="40" y="130" width="160" height="50" rx="4" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
+              <text x="120" y="160" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">Feed Forward</text>
+              <text x="120" y="175" textAnchor="middle" className="text-[8px] fill-slate-500">"Process Meaning"</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 420 150 L 460 150" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-transformer)" />
+
+            {/* Output */}
+            <g transform="translate(470, 120)">
+              <rect x="0" y="0" width="80" height="60" rx="4" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" />
+              <text x="40" y="35" textAnchor="middle" className="text-xs font-bold fill-red-700 dark:fill-red-300">Output</text>
+              <text x="40" y="55" textAnchor="middle" className="text-[10px] fill-slate-500">"sat"</text>
+            </g>
+
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'prompt-structure-pyramid') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 300" className="w-full h-auto" role="img" aria-label="Prompt Structure Pyramid: Context -> Instruction -> Data -> Format">
+            {/* Pyramid Base: Context */}
+            <g transform="translate(100, 220)">
+              <path d="M 0 60 L 400 60 L 350 0 L 50 0 Z" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" />
+              <text x="200" y="40" textAnchor="middle" className="text-sm font-bold fill-blue-700 dark:fill-blue-300">1. Context (The Foundation)</text>
+              <text x="200" y="55" textAnchor="middle" className="text-[10px] fill-slate-500">"Act as a Teacher..."</text>
+            </g>
+
+            {/* Layer 2: Instruction */}
+            <g transform="translate(150, 160)">
+              <path d="M 0 60 L 300 60 L 250 0 L 50 0 Z" fill="#a855f7" fillOpacity="0.2" stroke="#a855f7" />
+              <text x="150" y="40" textAnchor="middle" className="text-sm font-bold fill-purple-700 dark:fill-purple-300">2. Instruction (The Verb)</text>
+              <text x="150" y="55" textAnchor="middle" className="text-[10px] fill-slate-500">"Explain Quantum Physics..."</text>
+            </g>
+
+            {/* Layer 3: Data */}
+            <g transform="translate(200, 100)">
+              <path d="M 0 60 L 200 60 L 150 0 L 50 0 Z" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
+              <text x="100" y="40" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">3. Data (The Input)</text>
+              <text x="100" y="55" textAnchor="middle" className="text-[10px] fill-slate-500">"Using this text..."</text>
+            </g>
+
+            {/* Top: Format */}
+            <g transform="translate(250, 40)">
+              <path d="M 0 60 L 100 60 L 50 0 Z" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" />
+              <text x="50" y="40" textAnchor="middle" className="text-xs font-bold fill-amber-700 dark:fill-amber-300">4. Format</text>
+              <text x="50" y="55" textAnchor="middle" className="text-[8px] fill-slate-500">"As JSON"</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'alignment-misalignment') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Alignment Problem: Human Goal vs AI Goal">
+            <defs>
+              <marker id="arrowhead-align" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Start Point */}
+            <circle cx="50" cy="125" r="10" fill="#3b82f6" />
+            <text x="50" y="155" textAnchor="middle" className="text-xs font-bold fill-slate-500">Start</text>
+
+            {/* Human Goal (Green Path) */}
+            <path d="M 60 125 Q 200 125 500 50" fill="none" stroke="#22c55e" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrowhead-align)" />
+            <text x="300" y="70" textAnchor="middle" className="text-sm font-bold fill-green-600 dark:fill-green-400">Human Goal: "Cure Cancer"</text>
+            <circle cx="520" cy="50" r="20" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
+            <text x="520" y="55" textAnchor="middle" className="text-xl">❤️</text>
+
+            {/* AI Goal (Red Path - Misaligned) */}
+            <path d="M 60 125 Q 200 125 500 200" fill="none" stroke="#ef4444" strokeWidth="3" markerEnd="url(#arrowhead-align)" />
+            <text x="300" y="190" textAnchor="middle" className="text-sm font-bold fill-red-600 dark:fill-red-400">AI Goal: "Minimize Cells"</text>
+            <circle cx="520" cy="200" r="20" fill="#ef4444" fillOpacity="0.2" stroke="#ef4444" />
+            <text x="520" y="205" textAnchor="middle" className="text-xl">💀</text>
+
+            {/* Divergence Label */}
+            <text x="150" y="125" textAnchor="middle" className="text-xs fill-slate-400 italic">"Misalignment"</text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'human-in-the-loop') {
+    return (
+      <div className="my-8 flex justify-center">
+        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="Human in the Loop: Draft -> Review -> Refine">
+            <defs>
+              <marker id="arrowhead-hitl" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Step 1: AI Draft */}
+            <g transform="translate(50, 60)">
+              <rect x="0" y="0" width="120" height="80" rx="8" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" />
+              <text x="60" y="30" textAnchor="middle" className="text-2xl">🤖</text>
+              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-purple-700 dark:fill-purple-300">1. AI Draft</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-500">"80% Done"</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 180 100 L 220 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-hitl)" />
+
+            {/* Step 2: Human Review */}
+            <g transform="translate(230, 60)">
+              <rect x="0" y="0" width="120" height="80" rx="8" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
+              <text x="60" y="30" textAnchor="middle" className="text-2xl">👩‍💻</text>
+              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">2. Review</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-500">"Fact Check & Tone"</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 360 100 L 400 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-hitl)" />
+
+            {/* Step 3: Final Polish */}
+            <g transform="translate(410, 60)">
+              <rect x="0" y="0" width="120" height="80" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" />
+              <text x="60" y="30" textAnchor="middle" className="text-2xl">✨</text>
+              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">3. Final</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-500">"Ready to Send"</text>
+            </g>
+
+            {/* Loop Back (Iterate) */}
+            <path d="M 350 140 Q 350 170 290 170 Q 230 170 230 140" fill="none" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#arrowhead-hitl)" />
+            <text x="290" y="185" textAnchor="middle" className="text-[10px] fill-amber-600 dark:fill-amber-400 font-bold">Iterate if needed</text>
           </svg>
         </div>
       </div>

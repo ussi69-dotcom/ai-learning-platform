@@ -2,7 +2,7 @@
 
 <Callout type="info">
 **Mission Goal:** Open the brain of ChatGPT and see how it thinks (in numbers).
-⏳ **Reading Time:** 15 min | 🧪 **2 Labs Included**
+⏳ **Reading Time:** 20 min | 🧪 **2 Labs Included**
 </Callout>
 
 Welcome, Padawan. You have learned *how* AI learns. Now, it is time to meet the droid itself.
@@ -28,7 +28,26 @@ An LLM is exactly that. It is a machine trained on the entire internet (The Jedi
 
 ---
 
-## 🔢 2. It Doesn't Read Words. It Reads Numbers.
+---
+
+## 🏗️ 2. The Engine: Attention is All You Need
+
+Before 2017, AI was bad at long sentences. It forgot the beginning by the time it reached the end.
+Then Google invented the **Transformer**.
+
+The secret sauce is **"Self-Attention"**.
+Imagine reading a sentence: *"The animal didn't cross the street because it was too tired."*
+
+*   **Old AI:** Reads left to right. Gets confused by "it".
+*   **Transformer:** Looks at "it" and connects it to "animal" (not "street") because of the context "tired".
+
+<Diagram type="transformer-architecture-simplified" />
+
+It pays "attention" to all words at once, weighing their importance. This is why it understands context so well.
+
+---
+
+## 🔢 3. It Doesn't Read Words. It Reads Numbers.
 
 Here is the secret: Computers cannot read. They can only calculate.
 Before an LLM sees your prompt, it chops it up into little pieces called **Tokens**.
@@ -65,7 +84,7 @@ Explain why you split it that way.
 
 ---
 
-## 🧠 3. The Context Window (Short-Term Memory)
+## 🧠 4. The Context Window (Short-Term Memory)
 
 Have you ever talked to ChatGPT for so long that it forgot what you said at the beginning?
 That is because of the **Context Window**.
@@ -80,7 +99,7 @@ Imagine a Jedi deflecting blaster bolts. They can only focus on a certain number
 
 ---
 
-## 🌡️ 4. Temperature: From Droid to Poet
+## 🌡️ 5. Temperature: From Droid to Poet
 
 How do we make a math machine creative? We adjust the **Temperature**.
 This parameter controls how "risky" the AI is when choosing the next token.
@@ -113,7 +132,7 @@ Version 2 (Temperature 1): Be abstract, poetic, chaotic, and metaphorical. Use r
 
 ---
 
-## 🏭 5. How a Model is Born
+## 🏭 6. How a Model is Born
 
 An LLM doesn't just appear. It is forged in two fires.
 
@@ -124,7 +143,7 @@ An LLM doesn't just appear. It is forged in two fires.
 
 ---
 
-## 🏆 6. Final Mission Report
+## 🏆 7. Final Mission Report
 
 You have looked under the hood. It is not magic. It is math.
 
