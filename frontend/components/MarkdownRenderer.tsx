@@ -85,7 +85,7 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         
         elements.push(
           <Callout key={`callout-${i}`} type={type}>
-            {parseInlineMarkdown(innerContent)}
+            {parseContent(innerContent)}
           </Callout>
         );
         
@@ -115,7 +115,7 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         
         elements.push(
           <ConceptCard key={`concept-${i}`} {...props}>
-            {parseInlineMarkdown(innerContent)}
+            {parseContent(innerContent)}
           </ConceptCard>
         );
         
@@ -193,7 +193,7 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         
         elements.push(
           <KeyTakeaway key={`takeaway-${i}`} {...props}>
-            {parseInlineMarkdown(innerContent)}
+            {parseContent(innerContent)}
           </KeyTakeaway>
         );
         
