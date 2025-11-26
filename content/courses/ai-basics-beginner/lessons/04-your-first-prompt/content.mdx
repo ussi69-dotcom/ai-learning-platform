@@ -190,25 +190,28 @@ Force it to slow down with the magic phrase: **"Let's think step by step."**
 
 <Diagram type="chain-of-thought" />
 
-### 🔬 Lab 5: Hyperdrive Logic
+### 🔬 Lab 5: The Reasoning Anchor
 
-**Objective:** Solve a riddle that trips up fast thinkers.
+**Objective:** Force the AI to handle complex constraints that overwhelm its short-term memory.
 
 **The Prompt:**
 ```text
-A bat and a ball cost $1.10 in total.
-The bat costs $1.00 more than the ball.
-How much does the ball cost?
+You are planning a workshop schedule.
+Constraint 1: We have 3 rooms (Red, Blue, Green).
+Constraint 2: Each room hosts max 2 sessions.
+Constraint 3: "Session A" shares an instructor with "Session C" (they cannot be at the same time).
+Constraint 4: "Session B" needs the Projector (only in Red Room).
 
+Create a valid schedule for Sessions A, B, C, D, E, F.
 Let's think step by step.
 ```
 
 **Analysis:**
-*   **Without CoT:** AI might say $0.10 (Wrong).
-*   **With CoT:** AI calculates: $x + (x+1.00) = 1.10 -> 2x = 0.10 -> x = 0.05. Correct ($0.05).
+*   **Without CoT:** The AI often hallucinates a schedule where Session A and C clash, or puts Session B in the Blue room. It tries to "guess" the answer in one go.
+*   **With CoT:** The magic phrase forces it to write: *"First, let's place Session B in Red. Next, let's schedule A and C in different slots..."* This "scratchpad" thinking ensures accuracy.
 </LabSection>
 
-<LabComplete labId="lab-hyperdrive-logic" />
+<LabComplete labId="lab-reasoning-anchor" />
 
 ---
 
