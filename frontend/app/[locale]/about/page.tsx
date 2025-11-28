@@ -26,10 +26,11 @@ export default function AboutPage() {
 
   // Timeline Data
   const timeline = [
-    { year: '2023-2024', title: 'The Research Phase', desc: 'Experiments with Galaxy AI & Gemini 2.5 Pro. Discovery of MCP.', icon: <Brain className="w-5 h-5" /> },
-    { year: '2024', title: 'The Architect', desc: 'Perplexity integrated as Lead Architect. Structural planning.', icon: <Users className="w-5 h-5" /> },
-    { year: '2025 (Early)', title: 'The Builders', desc: 'Antigravity IDE & Gemini CLI specialized tools created.', icon: <Terminal className="w-5 h-5" /> },
-    { year: '2025 (Now)', title: 'The Ecosystem', desc: 'Cycle-based development, "Liquid Glass" UI, Multi-Agent orchestration.', icon: <Zap className="w-5 h-5" /> },
+    { year: 'Nov 15, 2025', title: 'The Spark', desc: 'Idea born. Deep dive into AI agents & local LLMs.', icon: <Brain className="w-5 h-5" /> },
+    { year: 'Nov 16, 2025', title: 'The Prototype', desc: 'Rapid development with Galaxy.AI & Claude Sonnet 4.5.', icon: <Code2 className="w-5 h-5" /> },
+    { year: 'Nov 18, 2025', title: 'The Crucible', desc: 'Anthropic Ban. A lesson in context optimization.', icon: <Zap className="w-5 h-5" /> },
+    { year: 'Nov 2025', title: 'The Gemini Era', desc: 'Switch to Gemini 2.5. "Antigravity" workflow established.', icon: <Rocket className="w-5 h-5" /> },
+    { year: 'Future', title: 'Gemini 3.0', desc: 'Awaiting the next leap. Building the ecosystem.', icon: <Terminal className="w-5 h-5" /> },
   ];
 
   // Tech Stack Data

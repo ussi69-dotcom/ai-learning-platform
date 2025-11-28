@@ -8,23 +8,22 @@ We believe the best way to learn AI is to **build with AI, alongside AI agents**
 
 ---
 
-## How It All Started: The Multi-Agent Genesis
+## How It All Started: The Spark and The Crucible
 
-This project didn't begin with a traditional dev team. It started with a **question**: *What if we could leverage multiple AI models — each with unique strengths — to collaboratively build something greater than any single model could achieve alone?*
+This project didn't begin in a boardroom. It began on **Sunday, November 15, 2025**, with a spark of curiosity that turned into an obsession with AI agents.
 
-### The Research Phase (2023–2024)
-- Early experiments with **Galaxy AI** and **Gemini 2.5 Pro** to test multi-agent coordination
-- Discovery of **MCP (Model Context Protocol)** as the orchestration layer
-- Manual context transfer between platforms (painful, but educational)
+### The Prototype & The Ban (Nov 15-18, 2025)
+The journey started with **Galaxy.AI** and **Claude Sonnet 4.5**. We rapidly prototyped the vision, eager to see what AI could build. But ambition hit a wall.
+- A naive attempt to transfer massive context to a paid Anthropic account led to an immediate ban.
+- This failure was the **crucible**. It forced a hard lesson: context optimization isn't optional; it's survival.
 
-### The Evolution (2024–2025)
-As new models emerged, we integrated them:
-- **Antigravity IDE** for visual development and quick edits
-- **Gemini 3 Pro CLI** for deep technical work with full repo context
-- **Claude Opus 4.5** and **Sonnet 4.5** for strategic planning and validation
-- **Perplexity (with MCP)** as Lead Architect for research, planning, and cross-platform context synthesis
+### The Renaissance (Nov 2025 - Present)
+From the ashes of that failure, we rebuilt.
+- switched to **Gemini 2.5** as the primary driver.
+- Developed the **"Antigravity" workflow**: a robust system for context preservation, atomic updates, and agent coordination.
+- Eagerly awaiting **Gemini 3.0** to take the platform to the next level.
 
-Each new agent didn't replace the previous ones — they **specialized**. Some handle research, others write code, some validate, and others orchestrate. The platform you're using right now was built by this exact workflow.
+The platform you're using right now is the result of that pivot—a system built to survive and thrive in the era of autonomous agents.
 
 ---
 
@@ -34,14 +33,12 @@ Every technology decision was made to support **transparency, collaboration, and
 
 | Technology | Why This Choice |
 |------------|-----------------|
-| **Next.js 14+** | Server-side rendering, optimal performance, modern React patterns |
-| **WSL2 (local dev)** | Cross-platform compatibility, Linux tooling, seamless CI/CD |
-| **GitHub as Source of Truth** | Single, auditable history; every change is tracked |
-| **MCP (Model Context Protocol)** | Standardized agent communication, context sharing across platforms |
-| **MDX for Content** | Code + content in one place, reusable components (ConceptCard, Diagram) |
-| **Small, Atomic Commits** | Easier rollbacks, clear history, better collaboration |
-
-We didn't chase trends. We chose tools that let **humans and AI agents work together efficiently**.
+| **Next.js 16** | Server Actions, App Router, bleeding-edge React features |
+| **FastAPI** | High-performance async backend |
+| **PostgreSQL** | Robust data persistence |
+| **Docker** | Consistent environments for humans and agents |
+| **MCP (Model Context Protocol)** | Standardized agent communication |
+| **MDX** | Content as Code |
 
 ---
 
@@ -128,12 +125,11 @@ The `.ai-context/` structure isn't just for us — it's a **template** for any t
 
 ## Current Status & What's Next
 
-**Cycle 17 (November 2025)**: Core curriculum complete, gamification system live, multi-agent workflow fully documented.
+**Cycle 31 (November 2025)**: Lessons 1-7 localized, "Masterpiece Standard" achieved, Localization architecture fully implemented.
 
 **Next Goals**:
-- Localization (EN/CZ) with smart i18n strategy
 - Community contributions (your PRs are welcome!)
-- Advanced labs using latest models (GPT-5, Gemini 3.5, Claude Opus 5)
+- Advanced labs using latest models
 - Mobile-first redesign for on-the-go learning
 
 ---
