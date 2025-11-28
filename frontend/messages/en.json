@@ -89,7 +89,7 @@
     "hero_subtitle": "The Future of Learning is Co-Creation",
     "hero_desc": "An open-source learning platform built collaboratively by human and AI agents. We believe the best way to learn AI is to build with AI.",
     "genesis_title": "Zero-Day Development",
-    "genesis_desc": "It started on Nov 15, 2025. A spark of curiosity turned into an obsession. We prototyped with Galaxy.AI, but a naive context transfer got us banned from Anthropic. That was the turning point. On Nov 18, Gemini 3.0 Pro dropped—we adopted it day one. On Nov 20, Antigravity launched—we integrated it immediately. On Nov 24, we got Gemini CLI access. This isn't just development; it's 'Zero-Day Engineering.' We don't wait for best practices; we invent them the moment the tech exists.",
+    "genesis_desc": "It all started on Sunday, November 15, 2025. A spark of curiosity ignited an obsession with AI agents. We began prototyping in Galaxy.AI with Claude Sonnet 4.5, but hit a wall—a naive massive context transfer led to an instant ban from Anthropic. That was the turning point. On November 18, Gemini 3.0 Pro dropped, and we immediately deployed it as our primary advisor in VS Code. Two days later, November 20, Google unveiled Antigravity—we integrated it that same evening, and development velocity hit Mach 10. On November 24, the Gemini 3.0 CLI invite arrived. The loop was closed. We call this 'Zero-Day Engineering'—a new AI model drops in the morning, and by evening, it's powering production. Perplexity leads research, ChatGPT reviews, and Gemini 3.0 with Antigravity builds the core.",
     "tech_stack_title": "Tech Stack",
     "tech_stack_desc": "Chosen for transparency, scale, and agent-friendliness.",
     "workflow_title": "The Workflow",

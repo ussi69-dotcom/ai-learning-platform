@@ -42,13 +42,35 @@ export default function AboutPage() {
 
       <div className="container px-4 py-12 md:py-24 mx-auto max-w-5xl">
         {/* Header */}
-        <div className="text-center mb-16 space-y-4">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
-            AI Built by AI
+        <div className="text-center mb-16 space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm text-sm font-medium text-primary mb-4 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+            <Rocket className="w-4 h-4" />
+            <span>{t('hero_subtitle')}</span>
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-b from-emerald-600 to-teal-500 dark:from-white dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)] pb-2">
+            {t('hero_title')}
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A self-evolving platform built at the speed of light using the latest breakthroughs in Agentic AI.
+          
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            {t('hero_desc')}
           </p>
+        </div>
+
+        {/* The Story / Genesis Section */}
+        <div className="mb-24 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+          <Card className="bg-card/30 backdrop-blur-md border-primary/20 overflow-hidden relative">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
+            <CardContent className="p-8 md:p-12 text-center space-y-6">
+              <Sparkles className="w-12 h-12 text-primary mx-auto opacity-80" />
+              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                {t('genesis_title')}
+              </h2>
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+                {t('genesis_desc')}
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Genesis Timeline */}
