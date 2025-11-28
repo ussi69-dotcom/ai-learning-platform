@@ -65,4 +65,4 @@ Next Steps:
 - Frontend Integration: Connect UI to the new endpoint.
 - VPS Deployment: Ensure Docker permissions are correct on the server.
 Issues: None
-Commit Hash: (will be added after commit)
+Commit Hash: b306d96c1835818160293c0d595d53188ac93a39
