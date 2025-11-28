@@ -109,4 +109,4 @@ Next Steps:
 - Run `scripts/setup_security.sh` on VPS.
 - Create a lesson that utilizes the new Sandbox feature.
 Issues: None
-Commit Hash: (will be added after commit)
+Commit Hash: a0c4944aa690d6bfc90f9f57730b66f89eaad52e
