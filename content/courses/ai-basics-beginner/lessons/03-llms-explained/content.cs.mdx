@@ -1,0 +1,164 @@
+# Mysl stroje: LLM 🤖
+
+<Callout type="info">
+**Cíl mise:** Otevřít mozek ChatGPT a podívat se, jak myslí (v číslech).
+⏳ **Čas čtení:** 20 min | 🧪 **2 Laboratoře**
+</Callout>
+
+Vítej, Padawane. Naučil ses, *jak* se AI učí. Nyní je čas setkat se se samotným droidem.
+Říkáme jim **Velké jazykové modely (LLM)**.
+
+ChatGPT, Claude, Gemini—všechno to jsou LLM. Nezasvěceným připadají jako magie. Pro Jediho jsou to jednoduše... **Prediktivní motory**.
+
+---
+
+## 🔮 1. Hra na předpovídání
+
+Představ si, že C-3PO překládá prastarý sithský dialekt. Necítí v těch slovech hněv. Vypočítává **pravděpodobnost**, které slovo obvykle následuje po tom předchozím.
+
+LLM je přesně tohle. Je to stroj vycvičený na celém internetu (Archivy Jediů), aby hrál jednu jednoduchou hru: **"Uhádni další token."**
+
+<Diagram type="llm-next-token" />
+
+<ConceptCard title="Predikce dalšího tokenu" icon="🔮" jediQuote="Soustřeď se na okamžik. Co přijde dál?">
+*   **Vstupní kontext:** "Obloha je..."
+*   **Výpočet:** Modrá (90 %), Šedá (5 %), Zelená (1 %).
+*   **Akce:** AI hodí kostkou na základě těchto pravděpodobností a vybere "Modrá".
+</ConceptCard>
+
+---
+
+---
+
+## 🏗️ 2. Motor: Pozornost je vše, co potřebuješ
+
+Před rokem 2017 byla AI špatná na dlouhé věty. Než se dostala na konec, zapomněla začátek.
+Pak Google vynalezl **Transformer**.
+
+Tou tajnou přísadou je **"Sebe-pozornost" (Self-Attention)**.
+Představ si, že čteš větu: *"Zvíře nepřešlo ulici, protože bylo příliš unavené."*
+
+*   **Stará AI:** Čte zleva doprava. Zmate ji "bylo".
+*   **Transformer:** Podívá se na "bylo" a spojí si ho se "zvíře" (ne "ulicí") díky kontextu "unavené".
+
+<Diagram type="transformer-architecture-simplified" />
+
+Věnuje "pozornost" všem slovům najednou a váží jejich důležitost. Proto tak dobře chápe kontext.
+
+---
+
+## 🔢 3. Nečte slova. Čte čísla.
+
+Tady je tajemství: Počítače neumí číst. Umí jen počítat.
+Než LLM uvidí tvůj prompt, rozseká ho na malé kousky zvané **Tokeny**.
+
+Představ si tokeny jako **Kostičky Lega**.
+*   🍎 **Jablko** = 1 Kostička
+*   🧱 **Ing** (přípona) = 1 Kostička
+*   ⬜ **Mezera** = 1 Kostička
+
+Zhruba platí: **1 000 tokenů ≈ 750 slov**.
+AI převede tyto tokeny na čísla (např. `18342`), provede na nich matematické operace a výsledek převede zpět na slova.
+
+<Diagram type="tokenization-viz" />
+
+---
+
+## 🔬 Lab 1: Pohled Tokenizéru
+
+Je čas spatřit Matrix. Donuťme AI odhalit, jak vidí jazyk.
+
+**Cíl:** Vizualizovat tokeny.
+
+**Prompt:**
+```text
+Přepiš prosím slovo "Nejneobhospodařovávatelnějšími" ale vlož svislou čáru "|" mezi každý token, který bys vnímal.
+Vysvětli, proč jsi to tak rozdělil.
+```
+
+**Analýza:**
+*   Nebude to jedno slovo. Bude to `Nejne|obhos|podař|...`.
+*   To dokazuje, že AI vidí shluky znaků, ne celá slova. Proto má AI někdy problémy s pravopisem nebo rýmováním—nevidí písmena!
+
+<LabComplete labId="lab-tokenizer-view" />
+
+---
+
+## 🧠 4. Kontextové okno (Krátkodobá paměť)
+
+Už jsi někdy mluvil s ChatGPT tak dlouho, že zapomněla, co jsi říkal na začátku?
+To je kvůli **Kontextovému oknu**.
+
+Představ si Jediho odrážejícího střely z blasterů. Může se soustředit jen na určitý počet najednou. Pokud jich přijde příliš mnoho, pustí ty dřívější, aby se soustředil na nové.
+
+<Diagram type="context-window" />
+
+*   **Vstup:** Vše, co napíšeš + vše, co AI zatím odpověděla.
+*   **Limit:** Každý model má maximální limit (např. 128k tokenů).
+*   **Přetečení:** Pokud překročíš limit, AI "zapomene" nejstarší část konverzace (FIFO: První dovnitř, první ven).
+
+---
+
+## 🌡️ 5. Teplota: Od Droida k Básníkovi
+
+Jak uděláme z matematického stroje kreativce? Upravíme **Teplotu**.
+Tento parametr řídí, jak "riskantní" je AI při výběru dalšího tokenu.
+
+<Diagram type="temperature-scale" />
+
+*   ❄️ **Teplota 0.0 (Sithská logika):** Vždy vybere nejpravděpodobnější slovo. Přesné, chladné, robotické. (Kódování, Matematika).
+*   🔥 **Teplota 1.0 (Intuice Jediů):** Riskuje. Vybírá méně pravděpodobná slova. Kreativní, chaotické. (Poezie, Nápady).
+
+---
+
+## 🔬 Lab 2: Simulace Teploty
+
+Většina chatovacích aplikací nemá posuvník, ale můžeme to simulovat promptem.
+
+**Cíl:** Vidět rozdíl mezi Logikou (Teplota 0) a Chaosem (Teplota 1).
+
+**Prompt:**
+```text
+Úkol: Popiš západ slunce.
+Verze 1 (Teplota 0): Buď extrémně stručný, faktický a vědecký. Žádné emoce.
+Verze 2 (Teplota 1): Buď abstraktní, poetický, chaotický a metaforický. Používej vzácná slova.
+```
+
+**Analýza:**
+*   **Verze 1:** "Slunce kleslo pod obzor, způsobujíc Rayleighův rozptyl..."
+*   **Verze 2:** "Krvácející žloutek se roztříštil o zubaté tesáky hor..."
+
+<LabComplete labId="lab-simulating-temperature" />
+
+---
+
+## 🏭 6. Jak se rodí model
+
+LLM se jen tak neobjeví. Je ukován ve dvou ohních.
+
+<Diagram type="training-pipeline" />
+
+1.  **Předtrénování (Základní model):** Čte internet. Je divoký a nepředvídatelný. Chce jen dokončovat věty.
+2.  **Doladění (Chatovací model):** Lidé ho učí být nápomocným. Tak se ze surového GPT-4 stává ChatGPT.
+
+---
+
+## 🏆 7. Závěrečná zpráva z mise
+
+Podíval ses pod kapotu. Není to magie. Je to matematika.
+
+<ConceptCard title="Holocron: Architektura LLM" icon="💾">
+
+### 🔑 Klíčové komponenty
+*   **Tokeny:** Atomy jazyka. (1000 tokenů ≈ 750 slov).
+*   **Kontextové okno:** Omezená vyrovnávací paměť.
+*   **Teplota:** Ovladač kreativity (0 = Logika, 1 = Chaos).
+*   **Halucinace:** Když motor předpovědí sebevědomě hádá špatná fakta.
+
+### 🛡️ Moudrost Jediů
+*   **Další token:** AI vždy jen hádá, co přijde dál.
+*   **Důvěra:** Ověřuj fakta. Důvěřuj kreativitě.
+
+</ConceptCard>
+
+**Příští lekce:** Teď znáš teorii. Je čas mluvit jazykem. Připrav se na **Prompt Engineering**.

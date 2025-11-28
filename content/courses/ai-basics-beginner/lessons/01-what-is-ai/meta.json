@@ -1,6 +1,8 @@
 {
   "title": "What is Artificial Intelligence?",
+  "title_cs": "Co je umělá inteligence?",
   "description": "Understanding AI in simple terms - no tech jargon! Learn what AI really is and see real examples.",
+  "description_cs": "Pochopení AI v jednoduchých termínech - žádný technický žargon! Zjistěte, co AI skutečně je, a podívejte se na reálné příklady.",
   "video_url": "https://www.youtube.com/embed/ad79nYk2keg",
   "order": 1
 }

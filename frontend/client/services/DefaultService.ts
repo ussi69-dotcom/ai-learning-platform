@@ -23,12 +23,14 @@ export class DefaultService {
      * Read Courses
      * @param skip
      * @param limit
+     * @param lang
      * @returns Course Successful Response
      * @throws ApiError
      */
     public static readCoursesCoursesGet(
         skip?: number,
         limit: number = 100,
+        lang: string = 'en',
     ): CancelablePromise<Array<Course>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -36,6 +38,7 @@ export class DefaultService {
             query: {
                 'skip': skip,
                 'limit': limit,
+                'lang': lang,
             },
             errors: {
                 422: `Validation Error`,
@@ -45,17 +48,22 @@ export class DefaultService {
     /**
      * Read Course
      * @param courseId
+     * @param lang
      * @returns Course Successful Response
      * @throws ApiError
      */
     public static readCourseCoursesCourseIdGet(
         courseId: number,
+        lang: string = 'en',
     ): CancelablePromise<Course> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/courses/{course_id}',
             path: {
                 'course_id': courseId,
+            },
+            query: {
+                'lang': lang,
             },
             errors: {
                 422: `Validation Error`,
@@ -66,12 +74,14 @@ export class DefaultService {
      * Read Lessons
      * @param skip
      * @param limit
+     * @param lang
      * @returns Lesson Successful Response
      * @throws ApiError
      */
     public static readLessonsLessonsGet(
         skip?: number,
         limit: number = 100,
+        lang: string = 'en',
     ): CancelablePromise<Array<Lesson>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -79,6 +89,7 @@ export class DefaultService {
             query: {
                 'skip': skip,
                 'limit': limit,
+                'lang': lang,
             },
             errors: {
                 422: `Validation Error`,
@@ -88,17 +99,22 @@ export class DefaultService {
     /**
      * Read Lesson
      * @param lessonId
+     * @param lang
      * @returns Lesson Successful Response
      * @throws ApiError
      */
     public static readLessonLessonsLessonIdGet(
         lessonId: number,
+        lang: string = 'en',
     ): CancelablePromise<Lesson> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/lessons/{lesson_id}',
             path: {
                 'lesson_id': lessonId,
+            },
+            query: {
+                'lang': lang,
             },
             errors: {
                 422: `Validation Error`,

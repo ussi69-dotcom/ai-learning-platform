@@ -1,0 +1,79 @@
+{
+  "Navigation": {
+    "courses": "Courses",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register"
+  },
+  "Auth": {
+    "login_title": "Login to your account",
+    "email": "Email",
+    "password": "Password",
+    "submit_login": "Sign In",
+    "no_account": "Don't have an account?",
+    "register_link": "Register here",
+    "register_title": "Create an account",
+    "username": "Username",
+    "confirm_password": "Confirm Password",
+    "submit_register": "Sign Up",
+    "has_account": "Already have an account?",
+    "login_link": "Login here"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "Profile": {
+    "title": "Profile",
+    "description": "Your account information and settings",
+    "account_status": "Account Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "my_learning": "My Learning 📚",
+    "no_lessons": "You haven't completed any lessons yet. Start learning!",
+    "lessons_completed": "You have completed <bold>{count}</bold> lessons!",
+    "lessons_done": "Lessons Done",
+    "active_courses": "Active Courses",
+    "difficulty_level": "Difficulty Level",
+    "difficulty_desc": "Choose your learning level to see courses tailored to your experience.",
+    "current": "Current",
+    "update_difficulty": "Update Difficulty",
+    "updating": "Updating...",
+    "no_changes": "No Changes",
+    "back_home": "Back to Home",
+    "choose_avatar": "Choose your Avatar"
+  },
+  "Feedback": {
+    "title": "Feedback Station",
+    "subtitle": "Help us improve the galaxy!",
+    "marker_location": "Marker Location",
+    "bug": "Bug",
+    "feature": "Feature",
+    "note": "Note",
+    "question": "Question",
+    "placeholder_bug": "Describe your bug here... Be specific!",
+    "placeholder_feature": "Describe your feature idea here...",
+    "placeholder_note": "Write your note here...",
+    "placeholder_question": "Ask your question here...",
+    "sending": "Sending...",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "error": "Failed to submit feedback. Please try again.",
+    "drag_drop": "Drag & drop me to place feedback",
+    "viewing_feedback": "Viewing feedback. Click Eye to hide.",
+    "hide_feedback": "Hide Feedback",
+    "view_feedback": "View Feedback",
+    "report_bug": "Report a Bug / Feedback"
+  },
+  "Lab": {
+    "complete": "Lab Completed",
+    "mastered": "You have mastered this experiment.",
+    "title": "Experimental Lab",
+    "saving": "Saving...",
+    "mark_complete": "Mark Lab as Complete"
+  }
+}

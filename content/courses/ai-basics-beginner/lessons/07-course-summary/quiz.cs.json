@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Jaká je NEJDŮLEŽITĚJŠÍ věc, kterou ses naučil v tomto kurzu?",
+    "option_a": "AI je děsivá a komplikovaná",
+    "option_b": "AI je nástroj, který se každý může naučit efektivně používat",
+    "option_c": "AI mohou používat pouze programátoři",
+    "option_d": "AI nahradí všechna pracovní místa",
+    "correct_answer": "B",
+    "explanation": "Klíčový poznatek: AI je mocný nástroj, který se může naučit používat KAŽDÝ! Nepotřebuješ být programátor - stačí pochopit základy a trénovat.",
+    "order": 1
+  },
+  {
+    "question": "Jaká dovednost je nejdůležitější pro efektivní používání AI?",
+    "option_a": "Schopnost programovat",
+    "option_b": "Znalost matematiky",
+    "option_c": "Psaní dobrých promptů (prompt engineering)",
+    "option_d": "Drahé vybavení",
+    "correct_answer": "C",
+    "explanation": "Prompt engineering - vědět, jak požádat AI o to, co chceš - je dovednost č. 1. Každý se ji může naučit a nevyžaduje technické znalosti!",
+    "order": 2
+  },
+  {
+    "question": "Jaký by měl být tvůj další krok po tomto kurzu?",
+    "option_a": "Přestat se učit o AI",
+    "option_b": "Cvičit používání AI nástrojů denně po dobu 30 dnů",
+    "option_c": "Počkat, dokud vše nezapomeneš",
+    "option_d": "Číst pouze více teorie",
+    "correct_answer": "B",
+    "explanation": "Cvičení dělá mistra! Lekce doporučuje používat AI denně po dobu 30 dnů - zkoušet různé prompty, prozkoumávat nástroje a budovat své dovednosti praktickou zkušeností.",
+    "order": 3
+  },
+  {
+    "question": "Které tvrzení o AI je PRAVDIVÉ?",
+    "option_a": "AI je dokonalá a nikdy nedělá chyby",
+    "option_b": "AI nahradí lidskou kreativitu",
+    "option_c": "AI je nástroj pro zesílení lidských schopností, ne jejich náhradu",
+    "option_d": "AI funguje bez jakéhokoli lidského vstupu",
+    "correct_answer": "C",
+    "explanation": "AI se nejlépe používá k ZESÍLENÍ lidských schopností - aby tě udělala produktivnějším, kreativnějším a efektivnějším. Je to nástroj, který ti má pomoci, ne tě nahradit!",
+    "order": 4
+  },
+  {
+    "question": "Co dělá někoho 'AI-gramotným' po tomto kurzu?",
+    "option_a": "Vědět, jak naprogramovat AI",
+    "option_b": "Rozumět tomu, co je AI, jak se učí a jak ji používat eticky",
+    "option_c": "Mít drahé AI nástroje",
+    "option_d": "Pracovat v tech oboru",
+    "correct_answer": "B",
+    "explanation": "AI gramotnost znamená rozumět základům (co to je, jak to funguje), být schopen efektivně používat AI nástroje a používat je zodpovědně a eticky.",
+    "order": 5
+  }
+]

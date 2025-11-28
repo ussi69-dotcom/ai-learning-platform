@@ -41,8 +41,10 @@ class ContentLoader:
         if not course:
             course = Course(
                 title=meta["title"],
+                title_cs=meta.get("title_cs"),
                 slug=course_dir.name, # Use directory name as slug
                 description=meta["description"],
+                description_cs=meta.get("description_cs"),
                 image_url=meta["image_url"],
                 difficulty_level=DifficultyLevel[meta["difficulty_level"]],
                 owner_id=owner_id
@@ -54,6 +56,8 @@ class ContentLoader:
             # Update fields if needed
             course.slug = course_dir.name # Ensure slug is set
             course.description = meta["description"]
+            course.title_cs = meta.get("title_cs")
+            course.description_cs = meta.get("description_cs")
             course.image_url = meta["image_url"]
             course.difficulty_level = DifficultyLevel[meta["difficulty_level"]]
             db.commit()
@@ -68,6 +72,7 @@ class ContentLoader:
     def _process_lesson(self, db: Session, lesson_dir: Path, course_id: int):
         meta_path = lesson_dir / "meta.json"
         content_path = lesson_dir / "content.mdx"
+        content_cs_path = lesson_dir / "content.cs.mdx"
         
         if not meta_path.exists() or not content_path.exists():
             return
@@ -77,6 +82,11 @@ class ContentLoader:
         
         with open(content_path, "r", encoding="utf-8") as f:
             content = f.read()
+            
+        content_cs = None
+        if content_cs_path.exists():
+            with open(content_cs_path, "r", encoding="utf-8") as f:
+                content_cs = f.read()
 
         # Extract Metadata from MDX (Mission Goal Callout)
         # Format: ⏳ **Reading Time:** 15 min | 🧪 **[3] Labs Included**
@@ -100,9 +110,12 @@ class ContentLoader:
         if not lesson:
             lesson = Lesson(
                 title=meta["title"],
+                title_cs=meta.get("title_cs"),
                 slug=lesson_dir.name, # Use directory name as slug
                 description=meta["description"],
+                description_cs=meta.get("description_cs"),
                 content=content,
+                content_cs=content_cs,
                 video_url=meta.get("video_url"),
                 order=meta["order"],
                 course_id=course_id,
@@ -115,7 +128,10 @@ class ContentLoader:
         else:
             lesson.slug = lesson_dir.name # Ensure slug is set
             lesson.description = meta["description"]
+            lesson.title_cs = meta.get("title_cs")
+            lesson.description_cs = meta.get("description_cs")
             lesson.content = content
+            lesson.content_cs = content_cs
             lesson.video_url = meta.get("video_url")
             lesson.order = meta["order"]
             lesson.duration = duration
@@ -131,19 +147,44 @@ class ContentLoader:
         with open(quiz_path, "r", encoding="utf-8") as f:
             quizzes_data = json.load(f)
 
+        # Try to load localized quizzes (CZ)
+        quiz_cs_path = quiz_path.parent / "quiz.cs.json"
+        quizzes_cs_data = []
+        if quiz_cs_path.exists():
+            try:
+                with open(quiz_cs_path, "r", encoding="utf-8") as f:
+                    quizzes_cs_data = json.load(f)
+            except Exception as e:
+                logger.warning(f"⚠️ Failed to load {quiz_cs_path}: {e}")
+
         # Clear existing quizzes for this lesson
         db.query(Quiz).filter(Quiz.lesson_id == lesson_id).delete()
         
-        for q_data in quizzes_data:
+        for i, q_data in enumerate(quizzes_data):
+            # Find matching CS data by index (assuming same order)
+            q_cs = quizzes_cs_data[i] if i < len(quizzes_cs_data) else {}
+
             quiz = Quiz(
                 question=q_data["question"],
+                question_cs=q_cs.get("question"), # CS localization
+                
                 option_a=q_data["option_a"],
+                option_a_cs=q_cs.get("option_a"),
+                
                 option_b=q_data["option_b"],
+                option_b_cs=q_cs.get("option_b"),
+                
                 option_c=q_data["option_c"],
+                option_c_cs=q_cs.get("option_c"),
+                
                 option_d=q_data["option_d"],
+                option_d_cs=q_cs.get("option_d"),
+                
                 correct_answer=q_data["correct_answer"],
                 explanation=q_data["explanation"],
-                order=q_data["order"],
+                explanation_cs=q_cs.get("explanation"),
+                
+                order=q_data.get("order", i + 1),
                 lesson_id=lesson_id
             )
             db.add(quiz)

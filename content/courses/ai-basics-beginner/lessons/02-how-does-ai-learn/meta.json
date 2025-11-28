@@ -1,6 +1,8 @@
 {
   "title": "How Does AI Learn?",
+  "title_cs": "Jak se AI učí?",
   "description": "Discover the three ways AI learns patterns—supervised, unsupervised, and reinforcement learning—with real-world examples.",
+  "description_cs": "Objevte tři způsoby, jak se AI učí vzory—učení s učitelem, bez učitele a posilováním—na příkladech z reálného světa.",
   "video_url": "https://www.youtube.com/embed/AiIwId05-mE",
   "order": 2
 }

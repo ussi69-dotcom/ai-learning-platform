@@ -1,6 +1,8 @@
 {
   "title": "Talking to AI - Your First Prompt",
+  "title_cs": "Mluvíme s AI: Tvůj první prompt",
   "description": "Master the Jedi Code of Prompting. Learn the formula (Role + Task + Context + Format) to control AI with precision.",
+  "description_cs": "Ovládni kodex Jediů pro promptování. Nauč se formuli (Role + Úkol + Kontext + Formát) pro přesné ovládání AI.",
   "video_url": "https://www.youtube.com/embed/jC4v5AS4RIM",
   "order": 4
 }

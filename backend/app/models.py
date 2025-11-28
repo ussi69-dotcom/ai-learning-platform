@@ -1,5 +1,5 @@
 import enum
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text, Enum, DateTime, Float, UniqueConstraint
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text, Enum, DateTime, Float, UniqueConstraint, JSON
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from app.database import Base
@@ -31,8 +31,10 @@ class Course(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
+    title_cs = Column(String, nullable=True) # CS Localization
     slug = Column(String, unique=True, index=True) # Added slug
     description = Column(Text)
+    description_cs = Column(Text, nullable=True) # CS Localization
     image_url = Column(String, nullable=True) 
     difficulty_level = Column(Enum(DifficultyLevel), default=DifficultyLevel.LETS_ROCK, index=True)
     
@@ -47,12 +49,16 @@ class Lesson(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
+    title_cs = Column(String, nullable=True) # CS Localization
     slug = Column(String, index=True) # Added slug
     description = Column(Text)
+    description_cs = Column(Text, nullable=True) # CS Localization
     content = Column(Text) # MDX obsah
+    content_cs = Column(Text, nullable=True) # CS Localization
     order = Column(Integer)
     video_url = Column(String, nullable=True)
     duration = Column(String, nullable=True) # e.g. "15 min"
+    duration_cs = Column(String, nullable=True) # CS Localization
     lab_count = Column(Integer, default=0)
 
     course_id = Column(Integer, ForeignKey("courses.id"))
@@ -67,22 +73,31 @@ class Quiz(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     lesson_id = Column(Integer, ForeignKey("lessons.id"))
+    
     question = Column(String, nullable=False)
+    question_cs = Column(String, nullable=True) # CS Localization
+    
     option_a = Column(String, nullable=False)
+    option_a_cs = Column(String, nullable=True) # CS Localization
+    
     option_b = Column(String, nullable=False)
+    option_b_cs = Column(String, nullable=True) # CS Localization
+    
     option_c = Column(String, nullable=False)
+    option_c_cs = Column(String, nullable=True) # CS Localization
+    
     option_d = Column(String, nullable=False)
+    option_d_cs = Column(String, nullable=True) # CS Localization
+    
     correct_answer = Column(String, nullable=False)  # 'A', 'B', 'C', or 'D'
+    
     explanation = Column(Text, nullable=True)
+    explanation_cs = Column(Text, nullable=True) # CS Localization
+    
     order = Column(Integer, default=1)
     
     lesson = relationship("Lesson", back_populates="quizzes")
 
-
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text, Enum, DateTime, JSON
-# ... imports ...
-
-# ... (User, Course, Lesson, Quiz classes remain same) ...
 
 class UserProgress(Base):
     __tablename__ = "user_progress"

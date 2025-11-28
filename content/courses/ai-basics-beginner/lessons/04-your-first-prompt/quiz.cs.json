@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Jaký je účel používání 'Oddělovačů' (jako \"\") v promptu?",
+    "option_a": "Aby prompt vypadal lépe.",
+    "option_b": "Aby se jasně oddělily instrukce od dat/textu, který má AI zpracovat.",
+    "option_c": "Pro zvýšení rychlosti AI.",
+    "option_d": "Pro zašifrování zprávy.",
+    "correct_answer": "B",
+    "explanation": "Oddělovače fungují jako ploty. Říkají AI: 'Vše uvnitř těchto trojitých uvozovek jsou data, ne instrukce.' To zabraňuje zmatení a Prompt Injection.",
+    "order": 1
+  },
+  {
+    "question": "Který ze '6 Pilířů' nastavuje 'hlas' nebo 'vibe' AI?",
+    "option_a": "Úkol",
+    "option_b": "Kontext",
+    "option_c": "Tón",
+    "option_d": "Formát",
+    "correct_answer": "C",
+    "explanation": "Tón určuje styl odpovědi (např. profesionální, vtipný, sarkastický). Persona nastavuje myšlení, Tón nastavuje hlas.",
+    "order": 2
+  },
+  {
+    "question": "Co je 'Few-Shot Prompting' (nebo Příklady)?",
+    "option_a": "Ptát se AI jen na pár otázek denně.",
+    "option_b": "Poskytnutí několika příkladů (shots) požadovaného vstupu a výstupu uvnitř promptu.",
+    "option_c": "Použití velmi krátkého promptu.",
+    "option_d": "Promptování při pití espressa.",
+    "correct_answer": "B",
+    "explanation": "Few-Shot prompting zahrnuje poskytnutí příkladů AI (jako 'Vstup: A -> Výstup: B'), aby se naučila vzor, který chcete, aby následovala.",
+    "order": 3
+  },
+  {
+    "question": "Proč je 'Pozitivní omezení' lepší než 'Negativní omezení'?",
+    "option_a": "Není; negativní je lepší.",
+    "option_b": "AI má problémy s instrukcemi 'Nedělej' (efekt Růžového slona). Funguje lépe, když se jí řekne přesně, CO má dělat.",
+    "option_c": "Pozitivní omezení používají méně tokenů.",
+    "option_d": "Negativní omezení AI naštvou.",
+    "correct_answer": "B",
+    "explanation": "Místo 'Nepoužívej dlouhá slova' řekni 'Používej jednoduchá slova'. Zaměř AI na cílové chování.",
+    "order": 4
+  },
+  {
+    "question": "Pokud o tématu nevíte dost na to, abyste napsali dobrý prompt, jakou techniku byste měli použít?",
+    "option_a": "Řetězec myšlenek (Chain of Thought)",
+    "option_b": "Reverzní promptování (Požádejte AI, ať se ptá VÁS)",
+    "option_c": "Zero-Shot",
+    "option_d": "Oddělovače",
+    "correct_answer": "B",
+    "explanation": "Reverzní promptování obrací scénář. Požádáte AI, aby vás vyzpovídala a získala tak potřebný kontext.",
+    "order": 5
+  }
+]

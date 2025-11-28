@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthContext";
@@ -11,6 +11,7 @@ import FeedbackFAB from "@/components/FeedbackFAB";
 import FeedbackSubmissionModal from "@/components/FeedbackSubmissionModal";
 import FeedbackDetailModal from "@/components/FeedbackDetailModal";
 import FeedbackMarker from "@/components/FeedbackMarker";
+import { useLocale, useTranslations } from 'next-intl';
 
 type FeedbackMode = 'idle' | 'placing' | 'viewing';
 
@@ -45,6 +46,10 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null);
   const [lastLesson, setLastLesson] = useState<UserProgress | null>(null);
   const [loadingResume, setLoadingResume] = useState(true);
+  
+  const locale = useLocale();
+  const t = useTranslations('Common');
+  const tAuth = useTranslations('Auth');
 
   // Feedback State
   const [feedbackMode, setFeedbackMode] = useState<FeedbackMode>('idle');
@@ -63,6 +68,7 @@ export default function HomePage() {
       try {
         const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
         const response = await axios.get(`${API_BASE}/courses/`, {
+          params: { lang: locale },
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -105,7 +111,7 @@ export default function HomePage() {
       fetchCourses();
       fetchLastLesson();
     }
-  }, [token, isLoading]);
+  }, [token, isLoading, locale]);
 
   // Fetch Global Feedback
   useEffect(() => {
@@ -209,7 +215,7 @@ export default function HomePage() {
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading...</p>
+          <p className="text-muted-foreground">{t('loading')}</p>
         </div>
       </div>
     );
@@ -224,38 +230,38 @@ export default function HomePage() {
             AI Learning Platform
           </h1>
           <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mb-4">
-            Learning by doing. Postaveno na Next.js 16 + FastAPI.
+            {locale === 'cs' ? 'Uč se praxí. Postaveno na Next.js 16 + FastAPI.' : 'Learning by doing. Built on Next.js 16 + FastAPI.'}
           </p>
           {user && (
             <p className="text-sm text-muted-foreground mb-8">
-              Your difficulty: <span className="font-semibold">{DIFFICULTY_LABELS[user.difficulty]}</span>
+              {locale === 'cs' ? 'Vaše obtížnost: ' : 'Your difficulty: '}<span className="font-semibold">{DIFFICULTY_LABELS[user.difficulty]}</span>
             </p>
           )}
           <div className="space-x-4">
              {!user ? (
                <>
                  <Link href="/login">
-                   <Button size="lg">Login to Start</Button>
+                   <Button size="lg">{tAuth('submit_login')}</Button>
                  </Link>
                  <Link href="/register">
-                   <Button size="lg" variant="outline">Register</Button>
+                   <Button size="lg" variant="outline">{tAuth('submit_register')}</Button>
                  </Link>
                </>
              ) : (
                 lastLesson ? (
                     <Link href={`/courses/${lastLesson.course_id}/lessons/${lastLesson.lesson_id}`}>
                         <Button size="lg" className='gap-2'>
-                          Resume Learning 🚀
+                          {locale === 'cs' ? 'Pokračovat v učení 🚀' : 'Resume Learning 🚀'}
                         </Button>
                     </Link>
                 ) : courses.length > 0 ? (
                     <Link href={`/courses/${courses[0].id}`}>
                       <Button size="lg" className='gap-2'>
-                        Start Learning 🚀
+                        {locale === 'cs' ? 'Začít s učením 🚀' : 'Start Learning 🚀'}
                       </Button>
                     </Link>
                 ) : (
-                    <Button size="lg" disabled>No courses available</Button>
+                    <Button size="lg" disabled>{locale === 'cs' ? 'Žádné kurzy' : 'No courses available'}</Button>
                 )
              )}
           </div>
@@ -265,7 +271,7 @@ export default function HomePage() {
       {/* Seznam Kurzů */}
       <section className="w-full py-12 md:py-24 container px-4 mx-auto">
           <h2 className="text-3xl font-bold mb-8">
-            {user ? `Courses for ${DIFFICULTY_LABELS[user.difficulty]}` : "Available Courses"}
+            {user ? (locale === 'cs' ? `Kurzy pro ${DIFFICULTY_LABELS[user.difficulty]}` : `Courses for ${DIFFICULTY_LABELS[user.difficulty]}`) : (locale === 'cs' ? "Dostupné kurzy" : "Available Courses")}
           </h2>
           
           {error && (
@@ -276,8 +282,8 @@ export default function HomePage() {
 
           {!user ? (
             <div className="col-span-3 p-12 border-2 border-dashed border-border rounded-xl text-center text-muted-foreground glass-panel">
-              <p className="text-lg mb-2">Please login to see courses</p>
-              <p className="text-sm">Courses are personalized based on your difficulty level</p>
+              <p className="text-lg mb-2">{locale === 'cs' ? 'Pro zobrazení kurzů se prosím přihlaste' : 'Please login to see courses'}</p>
+              <p className="text-sm">{locale === 'cs' ? 'Kurzy jsou personalizované podle vaší obtížnosti' : 'Courses are personalized based on your difficulty level'}</p>
             </div>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -313,7 +319,7 @@ export default function HomePage() {
                         
                       <Link href={`/courses/${course.id}`}>
                         <Button size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                           Start Course →
+                           {locale === 'cs' ? 'Začít kurz →' : 'Start Course →'}
                          </Button>
                       </Link>
                       </div>
@@ -322,8 +328,8 @@ export default function HomePage() {
                 ))
               ) : (
                 <div className="col-span-3 p-12 border-2 border-dashed border-border rounded-xl text-center text-muted-foreground glass-panel">
-                  <p>No courses available for your difficulty level yet.</p>
-                  <p className="text-sm mt-2">Check back soon!</p>
+                  <p>{locale === 'cs' ? 'Pro vaši obtížnost zatím nejsou dostupné žádné kurzy.' : 'No courses available for your difficulty level yet.'}</p>
+                  <p className="text-sm mt-2">{locale === 'cs' ? 'Zkuste to brzy znovu!' : 'Check back soon!'}</p>
                 </div>
               )}
             </div>

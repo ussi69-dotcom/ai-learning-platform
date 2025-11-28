@@ -1,6 +1,8 @@
 {
   "title": "AI at Work: The Enterprise Era",
+  "title_cs": "AI v Práci: Podniková éra",
   "description": "Stop drowning in emails. Learn how to use AI tools (Copilot, Gemini, RAG) to save 2 hours every day. Mastering the future of productivity.",
+  "description_cs": "Přestaň se topit v e-mailech. Nauč se používat AI nástroje (Copilot, Gemini, RAG), abys ušetřil 2 hodiny denně. Ovládni budoucnost produktivity.",
   "video_url": "https://www.youtube.com/embed/JbOJliF-Cn4",
   "order": 6
 }

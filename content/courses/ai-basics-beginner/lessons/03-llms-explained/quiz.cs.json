@@ -1,0 +1,32 @@
+[
+  {
+    "question": "Jaká je základní funkce Velkého jazykového modelu (LLM)?",
+    "option_a": "Rozumět lidským emocím.",
+    "option_b": "Předpovídat další token v sekvenci.",
+    "option_c": "Vyhledávat v databázi Google.",
+    "option_d": "Uložit každou knihu, která kdy byla napsána.",
+    "correct_answer": "B",
+    "explanation": "V jádru je LLM prediktivní motor. Vypočítává pravděpodobnost dalšího tokenu na základě těch předchozích.",
+    "order": 1
+  },
+  {
+    "question": "Co z následujícího je PRAVDA o Tokenech?",
+    "option_a": "Jeden token je vždy přesně jedno slovo.",
+    "option_b": "Tokeny jsou způsob, jakým AI zpracovává obrázky.",
+    "option_c": "Token může být slovo, část slova nebo interpunkce.",
+    "option_d": "Tokeny se používají pouze v sithském jazyce.",
+    "correct_answer": "C",
+    "explanation": "Tokeny jsou 'atomy' jazyka pro AI. Rozkládají text na efektivní číselné shluky.",
+    "order": 2
+  },
+  {
+    "question": "Pokud chcete, aby byla AI faktická, přesná a konzistentní (např. pro kódování), jakou Teplotu byste měli použít?",
+    "option_a": "Vysokou teplotu (0.8 - 1.0)",
+    "option_b": "Nízkou teplotu (0.0 - 0.2)",
+    "option_c": "Pokojovou teplotu (20°C)",
+    "option_d": "Zápornou teplotu",
+    "correct_answer": "B",
+    "explanation": "Nízká teplota nutí model vybrat nejpravděpodobnější další token, což jej činí deterministickým a přesným.",
+    "order": 3
+  }
+]

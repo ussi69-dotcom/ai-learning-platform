@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Co je to 'Halucinace AI'?",
+    "option_a": "Když AI odmítne odpovědět.",
+    "option_b": "Když AI sebevědomě vygeneruje fakticky nesprávnou odpověď.",
+    "option_c": "Když se AI stane vnímající.",
+    "option_d": "Když AI vygeneruje obrázek.",
+    "correct_answer": "B",
+    "explanation": "Halucinace je, když LLM generuje nepravdivé informace s vysokou jistotou, protože předpovídá pravděpodobná slova, nikoliv vyhledává fakta.",
+    "order": 1
+  },
+  {
+    "question": "Proč mají AI modely 'Zkreslení' (Bias)?",
+    "option_a": "Protože je vývojáři naprogramovali, aby byly zlé.",
+    "option_b": "Protože jsou trénovány na datech z internetu, která obsahují lidské stereotypy a předsudky.",
+    "option_c": "Protože nenávidí lidi.",
+    "option_d": "Nemají zkreslení.",
+    "correct_answer": "B",
+    "explanation": "AI modely jsou zrcadla jejich trénovacích dat. Pokud má internet zkreslení (např. genderové stereotypy), AI se tyto vzory naučí a opakuje je.",
+    "order": 2
+  },
+  {
+    "question": "Co je to 'Znalostní hranice' (Knowledge Cutoff)?",
+    "option_a": "AI se v noci vypíná.",
+    "option_b": "Datum, kdy končí trénovací data AI; nezná události po tomto datu.",
+    "option_c": "Limit toho, jak chytrá AI je.",
+    "option_d": "Bezpečnostní pojistka.",
+    "correct_answer": "B",
+    "explanation": "Trénování LLM trvá měsíce a končí k určitému datu. Bez přístupu k webu (RAG) AI doslova neví o událostech, které se staly po tomto datu.",
+    "order": 3
+  },
+  {
+    "question": "Jaká je nejlepší obrana proti deepfakes (AI generovaným falešným hlasům/videím)?",
+    "option_a": "Věřit všemu, co vidíte.",
+    "option_b": "Skepticismus a ověřování (např. rodinná kódová slova, kontrola zdrojů).",
+    "option_c": "Smazat sociální sítě.",
+    "option_d": "Zeptat se AI, jestli je to falešné.",
+    "correct_answer": "B",
+    "explanation": "V éře AI už neplatí 'Vidět znamená věřit'. Musíte ověřovat zdroje a používat bezpečnostní opatření jako kódová slova pro rodinné nouzové situace.",
+    "order": 4
+  },
+  {
+    "question": "Jak můžete omezit halucinace ve svých promptech?",
+    "option_a": "Požádat AI, aby byla kreativní.",
+    "option_b": "Říct AI: 'Pokud nevíš, řekni, že nevíš.'",
+    "option_c": "Použít negativní omezení.",
+    "option_d": "Psát velkými písmeny.",
+    "correct_answer": "B",
+    "explanation": "Dát AI svolení přiznat neznalost snižuje šanci, že si vymyslí věrohodně znějící lež, aby uspokojila váš požadavek.",
+    "order": 5
+  }
+]

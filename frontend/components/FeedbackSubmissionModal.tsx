@@ -4,9 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Bug, Lightbulb, StickyNote, HelpCircle, X } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '@/context/AuthContext';
-// If useAuth is not exported from ProtectedRoute, we might need to adjust imports.
-// Usually AuthContext is in a separate file. Let's assume we can pass the token or get it.
-// Checking imports in LessonPage: import { useAuth } from "@/components/ProtectedRoute"; -> It seems it is.
+import { useTranslations } from 'next-intl';
 
 type FeedbackType = 'BUG' | 'FEATURE' | 'NOTE' | 'QUESTION';
 
@@ -34,6 +32,7 @@ export default function FeedbackSubmissionModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const { token } = useAuth();
+  const t = useTranslations('Feedback');
 
   if (!isOpen) return null;
 
@@ -65,17 +64,17 @@ export default function FeedbackSubmissionModal({
       onSubmitSuccess();
     } catch (err) {
       console.error("Feedback submission failed:", err);
-      setError("Failed to submit feedback. Please try again.");
+      setError(t('error'));
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const types: { id: FeedbackType; label: string; icon: React.ElementType; color: string }[] = [
-    { id: 'BUG', label: 'Bug', icon: Bug, color: 'text-red-400' },
-    { id: 'FEATURE', label: 'Feature', icon: Lightbulb, color: 'text-yellow-400' },
-    { id: 'NOTE', label: 'Note', icon: StickyNote, color: 'text-blue-400' },
-    { id: 'QUESTION', label: 'Question', icon: HelpCircle, color: 'text-purple-400' },
+    { id: 'BUG', label: t('bug'), icon: Bug, color: 'text-red-400' },
+    { id: 'FEATURE', label: t('feature'), icon: Lightbulb, color: 'text-yellow-400' },
+    { id: 'NOTE', label: t('note'), icon: StickyNote, color: 'text-blue-400' },
+    { id: 'QUESTION', label: t('question'), icon: HelpCircle, color: 'text-purple-400' },
   ];
 
   return (
@@ -91,9 +90,9 @@ export default function FeedbackSubmissionModal({
                 <Bug className="text-primary" size={20} />
               </div>
               <h2 className="text-2xl font-bold text-foreground drop-shadow-sm tracking-tight">
-                Feedback Station
+                {t('title')}
               </h2>
-              <p className="text-muted-foreground text-xs font-medium tracking-wide">Help us improve the galaxy!</p>
+              <p className="text-muted-foreground text-xs font-medium tracking-wide">{t('subtitle')}</p>
            </div>
            
            <button 
@@ -106,7 +105,7 @@ export default function FeedbackSubmissionModal({
 
         <div className="p-6 space-y-6">
           <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground font-mono bg-secondary/10 py-1.5 px-3 rounded-full w-fit mx-auto border border-secondary/20">
-            <span>Marker Location:</span>
+            <span>{t('marker_location')}:</span>
             <span className="text-primary">{Math.round(x * 100)}%, {Math.round(y * 100)}%</span>
           </div>
 
@@ -149,7 +148,7 @@ export default function FeedbackSubmissionModal({
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder={`Describe your ${type.toLowerCase()} here... Be specific!`}
+                placeholder={t(`placeholder_${type.toLowerCase()}`)}
                 className="relative w-full min-h-[140px] p-4 rounded-xl bg-background/50 border border-input focus:border-primary/50 outline-none resize-none text-sm text-foreground placeholder:text-muted-foreground transition-all shadow-inner"
                 autoFocus
               />
@@ -164,7 +163,7 @@ export default function FeedbackSubmissionModal({
                 disabled={isSubmitting} 
                 className="text-muted-foreground hover:text-foreground hover:bg-white/5 rounded-full px-6"
               >
-                Cancel
+                {t('cancel')}
               </Button>
               <Button 
                 onClick={handleSubmit} 
@@ -174,11 +173,11 @@ export default function FeedbackSubmissionModal({
                 {isSubmitting ? (
                    <span className="flex items-center gap-2">
                      <span className="animate-spin rounded-full h-4 w-4 border-2 border-white/20 border-t-white"></span>
-                     <span>Sending...</span>
+                     <span>{t('sending')}</span>
                    </span>
                 ) : (
                     <span className="flex items-center gap-2 font-semibold tracking-wide">
-                        Submit <span className="text-primary-foreground/60">→</span>
+                        {t('submit')} <span className="text-primary-foreground/60">→</span>
                     </span>
                 )}
               </Button>

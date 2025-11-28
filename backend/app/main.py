@@ -95,6 +95,7 @@ def read_root():
 def read_courses(
     skip: int = 0, 
     limit: int = 100, 
+    lang: str = "en",
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
@@ -102,11 +103,20 @@ def read_courses(
     courses = db.query(models.Course)\
         .filter(models.Course.difficulty_level == current_user.difficulty)\
         .offset(skip).limit(limit).all()
+    
+    if lang == "cs":
+        for course in courses:
+            if course.title_cs:
+                course.title = course.title_cs
+            if course.description_cs:
+                course.description = course.description_cs
+
     return courses
 
 @app.get("/courses/{course_id}", response_model=schemas.Course)
 def read_course(
     course_id: int, 
+    lang: str = "en",
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
@@ -118,6 +128,12 @@ def read_course(
     if course.difficulty_level != current_user.difficulty:
         raise HTTPException(status_code=403, detail="You don't have access to this course")
     
+    if lang == "cs":
+        if course.title_cs:
+            course.title = course.title_cs
+        if course.description_cs:
+            course.description = course.description_cs
+            
     return course
 
 # --- LESSONS ENDPOINTS ---
@@ -134,17 +150,45 @@ def get_user_last_lesson(
     return progress
 
 @app.get("/lessons/", response_model=List[schemas.LessonSummary])
-def read_lessons(skip: int = 0, limit: int = 100, db: Session = Depends(database.get_db)):
+def read_lessons(
+    skip: int = 0, 
+    limit: int = 100, 
+    lang: str = "en",
+    db: Session = Depends(database.get_db)
+):
     # Tento endpoint volá frontend pro získání všech lekcí
     lessons = db.query(models.Lesson).offset(skip).limit(limit).all()
+
+    if lang == "cs":
+        for lesson in lessons:
+            if lesson.title_cs:
+                lesson.title = lesson.title_cs
+            if lesson.description_cs:
+                lesson.description = lesson.description_cs
+
     return lessons
 
 @app.get("/lessons/{lesson_id}", response_model=schemas.Lesson)
-def read_lesson(lesson_id: int, db: Session = Depends(database.get_db)):
+def read_lesson(
+    lesson_id: int, 
+    lang: str = "en",
+    db: Session = Depends(database.get_db)
+):
     # Detail lekce (vrací i `content`, na rozdíl od "/lessons/")
     lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
     if lesson is None:
         raise HTTPException(status_code=404, detail="Lesson not found")
+    
+    if lang == "cs":
+        if lesson.title_cs:
+            lesson.title = lesson.title_cs
+        if lesson.description_cs:
+            lesson.description = lesson.description_cs
+        if lesson.content_cs:
+            lesson.content = lesson.content_cs
+        if lesson.duration_cs:
+            lesson.duration = lesson.duration_cs
+            
     return lesson
 
 # --- FEEDBACK ENDPOINTS ---

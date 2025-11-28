@@ -1,6 +1,8 @@
 {
   "title": "The Dark Side: Hallucinations & Bias",
+  "title_cs": "Temná strana: Halucinace a Zkreslení",
   "description": "Why does AI lie? Discover the 'Dark Side' of Large Language Models: Hallucinations, Bias, and how to stay safe.",
+  "description_cs": "Proč AI lže? Objev 'Temnou stranu' Velkých jazykových modelů: Halucinace, Zkreslení a jak zůstat v bezpečí.",
   "video_url": "https://www.youtube.com/embed/cfqtFvWOfg0",
   "order": 5
 }

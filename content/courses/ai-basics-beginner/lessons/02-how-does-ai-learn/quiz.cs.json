@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Jaká je definující charakteristika Učení s učitelem (Supervised Learning)?",
+    "option_a": "AI objevuje vzory sama bez štítků",
+    "option_b": "AI je trénována na označených datech s poskytnutými správnými odpověďmi",
+    "option_c": "AI se učí pokusem a omylem pomocí odměn",
+    "option_d": "AI nepotřebuje žádná trénovací data",
+    "correct_answer": "B",
+    "explanation": "Učení s učitelem vyžaduje označená data—každý vstup (email, obrázek) má odpovídající správnou odpověď (spam/ne spam, kočka/pes). AI se učí předpovídat štítky pro nová data studiem těchto příkladů.",
+    "order": 1
+  },
+  {
+    "question": "Který typ učení bys použil pro seskupení zákazníků podle chování, když NEZNÁŠ kategorie předem?",
+    "option_a": "Učení s učitelem",
+    "option_b": "Učení bez učitele",
+    "option_c": "Učení posilováním",
+    "option_d": "Transferové učení",
+    "correct_answer": "B",
+    "explanation": "Učení bez učitele je perfektní pro objevování skrytých vzorů, když nemáte předem definované kategorie. AI shlukuje podobná data dohromady (např. segmentace zákazníků).",
+    "order": 2
+  },
+  {
+    "question": "Co je 'odměna' v Učení posilováním (Reinforcement Learning)?",
+    "option_a": "Označený dataset",
+    "option_b": "Zpětnovazební signál, který říká AI, zda byla akce dobrá nebo špatná",
+    "option_c": "Počet parametrů v modelu",
+    "option_d": "Čas tréninku",
+    "correct_answer": "B",
+    "explanation": "V učení posilováním je odměna (nebo trest) zpětnou vazbou z prostředí. Pokud AI vyhraje hru, dostane +10 bodů. Pokud prohraje, dostane -5 bodů. Upravuje svou strategii tak, aby maximalizovala budoucí odměny.",
+    "order": 3
+  },
+  {
+    "question": "Který typ učení primárně používá spam filtr?",
+    "option_a": "Učení bez učitele",
+    "option_b": "Učení posilováním",
+    "option_c": "Učení s učitelem",
+    "option_d": "Samo-dohlížené učení",
+    "correct_answer": "C",
+    "explanation": "Spam filtry používají učení s učitelem. Jsou trénovány na tisících e-mailů označených jako 'spam' nebo 'ne spam' a učí se předpovídat štítek pro nové e-maily na základě vzorů v textu.",
+    "order": 4
+  },
+  {
+    "question": "Jaké je hlavní omezení Učení bez učitele?",
+    "option_a": "Je příliš pomalé",
+    "option_b": "Dokáže najít vzory, ale neumí vysvětlit, co znamenají",
+    "option_c": "Vyžaduje označená data",
+    "option_d": "Neumí zpracovat velké datasety",
+    "correct_answer": "B",
+    "explanation": "Učení bez učitele dokáže objevit shluky a vzory v datech, ale neví, co tyto vzory představují. Člověk stále musí výsledky interpretovat (např. 'Skupina A jsou lovci slev').",
+    "order": 5
+  }
+]

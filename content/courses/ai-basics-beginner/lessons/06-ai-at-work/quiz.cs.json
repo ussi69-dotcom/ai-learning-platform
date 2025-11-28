@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Jaká je hlavní výhoda používání AI Asistenta pro schůzky?",
+    "option_a": "Dělá schůzky delší.",
+    "option_b": "Umožňuje ti schůzku úplně vynechat a nikdy nemluvit s lidmi.",
+    "option_c": "Generuje přepisy, shrnutí a úkoly, což ti umožní soustředit se na konverzaci.",
+    "option_d": "Hlasuje za tebe.",
+    "correct_answer": "C",
+    "explanation": "AI asistenti jako Copilot nebo Zoom AI Companion zvládají administrativní zátěž (poznámky, úkoly), čímž tě uvolňují pro zapojení do skutečné diskuze.",
+    "order": 1
+  },
+  {
+    "question": "Při použití AI k analýze dat v Excelu/Sheets, co je klíčovým přínosem?",
+    "option_a": "Změní čísla, aby vypadala lépe.",
+    "option_b": "Dokáže identifikovat trendy a vzory, které by mohly být pro lidské oko neviditelné.",
+    "option_c": "Smaže staré soubory.",
+    "option_d": "Zabrání ti používat vzorce.",
+    "correct_answer": "B",
+    "explanation": "AI vyniká v rozpoznávání vzorů. Dokáže proskenovat tisíce řádků a najít odlehlé hodnoty, trendy nebo korelace, které by člověk mohl přehlédnout.",
+    "order": 2
+  },
+  {
+    "question": "Co je 'RAG' (Retrieval Augmented Generation) v pracovním kontextu?",
+    "option_a": "Hadřík na čištění monitorů.",
+    "option_b": "Způsob, jakým AI prohledává interní dokumenty tvé firmy (PDF, SharePoint), aby přesně odpověděla na otázky.",
+    "option_c": "Typ počítačového viru.",
+    "option_d": "Generátor náhodných čísel.",
+    "correct_answer": "B",
+    "explanation": "RAG umožňuje AI vyhledat informace ve tvých soukromých firemních datech před odpovědí, čímž zajišťuje, že odpověď je relevantní pro tvé konkrétní podnikání.",
+    "order": 3
+  },
+  {
+    "question": "Proč je 'Člověk ve smyčce' stále kritický při používání AI pro práci?",
+    "option_a": "Protože AI se cítí osaměle.",
+    "option_b": "Pro ověření přesnosti, tónu a zajištění, že neuniknou žádná citlivá tajemství.",
+    "option_c": "Pouze pro stisknutí tlačítka 'Odeslat'.",
+    "option_d": "Není kritický; AI je dokonalá.",
+    "correct_answer": "B",
+    "explanation": "AI může halucinovat nebo postrádat kontext. Ty jsi pilot; AI je co-pilot. Jsi zodpovědný za konečný výstup.",
+    "order": 4
+  },
+  {
+    "question": "Co je 'Syndrom prázdné stránky', který AI pomáhá řešit?",
+    "option_a": "Když tvojí tiskárně dojde papír.",
+    "option_b": "Obtížnost začít psát dokument od nuly.",
+    "option_c": "Chyba obrazovky.",
+    "option_d": "Zapomenutí hesla.",
+    "correct_answer": "B",
+    "explanation": "AI je vynikající v generování 'Prvního návrhu'. Je snazší upravit špatný text než psát nový text z ničeho.",
+    "order": 5
+  }
+]

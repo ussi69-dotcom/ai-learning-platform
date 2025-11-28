@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, use } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { useRouter } from '@/i18n/routing'; // Updated import for routing
+import { Link } from '@/i18n/routing'; // Updated import for routing
 import { Button } from '@/components/ui/button';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useAuth } from '@/context/AuthContext';
@@ -16,6 +16,7 @@ import FeedbackSubmissionModal from "@/components/FeedbackSubmissionModal";
 import FeedbackDetailModal from "@/components/FeedbackDetailModal";
 import FeedbackMarker from "@/components/FeedbackMarker";
 import axios from 'axios';
+import { useLocale, useTranslations } from 'next-intl';
 
 // Helper function moved outside component
 const splitIntoSlides = (content: string): string[] => {
@@ -49,6 +50,9 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   const [allLessons, setAllLessons] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
+  
+  const locale = useLocale();
+  const t = useTranslations('Common');
 
   const [feedbackMode, setFeedbackMode] = useState<FeedbackMode>('idle');
   const [feedbackToPlace, setFeedbackToPlace] = useState<{ x: number; y: number; slideIndex: number } | null>(null);
@@ -74,12 +78,14 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
         
         // 1. Load Lesson
         const lessonRes = await axios.get(`${API_BASE}/lessons/${lessonId}`, {
+          params: { lang: locale },
           headers: { "Authorization": `Bearer ${token}` }
         });
         setLesson(lessonRes.data);
 
         // 2. Load Course
         const courseRes = await axios.get(`${API_BASE}/courses/${courseId}`, {
+          params: { lang: locale },
           headers: { "Authorization": `Bearer ${token}` }
         });
         setCourse(courseRes.data);
@@ -92,6 +98,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
         // 4. Load All Lessons (for navigation)
         const allLessonsRes = await axios.get(`${API_BASE}/lessons/`, {
+          params: { lang: locale },
           headers: { "Authorization": `Bearer ${token}` }
         });
         const courseLessons = allLessonsRes.data
@@ -116,7 +123,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
     }
 
     fetchData();
-  }, [lessonId, token, courseId]);
+  }, [lessonId, token, courseId, locale]);
 
   // Save progress when page changes
   useEffect(() => {
@@ -139,7 +146,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
     }, 1000); // Debounce 1s
 
     return () => clearTimeout(saveProgress);
-  }, [currentPage, lessonId, token, loading]);
+  }, [currentPage, lessonId, token, loading, router]);
 
   // Fetch Feedback when entering viewing mode or page changes
   useEffect(() => {
@@ -186,7 +193,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading lesson...</p>
+          <p className="text-muted-foreground">{t('loading')}</p>
         </div>
       </div>
     );
@@ -309,7 +316,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             <div className="flex gap-2">
                <Link href={`/courses/${courseId}`}>
                  <Button variant="outline" size="sm" className="gap-2">
-                   ← Back to Course
+                   ← {locale === 'cs' ? 'Zpět na kurz' : 'Back to Course'}
                  </Button>
                </Link>
                {currentPage > 0 && (
@@ -319,7 +326,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                     className="gap-2 text-muted-foreground hover:text-foreground"
                     onClick={() => setCurrentPage(0)}
                   >
-                    Back to Page 1
+                    {locale === 'cs' ? 'Zpět na stranu 1' : 'Back to Page 1'}
                   </Button>
                )}
             </div>
@@ -331,7 +338,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                 onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
                 disabled={currentPage === 0}
               >
-                ← Prev
+                ← {locale === 'cs' ? 'Zpět' : 'Prev'}
               </Button>
               <Button
                 variant="ghost"
@@ -339,7 +346,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                 onClick={() => setCurrentPage(Math.min(calculatedTotalPages - 1, currentPage + 1))}
                 disabled={currentPage === calculatedTotalPages - 1}
               >
-                Next →
+                {locale === 'cs' ? 'Další' : 'Next'} →
               </Button>
             </div>
           </div>
@@ -348,7 +355,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           <div className="mb-8 mt-4">
              <div className="flex items-center gap-3 mb-4">
               <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold border border-primary/20">
-                Lesson {lesson.order}
+                {locale === 'cs' ? 'Lekce' : 'Lesson'} {lesson.order}
               </span>
               {course && (
                 <Link href={`/courses/${courseId}`} className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors">
@@ -380,8 +387,8 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             
             {/* Page Indicator (Top) */}
             <div className="flex justify-between items-center mb-6 text-xs font-bold text-muted-foreground uppercase tracking-wider">
-               <span>Section {currentPage + 1} of {calculatedTotalPages}</span>
-               {isQuizPage && <span className="text-primary">Final Challenge</span>}
+               <span>{locale === 'cs' ? 'Sekce' : 'Section'} {currentPage + 1} {locale === 'cs' ? 'z' : 'of'} {calculatedTotalPages}</span>
+               {isQuizPage && <span className="text-primary">{locale === 'cs' ? 'Závěrečný test' : 'Final Challenge'}</span>}
             </div>
 
             {/* Formatted content */}
@@ -440,7 +447,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                   disabled={currentPage === 0}
                   className="min-w-[80px] h-12 text-base" // Větší tlačítka
                 >
-                  ← Prev
+                  ← {locale === 'cs' ? 'Zpět' : 'Prev'}
                 </Button>
              </div>
 
@@ -460,7 +467,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                   disabled={currentPage === calculatedTotalPages - 1}
                   className="w-full md:w-auto min-w-[120px] h-full text-base font-bold shadow-md" 
                 >
-                  Next Page →
+                  {locale === 'cs' ? 'Další strana' : 'Next Page'} →
                 </Button>
               </div>
           </div>
@@ -473,7 +480,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
               {previousLesson ? (
                 <Link href={`/courses/${courseId}/lessons/${previousLesson.id}`}>
                   <Button variant="outline" size="sm" className="text-muted-foreground hover:text-foreground gap-2">
-                    <span>«</span> Prev Lesson
+                    <span>«</span> {locale === 'cs' ? 'Předchozí lekce' : 'Prev Lesson'}
                   </Button>
                 </Link>
               ) : (
@@ -485,7 +492,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             <div className="justify-self-center">
                <Link href={`/courses/${courseId}`}>
                   <Button variant="outline" size="sm" className="border-dashed border-border text-muted-foreground hover:text-foreground">
-                    Course Overview
+                    {locale === 'cs' ? 'Přehled kurzu' : 'Course Overview'}
                   </Button>
                </Link>
             </div>
@@ -495,13 +502,13 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                {nextLesson ? (
                   <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`}>
                     <Button variant="outline" size="sm" className="text-muted-foreground hover:text-foreground gap-2">
-                      Next Lesson <span>»</span>
+                      {locale === 'cs' ? 'Další lekce' : 'Next Lesson'} <span>»</span>
                     </Button>
                   </Link>
                ) : (
                   <Link href={`/courses/${courseId}`}>
                     <Button variant="default" size="sm" className="gap-2">
-                      Finish Course 🏆
+                      {locale === 'cs' ? 'Dokončit kurz 🏆' : 'Finish Course 🏆'}
                     </Button>
                   </Link>
                )}

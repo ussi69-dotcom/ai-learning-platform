@@ -18,12 +18,8 @@ def reset_db(db):
         db.query(Lesson).delete()
         db.query(Course).delete()
         db.query(User).delete()
-        
-        # Force drop tables to ensure schema update (XP column)
-        # Base.metadata.drop_all(bind=engine)
-        Base.metadata.create_all(bind=engine)
-        
         db.commit()
+        logger.info("✅ Data vymazána")
     except Exception as e:
         logger.warning(f"Mazání přeskočeno: {e}")
         db.rollback()

@@ -1,13 +1,15 @@
 "use client";
 
 import React from 'react';
+import { useLocale } from 'next-intl';
 
 interface DiagramProps {
   type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop' | 'prompt-cheat-sheet' | 'traditional-vs-ml';
 }
 
 export default function Diagram({ type }: DiagramProps) {
-  // ... (existing diagrams) ...
+  const locale = useLocale();
+  const isCs = locale === 'cs';
 
   if (type === 'traditional-vs-ml') {
     return (
@@ -25,12 +27,12 @@ export default function Diagram({ type }: DiagramProps) {
 
             {/* LEFT: TRADITIONAL */}
             <g transform="translate(50, 40)">
-              <text x="120" y="0" textAnchor="middle" className="text-lg font-bold fill-blue-600 dark:fill-blue-400 uppercase">Traditional</text>
+              <text x="120" y="0" textAnchor="middle" className="text-lg font-bold fill-blue-600 dark:fill-blue-400 uppercase">{isCs ? 'Tradiční' : 'Traditional'}</text>
               
               {/* Inputs */}
               <g transform="translate(0, 40)">
                 <rect x="0" y="0" width="100" height="40" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
-                <text x="50" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Rules</text>
+                <text x="50" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">{isCs ? 'Pravidla' : 'Rules'}</text>
                 
                 <rect x="140" y="0" width="100" height="40" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
                 <text x="190" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Data</text>
@@ -47,17 +49,17 @@ export default function Diagram({ type }: DiagramProps) {
               <path d="M 120 180 L 120 210" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-tvm)" />
               
               <rect x="70" y="210" width="100" height="40" rx="4" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
-              <text x="120" y="235" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">Answers</text>
+              <text x="120" y="235" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">{isCs ? 'Odpovědi' : 'Answers'}</text>
             </g>
 
             {/* RIGHT: MACHINE LEARNING */}
              <g transform="translate(400, 40)">
-              <text x="120" y="0" textAnchor="middle" className="text-lg font-bold fill-purple-600 dark:fill-purple-400 uppercase">Machine Learning</text>
+              <text x="120" y="0" textAnchor="middle" className="text-lg font-bold fill-purple-600 dark:fill-purple-400 uppercase">{isCs ? 'Strojové učení' : 'Machine Learning'}</text>
               
               {/* Inputs */}
               <g transform="translate(0, 40)">
                 <rect x="0" y="0" width="100" height="40" rx="4" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" />
-                <text x="50" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Answers</text>
+                <text x="50" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">{isCs ? 'Odpovědi' : 'Answers'}</text>
                 
                 <rect x="140" y="0" width="100" height="40" rx="4" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" />
                 <text x="190" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Data</text>
@@ -74,7 +76,7 @@ export default function Diagram({ type }: DiagramProps) {
               <path d="M 120 180 L 120 210" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-tvm)" />
               
               <rect x="70" y="210" width="100" height="40" rx="4" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" />
-              <text x="120" y="235" textAnchor="middle" className="text-sm font-bold fill-amber-700 dark:fill-amber-300">Rules</text>
+              <text x="120" y="235" textAnchor="middle" className="text-sm font-bold fill-amber-700 dark:fill-amber-300">{isCs ? 'Pravidla' : 'Rules'}</text>
             </g>
 
           </svg>
@@ -544,7 +546,7 @@ export default function Diagram({ type }: DiagramProps) {
 
             {/* --- WAVE 1: DISCRIMINATIVE --- */}
             <g transform="translate(50, 40)">
-              <text x="0" y="0" className="text-sm font-bold fill-slate-600 dark:fill-slate-400 uppercase tracking-widest">Wave 1: Discriminative AI</text>
+              <text x="0" y="0" className="text-sm font-bold fill-slate-600 dark:fill-slate-400 uppercase tracking-widest">{isCs ? 'Vlna 1: Diskriminativní AI' : 'Wave 1: Discriminative AI'}</text>
               
               {/* Input: Cat Photo */}
               <g transform="translate(0, 30)">
@@ -560,7 +562,7 @@ export default function Diagram({ type }: DiagramProps) {
               <g transform="translate(140, 30)">
                 <polygon points="30,0 60,30 30,60 0,30" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" />
                 <text x="30" y="35" textAnchor="middle" className="text-xl">⚖️</text>
-                <text x="30" y="75" textAnchor="middle" className="text-xs fill-purple-700 dark:fill-purple-300">The Judge</text>
+                <text x="30" y="75" textAnchor="middle" className="text-xs fill-purple-700 dark:fill-purple-300">{isCs ? 'Soudce' : 'The Judge'}</text>
               </g>
 
               {/* Arrow */}
@@ -569,7 +571,7 @@ export default function Diagram({ type }: DiagramProps) {
               {/* Output: Label */}
               <g transform="translate(270, 40)">
                 <rect x="0" y="0" width="80" height="40" rx="20" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
-                <text x="40" y="25" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">"Cat"</text>
+                <text x="40" y="25" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">{isCs ? '"Kočka"' : '"Cat"'}</text>
               </g>
             </g>
 
@@ -578,12 +580,12 @@ export default function Diagram({ type }: DiagramProps) {
 
             {/* --- WAVE 2: GENERATIVE --- */}
             <g transform="translate(50, 180)">
-              <text x="0" y="0" className="text-sm font-bold fill-slate-600 dark:fill-slate-400 uppercase tracking-widest">Wave 2: Generative AI</text>
+              <text x="0" y="0" className="text-sm font-bold fill-slate-600 dark:fill-slate-400 uppercase tracking-widest">{isCs ? 'Vlna 2: Generativní AI' : 'Wave 2: Generative AI'}</text>
               
               {/* Input: Prompt */}
               <g transform="translate(0, 30)">
                 <rect x="0" y="0" width="100" height="60" rx="4" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" />
-                <text x="50" y="25" textAnchor="middle" className="text-xs font-bold fill-amber-700 dark:fill-amber-200">"Paint a cyberpunk cat"</text>
+                <text x="50" y="25" textAnchor="middle" className="text-xs font-bold fill-amber-700 dark:fill-amber-200">{isCs ? '"Namaluj kyberpunk kočku"' : '"Paint a cyberpunk cat"'}</text>
                 <text x="50" y="75" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">Prompt</text>
               </g>
 
@@ -594,7 +596,7 @@ export default function Diagram({ type }: DiagramProps) {
               <g transform="translate(170, 30)">
                 <circle cx="30" cy="30" r="30" fill="#ec4899" fillOpacity="0.1" stroke="#ec4899" className="animate-pulse" />
                 <text x="30" y="35" textAnchor="middle" className="text-xl">🎨</text>
-                <text x="30" y="75" textAnchor="middle" className="text-xs fill-pink-700 dark:fill-pink-300">The Creator</text>
+                <text x="30" y="75" textAnchor="middle" className="text-xs fill-pink-700 dark:fill-pink-300">{isCs ? 'Tvůrce' : 'The Creator'}</text>
               </g>
 
               {/* Arrow */}
@@ -631,21 +633,21 @@ export default function Diagram({ type }: DiagramProps) {
             <g transform="translate(50, 60)">
               <circle cx="20" cy="40" r="8" fill="#3b82f6" />
               <text x="20" y="20" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">1950</text>
-              <text x="20" y="130" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">Turing Test</text>
+              <text x="20" y="130" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">{isCs ? 'Turingův test' : 'Turing Test'}</text>
             </g>
 
             {/* 1997: Deep Blue */}
             <g transform="translate(200, 60)">
               <circle cx="20" cy="40" r="8" fill="#a855f7" />
               <text x="20" y="20" textAnchor="middle" className="text-xs font-bold fill-purple-700 dark:fill-purple-300">1997</text>
-              <text x="20" y="130" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">Deep Blue (Chess)</text>
+              <text x="20" y="130" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">{isCs ? 'Deep Blue (Šachy)' : 'Deep Blue (Chess)'}</text>
             </g>
 
             {/* 2012: Deep Learning */}
             <g transform="translate(350, 60)">
               <circle cx="20" cy="40" r="8" fill="#ef4444" />
               <text x="20" y="20" textAnchor="middle" className="text-xs font-bold fill-red-700 dark:fill-red-300">2012</text>
-              <text x="20" y="130" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">AlexNet (Vision)</text>
+              <text x="20" y="130" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">{isCs ? 'AlexNet (Vidění)' : 'AlexNet (Vision)'}</text>
             </g>
 
             {/* 2017: Transformers */}
@@ -859,7 +861,7 @@ export default function Diagram({ type }: DiagramProps) {
             <g transform="translate(50, 60)">
               <rect x="0" y="0" width="80" height="80" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
               <text x="40" y="45" textAnchor="middle" className="text-2xl">🐱</text>
-              <text x="40" y="70" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">Input</text>
+              <text x="40" y="70" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">{isCs ? 'Vstup' : 'Input'}</text>
             </g>
 
             {/* Arrow */}
@@ -869,7 +871,7 @@ export default function Diagram({ type }: DiagramProps) {
             <g transform="translate(200, 40)">
               <rect x="0" y="0" width="200" height="120" rx="8" fill="url(#box-grad)" stroke="#475569" strokeWidth="2" />
               <text x="100" y="60" textAnchor="middle" className="text-4xl font-bold fill-white opacity-50">???</text>
-              <text x="100" y="90" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">Hidden Layers</text>
+              <text x="100" y="90" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'Skryté vrstvy' : 'Hidden Layers'}</text>
               
               {/* Math symbols floating */}
               <text x="30" y="30" className="text-[10px] fill-slate-600 dark:fill-slate-400">∑</text>
@@ -883,8 +885,8 @@ export default function Diagram({ type }: DiagramProps) {
             {/* Output */}
             <g transform="translate(470, 60)">
               <rect x="0" y="0" width="80" height="80" rx="4" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" />
-              <text x="40" y="45" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">"Cat"</text>
-              <text x="40" y="70" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">Output</text>
+              <text x="40" y="45" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">{isCs ? '"Kočka"' : '"Cat"'}</text>
+              <text x="40" y="70" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">{isCs ? 'Výstup' : 'Output'}</text>
             </g>
           </svg>
         </div>

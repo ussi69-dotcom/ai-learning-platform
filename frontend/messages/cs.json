@@ -1,0 +1,79 @@
+{
+  "Navigation": {
+    "courses": "Kurzy",
+    "dashboard": "Nástěnka",
+    "profile": "Profil",
+    "login": "Přihlásit",
+    "logout": "Odhlásit",
+    "register": "Registrace"
+  },
+  "Auth": {
+    "login_title": "Přihlášení k účtu",
+    "email": "Email",
+    "password": "Heslo",
+    "submit_login": "Přihlásit se",
+    "no_account": "Nemáte účet?",
+    "register_link": "Zaregistrujte se zde",
+    "register_title": "Vytvořit účet",
+    "username": "Uživatelské jméno",
+    "confirm_password": "Potvrzení hesla",
+    "submit_register": "Zaregistrovat",
+    "has_account": "Máte již účet?",
+    "login_link": "Přihlaste se zde"
+  },
+  "Common": {
+    "loading": "Načítání...",
+    "error": "Došlo k chybě",
+    "save": "Uložit",
+    "cancel": "Zrušit"
+  },
+  "Profile": {
+    "title": "Profil",
+    "description": "Informace o vašem účtu a nastavení",
+    "account_status": "Stav účtu",
+    "active": "Aktivní",
+    "inactive": "Neaktivní",
+    "my_learning": "Moje učení 📚",
+    "no_lessons": "Zatím jste nedokončili žádné lekce. Začněte se učit!",
+    "lessons_completed": "Dokončili jste <bold>{count}</bold> lekcí!",
+    "lessons_done": "Hotové lekce",
+    "active_courses": "Aktivní kurzy",
+    "difficulty_level": "Úroveň obtížnosti",
+    "difficulty_desc": "Vyberte si úroveň učení, abyste viděli kurzy přizpůsobené vašim zkušenostem.",
+    "current": "Aktuální",
+    "update_difficulty": "Aktualizovat obtížnost",
+    "updating": "Aktualizuji...",
+    "no_changes": "Žádné změny",
+    "back_home": "Zpět na úvod",
+    "choose_avatar": "Vyber si Avatara"
+  },
+  "Feedback": {
+    "title": "Centrála Zpětné vazby",
+    "subtitle": "Pomozte nám vylepšit galaxii!",
+    "marker_location": "Pozice značky",
+    "bug": "Chyba",
+    "feature": "Nápad",
+    "note": "Poznámka",
+    "question": "Dotaz",
+    "placeholder_bug": "Popište chybu zde... Buďte konkrétní!",
+    "placeholder_feature": "Popište svůj nápad na vylepšení...",
+    "placeholder_note": "Napište svou poznámku zde...",
+    "placeholder_question": "Zeptejte se zde...",
+    "sending": "Odesílám...",
+    "submit": "Odeslat",
+    "cancel": "Zrušit",
+    "error": "Nepodařilo se odeslat zpětnou vazbu. Zkuste to prosím znovu.",
+    "drag_drop": "Přetáhni mě a umísti zpětnou vazbu",
+    "viewing_feedback": "Zobrazení zpětné vazby. Klikněte pro skrytí.",
+    "hide_feedback": "Skrýt zpětnou vazbu",
+    "view_feedback": "Zobrazit zpětnou vazbu",
+    "report_bug": "Nahlásit chybu / Zpětná vazba"
+  },
+  "Lab": {
+    "complete": "Laboratoř dokončena",
+    "mastered": "Zvládl jsi tento experiment.",
+    "title": "Experimentální laboratoř",
+    "saving": "Ukládám...",
+    "mark_complete": "Označit laboratoř jako hotovou"
+  }
+}

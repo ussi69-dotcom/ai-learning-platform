@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Jaký je základní rozdíl mezi tradičním programováním a strojovým učením?",
+    "option_a": "Programování používá Python, ML používá R",
+    "option_b": "Programování definuje explicitní pravidla, ML se učí vzory z dat",
+    "option_c": "Programování je rychlejší, ML je pomalejší",
+    "option_d": "Programování používá méně paměti než ML",
+    "correct_answer": "B",
+    "explanation": "Klíčový posun spočívá v tom, že tradiční programování vyžaduje napsání explicitních pravidel (if/else), zatímco strojové učení se učí vzory z příkladů (dat), aniž by bylo explicitně naprogramováno.",
+    "order": 1
+  },
+  {
+    "question": "Co jsou 'Parametry' v neuronové síti?",
+    "option_a": "Počet vrstev v síti",
+    "option_b": "Velikost trénovacího datasetu",
+    "option_c": "'Knoflíky' nebo váhy, které ukládají naučené znalosti",
+    "option_d": "Použitý programovací jazyk",
+    "correct_answer": "C",
+    "explanation": "Parametry jsou jako 'knoflíky' na rozvaděči - jsou to váhy, které se během tréninku ladí a ukládají znalosti modelu. Model se '70 miliardami parametrů' má 70 miliard těchto laditelných knoflíků.",
+    "order": 2
+  },
+  {
+    "question": "Jaký je rozdíl mezi Tréninkem a Inferencí?",
+    "option_a": "Trénink je rychlý, Inference je pomalá",
+    "option_b": "Trénink je fáze učení (měsíce), Inference je fáze používání (vteřiny)",
+    "option_c": "Trénink používá CPU, Inference používá GPU",
+    "option_d": "Není žádný rozdíl",
+    "correct_answer": "B",
+    "explanation": "Trénink je náročná fáze učení, která trvá měsíce a využívá tisíce GPU. Inference je, když používáte hotový (zmrazený) model k získání odpovědí - je to rychlé (vteřiny), protože model je již natrénován.",
+    "order": 3
+  },
+  {
+    "question": "Proč se AI nazývá 'Černá skříňka' (Black Box)?",
+    "option_a": "Protože běží v tmavých datacentrech",
+    "option_b": "Protože nevíme, JAK dochází ke konkrétním rozhodnutím, i když známe matematiku",
+    "option_c": "Protože je šifrovaná",
+    "option_d": "Protože je to proprietární software",
+    "correct_answer": "B",
+    "explanation": "Známe matematiku a kód neuronových sítí, ale nerozumíme tomu, PROČ se konkrétní neurony aktivují pro konkrétní vstupy. Rozhodovací proces je neprůhledný - proto 'černá skříňka'.",
+    "order": 4
+  },
+  {
+    "question": "Co je to 'Halucinace' AI?",
+    "option_a": "Když AI generuje obrázky",
+    "option_b": "Když AI vymýšlí věrohodně znějící, ale nepravdivé informace",
+    "option_c": "Když AI spadne",
+    "option_d": "Když AI běží pomalu",
+    "correct_answer": "B",
+    "explanation": "K halucinaci dochází, když AI sebevědomě generuje nepravdivé informace, protože předpovídá statisticky nejpravděpodobnější slova, místo aby ověřovala fakta.",
+    "order": 5
+  }
+]

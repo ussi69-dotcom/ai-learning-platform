@@ -7,6 +7,7 @@ import axios from 'axios';
 import LabBadge from './LabBadge';
 import { CheckCircle, Beaker } from 'lucide-react';
 import { Button } from '@/components/ui/button'; // Import Shadcn Button
+import { useTranslations } from 'next-intl';
 
 interface LabCompleteProps {
   labId: string;
@@ -16,6 +17,7 @@ export default function LabComplete({ labId }: LabCompleteProps) {
   const { token, refreshUser } = useAuth();
   const params = useParams();
   const lessonId = params.lessonId ? parseInt(params.lessonId as string) : null;
+  const t = useTranslations('Lab');
 
   const [isCompleted, setIsCompleted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,8 +74,8 @@ export default function LabComplete({ labId }: LabCompleteProps) {
           <CheckCircle className="w-6 h-6" />
         </div>
         <div>
-          <h4 className="font-bold text-green-700 dark:text-green-400">Lab Completed</h4>
-          <p className="text-sm text-muted-foreground">You have mastered this experiment.</p>
+          <h4 className="font-bold text-green-700 dark:text-green-400">{t('complete')}</h4>
+          <p className="text-sm text-muted-foreground">{t('mastered')}</p>
         </div>
       </div>
     );
@@ -83,7 +85,7 @@ export default function LabComplete({ labId }: LabCompleteProps) {
     <>
       {showBadge && (
         <LabBadge 
-          title="Experimental Lab" 
+          title={t('title')}
           onClose={() => setShowBadge(false)} 
           type="lab"
           xp={25}
@@ -98,11 +100,11 @@ export default function LabComplete({ labId }: LabCompleteProps) {
           className="relative group text-lg font-bold shadow-md hover:shadow-lg transition-all duration-300"
         >
           {isLoading ? (
-            <span>Saving...</span>
+            <span>{t('saving')}</span>
           ) : (
             <>
               <Beaker className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
-              <span>Mark Lab as Complete</span>
+              <span>{t('mark_complete')}</span>
             </>
           )}
         </Button>

@@ -1,7 +1,9 @@
 {
   "title": "The Mind of the Machine: LLMs",
+  "title_cs": "Mysl stroje: LLM",
   "slug": "llms-explained",
   "description": "Unlock the secrets of Large Language Models. Learn how they think, predict, and why they sometimes hallucinations.",
+  "description_cs": "Odhalte tajemství Velkých jazykových modelů. Zjistěte, jak myslí, předpovídají a proč někdy halucinují.",
   "order": 3,
   "video_url": "https://www.youtube.com/embed/5sLYAQS9sWQ"
 }

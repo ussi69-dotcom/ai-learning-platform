@@ -1,6 +1,8 @@
 {
   "title": "Course Summary & Next Steps",
+  "title_cs": "Shrnutí kurzu a další kroky",
   "description": "Congratulations on completing AI Basics! Let's recap your journey, equip you with the best tools, and prepare you for the next level.",
+  "description_cs": "Gratulujeme k dokončení Základů AI! Zrekapitulujme tvou cestu, vybavme tě nejlepšími nástroji a připravme tě na další úroveň.",
   "order": 7,
   "video_url": "https://www.youtube.com/embed/S7xTBa93TX8"
 }

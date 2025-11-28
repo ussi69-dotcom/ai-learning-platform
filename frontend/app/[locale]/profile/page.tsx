@@ -8,7 +8,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AvatarSelector, { getAvatar } from '@/components/AvatarSelector';
 import { X } from 'lucide-react'; // Import X icon
+import { useTranslations } from 'next-intl';
 
+// ... (DIFFICULTY_LABELS and DIFFICULTY_OPTIONS remain unchanged) ...
 const DIFFICULTY_LABELS: Record<string, string> = {
   'PIECE_OF_CAKE': '🍰 Piece of Cake',
   'LETS_ROCK': '🎸 Let\'s Rock',
@@ -26,7 +28,11 @@ const DIFFICULTY_OPTIONS = [
 export default function ProfilePage() {
   const { user, logout, isLoading, token } = useAuth();
   const router = useRouter();
+  const t = useTranslations('Profile');
+  const tCommon = useTranslations('Common');
+  
   const [selectedDifficulty, setSelectedDifficulty] = useState(user?.difficulty || 'LETS_ROCK');
+  // ... (rest of state) ...
   const [selectedAvatar, setSelectedAvatar] = useState(user?.avatar || 'jedi_1');
   const [showAvatarModal, setShowAvatarModal] = useState(false); // Modal state
   const [updating, setUpdating] = useState(false);
@@ -34,6 +40,7 @@ export default function ProfilePage() {
   const [myProgress, setMyProgress] = useState<any[]>([]);
   const [courses, setCourses] = useState<any[]>([]);
 
+  // ... (useEffect hooks remain same) ...
   // Handle redirect in useEffect to avoid React error
   useEffect(() => {
     if (!isLoading && !user) {
@@ -43,7 +50,6 @@ export default function ProfilePage() {
     if (user && user.avatar) setSelectedAvatar(user.avatar);
   }, [isLoading, user, router]);
 
-  // ... (fetchProgress effect remains same) ...
   useEffect(() => {
     async function fetchProgress() {
       if (!token) return;
@@ -58,10 +64,11 @@ export default function ProfilePage() {
     fetchProgress();
   }, [token]);
 
-  if (isLoading) return <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-950 text-slate-900 dark:text-white"><p>Loading...</p></div>;
+  if (isLoading) return <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-950 text-slate-900 dark:text-white"><p>{tCommon('loading')}</p></div>;
   if (!user) return null;
 
   const handleAvatarChange = async (newAvatar: string) => {
+    // ... (logic remains same) ...
     setSelectedAvatar(newAvatar);
     setShowAvatarModal(false); // Close modal immediately on select
     setUpdating(true);
@@ -80,9 +87,8 @@ export default function ProfilePage() {
     }
   };
 
-  // ... (handleDifficultyChange remains same) ...
   const handleDifficultyChange = async () => {
-    if (selectedDifficulty === user.difficulty) { setMessage('This is already your current difficulty!'); return; }
+    if (selectedDifficulty === user.difficulty) { setMessage(t('no_changes')); return; }
     const confirmed = window.confirm(`Are you sure you want to switch to ${DIFFICULTY_LABELS[selectedDifficulty]}?\n\nYou\'ll see different courses suited to your new difficulty level.`);
     if (!confirmed) return;
     setUpdating(true); setMessage('');
@@ -97,14 +103,13 @@ export default function ProfilePage() {
   const handleLogout = () => { logout(); router.push('/'); };
   const hasChanges = selectedDifficulty !== user.difficulty;
   
-  // Get current avatar object
   const avatarObj = getAvatar(selectedAvatar);
   const AvatarIcon = avatarObj.type === 'ICON' ? avatarObj.icon : null;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 py-12 transition-colors duration-300 relative">
       
-      {/* Inject Gradients for Profile Icon if needed */}
+      {/* Inject Gradients */}
       <svg width="0" height="0" className="absolute">
         <defs>
           <linearGradient id="grad-jedi" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#60a5fa" /><stop offset="100%" stopColor="#ffffff" /></linearGradient>
@@ -120,7 +125,7 @@ export default function ProfilePage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-3xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in zoom-in-95 duration-200">
             <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
-              <h3 className="text-lg font-bold dark:text-white">Choose your Avatar</h3>
+              <h3 className="text-lg font-bold dark:text-white">{t('choose_avatar')}</h3>
               <button onClick={() => setShowAvatarModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
                 <X className="w-5 h-5 dark:text-slate-400" />
               </button>
@@ -134,8 +139,8 @@ export default function ProfilePage() {
 
       <Card className="w-full max-w-2xl dark:bg-slate-900 dark:border-slate-800">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold dark:text-white">Profile</CardTitle>
-          <CardDescription className="dark:text-slate-400">Your account information and settings</CardDescription>
+          <CardTitle className="text-2xl font-bold dark:text-white">{t('title')}</CardTitle>
+          <CardDescription className="dark:text-slate-400">{t('description')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-4">
@@ -167,12 +172,12 @@ export default function ProfilePage() {
             </div>
 
             <div>
-              <label className="text-sm font-medium text-slate-600 dark:text-slate-400">Account Status</label>
+              <label className="text-sm font-medium text-slate-600 dark:text-slate-400">{t('account_status')}</label>
               <p className="text-lg font-medium dark:text-slate-200">
                 {user.is_active ? (
-                  <span className="text-green-600 dark:text-green-400">✓ Active</span>
+                  <span className="text-green-600 dark:text-green-400">✓ {t('active')}</span>
                 ) : (
-                  <span className="text-red-600 dark:text-red-400">✗ Inactive</span>
+                  <span className="text-red-600 dark:text-red-400">✗ {t('inactive')}</span>
                 )}
               </p>
             </div>
@@ -180,24 +185,27 @@ export default function ProfilePage() {
 
           {/* My Learning Section */}
           <div className="pt-6 border-t dark:border-slate-700">
-            <h3 className="text-lg font-semibold mb-4 dark:text-white">My Learning 📚</h3>
+            <h3 className="text-lg font-semibold mb-4 dark:text-white">{t('my_learning')}</h3>
             {myProgress.length === 0 ? (
-              <p className="text-slate-600 dark:text-slate-400">You haven't completed any lessons yet. Start learning!</p>
+              <p className="text-slate-600 dark:text-slate-400">{t('no_lessons')}</p>
             ) : (
               <div className="space-y-2">
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
-                  You have completed <span className="font-bold text-blue-600 dark:text-blue-400">{myProgress.length}</span> lessons!
+                  {t.rich('lessons_completed', {
+                    count: myProgress.length,
+                    bold: (chunks) => <span className="font-bold text-blue-600 dark:text-blue-400">{chunks}</span>
+                  })}
                 </p>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg text-center border border-blue-100 dark:border-blue-800">
                     <div className="text-2xl font-bold text-blue-700 dark:text-blue-300">{myProgress.length}</div>
-                    <div className="text-xs text-blue-600 dark:text-blue-400">Lessons Done</div>
+                    <div className="text-xs text-blue-600 dark:text-blue-400">{t('lessons_done')}</div>
                   </div>
                   <div className="bg-green-50 dark:bg-green-950/30 p-4 rounded-lg text-center border border-green-100 dark:border-green-800">
                     <div className="text-2xl font-bold text-green-700 dark:text-green-300">
                       {new Set(myProgress.map((p: any) => p.course_id)).size}
                     </div>
-                    <div className="text-xs text-green-600 dark:text-green-400">Active Courses</div>
+                    <div className="text-xs text-green-600 dark:text-green-400">{t('active_courses')}</div>
                   </div>
                 </div>
               </div>
@@ -206,9 +214,9 @@ export default function ProfilePage() {
 
           {/* Difficulty Switcher Section */}
           <div className="pt-6 border-t dark:border-slate-700">
-            <h3 className="text-lg font-semibold mb-4 dark:text-white">Difficulty Level</h3>
+            <h3 className="text-lg font-semibold mb-4 dark:text-white">{t('difficulty_level')}</h3>
             <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-              Choose your learning level to see courses tailored to your experience.
+              {t('difficulty_desc')}
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
@@ -224,7 +232,7 @@ export default function ProfilePage() {
                   <div className="font-semibold text-lg dark:text-slate-200">{option.label}</div>
                   <div className="text-sm text-slate-600 dark:text-slate-400">{option.description}</div>
                   {option.value === user.difficulty && (
-                    <div className="text-xs text-indigo-600 dark:text-indigo-400 mt-1">✓ Current</div>
+                    <div className="text-xs text-indigo-600 dark:text-indigo-400 mt-1">✓ {t('current')}</div>
                   )}
                 </button>
               ))}
@@ -244,7 +252,7 @@ export default function ProfilePage() {
               disabled={!hasChanges || updating}
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white disabled:opacity-50"
             >
-              {updating ? 'Updating...' : hasChanges ? 'Update Difficulty' : 'No Changes'}
+              {updating ? t('updating') : hasChanges ? t('update_difficulty') : t('no_changes')}
             </Button>
           </div>
 
@@ -255,14 +263,14 @@ export default function ProfilePage() {
               className="w-full dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
               onClick={() => router.push('/')}
             >
-              Back to Home
+              {t('back_home')}
             </Button>
             <Button 
               variant="destructive" 
               className="w-full bg-red-600 hover:bg-red-700 text-white"
               onClick={handleLogout}
             >
-              Logout
+              {tCommon('logout') || 'Logout'} 
             </Button>
           </div>
         </CardContent>

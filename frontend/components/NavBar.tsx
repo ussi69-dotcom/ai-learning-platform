@@ -1,16 +1,19 @@
 "use client";
 
 import { useAuth } from '@/context/AuthContext';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 import JediSithToggle from './JediSithToggle';
 import XPProgressBar from './XPProgressBar';
+import LanguageSwitcher from './LanguageSwitcher';
 import { useEffect, useState } from 'react';
 import { getAvatar } from '@/components/AvatarSelector';
+import { useTranslations } from 'next-intl';
 
 export default function NavBar() {
   const { user, logout, token } = useAuth();
   const [progressStats, setProgressStats] = useState({ level: 1, xp: 0, maxXp: 500 });
+  const t = useTranslations('Navigation');
 
   useEffect(() => {
     if (!user) return;
@@ -68,6 +71,9 @@ export default function NavBar() {
           
           {/* Theme Toggle */}
           <JediSithToggle />
+          
+          {/* Language Switcher */}
+          <LanguageSwitcher />
 
           {user ? (
             <>
@@ -83,7 +89,7 @@ export default function NavBar() {
                       />
                     )
                   )}
-                  <span className="hidden sm:inline">Profile</span>
+                  <span className="hidden sm:inline">{t('profile')}</span>
                 </Button>
               </Link>
               <Button 
@@ -92,19 +98,19 @@ export default function NavBar() {
                 onClick={logout}
                 className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
               >
-                Logout
+                {t('logout')}
               </Button>
             </>
           ) : (
             <div className="flex gap-2">
               <Link href="/login">
                 <Button variant="outline" size="sm" className="dark:bg-slate-900 dark:border-slate-700 dark:text-slate-300">
-                  Login
+                  {t('login')}
                 </Button>
               </Link>
               <Link href="/register">
                 <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground border-none">
-                  Register
+                  {t('register')}
                 </Button>
               </Link>
             </div>

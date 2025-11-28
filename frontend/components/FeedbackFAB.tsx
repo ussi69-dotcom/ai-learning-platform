@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AlertCircle, Flag, MessageCircle, X, MousePointer2, Plus, List, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 type FeedbackMode = 'idle' | 'placing' | 'viewing'; // idle: default, placing: drag&drop, viewing: show existing
 
@@ -16,6 +17,7 @@ interface FeedbackFABProps {
 export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback, lessonId, slideIndex }: FeedbackFABProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [draggedPosition, setDraggedPosition] = useState<{ x: number; y: number } | null>(null);
+  const t = useTranslations('Feedback');
 
   const toggleMode = () => {
     if (currentMode === 'placing') {
@@ -86,13 +88,13 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
       {currentMode === 'placing' && (
         <div className="bg-black/60 backdrop-blur-xl border border-primary/50 text-primary-foreground px-4 py-2 rounded-xl shadow-[0_0_15px_rgba(var(--primary),0.3)] text-sm flex items-center gap-2 animate-in slide-in-from-right fade-in duration-300 mb-2">
           <MousePointer2 className="w-4 h-4 text-primary" /> 
-          <span className="font-medium tracking-wide text-zinc-100">Drag & drop me to place feedback</span>
+          <span className="font-medium tracking-wide text-zinc-100">{t('drag_drop')}</span>
         </div>
       )}
        {currentMode === 'viewing' && (
         <div className="bg-black/60 backdrop-blur-xl border border-primary/50 text-primary-foreground px-4 py-2 rounded-xl shadow-[0_0_15px_rgba(var(--primary),0.3)] text-sm flex items-center gap-2 animate-in slide-in-from-right fade-in duration-300 mb-2">
           <Eye className="w-4 h-4 text-primary" /> 
-          <span className="font-medium tracking-wide text-zinc-100">Viewing feedback. Click Eye to hide.</span>
+          <span className="font-medium tracking-wide text-zinc-100">{t('viewing_feedback')}</span>
         </div>
       )}
 
@@ -108,7 +110,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
                 : "bg-black/20 border-primary/30 text-primary/80 hover:text-primary hover:border-primary hover:bg-primary/10"
             )}
             onClick={() => onModeChange(currentMode === 'viewing' ? 'idle' : 'viewing')}
-            title={currentMode === 'viewing' ? "Hide Feedback" : "View Feedback"}
+            title={currentMode === 'viewing' ? t('hide_feedback') : t('view_feedback')}
           >
              {currentMode === 'viewing' ? <X size={32} /> : <Eye size={32} />}
           </Button>
@@ -125,7 +127,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
           )}
           onClick={toggleMode}
           onMouseDown={startDrag}
-          title="Report a Bug / Feedback"
+          title={t('report_bug')}
         >
           {currentMode === 'placing' ? <X size={32} /> : <AlertCircle size={32} />}
         </Button>

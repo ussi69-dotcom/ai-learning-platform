@@ -1,0 +1,203 @@
+# Jak se AI učí?
+
+<Callout type="info">
+**Cíl mise:** Zvládnout 3 způsoby, jak se stroje učí, záhadu "Černé skříňky" a tajný 4. způsob.
+⏳ **Čas čtení:** 20 min | 🧪 **3 Laboratoře**
+</Callout>
+
+Vítej zpět. V minulé lekci jsme se naučili, že AI je student, ne kalkulačka.
+Ale jak přesně učíš stroj? Nemůžeš mu prostě nahrát učebnici do mozku (zatím).
+
+Jak ukazuje video, používáme tři odlišné styly výuky. Představ si je jako **Tréninkové metody Jediů**.
+
+<Diagram type="learning-types-overview" />
+
+---
+
+## 📚 1. Učení s učitelem (Supervised Learning - Třída)
+
+Toto je nejběžnější metoda. Funguje jako přísná školní třída.
+**Učitel (Člověk)** dává **Studentovi (AI)** problém A ODPOVĚĎ.
+
+### Workflow 🔄
+1.  📥 **Vstup:** Obrázek kočky 🐱
+2.  🏷️ **Štítek:** "Toto je Kočka."
+3.  🔁 **Opakovat:** 1 000 000 krát.
+
+AI se nakonec naučí vzory "Kočky" (špičaté uši, vousky) a dokáže rozpoznat kočky, které nikdy předtím neviděla.
+
+<Diagram type="supervised-learning-flow" />
+
+<ConceptCard title="Kuchařka" icon="📖" jediQuote="Studuj archivy.">
+*   **Analogie:** Kartičky s odpověďmi na zadní straně.
+*   **Případ užití:** Spam filtry, Rozpoznávání obličeje, Lékařská diagnóza.
+*   **Omezení:** Vyžaduje obrovské množství lidmi označených dat (drahé).
+</ConceptCard>
+
+### 🔬 Lab 1: Analyzátor sentimentu
+
+Podívejme se na Učení s učitelem v akci. Tento model byl vycvičen na milionech filmových recenzí označených jako "Pozitivní" 👍 nebo "Negativní" 👎.
+
+**Cíl:** Otestovat, zda AI chápe nuance, nebo jen klíčová slova.
+
+**Prompt:**
+```text
+Klasifikuj sentiment těchto 3 vět jako Pozitivní nebo Negativní:
+1. "Ten film jsem naprosto miloval."
+2. "Naprosto jsem miloval spaní během toho filmu."
+3. "Ten film nebyl vůbec špatný."
+```
+
+**Analýza:**
+*   **Věta 2:** Záludné! Obsahuje slovo "miloval", ale kontext ("spaní") ji dělá negativní. Jednoduché vyhledávání klíčových slov by zde selhalo.
+*   **Věta 3:** Dvojitý zápor ("nebyl špatný"). AI chápe, že to znamená "Dobrý".
+
+<LabComplete labId="lab-sentiment-analyzer" />
+
+---
+
+## 🧩 2. Učení bez učitele (Unsupervised Learning - Meditace)
+
+Co když nemáme štítky? Co když na AI prostě vysypeme hrubá data a řekneme "Přeber si to"?
+To je **Učení bez učitele**. AI medituje nad daty, dokud nenajde skryté struktury.
+
+### Workflow 🔄
+1.  📦 **Vstup:** 1 000 000 záznamů o nákupech zákazníků.
+2.  ❌ **Štítek:** Žádný.
+3.  ✨ **Výsledek:** AI je seskupí do "Víkendových nakupujících", "Lovců slev" a "Velkých utrácečů".
+
+<Diagram type="clustering-visualization" />
+
+<ConceptCard title="Hledač vzorů" icon="🔮" jediQuote="Naslouchej Síle. Ta tě vede.">
+*   **Analogie:** Organizování nepořádné knihovny bez znalosti systému třídění.
+*   **Případ užití:** Segmentace zákazníků, Doporučovací systémy (Netflix), Detekce anomálií.
+</ConceptCard>
+
+### 🔬 Lab 2: Hra na shlukování
+
+AI je překvapivě dobrá v hledání kategorií, které jsi nedefinoval.
+
+**Cíl:** Požádat AI o seskupení náhodných položek.
+
+**Prompt:**
+```text
+Seskup tyto položky do 3 logických kategorií. Názvy kategorií mi zatím neříkej.
+Položky: Apple, Tesla, Pomeranč, Ford, Banán, Microsoft, BMW, Google.
+```
+
+**Analýza:**
+Měla by je seskupit do:
+1.  🍎 **Ovoce:** Pomeranč, Banán.
+2.  💻 **Tech:** Apple (Záludné! Záleží na kontextu), Tesla, Microsoft, Google.
+3.  🚗 **Auta:** Tesla, Ford, BMW.
+*Všimni si, jak "Apple" a "Tesla" mohou patřit do více skupin. Sleduj, jak si AI poradí s dvojznačností.*
+
+<LabComplete labId="lab-clustering-game" />
+
+---
+
+## ⚔️ 3. Učení posilováním (Reinforcement Learning - Bojový výcvik)
+
+Toto je nejpokročilejší metoda. Takto učíme AI hrát hry (Šachy, Go) nebo chodit (Roboti).
+Je to **Pokus a Omyl** na steroidech.
+
+### Workflow 🔄
+1.  🤖 **Akce:** AI udělá tah.
+2.  🎯 **Zpětná vazba:** Dáme jí body (+1 za výhru, -1 za prohru).
+3.  🔁 **Smyčka:** Hraje miliony her sama proti sobě, aby maximalizovala body.
+
+<Diagram type="reinforcement-learning-loop" />
+
+<ConceptCard title="Válečník" icon="⚔️" sithQuote="Silní přežijí. Slabí zahynou.">
+*   **Analogie:** Cvičení psa pomocí pamlsků.
+*   **Případ užití:** Samořídící auta, AlphaGo, Robotika.
+*   **Klíč:** Potřebuje simulaci, aby mohla běžet miliony krát.
+</ConceptCard>
+
+---
+
+## 📉 4. Jak se vlastně zlepšuje (Hra na přihořívá)
+
+Možná si říkáš: *"Dobře, ale jak se ta AI skutečně zlepšuje?"*
+Hádá prostě náhodně, dokud se netrefí?
+
+Vlastně ano. Ale s háčkem. Hraje hru na **"Přihořívá & Samá voda"**.
+
+### Tréninková smyčka 🔄
+1.  **Odhad:** AI se podívá na obrázek psa a tipne "Kočka" (50% jistota).
+2.  **Chyba (Ztráta):** Učitel řekne "Špatně! To byl Pes."
+3.  **Aktualizace:** AI vypočítá, *o kolik* se spletla ("Ztráta") a pošťouchne svá vnitřní čísla (váhy), aby se příště spletla o trochu méně.
+
+Tento proces opakuje **miliony krát**.
+*   Odhad -> Špatně -> Pošťouchnutí.
+*   Odhad -> Špatně -> Pošťouchnutí.
+*   Odhad -> Správně! -> Uložit.
+
+<Diagram type="training-loop" />
+
+<ConceptCard title="Ztrátová funkce" icon="📉" jediQuote="Neúspěch, největším učitelem je.">
+*   **Analogie:** Hraní "Přihořívá" se zavázanýma očima.
+*   **Cíl:** Minimalizovat "Ztrátu" (vzdálenost od správné odpovědi).
+*   **Magie:** AI to dělá pomocí kalkulu (Gradientní sestup), klouzáním z kopce chyby dolů, dokud nenajde dno (Pravdu).
+</ConceptCard>
+
+---
+
+## 📦 5. Problém "Černé skříňky"
+
+Tady je ta děsivá část. Známe **Vstup** (Data) a známe **Výstup** (Předpověď).
+Ale ten střed? Ta část, kde AI skutečně "přemýšlí"?
+
+Je to **Černá skříňka**.
+
+<Diagram type="black-box" />
+
+Uvnitř moderní AI (jako GPT-4) jsou **biliony** čísel (parametrů), které interagují složitými způsoby.
+Když se zeptáš inženýra *"Proč AI řekla 'Ahoj' místo 'Čau'?"*, nemůže ukázat na konkrétní řádek kódu.
+Může jen říct: *"Protože matematika rozhodla, že to bylo o 0,001 % pravděpodobnější."*
+
+### Proč na tom záleží
+*   **Důvěra:** Můžeme věřit rozhodnutí, když nerozumíme důvodům?
+*   **Zkreslení:** Pokud se AI naučí zlozvyk (jako rasismus) z internetu, je těžké najít, kde přesně je ten zvyk uložen, aby se smazal.
+*   **Magie:** Také to znamená, že AI může najít vzory, které lidé *nevidí*, a řešit problémy způsoby, které jsme si nikdy nepředstavovali.
+
+---
+
+## 🤝 6. Tajná zbraň: RLHF
+
+Jak jsme dostali ChatGPT? Nebyla to jen jedna metoda. Byla to kombinace.
+Tou tajnou přísadou je **RLHF (Reinforcement Learning from Human Feedback - Učení posilováním z lidské zpětné vazby)**.
+
+1.  📚 **Supervised:** Naučili jsme ji gramatiku čtením internetu.
+2.  👍 **Reinforcement:** Lidé s ní chatovali a hlasovali "Palec nahoru" nebo "Palec dolů".
+    *   Pokud byla hrubá -> Palec dolů (Trest).
+    *   Pokud byla nápomocná -> Palec nahoru (Odměna).
+
+Tím se mimozemská inteligence sladila s lidskými hodnotami.
+
+---
+
+## 🏆 7. Závěrečná zpráva z mise
+
+Nyní znáš tři pilíře učení AI.
+
+<ConceptCard title="Holocron: Metody učení" icon="🧠">
+
+### 1. Supervised Learning (Učitel) 📖
+*   **Data:** Označená (Otázka + Odpověď).
+*   **Cíl:** Přesnost.
+*   **Příklad:** Je tento email Spam?
+
+### 2. Unsupervised Learning (Průzkumník) 🧭
+*   **Data:** Neoznačená (Hrubá data).
+*   **Cíl:** Struktura a Vzory.
+*   **Příklad:** Doporučení Spotify.
+
+### 3. Reinforcement Learning (Hráč) 🎮
+*   **Data:** Prostředí (Akce + Odměny).
+*   **Cíl:** Strategie a Optimalizace.
+*   **Příklad:** Kráčející robot.
+
+</ConceptCard>
+
+**Příští lekce:** Teď, když máme mozek, pojďme mu dát hlas. Vstupujeme do světa **Velkých jazykových modelů (LLMs)**.

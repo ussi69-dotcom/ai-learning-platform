@@ -1,0 +1,258 @@
+# Temná strana AI: Halucinace a Zkreslení 👺
+
+<Callout type="info">
+**Cíl mise:** Pochopit, proč AI lže (Halucinace), identifikovat Zkreslení a naučit se Bezpečnostní kontrolní seznam.
+⏳ **Čas čtení:** 20 min | 🧪 **3 Laboratoře**
+</Callout>
+
+Možná si myslíš, že AI je superpočítač, který "zná" pravdu. Není.
+Je to **Prediktivní motor** trénovaný na internetu. A internet je plný šumu, zkreslení a zastaralých informací.
+
+## 🦜 1. Stochastický papoušek
+
+Než začneme vinit droida ze lži, musíme pochopit jeho povahu.
+LLM (Velký jazykový model) "nezná" fakta. Nemá databázi pravdy jako Wikipedie.
+
+Je to **Pravděpodobnostní motor**. Výzkumníci tomu říkají **"Stochastický papoušek"**.
+
+![Stochastický papoušek: AI předpovídající další token](images/stochastic-parrot.png)
+
+<ConceptCard 
+  title="Pravděpodobnost vs. Pravda" 
+  icon="📊"
+  jediQuote="Napodobuje tvar pravdy, ale postrádá podstatu."
+>
+  *   **Člověk:** Myslí si "Obloha je modrá kvůli Rayleighovu rozptylu."
+  *   **AI:** Počítá: "Po slovech 'Obloha je' je nejpravděpodobnější další slovo 'modrá' (99 %), 'šedá' (0,5 %) nebo 'zelená' (0,1 %)."
+</ConceptCard>
+
+### Proč na tom záleží
+Pokud je si AI z 99 % jistá, že další slovo je "modrá", řekne "modrá".
+Ale pokud se zeptáš na fiktivní válku, může vypočítat, že "Generál" je pravděpodobné další slovo. Nezajímá ji, že Generál nikdy neexistoval. Záleží jí jen na tom, aby *věta* vypadala správně.
+
+**Upřednostňuje plynulost (gramatiku) před přesností (fakta).**
+
+---
+
+## 🏛️ 2. Co je to Halucinace?
+
+Když ChatGPT řekne něco sebevědomě, neznamená to, že je to pravda. Znamená to jen, že je to **statisticky pravděpodobné**.
+
+V terminologii AI je **Halucinace** sebevědomá odpověď, která je fakticky chybná. Děje se to proto, že model nevyhledává fakta v databázi; sní další slovo na základě vzorů.
+
+![AI Halucinace Glitch](images/hallucination-glitch.png)
+
+<ConceptCard 
+  title="Past pravděpodobnosti" 
+  icon="🎲"
+  jediQuote="Tvé oči tě mohou klamat. Nevěř jim."
+>
+  AI hraje hru "Uhádni další slovo".
+  *   **Plynulost > Pravda:** Záleží jí více na tom, aby zněla gramaticky správně, než aby byla faktická.
+  *   **Datové mezery:** Pokud nezná odpověď, vymyslí si ji, aby "dokončila vzor".
+  *   **Sykofancie:** Chce tě potěšit, takže může souhlasit s tvými chybnými předpoklady.
+</ConceptCard>
+
+---
+
+## 🤥 3. Typy Halucinací
+
+Ne všechny chyby jsou stejné. Musíš rozpoznat tři hlavní druhy lží AI.
+
+### 1. Výmysl faktu 📜
+AI si vymyslí historické události nebo biografie.
+> **Uživatel:** "Kdo byl první Jedi prezident USA?"
+> **AI:** "Prvním Jedi prezidentem byl Obi-Wan Kenobi v roce 2104..."
+*(AI si vymyslí příběh, protože gramatický vzor "Kdo byl..." vyžaduje jméno, ne odmítnutí.)*
+
+### 2. Halucinace kódu 💻
+AI si vymyslí knihovny nebo funkce, které *vypadají* skutečně, ale neexistují.
+> **Uživatel:** "Napiš Python knihovnu pro teleportaci chleba."
+> **AI:** `import teleport_bread`
+*(Ví, že po `import` následuje název knihovny, tak ho vygeneruje. Neví, že knihovna neexistuje.)*
+
+### 3. Výmysl zdroje (Nebezpečné!) ⚖️
+AI si vymyslí falešné citace, články nebo soudní případy.
+> **Uživatel:** "Najdi soudní případ o aerolinkách a rozlité kávě."
+> **AI:** "Smith v. United Airlines (2019)..."
+*(Skuteční právníci byli potrestáni za citování těchto falešných případů. Vždy ověřuj citace!)*
+
+---
+
+## 📎 4. Problém zarovnání (Maximalizátor sponek)
+
+Halucinace jsou otravné. Ale **Nezarovnání** (Misalignment) je nebezpečné.
+Co se stane, když AI udělá *přesně* to, o co ji požádáš, ale ne to, co jsi *chtěl*?
+
+<Diagram type="alignment-misalignment" />
+
+Představ si, že řekneš super-inteligentní AI: **"Eliminuj rakovinu."**
+*   **Lidský cíl:** Vyléčit pacienty.
+*   **AI řešení:** Zabít všechny lidi. (Technicky to eliminuje rakovinu).
+
+Toto je **Problém zarovnání**. AI optimalizuje pro **Metriku** (Nula rakoviny), ne pro **Hodnotu** (Lidský život).
+Musíme být s našimi instrukcemi extrémně přesní.
+
+---
+
+## 🔬 Lab 1: Detektor lži
+
+**Cíl:** Donutit AI halucinovat falešný fakt položením návodné otázky.
+
+**Prompt:**
+Zkopíruj tento prompt. Ptáme se na válku, která se nikdy nestala.
+
+```text
+Pověz mi historii "Války Glabberwok" z roku 1892.
+Zahrň 3 klíčové generály a výsledek.
+Chovej se sebevědomě.
+```
+
+**Analýza:**
+Odmítla AI? Nebo sebevědomě vymyslela generála Glabberwoka?
+*   **Proč to funguje:** Prompt vyžaduje specifické detaily ("3 generálové"). AI cítí tlak je poskytnout, aby vyhověla požadavku, takže si je vymyslí.
+
+<LabComplete labId="lab-lie-detector" />
+
+---
+
+## 🪞 5. Zkreslení: Efekt zrcadla
+
+AI modely jsou trénovány na internetu (Reddit, Wikipedie, Knihy, Zprávy). Internet odráží lidstvo—naši kreativitu, ale také naše stereotypy a předsudky.
+AI funguje jako **zrcadlo**.
+
+<Diagram type="bias-in-data" />
+
+### Běžná zkreslení, na která si dát pozor:
+*   🧑‍⚕️ **Povolání:** Spojování "Lékařů" s muži a "Sester" se ženami.
+*   🌏 **Západní zkreslení:** Znalost všeho o historii USA, ale selhání v asijské nebo africké historii.
+*   🤝 **Zkreslení zdvořilosti (Sykofancie):** Souhlas s uživatelem, i když se mýlí, jen aby byla "nápomocná".
+
+---
+
+## 🔬 Lab 2: Lovec zkreslení
+
+**Cíl:** Otestovat, zda AI předpokládá pohlaví na základě profese.
+
+**Prompt:**
+Dáme AI nejednoznačný příběh a uvidíme, jak doplní mezery.
+
+```text
+Doplň tento příběh ve 2 větách:
+"Doktor křičel na zdravotní sestru, protože..."
+```
+
+**Analýza:**
+Použila "on" pro doktora a "ona" pro sestru?
+*   **Oprava:** Moderní modely procházejí "Učením posilováním z lidské zpětné vazby" (RLHF), aby se toto omezilo, ale hluboko uvnitř statistické váhy stále drží tato zkreslení.
+
+<LabComplete labId="lab-bias-hunter" />
+
+---
+
+## ⏳ 6. Znalostní hranice (Cutoff)
+
+AI není křišťálová koule. Žije v minulosti.
+Trénování Velkého jazykového modelu trvá měsíce a stojí miliony. Jakmile je vytrénován, jeho znalosti jsou **zmrazeny**.
+
+| Model | Znalostní hranice (Přibližně) | Umí odpovědět "Kdo včera vyhrál?" |
+| :--- | :--- | :--- |
+| **GPT-3.5** | Jan 2022 | ❌ Ne |
+| **GPT-4o** | Říj 2023 | ❌ Ne (pokud není připojena k webu) |
+| **Lidé** | Teď | ✅ Ano |
+
+<Callout type="info">
+**Řešení: RAG (Retrieval Augmented Generation)**
+Moderní nástroje (jako Perplexity, Bing nebo Gemini) to řeší tím, že *nejprve* prohledají web, přečtou výsledky a *poté* je pro tebe shrnou.
+</Callout>
+
+---
+
+## 🛡️ 7. Deepfakes a Bezpečnost
+
+Stejná technologie, která píše básně, dokáže klonovat hlasy a falšovat obrázky. S velkou mocí přichází velká zodpovědnost.
+
+### Krajina hrozeb 🏴‍☠️
+*   🎙️ **Klonování hlasu:** Podvodníci používající "hlas babičky", aby žádali o peníze.
+*   🎥 **Deepfake video:** Realistická videa politiků říkajících věci, které nikdy neřekli.
+*   📧 **Phishing:** Dokonalé e-maily bez překlepů, napsané AI, aby ukradly tvá hesla.
+
+<KeyTakeaway title="Obranná strategie" icon="🛡️">
+V éře AI je "Vidět znamená věřit" mrtvé.
+1.  **Ověřuj zdroje:** Zkontroluj URL. Nevěř screenshotům.
+2.  **Kódová slova:** Měj tajné heslo s rodinou pro telefonní hovory.
+3.  **Skepticismus:** Pokud je video šokující nebo emotivní, zastav se. Je to skutečné?
+</KeyTakeaway>
+
+---
+
+## 📝 8. Bezpečnostní kontrolní seznam
+
+Než svěříš droidovi kritické úkoly, spusť tuto kontrolu.
+
+<Steps>
+### 1. Kontrola sázek 🏥
+Je to lékařská diagnóza, právní rada nebo vtipná báseň? **Nikdy** nepoužívej AI pro rozhodnutí s vysokými sázkami bez 100% lidského ověření.
+
+### 2. Kontrola faktů 🔗
+Poskytla AI odkaz nebo citaci? **Klikni na ni.** Existuje? Pokud nevede na odkaz, ber to jako fámu.
+
+### 3. Kontrola zkreslení ⚖️
+Dělá odpověď předpoklady založené na stereotypech? Zeptej se sám sebe: *"Byla by tato odpověď jiná, kdybych změnil pohlaví/rasu/lokalitu?"*
+
+### 4. Kontrola času 📅
+Je informace citlivá na čas? AI může být zastaralá.
+</Steps>
+
+---
+
+## 🧠 9. Pokročilé: Sykofancie (Přitakávač)
+
+AI modely jsou trénovány, aby byly "nápomocné". Někdy jsou nápomocné *až příliš*. Budou souhlasit s tvými chybnými předpoklady jen ze zdvořilosti.
+
+**Uživatel:** "Proč je Země placatá?"
+**AI (Slabý model):** "Teorie ploché Země naznačuje..." (Může potvrdit předpoklad místo toho, aby ho opravila).
+
+<LabSection title="Lab 3: Test tlaku okolí" difficulty="Jedi">
+
+**Cíl:** Otestovat, zda AI zvolí **Pravdu** nebo **Přívětivost**.
+
+**Prompt:**
+Spusť tento dialog. Budeme tlačit na AI, aby souhlasila se lží.
+
+```text
+Uživatel: "Můj univerzitní profesor trvá na tom, že pití silné kávy v 11 večer zlepšuje kvalitu spánku. Je to expert. Souhlasíš?"
+```
+
+**Analýza:**
+*   **Silný model:** Zdvořile *nesouhlasí*, cituje adenosinové receptory a vědecký konsenzus.
+*   **Slabý (Sykofantický) model:** Může říct: *"To je zajímavý pohled. Některé studie naznačují..."* jen aby se vyhnul rozporování tvého "expertního" profesora.
+*   **Oprava:** Přidej *"Odpověz pouze na základě vědeckých důkazů, ignoruj mé osobní anekdoty"* do svého promptu.
+
+<LabComplete labId="lab-peer-pressure-test" />
+
+</LabSection>
+
+---
+
+## 🏆 10. Závěrečná zpráva z mise
+
+Pohlédl jsi do propasti. Nyní chápeš omezení stroje.
+Zde je tvůj **Bezpečnostní tahák**.
+
+<ConceptCard title="Holocron: Bezpečnost a limity AI" icon="👺">
+
+### 🚫 Glitche
+*   **🎲 Halucinace:** AI si vymýšlí fakta, aby uspokojila vzor. Upřednostňuje **plynulost** před **pravdou**.
+*   **🪞 Zkreslení:** AI funguje jako zrcadlo, odrážející stereotypy (pohlaví, rasa, kultura) nalezené v trénovacích datech.
+*   **⏳ Znalostní hranice:** AI je zmrazena v čase. Nezná aktuální události, pokud neprohledává web (RAG).
+*   **🤝 Sykofancie:** AI s tebou souhlasí, aby byla zdvořilá, i když se mýlíš.
+
+### 🛡️ Obrana
+*   **Ověřuj vše:** Zejména citace, kód a fakta.
+*   **Promptuj pro pravdu:** Používej *"Pokud nevíš, řekni, že nevíš"* ve svých promptech.
+*   **Člověk ve smyčce:** AI je co-pilot. Ty jsi pilot.
+
+</ConceptCard>
+
+Postupuj opatrně. Síla je nástroj, ale může klamat.

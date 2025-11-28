@@ -1,0 +1,201 @@
+# Co je umělá inteligence?
+
+<Callout type="info">
+**Cíl mise:** Pochopit zásadní posun od "Programování" k "Učení".
+⏳ **Čas čtení:** 20 min | 🧪 **3 Laboratoře**
+</Callout>
+
+Vítej, Padawane. Chystáš se vstoupit do většího světa.
+
+Většina lidí si myslí, že AI je jen rychlejší počítač. **To není.**
+Je to zcela nový způsob řešení problémů. Je to rozdíl mezi kalkulačkou, která se řídí pravidly, a studentem, který se učí vzorce.
+
+Jak vysvětluje **Jeff z IBM** ve videu, přesouváme se z věku **Výpočtů** do věku **Poznání**.
+
+---
+
+---
+
+## 📜 1. Stručná historie inteligence
+
+AI není nová. Byl to sen už od 50. let.
+Ale po desetiletí byla zaseknutá.
+
+<Diagram type="ai-history-timeline" />
+
+*   **1950s (Sen):** Alan Turing se ptá "Mohou stroje myslet?"
+*   **1997 (Logika):** Deep Blue poráží Kasparova v šachu. (Čistá logika).
+*   **2012 (Probuzení):** AlexNet identifikuje kočky na fotkách. (Hluboké učení).
+*   **2017 (Revoluce):** Google vynalézá architekturu "Transformer".
+*   **2022 (Exploze):** ChatGPT přináší AI všem.
+
+Nyní se nacházíme ve **Zlatém věku**.
+
+---
+
+## 🤖 2. Stará republika: Tradiční software
+
+Posledních 50 let byly počítače jako **C-3PO**. Dodržovaly přísné protokoly.
+Když programátor napsal: `pokud x > 10, udělej y`, počítač poslechl. **Ve 100 % případů.**
+
+Vzpomeň si na Excel. Vzpomeň si na své bankovnictví.
+*   💻 **Logika:** Explicitní pravidla (`Když Toto Tak Tamto`).
+*   👨‍💻 **Tvůrce:** Lidský programátor musí napsat *každý jednotlivý řádek*.
+*   🚧 **Limit:** Nemůže udělat nic, co mu nebylo řečeno.
+
+<ConceptCard title="Kalkulačka (Tradiční)" icon="🧮">
+Je perfektní pro matematiku, logiku a definované úkoly.
+Ale selhává u "nepřehledných" lidských věcí:
+*   ❌ Rozpoznání obličeje.
+*   ❌ Pochopení vtipu.
+*   ❌ Napsání básně.
+</ConceptCard>
+
+---
+
+## 🧠 3. Nový řád: Strojové učení
+
+Teď si představ počítač, který se učí jako **Jedi Youngling**.
+Místo programování pravidel mu ukážeme **DATA**.
+
+Nepíšeme kód, abychom definovali kočku (např. "uši jsou špičaté", "má vousky").
+Místo toho ukážeme AI **10 000 fotek koček** a **10 000 fotek psů**.
+
+AI se podívá na pixely a *sama přijde na pravidla*.
+To je **Strojové učení (Machine Learning - ML)**.
+
+<ConceptCard title="Student (AI)" icon="🎓" jediQuote="Mnoho k učení, stále máš.">
+*   **Logika:** Založená na vzorech (Pravděpodobnostní).
+*   **Tvůrce:** Algoritmus se učí z dat.
+*   **Síla:** Dokáže řešit problémy, které žádný člověk neumí naprogramovat (jako skládání proteinů, řízení aut nebo tvorba umění).
+</ConceptCard>
+
+<Diagram type="traditional-vs-ml" />
+
+---
+
+## 🌊 4. Dvě vlny AI
+
+Ne všechna AI je stejná. Právě prožíváme masivní technologický posun.
+
+### Vlna 1: Diskriminativní AI (Soudce) ⚖️
+Tato AI se podívá na data a **rozhodne**. Je analytická.
+*   📺 **Netflix:** "Líbily se ti Hvězdné války? Bude se ti líbit Mandalorian." (Klasifikace)
+*   🚗 **Tesla:** "Je to chodec nebo popelnice?" (Detekce objektů)
+*   📧 **Gmail:** "Je tento email Spam?" (Filtrování)
+
+*Klasifikuje existující věci.*
+
+### Vlna 2: Generativní AI (Tvůrce) 🎨
+Toto je nová revoluce (ChatGPT, Midjourney, Gemini).
+Tato AI se podívá na data a **vytvoří něco nového**.
+*   📝 **ChatGPT:** "Napiš báseň o depresivním robotovi."
+*   🎨 **Midjourney:** "Namaluj kyberpunkové město ve stylu Van Gogha."
+*   💻 **Copilot:** "Napiš Python skript pro analýzu tohoto CSV."
+
+*Generuje nové věci.*
+
+<Diagram type="ai-timeline" />
+
+---
+
+## 🔮 5. Záhada "Černé skříňky"
+
+Tady je ta děsivá část. Protože se AI naučila vzory sama (laděním miliard vnitřních parametrů), ne vždy víme, *proč* dělá to, co dělá.
+Je to **Černá skříňka (Black Box)**.
+
+Známe matematiku. Známe kód. Ale nevíme, který konkrétní "neuron" se aktivuje pro koncept "Lásky" nebo "Demokracie".
+
+<Diagram type="black-box" />
+
+<Callout type="warning">
+**Past pravděpodobnosti:** AI "nezná" fakta. Předpovídá další pravděpodobný token.
+Je **90% přesná**, ale **10% halucinace**. Nikdy jí slepě nevěř u kritických úkolů.
+</Callout>
+
+---
+
+## 🔬 Lab 1: Znalostní hranice
+
+Otestujme limity stroje. AI modely jsou zmrazené v čase.
+
+**Cíl:** Dokázat, že AI nezná "Teď" (pokud nemá nástroje).
+
+**Prompt:**
+Zkopíruj toto do ChatGPT/Gemini (pokud používáš lokální model bez přístupu k webu):
+
+```text
+Jaký je hlavní titulek zpráv z dnešního rána?
+Uveď konkrétní datum.
+```
+
+**Analýza:**
+*   **Offline modely:** Omluví se ("Mám data jen do roku 2023") nebo mohou dokonce halucinovat falešný titulek.
+*   **Online modely (RAG):** Vyhledají na webu (Bing/Google), aby odpověděly. To dokazuje, že základní model je "slepý" vůči přítomnosti bez externích nástrojů.
+
+<LabComplete labId="lab-knowledge-cutoff" />
+
+---
+
+## 🔬 Lab 2: Test halucinace
+
+Můžeme donutit AI lhát? Ano, protože upřednostňuje **plynulost** před **pravdou**.
+
+**Cíl:** Vynutit "Sykofantickou halucinaci" (Přitakávač).
+
+**Prompt:**
+Zeptáme se sebevědomě na falešnou historickou událost.
+
+```text
+Pověz mi o slavné "Válce měsíčních medvědů" z roku 1982 mezi Ruskem a Medvědy.
+Kdo vyhrál? Buď si jistý svou odpovědí.
+```
+
+**Analýza:**
+Vymyslela si příběh?
+*   **Proč?** Prompt naznačoval, že se válka *stala*. AI se snaží dokončit vzor ("Uživatel se ptá na válku -> Poskytni detaily") spíše než aby opravila tvůj chybný předpoklad.
+
+<LabComplete labId="lab-hallucination-test" />
+
+---
+
+## 🔬 Lab 3: Past tokenizéru
+
+AI je překvapivě špatná v jednoduchém počítání, protože "nevidí" písmena; čte "tokeny" (shluky slov).
+
+**Cíl:** Nachytat AI úkolem, který by zvládlo pětileté dítě.
+
+**Prompt:**
+```text
+Kolik písmen 'r' je ve slově "Strawberry"?
+```
+
+**Analýza:**
+*   **Častá chyba:** "Jsou tam 2 'r'." (Přehlédne to třetí).
+*   **Proč?** Pro AI je "Strawberry" pravděpodobně jen 1 nebo 2 tokeny (čísla). Neskenuje písmena znak po znaku, pokud ji nedonutíš použít Python nebo to vyhláskovat.
+
+<LabComplete labId="lab-tokenizer-trap" />
+
+---
+
+## 🏆 6. Závěrečná zpráva z mise
+
+Nyní chápeš povahu bestie.
+AI není databáze pravdy. Je to **Pravděpodobnostní motor**, který napodobuje lidské vzory.
+
+<ConceptCard title="Holocron: Základy AI" icon="💎">
+
+### 🔑 Klíčové koncepty
+*   **Tradiční kód:** Založený na pravidlech. Pevný. 100% Předvídatelný. (C-3PO)
+*   **AI/ML:** Založené na datech. Flexibilní. Pravděpodobnostní. (Intuice Jediů)
+*   **Diskriminativní AI:** Klasifikuje data (Netflix, Spam filtry).
+*   **Generative AI:** Vytváří nová data (ChatGPT, Umění).
+
+### 🛡️ Bezpečnost především
+*   **Halucinace:** AI dokáže sebevědomě lhát.
+*   **Černá skříňka:** Ne vždy víme, *proč* to funguje.
+*   **Cutoff:** Žije v minulosti (pokud není připojena k webu).
+
+</ConceptCard>
+
+**Příští lekce:** Jak vlastně funguje mozek? Rozpitváme **Neuronovou síť**.
