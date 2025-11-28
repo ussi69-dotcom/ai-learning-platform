@@ -82,4 +82,4 @@ Next Steps:
 - Update lessons to use `<Sandbox>`.
 - Deployment to VPS.
 Issues: None
-Commit Hash: (will be added after commit)
+Commit Hash: a92cc9cec6e12455a556e940a1977042510f0c5d
