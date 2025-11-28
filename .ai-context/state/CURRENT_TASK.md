@@ -1,18 +1,18 @@
 # ⚡ Current Task Context
 
-**Objective:** Cycle 33 - Python Sandbox Implementation (Backend)
+**Objective:** Cycle 34 - Frontend Sandbox Integration
 
-## Active Goals (Cycle 33)
-1.  [x] Add `docker` library to backend dependencies.
-2.  [x] Configure `docker-compose.yml` for Docker-in-Docker (socket mount).
-3.  [x] Implement `SandboxService` (secure container spawning).
-4.  [x] Implement API Endpoint (`POST /sandbox/execute`).
-5.  [x] Verify with test script (`scripts/test_sandbox.py`).
+## Active Goals (Cycle 34)
+1.  [x] Create API Client (`frontend/lib/sandboxApi.ts`).
+2.  [x] Create UI Component (`frontend/components/mdx/Sandbox.tsx`).
+3.  [x] Integrate into Markdown Parser (`MarkdownRenderer.tsx`).
+4.  [x] Verify TS build (lint passed).
 
 ## Completed Cycles
-- **Cycle 32:** Documentation Optimization (Core/State structure created).
-- **Cycle 31:** Localization (CZ/EN).
+- **Cycle 33:** Python Sandbox Backend (Docker execution).
+- **Cycle 32:** Documentation Optimization.
+- **Cycle 31:** Localization.
 
 ## Next Steps
-- Connect Frontend "Run Code" button to the new API endpoint.
-- Deploy to VPS and verify Docker permissions.
+- Create a lesson that utilizes the new Sandbox feature.
+- Deploy to VPS.

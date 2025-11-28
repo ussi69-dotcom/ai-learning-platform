@@ -66,3 +66,20 @@ Next Steps:
 - VPS Deployment: Ensure Docker permissions are correct on the server.
 Issues: None
 Commit Hash: b306d96c1835818160293c0d595d53188ac93a39
+
+---
+
+# Session Log Entry
+Date: 2025-11-28 11:30
+Agent: Gemini CLI
+Accomplished:
+- **Implemented Cycle 34 (Frontend Sandbox Integration):**
+    - Created API Client `frontend/lib/sandboxApi.ts`.
+    - Created `<Sandbox>` UI component (`frontend/components/mdx/Sandbox.tsx`) with Dark Mode & Loading states.
+    - Integrated `<Sandbox>` into `MarkdownRenderer.tsx` for MDX parsing.
+    - Verified TypeScript build (lint passed).
+Next Steps:
+- Update lessons to use `<Sandbox>`.
+- Deployment to VPS.
+Issues: None
+Commit Hash: (will be added after commit)

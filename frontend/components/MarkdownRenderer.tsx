@@ -8,6 +8,7 @@ import ConceptCard from './mdx/ConceptCard';
 import LabSection from './mdx/LabSection';
 import LabComplete from './mdx/LabComplete';
 import CodeBlock from './CodeBlock';
+import Sandbox from './mdx/Sandbox';
 import Diagram from './mdx/Diagram';
 import KeyTakeaway from './mdx/KeyTakeaway';
 import { YouTube } from './mdx/YouTube';
@@ -172,6 +173,35 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         );
         
         i = openEnd + 1;
+        continue;
+      }
+
+      // 4.8 Handle <Sandbox> component
+      if (line.trim().startsWith('<Sandbox')) {
+        const { endIndex: openEnd, tagContent } = readOpeningTag(i);
+        
+        const heightMatch = tagContent.match(/height=['"]([^'"']+)['"]/);
+        const height = heightMatch?.[1];
+
+        // Check for self-closing
+        if (tagContent.trim().endsWith('/>')) {
+             const defaultCodeMatch = tagContent.match(/defaultCode=['"]([^'"']+)['"]/);
+             const code = defaultCodeMatch?.[1];
+             
+             elements.push(
+                <Sandbox key={`sandbox-${i}`} defaultCode={code} height={height} />
+             );
+             i = openEnd + 1;
+        } else {
+             // It has content
+             const { end: closeEnd, content: innerContent } = findClosingTag(openEnd, 'Sandbox');
+             const code = innerContent.trim(); 
+             
+             elements.push(
+                <Sandbox key={`sandbox-${i}`} defaultCode={code} height={height} />
+             );
+             i = closeEnd;
+        }
         continue;
       }
 

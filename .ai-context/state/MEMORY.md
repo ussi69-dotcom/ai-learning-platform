@@ -29,7 +29,7 @@ docker-compose down -v && docker-compose up -d --build
 *Never run `python seed.py` manually.*
 
 ### 2. Content Engineering ✍️
-- **Format:** MDX. Use `<Diagram>`, `<ConceptCard>`, `<Callout>`, `<Steps>`.
+- **Format:** MDX. Use `<Diagram>`, `<ConceptCard>`, `<Callout>`, `<Steps>`, `<Sandbox>`.
 - **Images:** Avoid raster. Use `<Diagram type="...">` (SVG) or CSS.
 - **Quizzes:** Defined in `quiz.json` (not MDX).
 - **Diagrams:** Use specific colors (`fill-slate-600 dark:fill-slate-400`) for dark mode compatibility.
@@ -42,16 +42,17 @@ docker-compose down -v && docker-compose up -d --build
 - **Styling:** Tailwind 4. No solid backgrounds; use transparency (`bg-card/50`).
 - **State:** `AuthContext` for user state.
 - **Localization:** `next-intl` used in UI.
+- **Interactive Components:** Use `<Sandbox defaultCode="..." />` for Python labs.
 
 ---
 
 ## 📊 Current State Snapshot
-- **Cycle:** 33 (Python Sandbox).
-- **Status:** Sandbox Backend implemented & verified.
+- **Cycle:** 34 (Frontend Sandbox Integration).
+- **Status:** Full Stack Sandbox (Backend + UI) implemented.
 - **Key Achievements:**
     - "Masterpiece Standard" achieved for Lessons 3-6.
     - Localization architecture (`[locale]` routing) fully implemented.
-    - **Secure Code Execution:** Implemented via `SandboxService` + Docker.
+    - **Secure Code Execution:** Implemented via `SandboxService` + Docker + `<Sandbox>` UI.
 
 ---
 
