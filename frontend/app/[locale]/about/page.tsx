@@ -4,19 +4,8 @@ import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from '@/i18n/routing';
 import { Button } from "@/components/ui/button";
-import { 
-  Brain, 
-  Code2, 
-  GitBranch, 
-  Layers, 
-  Rocket, 
-  Users, 
-  Workflow, 
-  Zap, 
-  Terminal,
-  Database,
-  Layout
-} from 'lucide-react';
+import { Rocket, Brain, Code2, Terminal, Zap, Users, Sparkles, Layout, Database, Layers, Workflow, GitBranch } from 'lucide-react';
+import Diagram from '@/components/mdx/Diagram';
 
 import { useAuth } from '@/context/AuthContext';
 
@@ -26,116 +15,109 @@ export default function AboutPage() {
 
   // Timeline Data
   const timeline = [
-    { year: 'Nov 15, 2025', title: 'The Spark', desc: 'Idea born. Deep dive into AI agents & local LLMs.', icon: <Brain className="w-5 h-5" /> },
-    { year: 'Nov 16, 2025', title: 'The Prototype', desc: 'Rapid development with Galaxy.AI & Claude Sonnet 4.5.', icon: <Code2 className="w-5 h-5" /> },
-    { year: 'Nov 18, 2025', title: 'The Crucible', desc: 'Anthropic Ban. A lesson in context optimization.', icon: <Zap className="w-5 h-5" /> },
-    { year: 'Nov 2025', title: 'The Gemini Era', desc: 'Switch to Gemini 2.5. "Antigravity" workflow established.', icon: <Rocket className="w-5 h-5" /> },
-    { year: 'Future', title: 'Gemini 3.0', desc: 'Awaiting the next leap. Building the ecosystem.', icon: <Terminal className="w-5 h-5" /> },
+    { year: 'Nov 15, 2025', title: 'The Spark', desc: 'Curiosity meets obsession. Galaxy.AI & Claude Sonnet 4.5 prototype the vision.', icon: <Brain className="w-5 h-5" /> },
+    { year: 'Nov 16-18, 2025', title: 'The Crash & Rebirth', desc: 'Anthropic ban forces a rethink. Gemini 3.0 Pro drops (Nov 18) -> Adopted Day 1.', icon: <Zap className="w-5 h-5" /> },
+    { year: 'Nov 20, 2025', title: 'Hyperdrive', desc: 'Antigravity framework released. Integrated same-day. Development velocity hits Mach 10.', icon: <Rocket className="w-5 h-5" /> },
+    { year: 'Nov 24, 2025', title: 'The Weapon', desc: 'Gemini 3.0 CLI access granted. Zero-day integration. The stack becomes self-aware.', icon: <Terminal className="w-5 h-5" /> },
+    { year: 'Now', title: 'The Vanguard', desc: 'Gemini 3 Pro, Antigravity, Perplexity, & Opus 4.5. We build with tomorrow\'s tools, today.', icon: <Users className="w-5 h-5" /> },
   ];
 
   // Tech Stack Data
   const techStack = [
-    { name: 'Next.js 16', icon: <Layout className="w-6 h-6" />, desc: 'Server Actions, App Router' },
-    { name: 'FastAPI', icon: <Zap className="w-6 h-6" />, desc: 'High-perf Async Backend' },
-    { name: 'PostgreSQL', icon: <Database className="w-6 h-6" />, desc: 'Robust Data Persistence' },
-    { name: 'Docker', icon: <Layers className="w-6 h-6" />, desc: 'Consistent Environments' },
-    { name: 'MCP', icon: <Workflow className="w-6 h-6" />, desc: 'Model Context Protocol' },
-    { name: 'MDX', icon: <Code2 className="w-6 h-6" />, desc: 'Content as Code' },
+    { name: 'Next.js 16', icon: <Layout className="w-6 h-6" />, desc: 'Server Actions & App Router. The bleeding edge of React.' },
+    { name: 'Antigravity', icon: <Rocket className="w-6 h-6" />, desc: 'Powered by Gemini 3.0 & Sonnet 4.5 Thinking. The context engine.' },
+    { name: 'Gemini 3.0 Pro', icon: <Sparkles className="w-6 h-6" />, desc: 'The Brain. Handling complex reasoning and code generation.' },
+    { name: 'Perplexity', icon: <Brain className="w-6 h-6" />, desc: 'Deep Research & Content Architecture. The Librarian.' },
+    { name: 'FastAPI + PG', icon: <Database className="w-6 h-6" />, desc: 'Async python backend with robust relational data storage.' },
+    { name: 'Docker', icon: <Layers className="w-6 h-6" />, desc: 'Consistent environments for humans and agents.' },
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col items-center relative overflow-hidden">
-      
-      {/* Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px]" />
+    <div className="flex min-h-screen flex-col bg-background text-foreground relative overflow-hidden">
+      {/* Background Gradients */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/10 rounded-full blur-[120px]" />
       </div>
 
-      {/* Hero Section */}
-      <section className="w-full py-20 md:py-32 px-4 text-center relative z-10">
-        <div className="max-w-4xl mx-auto space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card/50 border border-border backdrop-blur-sm text-sm font-medium text-primary mb-4 animate-fade-in">
-            <Rocket className="w-4 h-4" />
-            <span>{t('hero_subtitle')}</span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-b from-foreground to-foreground/50 bg-clip-text text-transparent drop-shadow-sm">
-            {t('hero_title')}
+      <div className="container px-4 py-12 md:py-24 mx-auto max-w-5xl">
+        {/* Header */}
+        <div className="text-center mb-16 space-y-4">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+            AI Built by AI
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            {t('hero_desc')}
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            A self-evolving platform built at the speed of light using the latest breakthroughs in Agentic AI.
           </p>
         </div>
-      </section>
 
-      {/* Genesis Section (Timeline) */}
-      <section className="w-full py-16 px-4 bg-card/30 border-y border-border/50 backdrop-blur-sm">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">{t('genesis_title')}</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">{t('genesis_desc')}</p>
-          </div>
-
-          <div className="relative">
-            {/* Line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-primary/50 to-transparent md:-translate-x-1/2" />
-
-            <div className="space-y-12">
-              {timeline.map((item, index) => (
-                <div key={index} className={`relative flex flex-col md:flex-row gap-8 items-center md:items-start ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
-                  
-                  {/* Dot */}
-                  <div className="absolute left-4 md:left-1/2 w-8 h-8 bg-background border-2 border-primary rounded-full flex items-center justify-center z-10 md:-translate-x-1/2 -translate-x-1/2">
-                     {item.icon}
+        {/* Genesis Timeline */}
+        <div className="mb-24 relative">
+           <div className="absolute left-[19px] top-0 bottom-0 w-[2px] bg-border md:left-1/2 md:-ml-[1px]" />
+           
+           <div className="space-y-12">
+             {timeline.map((item, index) => (
+               <div key={index} className={`relative flex items-center md:justify-between ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+                  {/* Icon Marker */}
+                  <div className="absolute left-0 md:left-1/2 -translate-x-[2px] md:-translate-x-1/2 w-10 h-10 rounded-full bg-background border-2 border-primary flex items-center justify-center z-10 shadow-lg shadow-primary/20">
+                    {item.icon}
                   </div>
-
-                  {/* Content */}
-                  <div className="w-full md:w-[calc(50%-2rem)] pl-12 md:pl-0">
-                    <Card className="hover:border-primary/50 transition-colors duration-300 bg-card/50 backdrop-blur-md">
+                  
+                  {/* Content Card */}
+                  <div className="ml-16 md:ml-0 w-full md:w-[45%]">
+                    <Card className="bg-card/50 backdrop-blur-sm border-primary/10 hover:border-primary/30 transition-colors">
                       <CardHeader>
                         <div className="text-sm text-primary font-mono mb-1">{item.year}</div>
-                        <CardTitle>{item.title}</CardTitle>
+                        <CardTitle className="text-xl">{item.title}</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-muted-foreground text-sm">{item.desc}</p>
+                        <p className="text-muted-foreground">{item.desc}</p>
                       </CardContent>
                     </Card>
                   </div>
-                </div>
+               </div>
+             ))}
+           </div>
+        </div>
+      </div>
+
+      {/* Tech Stack Grid */}
+        <section className="w-full py-10 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold mb-4">{t('tech_stack_title')}</h2>
+              <p className="text-muted-foreground">{t('tech_stack_desc')}</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {techStack.map((tech, i) => (
+                <Card key={i} className="group relative overflow-hidden hover:-translate-y-1 transition-all duration-300 bg-card/40 border-border/50 h-32 hover:h-auto min-h-[128px]">
+                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    {tech.icon}
+                  </div>
+                  
+                  <div className="p-6 h-full flex flex-col justify-center group-hover:justify-start transition-all duration-300">
+                    <div className="flex flex-row items-center gap-4 mb-2">
+                      <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        {tech.icon}
+                      </div>
+                      <CardTitle className="text-lg">{tech.name}</CardTitle>
+                    </div>
+                    
+                    {/* Description Reveal */}
+                    <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-300 ease-out">
+                      <div className="overflow-hidden">
+                        <p className="text-sm text-muted-foreground pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                          {tech.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Tech Stack Grid */}
-      <section className="w-full py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">{t('tech_stack_title')}</h2>
-            <p className="text-muted-foreground">{t('tech_stack_desc')}</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {techStack.map((tech, i) => (
-              <Card key={i} className="group hover:-translate-y-1 transition-transform duration-300 bg-card/40 border-border/50 overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                  {tech.icon}
-                </div>
-                <CardHeader className="flex flex-row items-center gap-4 pb-2">
-                  <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                    {tech.icon}
-                  </div>
-                  <CardTitle className="text-lg">{tech.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">{tech.desc}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
 
       {/* Workflow Section */}
       <section className="w-full py-20 px-4 bg-gradient-to-b from-slate-900 to-background text-white">

@@ -8,7 +8,7 @@ We believe the best way to learn AI is to **build with AI, alongside AI agents**
 
 ---
 
-## How It All Started: The Spark and The Crucible
+## How It All Started: Zero-Day Development
 
 This project didn't begin in a boardroom. It began on **Sunday, November 15, 2025**, with a spark of curiosity that turned into an obsession with AI agents.
 
@@ -17,13 +17,14 @@ The journey started with **Galaxy.AI** and **Claude Sonnet 4.5**. We rapidly pro
 - A naive attempt to transfer massive context to a paid Anthropic account led to an immediate ban.
 - This failure was the **crucible**. It forced a hard lesson: context optimization isn't optional; it's survival.
 
-### The Renaissance (Nov 2025 - Present)
-From the ashes of that failure, we rebuilt.
-- switched to **Gemini 2.5** as the primary driver.
-- Developed the **"Antigravity" workflow**: a robust system for context preservation, atomic updates, and agent coordination.
-- Eagerly awaiting **Gemini 3.0** to take the platform to the next level.
+### The Renaissance: Zero-Day Adoption (Nov 2025 - Present)
+We didn't just rebuild; we accelerated by adopting technology the **moment** it was released:
 
-The platform you're using right now is the result of that pivot—a system built to survive and thrive in the era of autonomous agents.
+1.  **Nov 18, 2025 (Gemini 3.0 Pro):** Released. Adopted **Day 1** as our primary VS Code advisor.
+2.  **Nov 20, 2025 (Antigravity):** Google blog post drops. We integrated it **same-day**. Development speed became so turbulent we had to invent new governance rules.
+3.  **Nov 24, 2025 (Gemini 3 CLI):** Invitation accepted. **Zero-day integration** into the pipeline.
+
+Today, we operate on the bleeding edge: **Gemini 3.0 Pro** drives the code, **Antigravity** handles the heavy lifting, **Perplexity** leads research, and **Opus 4.5** provides strategic oversight. We don't wait for the future; we build with it.
 
 ---
 
