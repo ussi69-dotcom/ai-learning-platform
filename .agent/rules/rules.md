@@ -28,6 +28,10 @@ You share this codebase with your counterpart, **Gemini CLI**. You are the same 
 - **Ending:** Update `state/SESSION_LOG.md` with your actions and next steps.
 - **Conflicts:** If you see `GEMINI.md` (CLI Memory) - **DO NOT DELETE**. It is for CLI use only. Use `state/MEMORY.md` for shared knowledge.
 
+## 4. Agent Memory Files
+- **`GEMINI.md`** – používat pouze pro Gemini CLI (root session memory).
+- **`.ai-context/state/MEMORY.md`** – používat pro všechny agenty jako sdílenou projektovou knowledge-base.
+
 ---
 
 # ⚙️ Workflow Rules
