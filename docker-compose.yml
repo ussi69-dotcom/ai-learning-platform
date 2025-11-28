@@ -30,6 +30,7 @@ services:
     volumes:
       - ./backend:/app
       - ./content:/app/content
+      - /var/run/docker.sock:/var/run/docker.sock
     command: ["./entrypoint.sh"]
     depends_on:
       - db

@@ -12,6 +12,7 @@ import FeedbackSubmissionModal from "@/components/FeedbackSubmissionModal";
 import FeedbackDetailModal from "@/components/FeedbackDetailModal";
 import FeedbackMarker from "@/components/FeedbackMarker";
 import { useLocale, useTranslations } from 'next-intl';
+import { Rocket } from 'lucide-react';
 
 type FeedbackMode = 'idle' | 'placing' | 'viewing';
 
@@ -251,13 +252,13 @@ export default function HomePage() {
                 lastLesson ? (
                     <Link href={`/courses/${lastLesson.course_id}/lessons/${lastLesson.lesson_id}`}>
                         <Button size="lg" className='gap-2'>
-                          {locale === 'cs' ? 'Pokračovat v učení 🚀' : 'Resume Learning 🚀'}
+                          {locale === 'cs' ? 'Pokračovat v učení' : 'Resume Learning'} <Rocket size={18} className="text-white" />
                         </Button>
                     </Link>
                 ) : courses.length > 0 ? (
                     <Link href={`/courses/${courses[0].id}`}>
                       <Button size="lg" className='gap-2'>
-                        {locale === 'cs' ? 'Začít s učením 🚀' : 'Start Learning 🚀'}
+                        {locale === 'cs' ? 'Začít s učením' : 'Start Learning'} <Rocket size={18} className="text-white" />
                       </Button>
                     </Link>
                 ) : (

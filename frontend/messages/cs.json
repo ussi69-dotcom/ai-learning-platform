@@ -25,7 +25,8 @@
     "loading": "Načítání...",
     "error": "Došlo k chybě",
     "save": "Uložit",
-    "cancel": "Zrušit"
+    "cancel": "Zrušit",
+    "logout": "Odhlásit"
   },
   "Profile": {
     "title": "Profil",

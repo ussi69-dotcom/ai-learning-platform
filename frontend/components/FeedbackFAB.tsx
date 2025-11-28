@@ -52,22 +52,13 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
       if (contentContainer) {
         const rect = contentContainer.getBoundingClientRect();
         
-        // Check if drop is within the container
-        if (
-          e.clientX >= rect.left && 
-          e.clientX <= rect.right && 
-          e.clientY >= rect.top && 
-          e.clientY <= rect.bottom
-        ) {
-          const relativeX = (e.clientX - rect.left) / rect.width;
-          const relativeY = (e.clientY - rect.top) / rect.height;
-          
-          onPlaceFeedback(relativeX, relativeY, slideIndex);
-          onModeChange('idle');
-        } else {
-            // Dropped outside
-            setDraggedPosition(null);
-        }
+        // Calculate relative position even if outside
+        // This allows placing markers in margins/whitespace
+        const relativeX = (e.clientX - rect.left) / rect.width;
+        const relativeY = (e.clientY - rect.top) / rect.height;
+        
+        onPlaceFeedback(relativeX, relativeY, slideIndex);
+        onModeChange('idle');
       }
       setDraggedPosition(null);
     };

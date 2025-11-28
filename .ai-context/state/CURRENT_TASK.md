@@ -1,15 +1,18 @@
 # ⚡ Current Task Context
 
-**Objective:** Agent & Documentation Optimization (Cycle 32)
+**Objective:** Cycle 33 - Python Sandbox Implementation (Backend)
 
-## Active Goals
-1.  [x] Analyze file structure.
-2.  [x] Create categorized directory structure (`core`, `state`, etc.).
-3.  [x] Unify memory (`MEMORY.md`).
-4.  [ ] Create Navigation (`INDEX.md`).
-5.  [ ] Update Rules (`rules.md`).
-6.  [ ] Clean up root directory.
+## Active Goals (Cycle 33)
+1.  [x] Add `docker` library to backend dependencies.
+2.  [x] Configure `docker-compose.yml` for Docker-in-Docker (socket mount).
+3.  [x] Implement `SandboxService` (secure container spawning).
+4.  [x] Implement API Endpoint (`POST /sandbox/execute`).
+5.  [x] Verify with test script (`scripts/test_sandbox.py`).
 
-## Recent Context
-- We just finished Cycle 31 (Localization of Lessons).
-- We are now optimizing the agent workflow itself to ensure future scalability.
+## Completed Cycles
+- **Cycle 32:** Documentation Optimization (Core/State structure created).
+- **Cycle 31:** Localization (CZ/EN).
+
+## Next Steps
+- Connect Frontend "Run Code" button to the new API endpoint.
+- Deploy to VPS and verify Docker permissions.

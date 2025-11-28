@@ -25,7 +25,8 @@
     "loading": "Loading...",
     "error": "An error occurred",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "logout": "Logout"
   },
   "Profile": {
     "title": "Profile",

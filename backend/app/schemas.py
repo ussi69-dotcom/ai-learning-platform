@@ -179,5 +179,16 @@ class FeedbackItemResponse(FeedbackItemBase):
     class Config:
         from_attributes = True
 
+# --- SANDBOX SCHEMAS ---
+class SandboxRequest(BaseModel):
+    code: str
+    language: str = "python"
+
+class SandboxResponse(BaseModel):
+    status: str  # "success", "error", "timeout"
+    output: Optional[str] = None
+    error: Optional[str] = None
+    exit_code: Optional[int] = None
+
 # Update forward refs for recursive schema definition
 FeedbackItemResponse.model_rebuild()

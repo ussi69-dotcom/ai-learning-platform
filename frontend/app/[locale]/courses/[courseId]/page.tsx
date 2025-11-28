@@ -266,6 +266,7 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
              onClose={() => setFeedbackToPlace(null)}
              onSubmitSuccess={() => { // Corrected from onSubmit
                 setFeedbackToPlace(null);
+                setFeedbackMode('viewing'); // Switch to viewing mode to see the new marker
                 // Refresh feedback
                 const fetchFeedback = async () => {
                    try {

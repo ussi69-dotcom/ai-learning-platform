@@ -17,6 +17,7 @@ Read this first to understand the environment, preferences, and active protocols
 - **Backend:** `/backend` (FastAPI, SQLAlchemy, Pydantic v2).
 - **Content:** `/content` (MDX lessons, `meta.json`, `quiz.json`).
 - **Database:** PostgreSQL (Service `db`). Auto-seeded via `backend/entrypoint.sh`.
+- **Sandbox:** Docker Sibling Containers. Backend mounts `/var/run/docker.sock` to spawn isolated `python:3.11-slim` containers for code execution.
 
 ## 🔑 Standard Operating Protocols (SOPs)
 
@@ -33,20 +34,24 @@ docker-compose down -v && docker-compose up -d --build
 - **Quizzes:** Defined in `quiz.json` (not MDX).
 - **Diagrams:** Use specific colors (`fill-slate-600 dark:fill-slate-400`) for dark mode compatibility.
 
-### 3. Frontend Development 🎨
+### 3. Backend Development 🐍
+- **Sandbox:** Code execution requires `docker-compose` with socket mount.
+- **Testing:** Use `scripts/test_sandbox.py` to verify execution environment.
+
+### 4. Frontend Development 🎨
 - **Styling:** Tailwind 4. No solid backgrounds; use transparency (`bg-card/50`).
 - **State:** `AuthContext` for user state.
-- **Localization:** `next-intl` used for UI.
+- **Localization:** `next-intl` used in UI.
 
 ---
 
 ## 📊 Current State Snapshot
-- **Cycle:** 31 (Completed).
-- **Status:** Lessons 1-7 localized to Czech. UI fully localized.
+- **Cycle:** 33 (Python Sandbox).
+- **Status:** Sandbox Backend implemented & verified.
 - **Key Achievements:**
     - "Masterpiece Standard" achieved for Lessons 3-6.
     - Localization architecture (`[locale]` routing) fully implemented.
-    - Diagram component architecture robust.
+    - **Secure Code Execution:** Implemented via `SandboxService` + Docker.
 
 ---
 

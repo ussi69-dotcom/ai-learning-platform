@@ -532,7 +532,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           }}
           onSubmitSuccess={() => {
             setFeedbackToPlace(null);
-            setFeedbackMode('idle');
+            setFeedbackMode('viewing');
           }}
           lessonId={parseInt(lessonId)}
           slideIndex={feedbackToPlace?.slideIndex || 0}

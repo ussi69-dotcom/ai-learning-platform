@@ -6,6 +6,7 @@ from typing import List, Optional
 from datetime import timedelta
 
 from . import models, schemas, database, auth
+from app.routers import sandbox
 
 from fastapi.staticfiles import StaticFiles
 
@@ -13,6 +14,9 @@ from fastapi.staticfiles import StaticFiles
 models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title="AI Learning Platform API")
+
+# Include Routers
+app.include_router(sandbox.router)
 
 # Mount content directory for static assets (images, etc.)
 # This maps http://localhost:8000/content/ -> /app/content/
