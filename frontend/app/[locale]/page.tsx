@@ -12,7 +12,7 @@ import FeedbackSubmissionModal from "@/components/FeedbackSubmissionModal";
 import FeedbackDetailModal from "@/components/FeedbackDetailModal";
 import FeedbackMarker from "@/components/FeedbackMarker";
 import { useLocale, useTranslations } from 'next-intl';
-import { Rocket } from 'lucide-react';
+import { Rocket, Info } from 'lucide-react';
 
 type FeedbackMode = 'idle' | 'placing' | 'viewing';
 
@@ -51,6 +51,8 @@ export default function HomePage() {
   const locale = useLocale();
   const t = useTranslations('Common');
   const tAuth = useTranslations('Auth');
+  const tAbout = useTranslations('About');
+  const tNav = useTranslations('Navigation');
 
   // Feedback State
   const [feedbackMode, setFeedbackMode] = useState<FeedbackMode>('idle');
@@ -225,39 +227,52 @@ export default function HomePage() {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground relative" id="lesson-content-container">
       {/* Hero Sekce */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-card/50 border-b border-border">
-        <div className="container px-4 md:px-6 mx-auto text-center">
-          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl mb-4">
-            AI Learning Platform
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-card/50 border-b border-border relative overflow-hidden">
+        {/* Background Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden -z-10 pointer-events-none">
+           <div className="absolute top-[-20%] left-[20%] w-[60%] h-[60%] bg-primary/10 rounded-full blur-[100px]" />
+        </div>
+
+        <div className="container px-4 md:px-6 mx-auto text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-primary mb-6">
+            <Rocket className="w-4 h-4" />
+            <span>{tAbout('hero_subtitle')}</span>
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
+            {tAbout('hero_title')}
           </h1>
-          <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mb-4">
-            {locale === 'cs' ? 'Uč se praxí. Postaveno na Next.js 16 + FastAPI.' : 'Learning by doing. Built on Next.js 16 + FastAPI.'}
+          
+          <p className="mx-auto max-w-[800px] text-muted-foreground md:text-xl mb-8 leading-relaxed">
+            {tAbout('hero_desc')}
           </p>
+
           {user && (
-            <p className="text-sm text-muted-foreground mb-8">
-              {locale === 'cs' ? 'Vaše obtížnost: ' : 'Your difficulty: '}<span className="font-semibold">{DIFFICULTY_LABELS[user.difficulty]}</span>
+            <p className="text-sm text-muted-foreground mb-8 bg-card/50 inline-block px-4 py-2 rounded-full border border-border">
+              {locale === 'cs' ? 'Vaše obtížnost: ' : 'Your difficulty: '}<span className="font-semibold text-foreground">{DIFFICULTY_LABELS[user.difficulty]}</span>
             </p>
           )}
-          <div className="space-x-4">
+          
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
              {!user ? (
                <>
                  <Link href="/login">
-                   <Button size="lg">{tAuth('submit_login')}</Button>
+                   <Button size="lg" className="w-full sm:w-auto">{tAuth('submit_login')}</Button>
                  </Link>
                  <Link href="/register">
-                   <Button size="lg" variant="outline">{tAuth('submit_register')}</Button>
+                   <Button size="lg" variant="outline" className="w-full sm:w-auto">{tAuth('submit_register')}</Button>
                  </Link>
                </>
              ) : (
                 lastLesson ? (
                     <Link href={`/courses/${lastLesson.course_id}/lessons/${lastLesson.lesson_id}`}>
-                        <Button size="lg" className='gap-2'>
+                        <Button size="lg" className='gap-2 w-full sm:w-auto shadow-lg shadow-primary/20'>
                           {locale === 'cs' ? 'Pokračovat v učení' : 'Resume Learning'} <Rocket size={18} className="text-white" />
                         </Button>
                     </Link>
                 ) : courses.length > 0 ? (
                     <Link href={`/courses/${courses[0].id}`}>
-                      <Button size="lg" className='gap-2'>
+                      <Button size="lg" className='gap-2 w-full sm:w-auto shadow-lg shadow-primary/20'>
                         {locale === 'cs' ? 'Začít s učením' : 'Start Learning'} <Rocket size={18} className="text-white" />
                       </Button>
                     </Link>
@@ -265,6 +280,12 @@ export default function HomePage() {
                     <Button size="lg" disabled>{locale === 'cs' ? 'Žádné kurzy' : 'No courses available'}</Button>
                 )
              )}
+             
+             <Link href="/about">
+                <Button variant="ghost" size="lg" className="gap-2 w-full sm:w-auto">
+                  <Info size={18} /> {tNav('about')}
+                </Button>
+             </Link>
           </div>
         </div>
       </section>

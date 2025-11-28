@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTranslations } from 'next-intl';
+import { getErrorMessage } from '@/lib/utils';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -28,7 +29,7 @@ export default function LoginPage() {
       await login(email, password);
       router.push('/'); // Redirect to home after successful login
     } catch (err: any) {
-      setError(err.response?.data?.detail || tCommon('error'));
+      setError(getErrorMessage(err, tCommon('error')));
     } finally {
       setIsLoading(false);
     }

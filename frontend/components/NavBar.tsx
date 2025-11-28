@@ -69,6 +69,11 @@ export default function NavBar() {
         {/* Right: Actions */}
         <div className="flex items-center gap-3 flex-shrink-0">
           
+          {/* About Link */}
+          <Link href="/about" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden md:block mr-2">
+            {t('about') || 'About'}
+          </Link>
+
           {/* Theme Toggle */}
           <JediSithToggle />
           

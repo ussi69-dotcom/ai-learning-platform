@@ -259,4 +259,4 @@ Mrkni do `.ai-context/` pro:
 
 ---
 
-**Vytvořeno s ❤️ pomocí Claude Sonnet 4.5**
+

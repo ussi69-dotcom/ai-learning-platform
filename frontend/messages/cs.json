@@ -1,6 +1,7 @@
 {
   "Navigation": {
     "courses": "Kurzy",
+    "about": "O projektu",
     "dashboard": "Nástěnka",
     "profile": "Profil",
     "login": "Přihlásit",
@@ -19,7 +20,11 @@
     "confirm_password": "Potvrzení hesla",
     "submit_register": "Zaregistrovat",
     "has_account": "Máte již účet?",
-    "login_link": "Přihlaste se zde"
+    "login_link": "Přihlaste se zde",
+    "password_requirements": "Heslo musí:",
+    "password_min_length": "Mít alespoň {min_length} znaků",
+    "password_one_number": "Obsahovat alespoň jedno číslo",
+    "password_one_uppercase": "Obsahovat alespoň jedno velké písmeno"
   },
   "Common": {
     "loading": "Načítání...",
@@ -76,5 +81,20 @@
     "title": "Experimentální laboratoř",
     "saving": "Ukládám...",
     "mark_complete": "Označit laboratoř jako hotovou"
+  },
+  "About": {
+    "title": "O projektu",
+    "nav_link": "O projektu",
+    "hero_title": "AI Vzdělávání tvořené AI",
+    "hero_subtitle": "Budoucnost učení je ve spolupráci",
+    "hero_desc": "Open-source vzdělávací platforma vybudovaná společně lidmi a AI agenty. Věříme, že nejlepší způsob, jak se naučit AI, je stavět s AI.",
+    "genesis_title": "Zrození projektu",
+    "genesis_desc": "Začalo to otázkou: Dokáže AI postavit vlastní vzdělávací platformu? Od Galaxy AI přes Gemini 2.5 až po Claude Opus, tento projekt je odpovědí.",
+    "tech_stack_title": "Technologie",
+    "tech_stack_desc": "Vybráno pro transparentnost, škálovatelnost a spolupráci s agenty.",
+    "workflow_title": "Workflow",
+    "workflow_desc": "Nekódíme jen tak. Iterujeme v atomických cyklech se zachováním kontextu.",
+    "join_us": "Přidej se k revoluci",
+    "join_desc": "Začni se učit, získávej XP a nakonec přispěj do zdrojového kódu."
   }
 }

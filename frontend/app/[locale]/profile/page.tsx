@@ -26,7 +26,7 @@ const DIFFICULTY_OPTIONS = [
 ];
 
 export default function ProfilePage() {
-  const { user, logout, isLoading, token } = useAuth();
+  const { user, logout, isLoading, token, refreshUser } = useAuth();
   const router = useRouter();
   const t = useTranslations('Profile');
   const tCommon = useTranslations('Common');
@@ -78,7 +78,8 @@ export default function ProfilePage() {
       const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
       await axios.put(`${API_BASE}/users/me/avatar`, { avatar: newAvatar }, { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } });
       setMessage('✅ Avatar updated!');
-      setTimeout(() => window.location.reload(), 500);
+      await refreshUser();
+      // setTimeout(() => window.location.reload(), 500);
     } catch (error) {
       console.error('Error updating avatar:', error);
       setMessage('❌ Failed to update avatar.');
@@ -95,8 +96,9 @@ export default function ProfilePage() {
     try {
       const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
       await axios.put(`${API_BASE}/users/me/difficulty`, { difficulty: selectedDifficulty }, { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, params: { difficulty: selectedDifficulty } });
-      setMessage('✅ Difficulty updated! Redirecting...');
-      setTimeout(() => { window.location.reload(); }, 1000);
+      setMessage('✅ Difficulty updated!');
+      await refreshUser();
+      // setTimeout(() => { window.location.reload(); }, 1000);
     } catch (error: any) { console.error('Error updating difficulty:', error); setMessage('❌ Failed to update difficulty. Please try again.'); } finally { setUpdating(false); }
   };
 

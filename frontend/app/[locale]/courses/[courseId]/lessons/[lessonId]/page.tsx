@@ -59,6 +59,16 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   const [feedbackItems, setFeedbackItems] = useState<any[]>([]);
   const [selectedFeedback, setSelectedFeedback] = useState<any>(null);
 
+  // --- DEBUG LOGGING ---
+  useEffect(() => {
+    console.log(`[LessonPage] Render Cycle. LessonId: ${lessonId}, Page: ${currentPage}, Loading: ${loading}`);
+  });
+
+  useEffect(() => {
+    console.log(`[LessonPage] Mount or LessonId Change: ${lessonId}`);
+  }, [lessonId]);
+  // ---------------------
+
 
   // Derive total pages immediately (safe calculation)
   const slides = lesson ? splitIntoSlides(lesson.content) : [];

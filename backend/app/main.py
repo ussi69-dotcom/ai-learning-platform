@@ -58,7 +58,6 @@ def register_user(request: Request, user: schemas.UserCreate, db: Session = Depe
         raise HTTPException(status_code=400, detail="Email already registered")
     
     hashed_password = auth.get_password_hash(user.password)
-    verification_token = str(uuid.uuid4())
 
     # Default difficulty is handled by Schema default, but we can be explicit if needed
     new_user = models.User(
@@ -66,32 +65,14 @@ def register_user(request: Request, user: schemas.UserCreate, db: Session = Depe
         hashed_password=hashed_password,
         difficulty=models.DifficultyLevel(user.difficulty), # Convert string to Enum
         avatar=user.avatar,
-        is_verified=False,
-        verification_token=verification_token
+        is_verified=True, # No email verification needed for now
     )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
 
-    # MOCK EMAIL SENDING
-    print(f"==================================================")
-    print(f"📧 EMAIL TO: {user.email}")
-    print(f"🔗 VERIFY LINK: http://localhost:8000/auth/verify/{verification_token}")
-    print(f"==================================================")
-
     return new_user
 
-@app.get("/auth/verify/{token}")
-def verify_email(token: str, db: Session = Depends(database.get_db)):
-    user = db.query(models.User).filter(models.User.verification_token == token).first()
-    if not user:
-        raise HTTPException(status_code=400, detail="Invalid verification token")
-    
-    user.is_verified = True
-    user.verification_token = None
-    db.commit()
-    
-    return {"message": "Email verified successfully. You can now login."}
 
 @app.post("/auth/token", response_model=schemas.Token)
 @limiter.limit("5/minute")
@@ -105,12 +86,6 @@ def login_for_access_token(request: Request, form_data: OAuth2PasswordRequestFor
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
-        )
-    
-    if not user.is_verified:
-         raise HTTPException(
-            status_code=400,
-            detail="Email not verified. Please check your inbox.",
         )
     
     print(f"DEBUG: User found: {user.email}, Hash in DB: {user.hashed_password[:20]}...")

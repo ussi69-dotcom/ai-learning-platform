@@ -1,112 +1,46 @@
-# 📝 Session Log & Handoffs
+# Session Log - Cycle 31 Extension
 
-Use this file to track progress and hand off work between agents (CLI ↔ IDE).
+## 📅 Date: 2025-11-28
 
-## 📋 Handoff Template
+## 🎯 Task: About Page & Homepage "Wow" Factor + Bug Fixes + Password Requirements
 
-```markdown
-# Session Log Entry
-Date: [YYYY-MM-DD HH:MM]
-Agent: [CLI or IDE]
-Accomplished:
-- [Item 1]
-- [Item 2]
-Next Steps:
-- [Priority 1]
-- [Priority 2]
-Issues:
-- [Blocker/Bug]
-Commit Hash: [git rev-parse HEAD]
-```
+### ✅ Completed
+1.  **New About Page (`/about`)**:
+    -   Implemented `frontend/app/[locale]/about/page.tsx`.
+    -   Features: Hero, Genesis Timeline (Visual), Tech Stack Grid, Workflow Visualization.
+    -   Design: "Liquid Glass" aesthetic (backdrop-blur, slate/indigo gradients).
+    -   Content: Marketing-focused, "AI Built by AI" narrative.
 
----
+2.  **Homepage Update**:
+    -   Enhanced Hero section in `frontend/app/[locale]/page.tsx`.
+    -   Added animated background glow.
+    -   Added "About Project" secondary button.
+    -   Localized all text (removed hardcoded English/Czech).
 
-# Session Log Entry
-Date: 2025-11-28 09:20
-Agent: Antigravity IDE
-Accomplished:
-- **Completed Documentation Optimization** (Cycle 32)
-- Created modular structure: `core/`, `state/`, `workflows/`, `history/`, `learning/`
-- Consolidated history archives (reduced root clutter)
-- Established `MEMORY.md` as unified truth
-- Created `INDEX.md` for navigation
-- Updated `rules.md` with coordination protocols
-- Cleaned up root directory (moved temp files to `.cleanup/`)
-Next Steps:
-- **Next Agent:** Read `.ai-context/INDEX.md` first!
-- Resume work on Python Sandbox (Phase 2) or Lesson 7
-Issues: None
-Commit Hash: 1f28389
+3.  **Navigation**:
+    -   Added "About" link to `NavBar.tsx`.
 
----
+4.  **Localization**:
+    -   Updated `en.json` and `cs.json` with comprehensive `About` and `Navigation` keys.
+    -   Added new keys for password requirements under the `Auth` namespace.
 
-# Session Log Entry
-Date: 2025-11-28 10:30
-Agent: Gemini CLI
-Accomplished:
-- Updated root `GEMINI.md` to sync with `.ai-context/state/MEMORY.md` for consistency.
-Next Steps:
-- Await user's next instruction (e.g., proceed with Python Sandbox).
-Issues: None
-Commit Hash: 85a3d713ff4e168381a7fa155c536e0638f13787
+5.  **Bug Fixes & UX Improvement**:
+    -   **Registration Error**: Fixed "Runtime Error: Objects are not valid as a React child" on register page.
+        -   Cause: Pydantic validation errors (array of objects) were being passed directly to `setError`.
+        -   Fix: Created `getErrorMessage` utility in `frontend/lib/utils.ts` to parse string or array errors safely.
+        -   Applied fix to `RegisterPage` and `LoginPage`.
+    -   **Password Requirements**: Implemented frontend validation and visual feedback for password requirements on the `RegisterPage`.
+        -   Backend requirements: Min 8 chars, at least one number, at least one uppercase letter.
+        -   Frontend `handleSubmit` now checks these rules before API call.
+        -   Live visual feedback (green check/red X) displayed for each requirement.
 
----
+### 📝 Notes
+-   Lint check passed for new files.
+-   Used `lucide-react` for consistent iconography.
+-   Followed "Masterpiece Standard" for the About page content structure.
+-   Error handling is now robust against backend validation structures.
 
-# Session Log Entry
-Date: 2025-11-28 11:00
-Agent: Gemini CLI
-Accomplished:
-- **Implemented Cycle 33 (Python Sandbox Backend):**
-    - Added `SandboxService` for secure Docker container execution.
-    - Updated `docker-compose.yml` to expose Docker socket.
-    - Added API endpoint `POST /sandbox/execute`.
-    - Verified execution (Normal + Timeout) with `scripts/test_sandbox.py`.
-Next Steps:
-- Frontend Integration: Connect UI to the new endpoint.
-- VPS Deployment: Ensure Docker permissions are correct on the server.
-Issues: None
-Commit Hash: b306d96c1835818160293c0d595d53188ac93a39
-
----
-
-# Session Log Entry
-Date: 2025-11-28 11:30
-Agent: Gemini CLI
-Accomplished:
-- **Implemented Cycle 34 (Frontend Sandbox Integration):**
-    - Created API Client `frontend/lib/sandboxApi.ts`.
-    - Created `<Sandbox>` UI component (`frontend/components/mdx/Sandbox.tsx`) with Dark Mode & Loading states.
-    - Integrated `<Sandbox>` into `MarkdownRenderer.tsx` for MDX parsing.
-    - Verified TypeScript build (lint passed).
-Next Steps:
-- Update lessons to use `<Sandbox>`.
-- Deployment to VPS.
-Issues: None
-Commit Hash: a92cc9cec6e12455a556e940a1977042510f0c5d
-
----
-
-# Session Log Entry
-Date: 2025-11-28 12:30
-Agent: Gemini CLI
-Accomplished:
-- **Implemented Cycle 35 (Security Hardening):**
-    - **API Hardening:**
-        - Added Redis service (`docker-compose.yml`) and dependencies (`backend/requirements.txt`).
-        - Implemented Rate Limiting for Login, Register, Sandbox endpoints.
-        - Enforced Strong Passwords (min 8 chars, 1 uppercase, 1 number).
-        - Added Security HTTP Headers (HSTS, X-Frame-Options, X-XSS-Protection, Content-Type-Options).
-    - **Identity & Verification:**
-        - Added `is_verified` and `verification_token` to User model.
-        - Modified User registration to generate token and set `is_verified=False`.
-        - Implemented email verification endpoint `GET /auth/verify/{token}`.
-        - Modified Login to block unverified users.
-        - Updated `backend/seed.py` to mark admin as verified.
-    - **VPS Readiness:** Created `scripts/setup_security.sh` for firewall and Fail2Ban.
-    - **Verified:** All new features tested locally (login, register, verify, sandbox).
-Next Steps:
-- Deploy updated platform to VPS.
-- Run `scripts/setup_security.sh` on VPS.
-- Create a lesson that utilizes the new Sandbox feature.
-Issues: None
-Commit Hash: a0c4944aa690d6bfc90f9f57730b66f89eaad52e
+### 🚀 Next Steps
+-   Verify mobile responsiveness (visual check recommended).
+-   Confirm password requirements are working as expected during user testing.
+-   Consider adding a "Contributors" section later dynamically fetching from GitHub.

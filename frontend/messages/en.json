@@ -1,6 +1,7 @@
 {
   "Navigation": {
     "courses": "Courses",
+    "about": "About",
     "dashboard": "Dashboard",
     "profile": "Profile",
     "login": "Login",
@@ -19,7 +20,11 @@
     "confirm_password": "Confirm Password",
     "submit_register": "Sign Up",
     "has_account": "Already have an account?",
-    "login_link": "Login here"
+    "login_link": "Login here",
+    "password_requirements": "Password must:",
+    "password_min_length": "Be at least {min_length} characters long",
+    "password_one_number": "Contain at least one number",
+    "password_one_uppercase": "Contain at least one uppercase letter"
   },
   "Common": {
     "loading": "Loading...",
@@ -76,5 +81,20 @@
     "title": "Experimental Lab",
     "saving": "Saving...",
     "mark_complete": "Mark Lab as Complete"
+  },
+  "About": {
+    "title": "About the Project",
+    "nav_link": "About",
+    "hero_title": "AI Education Built by AI",
+    "hero_subtitle": "The Future of Learning is Co-Creation",
+    "hero_desc": "An open-source learning platform built collaboratively by human and AI agents. We believe the best way to learn AI is to build with AI.",
+    "genesis_title": "The Genesis",
+    "genesis_desc": "It started with a question: Can AI build its own educational platform? From Galaxy AI to Gemini 2.5 and Claude Opus, this project is the answer.",
+    "tech_stack_title": "Tech Stack",
+    "tech_stack_desc": "Chosen for transparency, scale, and agent-friendliness.",
+    "workflow_title": "The Workflow",
+    "workflow_desc": "We don't just code. We iterate in atomic cycles with preserved context.",
+    "join_us": "Join the Revolution",
+    "join_desc": "Start learning, earn XP, and eventually contribute to the source code."
   }
 }

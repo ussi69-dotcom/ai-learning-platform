@@ -8,6 +8,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import AvatarSelector from '@/components/AvatarSelector';
 import { useTranslations, useLocale } from 'next-intl';
+import { getErrorMessage } from '@/lib/utils';
+import { CheckCircle, XCircle } from 'lucide-react'; // Import icons
+
+const MIN_PASSWORD_LENGTH = 8; // Define minimum password length
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -41,8 +45,16 @@ export default function RegisterPage() {
       return;
     }
 
-    if (password.length < 6) {
-      setError(locale === 'cs' ? 'Heslo musí mít alespoň 6 znaků' : 'Password must be at least 6 characters');
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      setError(t('password_min_length', { min_length: MIN_PASSWORD_LENGTH }));
+      return;
+    }
+    if (!/\d/.test(password)) {
+      setError(t('password_one_number'));
+      return;
+    }
+    if (!/[A-Z]/.test(password)) {
+      setError(t('password_one_uppercase'));
       return;
     }
 
@@ -52,7 +64,7 @@ export default function RegisterPage() {
       await register(email, password, difficulty, avatar);
       router.push('/'); // Redirect to home after successful registration
     } catch (err: any) {
-      setError(err.response?.data?.detail || tCommon('error'));
+      setError(getErrorMessage(err, tCommon('error')));
     } finally {
       setIsLoading(false);
     }
@@ -114,6 +126,25 @@ export default function RegisterPage() {
                 className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400"
                 placeholder="••••••••"
               />
+            </div>
+
+            {/* Password Requirements */}
+            <div className="space-y-2 text-sm">
+              <p className="font-medium text-slate-700 dark:text-slate-300">{t('password_requirements')}</p>
+              <ul className="space-y-1">
+                <li className={`flex items-center gap-2 ${password.length >= MIN_PASSWORD_LENGTH ? 'text-green-500' : 'text-red-500'}`}>
+                  {password.length >= MIN_PASSWORD_LENGTH ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+                  {t('password_min_length', { min_length: MIN_PASSWORD_LENGTH })}
+                </li>
+                <li className={`flex items-center gap-2 ${/\d/.test(password) ? 'text-green-500' : 'text-red-500'}`}>
+                  {/\d/.test(password) ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+                  {t('password_one_number')}
+                </li>
+                <li className={`flex items-center gap-2 ${/[A-Z]/.test(password) ? 'text-green-500' : 'text-red-500'}`}>
+                  {/[A-Z]/.test(password) ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+                  {t('password_one_uppercase')}
+                </li>
+              </ul>
             </div>
 
             <div className="space-y-2">
