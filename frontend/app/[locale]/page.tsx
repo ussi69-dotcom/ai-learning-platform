@@ -11,17 +11,18 @@ import FeedbackFAB from "@/components/FeedbackFAB";
 import FeedbackSubmissionModal from "@/components/FeedbackSubmissionModal";
 import FeedbackDetailModal from "@/components/FeedbackDetailModal";
 import FeedbackMarker from "@/components/FeedbackMarker";
+import DifficultyIcon from "@/components/DifficultyIcon";
 import { useLocale, useTranslations } from 'next-intl';
 import { Rocket, Info } from 'lucide-react';
 
 type FeedbackMode = 'idle' | 'placing' | 'viewing';
 
-// Difficulty level labels with emojis
+// Difficulty level labels (without emojis)
 const DIFFICULTY_LABELS: Record<string, string> = {
-  PIECE_OF_CAKE: "🍰 Piece of Cake",
-  LETS_ROCK: "🎸 Let's Rock",
-  COME_GET_SOME: "💪 Come Get Some",
-  DAMN_IM_GOOD: "🔥 Damn I'm Good"
+  PIECE_OF_CAKE: "Piece of Cake",
+  LETS_ROCK: "Let's Rock",
+  COME_GET_SOME: "Come Get Some",
+  DAMN_IM_GOOD: "Damn I'm Good"
 };
 
 interface Course {
@@ -248,8 +249,12 @@ export default function HomePage() {
           </p>
 
           {user && (
-            <p className="text-sm text-muted-foreground mb-8 bg-card/50 inline-block px-4 py-2 rounded-full border border-border">
-              {locale === 'cs' ? 'Vaše obtížnost: ' : 'Your difficulty: '}<span className="font-semibold text-foreground">{DIFFICULTY_LABELS[user.difficulty]}</span>
+            <p className="text-sm text-muted-foreground mb-8 bg-card/50 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border">
+              {locale === 'cs' ? 'Vaše obtížnost: ' : 'Your difficulty: '}
+              <span className="font-semibold text-foreground flex items-center gap-1">
+                <DifficultyIcon level={user.difficulty} size={16} />
+                {DIFFICULTY_LABELS[user.difficulty]}
+              </span>
             </p>
           )}
           
@@ -293,7 +298,15 @@ export default function HomePage() {
       {/* Seznam Kurzů */}
       <section className="w-full py-12 md:py-24 container px-4 mx-auto">
           <h2 className="text-3xl font-bold mb-8">
-            {user ? (locale === 'cs' ? `Kurzy pro ${DIFFICULTY_LABELS[user.difficulty]}` : `Courses for ${DIFFICULTY_LABELS[user.difficulty]}`) : (locale === 'cs' ? "Dostupné kurzy" : "Available Courses")}
+            {user ? (
+              <span className="flex items-center gap-2">
+                {locale === 'cs' ? 'Kurzy pro ' : 'Courses for '}
+                <span className="inline-flex items-center gap-1 text-primary">
+                   <DifficultyIcon level={user.difficulty} size={24} />
+                   {DIFFICULTY_LABELS[user.difficulty]}
+                </span>
+              </span>
+            ) : (locale === 'cs' ? "Dostupné kurzy" : "Available Courses")}
           </h2>
           
           {error && (
@@ -320,7 +333,8 @@ export default function HomePage() {
                         <div className="absolute inset-0 w-full h-full flex items-center justify-center transform group-hover:scale-105 transition-transform duration-500">
                            <CourseIcon courseId={course.id} slug={course.slug} imageUrl={course.image_url} objectFit="cover" />
                         </div>
-                        <span className="absolute top-3 right-3 text-[10px] font-bold bg-black/50 backdrop-blur-md text-white px-2 py-1 rounded-full border border-white/10">
+                        <span className="absolute top-3 right-3 text-[10px] font-bold bg-black/50 backdrop-blur-md text-white px-2 py-1 rounded-full border border-white/10 flex items-center gap-1">
+                          <DifficultyIcon level={course.difficulty_level} size={12} className="text-white" />
                           {DIFFICULTY_LABELS[course.difficulty_level]}
                         </span>
                     </div>

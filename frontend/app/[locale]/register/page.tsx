@@ -10,6 +10,7 @@ import AvatarSelector from '@/components/AvatarSelector';
 import { useTranslations, useLocale } from 'next-intl';
 import { getErrorMessage } from '@/lib/utils';
 import { CheckCircle, XCircle } from 'lucide-react'; // Import icons
+import DifficultyIcon from '@/components/DifficultyIcon';
 
 const MIN_PASSWORD_LENGTH = 8; // Define minimum password length
 
@@ -30,10 +31,10 @@ export default function RegisterPage() {
 
   // Ideally move this to messages.json, but for now logic is here
   const DIFFICULTY_LEVELS = [
-    { value: 'PIECE_OF_CAKE', label: '🍰 Piece of Cake', description: locale === 'cs' ? 'Snadný režim pro začátečníky' : 'Easy mode for beginners' },
-    { value: 'LETS_ROCK', label: '🎸 Let\'s Rock', description: locale === 'cs' ? 'Normální obtížnost' : 'Normal difficulty' },
-    { value: 'COME_GET_SOME', label: '💪 Come Get Some', description: locale === 'cs' ? 'Těžký režim pro zkušené' : 'Hard mode for experienced learners' },
-    { value: 'DAMN_IM_GOOD', label: '🔥 Damn I\'m Good', description: locale === 'cs' ? 'Expert mód - žádná pomoc' : 'Expert mode - no hand-holding' },
+    { value: 'PIECE_OF_CAKE', label: 'Piece of Cake', description: locale === 'cs' ? 'Snadný režim pro začátečníky' : 'Easy mode for beginners' },
+    { value: 'LETS_ROCK', label: 'Let\'s Rock', description: locale === 'cs' ? 'Normální obtížnost' : 'Normal difficulty' },
+    { value: 'COME_GET_SOME', label: 'Come Get Some', description: locale === 'cs' ? 'Těžký režim pro zkušené' : 'Hard mode for experienced learners' },
+    { value: 'DAMN_IM_GOOD', label: 'Damn I\'m Good', description: locale === 'cs' ? 'Expert mód - žádná pomoc' : 'Expert mode - no hand-holding' },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -183,7 +184,10 @@ export default function RegisterPage() {
                       className="mt-1 mr-3"
                     />
                     <div className="flex-1">
-                      <div className="font-medium text-slate-900 dark:text-white">{level.label}</div>
+                      <div className="font-medium text-slate-900 dark:text-white flex items-center gap-2">
+                        <DifficultyIcon level={level.value} size={18} />
+                        {level.label}
+                      </div>
                       <div className="text-xs text-slate-600 dark:text-slate-400">{level.description}</div>
                     </div>
                   </label>

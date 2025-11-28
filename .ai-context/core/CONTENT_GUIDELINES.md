@@ -109,3 +109,11 @@ Write a poem about a robot who loves gardening.
 *   **Inspiration:** Use Lesson 3's Holocron as the gold standard.
 *   **Icon Usage:** One icon per key concept improves scannability.
 *   **Avoid:** Long paragraphs, walls of text, ASCII art dividers.
+
+## 8. Localization Protocol 🌍
+**CRITICAL:** The platform supports both English (`en`) and Czech (`cs`).
+*   **Dual Update Rule:** When modifying content (fixing typos, changing images, merging pages), you **MUST** update both:
+    *   `content.mdx` (English)
+    *   `content.cs.mdx` (Czech)
+*   **Syncing:** After updating files, run `docker-compose exec backend python seed.py` to sync changes to the database.
+*   **Verification:** Verify changes in both languages if possible, or at least ensure the file structure matches.

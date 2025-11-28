@@ -9,20 +9,21 @@ import axios from 'axios';
 import AvatarSelector, { getAvatar } from '@/components/AvatarSelector';
 import { X } from 'lucide-react'; // Import X icon
 import { useTranslations } from 'next-intl';
+import DifficultyIcon from '@/components/DifficultyIcon';
 
 // ... (DIFFICULTY_LABELS and DIFFICULTY_OPTIONS remain unchanged) ...
 const DIFFICULTY_LABELS: Record<string, string> = {
-  'PIECE_OF_CAKE': '🍰 Piece of Cake',
-  'LETS_ROCK': '🎸 Let\'s Rock',
-  'COME_GET_SOME': '💪 Come Get Some',
-  'DAMN_IM_GOOD': '🔥 Damn I\'m Good',
+  'PIECE_OF_CAKE': 'Piece of Cake',
+  'LETS_ROCK': 'Let\'s Rock',
+  'COME_GET_SOME': 'Come Get Some',
+  'DAMN_IM_GOOD': 'Damn I\'m Good',
 };
 
 const DIFFICULTY_OPTIONS = [
-  { value: 'PIECE_OF_CAKE', label: '🍰 Piece of Cake', description: 'AI basics for absolute beginners' },
-  { value: 'LETS_ROCK', label: '🎸 Let\'s Rock', description: 'Practical prompt engineering' },
-  { value: 'COME_GET_SOME', label: '💪 Come Get Some', description: 'Advanced AI techniques' },
-  { value: 'DAMN_IM_GOOD', label: '🔥 Damn I\'m Good', description: 'AI engineering deep dive' },
+  { value: 'PIECE_OF_CAKE', label: 'Piece of Cake', description: 'AI basics for absolute beginners' },
+  { value: 'LETS_ROCK', label: 'Let\'s Rock', description: 'Practical prompt engineering' },
+  { value: 'COME_GET_SOME', label: 'Come Get Some', description: 'Advanced AI techniques' },
+  { value: 'DAMN_IM_GOOD', label: 'Damn I\'m Good', description: 'AI engineering deep dive' },
 ];
 
 export default function ProfilePage() {
@@ -231,7 +232,10 @@ export default function ProfilePage() {
                       : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 dark:bg-slate-800'
                   }`}
                 >
-                  <div className="font-semibold text-lg dark:text-slate-200">{option.label}</div>
+                  <div className="font-semibold text-lg dark:text-slate-200 flex items-center gap-2">
+                    <DifficultyIcon level={option.value} size={20} />
+                    {option.label}
+                  </div>
                   <div className="text-sm text-slate-600 dark:text-slate-400">{option.description}</div>
                   {option.value === user.difficulty && (
                     <div className="text-xs text-indigo-600 dark:text-indigo-400 mt-1">✓ {t('current')}</div>
