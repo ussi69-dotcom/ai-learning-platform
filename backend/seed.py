@@ -39,6 +39,7 @@ def seed_data():
             email="admin@ai-platform.com",
             hashed_password=get_password_hash("admin123"),
             is_active=True,
+            is_verified=True,
             difficulty=DifficultyLevel.DAMN_IM_GOOD,
             xp=100
         )

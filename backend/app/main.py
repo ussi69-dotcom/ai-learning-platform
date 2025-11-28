@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session, joinedload, selectinload
 from typing import List, Optional
 from datetime import timedelta
+import uuid
 
 from . import models, schemas, database, auth
 from app.routers import sandbox
@@ -14,6 +15,13 @@ from fastapi.staticfiles import StaticFiles
 models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title="AI Learning Platform API")
+
+# Rate Limiting Setup
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from app.limiter import limiter
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Include Routers
 app.include_router(sandbox.router)
@@ -31,29 +39,63 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    return response
+
 # Dependency pro získání DB session - ODSTRANĚNO, používáme database.get_db
 
 @app.post("/auth/register", response_model=schemas.User)
-def register_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
+@limiter.limit("5/minute")
+def register_user(request: Request, user: schemas.UserCreate, db: Session = Depends(database.get_db)):
     db_user = db.query(models.User).filter(models.User.email == user.email).first()
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     
     hashed_password = auth.get_password_hash(user.password)
+    verification_token = str(uuid.uuid4())
+
     # Default difficulty is handled by Schema default, but we can be explicit if needed
     new_user = models.User(
         email=user.email, 
         hashed_password=hashed_password,
         difficulty=models.DifficultyLevel(user.difficulty), # Convert string to Enum
-        avatar=user.avatar
+        avatar=user.avatar,
+        is_verified=False,
+        verification_token=verification_token
     )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
+
+    # MOCK EMAIL SENDING
+    print(f"==================================================")
+    print(f"📧 EMAIL TO: {user.email}")
+    print(f"🔗 VERIFY LINK: http://localhost:8000/auth/verify/{verification_token}")
+    print(f"==================================================")
+
     return new_user
 
+@app.get("/auth/verify/{token}")
+def verify_email(token: str, db: Session = Depends(database.get_db)):
+    user = db.query(models.User).filter(models.User.verification_token == token).first()
+    if not user:
+        raise HTTPException(status_code=400, detail="Invalid verification token")
+    
+    user.is_verified = True
+    user.verification_token = None
+    db.commit()
+    
+    return {"message": "Email verified successfully. You can now login."}
+
 @app.post("/auth/token", response_model=schemas.Token)
-def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
+@limiter.limit("5/minute")
+def login_for_access_token(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
     print(f"DEBUG: Login attempt for username: {form_data.username}")
     user = db.query(models.User).filter(models.User.email == form_data.username).first()
     
@@ -63,6 +105,12 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    if not user.is_verified:
+         raise HTTPException(
+            status_code=400,
+            detail="Email not verified. Please check your inbox.",
         )
     
     print(f"DEBUG: User found: {user.email}, Hash in DB: {user.hashed_password[:20]}...")

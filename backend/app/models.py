@@ -17,6 +17,8 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
+    is_verified = Column(Boolean, default=False)
+    verification_token = Column(String, nullable=True)
     difficulty = Column(Enum(DifficultyLevel), default=DifficultyLevel.LETS_ROCK)
     xp = Column(Integer, default=0)
     avatar = Column(String, default="droid_1") # Default avatar identifier

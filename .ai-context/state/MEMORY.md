@@ -8,7 +8,7 @@ Read this first to understand the environment, preferences, and active protocols
 ## 🖥️ Environment Context
 - **OS:** Linux
 - **Node.js:** v24.11.1 (Note: High version, watch for compatibility)
-- **Stack:** Next.js 16 (App Router), FastAPI, PostgreSQL 15, Docker Compose.
+- **Stack:** Next.js 16 (App Router), FastAPI, PostgreSQL 15, Redis 7, Docker Compose.
 - **Design System:** "Liquid Glass" (Holographic Datapad). Dark mode, `backdrop-blur`, `oklch` colors.
 - **Localization:** Czech (CZ) + English (EN) via `next-intl`.
 
@@ -37,6 +37,11 @@ docker-compose down -v && docker-compose up -d --build
 ### 3. Backend Development 🐍
 - **Sandbox:** Code execution requires `docker-compose` with socket mount.
 - **Testing:** Use `scripts/test_sandbox.py` to verify execution environment.
+- **Security:**
+    - Rate Limiting via `slowapi` and Redis for login/registration/sandbox.
+    - Strong password validation for new user registrations.
+    - Email verification for new users.
+    - Security HTTP Headers (HSTS, X-Frame-Options, X-Content-Type-Options).
 
 ### 4. Frontend Development 🎨
 - **Styling:** Tailwind 4. No solid backgrounds; use transparency (`bg-card/50`).
@@ -47,12 +52,14 @@ docker-compose down -v && docker-compose up -d --build
 ---
 
 ## 📊 Current State Snapshot
-- **Cycle:** 34 (Frontend Sandbox Integration).
-- **Status:** Full Stack Sandbox (Backend + UI) implemented.
+- **Cycle:** 35 (Security Hardening).
+- **Status:** Core security features implemented & verified.
 - **Key Achievements:**
     - "Masterpiece Standard" achieved for Lessons 3-6.
     - Localization architecture (`[locale]` routing) fully implemented.
-    - **Secure Code Execution:** Implemented via `SandboxService` + Docker + `<Sandbox>` UI.
+    - Secure Code Execution: Implemented via `SandboxService` + Docker + `<Sandbox>` UI.
+    - **API Security:** Rate Limiting, Strong Passwords, Email Verification, Security Headers.
+    - **Deployment Security:** Prepared `scripts/setup_security.sh` for VPS.
 
 ---
 

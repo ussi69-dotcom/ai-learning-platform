@@ -83,3 +83,30 @@ Next Steps:
 - Deployment to VPS.
 Issues: None
 Commit Hash: a92cc9cec6e12455a556e940a1977042510f0c5d
+
+---
+
+# Session Log Entry
+Date: 2025-11-28 12:30
+Agent: Gemini CLI
+Accomplished:
+- **Implemented Cycle 35 (Security Hardening):**
+    - **API Hardening:**
+        - Added Redis service (`docker-compose.yml`) and dependencies (`backend/requirements.txt`).
+        - Implemented Rate Limiting for Login, Register, Sandbox endpoints.
+        - Enforced Strong Passwords (min 8 chars, 1 uppercase, 1 number).
+        - Added Security HTTP Headers (HSTS, X-Frame-Options, X-XSS-Protection, Content-Type-Options).
+    - **Identity & Verification:**
+        - Added `is_verified` and `verification_token` to User model.
+        - Modified User registration to generate token and set `is_verified=False`.
+        - Implemented email verification endpoint `GET /auth/verify/{token}`.
+        - Modified Login to block unverified users.
+        - Updated `backend/seed.py` to mark admin as verified.
+    - **VPS Readiness:** Created `scripts/setup_security.sh` for firewall and Fail2Ban.
+    - **Verified:** All new features tested locally (login, register, verify, sandbox).
+Next Steps:
+- Deploy updated platform to VPS.
+- Run `scripts/setup_security.sh` on VPS.
+- Create a lesson that utilizes the new Sandbox feature.
+Issues: None
+Commit Hash: (will be added after commit)
