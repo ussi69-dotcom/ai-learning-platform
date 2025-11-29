@@ -1,4 +1,5 @@
 import logging
+import os
 from pathlib import Path
 from app.database import SessionLocal, engine, Base
 from app.models import User, Course, Lesson, Quiz, DifficultyLevel, UserProgress
@@ -33,11 +34,14 @@ def seed_data():
     logger.info("🌱 Sázím nová data...")
 
     # Admin
-    admin = db.query(User).filter(User.email == "admin@ai-platform.com").first()
+    superuser_email = os.getenv("FIRST_SUPERUSER", "admin@ai-platform.com")
+    superuser_password = os.getenv("FIRST_SUPERUSER_PASSWORD", "admin123")
+    
+    admin = db.query(User).filter(User.email == superuser_email).first()
     if not admin:
         admin = User(
-            email="admin@ai-platform.com",
-            hashed_password=get_password_hash("admin123"),
+            email=superuser_email,
+            hashed_password=get_password_hash(superuser_password),
             is_active=True,
             is_verified=True,
             difficulty=DifficultyLevel.DAMN_IM_GOOD,
@@ -48,6 +52,9 @@ def seed_data():
         db.refresh(admin)
         logger.info(f"👤 Created admin user: {admin.email}")
     else:
+        # Update password if admin exists (optional, but good for initial setup fixes)
+        # admin.hashed_password = get_password_hash(superuser_password)
+        # db.commit()
         logger.info(f"👤 Admin user already exists: {admin.email}")
 
     # Load Content

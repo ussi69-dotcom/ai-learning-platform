@@ -33,7 +33,12 @@ app.mount("/content", StaticFiles(directory="/app/content"), name="content")
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://frontend:3000"],
+    allow_origins=[
+        "http://localhost:3000", 
+        "http://frontend:3000", 
+        "https://ai-teach.me", 
+        "https://www.ai-teach.me"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -85,20 +90,24 @@ async def register_user(request: Request, user: schemas.UserCreate, db: Session 
 
     return new_user
 
+from fastapi.responses import RedirectResponse
+import os
+
 @app.get("/auth/verify")
 def verify_email(token: str, db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.verification_token == token).first()
     if not user:
-        raise HTTPException(status_code=400, detail="Invalid verification token")
+        # Redirect to error page or login with error
+        frontend_url = os.getenv("FRONTEND_URL", "https://ai-teach.me")
+        return RedirectResponse(url=f"{frontend_url}/login?error=invalid_token", status_code=303)
     
-    if user.is_verified:
-        return {"message": "Email already verified"}
-
-    user.is_verified = True
-    user.verification_token = None # Clear token
-    db.commit()
+    if not user.is_verified:
+        user.is_verified = True
+        user.verification_token = None # Clear token
+        db.commit()
     
-    return {"message": "Email verified successfully"}
+    frontend_url = os.getenv("FRONTEND_URL", "https://ai-teach.me")
+    return RedirectResponse(url=f"{frontend_url}/login?verified=true", status_code=303)
 
 
 @app.post("/auth/token", response_model=schemas.Token)
@@ -127,6 +136,14 @@ def login_for_access_token(request: Request, form_data: OAuth2PasswordRequestFor
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
+    if not user.is_verified:
+        print("DEBUG: User email not verified")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Email not verified. Please check your inbox.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     
     access_token_expires = timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = auth.create_access_token(
@@ -138,6 +155,45 @@ def login_for_access_token(request: Request, form_data: OAuth2PasswordRequestFor
 @app.get("/users/me", response_model=schemas.User)
 def read_users_me(current_user: models.User = Depends(auth.get_current_user)):
     return current_user
+
+@app.delete("/users/me", status_code=status.HTTP_204_NO_CONTENT)
+def delete_user_me(
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Delete the current user's account and related data."""
+    # 1. Check if user owns courses (Admins/Creators)
+    # We prevent deletion if they own content to preserve platform integrity
+    owned_courses = db.query(models.Course).filter(models.Course.owner_id == current_user.id).count()
+    if owned_courses > 0:
+        raise HTTPException(
+            status_code=400, 
+            detail="Cannot delete account because you own courses. Please contact support or transfer ownership."
+        )
+
+    # 2. Delete User Progress
+    db.query(models.UserProgress).filter(models.UserProgress.user_id == current_user.id).delete()
+
+    # 3. Delete Feedback Votes
+    db.query(models.FeedbackVote).filter(models.FeedbackVote.user_id == current_user.id).delete()
+
+    # 4. Delete Feedback Items (and their replies via cascade if configured, or leave orphans if DB allows)
+    # Ideally we should delete them, but for now let's just delete the user and rely on DB Foreign Keys 
+    # if they are set to CASCADE. If not, this might fail. 
+    # Let's try to delete items explicitly.
+    db.query(models.FeedbackItem).filter(models.FeedbackItem.user_id == current_user.id).delete()
+
+    # 5. Delete User
+    db.delete(current_user)
+    
+    try:
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        print(f"Error deleting user: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete account")
+
+    return None
 
 @app.get("/")
 def read_root():

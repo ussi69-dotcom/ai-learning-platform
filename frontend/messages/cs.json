@@ -24,7 +24,10 @@
     "password_requirements": "Heslo musí:",
     "password_min_length": "Mít alespoň {min_length} znaků",
     "password_one_number": "Obsahovat alespoň jedno číslo",
-    "password_one_uppercase": "Obsahovat alespoň jedno velké písmeno"
+    "password_one_uppercase": "Obsahovat alespoň jedno velké písmeno",
+    "registration_success_check_email": "Registrace úspěšná! Zkontrolujte prosím svůj email pro ověření účtu.",
+    "email_verified_success": "Email úspěšně ověřen! Nyní se můžete přihlásit.",
+    "invalid_verification_token": "Neplatný nebo expirovaný ověřovací token."
   },
   "Common": {
     "loading": "Načítání...",

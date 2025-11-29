@@ -14,14 +14,17 @@ EMAILS_FROM_EMAIL = os.getenv("EMAILS_FROM_EMAIL", "info@ai-learning.cz")
 class EmailSchema(BaseModel):
     email: List[EmailStr]
 
+use_ssl = True if SMTP_PORT == 465 else False
+use_tls = True if SMTP_PORT != 465 else False
+
 conf = ConnectionConfig(
     MAIL_USERNAME=SMTP_USER,
     MAIL_PASSWORD=SMTP_PASSWORD,
     MAIL_FROM=EMAILS_FROM_EMAIL,
     MAIL_PORT=SMTP_PORT,
     MAIL_SERVER=SMTP_HOST,
-    MAIL_STARTTLS=True,
-    MAIL_SSL_TLS=False,
+    MAIL_STARTTLS=use_tls,
+    MAIL_SSL_TLS=use_ssl,
     USE_CREDENTIALS=True,
     VALIDATE_CERTS=True
 )
@@ -32,7 +35,13 @@ async def send_verification_email(email: EmailStr, token: str):
     """
     # In a real app, this link would point to the frontend verification page
     # e.g., https://ai-learning.cz/verify?token=...
-    verify_url = f"{os.getenv('NEXT_PUBLIC_API_URL', 'http://localhost:3000')}/verify?token={token}"
+    # We point to the backend verification endpoint which will redirect to frontend
+    base_url = os.getenv('NEXT_PUBLIC_API_URL', 'http://localhost:3000')
+    # Ensure we don't double slashes if base_url ends with /
+    if base_url.endswith('/'):
+        base_url = base_url[:-1]
+        
+    verify_url = f"{base_url}/auth/verify?token={token}"
     
     html = f"""
     <html>

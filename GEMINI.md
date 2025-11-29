@@ -38,6 +38,19 @@ docker-compose down -v && docker-compose up -d --build
 - **State:** `AuthContext` for user state.
 - **Localization:** `next-intl` used in UI.
 
+### 4. Infrastructure & Deployment 🚀
+- **Nginx Caching:** Nginx caches container IPs at startup.
+- **Protocol:** ALWAYS restart Nginx after recreating backend/frontend containers:
+  ```bash
+  docker restart ai-nginx
+  ```
+  *Failure to do this results in 502 Bad Gateway / Connection Refused.*
+
+### 5. Dependency Management 📦
+- **Rule:** Do NOT improvise complex replacements for missing standard libraries/components (e.g., Shadcn, Radix, Pydantic).
+- **Action:** Install the missing dependency (e.g., `npm install`, `pip install`) instead of hacking a custom solution.
+- **Context:** Improvised code creates technical debt. Standard libraries are preferred.
+
 ---
 
 ## 📊 Current State Snapshot
