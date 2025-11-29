@@ -156,7 +156,7 @@ export default function ProfilePage() {
                <div className="text-center">
                   <button 
                     onClick={() => setShowAvatarModal(true)}
-                    className={`group relative w-24 h-24 rounded-2xl border-4 ${avatarObj.bg} border-slate-200 dark:border-slate-700 hover:border-indigo-500 transition-all duration-300 flex items-center justify-center overflow-hidden shadow-lg`}
+                    className={`group relative w-24 h-24 rounded-2xl border-4 ${avatarObj.bg} border-slate-200 dark:border-slate-700 hover:border-purple-500 dark:hover:border-red-500 transition-all duration-300 flex items-center justify-center overflow-hidden shadow-lg`}
                   >
                     {avatarObj.type === 'IMAGE' ? (
                       <img src={avatarObj.src} alt={avatarObj.label} className="w-20 h-20 object-contain group-hover:scale-110 transition-transform" />
@@ -228,7 +228,7 @@ export default function ProfilePage() {
                   key={option.value}
                   onClick={() => setSelectedDifficulty(option.value)}
                   className={`p-4 rounded-lg border-2 text-left transition-all ${selectedDifficulty === option.value
-                      ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 dark:border-indigo-400'
+                      ? 'border-purple-500 bg-purple-50 dark:bg-red-900/20 dark:border-red-500'
                       : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 dark:bg-slate-800'
                   }`}
                 >
@@ -238,7 +238,7 @@ export default function ProfilePage() {
                   </div>
                   <div className="text-sm text-slate-600 dark:text-slate-400">{option.description}</div>
                   {option.value === user.difficulty && (
-                    <div className="text-xs text-indigo-600 dark:text-indigo-400 mt-1">✓ {t('current')}</div>
+                    <div className="text-xs text-purple-600 dark:text-red-500 mt-1">✓ {t('current')}</div>
                   )}
                 </button>
               ))}
@@ -256,7 +256,7 @@ export default function ProfilePage() {
             <Button
               onClick={handleDifficultyChange}
               disabled={!hasChanges || updating}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white disabled:opacity-50"
+              className="w-full bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white disabled:opacity-50 dark:bg-none dark:bg-red-600 dark:hover:bg-red-700"
             >
               {updating ? t('updating') : hasChanges ? t('update_difficulty') : t('no_changes')}
             </Button>
@@ -272,8 +272,8 @@ export default function ProfilePage() {
               {t('back_home')}
             </Button>
             <Button 
-              variant="destructive" 
-              className="w-full bg-red-600 hover:bg-red-700 text-white"
+              variant="ghost" 
+              className="w-full text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
               onClick={handleLogout}
             >
               {tCommon('logout') || 'Logout'} 

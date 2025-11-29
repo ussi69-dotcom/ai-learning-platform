@@ -49,7 +49,7 @@ export default function NavBar() {
         
         {/* Left: Logo */}
         <div className="flex-shrink-0">
-          <Link href="/" className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hover:opacity-80 transition-opacity">
+          <Link href="/" className="text-xl font-bold bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
             AI Learning
           </Link>
         </div>
@@ -114,7 +114,7 @@ export default function NavBar() {
                 </Button>
               </Link>
               <Link href="/register">
-                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground border-none">
+                <Button size="sm" className="bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none">
                   {t('register')}
                 </Button>
               </Link>

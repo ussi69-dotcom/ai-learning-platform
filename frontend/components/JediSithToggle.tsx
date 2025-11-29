@@ -39,7 +39,7 @@ export default function JediSithToggle({ className = "" }: JediSithToggleProps) 
         className={`
           flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all duration-300
           ${theme === 'light' 
-            ? 'bg-white text-indigo-600 shadow-sm scale-105 ring-1 ring-slate-200' 
+            ? 'bg-white text-purple-600 shadow-sm scale-105 ring-1 ring-slate-200' 
             : 'text-slate-400 hover:text-slate-600'}
         `}
       >

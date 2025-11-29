@@ -72,3 +72,34 @@
 
 ### 🚀 Next Steps
 -   Handoff to next agent. Cycle 32 closed.
+
+## 📅 Date: 2025-11-28 (Late Night Session)
+
+## 🎯 Task: UI Color Unification (Purple Lightsaber / Sith Red)
+
+### ✅ Completed
+1.  **Design System Unification**:
+    -   **Light Mode**: Unified all primary actions and accents to **Purple** (`purple-600` to `purple-800`).
+    -   **Dark Mode**: Unified all primary actions to **Red** (`red-500` to `red-700`) and headings to **Silver/White**.
+    -   **Codified**: Added "9. Design System Rules" to `CONTENT_GUIDELINES.md`.
+
+2.  **Component Updates**:
+    -   **NavBar**: Register button now uses the purple gradient.
+    -   **Profile Page**: Difficulty selection and Avatar hover effects unified (Purple/Red). Logout button changed to neutral "Ghost" style.
+    -   **Lesson Page**: Main H1 title now uses the purple gradient (Light) and silver (Dark).
+    -   **Home Page**: "Courses for [Difficulty]" text unified.
+    -   **About Page**: CTA button unified.
+    -   **Jedi Toggle**: Active state text unified to purple.
+    -   **Progress Bars**: Unified to Purple/Red.
+
+3.  **Visual Polish**:
+    -   Removed inconsistent `indigo` and `primary` usages that didn't match the new theme.
+    -   Ensured gradients are consistent across the app.
+
+### 📝 Notes
+-   **User Feedback**: User specifically requested removing the red logout button (changed to ghost) and unifying the lesson titles (applied to H1 only).
+-   **Browser Tool**: Encountered `ECONNREFUSED` with the browser tool, so visual verification was done via code review and user feedback.
+
+### 🚀 Next Steps
+-   Continue monitoring for any missed `indigo` spots.
+-   Consider applying the design system to the Quiz interface if not already done.

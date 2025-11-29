@@ -48,7 +48,7 @@ export default function AboutPage() {
             <span>{t('hero_subtitle')}</span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-b from-emerald-600 to-teal-500 dark:from-white dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)] pb-2">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)] pb-2">
             {t('hero_title')}
           </h1>
           
@@ -62,8 +62,8 @@ export default function AboutPage() {
           <Card className="bg-card/30 backdrop-blur-md border-primary/20 overflow-hidden relative">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
             <CardContent className="p-8 md:p-12 text-center space-y-6">
-              <Sparkles className="w-12 h-12 text-primary mx-auto opacity-80" />
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+              <Sparkles className="w-12 h-12 text-purple-600 dark:text-slate-200 mx-auto opacity-80" />
+              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]">
                 {t('genesis_title')}
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
@@ -89,7 +89,9 @@ export default function AboutPage() {
                   <div className="ml-16 md:ml-0 w-full md:w-[45%]">
                     <Card className="bg-card/50 backdrop-blur-sm border-primary/10 hover:border-primary/30 transition-colors">
                       <CardHeader>
-                        <div className="text-sm text-primary font-mono mb-1">{item.year}</div>
+                        <div className="text-sm font-bold font-mono mb-1 bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent w-fit">
+                          {item.year}
+                        </div>
                         <CardTitle className="text-xl">{item.title}</CardTitle>
                       </CardHeader>
                       <CardContent>
@@ -155,7 +157,9 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
             {['Plan', 'Implement', 'Validate', 'Handoff'].map((step, i) => (
               <div key={i} className="p-4 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm text-center">
-                <div className="text-2xl font-bold text-primary mb-2">{i + 1}</div>
+                <div className="text-3xl font-bold mb-2 bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent inline-block">
+                  {i + 1}
+                </div>
                 <div className="font-medium">{step}</div>
               </div>
             ))}
@@ -173,13 +177,13 @@ export default function AboutPage() {
           <div className="pt-4">
             {user ? (
                <Link href="/">
-                 <Button size="lg" className="gap-2 text-lg px-8 h-12 rounded-full shadow-lg hover:shadow-primary/25 transition-shadow">
+                 <Button size="lg" className="gap-2 text-lg px-8 h-12 rounded-full shadow-lg shadow-purple-500/20 bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none transition-all">
                    {t('hero_title')} <Rocket className="w-5 h-5" />
                  </Button>
                </Link>
             ) : (
                <Link href="/register">
-                 <Button size="lg" className="gap-2 text-lg px-8 h-12 rounded-full shadow-lg hover:shadow-primary/25 transition-shadow">
+                 <Button size="lg" className="gap-2 text-lg px-8 h-12 rounded-full shadow-lg shadow-purple-500/20 bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none transition-all">
                    {t('hero_title')} <Rocket className="w-5 h-5" />
                  </Button>
                </Link>

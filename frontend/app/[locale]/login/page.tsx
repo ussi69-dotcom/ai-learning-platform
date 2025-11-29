@@ -84,7 +84,7 @@ export default function LoginPage() {
 
             <Button 
               type="submit" 
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white" 
+              className="w-full bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700" 
               disabled={isLoading}
             >
               {isLoading ? tCommon('loading') : t('submit_login')}
@@ -92,7 +92,7 @@ export default function LoginPage() {
 
             <p className="text-center text-sm text-slate-600 dark:text-slate-400">
               {t('no_account')}{' '}
-              <Link href="/register" className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium">
+              <Link href="/register" className="text-purple-600 dark:text-red-400 hover:underline font-medium">
                 {t('register_link')}
               </Link>
             </p>

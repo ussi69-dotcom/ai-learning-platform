@@ -240,7 +240,7 @@ export default function HomePage() {
             <span>{tAbout('hero_subtitle')}</span>
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm">
             {tAbout('hero_title')}
           </h1>
           
@@ -251,7 +251,7 @@ export default function HomePage() {
           {user && (
             <p className="text-sm text-muted-foreground mb-8 bg-card/50 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border">
               {locale === 'cs' ? 'Vaše obtížnost: ' : 'Your difficulty: '}
-              <span className="font-semibold text-foreground flex items-center gap-1">
+              <span className="font-semibold text-purple-600 dark:text-red-500 flex items-center gap-1">
                 <DifficultyIcon level={user.difficulty} size={16} />
                 {DIFFICULTY_LABELS[user.difficulty]}
               </span>
@@ -262,22 +262,22 @@ export default function HomePage() {
              {!user ? (
                <>
                  <Link href="/login">
-                   <Button size="lg" className="w-full sm:w-auto">{tAuth('submit_login')}</Button>
+                   <Button size="lg" className="w-full sm:w-auto bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-primary dark:text-primary-foreground border-none">{tAuth('submit_login')}</Button>
                  </Link>
                  <Link href="/register">
-                   <Button size="lg" variant="outline" className="w-full sm:w-auto">{tAuth('submit_register')}</Button>
+                   <Button size="lg" className="w-full sm:w-auto bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-transparent dark:border dark:border-input dark:hover:bg-accent dark:hover:text-accent-foreground">{tAuth('submit_register')}</Button>
                  </Link>
                </>
              ) : (
                 lastLesson ? (
                     <Link href={`/courses/${lastLesson.course_id}/lessons/${lastLesson.lesson_id}`}>
-                        <Button size="lg" className='gap-2 w-full sm:w-auto shadow-lg shadow-primary/20'>
+                        <Button size="lg" className='gap-2 w-full sm:w-auto shadow-lg shadow-purple-500/20 bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none'>
                           {locale === 'cs' ? 'Pokračovat v učení' : 'Resume Learning'} <Rocket size={18} className="text-white" />
                         </Button>
                     </Link>
                 ) : courses.length > 0 ? (
                     <Link href={`/courses/${courses[0].id}`}>
-                      <Button size="lg" className='gap-2 w-full sm:w-auto shadow-lg shadow-primary/20'>
+                      <Button size="lg" className='gap-2 w-full sm:w-auto shadow-lg shadow-purple-500/20 bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none'>
                         {locale === 'cs' ? 'Začít s učením' : 'Start Learning'} <Rocket size={18} className="text-white" />
                       </Button>
                     </Link>
@@ -301,7 +301,7 @@ export default function HomePage() {
             {user ? (
               <span className="flex items-center gap-2">
                 {locale === 'cs' ? 'Kurzy pro ' : 'Courses for '}
-                <span className="inline-flex items-center gap-1 text-primary">
+                <span className="inline-flex items-center gap-1 text-purple-600 dark:text-red-500">
                    <DifficultyIcon level={user.difficulty} size={24} />
                    {DIFFICULTY_LABELS[user.difficulty]}
                 </span>
@@ -354,7 +354,7 @@ export default function HomePage() {
                         <span className="text-xs text-muted-foreground font-mono">ID: {course.id}</span>
                         
                       <Link href={`/courses/${course.id}`}>
-                        <Button size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        <Button size="sm" className="bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none">
                            {locale === 'cs' ? 'Začít kurz →' : 'Start Course →'}
                          </Button>
                       </Link>

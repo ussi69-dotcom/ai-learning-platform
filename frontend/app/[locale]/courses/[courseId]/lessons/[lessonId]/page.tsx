@@ -373,7 +373,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                 </Link>
               )}
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold mb-4 text-foreground tracking-tight">{lesson.title}</h1>
+            <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent tracking-tight drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)] pb-1">{lesson.title}</h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">{lesson.description}</p>
           </div>
 

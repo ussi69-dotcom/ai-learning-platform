@@ -150,11 +150,11 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
             <div className="max-w-md mx-auto mt-4">
               <div className="flex justify-between text-sm mb-1 text-slate-600 dark:text-slate-400">
                 <span className="font-medium">{locale === 'cs' ? 'Postup v kurzu' : 'Course Progress'}</span>
-                <span className="font-bold text-indigo-600 dark:text-red-500">{progress.percentage}%</span>
+                <span className="font-bold text-purple-600 dark:text-red-500">{progress.percentage}%</span>
               </div>
               <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5">
                 <div 
-                  className="bg-indigo-600 dark:bg-red-600 h-2.5 rounded-full transition-all duration-500" 
+                  className="bg-purple-600 dark:bg-red-600 h-2.5 rounded-full transition-all duration-500" 
                   style={{ width: `${progress.percentage}%` }}
                 ></div>
               </div>
@@ -169,7 +169,7 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
           <div className="flex justify-center gap-4">
             {/* Button 1: Start Learning */}
             <Link href={`/courses/${courseId}/lessons/${lessons[0]?.id || 1}`}>
-              <Button size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-red-600 dark:hover:bg-red-700 flex items-center gap-2">
+              <Button size="lg" className="bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 flex items-center gap-2 border-none">
                 {locale === 'cs' ? 'Začít s učením' : 'Start Learning'} <Rocket size={18} className="text-white" />
               </Button>
             </Link>
@@ -190,12 +190,12 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
             <p className="text-slate-600 dark:text-slate-400">{locale === 'cs' ? 'Zatím žádné lekce.' : 'No lessons yet.'}</p>
           ) : (
             lessons.map((lesson: any) => (
-              <Card key={lesson.id} className="group hover:border-indigo-500 dark:hover:border-red-500 transition-colors">
+              <Card key={lesson.id} className="group hover:border-purple-500 dark:hover:border-red-500 transition-colors">
                 <Link href={`/courses/${courseId}/lessons/${lesson.id}`} className="flex items-center p-6">
                   <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center mr-6 transition-colors duration-300 ${
                     completedLessonIds.includes(lesson.id)
                       ? 'bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400 shadow-[0_0_10px_rgba(34,197,94,0.2)]'
-                      : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 group-hover:bg-indigo-50 dark:group-hover:bg-slate-700'
+                      : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 group-hover:bg-purple-50 dark:group-hover:bg-slate-700'
                   }`}>
                     <LessonIcon 
                       title={lesson.title} 
@@ -204,7 +204,7 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
                     />
                   </div>
                   <div className="flex-grow min-w-0 pr-4">
-                    <h3 className="text-lg font-semibold group-hover:text-indigo-600 dark:group-hover:text-red-500 transition-colors text-slate-900 dark:text-white">
+                    <h3 className="text-lg font-semibold group-hover:text-purple-600 dark:group-hover:text-red-500 transition-colors text-slate-900 dark:text-white">
                       {lesson.title}
                     </h3>
                     <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">

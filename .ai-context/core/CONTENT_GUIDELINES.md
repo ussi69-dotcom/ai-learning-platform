@@ -117,3 +117,13 @@ Write a poem about a robot who loves gardening.
     *   `content.cs.mdx` (Czech)
 *   **Syncing:** After updating files, run `docker-compose exec backend python seed.py` to sync changes to the database.
 *   **Verification:** Verify changes in both languages if possible, or at least ensure the file structure matches.
+
+## 9. Design System Rules 🎨
+*   **Light Mode (Jedi):** "Purple Lightsaber" theme.
+    *   Primary Action Color: Purple (`purple-600` to `purple-800`).
+    *   Gradients: Purple/Fuchsia mix.
+    *   Text Highlights: Purple.
+*   **Dark Mode (Sith):** "Sith Red & Silver" theme.
+    *   Primary Action Color: Red (`red-500` to `red-700`).
+    *   Headings: Silver/White (`slate-200` to `slate-400`).
+    *   Text Highlights: Red.
