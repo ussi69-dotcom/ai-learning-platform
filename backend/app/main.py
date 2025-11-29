@@ -50,28 +50,55 @@ async def add_security_headers(request: Request, call_next):
 
 # Dependency pro získání DB session - ODSTRANĚNO, používáme database.get_db
 
+from app.services.email import send_verification_email
+
+# ... (existing imports)
+
 @app.post("/auth/register", response_model=schemas.User)
 @limiter.limit("5/minute")
-def register_user(request: Request, user: schemas.UserCreate, db: Session = Depends(database.get_db)):
+async def register_user(request: Request, user: schemas.UserCreate, db: Session = Depends(database.get_db)):
     db_user = db.query(models.User).filter(models.User.email == user.email).first()
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     
     hashed_password = auth.get_password_hash(user.password)
+    verification_token = str(uuid.uuid4())
 
-    # Default difficulty is handled by Schema default, but we can be explicit if needed
     new_user = models.User(
         email=user.email, 
         hashed_password=hashed_password,
-        difficulty=models.DifficultyLevel(user.difficulty), # Convert string to Enum
+        difficulty=models.DifficultyLevel(user.difficulty),
         avatar=user.avatar,
-        is_verified=True, # No email verification needed for now
+        is_verified=False, # Must verify email
+        verification_token=verification_token
     )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
 
+    # Send verification email (background task would be better, but await is fine for now)
+    try:
+        await send_verification_email(new_user.email, verification_token)
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+        # Don't fail registration, just log it. User can request resend later.
+
     return new_user
+
+@app.get("/auth/verify")
+def verify_email(token: str, db: Session = Depends(database.get_db)):
+    user = db.query(models.User).filter(models.User.verification_token == token).first()
+    if not user:
+        raise HTTPException(status_code=400, detail="Invalid verification token")
+    
+    if user.is_verified:
+        return {"message": "Email already verified"}
+
+    user.is_verified = True
+    user.verification_token = None # Clear token
+    db.commit()
+    
+    return {"message": "Email verified successfully"}
 
 
 @app.post("/auth/token", response_model=schemas.Token)

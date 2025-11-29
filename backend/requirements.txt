@@ -12,3 +12,4 @@ python-multipart
 docker
 slowapi
 redis
+fastapi-mail

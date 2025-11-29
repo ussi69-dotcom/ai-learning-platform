@@ -29,5 +29,15 @@ if ! grep -q "/run/shm" /etc/fstab; then
     echo "Added /run/shm security to /etc/fstab"
 fi
 
+# 5. Install Unattended Upgrades
+apt install -y unattended-upgrades
+echo "✅ Unattended Upgrades installed."
+
+# 6. SSH Hardening (Optional but recommended)
+# sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config
+# sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+# systemctl restart ssh
+
 echo "✅ Security setup complete. Fail2Ban and UFW active."
-echo "⚠️  REMINDER: Disable password authentication in /etc/ssh/sshd_config if not already done!"
+echo "⚠️  IMPORTANT: Configure Cloudflare WAF for Geo-blocking (CZ only) and Anti-DDoS."
+echo "⚠️  REMINDER: Create a non-root user for Docker and disable SSH password auth!"
