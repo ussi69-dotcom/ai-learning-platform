@@ -322,8 +322,10 @@ export default function HomePage() {
             </div>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {courses.length > 0 ? (
-                courses.map((course) => (
+              {courses.filter(c => c.difficulty_level === user.difficulty).length > 0 ? (
+                courses
+                  .filter(c => c.difficulty_level === user.difficulty)
+                  .map((course) => (
                   <Card key={course.id} className="hover:border-primary/50 transition-all duration-300 group overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm">
                     {/* Course Image / Icon Area */}
                     <div className="h-48 w-full bg-gradient-to-br from-slate-900 to-slate-800 relative p-4 flex items-center justify-center overflow-hidden">

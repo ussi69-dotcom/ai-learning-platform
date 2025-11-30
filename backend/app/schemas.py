@@ -49,7 +49,7 @@ class Course(CourseBase):
     id: int
     owner_id: int
     difficulty_level: str
-    # lessons: List[Lesson] = [] # Zatím necháme volitelné, abychom se nezacyklili
+    lessons: List[LessonSummary] = []
 
     class Config:
         from_attributes = True
@@ -102,6 +102,11 @@ class UserXPUpdate(BaseModel):
 
 class UserAvatarUpdate(BaseModel):
     avatar: str
+
+class UserUpdate(BaseModel):
+    full_name: Optional[str] = None
+    avatar: Optional[str] = None
+    difficulty: Optional[str] = None
 
 
 # ===== QUIZ SCHEMAS =====

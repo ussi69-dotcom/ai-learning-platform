@@ -66,24 +66,28 @@ async def register_user(request: Request, user: schemas.UserCreate, db: Session 
     hashed_password = auth.get_password_hash(user.password)
     verification_token = str(uuid.uuid4())
 
+    # Auto-verify if SMTP is not configured (Dev mode)
+    should_auto_verify = not settings.SMTP_HOST or settings.SMTP_HOST == "smtp.example.com"
+
     new_user = models.User(
         email=user.email, 
         hashed_password=hashed_password,
         difficulty=models.DifficultyLevel(user.difficulty),
         avatar=user.avatar,
-        is_verified=False, # Must verify email
+        is_verified=should_auto_verify, 
         verification_token=verification_token
     )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
 
-    # Send verification email (background task would be better, but await is fine for now)
-    try:
-        await send_verification_email(new_user.email, verification_token)
-    except Exception as e:
-        print(f"Failed to send email: {e}")
-        # Don't fail registration, just log it. User can request resend later.
+    # Send verification email only if not auto-verified
+    if not should_auto_verify:
+        try:
+            await send_verification_email(new_user.email, verification_token)
+        except Exception as e:
+            print(f"Failed to send email: {e}")
+            # Don't fail registration, just log it. User can request resend later.
 
     return new_user
 
@@ -105,7 +109,7 @@ def verify_email(token: str, db: Session = Depends(database.get_db)):
 
 @app.post("/auth/token", response_model=schemas.Token)
 @limiter.limit("10/minute")
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
+async def login_for_access_token(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
     user = auth.authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -147,110 +151,80 @@ async def update_user_profile(user_update: schemas.UserUpdate, current_user: mod
     db.refresh(current_user)
     return current_user
 
+@app.get("/users/me/last-lesson", response_model=Optional[schemas.UserProgress])
+async def get_last_lesson(current_user: models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
+    progress = db.query(models.UserProgress).filter(
+        models.UserProgress.user_id == current_user.id
+    ).order_by(models.UserProgress.last_accessed.desc()).first()
+    return progress
 
 # --- CONTENT ENDPOINTS ---
 
-import os
-import json
-
-CONTENT_DIR = "/app/content"
-
-@app.get("/courses")
-def get_courses():
-    """Vrátí seznam kurzů z adresářové struktury."""
-    courses = []
-    if not os.path.exists(CONTENT_DIR) or not os.path.exists(os.path.join(CONTENT_DIR, "courses")):
-         return []
-
-    courses_dir = os.path.join(CONTENT_DIR, "courses")
-    for course_id in os.listdir(courses_dir):
-        course_path = os.path.join(courses_dir, course_id)
-        if os.path.isdir(course_path):
-            # Zkusíme načíst meta.json, pokud existuje
-            meta_path = os.path.join(course_path, "meta.json")
-            title = course_id.replace("-", " ").title()
-            description = "No description available."
-            
-            if os.path.exists(meta_path):
-                with open(meta_path, "r") as f:
-                    try:
-                        meta = json.load(f)
-                        title = meta.get("title", title)
-                        description = meta.get("description", description)
-                    except:
-                        pass
-
-            courses.append({
-                "id": course_id,
-                "title": title,
-                "description": description,
-                "image": f"/content/courses/{course_id}/cover.jpg" # Placeholder logic
-            })
+@app.get("/courses", response_model=List[schemas.Course])
+def get_courses(db: Session = Depends(database.get_db)):
+    """Vrátí seznam kurzů z databáze."""
+    courses = db.query(models.Course).all()
     return courses
 
-@app.get("/courses/{course_id}")
-def get_course_detail(course_id: str):
+@app.get("/courses/{course_slug}", response_model=schemas.Course)
+def get_course_detail(course_slug: str, db: Session = Depends(database.get_db)):
     """Vrátí detail kurzu a seznam lekcí."""
-    course_path = os.path.join(CONTENT_DIR, "courses", course_id)
-    if not os.path.exists(course_path):
+    course = db.query(models.Course).filter(models.Course.slug == course_slug).first()
+    if not course:
+        # Fallback: zkusíme ID
+        if course_slug.isdigit():
+             course = db.query(models.Course).filter(models.Course.id == int(course_slug)).first()
+    
+    if not course:
         raise HTTPException(status_code=404, detail="Course not found")
 
-    # Načíst metadata
-    meta = {}
-    meta_path = os.path.join(course_path, "meta.json")
-    if os.path.exists(meta_path):
-        with open(meta_path, "r") as f:
-             meta = json.load(f)
+    # Seřadíme lekce podle order
+    course.lessons.sort(key=lambda x: x.order)
+    return course
 
-    # Načíst lekce (adresáře začínající číslem nebo definované v meta.json)
-    lessons = []
-    # Jednoduchý průchod adresáři
-    for item in sorted(os.listdir(course_path)):
-        item_path = os.path.join(course_path, item)
-        if os.path.isdir(item_path) and not item.startswith("."):
-             # Hledáme index.mdx
-             if os.path.exists(os.path.join(item_path, "index.mdx")):
-                 lessons.append({
-                     "id": item,
-                     "title": item.replace("-", " ").title(), # Fallback, v reálu vyparsujeme z MDX
-                     "path": f"/courses/{course_id}/{item}"
-                 })
-    
-    return {
-        "id": course_id,
-        "title": meta.get("title", course_id.replace("-", " ").title()),
-        "description": meta.get("description", ""),
-        "lessons": lessons
-    }
-
-@app.get("/content/{course_id}/{lesson_id}")
-def get_lesson_content(course_id: str, lesson_id: str):
+@app.get("/content/{course_slug}/{lesson_slug}")
+def get_lesson_content(course_slug: str, lesson_slug: str, db: Session = Depends(database.get_db)):
     """Vrátí obsah lekce (MDX)."""
-    lesson_path = os.path.join(CONTENT_DIR, "courses", course_id, lesson_id, "index.mdx")
-    if not os.path.exists(lesson_path):
+    # Najdeme kurz
+    course = db.query(models.Course).filter(models.Course.slug == course_slug).first()
+    if not course:
+         raise HTTPException(status_code=404, detail="Course not found")
+         
+    # Najdeme lekci v kurzu podle slugu
+    lesson = db.query(models.Lesson).filter(
+        models.Lesson.course_id == course.id,
+        models.Lesson.slug == lesson_slug
+    ).first()
+    
+    if not lesson:
         raise HTTPException(status_code=404, detail="Lesson not found")
     
-    with open(lesson_path, "r") as f:
-        content = f.read()
-    
-    return {"content": content}
+    return {"content": lesson.content}
 
 # --- PROGRESS TRACKING ---
 
-@app.post("/progress/{course_id}/{lesson_id}")
-def mark_lesson_complete(course_id: str, lesson_id: str, current_user: models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
+@app.post("/progress/{course_slug}/{lesson_slug}")
+def mark_lesson_complete(course_slug: str, lesson_slug: str, current_user: models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
+    # Najdeme IDčka
+    course = db.query(models.Course).filter(models.Course.slug == course_slug).first()
+    if not course:
+        raise HTTPException(status_code=404, detail="Course not found")
+        
+    lesson = db.query(models.Lesson).filter(models.Lesson.course_id == course.id, models.Lesson.slug == lesson_slug).first()
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+
     # Check if already completed
     existing = db.query(models.UserProgress).filter(
         models.UserProgress.user_id == current_user.id,
-        models.UserProgress.course_id == course_id,
-        models.UserProgress.lesson_id == lesson_id
+        models.UserProgress.lesson_id == lesson.id
     ).first()
 
     if not existing:
         progress = models.UserProgress(
             user_id=current_user.id,
-            course_id=course_id,
-            lesson_id=lesson_id,
+            course_id=course.id,
+            lesson_id=lesson.id,
             completed=True
         )
         db.add(progress)

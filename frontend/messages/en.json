@@ -10,8 +10,10 @@
   },
   "Auth": {
     "login_title": "Login to your account",
+    "login_subtitle": "Enter your email below to login to your account",
     "email": "Email",
     "password": "Password",
+    "forgot_password": "Forgot password?",
     "submit_login": "Sign In",
     "no_account": "Don't have an account?",
     "register_link": "Register here",

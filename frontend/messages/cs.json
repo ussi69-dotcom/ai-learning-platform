@@ -10,8 +10,10 @@
   },
   "Auth": {
     "login_title": "Přihlášení k účtu",
+    "login_subtitle": "Zadejte svůj email pro přihlášení do účtu",
     "email": "Email",
     "password": "Heslo",
+    "forgot_password": "Zapomenuté heslo?",
     "submit_login": "Přihlásit se",
     "no_account": "Nemáte účet?",
     "register_link": "Zaregistrujte se zde",

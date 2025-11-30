@@ -55,22 +55,29 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
           }
         });
         if (courseRes.ok) {
-          setCourse(await courseRes.json());
+          const courseData = await courseRes.json();
+          setCourse(courseData);
+          
+          // Use lessons directly from course response
+          if (courseData.lessons) {
+            setLessons(courseData.lessons.sort((a: any, b: any) => a.order - b.order));
+          }
         }
 
-        // Fetch lessons with auth token
-        const lessonsRes = await fetch(`${API_BASE}/lessons/?lang=${locale}`, {
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        });
-        if (lessonsRes.ok) {
-          const allLessons = await lessonsRes.json();
-          const filtered = allLessons
-            .filter((l: any) => l.course_id === parseInt(courseId))
-            .sort((a: any, b: any) => a.order - b.order);
-          setLessons(filtered);
-        }
+        // --- Původní kód pro lessons odstraněn ---
+        // Fetch lessons s auth tokenem, pokud by kurz neobsahoval lessons (nemělo by se stávat)
+        // const lessonsRes = await fetch(`${API_BASE}/lessons/?lang=${locale}`, {
+        //   headers: {
+        //     "Authorization": `Bearer ${token}`
+        //   }
+        // });
+        // if (lessonsRes.ok) {
+        //   const allLessons = await lessonsRes.json();
+        //   const filtered = allLessons
+        //     .filter((l: any) => l.course_id === parseInt(courseId))
+        //     .sort((a: any, b: any) => a.order - b.order);
+        //   setLessons(filtered);
+        // }
 
         // Fetch progress
         const progressRes = await fetch(`${API_BASE}/courses/${courseId}/progress`, {
