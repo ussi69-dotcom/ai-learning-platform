@@ -41,7 +41,7 @@ type FeedbackMode = 'idle' | 'placing' | 'viewing';
 
 export default function LessonPage({ params }: { params: Promise<{ courseId: string; lessonId: string }> }) {
   const { courseId, lessonId } = use(params);
-  
+
   const { token } = useAuth();
   const router = useRouter();
   const [lesson, setLesson] = useState<any>(null);
@@ -50,7 +50,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   const [allLessons, setAllLessons] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
-  
+
   const locale = useLocale();
   const t = useTranslations('Common');
 
@@ -85,7 +85,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
       try {
         const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-        
+
         // 1. Load Lesson
         const lessonRes = await axios.get(`${API_BASE}/lessons/${lessonId}`, {
           params: { lang: locale },
@@ -102,6 +102,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
         // 3. Load Quizzes
         const quizzesRes = await axios.get(`${API_BASE}/lessons/${lessonId}/quizzes`, {
+          params: { lang: locale },
           headers: { "Authorization": `Bearer ${token}` }
         });
         setQuizzes(quizzesRes.data);
@@ -118,7 +119,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
         // 5. Load User Progress (Resume last page)
         const progressRes = await axios.get(`${API_BASE}/users/me/progress`, {
-           headers: { "Authorization": `Bearer ${token}` }
+          headers: { "Authorization": `Bearer ${token}` }
         });
         const myProgress = progressRes.data.find((p: any) => p.lesson_id === parseInt(lessonId));
         if (myProgress && myProgress.current_page) {
@@ -182,14 +183,14 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') {
-         if (currentPage < calculatedTotalPages - 1) {
-            setCurrentPage(p => p + 1);
-         }
+        if (currentPage < calculatedTotalPages - 1) {
+          setCurrentPage(p => p + 1);
+        }
       }
       if (e.key === 'ArrowLeft') {
-         if (currentPage > 0) {
-            setCurrentPage(p => p - 1);
-         }
+        if (currentPage > 0) {
+          setCurrentPage(p => p - 1);
+        }
       }
     };
 
@@ -215,7 +216,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
   // Ensure currentPage doesn't exceed bounds (e.g. if content changed)
   if (currentPage >= calculatedTotalPages && calculatedTotalPages > 0) {
-      setCurrentPage(calculatedTotalPages - 1);
+    setCurrentPage(calculatedTotalPages - 1);
   }
 
   const isQuizPage = currentPage === slides.length;
@@ -239,15 +240,15 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
       });
       // Refresh feedback
       const res = await axios.get(`${API_BASE}/feedback`, {
-          params: { lesson_id: lessonId, slide_index: currentPage },
-          headers: { "Authorization": `Bearer ${token}` }
+        params: { lesson_id: lessonId, slide_index: currentPage },
+        headers: { "Authorization": `Bearer ${token}` }
       });
       setFeedbackItems(res.data);
-      
+
       // Update selected item if open
       if (selectedFeedback && selectedFeedback.id === id) {
-         const updated = res.data.find((i: any) => i.id === id);
-         setSelectedFeedback(updated);
+        const updated = res.data.find((i: any) => i.id === id);
+        setSelectedFeedback(updated);
       }
     } catch (error) {
       console.error("Vote failed:", error);
@@ -255,7 +256,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   };
 
   const handleReply = async (parentId: number, message: string) => {
-     try {
+    try {
       const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
       // We need to construct the full object, but the endpoint expects FeedbackItemCreate
       // which needs lesson_id, slide_index, x_pos, y_pos, type, message.
@@ -278,14 +279,14 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
       // Refresh
       const res = await axios.get(`${API_BASE}/feedback`, {
-          params: { lesson_id: lessonId, slide_index: currentPage },
-          headers: { "Authorization": `Bearer ${token}` }
+        params: { lesson_id: lessonId, slide_index: currentPage },
+        headers: { "Authorization": `Bearer ${token}` }
       });
       setFeedbackItems(res.data);
-       // Update selected item if open
+      // Update selected item if open
       if (selectedFeedback && selectedFeedback.id === parentId) {
-         const updated = res.data.find((i: any) => i.id === parentId);
-         setSelectedFeedback(updated);
+        const updated = res.data.find((i: any) => i.id === parentId);
+        setSelectedFeedback(updated);
       }
     } catch (error) {
       console.error("Reply failed:", error);
@@ -298,11 +299,11 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
       await axios.delete(`${API_BASE}/feedback/${id}`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
-      
+
       // Refresh
       const res = await axios.get(`${API_BASE}/feedback`, {
-          params: { lesson_id: lessonId, slide_index: currentPage },
-          headers: { "Authorization": `Bearer ${token}` }
+        params: { lesson_id: lessonId, slide_index: currentPage },
+        headers: { "Authorization": `Bearer ${token}` }
       });
       setFeedbackItems(res.data);
       if (selectedFeedback && selectedFeedback.id === id) {
@@ -316,29 +317,29 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-background transition-colors duration-500">
-        
+
         <ProgressDots />
-        
+
         <div className="container mx-auto py-6 px-4 max-w-4xl pb-32 md:pb-24">
-          
+
           {/* Lesson Navigation (TOP) */}
           <div className="flex items-center justify-between gap-4 mb-8 p-3 -mx-3 rounded-lg bg-card/50 border border-border backdrop-blur-sm">
             <div className="flex gap-2">
-               <Link href={`/courses/${courseId}`}>
-                 <Button variant="outline" size="sm" className="gap-2">
-                   ← {locale === 'cs' ? 'Zpět na kurz' : 'Back to Course'}
-                 </Button>
-               </Link>
-               {currentPage > 0 && (
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="gap-2 text-muted-foreground hover:text-foreground"
-                    onClick={() => setCurrentPage(0)}
-                  >
-                    {locale === 'cs' ? 'Zpět na stranu 1' : 'Back to Page 1'}
-                  </Button>
-               )}
+              <Link href={`/courses/${courseId}`}>
+                <Button variant="outline" size="sm" className="gap-2">
+                  ← {locale === 'cs' ? 'Zpět na kurz' : 'Back to Course'}
+                </Button>
+              </Link>
+              {currentPage > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-2 text-muted-foreground hover:text-foreground"
+                  onClick={() => setCurrentPage(0)}
+                >
+                  {locale === 'cs' ? 'Zpět na stranu 1' : 'Back to Page 1'}
+                </Button>
+              )}
             </div>
 
             <div className="flex gap-2">
@@ -360,10 +361,10 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
               </Button>
             </div>
           </div>
-          
+
           {/* Header Section */}
           <div className="mb-8 mt-4">
-             <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3 mb-4">
               <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold border border-primary/20">
                 {locale === 'cs' ? 'Lekce' : 'Lesson'} {lesson.order}
               </span>
@@ -381,11 +382,11 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           {lesson.video_url && (
             <div className="mb-10">
               <div className="aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border-4 border-border ring-1 ring-black/5">
-                <iframe 
+                <iframe
                   className="w-full h-full"
-                  src={lesson.video_url} 
+                  src={lesson.video_url}
                   title={lesson.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
               </div>
@@ -394,97 +395,97 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
           {/* Content Card */}
           <div id="lesson-content-container" className="glass-panel rounded-3xl p-6 md:p-10 mb-8 min-h-[400px] relative">
-            
+
             {/* Page Indicator (Top) */}
             <div className="flex justify-between items-center mb-6 text-xs font-bold text-muted-foreground uppercase tracking-wider">
-               <span>{locale === 'cs' ? 'Sekce' : 'Section'} {currentPage + 1} {locale === 'cs' ? 'z' : 'of'} {calculatedTotalPages}</span>
-               {isQuizPage && <span className="text-primary">{locale === 'cs' ? 'Závěrečný test' : 'Final Challenge'}</span>}
+              <span>{locale === 'cs' ? 'Sekce' : 'Section'} {currentPage + 1} {locale === 'cs' ? 'z' : 'of'} {calculatedTotalPages}</span>
+              {isQuizPage && <span className="text-primary">{locale === 'cs' ? 'Závěrečný test' : 'Final Challenge'}</span>}
             </div>
 
             {/* Formatted content */}
             {!isQuizPage ? (
               <div className="animate-in fade-in duration-300">
-                <MarkdownRenderer 
-                  content={currentContent} 
+                <MarkdownRenderer
+                  content={currentContent}
                   courseSlug={course?.slug}
                   lessonSlug={lesson?.slug}
                 />
               </div>
             ) : (
               <div className="animate-in zoom-in-95 duration-300">
-                <Quiz 
-                  quizzes={quizzes} 
-                  onComplete={() => {}} 
+                <Quiz
+                  quizzes={quizzes}
+                  onComplete={() => { }}
                 />
               </div>
             )}
 
             {/* Lesson Complete (Embedded on last page if no quiz, or after quiz) */}
             {currentPage === calculatedTotalPages - 1 && !isQuizPage && !hasQuiz && (
-                <LessonComplete 
-                  lessonId={parseInt(lessonId)} 
-                  courseId={parseInt(courseId)} 
-                  lessonTitle={lesson.title}
-                />
+              <LessonComplete
+                lessonId={parseInt(lessonId)}
+                courseId={parseInt(courseId)}
+                lessonTitle={lesson.title}
+              />
             )}
 
             {/* Feedback Markers Overlay */}
             {feedbackMode === 'viewing' && (
               <div className="absolute inset-0 z-20 pointer-events-none">
-                 {feedbackItems.map((item) => (
-                    <div key={item.id} className="pointer-events-auto">
-                      <FeedbackMarker 
-                        x={item.x_pos} 
-                        y={item.y_pos} 
-                        type={item.type} 
-                        message={item.message} 
-                        author={item.author}
-                        isResolved={item.is_resolved}
-                        onClick={() => setSelectedFeedback(item)}
-                      />
-                    </div>
-                 ))}
+                {feedbackItems.map((item) => (
+                  <div key={item.id} className="pointer-events-auto">
+                    <FeedbackMarker
+                      x={item.x_pos}
+                      y={item.y_pos}
+                      type={item.type}
+                      message={item.message}
+                      author={item.author}
+                      isResolved={item.is_resolved}
+                      onClick={() => setSelectedFeedback(item)}
+                    />
+                  </div>
+                ))}
               </div>
             )}
           </div>
 
           {/* --- PRIMARY NAVIGATION (Page Control) --- */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-card/50 p-4 rounded-2xl border border-border backdrop-blur-sm">
-             <div className="flex w-full md:w-auto justify-between md:justify-start gap-4 order-2 md:order-1">
-               <Button
-                  variant="ghost"
-                  onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
-                  disabled={currentPage === 0}
-                  className="min-w-[80px] h-12 text-base" // Větší tlačítka
-                >
-                  ← {locale === 'cs' ? 'Zpět' : 'Prev'}
-                </Button>
-             </div>
+            <div className="flex w-full md:w-auto justify-between md:justify-start gap-4 order-2 md:order-1">
+              <Button
+                variant="ghost"
+                onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+                disabled={currentPage === 0}
+                className="min-w-[80px] h-12 text-base" // Větší tlačítka
+              >
+                ← {locale === 'cs' ? 'Zpět' : 'Prev'}
+              </Button>
+            </div>
 
-              {/* Interactive Segmented Progress Bar */}
-              <div className="w-full order-1 md:order-2">
-                <LessonProgressBar 
-                  total={calculatedTotalPages} 
-                  current={currentPage} 
-                  onNavigate={setCurrentPage} 
-                />
-              </div>
+            {/* Interactive Segmented Progress Bar */}
+            <div className="w-full order-1 md:order-2">
+              <LessonProgressBar
+                total={calculatedTotalPages}
+                current={currentPage}
+                onNavigate={setCurrentPage}
+              />
+            </div>
 
-              <div className="flex w-full md:w-auto justify-end order-3 h-12">
-                <Button
-                  variant={currentPage === calculatedTotalPages - 1 ? "default" : "outline"} 
-                  onClick={() => setCurrentPage(Math.min(calculatedTotalPages - 1, currentPage + 1))}
-                  disabled={currentPage === calculatedTotalPages - 1}
-                  className="w-full md:w-auto min-w-[120px] h-full text-base font-bold shadow-md" 
-                >
-                  {locale === 'cs' ? 'Další strana' : 'Next Page'} →
-                </Button>
-              </div>
+            <div className="flex w-full md:w-auto justify-end order-3 h-12">
+              <Button
+                variant={currentPage === calculatedTotalPages - 1 ? "default" : "outline"}
+                onClick={() => setCurrentPage(Math.min(calculatedTotalPages - 1, currentPage + 1))}
+                disabled={currentPage === calculatedTotalPages - 1}
+                className="w-full md:w-auto min-w-[120px] h-full text-base font-bold shadow-md"
+              >
+                {locale === 'cs' ? 'Další strana' : 'Next Page'} →
+              </Button>
+            </div>
           </div>
 
           {/* --- SECONDARY NAVIGATION (Context Control) --- */}
           <div className="grid grid-cols-3 gap-4 pt-8 border-t border-border">
-            
+
             {/* Prev Lesson */}
             <div className="justify-self-start">
               {previousLesson ? (
@@ -500,41 +501,41 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
             {/* Home / Course Index */}
             <div className="justify-self-center">
-               <Link href={`/courses/${courseId}`}>
-                  <Button variant="outline" size="sm" className="border-dashed border-border text-muted-foreground hover:text-foreground">
-                    {locale === 'cs' ? 'Přehled kurzu' : 'Course Overview'}
-                  </Button>
-               </Link>
+              <Link href={`/courses/${courseId}`}>
+                <Button variant="outline" size="sm" className="border-dashed border-border text-muted-foreground hover:text-foreground">
+                  {locale === 'cs' ? 'Přehled kurzu' : 'Course Overview'}
+                </Button>
+              </Link>
             </div>
 
             {/* Next Lesson */}
             <div className="justify-self-end">
-               {nextLesson ? (
-                  <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`}>
-                    <Button variant="outline" size="sm" className="text-muted-foreground hover:text-foreground gap-2">
-                      {locale === 'cs' ? 'Další lekce' : 'Next Lesson'} <span>»</span>
-                    </Button>
-                  </Link>
-               ) : (
-                  <Link href={`/courses/${courseId}`}>
-                    <Button variant="default" size="sm" className="gap-2">
-                      {locale === 'cs' ? 'Dokončit kurz 🏆' : 'Finish Course 🏆'}
-                    </Button>
-                  </Link>
-               )}
+              {nextLesson ? (
+                <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`}>
+                  <Button variant="outline" size="sm" className="text-muted-foreground hover:text-foreground gap-2">
+                    {locale === 'cs' ? 'Další lekce' : 'Next Lesson'} <span>»</span>
+                  </Button>
+                </Link>
+              ) : (
+                <Link href={`/courses/${courseId}`}>
+                  <Button variant="default" size="sm" className="gap-2">
+                    {locale === 'cs' ? 'Dokončit kurz 🏆' : 'Finish Course 🏆'}
+                  </Button>
+                </Link>
+              )}
             </div>
 
           </div>
         </div>
-        <FeedbackFAB 
-          onModeChange={setFeedbackMode} 
-          currentMode={feedbackMode} 
+        <FeedbackFAB
+          onModeChange={setFeedbackMode}
+          currentMode={feedbackMode}
           onPlaceFeedback={handlePlaceFeedback}
           lessonId={parseInt(lessonId)}
           slideIndex={currentPage}
         />
 
-        <FeedbackSubmissionModal 
+        <FeedbackSubmissionModal
           isOpen={feedbackToPlace !== null}
           onClose={() => {
             setFeedbackToPlace(null);
@@ -550,14 +551,14 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           y={feedbackToPlace?.y || 0}
         />
 
-        <FeedbackDetailModal 
+        <FeedbackDetailModal
           isOpen={selectedFeedback !== null}
           onClose={() => setSelectedFeedback(null)}
           feedbackItem={selectedFeedback}
           onVote={handleVote}
           onReply={handleReply}
           onDelete={handleDelete}
-          onUpdate={() => {}} // Not implemented yet
+          onUpdate={() => { }} // Not implemented yet
         />
       </div>
     </ProtectedRoute>

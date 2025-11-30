@@ -133,3 +133,44 @@
 -   **Manual Action**: Run `git push`.
 -   **Manual Action**: Restart IDE/Terminal.
 -   Continue with feature development in Cycle 35/36. Handoff complete.
+
+## 📅 Date: 2025-11-30 (Emergency Stabilization)
+
+## 🎯 Task: Fix XP Regression & Align with VPS Architecture
+
+### ✅ Completed
+1.  **Diagnosed Critical Regression**:
+    -   Identified that the local environment had diverged significantly from the production (`vps-deployment`) branch.
+    -   Local: Modular architecture (Split Routers).
+    -   VPS: Monolithic architecture (`main.py` contained all logic).
+    -   Result: "Fixes" applied locally were conflicting with or duplicating hidden logic in the monolithic structure.
+
+2.  **Architectural Alignment**:
+    -   **Replaced** local `backend/app/main.py` with the version from `vps-deployment`.
+    -   **Replaced** local `frontend/components/LessonComplete.tsx` with the version from `vps-deployment`.
+    -   **Deleted** conflicting local routers (`backend/app/routers/lessons.py`, `backend/app/routers/feedback.py`).
+    -   **Result**: Local environment is now an exact mirror of production logic.
+
+3.  **Verification**:
+    -   Ran `verify_xp_deep.py` to confirm backend XP logic (Passed).
+    -   Rebuilt Docker containers to apply changes.
+    -   Verified XP updates in UI.
+
+### 📝 Notes
+-   **Lesson Learned**: Always check the production branch (`vps-deployment`) before refactoring architecture.
+-   **Rule Added**: Added "Architecture Alignment" rule to `MEMORY.md`.
+
+### 🚀 Next Steps
+-   If modularity is desired, it must be refactored *starting* from the current monolithic state and deployed to VPS to keep them in sync.
+
+### 🔄 Refactor Update (v2)
+-   **Action**: Successfully split `main.py` into `lessons.py`, `feedback.py`, and `users.py` based on the *working* VPS code.
+-   **Verification**:
+    -   XP Logic: Verified 50 XP award (matches VPS).
+    -   Localization: Verified Czech content.
+    -   Quiz Localization: Fixed missing logic in `lessons.py` AND missing `lang` param in frontend. Verified.
+    -   Architecture: Modular routers are now live and working.
+-   **Documentation**:
+    -   Created `.ai-context/learning/INCIDENT_2025_11_30_BACKEND_REFACTOR.md`.
+    -   Updated `.ai-context/state/MEMORY.md` with critical lessons.
+-   **Branch**: `feature/backend-refactor-v2` is ready for merge.

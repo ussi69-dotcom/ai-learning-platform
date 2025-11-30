@@ -26,6 +26,15 @@ def run_verification():
         return
     print("Registration successful.")
 
+    # Manual Verification via Docker
+    import subprocess
+    print_step("Manually verifying user via Docker...")
+    subprocess.run([
+        "docker", "exec", "ai-db", "psql", "-U", "postgres", "-d", "ai_platform_db", 
+        "-c", f"UPDATE users SET is_verified = true WHERE email = '{EMAIL}';"
+    ], check=True)
+    print("User verified.")
+
     # 2. Login
     print_step("Logging in...")
     res = session.post(f"{BASE_URL}/auth/token", data={
@@ -72,10 +81,22 @@ def run_verification():
     new_xp = updated_user_data["xp"]
     print(f"New XP: {new_xp}")
 
-    if new_xp == initial_xp + 100:
+    if new_xp == initial_xp + 50:
         print("\n✅ SUCCESS: XP updated correctly in backend.")
     else:
-        print(f"\n❌ FAILURE: XP did not update. Expected {initial_xp + 100}, got {new_xp}")
+        print(f"\n❌ FAILURE: XP did not update. Expected {initial_xp + 50}, got {new_xp}")
+
+    # 6. Check Quiz Localization
+    print_step("Checking Quiz Localization (lang=cs)...")
+    res = session.get(f"{BASE_URL}/lessons/{lesson_id}/quizzes?lang=cs", headers=headers)
+    if res.status_code == 200:
+        quizzes = res.json()
+        if quizzes and "otázka" in str(quizzes).lower() or "co je" in str(quizzes).lower(): # Simple check for Czech words
+             print(f"✅ SUCCESS: Quizzes returned in Czech. Sample: {str(quizzes)[:100]}...")
+        else:
+             print(f"⚠️ WARNING: Quizzes might not be in Czech. Sample: {str(quizzes)[:100]}...")
+    else:
+        print(f"❌ FAILURE: Failed to fetch quizzes. Status: {res.status_code}")
 
 if __name__ == "__main__":
     try:
