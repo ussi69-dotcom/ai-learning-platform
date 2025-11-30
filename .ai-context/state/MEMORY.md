@@ -68,3 +68,10 @@ docker-compose down -v && docker-compose up -d --build
 - **IDE:** Use for visual checks, deep debugging.
 - **Handoff:** Write to `state/SESSION_LOG.md` before exiting.
 - **Stability First:** 🛑 DO NOT break working environments (e.g., Port 3000) to fix minor issues in secondary ones (Port 3001). If a feature works in the primary environment, prioritize maintaining that stability.
+-   **Architecture Alignment:** 🏛️ The `vps-deployment` branch represents the production architecture (monolithic `main.py`). Do not introduce split routers (`routers/lessons.py`) unless explicitly refactoring the entire platform to match. Always check `vps-deployment` before re-implementing existing features.
+
+### 5. Critical Incident Lessons (2025-11-30) 🚨
+-   **VPS Parity:** Local dev must match VPS architecture. If VPS is monolithic, Local must be too (until fully refactored).
+-   **Deep Verification:** UI testing is insufficient. Use scripts like `verify_xp_deep.py` to verify backend logic (XP, Localization) independently of frontend.
+-   **Localization:** Requires both Backend logic (field swapping) AND Frontend request params (`lang=...`).
+-   **Refactoring:** If a refactor fails, revert to the working monolith state first, then refactor incrementally with verification.
