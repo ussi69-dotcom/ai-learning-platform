@@ -25,3 +25,6 @@ Thumbs.db
 # Archive
 _archive/
 CONTEXT_FOR_ARCHITECT.md
+
+# Agent Memory (Local Only - Do Not Commit)
+GEMINI.md

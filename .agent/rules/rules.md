@@ -28,9 +28,15 @@ You share this codebase with your counterpart, **Gemini CLI**. You are the same 
 - **Ending:** Update `state/SESSION_LOG.md` with your actions and next steps.
 - **Conflicts:** If you see `GEMINI.md` (CLI Memory) - **DO NOT DELETE**. It is for CLI use only. Use `state/MEMORY.md` for shared knowledge.
 
-## 4. Agent Memory Files
-- **`GEMINI.md`** – používat pouze pro Gemini CLI (root session memory).
-- **`.ai-context/state/MEMORY.md`** – používat pro všechny agenty jako sdílenou projektovou knowledge-base.
+## 4. Agent Memory & Machine Switching
+- **`GEMINI.md`** is **LOCAL & EPHEMERAL**. It is `.gitignored`. Never rely on it being up-to-date after switching machines.
+- **`.ai-context/state/MEMORY.md`** is **SHARED & PERSISTENT**. It is the Single Source of Truth (SSOT).
+
+### 🔄 Boot Sequence (Start of Session)
+1. **IGNORE** the content of `GEMINI.md` if it conflicts with `MEMORY.md`.
+2. **READ** `.ai-context/state/MEMORY.md` immediately to load the true project state.
+3. **UPDATE** your local `GEMINI.md` with the state from `MEMORY.md`.
+4. **PROCEED** with the task defined in `.ai-context/state/CURRENT_TASK.md`.
 
 ---
 

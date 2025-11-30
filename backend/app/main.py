@@ -7,7 +7,7 @@ from datetime import timedelta
 import uuid
 
 from . import models, schemas, database, auth
-from app.routers import sandbox
+from app.routers import sandbox, lessons
 
 from fastapi.staticfiles import StaticFiles
 
@@ -25,6 +25,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Include Routers
 app.include_router(sandbox.router)
+app.include_router(lessons.router)
 
 from app.config import settings
 

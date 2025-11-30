@@ -1,15 +1,15 @@
-# Agent State
+# Agent State - Synchronized with MEMORY.md
 
 ## Current Status
-- **Cycle:** 32 (Completed)
-- **Focus:** Content Polish, Localization Sync, Visual Consistency
-- **Last Action:** Replaced difficulty emojis with SVGs and fixed Lesson 5 content sync.
+- **Cycle:** 35 (Security Hardening)
+- **Focus:** Core security features implemented & verified.
+- **Last Action:** Implemented Sandbox, Rate Limiting, Strong Passwords, Email Verification, Security Headers.
 
-## Recent Changes
-1.  **Lesson 5 Fixes**: Merged pages 2 & 3, removed redundant image, fixed content sync for Czech localization.
-2.  **Localization Protocol**: Updated `CONTENT_GUIDELINES.md` to enforce dual updates (EN/CZ) and DB sync.
-3.  **Visual Polish**: Replaced difficulty emojis (🍰, 🎸, etc.) with professional Lucide SVGs (`Cake`, `Guitar`, `Swords`, `Flame`) across Home, Register, and Profile pages.
-4.  **About Page**: Created `/about` with detailed timeline and tech stack.
+## Recent Changes (as per MEMORY.md)
+1.  **Secure Code Execution**: Implemented via `SandboxService` + Docker + `<Sandbox>` UI.
+2.  **API Security**: Rate Limiting (using Redis), Strong Password validation, Email Verification, Security HTTP Headers.
+3.  **Deployment Security**: Prepared `scripts/setup_security.sh` for VPS.
+4.  **Core Features**: "Masterpiece Standard" for Lessons 3-6, Localization architecture fully implemented.
 
 ## Context
 - **Project**: AI Learning Platform (Next.js 16 + FastAPI).
@@ -17,7 +17,10 @@
 - **Localization**: EN/CZ fully supported.
 
 ## Active Issues
-- None known critical.
+- Authentication timeout issues (to be resolved by Docker restart).
+- Discrepancy in `GEMINI.md` (CLI memory) needs to be fixed.
 
 ## Next Actions
-- Ready for next cycle planning.
+- Update `GEMINI.md` to reflect current state and point to `MEMORY.md` as SSOT.
+- Perform Docker Nuclear Reset (`docker-compose down -v && docker-compose up -d --build`).
+- Verify local development workflow and `.env` usage.
