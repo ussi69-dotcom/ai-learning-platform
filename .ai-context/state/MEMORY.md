@@ -67,3 +67,4 @@ docker-compose down -v && docker-compose up -d --build
 - **CLI:** Use for heavy lifting, file ops, git.
 - **IDE:** Use for visual checks, deep debugging.
 - **Handoff:** Write to `state/SESSION_LOG.md` before exiting.
+- **Stability First:** 🛑 DO NOT break working environments (e.g., Port 3000) to fix minor issues in secondary ones (Port 3001). If a feature works in the primary environment, prioritize maintaining that stability.

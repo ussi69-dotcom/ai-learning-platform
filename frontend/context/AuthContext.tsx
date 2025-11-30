@@ -4,6 +4,8 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 
+import { useRouter } from 'next/navigation';
+
 interface User {
   id: number;
   email: string;
@@ -29,8 +31,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
+  const logout = useCallback(() => {
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem('auth_token');
+    // No redirect here, interceptor will handle it
+  }, []);
 
   // Load user from localStorage on mount
   useEffect(() => {
@@ -43,25 +53,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  // Global Axios interceptor for 401 errors
+  useEffect(() => {
+    const responseInterceptor = axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        const originalRequest = error.config;
+        // Check for 401, if we have a token (we were logged in), and it's not a login/register request
+        if (error.response?.status === 401 && localStorage.getItem('auth_token') && !originalRequest._retry) {
+          originalRequest._retry = true; // prevent multiple retries
+          if (!originalRequest.url.includes('/auth/token') && !originalRequest.url.includes('/auth/register')) {
+            console.log("Session expired, logging out.");
+            logout();
+            router.push('/login?session_expired=true');
+          }
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    // Cleanup interceptor on unmount
+    return () => {
+      axios.interceptors.response.eject(responseInterceptor);
+    };
+  }, [logout, router]);
+
   const fetchCurrentUser = async (authToken: string) => {
     try {
-      const response = await axios.get(`${API_BASE}/users/me`, {
+      const response = await axios.get(`${API_BASE}/users/me?t=${Date.now()}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
       });
       setUser(response.data);
     } catch (error: any) {
-      // Silently clear invalid/expired tokens
-      if (error.response?.status === 401) {
-        console.log('Token expired, please login again');
-      } else {
+      // Silently clear invalid/expired tokens, the interceptor will handle the redirect
+      if (error.response?.status !== 401) {
         console.error('Failed to fetch user:', error);
       }
-      // Clear stored token
-      localStorage.removeItem('auth_token');
-      setToken(null);
-      setUser(null);
+      // The interceptor will handle logout and redirect now
     } finally {
       setIsLoading(false);
     }
@@ -81,7 +111,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { access_token } = response.data;
     setToken(access_token);
     localStorage.setItem('auth_token', access_token);
-    
+
     // Fetch user data
     await fetchCurrentUser(access_token);
   };
@@ -100,12 +130,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // The component will handle the redirect to a "check your email" page or login.
   };
 
-  const logout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem('auth_token');
-  };
-
   const refreshUser = useCallback(async () => {
     if (token) {
       await fetchCurrentUser(token);
@@ -118,6 +142,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     </AuthContext.Provider>
   );
 }
+
 
 export function useAuth() {
   const context = useContext(AuthContext);

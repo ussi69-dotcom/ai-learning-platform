@@ -9,10 +9,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { useTranslations, useLocale } from 'next-intl';
-import { BookOpen, CheckCircle, Trophy, Settings, AlertTriangle } from 'lucide-react';
+import { BookOpen, CheckCircle, Trophy, Settings, AlertTriangle, Sparkles, Zap, Shield, Crown } from 'lucide-react';
 import DifficultyIcon from '@/components/DifficultyIcon';
-import AvatarSelector from '@/components/AvatarSelector';
+import AvatarSelector, { getAvatar } from '@/components/AvatarSelector';
 import axios from 'axios';
+import { cn } from '@/lib/utils';
 
 export default function ProfilePage() {
   const { user, logout, refreshUser, token } = useAuth();
@@ -25,7 +26,7 @@ export default function ProfilePage() {
   const [isEditingAvatar, setIsEditingAvatar] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState(user?.difficulty || 'LETS_ROCK');
   const [isUpdating, setIsUpdating] = useState(false);
-  
+
   // Delete Account State
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -108,69 +109,114 @@ export default function ProfilePage() {
     );
   }
 
+  const currentAvatar = getAvatar(user.avatar || 'droid_1');
+
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl">
+    <div className="container mx-auto px-4 py-12 max-w-5xl">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 animate-in fade-in slide-in-from-top-4 duration-500">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">{t('title')}</h1>
-          <p className="text-slate-600 dark:text-slate-400">{t('description')}</p>
+          <h1 className="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-400 mb-2">{t('title')}</h1>
+          <p className="text-slate-600 dark:text-slate-400 text-lg">{t('description')}</p>
         </div>
-        <Button variant="outline" onClick={() => router.push('/')}>
+        <Button variant="outline" onClick={() => router.push('/')} className="backdrop-blur-sm bg-white/50 dark:bg-slate-900/50">
           {t('back_home')}
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
         {/* Left Column: User Info */}
-        <div className="md:col-span-1 space-y-6">
-          <Card className="dark:bg-slate-900 dark:border-slate-800 overflow-hidden">
-            <div className="bg-gradient-to-br from-indigo-500 to-purple-600 h-32"></div>
-            <CardContent className="pt-0 relative">
-              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2">
-                <div className="relative group cursor-pointer" onClick={() => setIsEditingAvatar(!isEditingAvatar)}>
-                  <div className="w-24 h-24 rounded-full border-4 border-white dark:border-slate-900 bg-slate-200 overflow-hidden">
-                     {/* Avatar Image */}
-                     <img 
-                       src={`/images/avatars/${user.avatar || 'droid_1'}.webp`} 
-                       alt="User Avatar"
-                       className="w-full h-full object-cover"
-                       onError={(e) => {e.currentTarget.src = '/images/avatars/droid_1.webp'}}
-                     />
-                  </div>
-                  <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                    <Settings className="w-6 h-6 text-white" />
+        <div className="lg:col-span-4 space-y-6">
+
+          {/* User Card */}
+          <Card className="relative overflow-hidden border-0 shadow-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl group">
+            {/* Ambient Background Glow - Corrected for Dark Mode (Red/Sith) */}
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-red-900/10 dark:via-orange-900/10 dark:to-slate-900/10 opacity-100 transition-opacity duration-500"></div>
+
+            {/* Decorative Circles - Corrected for Dark Mode */}
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-purple-500/20 dark:bg-red-500/10 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-500/20 dark:bg-orange-500/10 rounded-full blur-3xl"></div>
+
+            <CardContent className="pt-12 pb-8 relative z-10 flex flex-col items-center text-center">
+
+              {/* Avatar Container */}
+              <div className="relative mb-6 group-hover:scale-105 transition-transform duration-300">
+                <div className={cn(
+                  "w-32 h-32 rounded-full p-1 shadow-2xl bg-white dark:bg-slate-800",
+                  currentAvatar.bg.replace('/10', '/30') // Make bg slightly stronger for border effect
+                )}>
+                  <div className="w-full h-full rounded-full overflow-hidden bg-slate-100 dark:bg-slate-950 flex items-center justify-center relative">
+                    {currentAvatar.type === 'IMAGE' ? (
+                      <img
+                        src={currentAvatar.src}
+                        alt="User Avatar"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <currentAvatar.icon
+                        className="w-16 h-16"
+                        style={{ stroke: currentAvatar.gradient, strokeWidth: 1.5 }}
+                      />
+                    )}
+
+                    {/* Edit Overlay */}
+                    <div
+                      className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      onClick={() => setIsEditingAvatar(!isEditingAvatar)}
+                    >
+                      <Settings className="w-8 h-8 text-white animate-spin-slow" />
+                    </div>
                   </div>
                 </div>
+                {/* Status Indicator */}
+                <div className="absolute bottom-1 right-1 w-6 h-6 bg-emerald-500 border-4 border-white dark:border-slate-900 rounded-full" title="Online"></div>
               </div>
-              
-              <div className="mt-14 text-center space-y-2">
-                <h2 className="text-xl font-bold text-slate-900 dark:text-white truncate">{user.email.split('@')[0]}</h2>
-                <Badge variant={user.is_active ? "default" : "secondary"} className="bg-emerald-500 hover:bg-emerald-600">
+
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{user.email.split('@')[0]}</h2>
+              <div className="flex items-center gap-2 mb-6">
+                <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20">
                   {user.is_active ? t('active') : t('inactive')}
                 </Badge>
-                <div className="flex items-center justify-center gap-2 text-sm text-slate-500 mt-2">
-                   <Trophy className="w-4 h-4 text-yellow-500" />
-                   <span className="font-medium">{user.xp} XP</span>
+                <Badge variant="outline" className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 flex items-center gap-1">
+                  <Trophy className="w-3 h-3" />
+                  {user.xp} XP
+                </Badge>
+              </div>
+
+              <div className="w-full grid grid-cols-2 gap-4 text-left">
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold mb-1">Level</div>
+                  <div className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <Crown className="w-4 h-4 text-yellow-500" />
+                    1
+                  </div>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold mb-1">Rank</div>
+                  <div className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <Shield className="w-4 h-4 text-indigo-500 dark:text-red-500" />
+                    Novice
+                  </div>
                 </div>
               </div>
+
             </CardContent>
           </Card>
 
           {/* Avatar Selector Modal/Area */}
           {isEditingAvatar && (
-            <Card className="dark:bg-slate-900 dark:border-slate-800 animate-in fade-in zoom-in duration-200">
+            <Card className="dark:bg-slate-900 dark:border-slate-800 animate-in fade-in zoom-in duration-200 shadow-2xl border-indigo-500/20 dark:border-red-500/20">
               <CardHeader>
                 <CardTitle className="text-lg">{t('choose_avatar')}</CardTitle>
               </CardHeader>
               <CardContent>
-                <AvatarSelector 
+                <AvatarSelector
                   selectedAvatar={user.avatar || 'droid_1'}
-                  onSelect={(avatar) => handleUpdateAvatar(avatar)} 
+                  onSelect={(avatar) => handleUpdateAvatar(avatar)}
                 />
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   className="w-full mt-4"
                   onClick={() => setIsEditingAvatar(false)}
                 >
@@ -181,16 +227,16 @@ export default function ProfilePage() {
           )}
 
           {/* Difficulty Settings */}
-          <Card className="dark:bg-slate-900 dark:border-slate-800">
+          <Card className="dark:bg-slate-900/50 dark:border-slate-800 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <Settings className="w-5 h-5" />
+                <Settings className="w-5 h-5 text-slate-500" />
                 {t('difficulty_level')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {!isEditingDifficulty ? (
-                <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700/50 transition-colors hover:border-indigo-500/30 dark:hover:border-red-500/30">
                   <div className="flex items-center gap-3">
                     <DifficultyIcon level={user.difficulty} />
                     <span className="font-medium">{DIFFICULTY_LEVELS.find(l => l.value === user.difficulty)?.label}</span>
@@ -203,35 +249,41 @@ export default function ProfilePage() {
                   </Button>
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-3 animate-in fade-in slide-in-from-top-2">
                   {DIFFICULTY_LEVELS.map((level) => (
-                     <div 
-                       key={level.value}
-                       className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer border ${selectedDifficulty === level.value ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20' : 'border-transparent hover:bg-slate-100 dark:hover:bg-slate-800'}`}
-                       onClick={() => setSelectedDifficulty(level.value)}
-                     >
-                       <DifficultyIcon level={level.value} size={20} />
-                       <span className="text-sm">{level.label}</span>
-                     </div>
+                    <div
+                      key={level.value}
+                      className={cn(
+                        "flex items-center gap-3 p-3 rounded-xl cursor-pointer border transition-all duration-200",
+                        selectedDifficulty === level.value
+                          ? 'border-indigo-500 bg-indigo-50 dark:border-red-500 dark:bg-red-900/20 shadow-sm'
+                          : 'border-transparent hover:bg-slate-100 dark:hover:bg-slate-800'
+                      )}
+                      onClick={() => setSelectedDifficulty(level.value)}
+                    >
+                      <DifficultyIcon level={level.value} size={20} />
+                      <span className="text-sm font-medium">{level.label}</span>
+                    </div>
                   ))}
                   <div className="flex gap-2 pt-2">
-                    <Button size="sm" className="flex-1" onClick={handleUpdateDifficulty} disabled={isUpdating}>
+                    <Button size="sm" className="flex-1 bg-indigo-600 hover:bg-indigo-700 dark:bg-red-600 dark:hover:bg-red-700" onClick={handleUpdateDifficulty} disabled={isUpdating}>
                       {isUpdating ? t('updating') : tCommon('save')}
                     </Button>
-                    <Button size="sm" variant="outline" className="flex-1" onClick={() => setIsEditingDifficulty(false)}>
+                    <Button size="sm" variant="ghost" className="flex-1" onClick={() => setIsEditingDifficulty(false)}>
                       {tCommon('cancel')}
                     </Button>
                   </div>
                 </div>
               )}
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 px-1">
                 {t('difficulty_desc')}
               </p>
             </CardContent>
           </Card>
 
-           {/* Danger Zone */}
-           <Card className="border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-900/10 mt-6">
+          {/* Danger Zone */}
+          <Card className="border-red-200 dark:border-red-900/30 bg-red-50/50 dark:bg-red-950/10 mt-6 overflow-hidden">
+            <div className="absolute top-0 left-0 w-1 h-full bg-red-500"></div>
             <CardHeader>
               <CardTitle className="text-lg text-red-600 dark:text-red-400 flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5" />
@@ -242,9 +294,9 @@ export default function ProfilePage() {
               <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
                 {locale === 'cs' ? 'Smazání účtu je nevratné. Přijdete o veškerý postup a získané XP.' : 'Deleting your account is irreversible. You will lose all progress and XP.'}
               </p>
-              <Button 
-                variant="destructive" 
-                className="w-full"
+              <Button
+                variant="outline"
+                className="w-full border-red-200 hover:bg-red-50 text-red-600 dark:border-red-900/50 dark:hover:bg-red-900/20 dark:text-red-400"
                 onClick={() => setIsDeleteModalOpen(true)}
               >
                 {locale === 'cs' ? 'Smazat účet' : 'Delete Account'}
@@ -254,32 +306,32 @@ export default function ProfilePage() {
         </div>
 
         {/* Right Column: Stats & Learning */}
-        <div className="md:col-span-2 space-y-6">
-          
+        <div className="lg:col-span-8 space-y-6">
+
           {/* Stats Row */}
-          <div className="grid grid-cols-2 gap-4">
-            <Card className="dark:bg-slate-900 dark:border-slate-800">
-              <CardContent className="p-6 flex items-center gap-4">
-                <div className="p-3 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
-                  <CheckCircle className="w-6 h-6" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="dark:bg-slate-900/50 dark:border-slate-800 backdrop-blur-sm hover:border-indigo-500/30 dark:hover:border-red-500/30 transition-colors group">
+              <CardContent className="p-6 flex items-center gap-5">
+                <div className="p-4 rounded-2xl bg-indigo-100 dark:bg-red-500/10 text-indigo-600 dark:text-red-400 group-hover:scale-110 transition-transform duration-300">
+                  <CheckCircle className="w-8 h-8" />
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">{t('lessons_done')}</p>
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
+                  <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t('lessons_done')}</p>
+                  <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-1">
                     {/* Mock Data - needs API */}
                     0
                   </h3>
                 </div>
               </CardContent>
             </Card>
-            <Card className="dark:bg-slate-900 dark:border-slate-800">
-              <CardContent className="p-6 flex items-center gap-4">
-                <div className="p-3 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
-                  <BookOpen className="w-6 h-6" />
+            <Card className="dark:bg-slate-900/50 dark:border-slate-800 backdrop-blur-sm hover:border-emerald-500/30 dark:hover:border-emerald-500/30 transition-colors group">
+              <CardContent className="p-6 flex items-center gap-5">
+                <div className="p-4 rounded-2xl bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300">
+                  <BookOpen className="w-8 h-8" />
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">{t('active_courses')}</p>
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
+                  <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t('active_courses')}</p>
+                  <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-1">
                     {/* Mock Data - needs API */}
                     4
                   </h3>
@@ -289,16 +341,30 @@ export default function ProfilePage() {
           </div>
 
           {/* My Learning Section */}
-          <Card className="dark:bg-slate-900 dark:border-slate-800 min-h-[300px]">
+          <Card className="dark:bg-slate-900/50 dark:border-slate-800 min-h-[400px] backdrop-blur-sm flex flex-col">
             <CardHeader>
-              <CardTitle>{t('my_learning')}</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-indigo-500 dark:text-red-500" />
+                {t('my_learning')}
+              </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-center py-10 text-slate-500">
-                <BookOpen className="w-12 h-12 mx-auto mb-3 opacity-20" />
-                <p>{t('no_lessons')}</p>
-                <Button className="mt-4" variant="outline" onClick={() => router.push('/')}>
-                  Browse Courses
+            <CardContent className="flex-1 flex items-center justify-center">
+              <div className="text-center py-12 max-w-md mx-auto">
+                <div className="w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+                  <BookOpen className="w-10 h-10 text-slate-300 dark:text-slate-600" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                  {t('no_lessons')}
+                </h3>
+                <p className="text-slate-500 dark:text-slate-400 mb-8">
+                  {locale === 'cs' ? 'Zatím jste nedokončili žádné lekce. Vydejte se na cestu poznání!' : 'You haven\'t completed any lessons yet. Embark on your journey of knowledge!'}
+                </p>
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 dark:from-red-600 dark:to-orange-600 dark:hover:from-red-700 dark:hover:to-orange-700 text-white shadow-lg shadow-indigo-500/25 dark:shadow-red-500/25"
+                  onClick={() => router.push('/')}
+                >
+                  {locale === 'cs' ? 'Procházet kurzy' : 'Browse Courses'}
                 </Button>
               </div>
             </CardContent>
@@ -309,22 +375,25 @@ export default function ProfilePage() {
 
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-md w-full p-6 space-y-4 animate-in zoom-in duration-200">
-            <div className="flex items-center gap-3 text-red-600 dark:text-red-500">
-              <AlertTriangle className="w-8 h-8" />
-              <h3 className="text-xl font-bold">{locale === 'cs' ? 'Smazat účet?' : 'Delete Account?'}</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-md w-full p-8 space-y-6 animate-in zoom-in-95 duration-200">
+            <div className="flex flex-col items-center text-center gap-4">
+              <div className="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center">
+                <AlertTriangle className="w-8 h-8 text-red-600 dark:text-red-500" />
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white">{locale === 'cs' ? 'Smazat účet?' : 'Delete Account?'}</h3>
+              <p className="text-slate-600 dark:text-slate-300">
+                {locale === 'cs'
+                  ? 'Opravdu chcete smazat svůj účet? Tato akce je nevratná a přijdete o všechna data.'
+                  : 'Are you sure you want to delete your account? This action cannot be undone and you will lose all data.'}
+              </p>
             </div>
-            <p className="text-slate-600 dark:text-slate-300">
-              {locale === 'cs' 
-                ? 'Opravdu chcete smazat svůj účet? Tato akce je nevratná.' 
-                : 'Are you sure you want to delete your account? This action cannot be undone.'}
-            </p>
-            <div className="flex justify-end gap-3 pt-2">
-              <Button variant="outline" onClick={() => setIsDeleteModalOpen(false)} disabled={isDeleting}>
+
+            <div className="flex gap-3 pt-2">
+              <Button variant="outline" className="flex-1" onClick={() => setIsDeleteModalOpen(false)} disabled={isDeleting}>
                 {tCommon('cancel')}
               </Button>
-              <Button variant="destructive" onClick={handleDeleteAccount} disabled={isDeleting}>
+              <Button variant="destructive" className="flex-1" onClick={handleDeleteAccount} disabled={isDeleting}>
                 {isDeleting ? (locale === 'cs' ? 'Mažu...' : 'Deleting...') : (locale === 'cs' ? 'Ano, smazat' : 'Yes, Delete')}
               </Button>
             </div>

@@ -56,7 +56,8 @@
     "updating": "Updating...",
     "no_changes": "No Changes",
     "back_home": "Back to Home",
-    "choose_avatar": "Choose your Avatar"
+    "choose_avatar": "Choose your Avatar",
+    "login": "Login"
   },
   "Feedback": {
     "title": "Feedback Station",

@@ -13,7 +13,7 @@ interface LessonCompleteProps {
 }
 
 export default function LessonComplete({ lessonId, courseId, lessonTitle = "This Lesson", onComplete }: LessonCompleteProps) {
-  const { token } = useAuth();
+  const { token, refreshUser } = useAuth();
   const [isCompleted, setIsCompleted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showBadge, setShowBadge] = useState(false);
@@ -23,7 +23,8 @@ export default function LessonComplete({ lessonId, courseId, lessonTitle = "This
     const checkStatus = async () => {
       if (!token) return;
       try {
-        const res = await fetch('http://localhost:8000/users/me/progress', {
+        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const res = await fetch(`${API_BASE}/users/me/progress`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (res.ok) {
@@ -42,12 +43,14 @@ export default function LessonComplete({ lessonId, courseId, lessonTitle = "This
     if (!token) return;
     setIsLoading(true);
     try {
-      const res = await fetch(`http://localhost:8000/lessons/${lessonId}/complete`, {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const res = await fetch(`${API_BASE}/lessons/${lessonId}/complete`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` }
       });
-      
+
       if (res.ok) {
+        await refreshUser(); // Update XP first so it jumps when badge appears
         setIsCompleted(true);
         setShowBadge(true);
         if (onComplete) onComplete();
@@ -72,24 +75,24 @@ export default function LessonComplete({ lessonId, courseId, lessonTitle = "This
   return (
     <div className="mt-8 flex justify-center relative">
       {showBadge && (
-        <LabBadge 
-          title={lessonTitle} 
-          onClose={() => setShowBadge(false)} 
+        <LabBadge
+          title={lessonTitle}
+          onClose={() => setShowBadge(false)}
           type="lesson"
           xp={100}
         />
       )}
-      
+
       {!isCompleted && (
         <button
           onClick={handleComplete}
           disabled={isLoading}
           className={`
             px-8 py-4 rounded-full text-lg font-bold shadow-lg transform transition-all duration-200
-            ${isLoading 
-              ? 'bg-muted text-muted-foreground cursor-not-allowed' 
+            ${isLoading
+              ? 'bg-muted text-muted-foreground cursor-not-allowed'
               : 'bg-green-600 text-white hover:bg-green-500 hover:scale-105 hover:shadow-xl active:scale-95 hover:shadow-green-500/20 ' +
-                'dark:bg-yellow-500 dark:text-yellow-950 dark:hover:bg-yellow-400 dark:hover:shadow-yellow-500/20' /* Sith Gold */
+              'dark:bg-yellow-500 dark:text-yellow-950 dark:hover:bg-yellow-400 dark:hover:shadow-yellow-500/20' /* Sith Gold */
             }
           `}
         >

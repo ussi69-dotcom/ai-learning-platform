@@ -103,3 +103,33 @@
 ### 🚀 Next Steps
 -   Continue monitoring for any missed `indigo` spots.
 -   Consider applying the design system to the Quiz interface if not already done.
+
+## 📅 Date: 2025-11-30 (Rescue Session)
+
+## 🎯 Task: Fix Project Structure Duplication & Restore API Functionality
+
+### ✅ Completed
+1.  **Resolved "3 Gemini Files" Issue**:
+    -   Identified and removed nested project duplicate (`ai-learning-platform/ai-learning-platform`).
+    -   **Protocol Change**: Added `GEMINI.md` to `.gitignore` and removed it from Git tracking.
+    -   **Rules Update**: Updated `.agent/rules/rules.md` with a **Boot Sequence** forcing agents to prefer `MEMORY.md` (Shared) over `GEMINI.md` (Local).
+
+2.  **Fixed Lessons 404 Error**:
+    -   Diagnosed missing API endpoint for ID-based lesson retrieval (`GET /lessons/{id}`).
+    -   Implemented `backend/app/routers/lessons.py` with `GET /lessons`, `GET /lessons/{id}`, `GET /lessons/{id}/quizzes`, `POST /lessons/{id}/progress`.
+    -   Registered router in `main.py` and corrected Schema imports.
+    -   Restarted backend container.
+
+3.  **Workflow Optimization**:
+    -   Verified `docker-compose.yml` uses correct local `.env` variables.
+    -   Updated `docker-compose.prod.yml` to be production-ready (removed hardcoded URLs).
+    -   Synced `GEMINI.md` and `CURRENT_TASK.md` with `MEMORY.md`.
+
+### 📝 Notes
+-   **Important**: User must run `git push` manually (auth required).
+-   **Cleanup**: User advised to restart Terminal/IDE to clear file handles/cache of the deleted duplicate files.
+
+### 🚀 Next Steps
+-   **Manual Action**: Run `git push`.
+-   **Manual Action**: Restart IDE/Terminal.
+-   Continue with feature development in Cycle 35/36. Handoff complete.

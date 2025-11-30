@@ -127,6 +127,9 @@ class Quiz(QuizBase):
     class Config:
         from_attributes = True
 
+QuizQuestion = Quiz # Alias for backwards compatibility
+
+
 # ===== USER PROGRESS SCHEMAS =====
 class UserProgressBase(BaseModel):
     lesson_id: int

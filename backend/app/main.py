@@ -7,7 +7,7 @@ from datetime import timedelta
 import uuid
 
 from . import models, schemas, database, auth
-from app.routers import sandbox, lessons
+from app.routers import sandbox, lessons, feedback
 
 from fastapi.staticfiles import StaticFiles
 
@@ -26,6 +26,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 # Include Routers
 app.include_router(sandbox.router)
 app.include_router(lessons.router)
+app.include_router(feedback.router)
 
 from app.config import settings
 
@@ -161,14 +162,22 @@ async def get_last_lesson(current_user: models.User = Depends(auth.get_current_u
 
 # --- CONTENT ENDPOINTS ---
 
+def localize_course(course: models.Course, lang: str) -> models.Course:
+    if lang == 'cs':
+        if course.title_cs:
+            course.title = course.title_cs
+        if course.description_cs:
+            course.description = course.description_cs
+    return course
+
 @app.get("/courses", response_model=List[schemas.Course])
-def get_courses(db: Session = Depends(database.get_db)):
+def get_courses(lang: str = "en", db: Session = Depends(database.get_db)):
     """Vrátí seznam kurzů z databáze."""
     courses = db.query(models.Course).all()
-    return courses
+    return [localize_course(c, lang) for c in courses]
 
 @app.get("/courses/{course_slug}", response_model=schemas.Course)
-def get_course_detail(course_slug: str, db: Session = Depends(database.get_db)):
+def get_course_detail(course_slug: str, lang: str = "en", db: Session = Depends(database.get_db)):
     """Vrátí detail kurzu a seznam lekcí."""
     course = db.query(models.Course).filter(models.Course.slug == course_slug).first()
     if not course:
@@ -181,6 +190,22 @@ def get_course_detail(course_slug: str, db: Session = Depends(database.get_db)):
 
     # Seřadíme lekce podle order
     course.lessons.sort(key=lambda x: x.order)
+    
+    # Localize course
+    course = localize_course(course, lang)
+    
+    # Localize lessons within the course summary
+    # Note: LessonSummary schema might not have all fields, but we should try to localize title at least
+    # Assuming we can reuse localize_lesson logic or similar if LessonSummary has title/description
+    # Since LessonSummary is a Pydantic model in the response, but here 'course.lessons' are ORM objects.
+    # We can iterate and modify them in place before Pydantic serialization.
+    if lang == 'cs':
+        for lesson in course.lessons:
+            if lesson.title_cs:
+                lesson.title = lesson.title_cs
+            if lesson.description_cs:
+                lesson.description = lesson.description_cs
+                
     return course
 
 @app.get("/content/{course_slug}/{lesson_slug}")
@@ -236,7 +261,7 @@ def mark_lesson_complete(course_slug: str, lesson_slug: str, current_user: model
         
     return {"status": "success", "xp": current_user.xp}
 
-@app.get("/progress")
+@app.get("/users/me/progress", response_model=List[schemas.UserProgress])
 def get_user_progress(current_user: models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
     progress = db.query(models.UserProgress).filter(models.UserProgress.user_id == current_user.id).all()
     return progress
