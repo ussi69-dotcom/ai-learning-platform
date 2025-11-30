@@ -95,8 +95,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       is_active: true,
     });
 
-    // Auto-login after registration
-    await login(email, password);
+    // Previously we did auto-login here.
+    // Now we require email verification, so we just return success.
+    // The component will handle the redirect to a "check your email" page or login.
   };
 
   const logout = () => {

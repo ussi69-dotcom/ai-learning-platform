@@ -8,23 +8,28 @@ python -c "
 import sys
 import time
 import psycopg2
-from os import getenv
+import os
+
+# Get config from env
+db_user = os.getenv('POSTGRES_USER', 'postgres')
+db_password = os.getenv('POSTGRES_PASSWORD', 'postgres')
+db_name = os.getenv('POSTGRES_DB', 'ai_learning')
+db_host = os.getenv('DB_HOST', 'db')
 
 # Zkusíme 30x po 1 sekundě
 for _ in range(30):
     try:
-        # Parse DATABASE_URL or use params
-        # Zde pro jednoduchost hardcodujeme check na port 5432 host 'db'
         conn = psycopg2.connect(
-            dbname='learning_platform',
-            user='user',
-            password='password',
-            host='db',
+            dbname=db_name,
+            user=db_user,
+            password=db_password,
+            host=db_host,
             port='5432'
         )
         conn.close()
         sys.exit(0)
-    except psycopg2.OperationalError:
+    except psycopg2.OperationalError as e:
+        # print(f'Waiting for DB... {e}') # Uncomment for debug
         time.sleep(1)
 
 sys.exit(1)

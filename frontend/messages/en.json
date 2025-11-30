@@ -24,7 +24,10 @@
     "password_requirements": "Password must:",
     "password_min_length": "Be at least {min_length} characters long",
     "password_one_number": "Contain at least one number",
-    "password_one_uppercase": "Contain at least one uppercase letter"
+    "password_one_uppercase": "Contain at least one uppercase letter",
+    "registration_success_check_email": "Registration successful! Please check your email to verify your account.",
+    "email_verified_success": "Email verified successfully! You can now login.",
+    "invalid_verification_token": "Invalid or expired verification token."
   },
   "Common": {
     "loading": "Loading...",

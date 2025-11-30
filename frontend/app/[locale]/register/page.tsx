@@ -63,7 +63,8 @@ export default function RegisterPage() {
 
     try {
       await register(email, password, difficulty, avatar);
-      router.push('/'); // Redirect to home after successful registration
+      // Redirect to login with a success message
+      router.push('/login?registered=true'); 
     } catch (err: any) {
       setError(getErrorMessage(err, tCommon('error')));
     } finally {

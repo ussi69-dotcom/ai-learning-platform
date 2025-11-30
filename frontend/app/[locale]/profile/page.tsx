@@ -1,286 +1,337 @@
 "use client";
 
+import { useState } from 'react';
+import { useRouter } from '@/i18n/routing';
+import { Link } from '@/i18n/routing';
 import { useAuth } from '@/context/AuthContext';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import AvatarSelector, { getAvatar } from '@/components/AvatarSelector';
-import { X } from 'lucide-react'; // Import X icon
-import { useTranslations } from 'next-intl';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { useTranslations, useLocale } from 'next-intl';
+import { BookOpen, CheckCircle, Trophy, Settings, AlertTriangle } from 'lucide-react';
 import DifficultyIcon from '@/components/DifficultyIcon';
-
-// ... (DIFFICULTY_LABELS and DIFFICULTY_OPTIONS remain unchanged) ...
-const DIFFICULTY_LABELS: Record<string, string> = {
-  'PIECE_OF_CAKE': 'Piece of Cake',
-  'LETS_ROCK': 'Let\'s Rock',
-  'COME_GET_SOME': 'Come Get Some',
-  'DAMN_IM_GOOD': 'Damn I\'m Good',
-};
-
-const DIFFICULTY_OPTIONS = [
-  { value: 'PIECE_OF_CAKE', label: 'Piece of Cake', description: 'AI basics for absolute beginners' },
-  { value: 'LETS_ROCK', label: 'Let\'s Rock', description: 'Practical prompt engineering' },
-  { value: 'COME_GET_SOME', label: 'Come Get Some', description: 'Advanced AI techniques' },
-  { value: 'DAMN_IM_GOOD', label: 'Damn I\'m Good', description: 'AI engineering deep dive' },
-];
+import AvatarSelector from '@/components/AvatarSelector';
+import axios from 'axios';
 
 export default function ProfilePage() {
-  const { user, logout, isLoading, token, refreshUser } = useAuth();
-  const router = useRouter();
+  const { user, logout, refreshUser, token } = useAuth();
   const t = useTranslations('Profile');
   const tCommon = useTranslations('Common');
-  
+  const router = useRouter();
+  const locale = useLocale();
+
+  const [isEditingDifficulty, setIsEditingDifficulty] = useState(false);
+  const [isEditingAvatar, setIsEditingAvatar] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState(user?.difficulty || 'LETS_ROCK');
-  // ... (rest of state) ...
-  const [selectedAvatar, setSelectedAvatar] = useState(user?.avatar || 'jedi_1');
-  const [showAvatarModal, setShowAvatarModal] = useState(false); // Modal state
-  const [updating, setUpdating] = useState(false);
-  const [message, setMessage] = useState('');
-  const [myProgress, setMyProgress] = useState<any[]>([]);
-  const [courses, setCourses] = useState<any[]>([]);
-
-  // ... (useEffect hooks remain same) ...
-  // Handle redirect in useEffect to avoid React error
-  useEffect(() => {
-    if (!isLoading && !user) {
-      router.push('/login');
-    }
-    if (user && user.difficulty) setSelectedDifficulty(user.difficulty);
-    if (user && user.avatar) setSelectedAvatar(user.avatar);
-  }, [isLoading, user, router]);
-
-  useEffect(() => {
-    async function fetchProgress() {
-      if (!token) return;
-      try {
-        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-        const progressRes = await axios.get(`${API_BASE}/users/me/progress`, { headers: { Authorization: `Bearer ${token}` } });
-        setMyProgress(progressRes.data);
-        const coursesRes = await axios.get(`${API_BASE}/courses/`, { headers: { Authorization: `Bearer ${token}` } });
-        setCourses(coursesRes.data);
-      } catch (err) { console.error('Error fetching progress:', err); }
-    }
-    fetchProgress();
-  }, [token]);
-
-  if (isLoading) return <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-950 text-slate-900 dark:text-white"><p>{tCommon('loading')}</p></div>;
-  if (!user) return null;
-
-  const handleAvatarChange = async (newAvatar: string) => {
-    // ... (logic remains same) ...
-    setSelectedAvatar(newAvatar);
-    setShowAvatarModal(false); // Close modal immediately on select
-    setUpdating(true);
-    setMessage('');
-
-    try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      await axios.put(`${API_BASE}/users/me/avatar`, { avatar: newAvatar }, { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } });
-      setMessage('✅ Avatar updated!');
-      await refreshUser();
-      // setTimeout(() => window.location.reload(), 500);
-    } catch (error) {
-      console.error('Error updating avatar:', error);
-      setMessage('❌ Failed to update avatar.');
-    } finally {
-      setUpdating(false);
-    }
-  };
-
-  const handleDifficultyChange = async () => {
-    if (selectedDifficulty === user.difficulty) { setMessage(t('no_changes')); return; }
-    const confirmed = window.confirm(`Are you sure you want to switch to ${DIFFICULTY_LABELS[selectedDifficulty]}?\n\nYou\'ll see different courses suited to your new difficulty level.`);
-    if (!confirmed) return;
-    setUpdating(true); setMessage('');
-    try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      await axios.put(`${API_BASE}/users/me/difficulty`, { difficulty: selectedDifficulty }, { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, params: { difficulty: selectedDifficulty } });
-      setMessage('✅ Difficulty updated!');
-      await refreshUser();
-      // setTimeout(() => { window.location.reload(); }, 1000);
-    } catch (error: any) { console.error('Error updating difficulty:', error); setMessage('❌ Failed to update difficulty. Please try again.'); } finally { setUpdating(false); }
-  };
-
-  const handleLogout = () => { logout(); router.push('/'); };
-  const hasChanges = selectedDifficulty !== user.difficulty;
+  const [isUpdating, setIsUpdating] = useState(false);
   
-  const avatarObj = getAvatar(selectedAvatar);
-  const AvatarIcon = avatarObj.type === 'ICON' ? avatarObj.icon : null;
+  // Delete Account State
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // Ideally move this to messages.json, but for now logic is here
+  const DIFFICULTY_LEVELS = [
+    { value: 'PIECE_OF_CAKE', label: 'Piece of Cake' },
+    { value: 'LETS_ROCK', label: 'Let\'s Rock' },
+    { value: 'COME_GET_SOME', label: 'Come Get Some' },
+    { value: 'DAMN_IM_GOOD', label: 'Damn I\'m Good' },
+  ];
+
+  const handleUpdateDifficulty = async () => {
+    if (!user || selectedDifficulty === user.difficulty) {
+      setIsEditingDifficulty(false);
+      return;
+    }
+
+    setIsUpdating(true);
+    try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      await axios.put(
+        `${API_BASE}/users/me/difficulty`,
+        { difficulty: selectedDifficulty },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      await refreshUser();
+      setIsEditingDifficulty(false);
+    } catch (error) {
+      console.error('Failed to update difficulty', error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleUpdateAvatar = async (avatarId: string) => {
+    setIsUpdating(true);
+    try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      await axios.put(
+        `${API_BASE}/users/me/avatar`,
+        { avatar: avatarId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      await refreshUser();
+      setIsEditingAvatar(false);
+    } catch (error) {
+      console.error('Failed to update avatar', error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    setIsDeleting(true);
+    try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      await axios.delete(
+        `${API_BASE}/users/me`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      logout();
+      router.push('/');
+    } catch (error) {
+      console.error('Failed to delete account', error);
+      alert(tCommon('error') + ': Failed to delete account');
+      setIsDeleting(false);
+      setIsDeleteModalOpen(false);
+    }
+  };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">{tCommon('loading')}</h2>
+          <Button onClick={() => router.push('/login')}>{t('login')}</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 py-12 transition-colors duration-300 relative">
-      
-      {/* Inject Gradients */}
-      <svg width="0" height="0" className="absolute">
-        <defs>
-          <linearGradient id="grad-jedi" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#60a5fa" /><stop offset="100%" stopColor="#ffffff" /></linearGradient>
-          <linearGradient id="grad-sith" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#ef4444" /><stop offset="100%" stopColor="#f59e0b" /></linearGradient>
-          <linearGradient id="grad-cyber" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#d946ef" /><stop offset="100%" stopColor="#06b6d4" /></linearGradient>
-          <linearGradient id="grad-gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#fbbf24" /><stop offset="100%" stopColor="#fef3c7" /></linearGradient>
-          <linearGradient id="grad-tech" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#10b981" /><stop offset="100%" stopColor="#3b82f6" /></linearGradient>
-        </defs>
-      </svg>
+    <div className="container mx-auto px-4 py-12 max-w-4xl">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">{t('title')}</h1>
+          <p className="text-slate-600 dark:text-slate-400">{t('description')}</p>
+        </div>
+        <Button variant="outline" onClick={() => router.push('/')}>
+          {t('back_home')}
+        </Button>
+      </div>
 
-      {/* --- AVATAR MODAL --- */}
-      {showAvatarModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-3xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in zoom-in-95 duration-200">
-            <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
-              <h3 className="text-lg font-bold dark:text-white">{t('choose_avatar')}</h3>
-              <button onClick={() => setShowAvatarModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
-                <X className="w-5 h-5 dark:text-slate-400" />
-              </button>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        {/* Left Column: User Info */}
+        <div className="md:col-span-1 space-y-6">
+          <Card className="dark:bg-slate-900 dark:border-slate-800 overflow-hidden">
+            <div className="bg-gradient-to-br from-indigo-500 to-purple-600 h-32"></div>
+            <CardContent className="pt-0 relative">
+              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2">
+                <div className="relative group cursor-pointer" onClick={() => setIsEditingAvatar(!isEditingAvatar)}>
+                  <div className="w-24 h-24 rounded-full border-4 border-white dark:border-slate-900 bg-slate-200 overflow-hidden">
+                     {/* Avatar Image */}
+                     <img 
+                       src={`/images/avatars/${user.avatar || 'droid_1'}.webp`} 
+                       alt="User Avatar"
+                       className="w-full h-full object-cover"
+                       onError={(e) => {e.currentTarget.src = '/images/avatars/droid_1.webp'}}
+                     />
+                  </div>
+                  <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                    <Settings className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-14 text-center space-y-2">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white truncate">{user.email.split('@')[0]}</h2>
+                <Badge variant={user.is_active ? "default" : "secondary"} className="bg-emerald-500 hover:bg-emerald-600">
+                  {user.is_active ? t('active') : t('inactive')}
+                </Badge>
+                <div className="flex items-center justify-center gap-2 text-sm text-slate-500 mt-2">
+                   <Trophy className="w-4 h-4 text-yellow-500" />
+                   <span className="font-medium">{user.xp} XP</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Avatar Selector Modal/Area */}
+          {isEditingAvatar && (
+            <Card className="dark:bg-slate-900 dark:border-slate-800 animate-in fade-in zoom-in duration-200">
+              <CardHeader>
+                <CardTitle className="text-lg">{t('choose_avatar')}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <AvatarSelector 
+                  selectedAvatar={user.avatar || 'droid_1'}
+                  onSelect={(avatar) => handleUpdateAvatar(avatar)} 
+                />
+                <Button 
+                  variant="ghost" 
+                  className="w-full mt-4"
+                  onClick={() => setIsEditingAvatar(false)}
+                >
+                  {tCommon('cancel')}
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Difficulty Settings */}
+          <Card className="dark:bg-slate-900 dark:border-slate-800">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Settings className="w-5 h-5" />
+                {t('difficulty_level')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {!isEditingDifficulty ? (
+                <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <DifficultyIcon level={user.difficulty} />
+                    <span className="font-medium">{DIFFICULTY_LEVELS.find(l => l.value === user.difficulty)?.label}</span>
+                  </div>
+                  <Button variant="ghost" size="sm" onClick={() => {
+                    setSelectedDifficulty(user.difficulty);
+                    setIsEditingDifficulty(true);
+                  }}>
+                    Edit
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {DIFFICULTY_LEVELS.map((level) => (
+                     <div 
+                       key={level.value}
+                       className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer border ${selectedDifficulty === level.value ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20' : 'border-transparent hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                       onClick={() => setSelectedDifficulty(level.value)}
+                     >
+                       <DifficultyIcon level={level.value} size={20} />
+                       <span className="text-sm">{level.label}</span>
+                     </div>
+                  ))}
+                  <div className="flex gap-2 pt-2">
+                    <Button size="sm" className="flex-1" onClick={handleUpdateDifficulty} disabled={isUpdating}>
+                      {isUpdating ? t('updating') : tCommon('save')}
+                    </Button>
+                    <Button size="sm" variant="outline" className="flex-1" onClick={() => setIsEditingDifficulty(false)}>
+                      {tCommon('cancel')}
+                    </Button>
+                  </div>
+                </div>
+              )}
+              <p className="text-xs text-slate-500">
+                {t('difficulty_desc')}
+              </p>
+            </CardContent>
+          </Card>
+
+           {/* Danger Zone */}
+           <Card className="border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-900/10 mt-6">
+            <CardHeader>
+              <CardTitle className="text-lg text-red-600 dark:text-red-400 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5" />
+                Danger Zone
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                {locale === 'cs' ? 'Smazání účtu je nevratné. Přijdete o veškerý postup a získané XP.' : 'Deleting your account is irreversible. You will lose all progress and XP.'}
+              </p>
+              <Button 
+                variant="destructive" 
+                className="w-full"
+                onClick={() => setIsDeleteModalOpen(true)}
+              >
+                {locale === 'cs' ? 'Smazat účet' : 'Delete Account'}
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Right Column: Stats & Learning */}
+        <div className="md:col-span-2 space-y-6">
+          
+          {/* Stats Row */}
+          <div className="grid grid-cols-2 gap-4">
+            <Card className="dark:bg-slate-900 dark:border-slate-800">
+              <CardContent className="p-6 flex items-center gap-4">
+                <div className="p-3 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
+                  <CheckCircle className="w-6 h-6" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{t('lessons_done')}</p>
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
+                    {/* Mock Data - needs API */}
+                    0
+                  </h3>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="dark:bg-slate-900 dark:border-slate-800">
+              <CardContent className="p-6 flex items-center gap-4">
+                <div className="p-3 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
+                  <BookOpen className="w-6 h-6" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{t('active_courses')}</p>
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
+                    {/* Mock Data - needs API */}
+                    4
+                  </h3>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* My Learning Section */}
+          <Card className="dark:bg-slate-900 dark:border-slate-800 min-h-[300px]">
+            <CardHeader>
+              <CardTitle>{t('my_learning')}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center py-10 text-slate-500">
+                <BookOpen className="w-12 h-12 mx-auto mb-3 opacity-20" />
+                <p>{t('no_lessons')}</p>
+                <Button className="mt-4" variant="outline" onClick={() => router.push('/')}>
+                  Browse Courses
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+        </div>
+      </div>
+
+      {/* Delete Confirmation Modal */}
+      {isDeleteModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-md w-full p-6 space-y-4 animate-in zoom-in duration-200">
+            <div className="flex items-center gap-3 text-red-600 dark:text-red-500">
+              <AlertTriangle className="w-8 h-8" />
+              <h3 className="text-xl font-bold">{locale === 'cs' ? 'Smazat účet?' : 'Delete Account?'}</h3>
             </div>
-            <div className="p-6 bg-slate-50 dark:bg-slate-950/50">
-               <AvatarSelector selectedAvatar={selectedAvatar} onSelect={handleAvatarChange} />
+            <p className="text-slate-600 dark:text-slate-300">
+              {locale === 'cs' 
+                ? 'Opravdu chcete smazat svůj účet? Tato akce je nevratná.' 
+                : 'Are you sure you want to delete your account? This action cannot be undone.'}
+            </p>
+            <div className="flex justify-end gap-3 pt-2">
+              <Button variant="outline" onClick={() => setIsDeleteModalOpen(false)} disabled={isDeleting}>
+                {tCommon('cancel')}
+              </Button>
+              <Button variant="destructive" onClick={handleDeleteAccount} disabled={isDeleting}>
+                {isDeleting ? (locale === 'cs' ? 'Mažu...' : 'Deleting...') : (locale === 'cs' ? 'Ano, smazat' : 'Yes, Delete')}
+              </Button>
             </div>
           </div>
         </div>
       )}
 
-      <Card className="w-full max-w-2xl dark:bg-slate-900 dark:border-slate-800">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold dark:text-white">{t('title')}</CardTitle>
-          <CardDescription className="dark:text-slate-400">{t('description')}</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-               <div>
-                  <label className="text-sm font-medium text-slate-600 dark:text-slate-400">Email</label>
-                  <p className="text-lg font-medium dark:text-slate-200">{user.email}</p>
-               </div>
-               {/* Avatar Button */}
-               <div className="text-center">
-                  <button 
-                    onClick={() => setShowAvatarModal(true)}
-                    className={`group relative w-24 h-24 rounded-2xl border-4 ${avatarObj.bg} border-slate-200 dark:border-slate-700 hover:border-purple-500 dark:hover:border-red-500 transition-all duration-300 flex items-center justify-center overflow-hidden shadow-lg`}
-                  >
-                    {avatarObj.type === 'IMAGE' ? (
-                      <img src={avatarObj.src} alt={avatarObj.label} className="w-20 h-20 object-contain group-hover:scale-110 transition-transform" />
-                    ) : (
-                      <AvatarIcon 
-                        className="w-14 h-14 group-hover:scale-110 transition-transform" 
-                        style={{ stroke: avatarObj.gradient, strokeWidth: 1.5 }}
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                      <span className="text-xs text-white font-bold">EDIT</span>
-                    </div>
-                  </button>
-                  <p className="text-xs text-slate-500 mt-2">{avatarObj.label}</p>
-               </div>
-            </div>
-
-            <div>
-              <label className="text-sm font-medium text-slate-600 dark:text-slate-400">{t('account_status')}</label>
-              <p className="text-lg font-medium dark:text-slate-200">
-                {user.is_active ? (
-                  <span className="text-green-600 dark:text-green-400">✓ {t('active')}</span>
-                ) : (
-                  <span className="text-red-600 dark:text-red-400">✗ {t('inactive')}</span>
-                )}
-              </p>
-            </div>
-          </div>
-
-          {/* My Learning Section */}
-          <div className="pt-6 border-t dark:border-slate-700">
-            <h3 className="text-lg font-semibold mb-4 dark:text-white">{t('my_learning')}</h3>
-            {myProgress.length === 0 ? (
-              <p className="text-slate-600 dark:text-slate-400">{t('no_lessons')}</p>
-            ) : (
-              <div className="space-y-2">
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
-                  {t.rich('lessons_completed', {
-                    count: myProgress.length,
-                    bold: (chunks) => <span className="font-bold text-blue-600 dark:text-blue-400">{chunks}</span>
-                  })}
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg text-center border border-blue-100 dark:border-blue-800">
-                    <div className="text-2xl font-bold text-blue-700 dark:text-blue-300">{myProgress.length}</div>
-                    <div className="text-xs text-blue-600 dark:text-blue-400">{t('lessons_done')}</div>
-                  </div>
-                  <div className="bg-green-50 dark:bg-green-950/30 p-4 rounded-lg text-center border border-green-100 dark:border-green-800">
-                    <div className="text-2xl font-bold text-green-700 dark:text-green-300">
-                      {new Set(myProgress.map((p: any) => p.course_id)).size}
-                    </div>
-                    <div className="text-xs text-green-600 dark:text-green-400">{t('active_courses')}</div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Difficulty Switcher Section */}
-          <div className="pt-6 border-t dark:border-slate-700">
-            <h3 className="text-lg font-semibold mb-4 dark:text-white">{t('difficulty_level')}</h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-              {t('difficulty_desc')}
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-              {DIFFICULTY_OPTIONS.map(option => (
-                <button
-                  key={option.value}
-                  onClick={() => setSelectedDifficulty(option.value)}
-                  className={`p-4 rounded-lg border-2 text-left transition-all ${selectedDifficulty === option.value
-                      ? 'border-purple-500 bg-purple-50 dark:bg-red-900/20 dark:border-red-500'
-                      : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 dark:bg-slate-800'
-                  }`}
-                >
-                  <div className="font-semibold text-lg dark:text-slate-200 flex items-center gap-2">
-                    <DifficultyIcon level={option.value} size={20} />
-                    {option.label}
-                  </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">{option.description}</div>
-                  {option.value === user.difficulty && (
-                    <div className="text-xs text-purple-600 dark:text-red-500 mt-1">✓ {t('current')}</div>
-                  )}
-                </button>
-              ))}
-            </div>
-
-            {message && (
-              <div className={`p-3 rounded-lg mb-4 ${message.includes('✅') 
-                  ? 'bg-green-50 text-green-800 dark:bg-green-950/30 dark:text-green-200 border border-green-200 dark:border-green-800' 
-                  : 'bg-red-50 text-red-800 dark:bg-red-950/30 dark:text-red-200 border border-red-200 dark:border-red-800'
-              }`}>
-                {message}
-              </div>
-            )}
-
-            <Button
-              onClick={handleDifficultyChange}
-              disabled={!hasChanges || updating}
-              className="w-full bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white disabled:opacity-50 dark:bg-none dark:bg-red-600 dark:hover:bg-red-700"
-            >
-              {updating ? t('updating') : hasChanges ? t('update_difficulty') : t('no_changes')}
-            </Button>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="pt-4 border-t dark:border-slate-700 space-y-3">
-            <Button 
-              variant="outline" 
-              className="w-full dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-              onClick={() => router.push('/')}
-            >
-              {t('back_home')}
-            </Button>
-            <Button 
-              variant="ghost" 
-              className="w-full text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
-              onClick={handleLogout}
-            >
-              {tCommon('logout') || 'Logout'} 
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }

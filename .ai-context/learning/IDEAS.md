@@ -1,5 +1,10 @@
 # 💡 Brainstorming & Ideas Backlog
 
+## 🛠️ Admin Console
+- **User Management:** List, Edit, Delete users.
+- **Content Management:** Visual editor for lessons/quizzes.
+- **System Status:** Monitor server health and logs.
+
 ## 🎮 Gamifikace - RPG & "Pan Sponka"
 **Koncept:** Učení jako RPG hra.
 **Postava:**

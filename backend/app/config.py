@@ -42,6 +42,9 @@ class Settings(BaseSettings):
     # FRONTEND
     # Used for generating links in emails
     FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:3000")
+    
+    # BACKEND PUBLIC URL (for email links)
+    BACKEND_PUBLIC_URL: str = os.getenv("NEXT_PUBLIC_API_URL", "http://localhost:8000")
 
     class Config:
         case_sensitive = True
