@@ -1,9 +1,9 @@
 from slowapi import Limiter
 from slowapi.util import get_remote_address
-import os
+from app.config import settings
 
 # Default to memory if Redis is not configured (e.g. during build), but use Redis in prod
-REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379/0")
+REDIS_URL = settings.REDIS_URL
 
 # Initialize Limiter with Redis storage
 limiter = Limiter(

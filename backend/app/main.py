@@ -26,6 +26,8 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 # Include Routers
 app.include_router(sandbox.router)
 
+from app.config import settings
+
 # Mount content directory for static assets (images, etc.)
 # This maps http://localhost:8000/content/ -> /app/content/
 app.mount("/content", StaticFiles(directory="/app/content"), name="content")
@@ -33,7 +35,7 @@ app.mount("/content", StaticFiles(directory="/app/content"), name="content")
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://frontend:3000"],
+    allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

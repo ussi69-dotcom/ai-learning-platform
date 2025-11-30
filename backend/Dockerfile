@@ -12,5 +12,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Kopírování kódu
 COPY . .
 
-# Změna: teď spouštíme 'app.main:app' místo 'main:app'
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+# Nastavení entrypointu
+RUN chmod +x entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]

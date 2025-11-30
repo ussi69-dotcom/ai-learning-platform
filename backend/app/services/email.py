@@ -3,13 +3,14 @@ from typing import List
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from pydantic import EmailStr, BaseModel
 from pathlib import Path
+from app.config import settings
 
-# Load config from env
-SMTP_HOST = os.getenv("SMTP_HOST", "smtp.example.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
-SMTP_USER = os.getenv("SMTP_USER", "user")
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "password")
-EMAILS_FROM_EMAIL = os.getenv("EMAILS_FROM_EMAIL", "info@ai-learning.cz")
+# Load config from settings
+SMTP_HOST = settings.SMTP_HOST
+SMTP_PORT = settings.SMTP_PORT
+SMTP_USER = settings.SMTP_USER
+SMTP_PASSWORD = settings.SMTP_PASSWORD
+EMAILS_FROM_EMAIL = settings.EMAILS_FROM_EMAIL
 
 class EmailSchema(BaseModel):
     email: List[EmailStr]
@@ -32,7 +33,7 @@ async def send_verification_email(email: EmailStr, token: str):
     """
     # In a real app, this link would point to the frontend verification page
     # e.g., https://ai-learning.cz/verify?token=...
-    verify_url = f"{os.getenv('NEXT_PUBLIC_API_URL', 'http://localhost:3000')}/verify?token={token}"
+    verify_url = f"{settings.FRONTEND_URL}/verify?token={token}"
     
     html = f"""
     <html>
