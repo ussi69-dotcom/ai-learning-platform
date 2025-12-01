@@ -21,12 +21,10 @@ Read this first to understand the environment, preferences, and active protocols
 
 ## 🔑 Standard Operating Protocols (SOPs)
 
-### 1. Database Changes = Nuclear Reset ☢️
-If you modify `backend/app/models.py` or seed data:
-```bash
-docker-compose down -v && docker-compose up -d --build
-```
-*Never run `python seed.py` manually.*
+### 1. Database Changes 🗄️
+-   **Development:** You CAN use "Nuclear Reset" (`docker-compose down -v`) for rapid iteration, OR use Alembic.
+-   **Production:** You **MUST** use Alembic Migrations. **NEVER** use `down -v`.
+-   **Workflow:** See `.ai-context/workflows/DATABASE_MIGRATIONS.md`.
 
 ### 2. Content Engineering ✍️
 - **Format:** MDX. Use `<Diagram>`, `<ConceptCard>`, `<Callout>`, `<Steps>`, `<Sandbox>`.
@@ -74,4 +72,15 @@ docker-compose down -v && docker-compose up -d --build
 -   **VPS Parity:** Local dev must match VPS architecture. If VPS is monolithic, Local must be too (until fully refactored).
 -   **Deep Verification:** UI testing is insufficient. Use scripts like `verify_xp_deep.py` to verify backend logic (XP, Localization) independently of frontend.
 -   **Localization:** Requires both Backend logic (field swapping) AND Frontend request params (`lang=...`).
--   **Refactoring:** If a refactor fails, revert to the working monolith state first, then refactor incrementally with verification.
+
+### 6. Documentation Hygiene 🧹
+-   **Regular Audit:** Periodically check for duplicates, obsolete files, and dead links.
+-   **Ask First:** Before deleting or archiving large chunks of history, consult the user.
+-   **Single Source of Truth:** If information exists in `.ai-context`, do not duplicate it in root files (link to it instead).
+
+### 7. Git Commit Standards 📦
+-   **Feat:** New features or content.
+-   **Fix:** Bug fixes.
+-   **Refactor:** Code cleanup.
+-   **Docs:** Documentation updates.
+-   **Milestone:** Major cycle completion.

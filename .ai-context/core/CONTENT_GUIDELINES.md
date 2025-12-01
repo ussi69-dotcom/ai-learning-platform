@@ -25,7 +25,7 @@ Every lesson MUST follow this structure:
 ## 3. Visual Rules (SVG First) 🎨
 *   **NO Raster Images:** Do not use `.png` or `.jpg` files unless absolutely necessary (and approved).
 *   **Use Diagrams:** Use the `<Diagram type="...">` component.
-    *   **Check First:** Before creating a new diagram, check `frontend/components/mdx/Diagram.tsx` to see if a suitable one already exists. **Do not create duplicates.**
+    *   **Check First:** Before creating a new diagram, check `frontend/components/mdx/diagrams/` to see if a suitable one already exists. **Do not create duplicates.**
     *   *Available Types:* `neural-network`, `training-loop`, `traditional-vs-ml`, `ai-timeline`, `dashboard-ui`, `data-analysis-chart`, etc.
     *   *Why?* Scales perfectly, respects Dark Mode, editable via code.
 *   **Icons:** Use `LessonIcon` and `CourseIcon` components for UI elements.

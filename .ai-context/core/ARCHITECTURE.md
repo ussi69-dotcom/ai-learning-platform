@@ -27,7 +27,9 @@
 
 ### 4. Database Management (SOP)
 *   **Entrypoint:** The backend container uses `entrypoint.sh` to automatically wait for DB readiness and run `seed.py`.
-*   **Reset Protocol:** To apply schema changes, volumes must be destroyed: `docker-compose down -v && docker-compose up`. Manual seeding is forbidden.
+*   **Schema Changes:**
+    *   **Development:** Can use "Nuclear Reset" (`docker-compose down -v`) OR Alembic.
+    *   **Production:** MUST use Alembic Migrations. See `.ai-context/workflows/DATABASE_MIGRATIONS.md`.
 
 ## 🔄 Data Flow (Smart Progress)
 1.  **Resume:** `GET /users/me/last-lesson` -> Frontend redirects to Lesson + Page.
@@ -40,6 +42,5 @@
 
 ---
 
-**Status:** Aktualizováno listopad 2025  
-**Agent Architecture:** Perplexity (Architect) + Antigravity (Executor)  
-**OSS/Gemini/ostatní agenti se NEpoužívají pro tento projekt**
+**Status:** Aktualizováno prosinec 2025
+**Agent Architecture:** Gemini CLI + Antigravity IDE (Shared Memory via `.ai-context`)

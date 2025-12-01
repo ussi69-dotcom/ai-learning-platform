@@ -1,6 +1,8 @@
 # 👁️ Visual Inspection Workflow
 
-As an AI agent without a native browser, I can "see" the application by generating screenshots using Playwright running in a Docker container. This bypasses local system dependency issues and ensures network access to the running containers.
+As an AI agent without a native browser, I can "see" the application by generating screenshots using Playwright running in a Docker container.
+
+> **Note:** For ad-hoc visual checks, prefer using the `browser_subagent` tool if available. This workflow is for reproducible visual regression testing or when the subagent is unavailable.
 
 ## 🛠️ Setup
 

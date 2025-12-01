@@ -8,6 +8,9 @@ Gamifikovaná platforma pro výuku AI konceptů s českou lokalizací.
 - **Git**
 
 > **Poznámka:** Nepotřebuješ Node.js ani Python lokálně - vše běží v Dockeru!
+>
+> 🤖 **Pro AI Agenty:** Začněte v [.ai-context/INDEX.md](.ai-context/INDEX.md).
+> 🌟 **Vize Projektu:** Viz [.ai-context/core/VISION.md](.ai-context/core/VISION.md).
 
 ---
 

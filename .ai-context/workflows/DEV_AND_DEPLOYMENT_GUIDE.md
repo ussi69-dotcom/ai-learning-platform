@@ -124,12 +124,11 @@ Your VPS environment should be configured for production.
     docker compose -f docker-compose.prod.yml down
     docker compose -f docker-compose.prod.yml up -d --build
     ```
-    *Note: If you change `backend/app/models.py` (database schema), you MUST include `-v` in `down` command to clear the volume, which will also clear all data! Back up your production database first!*
+    *Note: If you changed `backend/app/models.py`, you must apply migrations.*
     ```bash
-    # ONLY IF DB SCHEMA CHANGES - DANGER: CLEARS ALL DATA!
-    # docker compose -f docker-compose.prod.yml down -v
-    # docker compose -f docker-compose.prod.yml up -d --build
+    docker compose -f docker-compose.prod.yml exec backend alembic upgrade head
     ```
+    *WARNING: Do NOT use `down -v` on production!*
 
 ## ⚠️ Important Considerations
 

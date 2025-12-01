@@ -65,6 +65,11 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
       clientY = (e as React.MouseEvent).clientY;
     }
 
+    // Prevent default touch behavior to stop scrolling
+    if (e.type === 'touchstart') {
+      e.preventDefault();
+    }
+
     setIsDragging(true);
     setDraggedPosition({ x: clientX, y: clientY });
   };
@@ -190,10 +195,10 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
           ref={mobileButtonRef}
           variant="outline"
           className={cn(
-            "!rounded-full w-10 h-10 shadow-lg border backdrop-blur-md flex items-center justify-center p-0 transition-all duration-300",
+            "!rounded-full w-10 h-10 shadow-lg border backdrop-blur-md flex items-center justify-center p-0 transition-all duration-300 touch-none",
             currentMode === 'viewing' || currentMode === 'placing'
               ? "bg-primary/20 border-primary text-primary shadow-[0_0_15px_rgba(var(--primary),0.4)] scale-110"
-              : "bg-black/10 border-white/10 text-white/50 hover:text-primary hover:border-primary hover:bg-primary/10"
+              : "bg-black/60 border-white/20 text-white/90 hover:text-primary hover:border-primary hover:bg-primary/10 shadow-lg"
           )}
           onClick={toggleMobileMode}
           onTouchStart={startDrag}

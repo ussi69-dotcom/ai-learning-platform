@@ -178,3 +178,32 @@
 -   **Content Update**: Modernized labs for AI 5.0 (Local Context, Reversal Curse, Sycophancy). Restarted backend to clear cache.
 -   **Verification**: Confirmed `AuthContext` handles 401 redirects correctly.
 -   **Ready for Deployment**.
+
+## 📅 Date: 2025-12-01 (Documentation Audit)
+
+## 🎯 Task: Comprehensive Documentation Audit & Cleanup
+
+### ✅ Completed
+1.  **Alembic Setup**:
+    -   Installed and configured Alembic for production-grade migrations.
+    -   Created `.ai-context/workflows/DATABASE_MIGRATIONS.md`.
+    -   Updated `ARCHITECTURE.md` and `DEV_AND_DEPLOYMENT_GUIDE.md`.
+
+2.  **Documentation Hygiene**:
+    -   **Consolidated Archives**: Moved `_archive` and `.cleanup` content to `.ai-context/history/archive`.
+    -   **Vision**: Moved `overview.md` to `.ai-context/core/VISION.md`.
+    -   **Entry Points**: Updated `README.md` to link to `INDEX.md` (for Agents) and `VISION.md` (for Humans).
+    -   **Incident Reporting**: Created `.ai-context/workflows/INCIDENT_REPORTING.md`.
+    -   **Cleanup**: Deleted orphaned/temporary files (`cli_prompt_about_page.md`, `WORKFLOW.md`, etc.).
+
+3.  **Protocol Updates**:
+    -   Added **Documentation Hygiene** and **Git Commit Standards** to `MEMORY.md`.
+    -   Updated `NEW-LESSON-PROMPT.md` and `CONTENT_GUIDELINES.md` to fix outdated references.
+
+### 📝 Notes
+-   **Strict Protocol**: Future agents MUST follow `INDEX.md`. Do not create root-level documentation files. Use `.ai-context`.
+-   **Lesson Strategy**: The strategy for "Reconstruction" lessons (Milestone Build) is saved in `.ai-context/learning/IDEAS.md`.
+
+### 🚀 Next Steps
+-   **Maintain Hygiene**: Periodically run the orphan-check script (see `task.md` history).
+-   **Deploy**: The platform is ready for production deployment with the new Alembic workflow.

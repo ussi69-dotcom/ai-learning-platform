@@ -11,7 +11,7 @@ import { Progress } from '@/components/ui/progress';
 import { useTranslations, useLocale } from 'next-intl';
 import { BookOpen, CheckCircle, Trophy, Settings, AlertTriangle, Sparkles, Zap, Shield, Crown } from 'lucide-react';
 import DifficultyIcon from '@/components/DifficultyIcon';
-import AvatarSelector, { getAvatar } from '@/components/AvatarSelector';
+import AvatarSelector, { getAvatar, GradientDefs } from '@/components/AvatarSelector';
 import axios from 'axios';
 import { cn } from '@/lib/utils';
 
@@ -113,6 +113,8 @@ export default function ProfilePage() {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
+      {/* Ensure Gradients are available for the profile avatar even when selector is closed */}
+      <GradientDefs />
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 animate-in fade-in slide-in-from-top-4 duration-500">
         <div>

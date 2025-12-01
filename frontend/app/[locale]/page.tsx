@@ -83,9 +83,11 @@ export default function HomePage() {
         } else {
           setError("Failed to load courses");
         }
-      } catch (err) {
-        console.error("Error fetching courses:", err);
-        setError("Failed to connect to backend");
+      } catch (err: any) {
+        if (err.response?.status !== 401) {
+          console.error("Error fetching courses:", err);
+          setError("Failed to connect to backend");
+        }
       } finally {
         setLoadingCourses(false);
       }
@@ -104,8 +106,10 @@ export default function HomePage() {
             if (response.status === 200 && response.data) {
                 setLastLesson(response.data);
             }
-        } catch (err) {
-            console.error("Error fetching last lesson:", err);
+        } catch (err: any) {
+            if (err.response?.status !== 401) {
+                console.error("Error fetching last lesson:", err);
+            }
         } finally {
             setLoadingResume(false);
         }

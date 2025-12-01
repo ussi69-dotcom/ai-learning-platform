@@ -6,10 +6,10 @@
 
 ## 📋 Context Loading
 First, read the following files to establish the "Masterpiece" standard:
-1.  `GEMINI.md` (Project Context)
-2.  `.ai-context/CONTENT_GUIDELINES.md` (The "Bible" - STRICT ADHERENCE REQUIRED)
-3.  `.ai-context/STRATEGY.md` (Curriculum Goals)
-4.  `frontend/components/mdx/Diagram.tsx` (Available Visual Components)
+19.  `.ai-context/state/MEMORY.md` (Project Context)
+10. `.ai-context/core/CONTENT_GUIDELINES.md` (The "Bible" - STRICT ADHERENCE REQUIRED)
+11. `.ai-context/core/STRATEGY.md` (Curriculum Goals)
+12. `frontend/components/mdx/diagrams/` (Available Visual Components)
 
 ---
 
@@ -32,7 +32,7 @@ Create a **"Masterpiece" Standard Lesson** that feels like a premium interactive
 
 ### Phase 2: Visual Asset Generation 🎨
 **Rule: NO RECYCLED IMAGES.**
-1.  **Diagrams:** Check `Diagram.tsx`. Is there a relevant SVG? If not, plan to create one.
+1.  **Diagrams:** Check `frontend/components/mdx/diagrams/`. Is there a relevant SVG? If not, plan to create one.
 2.  **Images:** Generate 2-3 *new* images using DALL-E 3 / Imagen / NanoBanana.
     *   *Style:* Cybernetic, Glassmorphism, Data Visualization, Dark Mode.
     *   *Prompts:* "A digital representation of [Concept], high tech, neon, dark background."

@@ -19,11 +19,15 @@ Regardless of your interface (CLI or IDE), start here.
 - [**GLOSSARY.md**](./core/GLOSSARY.md): Terminology.
 - [**COMPONENT_PATTERNS.md**](./core/COMPONENT_PATTERNS.md): UI Component usage.
 - [**STRATEGY.md**](./core/STRATEGY.md): Long-term vision.
+- [**VISION.md**](./core/VISION.md): High-level project vision and purpose.
 
 ### 🛠️ Workflows (`/workflows`)
 > *How-To Guides.*
 - [**NEW-LESSON-PROMPT.md**](./workflows/NEW-LESSON-PROMPT.md): Prompt for generating lessons.
 - [**VISUAL_INSPECTION.md**](./workflows/VISUAL_INSPECTION.md): How to see the UI.
+- [**DATABASE_MIGRATIONS.md**](./workflows/DATABASE_MIGRATIONS.md): Alembic workflow.
+- [**INCIDENT_REPORTING.md**](./workflows/INCIDENT_REPORTING.md): How to report failures.
+- [**DEV_AND_DEPLOYMENT_GUIDE.md**](./workflows/DEV_AND_DEPLOYMENT_GUIDE.md): Deployment SOP.
 
 ### 📚 Learning (`/learning`)
 > *Knowledge Base.*

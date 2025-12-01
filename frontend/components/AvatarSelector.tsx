@@ -19,8 +19,9 @@ import { cn } from '@/lib/utils';
 
 // --- GRADIENT DEFINITIONS ---
 // We define SVG gradients hiddenly, and reference them in the icons using stroke="url(#id)"
-const GradientDefs = () => (
-  <svg width="0" height="0" className="absolute">
+// We define SVG gradients hiddenly, and reference them in the icons using stroke="url(#id)"
+export const GradientDefs = () => (
+  <svg width="0" height="0" className="absolute pointer-events-none opacity-0" aria-hidden="true">
     <defs>
       <linearGradient id="grad-jedi" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stopColor="#60a5fa" /> {/* blue-400 */}

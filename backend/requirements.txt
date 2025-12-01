@@ -14,3 +14,4 @@ docker
 slowapi
 redis
 fastapi-mail
+alembic
