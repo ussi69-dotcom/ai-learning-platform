@@ -23,7 +23,18 @@ git clone https://github.com/ussi69-dotcom/ai-learning-platform.git
 cd ai-learning-platform
 ```
 
-### 2. Spusť Platformu
+### 2. Vytvoř Environment File
+
+> **Důležité**: Projekt má `.env` soubor gitignorovaný (odděluje dev/prod prostředí).
+
+Pro rychlý start zkopíruj přiklád:
+```bash
+cp .env.prod.example .env
+```
+
+Výchozí hodnoty fungují pro lokální vývoj. Uprav podle potřeby.
+
+### 3. Spusť Platformu
 
 ```bash
 docker compose up -d --build
@@ -107,7 +118,7 @@ Platforma podporuje **2 jazyky**: English (`/en`) a Čeština (`/cs`).
 - Frontend: `frontend/messages/en.json`, `frontend/messages/cs.json`
 - Content: Každý lesson má `meta.json` s `title_cs` a `description_cs`
 
----
+---\n\n## \ud83e\udd16 n8n Automation (Advanced)\n\nPlatforma zahrnuje **n8n** pro workflow automation.\n\n- **Web UI**: [http://localhost:5678](http://localhost:5678)\n- **Login**: `admin` / `password` (zm\u011b\u0148 v `.env`)\n- **Datab\u00e1ze**: Sd\u00edl\u00ed PostgreSQL s hlavn\u00ed aplikac\u00ed\n\n**Pl\u00e1novan\u00e9 pou\u017eit\u00ed:**\n- \ud83d\udce7 Email notifikace\n- \ud83d\udcca Monitoring & alerting (integrace s Grafana)\n- \ud83c\udf93 Budouc\u00ed labs: \"Building AI Automation Workflows\"\n\n> **Pro za\u010d\u00e1te\u010dn\u00edky**: n8n m\u016f\u017ee\u0161 zat\u00edm ignorovat. Nen\u00ed nutn\u00e9 pro z\u00e1kladn\u00ed funkci platformy.\n\n---
 
 ## 📂 Struktura Projektu
 
@@ -189,6 +200,14 @@ docker compose up -d --build
     - "3001:3000"  # Frontend na 3001
   ```
 
+**Po změně portů:**
+```bash
+docker compose down
+docker compose up -d --build
+```
+
+Také aktualizuj `NEXT_PUBLIC_API_URL` v `.env` pokud měníš port backendu.
+
 ---
 
 ## 🏗️ Vývoj
@@ -203,12 +222,26 @@ docker compose up -d --build
 
 ### Změna DB Schématu
 
+**Development (Quick & Dirty):**
 1. Uprav `backend/app/models.py`
 2. Nuclear reset:
    ```bash
    docker compose down -v
    docker compose up -d --build
    ```
+
+**Production (Safe Migrations):**
+1. Uprav `backend/app/models.py`
+2. Generate migration:
+   ```bash
+   docker compose exec backend alembic revision --autogenerate -m "Description"
+   ```
+3. Apply migration:
+   ```bash
+   docker compose exec backend alembic upgrade head
+   ```
+
+📚 **Detaily**: Viz `.ai-context/workflows/DATABASE_MIGRATIONS.md`
 
 ---
 
@@ -258,7 +291,8 @@ Vytvořeno při prvním seedování (`backend/seed.py`).
 Mrkni do `.ai-context/` pro:
 - `CONTENT_GUIDELINES.md` - jak psát lekce
 - `ARCHITECTURE.md` - tech stack a struktura
-- `AGENT-STATE.md` - aktuální stav projektu
+- `state/CURRENT_TASK.md` - aktuální úkoly agenta
+- `state/SESSION_LOG.md` - historie změn
 
 ---
 

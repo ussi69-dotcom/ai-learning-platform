@@ -9,7 +9,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from . import models, schemas, database, auth
-from app.routers import sandbox, lessons, feedback, users
+from app.routers import sandbox, lessons, feedback, users, health
 
 # Vytvoření tabulek (pro jistotu, i když to dělá seed)
 models.Base.metadata.create_all(bind=database.engine)
@@ -24,6 +24,7 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Include Routers
+app.include_router(health.router, tags=["health"])
 app.include_router(sandbox.router)
 app.include_router(lessons.router)
 app.include_router(feedback.router)

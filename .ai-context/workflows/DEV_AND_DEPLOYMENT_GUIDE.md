@@ -1,6 +1,6 @@
 # 🧑‍💻 Deployment & Development Guide
 
-This guide outlines the recommended workflow for developing features locally and deploying them to your VPS. It assumes you have read and understood the `.ai-context/workflows/DEPLOYMENT_STRATEGY.md` file.
+This guide outlines the recommended workflow for developing features locally and deploying them to your VPS. It follows 12-Factor App principles with environment-based configuration.
 
 ## 🚀 Local Development Workflow
 
