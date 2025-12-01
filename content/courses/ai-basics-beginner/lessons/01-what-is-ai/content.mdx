@@ -115,23 +115,24 @@ It is **90% accurate**, but **10% hallucination**. Never trust it blindly with c
 
 ---
 
-## 🔬 Lab 1: The Knowledge Cutoff
+## 🔬 Lab 1: The Local Reality Check
 
-Let's test the limits of the machine. AI models are frozen in time.
+Let's test the limits of the machine. AI models live in the cloud, not in your room.
 
-**Objective:** Prove that the AI doesn't know "Now" (unless it has tools).
+**Objective:** Prove that the AI doesn't know your *local* context (even if it has web access).
 
 **The Prompt:**
-Copy this into ChatGPT/Gemini (if using a local model without web access):
+Copy this into ChatGPT/Gemini:
 
 ```text
-What is the top news headline from this morning?
-Include the specific date.
+What color is the shirt I am wearing right now?
+If you don't know, guess.
 ```
 
 **Analysis:**
-*   **Offline Models:** Will apologize ("I only know data up to 2023") or might even hallucinate a fake headline.
-*   **Online Models (RAG):** Will search the web (Bing/Google) to answer. This proves the base model is "blind" to the present without external tools.
+*   **The Reality:** It cannot know. It has no eyes (unless you upload a photo).
+*   **The Hallucination Risk:** If you force it to guess, it might say "Blue" just to be helpful.
+*   **The Lesson:** AI is blind to the physical world around you unless you explicitly give it sensors (cameras/microphones).
 
 <LabComplete labId="lab-knowledge-cutoff" />
 
@@ -159,20 +160,22 @@ Did it invent a story?
 
 ---
 
-## 🔬 Lab 3: The Tokenizer Trap
+## 🔬 Lab 3: The Reversal Curse
 
-AI is surprisingly bad at simple counting because it doesn't "see" letters; it reads "tokens" (chunks of words).
+AI reads text forward, like a stream. It struggles to "look back" or manipulate characters in reverse order.
 
-**Objective:** Trip up the AI with a task a 5-year-old could do.
+**Objective:** Trip up the AI with simple string manipulation.
 
 **The Prompt:**
 ```text
-How many letter 'r's are in the word "Strawberry"?
+Write the word "Lollipop" backwards.
+Then, put a dash between every letter.
 ```
 
 **Analysis:**
-*   **Common Fail:** "There are 2 'r's." (It misses the third one).
-*   **Why?** To the AI, "Strawberry" is likely just 1 or 2 tokens (numbers). It doesn't scan the letters character-by-character unless you force it to use Python or spell it out.
+*   **Common Fail:** It might write "p-o-p-i-l-l-o-L" (correct) or mess up the double 'l's.
+*   **Harder Version:** "Reverse the sentence 'AI is great' word by word, but keep the letters in each word forward."
+*   **Why?** To the AI, "Lollipop" is one token. Splitting it requires "thinking" in characters, which is computationally expensive for it.
 
 <LabComplete labId="lab-tokenizer-trap" />
 

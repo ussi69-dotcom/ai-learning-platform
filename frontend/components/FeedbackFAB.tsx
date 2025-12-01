@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AlertCircle, Flag, MessageCircle, X, MousePointer2, Plus, List, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -18,6 +18,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
   const [isDragging, setIsDragging] = useState(false);
   const [draggedPosition, setDraggedPosition] = useState<{ x: number; y: number } | null>(null);
   const t = useTranslations('Feedback');
+  const mobileButtonRef = useRef<HTMLButtonElement>(null);
 
   const toggleMode = () => {
     if (currentMode === 'placing') {
@@ -29,35 +30,88 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
     }
   };
 
-  const startDrag = (e: React.MouseEvent) => {
-    if (currentMode !== 'placing') return;
-    e.preventDefault(); // Prevent text selection
+  // Mobile specific toggle: Idle -> Viewing -> Idle
+  // Placing is handled via drag from the viewing state
+  const toggleMobileMode = () => {
+    if (currentMode === 'idle') {
+      onModeChange('viewing');
+    } else {
+      onModeChange('idle');
+    }
+  };
+
+  const startDrag = (e: React.MouseEvent | React.TouchEvent) => {
+    // On mobile, we can only drag if we are already in 'viewing' mode (which acts as "active" state)
+    // On desktop, we can drag if we are in 'placing' mode
+    const isMobile = window.innerWidth < 768; // Simple check, can be refined
+
+    if (isMobile) {
+      if (currentMode !== 'viewing') return;
+      // Switch to placing mode temporarily while dragging
+      onModeChange('placing');
+    } else {
+      if (currentMode !== 'placing') return;
+    }
+
+    // e.preventDefault(); // Removed to allow scrolling if not dragging, logic handled below
+
+    let clientX, clientY;
+    if ('touches' in e) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      e.preventDefault(); // Prevent text selection on mouse
+      clientX = (e as React.MouseEvent).clientX;
+      clientY = (e as React.MouseEvent).clientY;
+    }
+
     setIsDragging(true);
-    setDraggedPosition({ x: e.clientX, y: e.clientY });
+    setDraggedPosition({ x: clientX, y: clientY });
   };
 
   useEffect(() => {
     if (!isDragging) return;
 
-    const onDrag = (e: MouseEvent) => {
-      setDraggedPosition({ x: e.clientX, y: e.clientY });
+    const onDrag = (e: MouseEvent | TouchEvent) => {
+      let clientX, clientY;
+      if ('touches' in e) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = (e as MouseEvent).clientX;
+        clientY = (e as MouseEvent).clientY;
+      }
+      setDraggedPosition({ x: clientX, y: clientY });
     };
 
-    const endDrag = (e: MouseEvent) => {
+    const endDrag = (e: MouseEvent | TouchEvent) => {
       setIsDragging(false);
-      
+
       // Try to find either lesson container OR course container
       const contentContainer = document.getElementById('lesson-content-container') || document.getElementById('course-content-container');
-      
+
       if (contentContainer) {
         const rect = contentContainer.getBoundingClientRect();
-        
+
+        let clientX, clientY;
+        if ('changedTouches' in e) {
+          clientX = e.changedTouches[0].clientX;
+          clientY = e.changedTouches[0].clientY;
+        } else {
+          clientX = (e as MouseEvent).clientX;
+          clientY = (e as MouseEvent).clientY;
+        }
+
         // Calculate relative position even if outside
         // This allows placing markers in margins/whitespace
-        const relativeX = (e.clientX - rect.left) / rect.width;
-        const relativeY = (e.clientY - rect.top) / rect.height;
-        
+        const relativeX = (clientX - rect.left) / rect.width;
+        const relativeY = (clientY - rect.top) / rect.height;
+
         onPlaceFeedback(relativeX, relativeY, slideIndex);
+        onModeChange('idle');
+      } else {
+        // If we didn't drop on content, revert to idle or viewing?
+        // Let's revert to idle to be safe
         onModeChange('idle');
       }
       setDraggedPosition(null);
@@ -65,10 +119,14 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
 
     window.addEventListener('mousemove', onDrag);
     window.addEventListener('mouseup', endDrag);
+    window.addEventListener('touchmove', onDrag, { passive: false });
+    window.addEventListener('touchend', endDrag);
 
     return () => {
       window.removeEventListener('mousemove', onDrag);
       window.removeEventListener('mouseup', endDrag);
+      window.removeEventListener('touchmove', onDrag);
+      window.removeEventListener('touchend', endDrag);
     };
   }, [isDragging, currentMode, onPlaceFeedback, slideIndex, onModeChange]);
 
@@ -78,18 +136,20 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
       {/* Instructions (Always above) */}
       {currentMode === 'placing' && (
         <div className="bg-black/60 backdrop-blur-xl border border-primary/50 text-primary-foreground px-4 py-2 rounded-xl shadow-[0_0_15px_rgba(var(--primary),0.3)] text-sm flex items-center gap-2 animate-in slide-in-from-right fade-in duration-300 mb-2">
-          <MousePointer2 className="w-4 h-4 text-primary" /> 
+          <MousePointer2 className="w-4 h-4 text-primary" />
           <span className="font-medium tracking-wide text-zinc-100">{t('drag_drop')}</span>
         </div>
       )}
-       {currentMode === 'viewing' && (
+      {currentMode === 'viewing' && (
         <div className="bg-black/60 backdrop-blur-xl border border-primary/50 text-primary-foreground px-4 py-2 rounded-xl shadow-[0_0_15px_rgba(var(--primary),0.3)] text-sm flex items-center gap-2 animate-in slide-in-from-right fade-in duration-300 mb-2">
-          <Eye className="w-4 h-4 text-primary" /> 
-          <span className="font-medium tracking-wide text-zinc-100">{t('viewing_feedback')}</span>
+          <Eye className="w-4 h-4 text-primary" />
+          <span className="font-medium tracking-wide text-zinc-100 hidden md:inline">{t('viewing_feedback')}</span>
+          <span className="font-medium tracking-wide text-zinc-100 md:hidden">Drag to report / Tap to close</span>
         </div>
       )}
 
-      <div className="flex items-center gap-1">
+      {/* DESKTOP VIEW: Two Buttons */}
+      <div className="hidden md:flex items-center gap-1">
         {/* View Feedback (Eye) */}
         {currentMode !== 'placing' && (
           <Button
@@ -103,7 +163,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
             onClick={() => onModeChange(currentMode === 'viewing' ? 'idle' : 'viewing')}
             title={currentMode === 'viewing' ? t('hide_feedback') : t('view_feedback')}
           >
-             {currentMode === 'viewing' ? <X size={32} /> : <Eye size={32} />}
+            {currentMode === 'viewing' ? <X size={32} /> : <Eye size={32} />}
           </Button>
         )}
 
@@ -112,8 +172,8 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
           variant="outline"
           className={cn(
             "!rounded-full w-14 h-14 shadow-lg border-2 backdrop-blur-md flex items-center justify-center p-0 transition-all duration-300 hover:scale-110",
-            currentMode === 'placing' 
-              ? "bg-primary hover:bg-primary/90 text-primary-foreground border-primary scale-110 animate-pulse cursor-grab active:cursor-grabbing shadow-[0_0_25px_rgba(var(--primary),0.6)]" 
+            currentMode === 'placing'
+              ? "bg-primary hover:bg-primary/90 text-primary-foreground border-primary scale-110 animate-pulse cursor-grab active:cursor-grabbing shadow-[0_0_25px_rgba(var(--primary),0.6)]"
               : "bg-black/20 border-primary/50 text-primary hover:scale-105 hover:bg-primary/10 hover:border-primary shadow-[0_0_20px_rgba(var(--primary),0.2)]"
           )}
           onClick={toggleMode}
@@ -121,6 +181,26 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
           title={t('report_bug')}
         >
           {currentMode === 'placing' ? <X size={32} /> : <AlertCircle size={32} />}
+        </Button>
+      </div>
+
+      {/* MOBILE VIEW: Single Unified Button */}
+      <div className="flex md:hidden items-center gap-1">
+        <Button
+          ref={mobileButtonRef}
+          variant="outline"
+          className={cn(
+            "!rounded-full w-10 h-10 shadow-lg border backdrop-blur-md flex items-center justify-center p-0 transition-all duration-300",
+            currentMode === 'viewing' || currentMode === 'placing'
+              ? "bg-primary/20 border-primary text-primary shadow-[0_0_15px_rgba(var(--primary),0.4)] scale-110"
+              : "bg-black/10 border-white/10 text-white/50 hover:text-primary hover:border-primary hover:bg-primary/10"
+          )}
+          onClick={toggleMobileMode}
+          onTouchStart={startDrag}
+          title="Feedback"
+        >
+          {/* Show X if viewing/placing, otherwise show AlertCircle (or Eye?) - User asked for "Report Bug" less intrusive */}
+          {(currentMode === 'viewing' || currentMode === 'placing') ? <X size={20} /> : <AlertCircle size={20} />}
         </Button>
       </div>
 

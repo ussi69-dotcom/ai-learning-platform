@@ -115,23 +115,24 @@ Je **90% přesná**, ale **10% halucinace**. Nikdy jí slepě nevěř u kritick�
 
 ---
 
-## 🔬 Lab 1: Znalostní hranice
+## 🔬 Lab 1: Lokální kontrola reality
 
-Otestujme limity stroje. AI modely jsou zmrazené v čase.
+Otestujme limity stroje. AI modely žijí v cloudu, ne ve tvém pokoji.
 
-**Cíl:** Dokázat, že AI nezná "Teď" (pokud nemá nástroje).
+**Cíl:** Dokázat, že AI nezná tvůj *lokální* kontext (i když má přístup k webu).
 
 **Prompt:**
-Zkopíruj toto do ChatGPT/Gemini (pokud používáš lokální model bez přístupu k webu):
+Zkopíruj toto do ChatGPT/Gemini:
 
 ```text
-Jaký je hlavní titulek zpráv z dnešního rána?
-Uveď konkrétní datum.
+Jakou barvu má tričko, které mám právě na sobě?
+Pokud to nevíš, tipni si.
 ```
 
 **Analýza:**
-*   **Offline modely:** Omluví se ("Mám data jen do roku 2023") nebo mohou dokonce halucinovat falešný titulek.
-*   **Online modely (RAG):** Vyhledají na webu (Bing/Google), aby odpověděly. To dokazuje, že základní model je "slepý" vůči přítomnosti bez externích nástrojů.
+*   **Realita:** Nemůže to vědět. Nemá oči (pokud nenahraješ fotku).
+*   **Riziko halucinace:** Pokud ji donutíš hádat, může říct "Modré", jen aby byla nápomocná.
+*   **Lekce:** AI je slepá vůči fyzickému světu kolem tebe, pokud jí explicitně nedáš senzory (kamery/mikrofony).
 
 <LabComplete labId="lab-knowledge-cutoff" />
 
@@ -159,20 +160,22 @@ Vymyslela si příběh?
 
 ---
 
-## 🔬 Lab 3: Past tokenizéru
+## 🔬 Lab 3: Prokletí obrácení (Reversal Curse)
 
-AI je překvapivě špatná v jednoduchém počítání, protože "nevidí" písmena; čte "tokeny" (shluky slov).
+AI čte text dopředu, jako proud. Má problém se "ohlédnout zpět" nebo manipulovat se znaky v obráceném pořadí.
 
-**Cíl:** Nachytat AI úkolem, který by zvládlo pětileté dítě.
+**Cíl:** Nachytat AI jednoduchou manipulací s řetězci.
 
 **Prompt:**
 ```text
-Kolik písmen 'r' je ve slově "Strawberry"?
+Napiš slovo "Lollipop" pozpátku.
+Poté vlož pomlčku mezi každé písmeno.
 ```
 
 **Analýza:**
-*   **Častá chyba:** "Jsou tam 2 'r'." (Přehlédne to třetí).
-*   **Proč?** Pro AI je "Strawberry" pravděpodobně jen 1 nebo 2 tokeny (čísla). Neskenuje písmena znak po znaku, pokud ji nedonutíš použít Python nebo to vyhláskovat.
+*   **Častá chyba:** Může napsat "p-o-p-i-l-l-o-L" (správně) nebo zkazit zdvojená 'l'.
+*   **Těžší verze:** "Obrátit větu 'AI je skvělá' slovo po slově, ale písmena v každém slově ponechat dopředu."
+*   **Proč?** Pro AI je "Lollipop" jeden token. Jeho rozdělení vyžaduje "přemýšlení" ve znacích, což je pro ni výpočetně náročné.
 
 <LabComplete labId="lab-tokenizer-trap" />
 

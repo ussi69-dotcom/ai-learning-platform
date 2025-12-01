@@ -173,4 +173,8 @@
 -   **Documentation**:
     -   Created `.ai-context/learning/INCIDENT_2025_11_30_BACKEND_REFACTOR.md`.
     -   Updated `.ai-context/state/MEMORY.md` with critical lessons.
--   **Branch**: `feature/backend-refactor-v2` is ready for merge.
+    -   Updated `.ai-context/state/MEMORY.md` with critical lessons.
+-   **Status**: Merged `feature/backend-refactor-v2` to `main` and pushed to `origin`.
+-   **Content Update**: Modernized labs for AI 5.0 (Local Context, Reversal Curse, Sycophancy). Restarted backend to clear cache.
+-   **Verification**: Confirmed `AuthContext` handles 401 redirects correctly.
+-   **Ready for Deployment**.

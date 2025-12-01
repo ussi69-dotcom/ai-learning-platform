@@ -20,11 +20,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: https://ai-teach.me/api
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     container_name: ai-frontend
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=https://ai-learning.cz/api # Change this to real domain
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     restart: always
     networks:
       - ai-network
@@ -55,7 +55,7 @@ services:
       - FRONTEND_URL=${FRONTEND_HOST}
     volumes:
       - ./content:/app/content
-    command: ["./entrypoint.sh"]
+    command: [ "./entrypoint.sh" ]
     depends_on:
       - db
       - redis

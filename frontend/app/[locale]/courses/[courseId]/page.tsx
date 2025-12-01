@@ -20,14 +20,14 @@ type FeedbackMode = 'idle' | 'placing' | 'viewing';
 export default function CoursePage({ params }: { params: Promise<{ courseId: string }> }) {
   // Unwrap params Promise (Next.js 16 requirement)
   const { courseId } = use(params);
-  
+
   const { token } = useAuth();
   const [course, setCourse] = useState<any>(null);
   const [lessons, setLessons] = useState<any[]>([]);
   const [progress, setProgress] = useState<any>(null);
   const [completedLessonIds, setCompletedLessonIds] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   const locale = useLocale();
   const t = useTranslations('Common');
   // Ideally create a 'Course' namespace for labels like 'Course Progress', 'Start Learning'
@@ -57,7 +57,7 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
         if (courseRes.ok) {
           const courseData = await courseRes.json();
           setCourse(courseData);
-          
+
           // Use lessons directly from course response
           if (courseData.lessons) {
             setLessons(courseData.lessons.sort((a: any, b: any) => a.order - b.order));
@@ -146,12 +146,12 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
       <div id="course-content-container" className="container mx-auto py-12 px-4 max-w-4xl bg-white dark:bg-slate-950 transition-colors duration-300 min-h-screen relative">
         {/* Header */}
         <div className="mb-12 text-center space-y-6">
-          <div className="w-[512px] h-[512px] mx-auto mb-6 animate-in zoom-in-50 duration-500">
-             <CourseIcon courseId={course.id} slug={course.slug} imageUrl={course.image_url} objectFit="contain" />
+          <div className="w-full max-w-[512px] aspect-square mx-auto mb-6 animate-in zoom-in-50 duration-500">
+            <CourseIcon courseId={course.id} slug={course.slug} imageUrl={course.image_url} objectFit="contain" />
           </div>
           <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">{course.title}</h1>
           <p className="text-xl text-slate-600 dark:text-slate-400">{course.description}</p>
-          
+
           {/* Progress Bar */}
           {progress && (
             <div className="max-w-md mx-auto mt-4">
@@ -160,19 +160,19 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
                 <span className="font-bold text-purple-600 dark:text-red-500">{progress.percentage}%</span>
               </div>
               <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5">
-                <div 
-                  className="bg-purple-600 dark:bg-red-600 h-2.5 rounded-full transition-all duration-500" 
+                <div
+                  className="bg-purple-600 dark:bg-red-600 h-2.5 rounded-full transition-all duration-500"
                   style={{ width: `${progress.percentage}%` }}
                 ></div>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                {locale === 'cs' 
-                 ? `${progress.completed} z ${progress.total} lekcí dokončeno` 
-                 : `${progress.completed} of ${progress.total} lessons completed`}
+                {locale === 'cs'
+                  ? `${progress.completed} z ${progress.total} lekcí dokončeno`
+                  : `${progress.completed} of ${progress.total} lessons completed`}
               </p>
             </div>
           )}
-          
+
           <div className="flex justify-center gap-4">
             {/* Button 1: Start Learning */}
             <Link href={`/courses/${courseId}/lessons/${lessons[0]?.id || 1}`}>
@@ -189,7 +189,7 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
             </Link>
           </div>
         </div>
-        
+
         {/* Lesson List */}
         <div className="space-y-4">
           <h2 className="text-2xl font-semibold mb-6 text-slate-900 dark:text-white">{locale === 'cs' ? 'Osnova kurzu' : 'Course Outline'}</h2>
@@ -199,14 +199,13 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
             lessons.map((lesson: any) => (
               <Card key={lesson.id} className="group hover:border-purple-500 dark:hover:border-red-500 transition-colors">
                 <Link href={`/courses/${courseId}/lessons/${lesson.id}`} className="flex items-center p-6">
-                  <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center mr-6 transition-colors duration-300 ${
-                    completedLessonIds.includes(lesson.id)
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center mr-6 transition-colors duration-300 ${completedLessonIds.includes(lesson.id)
                       ? 'bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400 shadow-[0_0_10px_rgba(34,197,94,0.2)]'
                       : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 group-hover:bg-purple-50 dark:group-hover:bg-slate-700'
-                  }`}>
-                    <LessonIcon 
-                      title={lesson.title} 
-                      completed={completedLessonIds.includes(lesson.id)} 
+                    }`}>
+                    <LessonIcon
+                      title={lesson.title}
+                      completed={completedLessonIds.includes(lesson.id)}
                       className="w-6 h-6"
                     />
                   </div>
@@ -228,7 +227,7 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
                     </div>
                   </div>
                   <div className="text-sm text-slate-500 dark:text-slate-400 font-mono whitespace-nowrap flex-shrink-0 self-center">
-                     {locale === 'cs' ? 'Spustit' : 'Start'} &rarr;
+                    {locale === 'cs' ? 'Spustit' : 'Start'} &rarr;
                   </div>
                 </Link>
               </Card>
@@ -237,12 +236,12 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
         </div>
 
         {/* Feedback FAB */}
-        <FeedbackFAB 
+        <FeedbackFAB
           onModeChange={setFeedbackMode}
           currentMode={feedbackMode}
           onPlaceFeedback={(x, y) => {
-             setFeedbackToPlace({ x, y });
-             setFeedbackMode('idle'); // Close FAB, modal will open
+            setFeedbackToPlace({ x, y });
+            setFeedbackMode('idle'); // Close FAB, modal will open
           }}
           lessonId={0} // 0 for Course Overview
           slideIndex={-1} // -1 for Course Overview
@@ -250,79 +249,79 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
 
         {/* Feedback Markers (Viewing Mode) */}
         {feedbackMode === 'viewing' && feedbackItems.map((item) => (
-           <FeedbackMarker
-             key={item.id}
-             x={item.x_pos} // Corrected from x_position
-             y={item.y_pos} // Corrected from y_position
-             type={item.type}
-             isResolved={item.is_resolved} // Corrected from resolved
-             message={item.message}
-             onClick={() => setSelectedFeedback(item)}
-             author={item.author}
-           />
+          <FeedbackMarker
+            key={item.id}
+            x={item.x_pos} // Corrected from x_position
+            y={item.y_pos} // Corrected from y_position
+            type={item.type}
+            isResolved={item.is_resolved} // Corrected from resolved
+            message={item.message}
+            onClick={() => setSelectedFeedback(item)}
+            author={item.author}
+          />
         ))}
 
         {/* Submission Modal */}
         {feedbackToPlace && (
-           <FeedbackSubmissionModal
-             isOpen={!!feedbackToPlace}
-             x={feedbackToPlace.x}
-             y={feedbackToPlace.y}
-             lessonId={0}
-             slideIndex={-1}
-             onClose={() => setFeedbackToPlace(null)}
-             onSubmitSuccess={() => { // Corrected from onSubmit
-                setFeedbackToPlace(null);
-                setFeedbackMode('viewing'); // Switch to viewing mode to see the new marker
-                // Refresh feedback
-                const fetchFeedback = async () => {
-                   try {
-                     const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-                     const res = await fetch(`${API_BASE}/feedback/?lesson_id=0&slide_index=-1`, {
-                        headers: { "Authorization": `Bearer ${token}` }
-                     });
-                     if (res.ok) setFeedbackItems(await res.json());
-                   } catch (e) { console.error(e); }
-                };
-                fetchFeedback();
-             }}
-           />
+          <FeedbackSubmissionModal
+            isOpen={!!feedbackToPlace}
+            x={feedbackToPlace.x}
+            y={feedbackToPlace.y}
+            lessonId={0}
+            slideIndex={-1}
+            onClose={() => setFeedbackToPlace(null)}
+            onSubmitSuccess={() => { // Corrected from onSubmit
+              setFeedbackToPlace(null);
+              setFeedbackMode('viewing'); // Switch to viewing mode to see the new marker
+              // Refresh feedback
+              const fetchFeedback = async () => {
+                try {
+                  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+                  const res = await fetch(`${API_BASE}/feedback/?lesson_id=0&slide_index=-1`, {
+                    headers: { "Authorization": `Bearer ${token}` }
+                  });
+                  if (res.ok) setFeedbackItems(await res.json());
+                } catch (e) { console.error(e); }
+              };
+              fetchFeedback();
+            }}
+          />
         )}
 
         {/* Detail Modal */}
         {selectedFeedback && (
-           <FeedbackDetailModal
-             isOpen={!!selectedFeedback}
-             feedbackItem={selectedFeedback}
-             onClose={() => setSelectedFeedback(null)}
-             onVote={async (id, type) => {
-                 // Optimistic update
-                 setFeedbackItems(prev => prev.map(i => i.id === id ? { ...i, votes: type === 'up' ? i.votes + 1 : i.votes - 1, user_vote: type } : i));
-                 // Actual API call would go here
-             }}
-             onDelete={async (id) => {
-                 try {
-                    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-                    await fetch(`${API_BASE}/feedback/${id}`, {
-                       method: 'DELETE',
-                       headers: { "Authorization": `Bearer ${token}` }
-                    });
-                    setFeedbackItems(prev => prev.filter(i => i.id !== id));
-                    setSelectedFeedback(null);
-                 } catch (e) { console.error(e); }
-             }}
-             onReply={async () => {
-                // Refresh feedback to get new reply
+          <FeedbackDetailModal
+            isOpen={!!selectedFeedback}
+            feedbackItem={selectedFeedback}
+            onClose={() => setSelectedFeedback(null)}
+            onVote={async (id, type) => {
+              // Optimistic update
+              setFeedbackItems(prev => prev.map(i => i.id === id ? { ...i, votes: type === 'up' ? i.votes + 1 : i.votes - 1, user_vote: type } : i));
+              // Actual API call would go here
+            }}
+            onDelete={async (id) => {
+              try {
                 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-                const res = await fetch(`${API_BASE}/feedback/?lesson_id=0&slide_index=-1`, {
-                    headers: { "Authorization": `Bearer ${token}` }
+                await fetch(`${API_BASE}/feedback/${id}`, {
+                  method: 'DELETE',
+                  headers: { "Authorization": `Bearer ${token}` }
                 });
-                if (res.ok) setFeedbackItems(await res.json());
-             }}
-             onUpdate={async (id, message, type) => {
-                 setFeedbackItems(prev => prev.map(i => i.id === id ? { ...i, message, type } : i));
-             }}
-           />
+                setFeedbackItems(prev => prev.filter(i => i.id !== id));
+                setSelectedFeedback(null);
+              } catch (e) { console.error(e); }
+            }}
+            onReply={async () => {
+              // Refresh feedback to get new reply
+              const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+              const res = await fetch(`${API_BASE}/feedback/?lesson_id=0&slide_index=-1`, {
+                headers: { "Authorization": `Bearer ${token}` }
+              });
+              if (res.ok) setFeedbackItems(await res.json());
+            }}
+            onUpdate={async (id, message, type) => {
+              setFeedbackItems(prev => prev.map(i => i.id === id ? { ...i, message, type } : i));
+            }}
+          />
         )}
 
       </div>

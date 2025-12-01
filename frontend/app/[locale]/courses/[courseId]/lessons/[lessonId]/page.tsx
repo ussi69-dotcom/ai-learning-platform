@@ -67,6 +67,11 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   useEffect(() => {
     console.log(`[LessonPage] Mount or LessonId Change: ${lessonId}`);
   }, [lessonId]);
+
+  // Scroll to top when changing pages within the lesson
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
   // ---------------------
 
 

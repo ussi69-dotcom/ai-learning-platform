@@ -22,9 +22,11 @@ ENV NODE_ENV production
 
 # Next.js requires these directories to be present
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
 # Start the Next.js production server
-CMD ["npm", "run", "start"]
+CMD ["node", "server.js"]
