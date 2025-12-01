@@ -16,24 +16,24 @@ export default function DiagramHistory({ type }: DiagramProps) {
       <div className="my-8 flex justify-center">
         <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 700 300" className="w-full h-auto" role="img" aria-label="Traditional Programming vs Machine Learning">
-             <defs>
+            <defs>
               <marker id="arrowhead-tvm" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
               </marker>
             </defs>
-            
+
             {/* Divider */}
             <line x1="350" y1="20" x2="350" y2="280" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
 
             {/* LEFT: TRADITIONAL */}
             <g transform="translate(50, 40)">
               <text x="120" y="0" textAnchor="middle" className="text-lg font-bold fill-blue-600 dark:fill-blue-400 uppercase">{isCs ? 'Tradiční' : 'Traditional'}</text>
-              
+
               {/* Inputs */}
               <g transform="translate(0, 40)">
                 <rect x="0" y="0" width="100" height="40" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
                 <text x="50" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">{isCs ? 'Pravidla' : 'Rules'}</text>
-                
+
                 <rect x="140" y="0" width="100" height="40" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
                 <text x="190" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Data</text>
               </g>
@@ -41,26 +41,26 @@ export default function DiagramHistory({ type }: DiagramProps) {
               {/* Process */}
               <path d="M 50 80 L 100 120" stroke="#94a3b8" strokeWidth="2" />
               <path d="M 190 80 L 140 120" stroke="#94a3b8" strokeWidth="2" />
-              
+
               <rect x="70" y="120" width="100" height="60" rx="8" fill="#1e293b" stroke="#334155" />
               <text x="120" y="155" textAnchor="middle" className="text-2xl">💻</text>
 
               {/* Output */}
               <path d="M 120 180 L 120 210" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-tvm)" />
-              
+
               <rect x="70" y="210" width="100" height="40" rx="4" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
               <text x="120" y="235" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">{isCs ? 'Odpovědi' : 'Answers'}</text>
             </g>
 
             {/* RIGHT: MACHINE LEARNING */}
-             <g transform="translate(400, 40)">
+            <g transform="translate(400, 40)">
               <text x="120" y="0" textAnchor="middle" className="text-lg font-bold fill-purple-600 dark:fill-purple-400 uppercase">{isCs ? 'Strojové učení' : 'Machine Learning'}</text>
-              
+
               {/* Inputs */}
               <g transform="translate(0, 40)">
                 <rect x="0" y="0" width="100" height="40" rx="4" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" />
                 <text x="50" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">{isCs ? 'Odpovědi' : 'Answers'}</text>
-                
+
                 <rect x="140" y="0" width="100" height="40" rx="4" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" />
                 <text x="190" y="25" textAnchor="middle" className="text-sm font-bold fill-slate-700 dark:fill-slate-300">Data</text>
               </g>
@@ -68,13 +68,13 @@ export default function DiagramHistory({ type }: DiagramProps) {
               {/* Process */}
               <path d="M 50 80 L 100 120" stroke="#94a3b8" strokeWidth="2" />
               <path d="M 190 80 L 140 120" stroke="#94a3b8" strokeWidth="2" />
-              
+
               <rect x="70" y="120" width="100" height="60" rx="8" fill="#1e293b" stroke="#334155" />
               <text x="120" y="155" textAnchor="middle" className="text-2xl">🧠</text>
 
               {/* Output */}
               <path d="M 120 180 L 120 210" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-tvm)" />
-              
+
               <rect x="70" y="210" width="100" height="40" rx="4" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" />
               <text x="120" y="235" textAnchor="middle" className="text-sm font-bold fill-amber-700 dark:fill-amber-300">{isCs ? 'Pravidla' : 'Rules'}</text>
             </g>
@@ -87,8 +87,8 @@ export default function DiagramHistory({ type }: DiagramProps) {
 
   if (type === 'ai-timeline') {
     return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 700 300" className="w-full h-auto" role="img" aria-label="The Two Waves of AI: Discriminative vs Generative">
             <defs>
               <marker id="arrowhead-timeline" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
@@ -99,7 +99,7 @@ export default function DiagramHistory({ type }: DiagramProps) {
             {/* --- WAVE 1: DISCRIMINATIVE --- */}
             <g transform="translate(50, 40)">
               <text x="0" y="0" className="text-sm font-bold fill-slate-600 dark:fill-slate-400 uppercase tracking-widest">{isCs ? 'Vlna 1: Diskriminativní AI' : 'Wave 1: Discriminative AI'}</text>
-              
+
               {/* Input: Cat Photo */}
               <g transform="translate(0, 30)">
                 <rect x="0" y="0" width="60" height="60" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
@@ -133,7 +133,7 @@ export default function DiagramHistory({ type }: DiagramProps) {
             {/* --- WAVE 2: GENERATIVE --- */}
             <g transform="translate(50, 180)">
               <text x="0" y="0" className="text-sm font-bold fill-slate-600 dark:fill-slate-400 uppercase tracking-widest">{isCs ? 'Vlna 2: Generativní AI' : 'Wave 2: Generative AI'}</text>
-              
+
               {/* Input: Prompt */}
               <g transform="translate(0, 30)">
                 <rect x="0" y="0" width="100" height="60" rx="4" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" />
