@@ -13,24 +13,189 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Scroll-triggered animation using Intersection Observer
   useEffect(() => {
-    if (isExpanded && scrollRef.current) {
-      setTimeout(() => {
-        scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
-      }, 500);
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+            entry.target.classList.remove('opacity-0', 'translate-y-8');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    const elements = document.querySelectorAll('.chat-message');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
   }, [isExpanded]);
 
-  // AUTHENTIC CONVERSATION HISTORY - EXTENDED VERSION
-  const chatHistory = [
+  return (
+    <div className="w-full max-w-5xl mx-auto">
+      <div className={`relative overflow-hidden rounded-2xl border transition-all duration-700 ease-in-out ${isExpanded ? 'border-purple-500/30 bg-slate-950/80 shadow-2xl shadow-purple-900/20' : 'border-white/5 bg-slate-900/40 hover:border-purple-500/20'} backdrop-blur-xl`}>
+        
+        {/* Jedi/Sith Background Glow */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-transparent to-red-600/5 pointer-events-none" />
+
+        {/* Header / Dashboard */}
+        <div 
+          className="p-6 cursor-pointer group relative z-10"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <div className="flex items-center gap-5">
+              <div className="relative">
+                <div className="absolute inset-0 bg-purple-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+                <div className="relative p-3 rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 border border-white/10 shadow-lg group-hover:border-purple-500/30 transition-colors">
+                  <GitMerge className="w-6 h-6 text-purple-400" />
+                </div>
+              </div>
+              <div className="text-left">
+                <div className="flex items-center gap-2 text-[10px] font-mono text-purple-400 mb-1 tracking-widest uppercase">
+                  <span className="px-2 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/20">Cycle #35</span>
+                  <span className="text-slate-700">|</span>
+                  <span className="flex items-center gap-1 text-slate-500"><Clock className="w-3 h-3" /> Dec 2, 2025</span>
+                </div>
+                <h3 className="text-xl font-bold text-white group-hover:text-purple-200 transition-colors tracking-tight">
+                  {locale === 'cs' ? "AI × Human: Protocol Audit" : "AI × Human: Protocol Audit"}
+                </h3>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-10 md:border-l md:border-r border-white/5 md:px-10">
+              <div className="text-center">
+                <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Deploy Time</div>
+                <div className="flex items-center gap-1 font-mono text-xl font-bold text-emerald-400 shadow-emerald-500/20 drop-shadow-sm">
+                  <TrendingUp className="w-4 h-4" />
+                  <span>-92%</span>
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Blockers</div>
+                <div className="flex items-center gap-3 font-mono text-xl font-bold text-slate-200">
+                  <span className="text-red-500 drop-shadow-sm">3</span>
+                  <span className="text-slate-700 text-sm">→</span>
+                  <span className="text-emerald-400 drop-shadow-sm">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 text-sm font-medium text-slate-500 group-hover:text-white transition-colors">
+              <span className="hidden md:inline tracking-wide text-xs uppercase">{isExpanded ? (locale === 'cs' ? "Close Archive" : "Close Archive") : (locale === 'cs' ? "Open Archive" : "Open Archive")}</span>
+              <div className={`p-2 rounded-full bg-white/5 border border-white/5 group-hover:bg-purple-500/10 group-hover:border-purple-500/30 transition-all duration-300 ${!isExpanded && 'animate-pulse'}`}>
+                {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Expanded Content: The Story */}
+        <div className={`overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] ${isExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
+          <div className="border-t border-white/5 bg-slate-950/30 relative">
+            
+            {/* IDE-like Scroll Container */}
+            <div 
+              className="h-[600px] overflow-y-auto p-8 space-y-8 scrollbar-hide scroll-smooth"
+            >
+              {chatHistory.map((msg, i) => (
+                <div 
+                  key={i}
+                  className="chat-message flex gap-6 opacity-0 translate-y-8 transition-all duration-700 ease-out"
+                >
+                  {/* Avatar Column */}
+                  <div className="flex flex-col items-center gap-2">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 border backdrop-blur-md shadow-lg transition-all duration-300 hover:scale-110 ${
+                      msg.role === 'blue' ? 'bg-blue-600/10 border-blue-500/30 text-blue-400 shadow-blue-500/10' : 
+                      msg.role === 'red' ? 'bg-red-600/10 border-red-500/30 text-red-400 shadow-red-500/10' : 
+                      msg.role === 'system' ? 'bg-emerald-600/10 border-emerald-500/30 text-emerald-400 shadow-emerald-500/10' :
+                      'bg-slate-700/50 border-slate-600/50 text-slate-300'
+                    }`}>
+                      {msg.avatar}
+                    </div>
+                    {/* Connection Line */}
+                    {i < chatHistory.length - 1 && (
+                      <div className={`w-px h-full bg-gradient-to-b ${
+                        msg.role === 'blue' ? 'from-blue-500/20 to-transparent' :
+                        msg.role === 'red' ? 'from-red-500/20 to-transparent' :
+                        'from-slate-700/20 to-transparent'
+                      }`} />
+                    )}
+                  </div>
+
+                  {/* Message Content */}
+                  <div className="flex-1 max-w-4xl pt-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className={`text-xs font-bold tracking-wider uppercase ${
+                        msg.role === 'blue' ? 'text-blue-400' : 
+                        msg.role === 'red' ? 'text-red-400' : 
+                        msg.role === 'system' ? 'text-emerald-400' :
+                        'text-slate-400'
+                      }`}>{msg.name}</span>
+                      <span className="text-[10px] text-slate-700 font-mono">
+                        {`01:${String(30 + Math.floor(i * 2.5)).padStart(2, '0')}`}
+                      </span>
+                    </div>
+                    
+                    <div className={`group relative p-5 rounded-2xl text-sm leading-relaxed border backdrop-blur-sm transition-all duration-300 hover:shadow-lg ${
+                      msg.role === 'blue' ? 'bg-blue-950/20 border-blue-500/10 hover:border-blue-500/20 text-blue-100' : 
+                      msg.role === 'red' ? 'bg-red-950/20 border-red-500/10 hover:border-red-500/20 text-red-100' : 
+                      msg.role === 'system' ? 'bg-emerald-950/20 border-emerald-500/10 text-emerald-100' :
+                      'bg-slate-800/40 border-white/5 hover:border-white/10 text-slate-300'
+                    }`}>
+                      {/* Glow Effect on Hover */}
+                      <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-r ${
+                         msg.role === 'blue' ? 'from-blue-500/5 to-transparent' : 
+                         msg.role === 'red' ? 'from-red-500/5 to-transparent' : 
+                         'from-white/5 to-transparent'
+                      }`} />
+                      
+                      <div className="relative whitespace-pre-wrap font-sans">
+                        {msg.message}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              
+              <div className="h-24" /> {/* Bottom spacer */}
+            </div>
+
+            {/* Footer Status Bar */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-slate-950/90 border-t border-white/5 backdrop-blur-xl flex flex-wrap items-center justify-between gap-4 z-20">
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <div className="text-xs font-mono text-slate-400">
+                  SYSTEM STATUS: <span className="text-emerald-400">OPTIMIZED</span>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                {['/health', '.env', 'n8n', 'Alembic'].map((tag, i) => (
+                  <div key={i} className="px-2 py-0.5 rounded bg-white/5 border border-white/5 text-[10px] text-slate-500 font-mono uppercase tracking-wider">
+                    {tag}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
     {
       role: "user",
-      name: "User",
+      name: "User (Architect)",
       avatar: <User className="w-4 h-4" />,
       message: locale === 'cs' 
-        ? "ENV file z produkce v git nemame ze? Dukladne analyzuj: Ridis se vsemi temi files s instrukcemi v .ai-content? Kdyz delas neco konkretniho, treba nove lekce, natahnes si cilene instrukce z NEW-LESSON-PROMPT treba? Mame vubec top takhle definovane, ze kdyz budes nasazovat (kdybys byl CLI na strane serveru) ridis se presne temito instrukcemi? Validuj, jestli se nam ty instrukce, workflow a guidelines uz nerozjizdi, jestli vse cteme, kdyz mame, jestli vse aktualizujeme, kdyz mame a jestli nemame uz naopak moc prehlcene instrukce a nehrozi, ze neco vypoustime. Pisem pravidelne incident reporty, kdyz neco fixnem? Aktualizujeme rules, INDEX, guidelines, readme?" 
-        : "Do we have the prod ENV file in git? Thoroughly analyze: Do you follow all files with instructions in .ai-content? When you do something specific, like new lessons, do you pull instructions from NEW-LESSON-PROMPT? Do we even have it defined that when deploying (if you were CLI on the server) you follow these instructions exactly? Validate if our instructions, workflows, and guidelines are drifting, if we read everything when we have it, if we update everything when we have it, and if we don't have instructions that are too overwhelming and risk missing things. Do we write incident reports when we fix things? Do we update rules, INDEX, guidelines, readme?",
-      color: "bg-slate-700 text-slate-200 border-slate-600",
+        ? "🔵 @BlueTeam 🔴 @RedTeam\n\n**Context:** Máme podezření na drift mezi dokumentací a realitou (chybějící .env, porty).\n\n**Task:** Proveďte 'Documentation Integrity Audit'.\n\n**Protocol:**\n1. **Red Team**: Simuluj 'Fresh Developer' experience. Žádné předchozí znalosti. Zkus nasadit appku podle README. Reportuj každý fail.\n2. **Blue Team**: Analyzuj report. Navrhni fixy.\n\n**Output:** Chci vidět seznam kritických chyb a návrh řešení. Go." 
+        : "🔵 @BlueTeam 🔴 @RedTeam\n\n**Context:** Suspected drift between docs and reality (missing .env, ports).\n\n**Task:** Execute 'Documentation Integrity Audit'.\n\n**Protocol:**\n1. **Red Team**: Simulate 'Fresh Developer' experience. Zero prior knowledge. Try to deploy app per README. Report every fail.\n2. **Blue Team**: Analyze report. Propose fixes.\n\n**Output:** I want a list of critical errors and a solution proposal. Go.",
+      color: "bg-slate-700 text-slate-200 border-slate-600 font-mono text-xs",
       delay: 0
     },
     {
@@ -54,13 +219,13 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
       delay: 2500
     },
     {
-      role: "blue",
-      name: "Gemini 3 Pro (Blue Team)",
-      avatar: <FileCheck className="w-4 h-4" />,
+      role: "user",
+      name: "User (Architect)",
+      avatar: <User className="w-4 h-4" />,
       message: locale === 'cs' 
-        ? "Děkuji za report. Navrhuji vědecký přístup - A/B Testing Methodology:\n\n**PHASE 1: Baseline Test** (Současný stav)\n- Fresh clone do /tmp/test-baseline\n- Následuj README přesně, bez jakýchkoliv fixů\n- Změř: čas k funkční platformě, počet blokerů, otázky které vzniknou\n\n**PHASE 2: Apply Fixes**\n- Oprav všech 9 problémů z Red Team reportu\n- BONUS: Přidám /health endpoint pro system monitoring (PostgreSQL + Redis status)\n- Commit jako 'improved' baseline\n\n**PHASE 3: Improved Test**\n- Fresh clone do /tmp/test-improved\n- Následuj NOVÝ README\n- Změř stejné metriky\n\n**PHASE 4: Compare & Report**\nVytvořím detailed comparison report.\n\nChceš pokračovat s tímhle přístupem?" 
-        : "Thank you for the report. Proposing scientific approach - A/B Testing Methodology:\n\n**PHASE 1: Baseline Test** (Current state)\n- Fresh clone to /tmp/test-baseline\n- Follow README exactly, no fixes\n- Measure: time to working platform, blocker count, questions raised\n\n**PHASE 2: Apply Fixes**\n- Fix all 9 issues from Red Team report\n- BONUS: Add /health endpoint for system monitoring (PostgreSQL + Redis status)\n- Commit as 'improved' baseline\n\n**PHASE 3: Improved Test**\n- Fresh clone to /tmp/test-improved\n- Follow NEW README\n- Measure same metrics\n\n**PHASE 4: Compare & Report**\nCreate detailed comparison report.\n\nShall I proceed with this approach?",
-      color: "bg-purple-900/40 border-purple-500/30 text-purple-200",
+        ? "Díky za report. Tohle je nepřijatelné pro onboarding.\n\n**Action Plan:** Spustíme **A/B Test** pro validaci fixů.\n\n**Scénář:**\n1. Vytvoř 2 izolované instance: `/tmp/baseline` a `/tmp/improved`\n2. **Baseline**: Clone main branch. Změř čas do failu.\n3. **Improved**: Aplikuj fixy do nové git branch `docs/fix-onboarding`. Přidej `/health` endpoint pro monitoring.\n4. **Sync**: Pushni změny, udělej fresh clone, změř čas do success.\n\nChci vidět tvrdá data. Execute." 
+        : "Thanks for the report. Unacceptable for onboarding.\n\n**Action Plan:** Initiate **A/B Test** to validate fixes.\n\n**Scenario:**\n1. Create 2 isolated instances: `/tmp/baseline` and `/tmp/improved`\n2. **Baseline**: Clone main branch. Measure time to fail.\n3. **Improved**: Apply fixes to new git branch `docs/fix-onboarding`. Add `/health` endpoint for monitoring.\n4. **Sync**: Push changes, fresh clone, measure time to success.\n\nI want hard data. Execute.",
+      color: "bg-slate-700 text-slate-200 border-slate-600 font-mono text-xs",
       delay: 5000
     },
     {
@@ -102,14 +267,24 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
       delay: 13500
     },
     {
+      role: "user",
+      name: "User (Code Review)",
+      avatar: <User className="w-4 h-4" />,
+      message: locale === 'cs' 
+        ? "� **Reviewing PR:**\n\n1. `.env.prod.example`: Dobře, že jsi přidal `CHANGE_ME` placeholders. Bezpečné.\n2. `README.md`: Sekce pro n8n je fajn, ale zdůrazni, že je to 'Advanced/Optional'. Nechci mást juniory.\n3. `/health` endpoint: Vypadá čistě. Přidej check i pro Redis, nejen DB.\n\nApprove po zapracování připomínek. Pokračuj na Phase 3 (Improved Test)." 
+        : "👀 **Reviewing PR:**\n\n1. `.env.prod.example`: Good job on `CHANGE_ME` placeholders. Safe.\n2. `README.md`: n8n section is good, but emphasize it's 'Advanced/Optional'. Don't confuse juniors.\n3. `/health` endpoint: Looks clean. Add check for Redis too, not just DB.\n\nApproved after addressing comments. Proceed to Phase 3 (Improved Test).",
+      color: "bg-slate-700 text-slate-200 border-slate-600 font-mono text-xs",
+      delay: 17000
+    },
+    {
       role: "blue",
-      name: "Blue Team (Applying Improvements)",
+      name: "Blue Team (Applying Fixes)",
       avatar: <Terminal className="w-4 h-4" />,
       message: locale === 'cs' 
-        ? "🔨 PHASE 2: APPLYING FIXES\n\n**Documentation Improvements:**\n\n1. README.md\n   + Add: 'Step 2: Create .env' with cp command\n   + Add: Alembic migration workflow section\n   + Add: n8n documentation (port 5678, purpose, future use)\n   + Fix: Dead references (DEPLOYMENT_STRATEGY → removed)\n   + Fix: Port troubleshooting (add rebuild + NEXT_PUBLIC_API_URL note)\n\n2. .env.prod.example\n   + Complete all missing variables:\n     DATABASE_URL, REDIS_URL, BACKEND_CORS_ORIGINS,\n     SMTP_*, FIRST_SUPERUSER_*, N8N_*\n\n3. DEV_AND_DEPLOYMENT_GUIDE.md\n   + Remove DEPLOYMENT_STRATEGY.md reference\n\n4. DATABASE_MIGRATIONS.md\n   + Add rollback section with emergency commands\n\n**NEW FEATURE: /health Endpoint**\n```python\n# backend/app/routers/health.py\n@router.get(\"/health\")\nasync def health_check():\n    # Returns PostgreSQL + Redis status\n    # Foundation for Grafana/n8n monitoring\n```\n\nApplying... Committed as 7637caf." 
-        : "🔨 PHASE 2: APPLYING FIXES\n\n**Documentation Improvements:**\n\n1. README.md\n   + Add: 'Step 2: Create .env' with cp command\n   + Add: Alembic migration workflow section\n   + Add: n8n documentation (port 5678, purpose, future use)\n   + Fix: Dead references (DEPLOYMENT_STRATEGY → removed)\n   + Fix: Port troubleshooting (add rebuild + NEXT_PUBLIC_API_URL note)\n\n2. .env.prod.example\n   + Complete all missing variables:\n     DATABASE_URL, REDIS_URL, BACKEND_CORS_ORIGINS,\n     SMTP_*, FIRST_SUPERUSER_*, N8N_*\n\n3. DEV_AND_DEPLOYMENT_GUIDE.md\n   + Remove DEPLOYMENT_STRATEGY.md reference\n\n4. DATABASE_MIGRATIONS.md\n   + Add rollback section with emergency commands\n\n**NEW FEATURE: /health Endpoint**\n```python\n# backend/app/routers/health.py\n@router.get(\"/health\")\nasync def health_check():\n    # Returns PostgreSQL + Redis status\n    # Foundation for Grafana/n8n monitoring\n```\n\nApplying... Committed as 7637caf.",
+        ? "🫡 Rozumím. Zapracovávám review notes:\n\n```diff\n- # n8n Automation\n+ # n8n Automation (Advanced/Optional)\n```\n\n```python\n# Adding Redis check to health.py\ntry:\n    r = redis.from_url(os.getenv('REDIS_URL'))\n    r.ping()\n    services.append({'name': 'Redis', 'status': 'healthy'})\nexcept Exception as e:\n    services.append({'name': 'Redis', 'status': 'down'})\n```\n\nSpouštím Phase 3: Improved Test..." 
+        : "🫡 Understood. Addressing review notes:\n\n```diff\n- # n8n Automation\n+ # n8n Automation (Advanced/Optional)\n```\n\n```python\n# Adding Redis check to health.py\ntry:\n    r = redis.from_url(os.getenv('REDIS_URL'))\n    r.ping()\n    services.append({'name': 'Redis', 'status': 'healthy'})\nexcept Exception as e:\n    services.append({'name': 'Redis', 'status': 'down'})\n```\n\nStarting Phase 3: Improved Test...",
       color: "bg-blue-900/40 border-blue-500/30 text-blue-200 font-mono text-xs",
-      delay: 16500
+      delay: 19000
     },
     {
       role: "blue",
@@ -133,12 +308,12 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
     },
     {
       role: "user",
-      name: "User (Strategic Vision)",
+      name: "User (Architect)",
       avatar: <User className="w-4 h-4" />,
       message: locale === 'cs' 
-        ? "OK, takže hotovo. Vítěz je main branch.\n\nWait... Tohle celé cvičení bylo vlastně krasný příklad Human × AI collaboration, ne? Red team našel problémy, Blue team fixoval, já schvaloval. To je přesně ta 'Built in Public' filosofie o které mluvíme.\n\nCo kdybychom z toho udělali showcase? Ukázat lidem JAK tenhle projekt vzniká. Reálná konverzace, reálné problémy, reálné řešení. Ne nějaké marketingové kecy, ale authentický pohled do našeho procesu.\n\nB by mohlo byt fajn i pro budouci feel a usabilitu platformy? Udelej to cool, ale drž se zároveň tématu a postupů." 
-        : "OK, so done. Winner is main branch.\n\nWait... This whole exercise was actually a beautiful example of Human × AI collaboration, right? Red team found issues, Blue team fixed them, I approved. That's exactly the 'Built in Public' philosophy we talk about.\n\nWhat if we made this into a showcase? Show people HOW this project is built. Real conversation, real problems, real solutions. Not marketing BS, but authentic look into our process.\n\nB could be nice for future feel and usability? Make it cool, but follow themes and process.",
-      color: "bg-slate-700 text-slate-200 border-slate-600",
+        ? "Skvělá práce týme. 👏\n\n**Retrospective:**\n- Baseline test odhalil kritické chyby v onboardingu.\n- A/B test potvrdil 100% improvement po fixech.\n- Spolupráce Red/Blue teamu fungovala perfektně.\n\n**Next Steps:**\n1. Merge `docs/fix-onboarding` do `main`.\n2. Deploy na produkci.\n3. Udělejte z tohoto procesu showcase na About page. Chci, aby lidi viděli, jak 'Built in Public' vypadá v praxi. Žádné marketingové řeči, ukažte jim kód a terminál.\n\nDismissed." 
+        : "Great work team. 👏\n\n**Retrospective:**\n- Baseline test revealed critical onboarding issues.\n- A/B test confirmed 100% improvement after fixes.\n- Red/Blue team collaboration worked perfectly.\n\n**Next Steps:**\n1. Merge `docs/fix-onboarding` to `main`.\n2. Deploy to production.\n3. Make this process a showcase on the About page. I want people to see what 'Built in Public' looks like in practice. No marketing fluff, show them code and terminal.\n\nDismissed.",
+      color: "bg-slate-700 text-slate-200 border-slate-600 font-mono text-xs",
       delay: 26000
     },
     {
