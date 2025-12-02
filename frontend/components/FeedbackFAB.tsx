@@ -196,7 +196,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
           ref={mobileButtonRef}
           variant="ghost"
           className={cn(
-            "!rounded-full w-20 h-20 flex items-center justify-center p-0 transition-all duration-300 touch-none border",
+            "!rounded-full w-12 h-12 flex items-center justify-center p-0 transition-all duration-300 touch-none border",
             currentMode === 'viewing' || currentMode === 'placing'
               ? "bg-primary/10 border-primary/50 text-primary shadow-[0_0_15px_rgba(var(--primary),0.3)] scale-110"
               : "bg-transparent border-primary/20 text-primary hover:border-primary/30 hover:bg-transparent"
@@ -205,8 +205,8 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
           onTouchStart={startDrag}
           title="Report Bug / View Feedback"
         >
-          {/* Show X if viewing/placing, otherwise show Split Bug/Eye icon (3x larger) */}
-          {(currentMode === 'viewing' || currentMode === 'placing') ? <X size={32} /> : <SplitBugEyeIcon size={72} />}
+          {/* Show X if viewing/placing, otherwise show Split Bug/Eye icon (larger but fits) */}
+          {(currentMode === 'viewing' || currentMode === 'placing') ? <X size={28} /> : <SplitBugEyeIcon size={48} />}
         </Button>
       </div>
 

@@ -22,8 +22,8 @@ export default function SplitBugEyeIcon({ size = 24, className = '' }: SplitBugE
       strokeLinejoin="round"
       className={className}
     >
-      {/* Left half: Bug icon (clipped) */}
-      <g clipPath="url(#leftHalf)">
+      {/* Top half: Bug icon (clipped) */}
+      <g clipPath="url(#topHalf)">
         {/* Bug body */}
         <path d="m8 2 1.88 1.88" />
         <path d="M14.12 3.88 16 2" />
@@ -38,21 +38,24 @@ export default function SplitBugEyeIcon({ size = 24, className = '' }: SplitBugE
         <path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" />
       </g>
 
-      {/* Right half: Eye icon (clipped) */}
-      <g clipPath="url(#rightHalf)">
+      {/* Bottom half: Eye icon (clipped) */}
+      <g clipPath="url(#bottomHalf)">
         {/* Eye shape */}
         <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
         {/* Pupil */}
         <circle cx="12" cy="12" r="3" />
       </g>
 
-      {/* Clip paths for vertical split */}
+      {/* Horizontal dividing line */}
+      <line x1="0" y1="12" x2="24" y2="12" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+
+      {/* Clip paths for horizontal split */}
       <defs>
-        <clipPath id="leftHalf">
-          <rect x="0" y="0" width="12" height="24" />
+        <clipPath id="topHalf">
+          <rect x="0" y="0" width="24" height="12" />
         </clipPath>
-        <clipPath id="rightHalf">
-          <rect x="12" y="0" width="12" height="24" />
+        <clipPath id="bottomHalf">
+          <rect x="0" y="12" width="24" height="12" />
         </clipPath>
       </defs>
     </svg>
