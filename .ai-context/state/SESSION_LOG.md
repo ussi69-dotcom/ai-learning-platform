@@ -1,5 +1,75 @@
 # Session Log
 
+## Cycle 38 - December 2-3, 2025 (Claude Code - Stabilization & Planning)
+
+**Agent:** Claude Code (Opus 4.5)
+**Status:** ✅ COMPLETE - Ready for Content Phase
+**Focus:** Bug fixes, Playwright visual testing, MCP cleanup, Master Execution Plan
+
+### What Was Done:
+
+1. **MCP Cleanup** 🧹
+   - Removed `sequential-thinking` and `playwright` MCP servers (caused crashes via npx)
+   - Kept `context7` (HTTP-based, stable)
+   - Solution: Use Playwright as project dependency instead of MCP
+
+2. **Playwright Visual Testing** 🎭
+   - Installed `@playwright/test` as dev dependency
+   - Created 48 baseline snapshots (desktop/tablet/mobile)
+   - Test files: `pages.spec.ts`, `components.spec.ts`, `auth-flows.spec.ts`
+   - Commands: `npm run test:visual`, `npm run test:visual:update`
+   - Documentation: Updated `VISUAL_INSPECTION.md`
+
+3. **Avatar Selector Fix** 🖼️
+   - Fixed icon overlap issue (removed scale transforms)
+   - Icons now full-size without borders
+   - Selected state uses ring highlight
+   - Grid: 5/6/7 columns with proper spacing
+
+4. **Cycle #35 Navigation Fix** 🔗
+   - Problem: `/about#cycle-35` scroll didn't work with Next.js
+   - Solution: Moved `ABTestShowcase` directly to Homepage
+   - Users click "START MISSION" to expand demo inline
+   - No navigation needed, better UX
+
+5. **Master Execution Plan** 📋
+   - Created `EXECUTION_PLAN.md` with full project roadmap
+   - Content status: 25% (only AI Basics complete)
+   - Priority: Phase 2 - Prompt Engineering (8 lessons)
+   - Role split: Claude = backend/bugs, Gemini = content/lessons
+
+### Commits:
+- `ef9e34e` - Playwright visual testing (48 baselines)
+- `7cf9909` - VISUAL_INSPECTION.md documentation
+- `acce0d5` - Avatar + navigation first fix
+- `d522d1b` - ABTestShowcase moved to homepage
+- `a2152fd` - Avatar grid without overlapping
+- `ee37601` - Avatars full-size without borders
+
+### Files Created/Modified:
+- `frontend/playwright.config.ts`
+- `frontend/tests/visual/*.spec.ts`
+- `frontend/components/AvatarSelector.tsx`
+- `frontend/app/[locale]/page.tsx` (ABTestShowcase)
+- `frontend/app/[locale]/about/page.tsx` (cleanup)
+- `.ai-context/EXECUTION_PLAN.md`
+- `.ai-context/workflows/VISUAL_INSPECTION.md`
+
+### Next Steps (for tomorrow):
+1. **Review EXECUTION_PLAN.md** - Finalize sprint priorities
+2. **Create slash commands** - `/new-lesson`, `/validate-lesson`
+3. **Content generation** - Start Phase 2 (Prompt Engineering)
+4. **Role coordination** - Claude: backend, Gemini: content
+
+### Handoff Notes:
+- All bugs fixed and pushed to origin/main
+- VPS deployment ready
+- Playwright visual testing operational
+- EXECUTION_PLAN.md contains full roadmap
+- User wants to continue with content generation tomorrow
+
+---
+
 ## Cycle 37 - December 2, 2025 (Claude Code - Workflow Setup)
 
 **Agent:** Claude Code (Senior Architect)

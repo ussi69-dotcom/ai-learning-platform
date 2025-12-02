@@ -65,16 +65,51 @@ Read this first to understand the environment, preferences, and active protocols
     - [CLAUDE.md](../../CLAUDE.md) - Onboarding guide for future AI agents
 
 ## 📊 Current State Snapshot
-- **Cycle:** 36 (Optimization & Stabilization) - **COMPLETE**
-- **Status:** Ready for Production Deployment
+- **Cycle:** 38 (Stabilization & Planning) - **COMPLETE**
+- **Status:** Ready for Content Generation Phase
 - **Key Achievements:**
     - "Masterpiece Standard" achieved for Lessons 3-6.
     - Localization architecture (`[locale]` routing) fully implemented.
     - Secure Code Execution: Implemented via `SandboxService` + Docker + `<Sandbox>` UI.
     - **API Security:** Rate Limiting, Strong Passwords, Email Verification, Security Headers.
-    - **Deployment Security:** Prepared `scripts/setup_security.sh` for VPS.
-    - **Documentation:** Comprehensive audit completed, optimization plan ready.
+    - **Playwright Visual Testing:** 48 baseline snapshots, `npm run test:visual`
     - **Infrastructure:** Multi-stage Docker builds, Makefile for DX.
+    - **All known bugs fixed** (avatars, navigation, scroll issues)
+
+---
+
+## 🎯 Master Execution Plan (EXECUTION_PLAN.md)
+
+### Content Status
+| Phase | Kurz | Lekce | Stav |
+|-------|------|-------|------|
+| 1 | AI Basics (Padawan) | 7 | ✅ DONE |
+| 2 | Prompt Engineering (Jedi) | 8 | 🔴 PRIORITA |
+| 3 | Advanced AI (Master) | 8 | 🟡 Další |
+| 4 | AI Engineering (Sith) | 8 | 🔵 Budoucnost |
+
+### Role Split
+| Agent | Odpovědnost |
+|-------|-------------|
+| **Claude Code** | Backend, bugy, architektura, review, git, Playwright QA |
+| **Gemini CLI** | MDX lekce, kvízy, překlady, kreativní obsah |
+
+### Sprint Priorities
+1. **Sprint 1:** ✅ Stabilizace (bugy opraveny)
+2. **Sprint 2:** Content Foundation - Gemini generuje lekce 01-04
+3. **Sprint 3:** Content Expansion - zbytek Phase 2+3
+4. **Sprint 4:** Polish & Deploy
+
+### Key Files
+- **Full Plan:** `.ai-context/EXECUTION_PLAN.md`
+- **Visual QA:** `.ai-context/workflows/VISUAL_INSPECTION.md`
+- **Content Guide:** `.ai-context/core/CONTENT_GUIDELINES.md`
+
+### Tomorrow's Focus
+1. Review EXECUTION_PLAN.md - finalizovat priority
+2. Create slash commands (`/new-lesson`, `/validate-lesson`)
+3. Start content generation (Phase 2: Prompt Engineering)
+4. Coordinate Claude (backend) + Gemini (content)
 
 ---
 
