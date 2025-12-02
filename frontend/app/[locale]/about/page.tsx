@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from '@/i18n/routing';
 import { Button } from "@/components/ui/button";
@@ -8,10 +8,12 @@ import { Rocket, Brain, Code2, Terminal, Zap, Users, Sparkles, Layout, Database,
 import Diagram from '@/components/mdx/Diagram';
 
 import { useAuth } from '@/context/AuthContext';
+import ABTestShowcase from '@/components/ABTestShowcase';
 
 export default function AboutPage() {
   const { user } = useAuth();
   const t = useTranslations('About');
+  const locale = useLocale();
 
   // Timeline Data
   const timeline = [
@@ -102,6 +104,11 @@ export default function AboutPage() {
                </div>
              ))}
            </div>
+        </div>
+
+        {/* A/B Test Meta Showcase */}
+        <div className="mb-24 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-400">
+          <ABTestShowcase locale={locale} />
         </div>
       </div>
 

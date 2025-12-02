@@ -11,183 +11,11 @@ interface ABTestShowcaseProps {
 
 export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Scroll-triggered animation using Intersection Observer
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('opacity-100', 'translate-y-0');
-            entry.target.classList.remove('opacity-0', 'translate-y-8');
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    );
-
-    const elements = document.querySelectorAll('.chat-message');
-    elements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, [isExpanded]);
-
-  return (
-    <div className="w-full max-w-5xl mx-auto">
-      <div className={`relative overflow-hidden rounded-2xl border transition-all duration-700 ease-in-out ${isExpanded ? 'border-purple-500/30 bg-slate-950/80 shadow-2xl shadow-purple-900/20' : 'border-white/5 bg-slate-900/40 hover:border-purple-500/20'} backdrop-blur-xl`}>
-        
-        {/* Jedi/Sith Background Glow */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-transparent to-red-600/5 pointer-events-none" />
-
-        {/* Header / Dashboard */}
-        <div 
-          className="p-6 cursor-pointer group relative z-10"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            
-            <div className="flex items-center gap-5">
-              <div className="relative">
-                <div className="absolute inset-0 bg-purple-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
-                <div className="relative p-3 rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 border border-white/10 shadow-lg group-hover:border-purple-500/30 transition-colors">
-                  <GitMerge className="w-6 h-6 text-purple-400" />
-                </div>
-              </div>
-              <div className="text-left">
-                <div className="flex items-center gap-2 text-[10px] font-mono text-purple-400 mb-1 tracking-widest uppercase">
-                  <span className="px-2 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/20">Cycle #35</span>
-                  <span className="text-slate-700">|</span>
-                  <span className="flex items-center gap-1 text-slate-500"><Clock className="w-3 h-3" /> Dec 2, 2025</span>
-                </div>
-                <h3 className="text-xl font-bold text-white group-hover:text-purple-200 transition-colors tracking-tight">
-                  {locale === 'cs' ? "AI × Human: Protocol Audit" : "AI × Human: Protocol Audit"}
-                </h3>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-10 md:border-l md:border-r border-white/5 md:px-10">
-              <div className="text-center">
-                <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Deploy Time</div>
-                <div className="flex items-center gap-1 font-mono text-xl font-bold text-emerald-400 shadow-emerald-500/20 drop-shadow-sm">
-                  <TrendingUp className="w-4 h-4" />
-                  <span>-92%</span>
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Blockers</div>
-                <div className="flex items-center gap-3 font-mono text-xl font-bold text-slate-200">
-                  <span className="text-red-500 drop-shadow-sm">3</span>
-                  <span className="text-slate-700 text-sm">→</span>
-                  <span className="text-emerald-400 drop-shadow-sm">0</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 text-sm font-medium text-slate-500 group-hover:text-white transition-colors">
-              <span className="hidden md:inline tracking-wide text-xs uppercase">{isExpanded ? (locale === 'cs' ? "Close Archive" : "Close Archive") : (locale === 'cs' ? "Open Archive" : "Open Archive")}</span>
-              <div className={`p-2 rounded-full bg-white/5 border border-white/5 group-hover:bg-purple-500/10 group-hover:border-purple-500/30 transition-all duration-300 ${!isExpanded && 'animate-pulse'}`}>
-                {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Expanded Content: The Story */}
-        <div className={`overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] ${isExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
-          <div className="border-t border-white/5 bg-slate-950/30 relative">
-            
-            {/* IDE-like Scroll Container */}
-            <div 
-              className="h-[600px] overflow-y-auto p-8 space-y-8 scrollbar-hide scroll-smooth"
-            >
-              {chatHistory.map((msg, i) => (
-                <div 
-                  key={i}
-                  className="chat-message flex gap-6 opacity-0 translate-y-8 transition-all duration-700 ease-out"
-                >
-                  {/* Avatar Column */}
-                  <div className="flex flex-col items-center gap-2">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 border backdrop-blur-md shadow-lg transition-all duration-300 hover:scale-110 ${
-                      msg.role === 'blue' ? 'bg-blue-600/10 border-blue-500/30 text-blue-400 shadow-blue-500/10' : 
-                      msg.role === 'red' ? 'bg-red-600/10 border-red-500/30 text-red-400 shadow-red-500/10' : 
-                      msg.role === 'system' ? 'bg-emerald-600/10 border-emerald-500/30 text-emerald-400 shadow-emerald-500/10' :
-                      'bg-slate-700/50 border-slate-600/50 text-slate-300'
-                    }`}>
-                      {msg.avatar}
-                    </div>
-                    {/* Connection Line */}
-                    {i < chatHistory.length - 1 && (
-                      <div className={`w-px h-full bg-gradient-to-b ${
-                        msg.role === 'blue' ? 'from-blue-500/20 to-transparent' :
-                        msg.role === 'red' ? 'from-red-500/20 to-transparent' :
-                        'from-slate-700/20 to-transparent'
-                      }`} />
-                    )}
-                  </div>
-
-                  {/* Message Content */}
-                  <div className="flex-1 max-w-4xl pt-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className={`text-xs font-bold tracking-wider uppercase ${
-                        msg.role === 'blue' ? 'text-blue-400' : 
-                        msg.role === 'red' ? 'text-red-400' : 
-                        msg.role === 'system' ? 'text-emerald-400' :
-                        'text-slate-400'
-                      }`}>{msg.name}</span>
-                      <span className="text-[10px] text-slate-700 font-mono">
-                        {`01:${String(30 + Math.floor(i * 2.5)).padStart(2, '0')}`}
-                      </span>
-                    </div>
-                    
-                    <div className={`group relative p-5 rounded-2xl text-sm leading-relaxed border backdrop-blur-sm transition-all duration-300 hover:shadow-lg ${
-                      msg.role === 'blue' ? 'bg-blue-950/20 border-blue-500/10 hover:border-blue-500/20 text-blue-100' : 
-                      msg.role === 'red' ? 'bg-red-950/20 border-red-500/10 hover:border-red-500/20 text-red-100' : 
-                      msg.role === 'system' ? 'bg-emerald-950/20 border-emerald-500/10 text-emerald-100' :
-                      'bg-slate-800/40 border-white/5 hover:border-white/10 text-slate-300'
-                    }`}>
-                      {/* Glow Effect on Hover */}
-                      <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-r ${
-                         msg.role === 'blue' ? 'from-blue-500/5 to-transparent' : 
-                         msg.role === 'red' ? 'from-red-500/5 to-transparent' : 
-                         'from-white/5 to-transparent'
-                      }`} />
-                      
-                      <div className="relative whitespace-pre-wrap font-sans">
-                        {msg.message}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              
-              <div className="h-24" /> {/* Bottom spacer */}
-            </div>
-
-            {/* Footer Status Bar */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-slate-950/90 border-t border-white/5 backdrop-blur-xl flex flex-wrap items-center justify-between gap-4 z-20">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <div className="text-xs font-mono text-slate-400">
-                  SYSTEM STATUS: <span className="text-emerald-400">OPTIMIZED</span>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                {['/health', '.env', 'n8n', 'Alembic'].map((tag, i) => (
-                  <div key={i} className="px-2 py-0.5 rounded bg-white/5 border border-white/5 text-[10px] text-slate-500 font-mono uppercase tracking-wider">
-                    {tag}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  );
-}
+  // AUTHENTIC CONVERSATION HISTORY - EXTENDED VERSION
+  const chatHistory = [
     {
       role: "user",
       name: "User (Architect)",
@@ -229,14 +57,14 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
       delay: 5000
     },
     {
-      role: "user",
-      name: "User",
-      avatar: <User className="w-4 h-4" />,
+      role: "blue",
+      name: "Gemini 3 Pro (Blue Team)",
+      avatar: <FileCheck className="w-4 h-4" />,
       message: locale === 'cs' 
-        ? "Projdi implementation_plan.md za blue team, obhaj odhalene nedostatky a validuj outcome, test scenar ok? Nejake dalsi navrhy?" 
-        : "Review implementation_plan.md as blue team, justify discovered issues and validate outcome. Test scenario ok? Any other suggestions?",
-      color: "bg-slate-700 text-slate-200 border-slate-600",
-      delay: 6500
+        ? "Děkuji za report. Navrhuji vědecký přístup - A/B Testing Methodology:\n\n**PHASE 1: Baseline Test** (Současný stav)\n- Fresh clone do /tmp/test-baseline\n- Následuj README přesně, bez jakýchkoliv fixů\n- Změř: čas k funkční platformě, počet blokerů, otázky které vzniknou\n\n**PHASE 2: Apply Fixes**\n- Oprav všech 9 problémů z Red Team reportu\n- BONUS: Přidám /health endpoint pro system monitoring (PostgreSQL + Redis status)\n- Commit jako 'improved' baseline\n\n**PHASE 3: Improved Test**\n- Fresh clone do /tmp/test-improved\n- Následuj NOVÝ README\n- Změř stejné metriky\n\n**PHASE 4: Compare & Report**\nVytvořím detailed comparison report.\n\nChceš pokračovat s tímhle přístupem?" 
+        : "Thank you for the report. Proposing scientific approach - A/B Testing Methodology:\n\n**PHASE 1: Baseline Test** (Current state)\n- Fresh clone to /tmp/test-baseline\n- Follow README exactly, no fixes\n- Measure: time to working platform, blocker count, questions raised\n\n**PHASE 2: Apply Fixes**\n- Fix all 9 issues from Red Team report\n- BONUS: Add /health endpoint for system monitoring (PostgreSQL + Redis status)\n- Commit as 'improved' baseline\n\n**PHASE 3: Improved Test**\n- Fresh clone to /tmp/test-improved\n- Follow NEW README\n- Measure same metrics\n\n**PHASE 4: Compare & Report**\nCreate detailed comparison report.\n\nShall I proceed with this approach?",
+      color: "bg-purple-900/40 border-purple-500/30 text-purple-200",
+      delay: 5000
     },
     {
       role: "blue",
@@ -271,7 +99,7 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
       name: "User (Code Review)",
       avatar: <User className="w-4 h-4" />,
       message: locale === 'cs' 
-        ? "� **Reviewing PR:**\n\n1. `.env.prod.example`: Dobře, že jsi přidal `CHANGE_ME` placeholders. Bezpečné.\n2. `README.md`: Sekce pro n8n je fajn, ale zdůrazni, že je to 'Advanced/Optional'. Nechci mást juniory.\n3. `/health` endpoint: Vypadá čistě. Přidej check i pro Redis, nejen DB.\n\nApprove po zapracování připomínek. Pokračuj na Phase 3 (Improved Test)." 
+        ? "👀 **Reviewing PR:**\n\n1. `.env.prod.example`: Dobře, že jsi přidal `CHANGE_ME` placeholders. Bezpečné.\n2. `README.md`: Sekce pro n8n je fajn, ale zdůrazni, že je to 'Advanced/Optional'. Nechci mást juniory.\n3. `/health` endpoint: Vypadá čistě. Přidej check i pro Redis, nejen DB.\n\nApprove po zapracování připomínek. Pokračuj na Phase 3 (Improved Test)." 
         : "👀 **Reviewing PR:**\n\n1. `.env.prod.example`: Good job on `CHANGE_ME` placeholders. Safe.\n2. `README.md`: n8n section is good, but emphasize it's 'Advanced/Optional'. Don't confuse juniors.\n3. `/health` endpoint: Looks clean. Add check for Redis too, not just DB.\n\nApproved after addressing comments. Proceed to Phase 3 (Improved Test).",
       color: "bg-slate-700 text-slate-200 border-slate-600 font-mono text-xs",
       delay: 17000
@@ -348,122 +176,177 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
     }
   ];
 
+  // Auto-play effect
+  useEffect(() => {
+    if (!isExpanded) return;
+
+    // Schedule all messages
+    const timeouts = chatHistory.map((msg, index) => {
+      return setTimeout(() => {
+        setVisibleCount(prev => Math.max(prev, index + 1));
+      }, msg.delay);
+    });
+
+    return () => timeouts.forEach(t => clearTimeout(t));
+  }, [isExpanded]);
+
+  // Auto-scroll effect
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  }, [visibleCount]);
+
   return (
     <div className="w-full max-w-5xl mx-auto">
-      <div className={`relative overflow-hidden rounded-2xl border transition-all duration-500 ease-in-out ${isExpanded ? 'border-purple-500/40 bg-slate-950/90 shadow-2xl shadow-purple-900/20' : 'border-white/10 bg-slate-900/40 hover:border-purple-500/30'} backdrop-blur-xl`}>
+      <div className={`relative overflow-hidden rounded-2xl border transition-all duration-700 ease-in-out ${isExpanded ? 'border-purple-500/30 bg-slate-950/80 shadow-2xl shadow-purple-900/20' : 'border-white/5 bg-slate-900/40 hover:border-purple-500/20'} backdrop-blur-xl`}>
         
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5 pointer-events-none" />
+        {/* Jedi/Sith Background Glow */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-transparent to-red-600/5 pointer-events-none" />
 
+        {/* Header / Dashboard */}
         <div 
           className="p-6 cursor-pointer group relative z-10"
-          onClick={() => setIsExpanded(!isExpanded)}
+          onClick={() => {
+            if (!isExpanded) setVisibleCount(0);
+            setIsExpanded(!isExpanded);
+          }}
         >
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             
             <div className="flex items-center gap-5">
               <div className="relative">
-                <div className="absolute inset-0 bg-purple-500 blur-md opacity-20 group-hover:opacity-40 transition-opacity" />
-                <div className="relative p-3 rounded-xl bg-gradient-to-br from-purple-600 to-blue-600 shadow-lg border border-white/10">
-                  <GitMerge className="w-6 h-6 text-white" />
+                <div className="absolute inset-0 bg-purple-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+                <div className="relative p-3 rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 border border-white/10 shadow-lg group-hover:border-purple-500/30 transition-colors">
+                  <GitMerge className="w-6 h-6 text-purple-400" />
                 </div>
               </div>
               <div className="text-left">
-                <div className="flex items-center gap-2 text-[10px] font-mono text-purple-300 mb-1 tracking-wider uppercase">
-                  <span className="px-2 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/20">Optimization Cycle #35</span>
-                  <span className="text-slate-600">|</span>
-                  <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> Dec 2, 2025</span>
+                <div className="flex items-center gap-2 text-[10px] font-mono text-purple-400 mb-1 tracking-widest uppercase">
+                  <span className="px-2 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/20">Cycle #35</span>
+                  <span className="text-slate-700">|</span>
+                  <span className="flex items-center gap-1 text-slate-500"><Clock className="w-3 h-3" /> Dec 2, 2025</span>
                 </div>
-                <h3 className="text-xl font-bold text-white group-hover:text-purple-200 transition-colors">
-                  {locale === 'cs' ? "AI × Human: Dokumentační Audit" : "AI × Human: Documentation Audit"}
+                <h3 className="text-xl font-bold text-white group-hover:text-purple-200 transition-colors tracking-tight">
+                  {locale === 'cs' ? "AI × Human: Protocol Audit" : "AI × Human: Protocol Audit"}
                 </h3>
               </div>
             </div>
 
-            <div className="flex items-center gap-8 md:border-l md:border-r border-white/5 md:px-8">
+            <div className="flex items-center gap-10 md:border-l md:border-r border-white/5 md:px-10">
               <div className="text-center">
-                <div className="text-[10px] uppercase tracking-wider text-slate-500 mb-1">Deploy Time</div>
-                <div className="flex items-center gap-1 font-mono text-lg font-bold text-green-400">
+                <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Deploy Time</div>
+                <div className="flex items-center gap-1 font-mono text-xl font-bold text-emerald-400 shadow-emerald-500/20 drop-shadow-sm">
                   <TrendingUp className="w-4 h-4" />
                   <span>-92%</span>
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-[10px] uppercase tracking-wider text-slate-500 mb-1">Blockers</div>
-                <div className="flex items-center gap-2 font-mono text-lg font-bold text-slate-200">
-                  <span className="text-red-400">3</span>
-                  <span className="text-slate-600 text-sm">➔</span>
-                  <span className="text-green-400">0</span>
+                <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Blockers</div>
+                <div className="flex items-center gap-3 font-mono text-xl font-bold text-slate-200">
+                  <span className="text-red-500 drop-shadow-sm">3</span>
+                  <span className="text-slate-700 text-sm">→</span>
+                  <span className="text-emerald-400 drop-shadow-sm">0</span>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 text-sm font-medium text-slate-400 group-hover:text-white transition-colors">
-              <span className="hidden md:inline">{isExpanded ? (locale === 'cs' ? "Zavřít Report" : "Close Report") : (locale === 'cs' ? "Přehrát Proces" : "Replay Process")}</span>
-              <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-purple-500/20 group-hover:border-purple-500/50 transition-all ${!isExpanded && 'animate-pulse'}`}>
+            <div className="flex items-center gap-3 text-sm font-medium text-slate-500 group-hover:text-white transition-colors">
+              <span className="hidden md:inline tracking-wide text-xs uppercase">{isExpanded ? (locale === 'cs' ? "Close Archive" : "Close Archive") : (locale === 'cs' ? "Open Archive" : "Open Archive")}</span>
+              <div className={`p-2 rounded-full bg-white/5 border border-white/5 group-hover:bg-purple-500/10 group-hover:border-purple-500/30 transition-all duration-300 ${!isExpanded && 'animate-pulse'}`}>
                 {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </div>
             </div>
           </div>
         </div>
 
-        <div className={`overflow-hidden transition-all duration-700 ease-in-out ${isExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
-          <div className="border-t border-white/5 bg-slate-950/50">
+        {/* Expanded Content: The Story */}
+        <div className={`overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] ${isExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
+          <div className="border-t border-white/5 bg-slate-950/30 relative">
             
+            {/* IDE-like Scroll Container */}
             <div 
               ref={scrollRef}
-              className="h-[600px] overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-purple-900/50 scrollbar-track-transparent"
+              className="h-[600px] overflow-y-auto p-8 space-y-8 scrollbar-hide scroll-smooth"
             >
-              {chatHistory.map((msg, i) => (
+              {chatHistory.slice(0, visibleCount).map((msg, i) => (
                 <div 
                   key={i}
-                  className="flex gap-4 animate-in fade-in duration-500"
-                  style={{ animationDelay: `${Math.min(i * 200, 2000)}ms` }}
+                  className={`chat-message flex gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
                 >
-                  <div className={`mt-1 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border border-white/10 shadow-lg ${
-                    msg.role === 'blue' ? 'bg-indigo-600 shadow-indigo-500/20' : 
-                    msg.role === 'red' ? 'bg-rose-600 shadow-rose-500/20' : 
-                    msg.role === 'system' ? 'bg-emerald-600 shadow-emerald-500/20' :
-                    'bg-slate-700'
-                  }`}>
-                    {msg.avatar}
+                  {/* Avatar Column */}
+                  <div className="flex flex-col items-center gap-2">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 border backdrop-blur-md shadow-lg transition-all duration-300 hover:scale-110 ${
+                      msg.role === 'blue' ? 'bg-blue-600/10 border-blue-500/30 text-blue-400 shadow-blue-500/10' : 
+                      msg.role === 'red' ? 'bg-red-600/10 border-red-500/30 text-red-400 shadow-red-500/10' : 
+                      msg.role === 'system' ? 'bg-emerald-600/10 border-emerald-500/30 text-emerald-400 shadow-emerald-500/10' :
+                      'bg-slate-700/50 border-slate-600/50 text-slate-300'
+                    }`}>
+                      {msg.avatar}
+                    </div>
+                    {/* Connection Line */}
+                    {i < visibleCount - 1 && (
+                      <div className={`w-px h-full bg-gradient-to-b ${
+                        msg.role === 'blue' ? 'from-blue-500/20 to-transparent' :
+                        msg.role === 'red' ? 'from-red-500/20 to-transparent' :
+                        'from-slate-700/20 to-transparent'
+                      }`} />
+                    )}
                   </div>
 
-                  <div className="flex-1 max-w-3xl">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className={`text-xs font-bold ${
-                        msg.role === 'blue' ? 'text-indigo-300' : 
-                        msg.role === 'red' ? 'text-rose-300' : 
-                        msg.role === 'system' ? 'text-emerald-300' :
-                        'text-slate-300'
+                  {/* Message Content */}
+                  <div className={`flex-1 max-w-4xl pt-1 ${msg.role === 'user' ? 'text-right' : ''}`}>
+                    <div className={`flex items-center gap-3 mb-2 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                      <span className={`text-xs font-bold tracking-wider uppercase ${
+                        msg.role === 'blue' ? 'text-blue-400' : 
+                        msg.role === 'red' ? 'text-red-400' : 
+                        msg.role === 'system' ? 'text-emerald-400' :
+                        'text-slate-400'
                       }`}>{msg.name}</span>
-                      <span className="text-[10px] text-slate-600 font-mono">
-                        {`01:${String(30 + Math.floor(i * 2.5)).padStart(2, '0')}`} PM
+                      <span className="text-[10px] text-slate-700 font-mono">
+                        {`01:${String(30 + Math.floor(i * 2.5)).padStart(2, '0')}`}
                       </span>
                     </div>
-                    <div className={`p-4 rounded-2xl text-sm leading-relaxed border shadow-sm whitespace-pre-wrap ${msg.color}`}>
-                      {msg.message}
+                    
+                    <div className={`group relative p-5 rounded-2xl text-sm leading-relaxed border backdrop-blur-sm transition-all duration-300 hover:shadow-lg inline-block text-left ${
+                      msg.role === 'blue' ? 'bg-blue-950/20 border-blue-500/10 hover:border-blue-500/20 text-blue-100' : 
+                      msg.role === 'red' ? 'bg-red-950/20 border-red-500/10 hover:border-red-500/20 text-red-100' : 
+                      msg.role === 'system' ? 'bg-emerald-950/20 border-emerald-500/10 text-emerald-100' :
+                      'bg-slate-800/40 border-white/5 hover:border-white/10 text-slate-300'
+                    }`}>
+                      {/* Glow Effect on Hover */}
+                      <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-r ${
+                         msg.role === 'blue' ? 'from-blue-500/5 to-transparent' : 
+                         msg.role === 'red' ? 'from-red-500/5 to-transparent' : 
+                         'from-white/5 to-transparent'
+                      }`} />
+                      
+                      <div className="relative whitespace-pre-wrap font-sans">
+                        {msg.message}
+                      </div>
                     </div>
                   </div>
                 </div>
               ))}
               
-              <div className="h-12" />
+              <div className="h-24" /> {/* Bottom spacer */}
             </div>
 
-            <div className="p-4 bg-slate-900/80 border-t border-white/5 flex flex-wrap items-center justify-between gap-4">
+            {/* Footer Status Bar */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-slate-950/90 border-t border-white/5 backdrop-blur-xl flex flex-wrap items-center justify-between gap-4 z-20">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400">
-                  <CheckCircle2 className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-white">Optimization Complete</div>
-                  <div className="text-xs text-slate-400">Documentation is now self-healing & verified.</div>
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <div className="text-xs font-mono text-slate-400">
+                  SYSTEM STATUS: <span className="text-emerald-400">OPTIMIZED</span>
                 </div>
               </div>
-              <div className="flex gap-2 flex-wrap">
-                {['/health endpoint', '.env setup', 'n8n docs', 'Alembic workflow'].map((tag, i) => (
-                  <div key={i} className="px-2.5 py-1 rounded-md bg-slate-800 border border-slate-700 text-[10px] text-slate-300 font-mono uppercase tracking-wide">
-                    + {tag}
+              <div className="flex gap-2">
+                {['/health', '.env', 'n8n', 'Alembic'].map((tag, i) => (
+                  <div key={i} className="px-2 py-0.5 rounded bg-white/5 border border-white/5 text-[10px] text-slate-500 font-mono uppercase tracking-wider">
+                    {tag}
                   </div>
                 ))}
               </div>
