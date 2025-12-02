@@ -14,6 +14,16 @@ Gamifikovaná platforma pro výuku AI konceptů s českou lokalizací.
 
 ---
 
+## 🌟 Klíčové Funkce
+
+- **Interactive AI Showcase:** Reálná demonstrace spolupráce Claude (Red Team) a Gemini (Blue Team) při řešení problémů.
+- **Live System Status:** Transparentní monitoring infrastruktury (PostgreSQL + Redis) přímo na webu.
+- **Gamifikace:** XP systém, úrovně obtížnosti (Piece of Cake až Damn I'm Good), vizuální progress.
+- **Built in Public:** Celý vývoj je dokumentován a integrován do příběhu platformy.
+- **Multi-stage Docker Build:** Optimalizované, bezpečné a malé production images.
+
+---
+
 ## 🏁 Quick Start (Nový Počítač)
 
 ### 1. Naklonuj Repozitář

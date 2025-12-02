@@ -13,8 +13,9 @@ import FeedbackDetailModal from "@/components/FeedbackDetailModal";
 import FeedbackMarker from "@/components/FeedbackMarker";
 import DifficultyIcon from "@/components/DifficultyIcon";
 import SystemStatus from "@/components/SystemStatus";
+import ABTestTeaser from "@/components/ABTestTeaser";
 import { useLocale, useTranslations } from 'next-intl';
-import { Rocket, Info } from 'lucide-react';
+import { Rocket, Info, Code2, Zap, Users, GitBranch } from 'lucide-react';
 
 type FeedbackMode = 'idle' | 'placing' | 'viewing';
 
@@ -51,10 +52,11 @@ export default function HomePage() {
   const [loadingResume, setLoadingResume] = useState(true);
   
   const locale = useLocale();
-  const t = useTranslations('Common');
+  const t = useTranslations('Home');
   const tAuth = useTranslations('Auth');
   const tAbout = useTranslations('About');
   const tNav = useTranslations('Navigation');
+  const tCommon = useTranslations('Common');
 
   // Feedback State
   const [feedbackMode, setFeedbackMode] = useState<FeedbackMode>('idle');
@@ -224,7 +226,7 @@ export default function HomePage() {
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">{t('loading')}</p>
+          <p className="text-muted-foreground">{tCommon('loading')}</p>
         </div>
       </div>
     );
@@ -299,6 +301,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Cycle #35 Teaser */}
+      <ABTestTeaser />
 
       {/* System Status Monitor */}
       <SystemStatus />
@@ -380,6 +385,34 @@ export default function HomePage() {
               )}
             </div>
           )}
+      </section>
+
+      {/* Benefits Section - How you learn */}
+      <section className="w-full py-12 md:py-24 bg-slate-50 dark:bg-slate-900/50 border-t border-b border-border/50">
+        <div className="container px-4 mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">{t('benefits_title')}</h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: <Code2 className="w-6 h-6" />, title: t('benefit_projects_title'), desc: t('benefit_projects_desc'), color: "text-blue-500 bg-blue-500/10" },
+              { icon: <Zap className="w-6 h-6" />, title: t('benefit_real_title'), desc: t('benefit_real_desc'), color: "text-amber-500 bg-amber-500/10" },
+              { icon: <Users className="w-6 h-6" />, title: t('benefit_collab_title'), desc: t('benefit_collab_desc'), color: "text-purple-500 bg-purple-500/10" },
+              { icon: <GitBranch className="w-6 h-6" />, title: t('benefit_open_title'), desc: t('benefit_open_desc'), color: "text-emerald-500 bg-emerald-500/10" }
+            ].map((benefit, index) => (
+              <Card key={index} className="border-none shadow-sm bg-background/50 backdrop-blur-sm hover:shadow-md transition-all duration-300">
+                <CardContent className="p-6 flex flex-col items-center text-center h-full">
+                  <div className={`p-3 rounded-full mb-4 ${benefit.color}`}>
+                    {benefit.icon}
+                  </div>
+                  <h3 className="font-bold text-lg mb-2">{benefit.title}</h3>
+                  <p className="text-sm text-muted-foreground">{benefit.desc}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Feedback System */}

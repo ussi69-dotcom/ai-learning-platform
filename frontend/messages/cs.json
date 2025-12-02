@@ -88,19 +88,53 @@
     "saving": "Ukládám...",
     "mark_complete": "Označit laboratoř jako hotovou"
   },
+  "Home": {
+    "teaser_title": "CYCLE #35 – AI × Human",
+    "teaser_subtitle": "Jak stavíme AI platformu: Red Team (Claude) + Blue Team (Gemini) + Člověk",
+    "teaser_metric_time": "Deploy Time",
+    "teaser_metric_blockers": "Blockers",
+    "teaser_desc_title": "Z rozbitého onboardingu k nasazení za 4 minuty",
+    "teaser_desc": "Red & Blue AI teams simulují problém, hledají řešení, člověk rozhoduje. Cyklus: Audit → Fixes → Deploy.",
+    "teaser_cta": "Podívat se do detailů",
+    "benefits_title": "Jak se učíš s AI",
+    "benefit_projects_title": "Praktické mini-projekty",
+    "benefit_projects_desc": "Stavěj skutečné aplikace s AI agenty, ne jen teorii.",
+    "benefit_real_title": "Reálné problémy",
+    "benefit_real_desc": "Řeš výzvy z produkčního vývoje, jako byl Cycle #35.",
+    "benefit_collab_title": "AI Spolupráce",
+    "benefit_collab_desc": "Nauč se orchestrovat Red & Blue teamy pro maximální efektivitu.",
+    "benefit_open_title": "Open Source",
+    "benefit_open_desc": "Přispívej do kódu platformy, na které se učíš."
+  },
   "About": {
     "title": "O projektu",
     "nav_link": "O projektu",
     "hero_title": "AI Vzdělávání tvořené AI",
     "hero_subtitle": "Budoucnost učení je ve spolupráci",
     "hero_desc": "Open-source vzdělávací platforma vybudovaná společně lidmi a AI agenty. Věříme, že nejlepší způsob, jak se naučit AI, je stavět s AI.",
+    "intro_title": "Proč jsme tady?",
+    "intro_desc": "Na ai-teach.me se naučíš, jak AI agenti spolupracují na reálných problémech. Nejde o teoretické přednášky, ale o živý organismus, který se vyvíjí před očima. Cycle #35 je důkazem – ukazuje, jak jsme zkrátili onboarding o 92 % díky autonomní spolupráci agentů.",
     "genesis_title": "Vývoj v čase nula",
     "genesis_desc": "Vše odstartovalo v neděli 15. listopadu 2025. Jiskra zvědavosti zažehla posedlost AI agenty. Začali jsme prototypovat v Galaxy.AI s Claude Sonnet 4.5, ale narazili jsme do zdi – naivní pokus o přenos masivního kontextu vedl k okamžitému banu na Anthropicu. To byl ten zlom. 18. listopadu vyšel Gemini 3.0 Pro a my ho okamžitě zapřáhli jako hlavního poradce ve VS Code. O dva dny později, 20. listopadu, Google odhalil Antigravity – integrovali jsme ho ještě ten večer a vývoj nabral turbulentní rychlost. 24. listopadu přišla pozvánka do Gemini 3.0 CLI. Tím se kruh uzavřel. Jedeme 'Zero-Day Engineering' – nová AI technologie ráno vyjde a večer už na ní běží produkce. Perplexity vede výzkum, ChatGPT dělá oponenturu a Gemini 3.0 s Antigravity tvoří jádro.",
+    "cycle_context_title": "Jak vypadá kolaborace člověka a AI?",
+    "cycle_context_desc": "V tomto cyklu jsme řešili kritický problém s dokumentací. Red Team (Claude) simuloval nováčka a narazil do zdi. Blue Team (Gemini) navrhl a implementoval fixy. Níže uvidíte přesný záznam jejich komunikace.",
     "tech_stack_title": "Technologie",
     "tech_stack_desc": "Vybráno pro transparentnost, škálovatelnost a spolupráci s agenty.",
     "workflow_title": "Workflow",
     "workflow_desc": "Nekódíme jen tak. Iterujeme v atomických cyklech se zachováním kontextu.",
     "join_us": "Přidej se k revoluci",
-    "join_desc": "Začni se učit, získávej XP a nakonec přispěj do zdrojového kódu."
+    "join_desc": "Začni se učit, získávej XP a nakonec přispěj do zdrojového kódu.",
+    "Timeline": {
+        "spark_title": "The Spark",
+        "spark_desc": "Zvědavost se mění v posedlost. Prototypování v Galaxy.AI & Claude Sonnet 4.5.",
+        "crash_title": "The Crash & Rebirth",
+        "crash_desc": "Anthropic ban vynucuje změnu. Gemini 3.0 Pro vychází (18. list) -> Nasazeno Den 1.",
+        "hyperdrive_title": "Hyperdrive",
+        "hyperdrive_desc": "Antigravity framework vydán. Integrováno týž večer. Rychlost vývoje dosahuje Mach 10.",
+        "weapon_title": "The Weapon",
+        "weapon_desc": "Gemini 3.0 CLI přístup udělen. Zero-day integrace. Stack se stává sebeuvědomělým.",
+        "vanguard_title": "The Vanguard",
+        "vanguard_desc": "Gemini 3 Pro, Antigravity, Perplexity, & Opus 4.5. Stavíme zítřejšími nástroji už dnes. Příkladem je Cycle #35, kde agenti autonomně opravili onboarding."
+    }
   }
 }

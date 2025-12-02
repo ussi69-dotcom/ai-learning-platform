@@ -265,3 +265,63 @@ GEMINI CLI needs to review and fix the Sith/Jedi theme implementation.
 ### 🚀 Next Steps
 -   **Deploy**: Push changes to production.
 -   **Feedback**: Gather user impressions on the new "Storytelling" approach on the About page.
+
+## 📅 Date: 2025-12-02 (Optimization & Stabilization)
+
+## 🎯 Task: UI Visual Polish, Infrastructure Optimization & Documentation
+
+### ✅ Completed
+1.  **ABTestShowcase Refinement**:
+    -   Fixed **Sith/Jedi** theme logic (Red/Purple accents now respect Light/Dark mode correctly).
+    -   Updated **Blue Team** identity color to Blue/Cyan (was Purple).
+    -   Upgraded **Claude** to version **4.5 Sonnet** in the narrative.
+    -   Implemented **Smart Auto-scroll**: User interaction (scroll) pauses playback for 2s, then auto-resumes. Fixed scroll stuttering issue.
+    -   Fixed **Syntax Error**: Removed conflicting Markdown (`**`) in JavaScript string that caused build failures.
+
+2.  **New Feature: System Status**:
+    -   Created `SystemStatus.tsx` component monitoring `/health` endpoint.
+    -   Integrated into **HomePage** (under Hero section).
+    -   Displays real-time status of PostgreSQL and Redis in a "glass" widget.
+
+3.  **Infrastructure Optimization**:
+    -   **Backend Dockerfile**: Rewritten to **Multi-stage build**. Reduced image size and improved security by removing build tools (`gcc`) from runtime image.
+    -   **Makefile**: Created a central `Makefile` for streamlined developer experience (`make up`, `make logs`, `make reset`).
+
+4.  **Documentation**:
+    -   Updated `README.md` to reflect new `make` commands.
+    -   Documented current state in `CURRENT_TASK.md`.
+
+### 📝 Notes
+-   **Scroll Behavior**: The `scroll-behavior: auto` fix was critical for preventing conflict between JS animation and CSS smooth scrolling.
+-   **Build**: The multi-stage build significantly improves production readiness.
+
+### 🚀 Next Steps
+-   **Deploy**: Ready for staging/production deployment.
+-   **Feature**: Continue with planned gamification features.
+
+## 📅 Date: 2025-12-02 (Cycle 36 - Part 2: Content Reorganization)
+
+## 🎯 Task: Homepage & About Page Redesign
+
+### ✅ Completed
+1.  **Homepage Reorganization**:
+    -   Created `ABTestTeaser.tsx`: A lightweight, static version of the Cycle #35 showcase with metrics and CTA.
+    -   Added **Benefits Section**: 4 cards ("Hands-on Projects", "Real-world Problems", etc.) using new icons.
+    -   Integrated `SystemStatus` widget below the Hero section.
+    -   Updated `messages/*.json` with `Home` namespace translations.
+
+2.  **About Page Deep Dive**:
+    -   Added **Intro Block**: Explains the "Why" behind the platform.
+    -   Added **Context for Cycle #35**: Explains the Red/Blue team collaboration before the interactive demo.
+    -   Added **Anchor**: `id="cycle-35"` for direct linking from Homepage.
+    -   **Timeline**: Refactored to use localized strings (`Timeline.vanguard_desc`).
+
+3.  **Bug Fixes**:
+    -   Fixed `MISSING_MESSAGE` errors by correctly using `useTranslations('Home')` vs `useTranslations('Common')` in `page.tsx`.
+
+### 📝 Notes
+-   **UI Pattern**: Established a pattern of "Teaser on Home" -> "Deep Dive on Inner Page".
+-   **Localization**: Requires careful namespace management in `next-intl`.
+
+### 🚀 Next Steps
+-   **Deploy**: Push to production.

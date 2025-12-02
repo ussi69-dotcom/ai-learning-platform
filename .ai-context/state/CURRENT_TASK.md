@@ -1,34 +1,33 @@
 # Agent State - Synchronized with MEMORY.md
 
 ## Current Status
-- **Cycle:** 36 (Optimization & Stabilization)
-- **Focus:** Developer Experience (DX) & Infrastructure Optimization
-- **Last Action:** Completed visual fixes on `ABTestShowcase` and optimized Docker builds.
+- **Cycle:** 36 (Optimization & Stabilization) - **COMPLETE**
+- **Focus:** Ready for Production Deployment
+- **Last Action:** Reorganized Homepage/About content, added Teaser & Benefits, finalized documentation.
 
 ## 🏆 Recent Achievements
-1.  **Visual & Functional Fixes (`ABTestShowcase.tsx`):**
-    *   **Theming:** Komponenta plně respektuje Sith/Jedi přepínač (Red/Purple akcenty).
-    *   **Identity:** Blue Team (Gemini) je nyní správně Modrý (Blue/Cyan), Red Team (Claude 4.5) Červený.
-    *   **UX:** Implementován "Smart Auto-scroll". Interakce uživatele (scroll) pauzne přehrávání na 2s.
-    *   **Syntax:** Opravena chyba parsování JS v lokalizačních řetězcích.
+1.  **Content Strategy & UX:**
+    -   **Homepage:** New `ABTestTeaser` drives traffic to About page. New "Benefits" section explains the value prop.
+    -   **About Page:** Expanded context, "Why we are here" intro, localized Timeline.
+    -   **System Status:** Live monitoring widget integrated on Homepage.
 
-2.  **Infrastructure Optimization:**
-    *   **Backend Dockerfile:** Přepsán na **Multi-stage build**. Produkční image neobsahuje `gcc` (menší, bezpečnější).
-    *   **Makefile:** Přidán `Makefile` pro zjednodušení DX (`make up`, `make reset`, `make logs`).
+2.  **Visual & Functional Fixes:**
+    -   `ABTestShowcase` fixed (Theming, Auto-scroll, JS syntax).
+    -   Localization namespaces fixed (`Home` vs `Common`).
 
-3.  **Documentation:**
-    *   `README.md` aktualizován o `make` příkazy.
-    *   Jasné instrukce pro onboarding.
+3.  **Infrastructure:**
+    -   Multi-stage Docker build.
+    -   `Makefile` for DX.
 
 ## 🚧 Active Issues
-- Žádné kritické blokery. Platforma je stabilní.
+- None. Platform is stable and ready for deploy.
 
 ## ⏭️ Next Actions
-1.  **Feature Development:** Platforma je připravena na vývoj nových funkcí (nové lekce, gamifikace).
-2.  **Deployment:** Zvážit nasazení na staging s novou optimalizovanou infrastrukturou.
-3.  **Visual Check:** Ověřit, zda nové barvy v `ABTestShowcase` sedí i v reálném nasazení (Blue vs Purple v Light mode).
+1.  **DEPLOY TO PRODUCTION** 🚀
+2.  **Monitor:** Check `/health` endpoint after deploy.
+3.  **Next Cycle:** Begin Cycle 37 - Gamification Deep Dive (User Streaks, Achievements).
 
 ## 🧠 Context for Next Agent
-- **Docker:** Backend používá `/opt/venv` v Dockeru. Pokud instaluješ nové balíčky, přidej je do `requirements.txt` a rebuildni (`make up`).
-- **Dev Workflow:** Používej `make` příkazy. Je to rychlejší.
-- **Content:** `ABTestShowcase` je hotový. Nesahej na něj, pokud není hlášen bug.
+-   **Architecture:** Frontend and Backend are optimized.
+-   **Content:** Use the "Teaser -> Deep Dive" pattern for future major features.
+-   **Repo:** `main` branch is the source of truth.

@@ -88,19 +88,53 @@
     "saving": "Saving...",
     "mark_complete": "Mark Lab as Complete"
   },
+  "Home": {
+    "teaser_title": "CYCLE #35 – AI × Human",
+    "teaser_subtitle": "How we build AI platform: Red Team (Claude) + Blue Team (Gemini) + Human",
+    "teaser_metric_time": "Deploy Time",
+    "teaser_metric_blockers": "Blockers",
+    "teaser_desc_title": "From broken onboarding to deployment in 4 mins",
+    "teaser_desc": "Red & Blue AI teams simulate the problem, find a solution, human decides. Cycle: Audit → Fixes → Deploy.",
+    "teaser_cta": "See details",
+    "benefits_title": "How you learn with AI",
+    "benefit_projects_title": "Hands-on Mini-projects",
+    "benefit_projects_desc": "Build real applications with AI agents, not just theory.",
+    "benefit_real_title": "Real-world Problems",
+    "benefit_real_desc": "Solve challenges from production development, like Cycle #35.",
+    "benefit_collab_title": "AI Collaboration",
+    "benefit_collab_desc": "Learn to orchestrate Red & Blue teams for maximum efficiency.",
+    "benefit_open_title": "Open Source",
+    "benefit_open_desc": "Contribute to the source code of the platform you learn on."
+  },
   "About": {
     "title": "About the Project",
     "nav_link": "About",
     "hero_title": "AI Education Built by AI",
     "hero_subtitle": "The Future of Learning is Co-Creation",
     "hero_desc": "An open-source learning platform built collaboratively by human and AI agents. We believe the best way to learn AI is to build with AI.",
+    "intro_title": "Why are we here?",
+    "intro_desc": "At ai-teach.me, you learn how AI agents collaborate on real problems. Not theoretical lectures, but a living organism evolving before your eyes. Cycle #35 is proof—showing how we cut onboarding time by 92% through autonomous agent collaboration.",
     "genesis_title": "Zero-Day Development",
     "genesis_desc": "It all started on Sunday, November 15, 2025. A spark of curiosity ignited an obsession with AI agents. We began prototyping in Galaxy.AI with Claude Sonnet 4.5, but hit a wall—a naive massive context transfer led to an instant ban from Anthropic. That was the turning point. On November 18, Gemini 3.0 Pro dropped, and we immediately deployed it as our primary advisor in VS Code. Two days later, November 20, Google unveiled Antigravity—we integrated it that same evening, and development velocity hit Mach 10. On November 24, the Gemini 3.0 CLI invite arrived. The loop was closed. We call this 'Zero-Day Engineering'—a new AI model drops in the morning, and by evening, it's powering production. Perplexity leads research, ChatGPT reviews, and Gemini 3.0 with Antigravity builds the core.",
+    "cycle_context_title": "Real-time Human-AI Collaboration",
+    "cycle_context_desc": "In this cycle, we tackled a critical documentation issue. Red Team (Claude) simulated a newcomer and hit a wall. Blue Team (Gemini) proposed and implemented fixes. Below is the exact record of their communication.",
     "tech_stack_title": "Tech Stack",
     "tech_stack_desc": "Chosen for transparency, scale, and agent-friendliness.",
     "workflow_title": "The Workflow",
     "workflow_desc": "We don't just code. We iterate in atomic cycles with preserved context.",
     "join_us": "Join the Revolution",
-    "join_desc": "Start learning, earn XP, and eventually contribute to the source code."
+    "join_desc": "Start learning, earn XP, and eventually contribute to the source code.",
+    "Timeline": {
+        "spark_title": "The Spark",
+        "spark_desc": "Curiosity meets obsession. Galaxy.AI & Claude Sonnet 4.5 prototype the vision.",
+        "crash_title": "The Crash & Rebirth",
+        "crash_desc": "Anthropic ban forces a rethink. Gemini 3.0 Pro drops (Nov 18) -> Adopted Day 1.",
+        "hyperdrive_title": "Hyperdrive",
+        "hyperdrive_desc": "Antigravity framework released. Integrated same-day. Development velocity hits Mach 10.",
+        "weapon_title": "The Weapon",
+        "weapon_desc": "Gemini 3.0 CLI access granted. Zero-day integration. The stack becomes self-aware.",
+        "vanguard_title": "The Vanguard",
+        "vanguard_desc": "Gemini 3 Pro, Antigravity, Perplexity, & Opus 4.5. Building with tomorrow's tools today. Example: Cycle #35, where agents autonomously fixed onboarding."
+    }
   }
 }

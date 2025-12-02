@@ -4,7 +4,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from '@/i18n/routing';
 import { Button } from "@/components/ui/button";
-import { Rocket, Brain, Code2, Terminal, Zap, Users, Sparkles, Layout, Database, Layers, Workflow, GitBranch } from 'lucide-react';
+import { Rocket, Brain, Code2, Terminal, Zap, Users, Sparkles, Layout, Database, Layers, Workflow, GitBranch, MonitorPlay } from 'lucide-react';
 import Diagram from '@/components/mdx/Diagram';
 
 import { useAuth } from '@/context/AuthContext';
@@ -15,13 +15,13 @@ export default function AboutPage() {
   const t = useTranslations('About');
   const locale = useLocale();
 
-  // Timeline Data
+  // Timeline Data - Now using translations
   const timeline = [
-    { year: 'Nov 15, 2025', title: 'The Spark', desc: 'Curiosity meets obsession. Galaxy.AI & Claude Sonnet 4.5 prototype the vision.', icon: <Brain className="w-5 h-5" /> },
-    { year: 'Nov 16-18, 2025', title: 'The Crash & Rebirth', desc: 'Anthropic ban forces a rethink. Gemini 3.0 Pro drops (Nov 18) -> Adopted Day 1.', icon: <Zap className="w-5 h-5" /> },
-    { year: 'Nov 20, 2025', title: 'Hyperdrive', desc: 'Antigravity framework released. Integrated same-day. Development velocity hits Mach 10.', icon: <Rocket className="w-5 h-5" /> },
-    { year: 'Nov 24, 2025', title: 'The Weapon', desc: 'Gemini 3.0 CLI access granted. Zero-day integration. The stack becomes self-aware.', icon: <Terminal className="w-5 h-5" /> },
-    { year: 'Now', title: 'The Vanguard', desc: 'Gemini 3 Pro, Antigravity, Perplexity, & Opus 4.5. We build with tomorrow\'s tools, today.', icon: <Users className="w-5 h-5" /> },
+    { year: 'Nov 15, 2025', title: t('Timeline.spark_title'), desc: t('Timeline.spark_desc'), icon: <Brain className="w-5 h-5" /> },
+    { year: 'Nov 16-18, 2025', title: t('Timeline.crash_title'), desc: t('Timeline.crash_desc'), icon: <Zap className="w-5 h-5" /> },
+    { year: 'Nov 20, 2025', title: t('Timeline.hyperdrive_title'), desc: t('Timeline.hyperdrive_desc'), icon: <Rocket className="w-5 h-5" /> },
+    { year: 'Nov 24, 2025', title: t('Timeline.weapon_title'), desc: t('Timeline.weapon_desc'), icon: <Terminal className="w-5 h-5" /> },
+    { year: 'Now', title: t('Timeline.vanguard_title'), desc: t('Timeline.vanguard_desc'), icon: <Users className="w-5 h-5" /> },
   ];
 
   // Tech Stack Data
@@ -57,6 +57,16 @@ export default function AboutPage() {
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             {t('hero_desc')}
           </p>
+        </div>
+
+        {/* NEW: Introduction Block (Why we are here) */}
+        <div className="mb-24 text-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-2xl font-bold mb-4 text-foreground">{t('intro_title')}</h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              {t('intro_desc')}
+            </p>
+          </div>
         </div>
 
         {/* The Story / Genesis Section */}
@@ -106,8 +116,17 @@ export default function AboutPage() {
            </div>
         </div>
 
-        {/* A/B Test Meta Showcase */}
-        <div className="mb-24 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-400">
+        {/* A/B Test Meta Showcase with Context */}
+        <div id="cycle-35" className="mb-24 scroll-mt-24 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-400">
+          <div className="text-center mb-8 max-w-3xl mx-auto">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-sm font-mono text-purple-600 dark:text-purple-400 mb-4">
+                <MonitorPlay className="w-4 h-4" />
+                <span>Cycle #35 Demo</span>
+             </div>
+             <h2 className="text-3xl font-bold mb-4">{t('cycle_context_title')}</h2>
+             <p className="text-muted-foreground">{t('cycle_context_desc')}</p>
+          </div>
+          
           <ABTestShowcase locale={locale} />
         </div>
       </div>

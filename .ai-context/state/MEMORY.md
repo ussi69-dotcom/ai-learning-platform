@@ -46,6 +46,9 @@ Read this first to understand the environment, preferences, and active protocols
 - **State:** `AuthContext` for user state.
 - **Localization:** `next-intl` used in UI.
 - **Interactive Components:** Use `<Sandbox defaultCode="..." />` for Python labs.
+- **UI Patterns:**
+    - **Teaser -> Deep Dive:** Use a lightweight "Teaser" component on Homepage (e.g., `ABTestTeaser`) to drive traffic to a detailed "Showcase" on inner pages (e.g., About).
+    - **Glass Monitoring:** System status and metrics should be visible but unobtrusive (glassmorphism).
 
 ---
 
