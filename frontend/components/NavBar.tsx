@@ -90,7 +90,9 @@ export default function NavBar() {
                     ) : (
                       <AvatarIcon 
                         className="w-6 h-6" 
-                        style={{ stroke: avatarObj.gradient }}
+                        stroke={avatarObj.gradient ? avatarObj.gradient : "currentColor"}
+                        strokeWidth={2}
+                        fill="none"
                       />
                     )
                   )}
