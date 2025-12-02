@@ -64,7 +64,7 @@ export default function ABTestTeaser() {
             
             <div className="pt-2 flex justify-start">
               <Link href="/about#cycle-35">
-                <Button className="bg-gradient-to-r from-purple-600 to-blue-600 dark:from-red-600 dark:to-purple-600 hover:opacity-90 text-white border-0 shadow-lg shadow-purple-500/20 dark:shadow-red-500/20 transition-all duration-300 group-hover:scale-105">
+                <Button className="bg-gradient-to-r from-purple-600 to-blue-600 dark:from-red-700 dark:via-red-600 dark:to-red-800 hover:opacity-90 text-white border-0 shadow-lg shadow-purple-500/20 dark:shadow-red-500/20 transition-all duration-300 group-hover:scale-105">
                   {t('teaser_cta')} <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
