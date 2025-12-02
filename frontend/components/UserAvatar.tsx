@@ -19,7 +19,7 @@ export default function UserAvatar({ avatarId, email, className }: UserAvatarPro
       <div className={cn("flex items-center justify-center rounded-full bg-secondary/10 border border-white/10 overflow-hidden", className)}>
         <AvatarIcon 
           className="w-2/3 h-2/3" 
-          style={{ stroke: avatarObj.gradient, strokeWidth: 1.5 }} 
+          style={{ stroke: avatarObj.color, strokeWidth: 1.5 }} 
         />
       </div>
     );
