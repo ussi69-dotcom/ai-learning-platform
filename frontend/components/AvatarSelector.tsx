@@ -167,7 +167,8 @@ export default function AvatarSelector({ selectedAvatar, onSelect }: AvatarSelec
               ) : (
                 <avatar.icon 
                   className="w-8 h-8 group-hover:scale-110 transition-transform" 
-                  style={{ stroke: avatar.gradient, strokeWidth: 2 }} // Apply gradient stroke
+                  fill={avatar.gradient}
+                  stroke="none"
                 />
               )}
             </button>

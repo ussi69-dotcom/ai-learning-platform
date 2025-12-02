@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { AlertCircle, Flag, MessageCircle, X, MousePointer2, Plus, List, Eye } from 'lucide-react';
+import { AlertCircle, Flag, MessageCircle, X, MousePointer2, Plus, List, Eye, Bug } from 'lucide-react';
+import SplitBugEyeIcon from './SplitBugEyeIcon';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
@@ -195,17 +196,17 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
           ref={mobileButtonRef}
           variant="outline"
           className={cn(
-            "!rounded-full w-10 h-10 shadow-lg border backdrop-blur-md flex items-center justify-center p-0 transition-all duration-300 touch-none",
+            "!rounded-full w-12 h-12 shadow-lg backdrop-blur-md flex items-center justify-center p-0 transition-all duration-300 touch-none border-2",
             currentMode === 'viewing' || currentMode === 'placing'
               ? "bg-primary/20 border-primary text-primary shadow-[0_0_15px_rgba(var(--primary),0.4)] scale-110"
-              : "bg-black/60 border-white/20 text-white/90 hover:text-primary hover:border-primary hover:bg-primary/10 shadow-lg"
+              : "bg-transparent dark:bg-white/5 border-primary/40 text-primary hover:border-primary hover:bg-primary/10 shadow-lg"
           )}
           onClick={toggleMobileMode}
           onTouchStart={startDrag}
-          title="Feedback"
+          title="Report Bug / View Feedback"
         >
-          {/* Show X if viewing/placing, otherwise show AlertCircle (or Eye?) - User asked for "Report Bug" less intrusive */}
-          {(currentMode === 'viewing' || currentMode === 'placing') ? <X size={20} /> : <AlertCircle size={20} />}
+          {/* Show X if viewing/placing, otherwise show Split Bug/Eye icon */}
+          {(currentMode === 'viewing' || currentMode === 'placing') ? <X size={24} /> : <SplitBugEyeIcon size={24} />}
         </Button>
       </div>
 
