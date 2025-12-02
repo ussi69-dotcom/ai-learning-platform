@@ -13,7 +13,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
   if (type === 'tokenization-viz') {
     return (
-      <div className="my-8 flex justify-center">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl">
           <svg viewBox="0 0 600 150" className="w-full h-auto" role="img" aria-label="Tokenization Visualization: Text converted to ID numbers">
             {/* Sentence */}
@@ -57,8 +57,8 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
   if (type === 'llm-next-token') {
     return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="LLM Prediction: Calculating probabilities for the next token">
             <defs>
                 <marker id="arrowhead-timeline" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
@@ -97,7 +97,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
   if (type === 'context-window') {
     return (
-      <div className="my-8 flex justify-center">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 150" className="w-full h-auto" role="img" aria-label="Context Window: Moving window of attention">
             {/* Text Stream */}
@@ -126,7 +126,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
   if (type === 'temperature-scale') {
     return (
-      <div className="my-8 flex justify-center">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="Temperature Scale: Precise vs Creative">
             {/* Gradient Line */}
@@ -159,7 +159,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
   if (type === 'bias-in-data') {
     return (
-      <div className="my-8 flex justify-center">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl">
           <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Bias in Data: The AI Mirror reflects the Internet's distortions">
             <defs>
@@ -223,7 +223,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
   if (type === 'rag-architecture') {
     return (
-      <div className="my-8 flex justify-center">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-5xl">
           {/* Increased viewBox width to 900 to prevent cropping */}
           <svg viewBox="0 0 900 400" className="w-full h-auto" role="img" aria-label="RAG Architecture: User Query -> Search Internal Docs -> AI Answer">
@@ -306,8 +306,8 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
   if (type === 'black-box') {
     return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="The Black Box Problem: Input -> ??? -> Output">
             <defs>
               <marker id="arrowhead-box" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
@@ -358,8 +358,8 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
   if (type === 'transformer-architecture-simplified') {
     return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 300" className="w-full h-auto" role="img" aria-label="Transformer Architecture: Input -> Attention -> Feed Forward -> Output">
             <defs>
               <marker id="arrowhead-transformer" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
@@ -414,8 +414,8 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
   if (type === 'alignment-misalignment') {
     return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Alignment Problem: Human Goal vs AI Goal">
             <defs>
               <marker id="arrowhead-align" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
@@ -449,8 +449,8 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
   if (type === 'human-in-the-loop') {
     return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="Human in the Loop: Draft -> Review -> Refine">
             <defs>
               <marker id="arrowhead-hitl" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">

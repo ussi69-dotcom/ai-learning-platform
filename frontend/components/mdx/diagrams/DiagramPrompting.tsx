@@ -13,8 +13,8 @@ export default function DiagramPrompting({ type }: DiagramProps) {
 
   if (type === 'few-shot-learning') {
     return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Few-Shot Learning: Showing examples to guide the AI">
             <defs>
               <marker id="arrowhead-fewshot" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
@@ -58,8 +58,8 @@ export default function DiagramPrompting({ type }: DiagramProps) {
 
   if (type === 'chain-of-thought') {
     return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Chain of Thought: Step-by-step reasoning">
             <defs>
               <marker id="arrowhead-cot" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
@@ -108,8 +108,8 @@ export default function DiagramPrompting({ type }: DiagramProps) {
 
   if (type === 'prompt-structure-pyramid') {
     return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 600 300" className="w-full h-auto" role="img" aria-label="Prompt Structure Pyramid: Context -> Instruction -> Data -> Format">
             {/* Pyramid Base: Context */}
             <g transform="translate(100, 220)">
@@ -146,8 +146,8 @@ export default function DiagramPrompting({ type }: DiagramProps) {
 
   if (type === 'prompt-cheat-sheet') {
     return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-0 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-2xl w-full max-w-4xl overflow-hidden">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-0 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-2xl w-full max-w-4xl overflow-hidden">
           <svg viewBox="0 0 800 450" className="w-full h-auto" role="img" aria-label="Prompt Engineering Cheat Sheet">
             
             {/* Background Header */}

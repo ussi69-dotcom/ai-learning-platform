@@ -13,8 +13,8 @@ export default function DiagramHistory({ type }: DiagramProps) {
 
   if (type === 'traditional-vs-ml') {
     return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-3xl">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
           <svg viewBox="0 0 700 300" className="w-full h-auto" role="img" aria-label="Traditional Programming vs Machine Learning">
             <defs>
               <marker id="arrowhead-tvm" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
@@ -175,8 +175,8 @@ export default function DiagramHistory({ type }: DiagramProps) {
 
   if (type === 'ai-history-timeline') {
     return (
-      <div className="my-8 flex justify-center">
-        <div className="relative p-6 rounded-2xl bg-slate-100/50 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg w-full max-w-4xl overflow-x-auto">
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl overflow-x-auto">
           <svg viewBox="0 0 800 200" className="w-full min-w-[700px] h-auto" role="img" aria-label="History of AI: 1950s to Now">
             {/* Timeline Line */}
             <line x1="50" y1="100" x2="750" y2="100" stroke="#334155" strokeWidth="4" strokeLinecap="round" />
