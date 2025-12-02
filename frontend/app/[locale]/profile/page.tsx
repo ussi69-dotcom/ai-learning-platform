@@ -110,6 +110,7 @@ export default function ProfilePage() {
   }
 
   const currentAvatar = getAvatar(user.avatar || 'droid_1');
+  const AvatarIcon = currentAvatar.icon;
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
@@ -155,10 +156,12 @@ export default function ProfilePage() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <currentAvatar.icon
-                        className="w-16 h-16"
-                        style={{ stroke: currentAvatar.color, strokeWidth: 1.5 }}
-                      />
+                      AvatarIcon && (
+                        <AvatarIcon
+                          className="w-16 h-16"
+                          style={{ stroke: currentAvatar.color, strokeWidth: 1.5 }}
+                        />
+                      )
                     )}
 
                     {/* Edit Overlay */}
