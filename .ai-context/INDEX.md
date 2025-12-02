@@ -23,6 +23,9 @@ Regardless of your interface (CLI or IDE), start here.
 
 ### 🛠️ Workflows (`/workflows`)
 > *How-To Guides.*
+- [**AGENT_HANDOFF.md**](./workflows/AGENT_HANDOFF.md): Multi-agent coordination (Claude ↔ Gemini).
+- [**MCP_SETUP.md**](./workflows/MCP_SETUP.md): Model Context Protocol server configuration.
+- [**SUBAGENT_STRATEGY.md**](./workflows/SUBAGENT_STRATEGY.md): When and how to use Task tool (subagents).
 - [**NEW-LESSON-PROMPT.md**](./workflows/NEW-LESSON-PROMPT.md): Prompt for generating lessons.
 - [**VISUAL_INSPECTION.md**](./workflows/VISUAL_INSPECTION.md): How to see the UI.
 - [**DATABASE_MIGRATIONS.md**](./workflows/DATABASE_MIGRATIONS.md): Alembic workflow.
