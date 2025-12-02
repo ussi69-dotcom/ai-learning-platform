@@ -138,7 +138,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
 
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end space-y-4">
+    <div className="fixed bottom-6 right-4 z-40 flex flex-col items-end space-y-4">
       {/* Instructions (Always above) */}
       {currentMode === 'placing' && (
         <div className="bg-black/60 backdrop-blur-xl border border-primary/50 text-primary-foreground px-4 py-2 rounded-xl shadow-[0_0_15px_rgba(var(--primary),0.3)] text-sm flex items-center gap-2 animate-in slide-in-from-right fade-in duration-300 mb-2">
@@ -194,19 +194,19 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
       <div className="flex md:hidden items-center gap-1">
         <Button
           ref={mobileButtonRef}
-          variant="outline"
+          variant="ghost"
           className={cn(
-            "!rounded-full w-12 h-12 shadow-lg backdrop-blur-md flex items-center justify-center p-0 transition-all duration-300 touch-none border-2",
+            "!rounded-full w-20 h-20 flex items-center justify-center p-0 transition-all duration-300 touch-none border",
             currentMode === 'viewing' || currentMode === 'placing'
-              ? "bg-primary/20 border-primary text-primary shadow-[0_0_15px_rgba(var(--primary),0.4)] scale-110"
-              : "bg-transparent dark:bg-white/5 border-primary/40 text-primary hover:border-primary hover:bg-primary/10 shadow-lg"
+              ? "bg-primary/10 border-primary/50 text-primary shadow-[0_0_15px_rgba(var(--primary),0.3)] scale-110"
+              : "bg-transparent border-primary/20 text-primary hover:border-primary/30 hover:bg-transparent"
           )}
           onClick={toggleMobileMode}
           onTouchStart={startDrag}
           title="Report Bug / View Feedback"
         >
-          {/* Show X if viewing/placing, otherwise show Split Bug/Eye icon */}
-          {(currentMode === 'viewing' || currentMode === 'placing') ? <X size={24} /> : <SplitBugEyeIcon size={24} />}
+          {/* Show X if viewing/placing, otherwise show Split Bug/Eye icon (3x larger) */}
+          {(currentMode === 'viewing' || currentMode === 'placing') ? <X size={32} /> : <SplitBugEyeIcon size={72} />}
         </Button>
       </div>
 
