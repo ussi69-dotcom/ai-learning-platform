@@ -117,7 +117,8 @@ export default function AboutPage() {
         </div>
 
         {/* A/B Test Meta Showcase with Context */}
-        <div id="cycle-35" className="mb-24 scroll-mt-40 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-400">
+        <div className="mb-24 relative animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-400">
+          <div id="cycle-35" className="absolute -top-40 left-0 w-full h-1 pointer-events-none opacity-0" />
           <div className="text-center mb-8 max-w-3xl mx-auto">
              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-red-500/10 border border-purple-500/20 dark:border-red-500/20 text-sm font-mono text-purple-600 dark:text-red-400 mb-4">
                 <MonitorPlay className="w-4 h-4" />
