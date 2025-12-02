@@ -28,3 +28,7 @@ CONTEXT_FOR_ARCHITECT.md
 
 # Agent Memory (Local Only - Do Not Commit)
 GEMINI.md
+# Playwright
+/frontend/playwright-report/
+/frontend/playwright/.cache/
+/frontend/test-results/
