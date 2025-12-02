@@ -123,7 +123,7 @@ interface AvatarSelectorProps {
 export default function AvatarSelector({ selectedAvatar, onSelect }: AvatarSelectorProps) {
   return (
     <div className="relative w-full min-h-[200px]">
-      <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-4 p-4 max-h-[400px] overflow-y-auto">
+      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3 p-4 max-h-[400px] overflow-y-auto">
         {AVATARS.map((avatar) => {
           const isSelected = selectedAvatar === avatar.id;
 
@@ -133,27 +133,26 @@ export default function AvatarSelector({ selectedAvatar, onSelect }: AvatarSelec
               key={avatar.id}
               onClick={() => onSelect(avatar.id)}
               className={cn(
-                "group flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-200 border-2 aspect-square relative overflow-hidden min-w-[60px] min-h-[60px]",
+                "group flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-200 border-2 aspect-square",
                 isSelected
-                  ? `border-primary scale-110 shadow-lg ${avatar.bg}`
-                  : "border-slate-300 dark:border-slate-700 hover:bg-muted hover:border-primary/50 hover:scale-105"
+                  ? `border-primary ring-2 ring-primary/30 shadow-md ${avatar.bg}`
+                  : "border-slate-200 dark:border-slate-700 hover:bg-muted hover:border-primary/50"
               )}
               title={avatar.label}
-              style={{ display: 'flex' }} // Force display
             >
               {avatar.type === 'IMAGE' ? (
                 <SafeAvatarImage
                   src={avatar.src}
                   alt={avatar.label}
-                  className="w-10 h-10 object-contain group-hover:scale-110 transition-transform"
+                  className="w-8 h-8 object-contain"
                 />
               ) : (
                 avatar.icon && (
                   <avatar.icon
-                    className="w-10 h-10 group-hover:scale-110 transition-transform drop-shadow-sm"
+                    className="w-7 h-7"
                     stroke={avatar.color || "currentColor"}
-                    strokeWidth={2.5}
-                    fill={avatar.color ? `${avatar.color}20` : "none"}
+                    strokeWidth={2}
+                    fill={avatar.color ? `${avatar.color}25` : "none"}
                   />
                 )
               )}
