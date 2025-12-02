@@ -88,9 +88,9 @@ export default function NavBar() {
                     avatarObj.type === 'IMAGE' ? (
                       <img src={avatarObj.src} alt="Avatar" className="w-6 h-6 rounded-full" />
                     ) : (
-                      <AvatarIcon 
+                      AvatarIcon && <AvatarIcon 
                         className="w-6 h-6" 
-                        stroke={avatarObj.gradient ? avatarObj.gradient : "currentColor"}
+                        stroke={avatarObj.color ? avatarObj.color : "currentColor"}
                         strokeWidth={2}
                         fill="none"
                       />
