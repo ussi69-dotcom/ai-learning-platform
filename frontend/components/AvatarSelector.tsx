@@ -150,10 +150,10 @@ export default function AvatarSelector({ selectedAvatar, onSelect }: AvatarSelec
               ) : (
                 avatar.icon && (
                   <avatar.icon
-                    className="w-8 h-8 group-hover:scale-110 transition-transform"
+                    className="w-10 h-10 group-hover:scale-110 transition-transform drop-shadow-sm"
                     stroke={avatar.color || "currentColor"}
-                    strokeWidth={2}
-                    fill="none"
+                    strokeWidth={2.5}
+                    fill={avatar.color ? `${avatar.color}20` : "none"}
                   />
                 )
               )}

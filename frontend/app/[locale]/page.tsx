@@ -13,7 +13,7 @@ import FeedbackDetailModal from "@/components/FeedbackDetailModal";
 import FeedbackMarker from "@/components/FeedbackMarker";
 import DifficultyIcon from "@/components/DifficultyIcon";
 import SystemStatus from "@/components/SystemStatus";
-import ABTestTeaser from "@/components/ABTestTeaser";
+import ABTestShowcase from "@/components/ABTestShowcase";
 import { useLocale, useTranslations } from 'next-intl';
 import { Rocket, Info, Code2, Zap, Users, GitBranch } from 'lucide-react';
 
@@ -302,8 +302,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Cycle #35 Teaser */}
-      <ABTestTeaser />
+      {/* Cycle #35 - AI × Human Collaboration Demo */}
+      <section className="w-full py-12 md:py-16 bg-slate-50/50 dark:bg-slate-900/30 border-y border-border/50">
+        <div className="container px-4 mx-auto max-w-5xl">
+          <ABTestShowcase locale={locale} />
+        </div>
+      </section>
 
       {/* System Status Monitor */}
       <SystemStatus />
