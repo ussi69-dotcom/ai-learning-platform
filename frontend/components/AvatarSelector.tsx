@@ -123,7 +123,7 @@ interface AvatarSelectorProps {
 export default function AvatarSelector({ selectedAvatar, onSelect }: AvatarSelectorProps) {
   return (
     <div className="relative w-full min-h-[200px]">
-      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3 p-4 max-h-[400px] overflow-y-auto">
+      <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-7 gap-2 p-3 max-h-[350px] overflow-y-auto">
         {AVATARS.map((avatar) => {
           const isSelected = selectedAvatar === avatar.id;
 
@@ -133,10 +133,10 @@ export default function AvatarSelector({ selectedAvatar, onSelect }: AvatarSelec
               key={avatar.id}
               onClick={() => onSelect(avatar.id)}
               className={cn(
-                "group flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-200 border-2 aspect-square",
+                "flex items-center justify-center rounded-lg transition-all duration-150 aspect-square p-1",
                 isSelected
-                  ? `border-primary ring-2 ring-primary/30 shadow-md ${avatar.bg}`
-                  : "border-slate-200 dark:border-slate-700 hover:bg-muted hover:border-primary/50"
+                  ? `ring-2 ring-primary ring-offset-2 ${avatar.bg}`
+                  : "hover:bg-slate-100 dark:hover:bg-slate-800"
               )}
               title={avatar.label}
             >
@@ -144,15 +144,15 @@ export default function AvatarSelector({ selectedAvatar, onSelect }: AvatarSelec
                 <SafeAvatarImage
                   src={avatar.src}
                   alt={avatar.label}
-                  className="w-8 h-8 object-contain"
+                  className="w-full h-full object-contain"
                 />
               ) : (
                 avatar.icon && (
                   <avatar.icon
-                    className="w-7 h-7"
+                    className="w-full h-full p-0.5"
                     stroke={avatar.color || "currentColor"}
-                    strokeWidth={2}
-                    fill={avatar.color ? `${avatar.color}25` : "none"}
+                    strokeWidth={1.5}
+                    fill={avatar.color ? `${avatar.color}30` : "none"}
                   />
                 )
               )}
