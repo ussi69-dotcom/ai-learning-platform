@@ -12,6 +12,7 @@ import FeedbackSubmissionModal from "@/components/FeedbackSubmissionModal";
 import FeedbackDetailModal from "@/components/FeedbackDetailModal";
 import FeedbackMarker from "@/components/FeedbackMarker";
 import DifficultyIcon from "@/components/DifficultyIcon";
+import SystemStatus from "@/components/SystemStatus";
 import { useLocale, useTranslations } from 'next-intl';
 import { Rocket, Info } from 'lucide-react';
 
@@ -298,6 +299,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* System Status Monitor */}
+      <SystemStatus />
 
       {/* Seznam Kurzů */}
       <section className="w-full py-12 md:py-24 container px-4 mx-auto">

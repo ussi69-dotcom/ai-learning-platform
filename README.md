@@ -62,7 +62,24 @@ Backend čeká na databázi a pak automaticky seeduje data.
 
 ---
 
-## 🛠️ Běžné Příkazy
+## 🛠️ Vývojářské Příkazy (Makefile)
+
+Pro zjednodušení vývoje používáme `make`.
+
+| Příkaz | Popis |
+|--------|-------|
+| `make up` | 🚀 Spustí platformu (build + detach) |
+| `make logs` | 📋 Zobrazí logy všech služeb |
+| `make down` | 🛑 Zastaví platformu |
+| `make reset` | ☢️ **Nuclear Reset:** Smaže DB a volumes, znovu postaví |
+| `make shell-backend` | 🐚 Otevře terminál v backendu |
+| `make test-backend` | 🧪 Spustí testy (pytest) |
+
+> **Tip:** Pokud nemáš `make`, můžeš stále používat `docker compose` příkazy (viz Makefile pro inspiraci).
+
+---
+
+## 🏗️ Manuální Docker Příkazy (Legacy)
 
 ### Zastavit Platformu
 
@@ -89,19 +106,6 @@ docker compose restart backend
 ```bash
 docker compose down -v
 docker compose up -d --build
-```
-
-### Zobrazit Logy
-
-```bash
-# Všechny služby
-docker compose logs -f
-
-# Jen frontend
-docker logs ai-frontend -f
-
-# Jen backend
-docker logs ai-backend -f
 ```
 
 ---

@@ -1,3 +1,33 @@
+# Session Log
+
+## Cycle 36 - December 2, 2025 (Antigravity → CLI Handoff)
+
+**Agent:** Antigravity  
+**Status:** HANDOFF to GEMINI CLI  
+**Issue:** A/B Showcase Sith/Jedi Theme Confusion
+
+### What Was Done:
+1. Refined A/B Showcase timing (slower pacing for readability)
+2. Implemented Jedi Mode (Purple) for Blue Team content
+3. Attempted to implement Sith/Jedi theme according to guidelines
+4. Added visual enhancements (scrollbar, arrow animation, summary)
+
+### Problem:
+User is frustrated with my understanding of Dark/Light mode (Sith/Jedi) theme application. Despite multiple attempts, I couldn't correctly apply the theme guidelines.
+
+### Handoff:
+See `handoff_cli_theme.md` for detailed context and requirements.
+
+**Key Files:**
+- `/home/ussi/ai-learning-platform/frontend/components/ABTestShowcase.tsx`
+- `/home/ussi/ai-learning-platform/frontend/app/globals.css`
+- `.ai-context/core/CONTENT_GUIDELINES.md`
+
+**Action Required:**
+GEMINI CLI needs to review and fix the Sith/Jedi theme implementation.
+
+---
+
 # Session Log - Cycle 31 Extension
 
 ## 📅 Date: 2025-11-28
@@ -207,3 +237,31 @@
 ### 🚀 Next Steps
 -   **Maintain Hygiene**: Periodically run the orphan-check script (see `task.md` history).
 -   **Deploy**: The platform is ready for production deployment with the new Alembic workflow.
+
+## 📅 Date: 2025-12-02 (A/B Test Showcase Polish)
+
+## 🎯 Task: Visual & Narrative Polish of A/B Test Showcase (Cycle 35)
+
+### ✅ Completed
+1.  **Narrative Refinement**:
+    -   Transformed the A/B Test Showcase into an "Antigravity Chat Simulation".
+    -   **Persona**: User as "Architect", Blue Team (Gemini) as "Jedi", Red Team (Claude) as "Sith".
+    -   **Content**: Authentic conversation history including Master Prompt, Red Team critical report, Blue Team analysis, and final outcome.
+
+2.  **Visual Enhancements**:
+    -   **Jedi vs Sith Theme**: Implemented distinct color coding (Purple/Blue vs Red) and "Liquid Glass" aesthetic.
+    -   **Chat Simulation**: Added auto-play functionality with progressive message reveal.
+    -   **Layout**: Right-aligned User messages for a true chat experience.
+    -   **Animations**: Scroll-triggered fade-ins and auto-scroll to bottom.
+
+3.  **Code Quality**:
+    -   **Linting**: Resolved all lint errors in `ABTestShowcase.tsx` (specifically `react/no-unescaped-entities` and `useEffect` state updates).
+    -   **Refactoring**: Cleaned up the component structure for better readability and performance.
+
+### 📝 Notes
+-   **Dev Server**: Encountered permission issues with the dev server (root ownership). User had to manually intervene to restart it.
+-   **Linting**: There are still unrelated lint errors in other files (`utils.ts`, `api/models/*.ts`), but the target component is clean.
+
+### 🚀 Next Steps
+-   **Deploy**: Push changes to production.
+-   **Feedback**: Gather user impressions on the new "Storytelling" approach on the About page.
