@@ -2,6 +2,25 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🚀 Boot Sequence (READ FIRST)
+
+**Before doing ANY work, read these files in order:**
+
+1. **`.agent/rules/rules.md`** - Agent identity & workflow rules
+2. **`.ai-context/INDEX.md`** - Documentation map
+3. **`.ai-context/state/MEMORY.md`** - Environment, stack, protocols (SSOT)
+4. **`.ai-context/state/SESSION_LOG.md`** - What happened last session
+5. **`.ai-context/state/CURRENT_TASK.md`** - Active task
+
+**On session start, report:**
+> "Pokračujeme od [poslední aktivita]. Stav: [brief status]. Další krok: [co teď]."
+
+**On session end, update:**
+- `SESSION_LOG.md` with accomplishments and next steps
+- `MEMORY.md` if you learned something new about the system
+
+---
+
 ## Project Overview
 
 Gamified AI learning platform with Czech localization (English/Czech). Features Star Wars theming (Jedi/Sith), XP progression, interactive labs, and MDX-based course content. Built with Next.js 16 (App Router), FastAPI, PostgreSQL, and Redis, deployed via Docker Compose.
