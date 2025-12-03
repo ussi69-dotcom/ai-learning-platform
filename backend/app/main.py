@@ -40,8 +40,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000", 
         "http://frontend:3000", 
-        "https://ai-teach.me", 
-        "https://www.ai-teach.me"
+        "https://ai-teaching.eu", 
+        "https://www.ai-teaching.eu"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -95,7 +95,7 @@ def verify_email(token: str, db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.verification_token == token).first()
     if not user:
         # Redirect to error page or login with error
-        frontend_url = os.getenv("FRONTEND_URL", "https://ai-teach.me")
+        frontend_url = os.getenv("FRONTEND_URL", "https://ai-teaching.eu")
         return RedirectResponse(url=f"{frontend_url}/login?error=invalid_token", status_code=303)
     
     if not user.is_verified:
@@ -103,7 +103,7 @@ def verify_email(token: str, db: Session = Depends(database.get_db)):
         user.verification_token = None # Clear token
         db.commit()
     
-    frontend_url = os.getenv("FRONTEND_URL", "https://ai-teach.me")
+    frontend_url = os.getenv("FRONTEND_URL", "https://ai-teaching.eu")
     return RedirectResponse(url=f"{frontend_url}/login?verified=true", status_code=303)
 
 
