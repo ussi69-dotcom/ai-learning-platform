@@ -7,10 +7,10 @@ Regardless of your interface (CLI or IDE), start here.
 
 ### 🧠 State (`/state`)
 > *Read/Write. The living memory of the project.*
-- [**LAST_SESSION.md**](./state/LAST_SESSION.md): **🔥 CHECK FIRST!** Krátkodobá hutná paměť z poslední session. Aktualizuj průběžně.
-- [**MEMORY.md**](./state/MEMORY.md): Dlouhodobá paměť. Environment, stack, protocols (SSOT).
-- [**CURRENT_TASK.md**](./state/CURRENT_TASK.md): What are we doing *right now*?
-- [**SESSION_LOG.md**](./state/SESSION_LOG.md): Historie všech sessions (archiv).
+- [**LAST_SESSION.md**](./state/LAST_SESSION.md): **🔥 ČTI PRVNÍ!** Kde jsme skončili. Aktualizuj průběžně.
+- [**MEMORY.md**](./state/MEMORY.md): Dlouhodobá paměť (stack, protokoly). Aktualizuj zřídka.
+- [**CURRENT_TASK.md**](./state/CURRENT_TASK.md): Aktivní úkol.
+- [**SESSION_LOG.md**](./state/SESSION_LOG.md): ⚠️ **ARCHIV - NEČÍST PŘI STARTU** (500+ řádků).
 
 ### 🧱 Core (`/core`)
 > *Read-Only. The immutable laws.*

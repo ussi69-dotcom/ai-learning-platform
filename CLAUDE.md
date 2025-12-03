@@ -2,26 +2,27 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 🚀 Boot Sequence (READ FIRST)
+## 🚀 Boot Sequence
 
-**Before doing ANY work, read these files in order:**
+**IHNED při startu přečti tyto soubory:**
 
-1. **`.agent/rules/rules.md`** - Agent identity & workflow rules
-2. **`.ai-context/INDEX.md`** - Documentation map
-3. **`.ai-context/state/LAST_SESSION.md`** - 🔥 **KRÁTKODOBÁ PAMĚŤ** - co se dělo naposledy
-4. **`.ai-context/state/MEMORY.md`** - Dlouhodobá paměť (stack, protokoly)
-5. **`.ai-context/state/CURRENT_TASK.md`** - Active task
+```
+1. .ai-context/state/LAST_SESSION.md   ← 🔥 KDE JSME SKONČILI
+2. .ai-context/state/MEMORY.md         ← Stack, protokoly
+3. .agent/rules/rules.md               ← Pravidla agenta
+```
 
-**On session start, report:**
-> "Pokračujeme od [poslední aktivita]. Stav: [brief status]. Další krok: [co teď]."
+**Po načtení OKAMŽITĚ odpověz:**
+> "Pokračujeme od [aktivita]. Stav: [status]. Další: [co teď]."
 
-**During session:**
-- Průběžně aktualizuj `LAST_SESSION.md` (co děláš, co je hotovo)
+**Během práce:**
+- Průběžně aktualizuj `LAST_SESSION.md`
 
-**On session end:**
-- `LAST_SESSION.md` - aktuální stav pro příští session
-- `SESSION_LOG.md` - archivní záznam (stručně)
-- `MEMORY.md` - JEN pokud je něco dlouhodobě důležitého
+**Na konci session:**
+- Aktualizuj `LAST_SESSION.md` (stav pro příště)
+- Přidej záznam do `SESSION_LOG.md` (archiv)
+
+**NEČTI při startu:** `SESSION_LOG.md` (je to archiv, 500+ řádků)
 
 ---
 
