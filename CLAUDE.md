@@ -8,16 +8,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 1. **`.agent/rules/rules.md`** - Agent identity & workflow rules
 2. **`.ai-context/INDEX.md`** - Documentation map
-3. **`.ai-context/state/MEMORY.md`** - Environment, stack, protocols (SSOT)
-4. **`.ai-context/state/SESSION_LOG.md`** - What happened last session
+3. **`.ai-context/state/LAST_SESSION.md`** - 🔥 **KRÁTKODOBÁ PAMĚŤ** - co se dělo naposledy
+4. **`.ai-context/state/MEMORY.md`** - Dlouhodobá paměť (stack, protokoly)
 5. **`.ai-context/state/CURRENT_TASK.md`** - Active task
 
 **On session start, report:**
 > "Pokračujeme od [poslední aktivita]. Stav: [brief status]. Další krok: [co teď]."
 
-**On session end, update:**
-- `SESSION_LOG.md` with accomplishments and next steps
-- `MEMORY.md` if you learned something new about the system
+**During session:**
+- Průběžně aktualizuj `LAST_SESSION.md` (co děláš, co je hotovo)
+
+**On session end:**
+- `LAST_SESSION.md` - aktuální stav pro příští session
+- `SESSION_LOG.md` - archivní záznam (stručně)
+- `MEMORY.md` - JEN pokud je něco dlouhodobě důležitého
 
 ---
 
