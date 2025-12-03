@@ -1,49 +1,81 @@
-# Agent State - Synchronized with MEMORY.md
+# Current Task - Cycle 39
 
-## Current Status
-- **Cycle:** 37 (Documentation Architecture & Quality)
-- **Focus:** Documentation Optimization & Governance
-- **Lead:** Claude 4.5 Sonnet (Senior Architect)
-- **Last Action:** Completed comprehensive documentation audit and created implementation plan.
+**Status:** ✅ COMPLETE - CI/CD Ready
+**Agent:** Claude Code (Opus 4.5)
+**Date:** 2025-12-03
 
-## 🏆 Recent Achievements (Cycle 36 → 37)
-1.  **Content Strategy & UX:**
-    -   **Homepage:** New `ABTestTeaser` drives traffic to About page. New "Benefits" section explains the value prop.
-    -   **About Page:** Expanded context, "Why we are here" intro, localized Timeline.
-    -   **System Status:** Live monitoring widget integrated on Homepage.
+---
 
-2.  **Visual & Functional Fixes:**
-    -   `ABTestShowcase` fixed (Theming, Auto-scroll, JS syntax).
-    -   Localization namespaces fixed (`Home` vs `Common`).
+## What Was Done This Cycle
 
-3.  **Infrastructure:**
-    -   Multi-stage Docker build.
-    -   `Makefile` for DX.
+1. **CI/CD Pipeline** ✅
+   - GitHub Actions (`.github/workflows/ci.yml`)
+   - Husky pre-commit hooks
+   - `npm run verify` script
+   - ESLint configured (0 errors, 195 warnings)
 
-4.  **Documentation (NEW - Cycle 37):**
-    -   ✅ Comprehensive audit completed ([DOCUMENTATION_AUDIT_2025_12_02.md](../core/DOCUMENTATION_AUDIT_2025_12_02.md))
-    -   ✅ Implementation plan created ([IMPLEMENTATION_PLAN_DOC_OPTIMIZATION.md](../IMPLEMENTATION_PLAN_DOC_OPTIMIZATION.md))
-    -   ✅ CLAUDE.md created for future AI agent onboarding
-    -   ✅ Senior Architect assigned and registered in MEMORY.md
+2. **CORS Fix** ✅
+   - Hardcoded domains removed
+   - Uses `BACKEND_CORS_ORIGINS` env variable
 
-## 🚧 Active Tasks
-- **Phase 1 (Quick Wins)** - Awaiting approval to begin:
-  - Add metadata headers to all core documents
-  - Create OWNERS.md with clear responsibilities
-  - Phase out GEMINI.md references
-  - Add "Related Documents" sections
+3. **Documentation** ✅
+   - Boot Sequence added to `CLAUDE.md`
+   - Learning doc: `CI_AND_CODE_QUALITY.md`
+   - MEMORY.md updated with CI/CD SOP
 
-## ⏭️ Next Actions
-1.  **User Review:** Review [Documentation Audit](../core/DOCUMENTATION_AUDIT_2025_12_02.md) and approve implementation
-2.  **Execute Phase 1:** Quick wins (1-2 hours) - metadata, ownership, cross-references
-3.  **Parallel Track:** Continue with production deployment prep
-4.  **Future Cycles:**
-    - Cycle 38: Gamification Deep Dive (User Streaks, Achievements)
-    - Ongoing: Documentation automation (Phase 3)
+4. **Dev Environment** ✅
+   - Git remote switched to SSH
+   - MCP config created (context7)
+   - All dependencies installed
 
-## 🧠 Context for Next Agent
--   **Architecture:** Frontend and Backend are optimized and production-ready.
--   **Documentation:** Major audit completed. Implementation plan ready for execution.
--   **Content:** Use the "Teaser -> Deep Dive" pattern for future major features.
--   **Repo:** `main` branch is the source of truth.
--   **Leadership:** Claude 4.5 Sonnet is Senior Architect responsible for documentation and system design.
+---
+
+## Next Priority: Content Generation (Phase 2)
+
+Per EXECUTION_PLAN.md, the next focus is **Prompt Engineering course**.
+
+### Immediate Actions
+
+1. **Create Slash Commands** (Claude)
+   - `/new-lesson` - skeleton generator
+   - `/validate-lesson` - structure validator
+
+2. **Create Lesson Skeletons** (Claude)
+   - 8 lessons for `prompt-engineering` course
+   - meta.json, empty MDX, empty quiz
+
+3. **Content Generation** (Gemini CLI)
+   - Write lessons 01-04
+   - Create quizzes
+   - Czech translations
+
+---
+
+## Content Status
+
+| Course | Progress | Priority |
+|--------|----------|----------|
+| AI Basics | ✅ 100% | Done |
+| Prompt Engineering | 🔴 STUB | **NOW** |
+| Advanced AI | 🔴 STUB | Next |
+| AI Engineering | 🔴 STUB | Future |
+
+---
+
+## Quality Gates (from EXECUTION_PLAN.md)
+
+Before merge:
+- [ ] `npm run verify` passes
+- [ ] pytest passes
+- [ ] Content follows CONTENT_GUIDELINES.md
+- [ ] EN + CS versions exist
+- [ ] Quiz has min 5 questions
+
+---
+
+## Handoff Notes
+
+- CI/CD is operational - builds are verified before merge
+- 195 ESLint warnings = tech debt (documented, not blocking)
+- Ready for content generation phase
+- Consider creating slash commands before mass content creation
