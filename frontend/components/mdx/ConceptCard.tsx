@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useRef } from 'react';
 import { Lightbulb, Brain, Cpu, Zap, Database, Search, Bot, Layers, Code, Terminal, Sparkles } from 'lucide-react';
 
 interface ConceptCardProps {
@@ -70,14 +70,13 @@ export default function ConceptCard({
 }: ConceptCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Memoize random quotes so they don't change on re-renders
-  const randomJediQuote = useMemo(() => {
-    return jediQuote || JEDI_QUOTES[Math.floor(Math.random() * JEDI_QUOTES.length)];
-  }, [jediQuote]);
+  // Use refs for random indices to avoid impure function calls during render
+  const jediIndexRef = useRef(Math.floor(Math.random() * JEDI_QUOTES.length));
+  const sithIndexRef = useRef(Math.floor(Math.random() * SITH_QUOTES.length));
 
-  const randomSithQuote = useMemo(() => {
-    return sithQuote || SITH_QUOTES[Math.floor(Math.random() * SITH_QUOTES.length)];
-  }, [sithQuote]);
+  // Get stable quotes - use provided or random
+  const randomJediQuote = jediQuote || JEDI_QUOTES[jediIndexRef.current];
+  const randomSithQuote = sithQuote || SITH_QUOTES[sithIndexRef.current];
 
   const IconComponent = getIcon(icon);
 
