@@ -3,8 +3,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from app.main import app, get_db
-from app.database import Base
+from app.main import app
+from app.database import Base, get_db
 from app.models import User
 
 # In-memory SQLite for testing
@@ -33,7 +33,7 @@ client = TestClient(app)
 def test_register_user():
     response = client.post(
         "/auth/register",
-        json={"email": "newuser@example.com", "password": "password123", "difficulty": "PIECE_OF_CAKE", "is_active": True},
+        json={"email": "newuser@example.com", "password": "Password123", "difficulty": "PIECE_OF_CAKE", "is_active": True},
     )
     assert response.status_code == 200
     data = response.json()
@@ -45,13 +45,20 @@ def test_login_user():
     # Register first
     client.post(
         "/auth/register",
-        json={"email": "loginuser@example.com", "password": "password123", "is_active": True},
+        json={"email": "loginuser@example.com", "password": "Password123", "is_active": True},
     )
+
+    # Verify user manually
+    db = TestingSessionLocal()
+    user = db.query(User).filter(User.email == "loginuser@example.com").first()
+    user.is_verified = True
+    db.commit()
+    db.close()
     
     # Login
     response = client.post(
         "/auth/token",
-        data={"username": "loginuser@example.com", "password": "password123"},
+        data={"username": "loginuser@example.com", "password": "Password123"},
     )
     assert response.status_code == 200
     data = response.json()
@@ -62,12 +69,19 @@ def test_read_users_me():
     # Register
     client.post(
         "/auth/register",
-        json={"email": "me@example.com", "password": "password123", "is_active": True},
+        json={"email": "me@example.com", "password": "Password123", "is_active": True},
     )
+    # Verify user manually
+    db = TestingSessionLocal()
+    user = db.query(User).filter(User.email == "me@example.com").first()
+    user.is_verified = True
+    db.commit()
+    db.close()
+
     # Login
     login_res = client.post(
         "/auth/token",
-        data={"username": "me@example.com", "password": "password123"},
+        data={"username": "me@example.com", "password": "Password123"},
     )
     token = login_res.json()["access_token"]
     
