@@ -36,6 +36,7 @@ Regardless of your interface (CLI or IDE), start here.
 > *Knowledge Base.*
 - [**walkthrough.md**](./learning/walkthrough.md): Codebase tour.
 - [**IDEAS.md**](./learning/IDEAS.md): Future concepts and improvements.
+- [**CI_AND_CODE_QUALITY.md**](./learning/CI_AND_CODE_QUALITY.md): ESLint, CI/CD, warnings explained (sysadmin-friendly).
 
 ### 📜 History (`/history`)
 > *Archives.*
