@@ -110,5 +110,36 @@ Nastavte výchozí chování Gitu, aby se na to už neptal.
 ---
 
 ## Rychlé tipy
-- **`git status`**: Vždy používejte před jakoukoliv akcí, abyste věděli, kde jste.
 - **`git log --oneline --graph --all`**: Zobrazí graf historie, abyste viděli, jak se větve rozcházejí a spojují.
+
+---
+
+## 4. Co se to právě stalo? (Vysvětlení pro lidi)
+
+Pokud máte pocit, že na vás Git jen křičí chyby, tady je vysvětlení toho, co jsme právě řešili:
+
+### Proč "Divergent branches" (Rozbíhající se větve)?
+Představte si to jako dva různé dokumenty Wordu.
+1.  Vy jste doma napsal odstavec A.
+2.  Kolega v práci do stejného souboru napsal odstavec B.
+3.  Když chcete tyto verze spojit, Git se ptá: "Mám dát tvůj odstavec za jeho (rebase), nebo je mám slepit dohromady novým lepidlem (merge)?"
+**Řešení:** Řekli jsme mu `pull --no-rebase` = "Slep to dohromady."
+
+### Proč "Merge conflict" (Konflikt)?
+Git je chytrý a většinou pozná, že vy jste psal na straně 1 a kolega na straně 5. Ale v souboru `.gitignore` jste oba psali na **stejný řádek**.
+- Vy jste přidal: `.mcp.json`
+- Kolega (nebo vy na jiném PC) přidal: `CLAUDE.md.local`
+Git neví, co je správně. Jestli jedno, druhé, nebo obojí.
+**Řešení:** Museli jsme soubor otevřít a ručně mu říct: "Nech tam oboje."
+
+### Jak číst tu chybu `non-fast-forward`?
+Uživatel: *"Hej, píše to `rejected`, ale neříká proč (že je problém v .gitignore)!"*
+
+To je správný postřeh. Ta chyba při `git push` je jen **první varování**.
+1.  **Fáze 1 (`git push`):** Git řekne: *"Stop! Na serveru je něco nového, co ty nemáš. (`non-fast-forward`). Nejdřív si to stáhni."*
+    - V tuto chvíli Git ještě *neví*, že tam bude konflikt. Jen ví, že nesedí počty.
+2.  **Fáze 2 (`git pull`):** Teprve když poslechnete a dáte `git pull`, Git se pokusí ty věci spojit.
+    - Až **TADY** zjistí: *"A sakra, v `.gitignore` to nesedí!"* a vyhodí chybu `CONFLICT`.
+
+**Poučení:**
+Když vidíte `rejected (non-fast-forward)`, znamená to vždy: **"Musím dát `git pull`"**. A teprve ten `pull` vám řekne, jestli je to v pohodě, nebo jestli musíte něco opravovat.
