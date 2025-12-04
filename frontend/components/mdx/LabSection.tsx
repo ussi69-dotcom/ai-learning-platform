@@ -3,10 +3,11 @@
 import React, { useState } from 'react';
 import { Check, FlaskConical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import LabBadge from './LabBadge'; 
+import LabBadge from './LabBadge';
 import { useAuth } from '@/context/AuthContext';
-import axios from 'axios'; 
+import axios from 'axios';
 import { useParams } from 'next/navigation';
+import { useLocale } from 'next-intl';
 
 interface LabSectionProps {
   title: string;
@@ -20,6 +21,7 @@ export default function LabSection({ title, difficulty = "Builder", children }: 
   const { token, refreshUser } = useAuth();
   const params = useParams();
   const lessonId = parseInt(params.lessonId as string);
+  const locale = useLocale();
   
   // Generate stable ID from title
   const labId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
@@ -89,7 +91,9 @@ export default function LabSection({ title, difficulty = "Builder", children }: 
               <FlaskConical className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Interactive Lab</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                {locale === 'cs' ? 'Interaktivní laboratoř' : 'Interactive Lab'}
+              </div>
               <h3 className="text-xl font-bold text-foreground">{title}</h3>
             </div>
           </div>
@@ -97,7 +101,7 @@ export default function LabSection({ title, difficulty = "Builder", children }: 
           {isCompleted && (
             <div className="flex items-center gap-2 text-green-600 dark:text-yellow-400 font-bold bg-background/80 px-3 py-1 rounded-full shadow-sm border border-border">
               <Check className="w-4 h-4" />
-              Completed
+              {locale === 'cs' ? 'Hotovo' : 'Completed'}
             </div>
           )}
         </div>
@@ -126,7 +130,9 @@ export default function LabSection({ title, difficulty = "Builder", children }: 
               }
             `}
           >
-            {isCompleted ? 'Lab Completed!' : 'I Finished This Lab'}
+            {isCompleted
+              ? (locale === 'cs' ? 'Lab dokončen!' : 'Lab Completed!')
+              : (locale === 'cs' ? 'Dokončil jsem tento Lab' : 'I Finished This Lab')}
           </Button>
         </div>
       </div>

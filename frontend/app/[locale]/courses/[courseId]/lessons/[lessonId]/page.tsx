@@ -321,14 +321,21 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-background transition-colors duration-500">
+      <div className="min-h-screen bg-background transition-colors duration-500 relative overflow-hidden">
+
+        {/* Ambient Background Blobs */}
+        <div className="fixed inset-0 -z-10 pointer-events-none">
+          <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-[150px] animate-pulse" style={{ animationDuration: '8s' }} />
+          <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '10s' }} />
+          <div className="absolute top-[40%] right-[20%] w-[30%] h-[30%] bg-fuchsia-500/3 dark:bg-fuchsia-500/5 rounded-full blur-[100px]" />
+        </div>
 
         <ProgressDots />
 
         <div className="container mx-auto py-6 px-4 max-w-4xl pb-32 md:pb-24">
 
           {/* Lesson Navigation (TOP) */}
-          <div className="flex items-center justify-between gap-4 mb-8 p-3 -mx-3 rounded-lg bg-card/50 border border-border backdrop-blur-sm">
+          <div className="flex items-center justify-between gap-4 mb-8 p-3 -mx-3 rounded-xl bg-card/30 border border-border/50 backdrop-blur-md hover:bg-card/50 transition-all duration-300">
             <div className="flex gap-2">
               <Link href={`/courses/${courseId}`}>
                 <Button variant="outline" size="sm" className="gap-2">
@@ -368,13 +375,13 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           </div>
 
           {/* Header Section */}
-          <div className="mb-8 mt-4">
+          <div className="mb-8 mt-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="flex items-center gap-3 mb-4">
-              <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold border border-primary/20">
+              <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold border border-primary/20 backdrop-blur-sm">
                 {locale === 'cs' ? 'Lekce' : 'Lesson'} {lesson.order}
               </span>
               {course && (
-                <Link href={`/courses/${courseId}`} className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors">
+                <Link href={`/courses/${courseId}`} className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors hover:underline underline-offset-4">
                   {course.title}
                 </Link>
               )}
@@ -389,7 +396,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
               <div className="aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border-4 border-border ring-1 ring-black/5">
                 <iframe
                   className="w-full h-full"
-                  src={lesson.video_url}
+                  src={`${lesson.video_url}${lesson.video_url.includes('?') ? '&' : '?'}cc_load_policy=1&cc_lang_pref=${locale}&hl=${locale}`}
                   title={lesson.title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -399,7 +406,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           )}
 
           {/* Content Card */}
-          <div id="lesson-content-container" className="glass-panel rounded-3xl p-6 md:p-10 mb-8 min-h-[400px] relative">
+          <div id="lesson-content-container" className="glass-panel rounded-3xl p-6 md:p-10 mb-8 min-h-[400px] relative animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 border border-border/50 shadow-xl shadow-primary/5 dark:shadow-primary/10 hover:shadow-2xl hover:shadow-primary/10 transition-shadow duration-500">
 
             {/* Page Indicator (Top) */}
             <div className="flex justify-between items-center mb-6 text-xs font-bold text-muted-foreground uppercase tracking-wider">
@@ -455,7 +462,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           </div>
 
           {/* --- PRIMARY NAVIGATION (Page Control) --- */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-card/50 p-4 rounded-2xl border border-border backdrop-blur-sm">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-card/30 p-4 rounded-2xl border border-border/50 backdrop-blur-md shadow-lg shadow-black/5 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-300">
             <div className="flex w-full md:w-auto justify-between md:justify-start gap-4 order-2 md:order-1">
               <Button
                 variant="ghost"
@@ -489,13 +496,13 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           </div>
 
           {/* --- SECONDARY NAVIGATION (Context Control) --- */}
-          <div className="grid grid-cols-3 gap-4 pt-8 border-t border-border">
+          <div className="grid grid-cols-3 gap-4 pt-8 border-t border-border/50 animate-in fade-in duration-500 delay-500">
 
             {/* Prev Lesson */}
             <div className="justify-self-start">
               {previousLesson ? (
                 <Link href={`/courses/${courseId}/lessons/${previousLesson.id}`}>
-                  <Button variant="outline" size="sm" className="text-muted-foreground hover:text-foreground gap-2">
+                  <Button variant="outline" size="sm" className="text-muted-foreground hover:text-foreground gap-2 hover:-translate-x-1 transition-all duration-200">
                     <span>«</span> {locale === 'cs' ? 'Předchozí lekce' : 'Prev Lesson'}
                   </Button>
                 </Link>
@@ -507,7 +514,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             {/* Home / Course Index */}
             <div className="justify-self-center">
               <Link href={`/courses/${courseId}`}>
-                <Button variant="outline" size="sm" className="border-dashed border-border text-muted-foreground hover:text-foreground">
+                <Button variant="outline" size="sm" className="border-dashed border-border/50 text-muted-foreground hover:text-foreground hover:border-border hover:bg-card/50 transition-all duration-200">
                   {locale === 'cs' ? 'Přehled kurzu' : 'Course Overview'}
                 </Button>
               </Link>
@@ -517,13 +524,13 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             <div className="justify-self-end">
               {nextLesson ? (
                 <Link href={`/courses/${courseId}/lessons/${nextLesson.id}`}>
-                  <Button variant="outline" size="sm" className="text-muted-foreground hover:text-foreground gap-2">
+                  <Button variant="outline" size="sm" className="text-muted-foreground hover:text-foreground gap-2 hover:translate-x-1 transition-all duration-200">
                     {locale === 'cs' ? 'Další lekce' : 'Next Lesson'} <span>»</span>
                   </Button>
                 </Link>
               ) : (
                 <Link href={`/courses/${courseId}`}>
-                  <Button variant="default" size="sm" className="gap-2">
+                  <Button variant="default" size="sm" className="gap-2 hover:scale-105 transition-transform duration-200">
                     {locale === 'cs' ? 'Dokončit kurz 🏆' : 'Finish Course 🏆'}
                   </Button>
                 </Link>

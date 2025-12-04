@@ -28,5 +28,25 @@
     "correct_answer": "B",
     "explanation": "Nízká teplota nutí model vybrat nejpravděpodobnější další token, což jej činí deterministickým a přesným.",
     "order": 3
+  },
+  {
+    "question": "Co je 'Kontextové okno' u LLM?",
+    "option_a": "Fyzické okno, kde je AI zobrazena.",
+    "option_b": "Maximální počet tokenů, které AI může zpracovat najednou.",
+    "option_c": "Speciální režim pro čtení Windows souborů.",
+    "option_d": "Čas, který AI potřebuje k odpovědi.",
+    "correct_answer": "B",
+    "explanation": "Kontextové okno je jako krátkodobá paměť AI. Moderní LLM mají kontextová okna od 8K do 200K+ tokenů, což jim umožňuje zpracovávat delší konverzace a dokumenty.",
+    "order": 4
+  },
+  {
+    "question": "Proč LLM někdy 'halucinují' (generují nepravdivé informace sebejistě)?",
+    "option_a": "Jsou navrženy tak, aby lidem lhaly.",
+    "option_b": "Jsou trénované být plynulé, ne faktické - takže generují věrohodně znějící text i když si nejsou jisté.",
+    "option_c": "Jejich databáze je poškozená.",
+    "option_d": "Mají lidské emoce, které ovlivňují jejich úsudek.",
+    "correct_answer": "B",
+    "explanation": "LLM upřednostňují plynulost před faktičností. Generují text, který zní správně na základě vzorů, ne ověřených faktů. Proto byste měli vždy ověřovat důležité informace.",
+    "order": 5
   }
 ]

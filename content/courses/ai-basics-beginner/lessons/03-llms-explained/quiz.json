@@ -28,5 +28,25 @@
     "correct_answer": "B",
     "explanation": "Low temperature forces the model to choose the most probable next token, making it deterministic and precise.",
     "order": 3
+  },
+  {
+    "question": "What is the 'Context Window' in an LLM?",
+    "option_a": "The physical window where the AI is displayed.",
+    "option_b": "The maximum number of tokens the AI can process at once.",
+    "option_c": "A special mode for reading Windows files.",
+    "option_d": "The time it takes for the AI to respond.",
+    "correct_answer": "B",
+    "explanation": "The context window is like the AI's short-term memory. Modern LLMs have context windows of 8K to 200K+ tokens, allowing them to process longer conversations and documents.",
+    "order": 4
+  },
+  {
+    "question": "Why do LLMs sometimes 'hallucinate' (generate false information confidently)?",
+    "option_a": "They are designed to lie to humans.",
+    "option_b": "They are trained to be fluent, not factual - so they generate plausible-sounding text even when uncertain.",
+    "option_c": "Their database is corrupted.",
+    "option_d": "They have human emotions that affect their judgment.",
+    "correct_answer": "B",
+    "explanation": "LLMs prioritize fluency over factuality. They generate text that sounds right based on patterns, not verified facts. This is why you should always verify important information.",
+    "order": 5
   }
 ]

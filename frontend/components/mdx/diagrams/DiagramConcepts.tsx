@@ -447,6 +447,306 @@ export default function DiagramConcepts({ type }: DiagramProps) {
     );
   }
 
+  if (type === 'learning-types-overview') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl">
+          <svg viewBox="0 0 800 280" className="w-full h-auto" role="img" aria-label="Three Types of Machine Learning: Supervised, Unsupervised, Reinforcement">
+            {/* Title */}
+            <text x="400" y="30" textAnchor="middle" className="text-lg font-bold fill-slate-600 dark:fill-slate-300">
+              {isCs ? 'Tři typy strojového učení' : 'Three Types of Machine Learning'}
+            </text>
+
+            {/* Supervised Learning */}
+            <g transform="translate(50, 60)">
+              <rect x="0" y="0" width="200" height="180" rx="12" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" strokeWidth="2" />
+              <text x="100" y="35" textAnchor="middle" className="text-sm font-bold fill-blue-600 dark:fill-blue-400">
+                {isCs ? 'Učení s učitelem' : 'Supervised Learning'}
+              </text>
+              <text x="100" y="70" textAnchor="middle" className="text-4xl">👨‍🏫</text>
+              <text x="100" y="100" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">
+                {isCs ? '"Toto je kočka"' : '"This is a cat"'}
+              </text>
+              <text x="100" y="130" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">
+                {isCs ? '"Toto je pes"' : '"This is a dog"'}
+              </text>
+              <rect x="40" y="145" width="120" height="25" rx="4" fill="#3b82f6" fillOpacity="0.2" />
+              <text x="100" y="162" textAnchor="middle" className="text-[10px] font-bold fill-blue-600 dark:fill-blue-300">
+                {isCs ? 'Označená data' : 'Labeled Data'}
+              </text>
+            </g>
+
+            {/* Unsupervised Learning */}
+            <g transform="translate(300, 60)">
+              <rect x="0" y="0" width="200" height="180" rx="12" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" strokeWidth="2" />
+              <text x="100" y="35" textAnchor="middle" className="text-sm font-bold fill-purple-600 dark:fill-purple-400">
+                {isCs ? 'Učení bez učitele' : 'Unsupervised Learning'}
+              </text>
+              <text x="100" y="70" textAnchor="middle" className="text-4xl">🔍</text>
+              <g transform="translate(40, 85)">
+                <circle cx="30" cy="15" r="8" fill="#ef4444" fillOpacity="0.5" />
+                <circle cx="50" cy="25" r="8" fill="#ef4444" fillOpacity="0.5" />
+                <circle cx="40" cy="5" r="8" fill="#ef4444" fillOpacity="0.5" />
+                <circle cx="90" cy="15" r="8" fill="#22c55e" fillOpacity="0.5" />
+                <circle cx="110" cy="25" r="8" fill="#22c55e" fillOpacity="0.5" />
+                <circle cx="100" cy="5" r="8" fill="#22c55e" fillOpacity="0.5" />
+              </g>
+              <rect x="40" y="145" width="120" height="25" rx="4" fill="#a855f7" fillOpacity="0.2" />
+              <text x="100" y="162" textAnchor="middle" className="text-[10px] font-bold fill-purple-600 dark:fill-purple-300">
+                {isCs ? 'Najdi vzory' : 'Find Patterns'}
+              </text>
+            </g>
+
+            {/* Reinforcement Learning */}
+            <g transform="translate(550, 60)">
+              <rect x="0" y="0" width="200" height="180" rx="12" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" strokeWidth="2" />
+              <text x="100" y="35" textAnchor="middle" className="text-sm font-bold fill-green-600 dark:fill-green-400">
+                {isCs ? 'Posilované učení' : 'Reinforcement Learning'}
+              </text>
+              <text x="100" y="70" textAnchor="middle" className="text-4xl">🎮</text>
+              <text x="60" y="100" textAnchor="middle" className="text-lg">✅</text>
+              <text x="100" y="100" textAnchor="middle" className="text-xs fill-green-600 dark:fill-green-400">+10</text>
+              <text x="140" y="100" textAnchor="middle" className="text-lg">❌</text>
+              <text x="100" y="125" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">
+                {isCs ? 'Pokus a omyl' : 'Trial & Error'}
+              </text>
+              <rect x="40" y="145" width="120" height="25" rx="4" fill="#22c55e" fillOpacity="0.2" />
+              <text x="100" y="162" textAnchor="middle" className="text-[10px] font-bold fill-green-600 dark:fill-green-300">
+                {isCs ? 'Odměny & Tresty' : 'Rewards & Penalties'}
+              </text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'supervised-learning-flow') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 650 200" className="w-full h-auto" role="img" aria-label="Supervised Learning Flow: Data + Labels -> Training -> Prediction">
+            <defs>
+              <marker id="arrowhead-supervised" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Step 1: Labeled Data */}
+            <g transform="translate(30, 50)">
+              <rect x="0" y="0" width="120" height="100" rx="8" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" strokeWidth="2" />
+              <text x="60" y="25" textAnchor="middle" className="text-xs font-bold fill-blue-600 dark:fill-blue-400">
+                {isCs ? 'Označená data' : 'Labeled Data'}
+              </text>
+              <text x="30" y="55" className="text-xs fill-slate-600 dark:fill-slate-400">🐱 = cat</text>
+              <text x="30" y="75" className="text-xs fill-slate-600 dark:fill-slate-400">🐶 = dog</text>
+              <text x="30" y="95" className="text-xs fill-slate-600 dark:fill-slate-400">🐦 = bird</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 160 100 L 200 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-supervised)" />
+
+            {/* Step 2: Training */}
+            <g transform="translate(210, 50)">
+              <rect x="0" y="0" width="120" height="100" rx="8" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" strokeWidth="2" />
+              <text x="60" y="25" textAnchor="middle" className="text-xs font-bold fill-purple-600 dark:fill-purple-400">
+                {isCs ? 'Trénink' : 'Training'}
+              </text>
+              <text x="60" y="60" textAnchor="middle" className="text-3xl">🧠</text>
+              <text x="60" y="90" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">
+                {isCs ? 'Učí se vzory' : 'Learning patterns'}
+              </text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 340 100 L 380 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-supervised)" />
+
+            {/* Step 3: Model */}
+            <g transform="translate(390, 50)">
+              <rect x="0" y="0" width="100" height="100" rx="8" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" strokeWidth="2" />
+              <text x="50" y="25" textAnchor="middle" className="text-xs font-bold fill-amber-600 dark:fill-amber-400">
+                {isCs ? 'Model' : 'Model'}
+              </text>
+              <text x="50" y="60" textAnchor="middle" className="text-3xl">🤖</text>
+              <text x="50" y="90" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">
+                {isCs ? 'Natrénovaný' : 'Trained'}
+              </text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 500 100 L 540 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-supervised)" />
+
+            {/* Step 4: Prediction */}
+            <g transform="translate(550, 50)">
+              <rect x="0" y="0" width="90" height="100" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" strokeWidth="2" />
+              <text x="45" y="25" textAnchor="middle" className="text-xs font-bold fill-green-600 dark:fill-green-400">
+                {isCs ? 'Predikce' : 'Prediction'}
+              </text>
+              <text x="45" y="55" textAnchor="middle" className="text-xl">🐱❓</text>
+              <text x="45" y="80" textAnchor="middle" className="text-xs fill-green-600 dark:fill-green-400">→ "cat"</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'clustering-visualization') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Clustering: AI finds groups without labels">
+            <defs>
+              <marker id="arrowhead-cluster" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Before: Mixed Data */}
+            <g transform="translate(50, 40)">
+              <text x="80" y="0" textAnchor="middle" className="text-sm font-bold fill-slate-600 dark:fill-slate-400">
+                {isCs ? 'Před: Smíšená data' : 'Before: Mixed Data'}
+              </text>
+              <rect x="0" y="15" width="160" height="160" rx="8" fill="#ffffff" fillOpacity="0.05" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
+              {/* Random dots */}
+              <circle cx="40" cy="50" r="10" fill="#94a3b8" />
+              <circle cx="100" cy="80" r="10" fill="#94a3b8" />
+              <circle cx="60" cy="120" r="10" fill="#94a3b8" />
+              <circle cx="130" cy="45" r="10" fill="#94a3b8" />
+              <circle cx="80" cy="150" r="10" fill="#94a3b8" />
+              <circle cx="120" cy="130" r="10" fill="#94a3b8" />
+              <circle cx="45" cy="85" r="10" fill="#94a3b8" />
+              <circle cx="110" cy="100" r="10" fill="#94a3b8" />
+              <text x="80" y="200" textAnchor="middle" className="text-xs fill-slate-500">
+                {isCs ? 'Bez označení' : 'No Labels'}
+              </text>
+            </g>
+
+            {/* Arrow */}
+            <g transform="translate(230, 100)">
+              <path d="M 0 20 L 60 20" stroke="#a855f7" strokeWidth="3" markerEnd="url(#arrowhead-cluster)" />
+              <text x="30" y="10" textAnchor="middle" className="text-xs font-bold fill-purple-600 dark:fill-purple-400">
+                {isCs ? 'Klastrování' : 'Clustering'}
+              </text>
+              <text x="30" y="50" textAnchor="middle" className="text-2xl">🔍</text>
+            </g>
+
+            {/* After: Clustered Data */}
+            <g transform="translate(340, 40)">
+              <text x="100" y="0" textAnchor="middle" className="text-sm font-bold fill-slate-600 dark:fill-slate-400">
+                {isCs ? 'Po: Nalezené skupiny' : 'After: Groups Found'}
+              </text>
+              <rect x="0" y="15" width="200" height="160" rx="8" fill="#ffffff" fillOpacity="0.05" stroke="#475569" strokeWidth="2" />
+
+              {/* Cluster 1 - Blue */}
+              <ellipse cx="55" cy="70" rx="45" ry="40" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeDasharray="4 4" />
+              <circle cx="40" cy="60" r="10" fill="#3b82f6" />
+              <circle cx="70" cy="55" r="10" fill="#3b82f6" />
+              <circle cx="50" cy="85" r="10" fill="#3b82f6" />
+
+              {/* Cluster 2 - Green */}
+              <ellipse cx="145" cy="70" rx="45" ry="40" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" strokeDasharray="4 4" />
+              <circle cx="130" cy="60" r="10" fill="#22c55e" />
+              <circle cx="160" cy="55" r="10" fill="#22c55e" />
+              <circle cx="145" cy="85" r="10" fill="#22c55e" />
+
+              {/* Cluster 3 - Orange */}
+              <ellipse cx="100" cy="140" rx="50" ry="30" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" strokeDasharray="4 4" />
+              <circle cx="80" cy="140" r="10" fill="#f59e0b" />
+              <circle cx="120" cy="140" r="10" fill="#f59e0b" />
+
+              <text x="100" y="200" textAnchor="middle" className="text-xs fill-slate-500">
+                {isCs ? '3 skupiny nalezeny!' : '3 Groups Found!'}
+              </text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === 'reinforcement-learning-loop') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 600 300" className="w-full h-auto" role="img" aria-label="Reinforcement Learning Loop: Agent, Environment, Reward">
+            <defs>
+              <marker id="arrowhead-rl" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#22c55e" />
+              </marker>
+              <marker id="arrowhead-rl-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#3b82f6" />
+              </marker>
+              <marker id="arrowhead-rl-amber" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#f59e0b" />
+              </marker>
+            </defs>
+
+            {/* Agent (Left) */}
+            <g transform="translate(80, 100)">
+              <rect x="0" y="0" width="120" height="100" rx="12" fill="#a855f7" fillOpacity="0.15" stroke="#a855f7" strokeWidth="2" />
+              <text x="60" y="35" textAnchor="middle" className="text-3xl">🤖</text>
+              <text x="60" y="65" textAnchor="middle" className="text-sm font-bold fill-purple-600 dark:fill-purple-400">
+                {isCs ? 'Agent' : 'Agent'}
+              </text>
+              <text x="60" y="85" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">
+                {isCs ? '(Rozhoduje)' : '(Makes Decisions)'}
+              </text>
+            </g>
+
+            {/* Environment (Right) */}
+            <g transform="translate(400, 100)">
+              <rect x="0" y="0" width="120" height="100" rx="12" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="2" />
+              <text x="60" y="35" textAnchor="middle" className="text-3xl">🌍</text>
+              <text x="60" y="65" textAnchor="middle" className="text-sm font-bold fill-blue-600 dark:fill-blue-400">
+                {isCs ? 'Prostředí' : 'Environment'}
+              </text>
+              <text x="60" y="85" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">
+                {isCs ? '(Svět/Hra)' : '(World/Game)'}
+              </text>
+            </g>
+
+            {/* Action Arrow (Top) */}
+            <path d="M 200 120 L 400 120" stroke="#22c55e" strokeWidth="3" markerEnd="url(#arrowhead-rl)" />
+            <text x="300" y="105" textAnchor="middle" className="text-xs font-bold fill-green-600 dark:fill-green-400">
+              {isCs ? 'Akce' : 'Action'}
+            </text>
+            <text x="300" y="135" textAnchor="middle" className="text-xl">🎯</text>
+
+            {/* State Arrow (Bottom) */}
+            <path d="M 400 180 L 200 180" stroke="#3b82f6" strokeWidth="3" markerEnd="url(#arrowhead-rl-blue)" />
+            <text x="300" y="195" textAnchor="middle" className="text-xs font-bold fill-blue-600 dark:fill-blue-400">
+              {isCs ? 'Nový stav' : 'New State'}
+            </text>
+
+            {/* Reward (Center Bottom) */}
+            <g transform="translate(250, 230)">
+              <rect x="0" y="0" width="100" height="50" rx="8" fill="#f59e0b" fillOpacity="0.15" stroke="#f59e0b" strokeWidth="2" />
+              <text x="50" y="25" textAnchor="middle" className="text-lg">🏆</text>
+              <text x="50" y="42" textAnchor="middle" className="text-xs font-bold fill-amber-600 dark:fill-amber-400">
+                {isCs ? 'Odměna' : 'Reward'}
+              </text>
+            </g>
+
+            {/* Reward arrows */}
+            <path d="M 460 200 Q 460 255 350 255" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#arrowhead-rl-amber)" />
+            <path d="M 250 255 Q 140 255 140 200" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#arrowhead-rl-amber)" />
+
+            {/* Title */}
+            <text x="300" y="40" textAnchor="middle" className="text-sm font-bold fill-slate-600 dark:fill-slate-300">
+              {isCs ? 'Cyklus posilovaného učení' : 'Reinforcement Learning Loop'}
+            </text>
+
+            {/* Example */}
+            <text x="300" y="70" textAnchor="middle" className="text-xs fill-slate-500">
+              {isCs ? 'Příklad: AI hraje šachy' : 'Example: AI plays chess'}
+            </text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   if (type === 'human-in-the-loop') {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
