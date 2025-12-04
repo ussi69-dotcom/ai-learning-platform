@@ -86,6 +86,27 @@ Tato chyba znamená, že máte **neuložené změny** (upravené soubory), kter�
     - Pokud změny nechcete, klikněte pravým tlačítkem na soubor v *Source Control* a vyberte **Discard Changes** (ikona zahnuté šipky zpět).
     - **Pozor:** Toto nenávratně smaže vaši neuloženou práci!
 
+### "fatal: Need to specify how to reconcile divergent branches"
+Tato chyba znamená, že se historie vaší větve a větve na GitHubu rozešly a Git neví, jestli má změny sloučit (merge) nebo přeskládat (rebase).
+
+**Řešení (jednorázové):**
+Otevřete terminál a spusťte příkaz pro sloučení:
+```bash
+git pull --no-rebase origin main
+```
+Tím se vytvoří "merge commit", který spojí obě verze.
+
+**Řešení (trvalé - doporučeno):**
+Nastavte výchozí chování Gitu, aby se na to už neptal.
+- Pro **merge** (klasické sloučení):
+  ```bash
+  git config --global pull.rebase false
+  ```
+- Pro **rebase** (čistší historie):
+  ```bash
+  git config --global pull.rebase true
+  ```
+
 ---
 
 ## Rychlé tipy
