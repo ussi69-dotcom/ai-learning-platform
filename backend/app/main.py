@@ -33,7 +33,9 @@ app.include_router(users.router)
 
 # Mount content directory for static assets (images, etc.)
 # This maps http://localhost:8000/content/ -> /app/content/
-app.mount("/content", StaticFiles(directory="/app/content"), name="content")
+content_dir = os.getenv("CONTENT_DIR", "/app/content")
+if os.path.exists(content_dir):
+    app.mount("/content", StaticFiles(directory=content_dir), name="content")
 
 # CORS middleware - origins from env or defaults for dev
 def get_cors_origins():
