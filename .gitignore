@@ -32,3 +32,6 @@ GEMINI.md
 /frontend/playwright-report/
 /frontend/playwright/.cache/
 /frontend/test-results/
+
+# Local Config
+.mcp.json
