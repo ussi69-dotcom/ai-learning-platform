@@ -26,7 +26,13 @@ def override_get_db():
     finally:
         db.close()
 
+from unittest.mock import AsyncMock
+from app.services import email
+
 app.dependency_overrides[get_db] = override_get_db
+
+# Mock email service to prevent sending real emails during tests
+email.send_verification_email = AsyncMock()
 
 client = TestClient(app)
 

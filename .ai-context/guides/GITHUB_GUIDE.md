@@ -143,3 +143,22 @@ To je správný postřeh. Ta chyba při `git push` je jen **první varování**.
 
 **Poučení:**
 Když vidíte `rejected (non-fast-forward)`, znamená to vždy: **"Musím dát `git pull`"**. A teprve ten `pull` vám řekne, jestli je to v pohodě, nebo jestli musíte něco opravovat.
+
+### "Chci tam mít přesně to, co je na serveru (origin/main)"
+Někdy se stane, že se v tom zamotáte tak, že chcete zahodit svoje změny a prostě tam mít to, co je na GitHubu.
+Tomu se říká **Hard Reset**.
+
+**Pozor: Toto smaže všechnu vaši neuloženou i uloženou práci, která není na GitHubu!**
+
+```bash
+# 1. Stáhni aktuální info
+git fetch origin
+
+# 2. Nastav mou větev 'main' PŘESNĚ tak, jak vypadá 'origin/main'
+git reset --hard origin/main
+```
+
+**Vysvětlení pojmů:**
+- **`main`**: Vaše pracovní verze na vašem počítači. Tady pracujete.
+- **`origin/main`**: "Záložka", která ukazuje, kde byl `main` na serveru (GitHubu) naposledy, když jste dali `git fetch` nebo `git pull`.
+- **Nemůžete "přepnout" na `origin/main` a pracovat tam.** Můžete se tam jen podívat (detached HEAD), ale změny musíte dělat ve svém `main` a pak je tam poslat (`push`).

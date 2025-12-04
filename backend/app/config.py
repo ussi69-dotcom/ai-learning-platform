@@ -43,8 +43,22 @@ class Settings(BaseSettings):
     # Used for generating links in emails
     FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:3000")
     
+    # DOMAIN NAME (for constructing absolute URLs if needed)
+    DOMAIN_NAME: str = os.getenv("DOMAIN_NAME", "localhost")
+
     # BACKEND PUBLIC URL (for email links)
+    # We use a property or validator to ensure this is absolute
     BACKEND_PUBLIC_URL: str = os.getenv("NEXT_PUBLIC_API_URL", "http://localhost:8000")
+
+    @field_validator("BACKEND_PUBLIC_URL", mode="after")
+    def assemble_backend_public_url(cls, v: str, info) -> str:
+        # If the URL is relative (starts with /), prepend the domain
+        if v.startswith("/"):
+            domain = info.data.get("DOMAIN_NAME", "localhost")
+            # Determine protocol - default to https for non-localhost unless specified
+            protocol = "http" if "localhost" in domain else "https"
+            return f"{protocol}://{domain}{v}"
+        return v
 
     class Config:
         case_sensitive = True

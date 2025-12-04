@@ -42,6 +42,7 @@ Regardless of your interface (CLI or IDE), start here.
 ### 📜 History (`/history`)
 > *Archives.*
 - [**completed_cycles/**](./history/completed_cycles/): Past work.
+- [**incidents/**](./history/incidents/): RCA and incident reports.
 - [**archive/**](./history/archive/): Ancient history.
 
 ---
