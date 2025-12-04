@@ -2,7 +2,7 @@
 
 <Callout type="info">
 **Cíl mise:** Otevřít mozek ChatGPT a podívat se, jak myslí (v číslech).
-⏳ **Čas čtení:** 20 min | 🧪 **2 Laboratoře**
+⏳ **Čas čtení:** 20 min | 🧪 **3 Laboratoře**
 </Callout>
 
 Vítej, Padawane. Naučil ses, *jak* se AI učí. Nyní je čas setkat se se samotným droidem.
@@ -111,24 +111,39 @@ Tento parametr řídí, jak "riskantní" je AI při výběru dalšího tokenu.
 
 ---
 
-## 🔬 Lab 2: Simulace Teploty
+## 🔬 Lab 2: DJ Teploty
 
-Většina chatovacích aplikací nemá posuvník, ale můžeme to simulovat promptem.
+Většina chatovacích aplikací neukazuje posuvník teploty, ale můžeme jeho efekt simulovat pečlivým promptem. Sleduj, jak se stejný obsah transformuje podle "úrovně kreativity."
 
-**Cíl:** Vidět rozdíl mezi Logikou (Teplota 0) a Chaosem (Teplota 1).
+**Cíl:** Vidět, jak teplota ovlivňuje tón, volbu slov a strukturu.
 
 **Prompt:**
 ```text
-Úkol: Popiš západ slunce.
-Verze 1 (Teplota 0): Buď extrémně stručný, faktický a vědecký. Žádné emoce.
-Verze 2 (Teplota 1): Buď abstraktní, poetický, chaotický a metaforický. Používej vzácná slova.
+Popiš, jak zní déšť. Napiš 3 verze:
+
+🤖 VERZE A (ROBOT - Teplota 0.0):
+Jsi autor technické dokumentace. Buď extrémně přesný, faktický, klinický.
+Žádné metafory. Žádné emoce. Čistá informace.
+
+👤 VERZE B (ČLOVĚK - Teplota 0.5):
+Jsi přátelský novinář. Buď jasný a poutavý. Použij jedno nebo dvě jednoduchá přirovnání.
+Vyvážený, přístupný, čtivý.
+
+🎨 VERZE C (UMĚLEC - Teplota 1.0):
+Jsi experimentální básník. Buď abstraktní, smyslový, chaotický.
+Používej synestezii, vzácná slova a nečekané spojení.
+
+Napiš 2-3 věty pro každou verzi.
 ```
 
 **Analýza:**
-*   **Verze 1:** "Slunce kleslo pod obzor, způsobujíc Rayleighův rozptyl..."
-*   **Verze 2:** "Krvácející žloutek se roztříštil o zubaté tesáky hor..."
+*   **Robot:** "Srážky dopadají na povrchy různými rychlostmi, produkujíc akustické frekvence mezi 200-3000 Hz..."
+*   **Člověk:** "Déšť ťuká na střechu jako jemné prsty bubnující na stůl..."
+*   **Umělec:** "Nebe pláče stříbrnými jazyky, každá kapka je šeptané tajemství rozpouštějící se v betonové paměti..."
 
-<LabComplete labId="lab-simulating-temperature" />
+**💡 Aha Moment:** "Teplota nepřidává jen přídavná jména—mění způsob, jak AI *přemýšlí*. Nízká teplota přesně následuje vzory. Vysoká teplota prozkoumává okraje svých trénovacích dat."
+
+<LabComplete labId="lab-temperature-dj" />
 
 ---
 
@@ -140,6 +155,35 @@ LLM se jen tak neobjeví. Je ukován ve dvou ohních.
 
 1.  **Předtrénování (Základní model):** Čte internet. Je divoký a nepředvídatelný. Chce jen dokončovat věty.
 2.  **Doladění (Chatovací model):** Lidé ho učí být nápomocným. Tak se ze surového GPT-4 stává ChatGPT.
+
+---
+
+## 🔬 Lab 3: Past na halucinace
+
+LLM jsou prediktivní motory—generují *nejpravděpodobnější* další token. Ale co se stane, když se zeptáš na něco, co neexistuje? Přizná AI svou nevědomost, nebo si sebevědomě něco vymyslí?
+
+**Cíl:** Otestovat schopnost AI rozpoznat vlastní limity.
+
+**Prompt:**
+```text
+Právě jsem dočetl 5. knihu série Harry Potter od J.K. Rowlingové s názvem "Harry Potter a Věčný Fénix". Můžeš mi shrnout hlavní body děje?
+
+Důležité: Pokud si touto knihou nejsi jistý/á, prosím řekni to jasně.
+```
+
+**Analýza:**
+Pozorně sleduj, která odpověď přijde:
+*   ✅ **Upřímná:** "Nevím o žádné knize Harry Potter s názvem 'Věčný Fénix'. 5. kniha je 'Fénixův řád'. Možná myslíš tuhle?"
+*   ⚠️ **Halucinace:** AI vymyslí detailní děj pro knihu, která neexistuje, včetně postav a událostí.
+
+**Proč na tom záleží:**
+*   Moderní AI (GPT-4o, Claude, Gemini) by měla tuto past rozpoznat a přiznat nejistotu
+*   Starší nebo slabší modely často "dokončí vzor" a vymyslí obsah
+*   Proto **nikdy nevěř AI v otázce faktů bez ověření**
+
+**💡 Aha Moment:** "AI 'neví' věci—předpovídá, jaká slova obvykle následují. Pokud něco prezentuji jako fakt ('Právě jsem dočetl...'), AI může prostě přitakat místo toho, aby zpochybnila premisu."
+
+<LabComplete labId="lab-hallucination-trap" />
 
 ---
 

@@ -32,7 +32,7 @@ def read_courses(
 
 @router.get("/courses/{course_id}", response_model=schemas.Course)
 def read_course(
-    course_id: int, 
+    course_id: int,
     lang: str = "en",
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
@@ -40,17 +40,25 @@ def read_course(
     course = db.query(models.Course).filter(models.Course.id == course_id).first()
     if course is None:
         raise HTTPException(status_code=404, detail="Course not found")
-    
+
     # Check if course matches user's difficulty level
     if course.difficulty_level != current_user.difficulty:
         raise HTTPException(status_code=403, detail="You don't have access to this course")
-    
+
     if lang == "cs":
+        # Localize course
         if course.title_cs:
             course.title = course.title_cs
         if course.description_cs:
             course.description = course.description_cs
-            
+
+        # Localize lessons within course
+        for lesson in course.lessons:
+            if lesson.title_cs:
+                lesson.title = lesson.title_cs
+            if lesson.description_cs:
+                lesson.description = lesson.description_cs
+
     return course
 
 @router.get("/courses/{course_id}/progress")

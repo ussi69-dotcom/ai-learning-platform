@@ -2,7 +2,7 @@
 
 <Callout type="info">
 **Mission Goal:** Open the brain of ChatGPT and see how it thinks (in numbers).
-⏳ **Reading Time:** 20 min | 🧪 **2 Labs Included**
+⏳ **Reading Time:** 20 min | 🧪 **3 Labs Included**
 </Callout>
 
 Welcome, Padawan. You have learned *how* AI learns. Now, it is time to meet the droid itself.
@@ -111,24 +111,39 @@ This parameter controls how "risky" the AI is when choosing the next token.
 
 ---
 
-## 🔬 Lab 2: Simulating Temperature
+## 🔬 Lab 2: The Temperature DJ
 
-Most chat apps don't have a slider, but we can simulate it with a prompt.
+Most chat apps don't expose the temperature slider, but we can simulate its effect with careful prompting. Watch the same content transform based on "creativity level."
 
-**Objective:** See the difference between Logic (Temp 0) and Chaos (Temp 1).
+**Objective:** See how temperature affects tone, word choice, and structure.
 
 **The Prompt:**
 ```text
-Task: Describe a sunset.
-Version 1 (Temperature 0): Be extremely concise, factual, and scientific. No emotion.
-Version 2 (Temperature 1): Be abstract, poetic, chaotic, and metaphorical. Use rare words.
+Describe what rain sounds like. Write 3 versions:
+
+🤖 VERSION A (ROBOT - Temperature 0.0):
+You are a technical documentation writer. Be extremely precise, factual, clinical.
+No metaphors. No emotion. Pure information.
+
+👤 VERSION B (HUMAN - Temperature 0.5):
+You are a friendly journalist. Be clear and engaging. Use one or two simple analogies.
+Balanced, relatable, readable.
+
+🎨 VERSION C (ARTIST - Temperature 1.0):
+You are an experimental poet. Be abstract, sensory, chaotic.
+Use synesthesia, rare words, and unexpected connections.
+
+Write 2-3 sentences for each version.
 ```
 
 **Analysis:**
-*   **Version 1:** "The sun descended below the horizon, causing Rayleigh scattering..."
-*   **Version 2:** "A bleeding yolk shattered upon the jagged teeth of the mountains..."
+*   **Robot:** "Precipitation impacts surfaces at varying velocities, producing acoustic frequencies between 200-3000 Hz..."
+*   **Human:** "Rain taps on the roof like gentle fingers drumming on a table..."
+*   **Artist:** "The sky weeps in silver tongues, each drop a whispered secret dissolving into concrete memory..."
 
-<LabComplete labId="lab-simulating-temperature" />
+**💡 Aha Moment:** "Temperature doesn't just add adjectives—it changes how AI *thinks*. Low temp follows patterns exactly. High temp explores the edges of its training data."
+
+<LabComplete labId="lab-temperature-dj" />
 
 ---
 
@@ -140,6 +155,35 @@ An LLM doesn't just appear. It is forged in two fires.
 
 1.  **Pre-training (The Base Model):** It reads the internet. It is wild and unpredictable. It just wants to complete sentences.
 2.  **Fine-tuning (The Chat Model):** Humans teach it to be helpful. This is how raw GPT-4 becomes ChatGPT.
+
+---
+
+## 🔬 Lab 3: The Hallucination Trap
+
+LLMs are prediction engines—they generate the *most likely* next token. But what happens when you ask about something that doesn't exist? Will they admit ignorance, or confidently make things up?
+
+**Objective:** Test AI's ability to recognize its own limitations.
+
+**The Prompt:**
+```text
+I just finished reading the 5th book in the Harry Potter series by J.K. Rowling, titled "Harry Potter and the Eternal Phoenix". Can you give me a summary of the main plot points?
+
+Important: If you're unsure about this book, please say so clearly.
+```
+
+**Analysis:**
+Watch carefully for one of these responses:
+*   ✅ **Honest:** "I'm not aware of a Harry Potter book titled 'The Eternal Phoenix'. The 5th book is 'Order of the Phoenix'. Are you perhaps thinking of that one?"
+*   ⚠️ **Hallucination:** The AI invents a detailed plot for a book that doesn't exist, complete with characters and events.
+
+**Why This Matters:**
+*   Modern AI (GPT-4o, Claude, Gemini) should catch this trap and admit uncertainty
+*   Older or weaker models often "complete the pattern" and invent content
+*   This is why you **never trust AI for facts without verification**
+
+**💡 Aha Moment:** "AI doesn't 'know' things—it predicts what words usually come next. If I frame something as a fact ('I just finished reading...'), it might just play along instead of questioning the premise."
+
+<LabComplete labId="lab-hallucination-trap" />
 
 ---
 

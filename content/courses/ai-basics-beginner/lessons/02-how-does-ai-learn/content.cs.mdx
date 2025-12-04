@@ -34,25 +34,37 @@ AI se nakonec naučí vzory "Kočky" (špičaté uši, vousky) a dokáže rozpoz
 *   **Omezení:** Vyžaduje obrovské množství lidmi označených dat (drahé).
 </ConceptCard>
 
-### 🔬 Lab 1: Analyzátor sentimentu
+### 🔬 Lab 1: Učitel vzorů
 
-Podívejme se na Učení s učitelem v akci. Tento model byl vycvičen na milionech filmových recenzí označených jako "Pozitivní" 👍 nebo "Negativní" 👎.
+Podívejme se, jak se AI učí z příkladů, ne z instrukcí. Toto je jádro **Few-Shot Learning** — ukaž vzor a AI si pravidlo odvodí sama.
 
-**Cíl:** Otestovat, zda AI chápe nuance, nebo jen klíčová slova.
+**Cíl:** Objevit, že AI dokáže odvodit pravidla čistě z příkladů.
 
 **Prompt:**
 ```text
-Klasifikuj sentiment těchto 3 vět jako Pozitivní nebo Negativní:
-1. "Ten film jsem naprosto miloval."
-2. "Naprosto jsem miloval spaní během toho filmu."
-3. "Ten film nebyl vůbec špatný."
+Podívej se na tyto příklady a odhal pravidlo:
+
+✅ "Pes" → "P"
+✅ "Kočka" → "K"
+✅ "Slon" → "S"
+✅ "Papoušek" → "P"
+
+Teď použij pravidlo:
+❓ "Žirafa" → ?
+❓ "Tygr" → ?
+❓ "Ptakopysk" → ?
+
+Nakonec: Popiš pravidlo, které jsi objevil/a.
 ```
 
 **Analýza:**
-*   **Věta 2:** Záludné! Obsahuje slovo "miloval", ale kontext ("spaní") ji dělá negativní. Jednoduché vyhledávání klíčových slov by zde selhalo.
-*   **Věta 3:** Dvojitý zápor ("nebyl špatný"). AI chápe, že to znamená "Dobrý".
+*   AI by měla odpovědět: Ž, T, P (první písmeno každého slova)
+*   Kouzlo: Nikdy jsi AI pravidlo NEŘEKL/A. Sama ho ODVODILA ze vzorů.
+*   Přesně takto funguje Supervised Learning — štítky (příklady) učí vzory.
 
-<LabComplete labId="lab-sentiment-analyzer" />
+**💡 Aha Moment:** "AI se učí jako dítě — z příkladů, ne z definic. Ukázal/a jsem jí 4 kartičky a ona sama přišla na pravidlo!"
+
+<LabComplete labId="lab-pattern-teacher" />
 
 ---
 
@@ -73,26 +85,36 @@ To je **Učení bez učitele**. AI medituje nad daty, dokud nenajde skryté stru
 *   **Případ užití:** Segmentace zákazníků, Doporučovací systémy (Netflix), Detekce anomálií.
 </ConceptCard>
 
-### 🔬 Lab 2: Hra na shlukování
+### 🔬 Lab 2: Jazyk z vesmíru
 
-AI je překvapivě dobrá v hledání kategorií, které jsi nedefinoval.
+AI se dokáže naučit **jakékoli abstraktní pravidlo**, i ve vymyšleném jazyce. To dokazuje, že AI pracuje se **vzory**, ne s významy.
 
-**Cíl:** Požádat AI o seskupení náhodných položek.
+**Cíl:** Vymyslet si pravidlo jazyka a sledovat, jak ho AI okamžitě zvládne.
 
 **Prompt:**
 ```text
-Seskup tyto položky do 3 logických kategorií. Názvy kategorií mi zatím neříkej.
-Položky: Apple, Tesla, Pomeranč, Ford, Banán, Microsoft, BMW, Google.
+Zahrajeme si s vymyšleným jazykem. V mém jazyce existuje jednoduchý systém přípon:
+
+Pes → Pesofon (přidej "-ofon")
+Banán → Banánofon (přidej "-ofon")
+Auto → Autofon (přidej "-ofon")
+
+Teď mi řekni:
+1. Jak se řekne "POČÍTAČ" v mém jazyce?
+2. Jak se řekne "KÁVA" v mém jazyce?
+3. Jak se řekne "LÁSKA" v mém jazyce?
+
+Pro KAŽDÉ slovo VYSVĚTLI pravidlo, které jsi použil/a.
 ```
 
 **Analýza:**
-Měla by je seskupit do:
-1.  🍎 **Ovoce:** Pomeranč, Banán.
-2.  💻 **Tech:** Apple (Záludné! Záleží na kontextu), Tesla, Microsoft, Google.
-3.  🚗 **Auta:** Tesla, Ford, BMW.
-*Všimni si, jak "Apple" a "Tesla" mohou patřit do více skupin. Sleduj, jak si AI poradí s dvojznačností.*
+*   AI by měla vygenerovat: Počítačofon, Kávofon, Láskofon
+*   Sleduj vysvětlení — AI popíše pravidlo, které odvodila
+*   To dokazuje, že AI pracuje na úrovni SYMBOLŮ, ne konceptů
 
-<LabComplete labId="lab-clustering-game" />
+**💡 Aha Moment:** "AI nerozumí 'významu'. Rozpoznává VZORY a aplikuje je na nová data. Je jí jedno, jestli je jazyk skutečný nebo vymyšlený — vzor je vzor."
+
+<LabComplete labId="lab-space-language" />
 
 ---
 
@@ -113,6 +135,35 @@ Je to **Pokus a Omyl** na steroidech.
 *   **Případ užití:** Samořídící auta, AlphaGo, Robotika.
 *   **Klíč:** Potřebuje simulaci, aby mohla běžet miliony krát.
 </ConceptCard>
+
+### 🔬 Lab 3: Asociativní mixér
+
+AI dokáže přenášet **styl a tón** mezi úplně nesouvisejícími oblastmi. To dokazuje, že se učí abstraktní vzory, ne jen fakta.
+
+**Cíl:** Sledovat, jak AI aplikuje vojenskou rétoriku 18. století na... zubní pastu.
+
+**Prompt:**
+```text
+Napiš recenzi na ZUBNÍ PASTU, ale ve stylu vojenského generála z 18. století, který píše bojovou zprávu.
+
+Požadavky:
+- Používej archaický jazyk ("tudíž", "načež", "nepřítel")
+- Zacházej se zubním plakem jako s vojenským nepřítelem k poražení
+- Zahrň strategickou terminologii (obchvatné manévry, taktický ústup, vítězství)
+- Zakonči doporučením "Koruně" nebo "Velitelství"
+- Délka 2-3 odstavce
+
+Téma: Recenzuji zubní pastu "MátaNádhera 3000" po 2 týdnech používání.
+```
+
+**Analýza:**
+*   AI by měla vyprodukovat něco jako: *"Oznamuji Nejvyššímu velitelství naše rozhodující vítězství proti insurgenci zubního plaku..."*
+*   Všimni si, jak AI plynule spojuje dvě nesouvisející oblasti (dentální hygiena + vojenská historie)
+*   Tento **cross-domain transfer** je nemožný pro systémy založené na pravidlech
+
+**💡 Aha Moment:** "AI neukládá 'znalosti o zubní pastě' a 'vojenské znalosti' odděleně. Naučila se VZORY jazyka, které lze libovolně kombinovat. Proto umí napsat Shakespearovský sonet o pizze."
+
+<LabComplete labId="lab-associative-mixer" />
 
 ---
 

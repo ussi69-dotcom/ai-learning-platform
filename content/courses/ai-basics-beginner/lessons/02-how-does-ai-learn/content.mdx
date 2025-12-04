@@ -34,25 +34,37 @@ Eventually, the AI learns the patterns of a "Cat" (pointy ears, whiskers) and ca
 *   **Limitation:** Requires massive amounts of human-labeled data (expensive).
 </ConceptCard>
 
-### 🔬 Lab 1: The Sentiment Analyzer
+### 🔬 Lab 1: The Pattern Teacher
 
-Let's see Supervised Learning in action. This model was trained on millions of movie reviews labeled "Positive" 👍 or "Negative" 👎.
+Let's see how AI learns from examples, not instructions. This is the core of **Few-Shot Learning**—show a pattern, and AI extracts the rule.
 
-**Objective:** Test if the AI understands nuance, or just keywords.
+**Objective:** Discover that AI can infer rules purely from examples.
 
 **The Prompt:**
 ```text
-Classify the sentiment of these 3 sentences as Positive or Negative:
-1. "I absolutely loved the movie."
-2. "I absolutely loved sleeping through the movie."
-3. "The movie was not bad at all."
+Look at these examples and discover the rule:
+
+✅ "Dog" → "D"
+✅ "Cat" → "C"
+✅ "Elephant" → "E"
+✅ "Parrot" → "P"
+
+Now apply the rule:
+❓ "Giraffe" → ?
+❓ "Tiger" → ?
+❓ "Platypus" → ?
+
+Finally: Describe the rule you discovered.
 ```
 
 **Analysis:**
-*   **Sentence 2:** Tricky! It has the word "loved", but the context ("sleeping") makes it negative. A simple keyword search would fail here.
-*   **Sentence 3:** Double negative ("not bad"). The AI understands this equals "Good".
+*   AI should output: G, T, P (first letter of each word)
+*   The magic: You never TOLD the AI the rule. It INFERRED it from patterns.
+*   This is exactly how Supervised Learning works—labels (examples) teach patterns.
 
-<LabComplete labId="lab-sentiment-analyzer" />
+**💡 Aha Moment:** "AI learns like a child—from examples, not definitions. I showed it 4 flashcards and it figured out the rule by itself!"
+
+<LabComplete labId="lab-pattern-teacher" />
 
 ---
 
@@ -73,26 +85,36 @@ This is **Unsupervised Learning**. The AI meditates on the data until it finds h
 *   **Use Case:** Customer Segmentation, Recommendation Engines (Netflix), Anomaly Detection.
 </ConceptCard>
 
-### 🔬 Lab 2: The Clustering Game
+### 🔬 Lab 2: The Space Language
 
-The AI is surprisingly good at finding categories you didn't define.
+AI can learn **any abstract rule**, even in fictional languages. This proves AI works with **patterns**, not meanings.
 
-**Objective:** Ask the AI to cluster random items.
+**Objective:** Create a made-up language rule and watch AI master it instantly.
 
 **The Prompt:**
 ```text
-Group these items into 3 logical categories. Do not tell me the category names yet.
-Items: Apple, Tesla, Orange, Ford, Banana, Microsoft, BMW, Google.
+Let's play with a made-up language. In my language, there's a simple suffix-system:
+
+Dog → Dogophone (add "-ophone")
+Banana → Bananophone (add "-ophone")
+Car → Carophone (add "-ophone")
+
+Now tell me:
+1. How do you say "COMPUTER" in my language?
+2. How do you say "COFFEE" in my language?
+3. How do you say "LOVE" in my language?
+
+For EACH word, EXPLAIN the rule you applied.
 ```
 
 **Analysis:**
-It should group them into:
-1.  🍎 **Fruit:** Apple, Orange, Banana.
-2.  💻 **Tech:** Apple (Tricky! Context matters), Tesla, Microsoft, Google.
-3.  🚗 **Cars:** Tesla, Ford, BMW.
-*Note how "Apple" and "Tesla" could belong to multiple groups. See how the AI handles the ambiguity.*
+*   AI should generate: Computerophone, Coffeeophone, Loveophone
+*   Watch the explanation—AI will describe the rule it inferred
+*   This proves AI works at the SYMBOL level, not concept level
 
-<LabComplete labId="lab-clustering-game" />
+**💡 Aha Moment:** "AI doesn't understand 'meaning'. It recognizes PATTERNS and applies them to new data. It doesn't care if the language is real or fake—a pattern is a pattern."
+
+<LabComplete labId="lab-space-language" />
 
 ---
 
@@ -113,6 +135,35 @@ It is **Trial and Error** on steroids.
 *   **Use Case:** Self-driving cars, AlphaGo, Robotics.
 *   **Key:** Needs a simulation to run millions of times.
 </ConceptCard>
+
+### 🔬 Lab 3: The Associative Mixer
+
+AI can transfer **style and tone** across completely unrelated domains. This proves it learns abstract patterns, not just facts.
+
+**Objective:** Watch AI apply 18th-century military rhetoric to... toothpaste.
+
+**The Prompt:**
+```text
+Write a product review for TOOTHPASTE, but in the style of an 18th-century military general writing a battle report.
+
+Requirements:
+- Use archaic language ("henceforth", "whereby", "the enemy")
+- Treat plaque as a military enemy to be conquered
+- Include strategic terminology (flanking maneuvers, tactical retreat, victory)
+- End with a recommendation to "the Crown" or "High Command"
+- Keep it 2-3 paragraphs
+
+Topic: Reviewing "MintFresh 3000" toothpaste after 2 weeks of use.
+```
+
+**Analysis:**
+*   AI should produce something like: *"I write to inform the High Command of our decisive victory against the plaque insurgency..."*
+*   Notice how AI seamlessly blends two unrelated domains (dental hygiene + military history)
+*   This **cross-domain transfer** is impossible for rule-based systems
+
+**💡 Aha Moment:** "AI doesn't store 'toothpaste knowledge' and 'military knowledge' separately. It learned PATTERNS of language that can be mixed freely. That's why it can write a Shakespearean sonnet about pizza."
+
+<LabComplete labId="lab-associative-mixer" />
 
 ---
 

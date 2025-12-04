@@ -115,76 +115,134 @@ Je **90% přesná**, ale **10% halucinace**. Nikdy jí slepě nevěř u kritick�
 
 ---
 
-## 🔬 Lab 1: Lokální kontrola reality
+## 🔬 Lab 1: Univerzální překladač
 
-Otestujme limity stroje. AI modely žijí v cloudu, ne ve tvém pokoji.
+AI není databáze. Je to motor, který generuje text na základě **role a kontextu**. Stejný obsah lze transformovat do jakékoliv formy bez ztráty jádra.
 
-**Cíl:** Dokázat, že AI nezná tvůj *lokální* kontext (i když má přístup k webu).
+**Cíl:** Sleduj, jak AI přizpůsobí STEJNOU informaci do úplně jiných stylů.
 
 **Prompt:**
 Zkopíruj toto do ChatGPT/Gemini:
 
 ```text
-Jakou barvu má tričko, které mám právě na sobě?
-Pokud to nevíš, tipni si.
+Vysvětli, jak funguje gravitace. Udělej to TŘEMI různými způsoby:
+
+1️⃣ VERZE A (Naštvaný teenager):
+Jsi frustrovaný teenager, kterého rodiče nutí vysvětlit fyziku babičce.
+Všechno tě štve, ale musíš to říct. Nahlas. S přístupem.
+
+2️⃣ VERZE B (Shakespeare):
+Jsi William Shakespeare v 16. století. Právě jsi objevil gravitaci.
+Piš o tom jako o dramatu - s metaforami, archaickým jazykem a vášní.
+
+3️⃣ VERZE C (LinkedIn motivační kouč):
+Jsi startupový motivátor na LinkedIn. Gravitace je životní lekce.
+Použij hodně emoji, řečnických otázek a "mindset energie".
+
+---
+Napiš 1-2 odstavce pro každou verzi. Udělej je VELMI odlišné v tónu.
 ```
 
 **Analýza:**
-*   **Realita:** Nemůže to vědět. Nemá oči (pokud nenahraješ fotku).
-*   **Riziko halucinace:** Pokud ji donutíš hádat, může říct "Modré", jen aby byla nápomocná.
-*   **Lekce:** AI je slepá vůči fyzickému světu kolem tebe, pokud jí explicitně nedáš senzory (kamery/mikrofony).
+*   **Verze A:** "Takže jako, věci padaj dolů, jo babi? Říká se tomu gravitace, whatever..." (cynismus, nuda)
+*   **Verze B:** "Co světlo temnotou vesmíru probleskne! / Země a Měsíc, v objetí lásky..." (poetické, archaické)
+*   **Verze C:** "🚀 Gravitace tě netáhne DOLŮ, táhne tě K ÚČELU! Tady je můj 3-krokový framework..." (buzzwords, emoji)
 
-<LabComplete labId="lab-knowledge-cutoff" />
+**💡 Aha Moment:** "AI není jedna fixní osobnost. Je to chameleon. Řeknu jí, jakou personu má použít, a ona generuje naživo. Žádné šablony—čistá adaptace."
+
+<LabComplete labId="lab-universal-translator" />
 
 ---
 
-## 🔬 Lab 2: Test halucinace
+## 🔬 Lab 2: Detektiv v chaosu
 
-Můžeme donutit AI lhát? Ano, protože upřednostňuje **plynulost** před **pravdou**.
+AI nerozumí jen strukturovaným datům. Dokáže vzít **chaotický lidský myšlenkový proud** a extrahovat z něj vzory, logiku a strukturu. To je skrytá superschopnost.
 
-**Cíl:** Vynutit "Sykofantickou halucinaci" (Přitakávač).
+**Cíl:** Transformovat chaotický, nestrukturovaný text do čisté, organizované tabulky.
 
 **Prompt:**
-Zeptáme se sebevědomě na falešnou historickou událost.
-
 ```text
-Pověz mi o slavné "Válce měsíčních medvědů" z roku 1982 mezi Ruskem a Medvědy.
-Kdo vyhrál? Buď si jistý svou odpovědí.
+Mám chaotický "brain dump" o svém zítřku. Je to nesouvislé, bez struktury.
+Přeměň to na tabulku s logickými časy a kategoriemi.
+
+[CHAOTICKÝ VSTUP]
+"Ráno musím vyvenčit psa, asi v 7. Pak mám call s Petrem, to je ten projekt X,
+asi hodinu. Jo a nezapomenout, že v 10:00 mi končí aukce na eBay.
+Oběd s mámou ve 12:30 v té italské restauraci. V 15:00 zubař, tam budu tak 45 minut.
+Večer chci jít běhat. A taky mám nový projekt pro práci, ale to padá někam na 18:00?"
+
+[TVŮJ ÚKOL]
+Strukturuj to do tabulky s:
+- Čas (od-do) → pokud chybí, LOGICKY odhadni a označ hvězdičkou (*)
+- Aktivita
+- Kategorie: (Zdraví/Práce/Rodina/Osobní)
+- Priorita: (Urgentní/Normální/Nízká)
+
+Vysvětli, kde jsi musel "hádat" a proč tvá logika dává smysl.
 ```
 
 **Analýza:**
-Vymyslela si příběh?
-*   **Proč?** Prompt naznačoval, že se válka *stala*. AI se snaží dokončit vzor ("Uživatel se ptá na válku -> Poskytni detaily") spíše než aby opravila tvůj chybný předpoklad.
+AI by měla vytvořit něco jako:
 
-<LabComplete labId="lab-hallucination-test" />
+| Čas | Aktivita | Kategorie | Priorita |
+|-----|----------|-----------|----------|
+| 07:00–07:30 | Venčení psa | Osobní | Normální |
+| 09:00–10:00 | Call Petr (projekt X) | Práce | Urgentní |
+| 10:00–10:05 | eBay aukce končí | Osobní | Urgentní |
+| 12:30–13:30 | Oběd s mámou | Rodina | Normální |
+| 15:00–15:45 | Zubař | Zdraví | Normální |
+| 18:00–19:00* | Příprava nového projektu | Práce | Normální |
+| 19:30–20:30* | Běh | Zdraví | Nízká |
+
+**💡 Aha Moment:** "Tohle není jen kopírování. AI CHÁPE čas, kontext, priority. Spojuje informace a doplňuje logické mezery. Skutečně přemýšlí o mém dni."
+
+<LabComplete labId="lab-chaos-detective" />
 
 ---
 
-## 🔬 Lab 3: Prokletí obrácení (Reversal Curse)
+## 🔬 Lab 3: Sokratovský učitel
 
-AI čte text dopředu, jako proud. Má problém se "ohlédnout zpět" nebo manipulovat se znaky v obráceném pořadí.
+AI nemusí být encyklopedie. Může být **Sokrates**—někdo, kdo učí prostřednictvím otázek, ne odpovědí. Když AI přepneš do režimu "Sokratovské dotazování", stane se nástrojem myšlení, ne nástrojem znalostí.
 
-**Cíl:** Nachytat AI jednoduchou manipulací s řetězci.
+**Cíl:** Zažij AI jako interaktivního tutora, který tě vede k objevování odpovědí.
 
 **Prompt:**
 ```text
-Napiš slovo "Lollipop" pozpátku.
-Poté vlož pomlčku mezi každé písmeno.
+Chci se naučit, jak funguje FOTOSYNTÉZA. Ale prosím, NEVYSVĚTLUJ mi to přímo.
+
+Hraj roli SOKRATA. Jsi starověký řecký filozof, který učí prostřednictvím OTÁZEK.
+Měl bys:
+
+1. Ptát se mě na to, co VÍM (nebo si myslím, že vím)
+2. Vést mě otázkami k rozporům (kde si uvědomím, že si nejsem jistý)
+3. Postupně mě tlačit k odpovědi, kterou mám objevit sám
+4. Být TRPĚLIVÝ a nikdy mě přímo nepoučovat
+
+Začni jednoduchou otázkou o rostlinách a slunci.
+Čekej na mou odpověď - nepiš odpovědi za mě.
 ```
 
 **Analýza:**
-*   **Častá chyba:** Může napsat "p-o-p-i-l-l-o-L" (správně) nebo zkazit zdvojená 'l'.
-*   **Těžší verze:** "Obrátit větu 'AI je skvělá' slovo po slově, ale písmena v každém slově ponechat dopředu."
-*   **Proč?** Pro AI je "Lollipop" jeden token. Jeho rozdělení vyžaduje "přemýšlení" ve znacích, což je pro ni výpočetně náročné.
+AI by měla odpovědět něco jako:
 
-<LabComplete labId="lab-tokenizer-trap" />
+*Sokrates: "Zdravím tě, zvídavý příteli. Řekni mi - zamyslel ses někdy nad tím, proč rostliny každý den obracejí své tváře ke slunci? Co myslíš, že hledají?"*
+
+[Ty odpovíš]
+
+*Sokrates: "Zajímavé! Říkáš, že chtějí teplo. Řekni mi tedy - všechny živé bytosti, které hledají teplo, potřebují také světlo? Nebo by mohlo být teplo a světlo něco jiného?"*
+
+[Dialog pokračuje...]
+
+**💡 Aha Moment:** "Nemusím se nechat krmit odpověďmi. Mohu přinutit AI, aby mi pomáhala MYSLET. Tohle je nejmocnější věc, kterou s AI můžu dělat—ne získávat informace, ale rozvíjet svůj myšlenkový proces."
+
+<LabComplete labId="lab-socratic-teacher" />
 
 ---
 
 ## 🏆 6. Závěrečná zpráva z mise
 
 Nyní chápeš povahu bestie.
-AI není databáze pravdy. Je to **Pravděpodobnostní motor**, který napodobuje lidské vzory.
+AI není databáze pravdy. Je to **Pravděpodobnostní motor**, který napodobuje lidské vzory—a právě to z ní dělá tak mocný nástroj.
 
 <ConceptCard title="Holocron: Základy AI" icon="💎">
 
@@ -192,13 +250,18 @@ AI není databáze pravdy. Je to **Pravděpodobnostní motor**, který napodobuj
 *   **Tradiční kód:** Založený na pravidlech. Pevný. 100% Předvídatelný. (C-3PO)
 *   **AI/ML:** Založené na datech. Flexibilní. Pravděpodobnostní. (Intuice Jediů)
 *   **Diskriminativní AI:** Klasifikuje data (Netflix, Spam filtry).
-*   **Generative AI:** Vytváří nová data (ChatGPT, Umění).
+*   **Generativní AI:** Vytváří nová data (ChatGPT, Umění).
+
+### 💪 Superschopnosti AI, které jsi objevil
+*   **Chameleon:** Okamžitě se přizpůsobí jakékoliv persóně, stylu nebo formátu.
+*   **Hledač vzorů:** Extrahuje strukturu z chaosu.
+*   **Partner pro myšlení:** Může učit prostřednictvím otázek, ne jen odpovědí.
 
 ### 🛡️ Bezpečnost především
-*   **Halucinace:** AI dokáže sebevědomě lhát.
+*   **Halucinace:** AI může znít sebevědomě, i když se mýlí.
 *   **Černá skříňka:** Ne vždy víme, *proč* to funguje.
-*   **Cutoff:** Žije v minulosti (pokud není připojena k webu).
+*   **Ověřuj:** Vždy kontroluj kritická fakta.
 
 </ConceptCard>
 
-**Příští lekce:** Jak vlastně funguje mozek? Rozpitváme **Neuronovou síť**.
+**Příští lekce:** Jak se AI vlastně učí? Prozkoumáme tři typy **Strojového učení**.
