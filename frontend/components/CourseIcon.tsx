@@ -16,23 +16,24 @@ export default function CourseIcon({ courseId, slug, className = "w-full h-full"
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    
     // Detect dark mode
     const checkDarkMode = () => {
       // Rely ONLY on the class, as the app toggle controls this
-      setIsDark(document.documentElement.classList.contains('dark'));
+      const dark = document.documentElement.classList.contains('dark');
+      setIsDark(dark);
     };
-    
+
+    // Initial check and mark as mounted
     checkDarkMode();
-    
+    setMounted(true);
+
     // Watch for theme changes
     const observer = new MutationObserver(checkDarkMode);
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['class']
     });
-    
+
     return () => observer.disconnect();
   }, []);
 
@@ -66,11 +67,14 @@ export default function CourseIcon({ courseId, slug, className = "w-full h-full"
   // 3: AI Basics (Beginner)
   // 4: Prompt Engineering (Practical)
 
-  let type = 'default';
-  if (slug?.includes('beginner') || courseId === 3) type = 'beginner';
-  else if (slug?.includes('prompt') || courseId === 4) type = 'prompt';
-  else if (slug?.includes('engineering') || courseId === 1) type = 'engineering';
-  else if (slug?.includes('advanced') || courseId === 2) type = 'advanced';
+  const getType = (): string => {
+    if (slug?.includes('beginner') || courseId === 3) return 'beginner';
+    if (slug?.includes('prompt') || courseId === 4) return 'prompt';
+    if (slug?.includes('engineering') || courseId === 1) return 'engineering';
+    if (slug?.includes('advanced') || courseId === 2) return 'advanced';
+    return 'default';
+  };
+  const type = getType();
 
   // --- SVG DEFINITIONS ---
 

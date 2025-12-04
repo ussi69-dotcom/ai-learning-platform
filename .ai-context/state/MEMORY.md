@@ -50,6 +50,16 @@ Read this first to understand the environment, preferences, and active protocols
     - **Teaser -> Deep Dive:** Use a lightweight "Teaser" component on Homepage (e.g., `ABTestTeaser`) to drive traffic to a detailed "Showcase" on inner pages (e.g., About).
     - **Glass Monitoring:** System status and metrics should be visible but unobtrusive (glassmorphism).
 
+### 5. CI/CD & Code Quality 🔄
+- **GitHub Actions:** `.github/workflows/ci.yml` - runs on PR/push to main
+- **Pre-commit:** Husky in `.husky/pre-commit` - TypeScript check before commit
+- **Verification:** `cd frontend && npm run verify` (lint + typecheck + build)
+- **ESLint:** Configured in `frontend/eslint.config.mjs`
+  - React Hooks v7 rules temporarily disabled (tech debt)
+  - 195 warnings, 0 errors (acceptable)
+- **Node Version:** v20 (see `frontend/.nvmrc`)
+- **Learning:** See `.ai-context/learning/CI_AND_CODE_QUALITY.md` for sysadmin-friendly explanation
+
 ---
 
 ## 👨‍💻 Architecture Leadership

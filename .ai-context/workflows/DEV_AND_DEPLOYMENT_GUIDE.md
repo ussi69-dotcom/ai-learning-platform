@@ -98,15 +98,15 @@ Your VPS environment should be configured for production.
     SECRET_KEY="YOUR_VERY_STRONG_PRODUCTION_SECRET_KEY" # MUST BE DIFFERENT FROM DEV!
     ALGORITHM="HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES=60 # Or longer
-    BACKEND_CORS_ORIGINS=["https://ai-teach.me", "https://www.ai-teach.me"] # Your production domains
-    FRONTEND_URL="https://ai-teach.me"
-    NEXT_PUBLIC_API_URL="https://ai-teach.me/api" # Or your backend domain
+    BACKEND_CORS_ORIGINS=["https://ai-teaching.eu", "https://www.ai-teaching.eu"] # Your production domains
+    FRONTEND_URL="https://ai-teaching.eu"
+    NEXT_PUBLIC_API_URL="https://ai-teaching.eu/api" # Or your backend domain
     SMTP_HOST="smtp.your-provider.com" # Configure real SMTP for email verification
     SMTP_PORT=587
     SMTP_USER="smtp_user"
     SMTP_PASSWORD="smtp_password"
-    EMAILS_FROM_EMAIL="noreply@ai-teach.me"
-    FIRST_SUPERUSER="admin@ai-teach.me" # Production admin email
+    EMAILS_FROM_EMAIL="noreply@ai-teaching.eu"
+    FIRST_SUPERUSER="admin@ai-teaching.eu" # Production admin email
     FIRST_SUPERUSER_PASSWORD="VERY_STRONG_ADMIN_PASSWORD"
     ```
     *Make sure `docker-compose.prod.yml` references this file if not using direct environment variables in the host system.*

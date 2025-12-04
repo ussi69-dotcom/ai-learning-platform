@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from datetime import timedelta
 import uuid
 import os
+import json
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -34,15 +35,20 @@ app.include_router(users.router)
 # This maps http://localhost:8000/content/ -> /app/content/
 app.mount("/content", StaticFiles(directory="/app/content"), name="content")
 
-# CORS middleware
+# CORS middleware - origins from env or defaults for dev
+def get_cors_origins():
+    cors_origins_str = os.getenv("BACKEND_CORS_ORIGINS")
+    if cors_origins_str:
+        try:
+            return json.loads(cors_origins_str)
+        except json.JSONDecodeError:
+            pass
+    # Default: dev origins
+    return ["http://localhost:3000", "http://frontend:3000"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000", 
-        "http://frontend:3000", 
-        "https://ai-teach.me", 
-        "https://www.ai-teach.me"
-    ],
+    allow_origins=get_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -95,7 +101,7 @@ def verify_email(token: str, db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.verification_token == token).first()
     if not user:
         # Redirect to error page or login with error
-        frontend_url = os.getenv("FRONTEND_URL", "https://ai-teach.me")
+        frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
         return RedirectResponse(url=f"{frontend_url}/login?error=invalid_token", status_code=303)
     
     if not user.is_verified:
@@ -103,7 +109,7 @@ def verify_email(token: str, db: Session = Depends(database.get_db)):
         user.verification_token = None # Clear token
         db.commit()
     
-    frontend_url = os.getenv("FRONTEND_URL", "https://ai-teach.me")
+    frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
     return RedirectResponse(url=f"{frontend_url}/login?verified=true", status_code=303)
 
 

@@ -12,13 +12,16 @@ export default function JediSithToggle({ className = "" }: JediSithToggleProps) 
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
-    if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      setTheme('dark');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = storedTheme === 'dark' || (!storedTheme && prefersDark);
+
+    if (isDark) {
       document.documentElement.classList.add('dark');
     } else {
-      setTheme('light');
       document.documentElement.classList.remove('dark');
     }
+    // Use functional update to avoid synchronous setState warning
+    setTheme(isDark ? 'dark' : 'light');
   }, []);
 
   const toggleTheme = (newTheme: 'light' | 'dark') => {

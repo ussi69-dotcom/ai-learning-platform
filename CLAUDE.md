@@ -2,6 +2,30 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🚀 Boot Sequence
+
+**IHNED při startu přečti tyto soubory:**
+
+```
+1. .ai-context/state/LAST_SESSION.md   ← 🔥 KDE JSME SKONČILI
+2. .ai-context/state/MEMORY.md         ← Stack, protokoly
+3. .agent/rules/rules.md               ← Pravidla agenta
+```
+
+**Po načtení OKAMŽITĚ odpověz:**
+> "Pokračujeme od [aktivita]. Stav: [status]. Další: [co teď]."
+
+**Během práce:**
+- Průběžně aktualizuj `LAST_SESSION.md`
+
+**Na konci session:**
+- Aktualizuj `LAST_SESSION.md` (stav pro příště)
+- Přidej záznam do `SESSION_LOG.md` (archiv)
+
+**NEČTI při startu:** `SESSION_LOG.md` (je to archiv, 500+ řádků)
+
+---
+
 ## Project Overview
 
 Gamified AI learning platform with Czech localization (English/Czech). Features Star Wars theming (Jedi/Sith), XP progression, interactive labs, and MDX-based course content. Built with Next.js 16 (App Router), FastAPI, PostgreSQL, and Redis, deployed via Docker Compose.
@@ -14,6 +38,39 @@ Gamified AI learning platform with Czech localization (English/Czech). Features 
 **Cache/Sessions:** Redis 7 (persistent volume: `redis_data`)
 **Automation:** n8n (optional, shares PostgreSQL)
 **Deployment:** Docker Compose (development + production configs)
+
+## Development Prerequisites
+
+### Required Tools
+- **Node.js:** v20+ (check with `node --version`)
+- **npm:** v10+ (comes with Node)
+- **Docker & Docker Compose:** Latest stable
+- **Git:** Latest stable
+
+### First-Time Setup (Fresh Environment)
+```bash
+# 1. Clone repo
+git clone <repo-url> && cd ai-learning-platform
+
+# 2. Install root dependencies (husky pre-commit hooks)
+npm install
+
+# 3. Install frontend dependencies
+cd frontend && npm install && cd ..
+
+# 4. Copy environment file
+cp .env.example .env  # or create from template in CLAUDE.md
+
+# 5. Start platform
+make up
+```
+
+### After Git Pull
+```bash
+# Always run after pulling changes
+cd frontend && npm install && cd ..
+npm install  # root (for husky updates)
+```
 
 ## Development Commands
 
@@ -69,6 +126,8 @@ docker compose exec backend pytest -k "test_login"
 
 ```
 ai-learning-platform/
+├── .github/workflows/ci.yml       # GitHub Actions CI pipeline
+├── .husky/pre-commit              # Pre-commit TypeScript check
 ├── frontend/
 │   ├── app/[locale]/              # Dynamic routing (en, cs)
 │   │   ├── login/, register/      # Auth pages
@@ -231,7 +290,55 @@ docker compose exec backend pytest              # All tests
 docker compose exec backend pytest tests/test_auth.py  # Specific file
 ```
 
-**No formal frontend tests yet** (ESLint only)
+**Frontend:** ESLint + TypeScript type checking
+```bash
+cd frontend
+npm run lint         # ESLint
+npm run typecheck    # TypeScript check (tsc --noEmit)
+npm run verify       # Full verification: lint + typecheck + build
+```
+
+## CI/CD & Build Verification
+
+### Automatic Checks (GitHub Actions)
+Every PR and push to `main` triggers `.github/workflows/ci.yml`:
+- **Frontend:** `npm ci` → `npm run lint` → `tsc --noEmit` → `npm run build`
+- **Backend:** `pip install` → `pytest`
+
+PR cannot be merged if CI fails.
+
+### Pre-commit Hooks (Husky)
+Local TypeScript check runs before every commit:
+```bash
+# Installed via: npm install (in root)
+# Hook: .husky/pre-commit
+```
+If typecheck fails, commit is blocked.
+
+### End-of-Cycle Checklist
+**IMPORTANT:** Before ending a development cycle, ALWAYS run:
+```bash
+cd frontend && npm run verify   # Must pass!
+docker compose exec backend pytest  # Must pass!
+```
+
+This ensures:
+1. No TypeScript errors
+2. Production build works
+3. Backend tests pass
+4. Code is ready for deployment
+
+### Manual Build Verification
+```bash
+# Frontend full check
+cd frontend
+npm run verify       # lint + typecheck + build
+
+# Or step by step:
+npm run lint         # ESLint
+npm run typecheck    # TypeScript only
+npm run build        # Production build
+```
 
 ## Security Features
 

@@ -35,3 +35,7 @@ GEMINI.md
 
 # Local Config
 .mcp.json
+
+# Local files
+CLAUDE.md.local
+*.deb

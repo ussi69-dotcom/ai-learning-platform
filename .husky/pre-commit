@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Run frontend type check and lint on staged files
+cd frontend && npm run typecheck

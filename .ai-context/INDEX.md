@@ -7,9 +7,10 @@ Regardless of your interface (CLI or IDE), start here.
 
 ### 🧠 State (`/state`)
 > *Read/Write. The living memory of the project.*
-- [**MEMORY.md**](./state/MEMORY.md): **START HERE.** Environment, stack, protocols.
-- [**CURRENT_TASK.md**](./state/CURRENT_TASK.md): What are we doing *right now*?
-- [**SESSION_LOG.md**](./state/SESSION_LOG.md): Handoff notes from the previous agent.
+- [**LAST_SESSION.md**](./state/LAST_SESSION.md): **🔥 ČTI PRVNÍ!** Kde jsme skončili. Aktualizuj průběžně.
+- [**MEMORY.md**](./state/MEMORY.md): Dlouhodobá paměť (stack, protokoly). Aktualizuj zřídka.
+- [**CURRENT_TASK.md**](./state/CURRENT_TASK.md): Aktivní úkol.
+- [**SESSION_LOG.md**](./state/SESSION_LOG.md): ⚠️ **ARCHIV - NEČÍST PŘI STARTU** (500+ řádků).
 
 ### 🧱 Core (`/core`)
 > *Read-Only. The immutable laws.*
@@ -36,6 +37,7 @@ Regardless of your interface (CLI or IDE), start here.
 > *Knowledge Base.*
 - [**walkthrough.md**](./learning/walkthrough.md): Codebase tour.
 - [**IDEAS.md**](./learning/IDEAS.md): Future concepts and improvements.
+- [**CI_AND_CODE_QUALITY.md**](./learning/CI_AND_CODE_QUALITY.md): ESLint, CI/CD, warnings explained (sysadmin-friendly).
 
 ### 📜 History (`/history`)
 > *Archives.*
@@ -46,19 +48,24 @@ Regardless of your interface (CLI or IDE), start here.
 
 ## 🤖 Agent Protocols
 
-1.  **Start of Session:**
-    - Read `INDEX.md` (this file).
-    - Read `state/MEMORY.md` (Context).
-    - Read `state/SESSION_LOG.md` (Handoff).
-    - Read `state/CURRENT_TASK.md` (Active Goal).
+### 1. Start of Session (Boot Sequence)
+```
+1. INDEX.md (toto) → navigace
+2. LAST_SESSION.md → CO SE DĚLO NAPOSLEDY (krátkodobá paměť)
+3. MEMORY.md → dlouhodobý kontext (stack, protokoly)
+4. CURRENT_TASK.md → aktivní úkol
+```
 
-2.  **During Work:**
-    - Update `state/CURRENT_TASK.md` with progress.
-    - Document new learnings in `learning/`.
+**Po načtení hned řekni:**
+> "Pokračujeme od [poslední aktivita]. Stav: [status]. Další krok: [co teď]."
 
-3.  **End of Session (Handoff):**
-    - Update `state/SESSION_LOG.md` with:
-        - Accomplishments.
-        - Next Steps.
-        - Issues.
-    - Commit changes.
+### 2. During Work
+- **Průběžně aktualizuj** `LAST_SESSION.md` (co děláš, co je hotovo)
+- Update `CURRENT_TASK.md` při změně úkolu
+- Document new learnings in `learning/`
+
+### 3. End of Session (Handoff)
+- **LAST_SESSION.md** - aktualizuj s přesným stavem pro příští session
+- **SESSION_LOG.md** - přidej záznam do archivu (stručně)
+- **MEMORY.md** - aktualizuj JEN pokud je něco dlouhodobě důležitého
+- Commit & push changes

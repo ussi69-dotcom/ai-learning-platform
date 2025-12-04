@@ -1,5 +1,17 @@
 {
   "dependencies": {
     "@google/gemini-cli": "^0.18.4"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10"
+  },
+  "scripts": {
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "frontend/**/*.{ts,tsx}": [
+      "bash -c 'cd frontend && npx tsc --noEmit'"
+    ]
   }
 }
