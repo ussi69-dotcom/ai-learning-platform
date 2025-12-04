@@ -5,7 +5,7 @@
 ---
 
 ## Session Info
-- **Datum:** 2025-12-04
+- **Datum:** 2025-12-05
 - **Agent:** Claude Code (Opus 4.5)
 - **Cycle:** 43
 - **Stroj:** Linux (WSL dev)
@@ -14,48 +14,52 @@
 
 ## Co jsme dělali
 
-1.  **LAB REFORGE - DOKONČENO:**
+1.  **LAB REFORGE - DOKONČENO A DEPLOYOVÁNO:**
     -   ✅ Všechny LABy přepsány podle nové filozofie: FUN + EDUCATIONAL + PROFESSIONAL
     -   ✅ Žádné "gotcha" testy (nefungují na GPT-5/Gemini 3/Claude 4)
     -   ✅ Timeless laby - fungují na jakémkoliv moderním AI modelu
+    -   ✅ CI/CD PASSED - commit `21e0aad`
 
-    **IMPLEMENTOVANÉ LABY:**
+    **IMPLEMENTOVANÉ LABY (12 celkem):**
 
-    **Lekce 01 - Co je AI (3 laby):**
-    - ✅ Universal Translator (Angry Teen/Shakespeare/LinkedIn) [EN+CZ]
-    - ✅ Chaos Detective (brain dump → JSON) [EN+CZ]
-    - ✅ Socratic Teacher (interaktivní dialog) [EN+CZ]
-
-    **Lekce 02 - Jak se AI učí (3 laby):**
-    - ✅ Pattern Teacher (first letter extraction) [EN+CZ]
-    - ✅ Space Language (Dog→Dogophone) [EN+CZ]
-    - ✅ Associative Mixer (toothpaste as war general) [EN+CZ]
-
-    **Lekce 03 - LLM Explained (3 laby):**
-    - ✅ Tokenizer View (kept original) [EN+CZ]
-    - ✅ Temperature DJ (robot/člověk/umělec) [EN+CZ]
-    - ✅ Hallucination Trap (Harry Potter fake book) [EN+CZ]
-
-    **Lekce 05 - Temná strana (3 laby):**
-    - ✅ Fact Checker's Dilemma (confidence % on myths) [EN+CZ]
-    - ✅ RAG Reality (knowledge cutoff demo) [EN+CZ]
-    - ✅ Black Box Dilemma (AI v právnictví) [EN+CZ]
+    | Lekce | Lab 1 | Lab 2 | Lab 3 |
+    |-------|-------|-------|-------|
+    | **01 - Co je AI** | Universal Translator | Chaos Detective | Socratic Teacher |
+    | **02 - Jak se AI učí** | Pattern Teacher | Space Language | Associative Mixer |
+    | **03 - LLM Explained** | Tokenizer View | Temperature DJ | Hallucination Trap |
+    | **05 - Temná strana** | Fact Checker's Dilemma | RAG Reality | Black Box Dilemma |
 
 2.  **Bugfix - Lokalizace lekcí:**
-    -   ✅ Opraveno: `/courses/{id}` nyní lokalizuje i seznam lekcí (title_cs, description_cs)
+    -   ✅ Opraveno: `/courses/{id}` nyní lokalizuje i seznam lekcí
     -   Soubor: `backend/app/routers/lessons.py`
+
+3.  **Vizuální kontrola (Playwright MCP):**
+    -   ✅ Všechny laby se renderují správně
+    -   ✅ Code blocks, tabulky, emoji, LabComplete buttons fungují
 
 ---
 
 ## Aktuální stav
 
 ```
-✅ CI/CD Pipeline     → FUNGUJE
-✅ Build              → PROCHÁZÍ (npm run verify) - NUTNO OVĚŘIT
+✅ CI/CD Pipeline     → SUCCESS (commit 21e0aad)
+✅ Build              → PASSED (npm run verify)
+✅ Backend Tests      → 3 passed, 6 skipped
 ✅ AI Basics Beginner → KOMPLETNĚ PŘEPRACOVÁNO (12 nových labů)
+✅ Deploy Ready       → git pull && docker compose up -d --build
 ⚠️  PNG Images        → 11 souborů (8.5 MB) - nice-to-have konverze
 📋 Ostatní kurzy      → STUB (Prompt Eng, Advanced, Deep Dive)
 ```
+
+---
+
+## MCP Nástroje k použití
+
+| MCP | K čemu |
+|-----|--------|
+| **Context7** | Dokumentace Tailwind CSS, React, Next.js |
+| **Figma MCP** | Design workflow |
+| **Playwright** | Browser testing - POUŽITO pro vizuální kontrolu |
 
 ---
 
@@ -65,28 +69,18 @@
 |--------|-----------------|
 | `content/courses/ai-basics-beginner/lessons/01-*/content*.mdx` | 3 nové laby (EN+CZ) |
 | `content/courses/ai-basics-beginner/lessons/02-*/content*.mdx` | 3 nové laby (EN+CZ) |
-| `content/courses/ai-basics-beginner/lessons/03-*/content*.mdx` | 2 nové laby + 1 updated (EN+CZ) |
+| `content/courses/ai-basics-beginner/lessons/03-*/content*.mdx` | 3 nové laby (EN+CZ) |
 | `content/courses/ai-basics-beginner/lessons/05-*/content*.mdx` | 3 nové laby (EN+CZ) |
 | `backend/app/routers/lessons.py` | Lokalizace fix |
 
 ---
 
-## MCP Nástroje k použití
-
-| MCP | K čemu |
-|-----|--------|
-| **Context7** | Dokumentace Tailwind CSS, React, Next.js - POUŽÍVAT! |
-| **Figma MCP** | Design workflow |
-| **Playwright** | Browser testing |
-
----
-
 ## Rozdělaná práce / Další kroky
 
-1. **Ověřit build:**
+1. **Deploy na produkci:**
    ```bash
-   cd frontend && npm run verify
-   docker compose exec backend pytest
+   git pull origin main
+   docker compose down && docker compose up -d --build
    ```
 
 2. **Potenciální vylepšení (nice-to-have):**
@@ -107,9 +101,10 @@
 
 ## Příští session - začít s
 
-> "Pokračujeme od Cycle 43. LAB REFORGE dokončen - 12 nových labů v AI Basics (EN+CZ).
-> Ověřit build, pak rozhodnout: design upgrade NEBO psát další kurzy?"
+> "Pokračujeme od Cycle 43. LAB REFORGE dokončen a deployován (commit 21e0aad).
+> 12 nových labů v AI Basics (EN+CZ), CI/CD PASSED.
+> Další: design upgrade NEBO psát další kurzy?"
 
 ---
 
-*Poslední update: 2025-12-04, LAB REFORGE dokončen*
+*Poslední update: 2025-12-05, LAB REFORGE dokončen a CI/CD PASSED*

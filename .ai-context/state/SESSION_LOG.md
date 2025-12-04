@@ -1,3 +1,66 @@
+## Cycle 43 - December 5, 2025 (Claude Code - LAB REFORGE)
+
+**Agent:** Claude Code (Opus 4.5)
+**Status:** ✅ COMPLETE
+**Focus:** Complete Lab Reforge for AI Basics Course (EN+CZ)
+
+### What Was Done:
+
+1.  **LAB REFORGE - Complete Overhaul** 🧪
+    -   **Philosophy:** FUN + EDUCATIONAL + PROFESSIONAL (no more "gotcha" tests)
+    -   **Problem:** Old labs used tricks that modern AI (GPT-5, Gemini 3, Claude 4) easily solve
+    -   **Solution:** Timeless labs that demonstrate real AI concepts
+
+    **12 New Labs Implemented:**
+
+    | Lesson | Lab 1 | Lab 2 | Lab 3 |
+    |--------|-------|-------|-------|
+    | 01 - What is AI | Universal Translator | Chaos Detective | Socratic Teacher |
+    | 02 - How AI Learns | Pattern Teacher | Space Language | Associative Mixer |
+    | 03 - LLM Explained | Tokenizer View | Temperature DJ | Hallucination Trap |
+    | 05 - Dark Side | Fact Checker's Dilemma | RAG Reality | Black Box Dilemma |
+
+2.  **Localization Bug Fix** 🌐
+    -   **Issue:** `/courses/{id}` endpoint didn't localize lesson list
+    -   **Fix:** Added loop to translate `title_cs`, `description_cs` for lessons
+    -   **File:** `backend/app/routers/lessons.py`
+
+3.  **Visual Testing with Playwright MCP** 🎭
+    -   Used Playwright MCP for automated visual verification
+    -   Confirmed all labs render correctly (code blocks, tables, emoji, buttons)
+
+### Files Modified:
+-   `content/courses/ai-basics-beginner/lessons/01-*/content*.mdx` (3 labs EN+CZ)
+-   `content/courses/ai-basics-beginner/lessons/02-*/content*.mdx` (3 labs EN+CZ)
+-   `content/courses/ai-basics-beginner/lessons/03-*/content*.mdx` (3 labs EN+CZ)
+-   `content/courses/ai-basics-beginner/lessons/05-*/content*.mdx` (3 labs EN+CZ)
+-   `backend/app/routers/lessons.py` (localization fix)
+-   `.ai-context/state/LAST_SESSION.md` (updated)
+
+### CI/CD Status:
+-   ✅ Pre-commit hook (typecheck): PASSED
+-   ✅ GitHub Actions CI: SUCCESS
+-   ✅ Commit: `21e0aad`
+
+### Lab Highlights:
+-   **Universal Translator:** Angry Teen / Shakespeare / LinkedIn personas explaining gravity
+-   **Chaos Detective:** Brain dump → structured JSON table
+-   **Associative Mixer:** Toothpaste review as 18th-century military general
+-   **Hallucination Trap:** Fake Harry Potter book test
+-   **Black Box Dilemma:** AI in legal decisions ethics scenario
+
+### Next Steps:
+1.  Deploy to production: `git pull && docker compose up -d --build`
+2.  Design upgrade for lesson pages (gradient blobs, animations)
+3.  Write additional courses (Prompt Engineering, Advanced AI)
+
+### Handoff Notes:
+-   AI Basics course is now production-ready with professional labs
+-   All content bilingual (EN+CZ)
+-   Backend auto-seeds content from MDX on startup
+
+---
+
 ## Cycle 41 - December 4, 2025 (Claude Code - CI/CD Pipeline Fix)
 
 **Agent:** Claude Code (Opus 4.5)
