@@ -52,12 +52,27 @@ class Settings(BaseSettings):
 
     @field_validator("BACKEND_PUBLIC_URL", mode="after")
     def assemble_backend_public_url(cls, v: str, info) -> str:
-        # If the URL is relative (starts with /), prepend the domain
+        domain = info.data.get("DOMAIN_NAME", "localhost")
+        
+        # If the URL is relative (starts with /)
         if v.startswith("/"):
-            domain = info.data.get("DOMAIN_NAME", "localhost")
-            # Determine protocol - default to https for non-localhost unless specified
             protocol = "http" if "localhost" in domain else "https"
             return f"{protocol}://{domain}{v}"
+            
+        # If the URL is absolute but points to localhost, and we have a real domain configured
+        if "localhost" in v and domain != "localhost":
+            from urllib.parse import urlparse
+            parsed = urlparse(v)
+            path = parsed.path
+            if not path:
+                path = "" # Ensure we don't add /api arbitrarily if not present, or should we?
+                # If the original was just http://localhost:8000, path is empty.
+            
+            protocol = "http" if "localhost" in domain else "https"
+            # Remove trailing slash from domain if present (though likely not)
+            clean_domain = domain.rstrip("/")
+            return f"{protocol}://{clean_domain}{path}"
+            
         return v
 
     class Config:

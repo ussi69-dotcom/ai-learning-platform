@@ -25,13 +25,14 @@ Regardless of your interface (CLI or IDE), start here.
 ### 🛠️ Workflows (`/workflows`)
 > *How-To Guides.*
 - [**AGENT_HANDOFF.md**](./workflows/AGENT_HANDOFF.md): Multi-agent coordination (Claude ↔ Gemini).
-- [**MCP_SETUP.md**](./workflows/MCP_SETUP.md): Model Context Protocol server configuration.
-- [**SUBAGENT_STRATEGY.md**](./workflows/SUBAGENT_STRATEGY.md): When and how to use Task tool (subagents).
-- [**NEW-LESSON-PROMPT.md**](./workflows/NEW-LESSON-PROMPT.md): Prompt for generating lessons.
-- [**VISUAL_INSPECTION.md**](./workflows/VISUAL_INSPECTION.md): How to see the UI.
 - [**DATABASE_MIGRATIONS.md**](./workflows/DATABASE_MIGRATIONS.md): Alembic workflow.
-- [**INCIDENT_REPORTING.md**](./workflows/INCIDENT_REPORTING.md): How to report failures.
 - [**DEV_AND_DEPLOYMENT_GUIDE.md**](./workflows/DEV_AND_DEPLOYMENT_GUIDE.md): Deployment SOP.
+- [**DOMAIN_CHANGE_GUIDE.md**](./workflows/DOMAIN_CHANGE_GUIDE.md): Checklist for changing project domain.
+- [**INCIDENT_REPORTING.md**](./workflows/INCIDENT_REPORTING.md): How to report failures.
+- [**MCP_SETUP.md**](./workflows/MCP_SETUP.md): Model Context Protocol server configuration.
+- [**NEW-LESSON-PROMPT.md**](./workflows/NEW-LESSON-PROMPT.md): Prompt for generating lessons.
+- [**SUBAGENT_STRATEGY.md**](./workflows/SUBAGENT_STRATEGY.md): When and how to use Task tool (subagents).
+- [**VISUAL_INSPECTION.md**](./workflows/VISUAL_INSPECTION.md): How to see the UI.
 
 ### 📚 Learning (`/learning`)
 > *Knowledge Base.*
