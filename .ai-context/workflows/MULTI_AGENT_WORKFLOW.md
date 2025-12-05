@@ -94,11 +94,14 @@ Kdy použít Claude:
 - "Commitni a vytvoř PR"
 ```
 
-### Claude Subagenti
+### Claude Subagenti (Volitelné - pro cost optimization)
 ```
-Haiku  → Quick tasks (lint, grep, validation)
-Sonnet → Standard coding (bugfixy, API)
-Opus   → Complex decisions (architecture veto)
+Pokud používáš Opus pro vše, subagenty nepotřebuješ.
+Subagenti jsou jen pro úsporu nákladů:
+
+Haiku  → Quick tasks (lint, grep)     ~$0.001/task
+Sonnet → Standard coding              ~$0.05/task
+Opus   → Vše (default)                ~$0.50/task
 ```
 
 ---
