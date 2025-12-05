@@ -177,7 +177,172 @@ npm run test:visual
 
 ---
 
-## 5. Příklady Delegování
+## 5. Post-Task QA Validation (Developer ↔ QA Loop)
+
+### Proces
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    TASK COMPLETED                           │
+│              (Developer finished implementation)            │
+└─────────────────────────┬───────────────────────────────────┘
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│              STAGE 1: QA REVIEW                             │
+│              Agent: Haiku nebo Gemini                       │
+├─────────────────────────────────────────────────────────────┤
+│  Pravidla:                                                  │
+│  • Max 5 findings per review (prevence scope creep)         │
+│  • Každý finding má kategorii + severity                    │
+│                                                             │
+│  Kategorie:                                                 │
+│  🐛 BUG        - Funkční chyba                              │
+│  🎨 UX         - User experience problém                    │
+│  ⚡ PERF       - Performance issue                          │
+│  🔒 SECURITY   - Bezpečnostní riziko                        │
+│  ✨ NICE2HAVE  - Vylepšení (ne kritické)                    │
+│                                                             │
+│  Severity:                                                  │
+│  P1 - Kritické (blokuje release)                            │
+│  P2 - Důležité (mělo by se opravit)                         │
+│  P3 - Nízká priorita (nice to have)                         │
+└─────────────────────────┬───────────────────────────────────┘
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│              STAGE 2: DEVELOPER TRIAGE                      │
+│              Agent: Sonnet                                  │
+├─────────────────────────────────────────────────────────────┤
+│  Pro každý QA finding rozhodne:                             │
+│                                                             │
+│  ✅ ACCEPT                                                  │
+│     → Přidá do tasklist                                     │
+│     → Implementuje fix                                      │
+│                                                             │
+│  ❌ REJECT                                                  │
+│     → Napíše důvod (technický/business)                     │
+│     → Vrací na QA k posouzení                               │
+│                                                             │
+│  🏛️ ARCHITECTURE QUESTION                                   │
+│     → Eskaluje na Opus (má veto právo)                      │
+│     → Gemini může dát input jako "advisory"                 │
+└─────────────────────────┬───────────────────────────────────┘
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│              STAGE 3: QA RESPONSE                           │
+│              Agent: Haiku/Gemini                            │
+│              ⚠️ MAX 1 ITERACE (no ping-pong!)               │
+├─────────────────────────────────────────────────────────────┤
+│  Pro každý REJECTED finding:                                │
+│                                                             │
+│  👍 ACCEPT REJECTION                                        │
+│     → Finding jde do "Declined" bucket                      │
+│     → Dokumentuje se důvod pro budoucnost                   │
+│                                                             │
+│  👎 DISAGREE                                                │
+│     → Finding + důvod jde do DECISION LIST                  │
+│     → Taguje se severity (P1/P2/P3)                         │
+│     → Čeká na rozhodnutí uživatele                          │
+└─────────────────────────┬───────────────────────────────────┘
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│              STAGE 4: ARCHITECT REVIEW (pokud potřeba)      │
+│              Agent: Opus 4.5                                │
+├─────────────────────────────────────────────────────────────┤
+│  Spouští se pokud:                                          │
+│  • Developer eskaloval arch otázku                          │
+│  • QA a Developer se neshodli na design patternu            │
+│                                                             │
+│  Pravomoci:                                                 │
+│  🔴 VETO POWER na architecture decisions                    │
+│  🟡 Může overridenout Sonnet na design patterns             │
+│  🟢 Bere Gemini input jako "advisory" (ne závazný)          │
+│                                                             │
+│  Output:                                                    │
+│  • Finální rozhodnutí s odůvodněním                         │
+│  • Aktualizace MEMORY.md (lessons learned)                  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Model Authority Hierarchy
+
+```
+┌────────────────────────────────────────────────────────────┐
+│  DECISION AUTHORITY (od nejvyšší po nejnižší)              │
+├────────────────────────────────────────────────────────────┤
+│  1. 👤 USER              - Finální arbitr                  │
+│  2. 🏛️ OPUS 4.5          - Architecture veto               │
+│  3. 💻 SONNET            - Implementation decisions        │
+│  4. 🔍 HAIKU             - QA findings (advisory)          │
+│  5. 💡 GEMINI            - Creative input (advisory)       │
+└────────────────────────────────────────────────────────────┘
+```
+
+### Output Buckets
+
+| Bucket | Popis | Kdo rozhoduje |
+|--------|-------|---------------|
+| **Tasklist** | Accepted findings → implementovat | Developer (Sonnet) |
+| **Declined** | Rejected + QA souhlasí | Developer + QA shoda |
+| **Decision List** | Neshoda → čeká na User | User arbitráž |
+| **Arch Decisions** | Eskalované otázky | Opus (veto) |
+
+### Příklad QA Review Output
+
+```markdown
+## QA Review: Feature XYZ
+
+### Findings
+
+| # | Category | Severity | Finding | Developer Response |
+|---|----------|----------|---------|-------------------|
+| 1 | 🐛 BUG | P1 | Null check missing in handleSubmit | ✅ ACCEPT |
+| 2 | ⚡ PERF | P2 | useEffect runs on every render | ✅ ACCEPT |
+| 3 | 🎨 UX | P3 | Button should be larger on mobile | ❌ REJECT: Design spec says 40px |
+| 4 | ✨ NICE | P3 | Add loading skeleton | ❌ REJECT: Scope creep |
+| 5 | 🔒 SEC | P2 | Input not sanitized | 🏛️ ESCALATE: Arch question |
+
+### QA Response to Rejections
+
+| # | QA Decision | Outcome |
+|---|-------------|---------|
+| 3 | 👍 Accept | → Declined bucket |
+| 4 | 👎 Disagree | → Decision List (P3) |
+| 5 | - | → Opus review |
+
+### Decision List for User
+
+| Finding | Developer says | QA says | Severity |
+|---------|---------------|---------|----------|
+| Loading skeleton | Scope creep | Better UX | P3 |
+```
+
+---
+
+## 6. Gemini MCP Integration
+
+### Setup (OAuth - vyšší limity)
+```bash
+# Gemini MCP používá tvůj Gemini CLI s OAuth
+claude mcp add gemini-cli -- npx -y gemini-mcp-tool
+```
+
+### Použití
+```
+"Použij Gemini k analýze celého frontend/ adresáře"
+"Zeptej se Gemini na second opinion k tomuto designu"
+"Ať Gemini vygeneruje MDX lekci podle CONTENT_GUIDELINES.md"
+```
+
+### @file syntax
+```
+# Reference soubory přímo v Gemini promptu:
+@./CLAUDE.md - přečte soubor
+@./frontend/ - analyzuje adresář
+```
+
+---
+
+## 7. Příklady Delegování
 
 ### Příklad 1: Nová Lekce
 ```
@@ -221,7 +386,7 @@ Claude Code:
 
 ---
 
-## 6. Cost Optimization
+## 8. Cost Optimization
 
 | Model | Use Case | Est. Cost/Task |
 |-------|----------|----------------|
@@ -238,7 +403,7 @@ Claude Code:
 
 ---
 
-## 7. Command Reference
+## 9. Command Reference
 
 ### Task Tool s modelem
 ```
