@@ -1,112 +1,63 @@
-# Last Session Handover
+# Current Task - Cycle 46
 
-**Aktualizuj průběžně během práce. Toto je krátkodobá, hutná paměť.**
-
----
-
-## Session Info
-- **Datum:** 2025-12-05
-- **Agent:** Claude Code (Opus 4.5)
-- **Cycle:** 45
-- **Stroj:** Linux (WSL dev)
+**Status:** ✅ COMPLETE - Content Generation (Phase 2)
+**Agent:** Gemini CLI
+**Date:** 2025-12-05
 
 ---
 
-## Co jsme dělali
+## What Was Done This Cycle
 
-1.  **MEGA-AUDIT KÓDU:**
-    -   ✅ Hloubkový audit duplicit, zombie souborů, monolitů
-    -   ✅ Nalezeny 2 zombie komponenty (CalloutBox, TryItYourself)
-    -   ✅ Nalezeno 8 DEBUG prints v main.py (security risk!)
-    -   ✅ Identifikovány monolity: ABTestShowcase (614), MarkdownRenderer (490)
+1.  **Content Generation (Practical Prompt Engineering)** ✅
+    -   Created lesson skeletons (01-08).
+    -   Wrote full content for Lessons 01-04 (EN + CS).
+    -   Lessons included: Anatomy, Patterns, Context, Output Control.
+    -   Followed "Masterpiece Standard" (Diagrams, Labs, Holocron).
 
-2.  **SECURITY FIX:**
-    -   ✅ Odstraněny DEBUG prints z `backend/app/main.py:121-157`
-    -   ✅ Včetně kritického `print(hash[:20])` - leakoval password hash prefix!
+2.  **Quiz Fixes** 🔧
+    -   Fixed quiz format incompatibility (dict vs list).
+    -   Updated all 8 lessons (01-04 full, 05-08 stubs) to use correct JSON list format.
 
-3.  **ZOMBIE CLEANUP:**
-    -   ✅ Smazán `frontend/components/CalloutBox.tsx` (65 řádků, nahrazen Callout.tsx)
-    -   ⚠️ `TryItYourself.tsx` - zvážit smazání (79 řádků, nepoužívaný)
+3.  **Database Seeding** 🌱
+    -   Ran `docker compose exec backend python seed.py`.
+    -   Successfully seeded all 8 lessons into DB.
 
-4.  **DOKUMENTACE:**
-    -   ✅ CLAUDE.md - přidán Agent Coordination Protocol
-    -   ✅ CLAUDE.md - přidán Multi-Agent Strategy
-    -   ✅ CLAUDE.md - přidán Technical Debt Tracking
-
-5.  **MCP SERVERY:**
-    -   ✅ GitHub MCP přidán (`gh mcp-server`)
-    -   ✅ Stav: Playwright, Context7, Figma, GitHub
+4.  **Tools** 🛠️
+    -   Created `scripts/generate_skeletons.py` for mass content generation.
 
 ---
 
-## Aktuální stav
+## Next Priority: Content Completion (Phase 2)
 
-```
-✅ Security Fix        → DEBUG prints odstraněny (commit f306fa0)
-✅ Zombie Cleanup      → CalloutBox.tsx smazán
-✅ CLAUDE.md           → Agent Protocol + Tech Debt tracking
-✅ GitHub MCP          → Přidán do user config
-✅ TypeScript          → PASSED
-⚠️  Backend Tests      → Import error (pre-existing, ne tato session)
-```
+Per EXECUTION_PLAN.md, the next focus is completing the **Prompt Engineering course**.
 
----
+### Immediate Actions
 
-## MCP Nástroje použité
+1.  **Write Lessons 05-08** (Gemini CLI)
+    -   Current status: Stubs with placeholder quizzes.
+    -   Need full MDX content (EN+CS) and real quizzes.
+    -   Topics: Personas, Debugging, Real World, Project.
 
-| MCP | K čemu |
-|-----|--------|
-| **Context7** | Tailwind/Next.js dokumentace |
-| **Playwright** | Dostupný pro vizuální testy |
-| **GitHub** | Nově přidán - PR workflow |
+2.  **Visual Polish** (Claude Code)
+    -   Verify diagrams render correctly in the new lessons.
+    -   Check dark mode compatibility.
 
 ---
 
-## Důležité soubory této session
+## Content Status
 
-| Soubor | Co bylo změněno |
-|--------|-----------------|
-| `backend/app/main.py` | Odstraněny DEBUG prints (security) |
-| `frontend/components/CalloutBox.tsx` | SMAZÁN (zombie) |
-| `CLAUDE.md` | Agent Coordination Protocol, Tech Debt |
-
----
-
-## Rozdělaná práce / Další kroky
-
-### Technický dluh k řešení:
-1. ~~**ABTestShowcase.tsx**~~ - ✅ HOTOVO (commit acce9d5) - rozdělen na 4 moduly
-2. **MarkdownRenderer.tsx** - 490 řádků → zvážit next-mdx-remote
-3. **Custom hook `useProgressCheck()`** - deduplikace Quiz + LabSection
-4. **Error boundary** - přidat `frontend/app/error.tsx`
-5. **TryItYourself.tsx** - smazat nebo revive
-
-### Backend test fix:
-- `tests/test_api.py` - ModuleNotFoundError - import path issue
-
-### Multi-agent strategie (připraveno):
-- Haiku pro lint/typecheck
-- Sonnet pro implementaci
-- Opus pro architekturu
-- Gemini CLI pro content generování
+| Course | Progress | Priority |
+|--------|----------|----------|
+| AI Basics | ✅ 100% | Done |
+| Prompt Engineering | 🟡 50% | **NOW** (01-04 Done) |
+| Advanced AI | 🔴 STUB | Next |
+| AI Engineering | 🔴 STUB | Future |
 
 ---
 
-## User kontext
+## Handoff Notes
 
-- **Doména:** ai-teaching.eu
-- **Role:** Sysadmin/Product Owner
-- **Styl:** Preferuje systematický přístup, dokumentaci
-- **Priority:** Efektivita, best practices, multi-agent workflow
-
----
-
-## Příští session - začít s
-
-> "Pokračujeme od Cycle 45. Security fix + zombie cleanup HOTOVO (commit f306fa0).
-> CLAUDE.md má Agent Protocol + Tech Debt tracking.
-> GitHub MCP přidán. Další: refactor ABTestShowcase NEBO fix backend tests NEBO content polish?"
-
----
-
-*Poslední update: 2025-12-05, Security cleanup + Agent Protocol DEPLOYED*
+-   Lessons 01-04 are live in DB.
+-   Lessons 05-08 exist as stubs (to satisfy seed script).
+-   Quiz format is now standard list-based.
+-   `scripts/generate_skeletons.py` is available for future courses.

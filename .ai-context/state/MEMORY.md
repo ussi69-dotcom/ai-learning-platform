@@ -124,6 +124,29 @@ Read this first to understand the environment, preferences, and active protocols
 ---
 
 ## 📝 Agent Coordination
+
+### Multi-Agent Setup (2025-12-05)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  GEMINI 3 Pro (1M context)    │  CLAUDE Opus 4.5 (200K)     │
+│  • Orchestrátor/Strategist    │  • Implementátor            │
+│  • 91.9% reasoning benchmark  │  • 98.2% tool use benchmark │
+├─────────────────────────────────────────────────────────────┤
+│  Gemini → Claude:             │  Claude → Gemini:           │
+│  claude -p "prompt"           │  mcp__gemini-cli__ask-gemini│
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Full workflow:** `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`
+
+### Lessons Learned (2025-12-05)
+- **MCP není nutný** pro cross-agent volání - shell příkazy stačí
+- **Gemini = Strategist** (větší context 1M, lepší reasoning 91.9%)
+- **Claude = Implementer** (lepší tool use 98.2%, precizní coding)
+- **Over-engineering alert:** Před builděním infrastruktury vždy zkusit nejjednodušší řešení
+
+### Legacy Notes
 - **CLI:** Use for heavy lifting, file ops, git.
 - **IDE:** Use for visual checks, deep debugging.
 - **Handoff:** Write to `state/SESSION_LOG.md` before exiting.
