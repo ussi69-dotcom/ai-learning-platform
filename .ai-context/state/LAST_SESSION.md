@@ -7,59 +7,58 @@
 ## Session Info
 - **Datum:** 2025-12-05
 - **Agent:** Claude Code (Opus 4.5)
-- **Cycle:** 43
+- **Cycle:** 45
 - **Stroj:** Linux (WSL dev)
 
 ---
 
 ## Co jsme dělali
 
-1.  **LAB REFORGE - DOKONČENO A DEPLOYOVÁNO:**
-    -   ✅ Všechny LABy přepsány podle nové filozofie: FUN + EDUCATIONAL + PROFESSIONAL
-    -   ✅ Žádné "gotcha" testy (nefungují na GPT-5/Gemini 3/Claude 4)
-    -   ✅ Timeless laby - fungují na jakémkoliv moderním AI modelu
-    -   ✅ CI/CD PASSED - commit `21e0aad`
+1.  **MEGA-AUDIT KÓDU:**
+    -   ✅ Hloubkový audit duplicit, zombie souborů, monolitů
+    -   ✅ Nalezeny 2 zombie komponenty (CalloutBox, TryItYourself)
+    -   ✅ Nalezeno 8 DEBUG prints v main.py (security risk!)
+    -   ✅ Identifikovány monolity: ABTestShowcase (614), MarkdownRenderer (490)
 
-    **IMPLEMENTOVANÉ LABY (12 celkem):**
+2.  **SECURITY FIX:**
+    -   ✅ Odstraněny DEBUG prints z `backend/app/main.py:121-157`
+    -   ✅ Včetně kritického `print(hash[:20])` - leakoval password hash prefix!
 
-    | Lekce | Lab 1 | Lab 2 | Lab 3 |
-    |-------|-------|-------|-------|
-    | **01 - Co je AI** | Universal Translator | Chaos Detective | Socratic Teacher |
-    | **02 - Jak se AI učí** | Pattern Teacher | Space Language | Associative Mixer |
-    | **03 - LLM Explained** | Tokenizer View | Temperature DJ | Hallucination Trap |
-    | **05 - Temná strana** | Fact Checker's Dilemma | RAG Reality | Black Box Dilemma |
+3.  **ZOMBIE CLEANUP:**
+    -   ✅ Smazán `frontend/components/CalloutBox.tsx` (65 řádků, nahrazen Callout.tsx)
+    -   ⚠️ `TryItYourself.tsx` - zvážit smazání (79 řádků, nepoužívaný)
 
-2.  **Bugfix - Lokalizace lekcí:**
-    -   ✅ Opraveno: `/courses/{id}` nyní lokalizuje i seznam lekcí
-    -   Soubor: `backend/app/routers/lessons.py`
+4.  **DOKUMENTACE:**
+    -   ✅ CLAUDE.md - přidán Agent Coordination Protocol
+    -   ✅ CLAUDE.md - přidán Multi-Agent Strategy
+    -   ✅ CLAUDE.md - přidán Technical Debt Tracking
 
-3.  **Vizuální kontrola (Playwright MCP):**
-    -   ✅ Všechny laby se renderují správně
-    -   ✅ Code blocks, tabulky, emoji, LabComplete buttons fungují
+5.  **MCP SERVERY:**
+    -   ✅ GitHub MCP přidán (`gh mcp-server`)
+    -   ✅ Stav: Playwright, Context7, Figma, GitHub
 
 ---
 
 ## Aktuální stav
 
 ```
-✅ CI/CD Pipeline     → SUCCESS (commit 21e0aad)
-✅ Build              → PASSED (npm run verify)
-✅ Backend Tests      → 3 passed, 6 skipped
-✅ AI Basics Beginner → KOMPLETNĚ PŘEPRACOVÁNO (12 nových labů)
-✅ Deploy Ready       → git pull && docker compose up -d --build
-⚠️  PNG Images        → 11 souborů (8.5 MB) - nice-to-have konverze
-📋 Ostatní kurzy      → STUB (Prompt Eng, Advanced, Deep Dive)
+✅ Security Fix        → DEBUG prints odstraněny (commit f306fa0)
+✅ Zombie Cleanup      → CalloutBox.tsx smazán
+✅ CLAUDE.md           → Agent Protocol + Tech Debt tracking
+✅ GitHub MCP          → Přidán do user config
+✅ TypeScript          → PASSED
+⚠️  Backend Tests      → Import error (pre-existing, ne tato session)
 ```
 
 ---
 
-## MCP Nástroje k použití
+## MCP Nástroje použité
 
 | MCP | K čemu |
 |-----|--------|
-| **Context7** | Dokumentace Tailwind CSS, React, Next.js |
-| **Figma MCP** | Design workflow |
-| **Playwright** | Browser testing - POUŽITO pro vizuální kontrolu |
+| **Context7** | Tailwind/Next.js dokumentace |
+| **Playwright** | Dostupný pro vizuální testy |
+| **GitHub** | Nově přidán - PR workflow |
 
 ---
 
@@ -67,26 +66,29 @@
 
 | Soubor | Co bylo změněno |
 |--------|-----------------|
-| `content/courses/ai-basics-beginner/lessons/01-*/content*.mdx` | 3 nové laby (EN+CZ) |
-| `content/courses/ai-basics-beginner/lessons/02-*/content*.mdx` | 3 nové laby (EN+CZ) |
-| `content/courses/ai-basics-beginner/lessons/03-*/content*.mdx` | 3 nové laby (EN+CZ) |
-| `content/courses/ai-basics-beginner/lessons/05-*/content*.mdx` | 3 nové laby (EN+CZ) |
-| `backend/app/routers/lessons.py` | Lokalizace fix |
+| `backend/app/main.py` | Odstraněny DEBUG prints (security) |
+| `frontend/components/CalloutBox.tsx` | SMAZÁN (zombie) |
+| `CLAUDE.md` | Agent Coordination Protocol, Tech Debt |
 
 ---
 
 ## Rozdělaná práce / Další kroky
 
-1. **Deploy na produkci:**
-   ```bash
-   git pull origin main
-   docker compose down && docker compose up -d --build
-   ```
+### Technický dluh k řešení:
+1. **ABTestShowcase.tsx** - 614 řádků → rozdělit na animation/state/UI
+2. **MarkdownRenderer.tsx** - 490 řádků → zvážit next-mdx-remote
+3. **Custom hook `useProgressCheck()`** - deduplikace Quiz + LabSection
+4. **Error boundary** - přidat `frontend/app/error.tsx`
+5. **TryItYourself.tsx** - smazat nebo revive
 
-2. **Potenciální vylepšení (nice-to-have):**
-   - Design upgrade lesson page (gradient blobs, animace)
-   - PNG → SVG konverze (11 souborů)
-   - Psát další kurzy (Prompt Engineering, Advanced AI)
+### Backend test fix:
+- `tests/test_api.py` - ModuleNotFoundError - import path issue
+
+### Multi-agent strategie (připraveno):
+- Haiku pro lint/typecheck
+- Sonnet pro implementaci
+- Opus pro architekturu
+- Gemini CLI pro content generování
 
 ---
 
@@ -94,17 +96,17 @@
 
 - **Doména:** ai-teaching.eu
 - **Role:** Sysadmin/Product Owner
-- **Styl:** Chce věci rychle hotové, kurzy PERFEKTNÍ
-- **Priority:** LABy musí být FUN + EDUCATIONAL + PROFESSIONAL
+- **Styl:** Preferuje systematický přístup, dokumentaci
+- **Priority:** Efektivita, best practices, multi-agent workflow
 
 ---
 
 ## Příští session - začít s
 
-> "Pokračujeme od Cycle 43. LAB REFORGE dokončen a deployován (commit 21e0aad).
-> 12 nových labů v AI Basics (EN+CZ), CI/CD PASSED.
-> Další: design upgrade NEBO psát další kurzy?"
+> "Pokračujeme od Cycle 45. Security fix + zombie cleanup HOTOVO (commit f306fa0).
+> CLAUDE.md má Agent Protocol + Tech Debt tracking.
+> GitHub MCP přidán. Další: refactor ABTestShowcase NEBO fix backend tests NEBO content polish?"
 
 ---
 
-*Poslední update: 2025-12-05, LAB REFORGE dokončen a CI/CD PASSED*
+*Poslední update: 2025-12-05, Security cleanup + Agent Protocol DEPLOYED*
