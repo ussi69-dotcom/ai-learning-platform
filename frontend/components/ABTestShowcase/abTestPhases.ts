@@ -6,6 +6,8 @@ export interface ABTestMessage {
   avatar: ReactNode;
   message: string;
   color: string;
+  /** Timing modifier in seconds. Negative = faster, Positive = slower scroll & longer pause */
+  timingModifier?: number;
 }
 
 export interface ABTestPhase {
@@ -29,7 +31,8 @@ export function getABTestPhases(locale: string): ABTestPhase[] {
           message: locale === 'cs'
             ? "🔵 @BlueTeam 🔴 @RedTeam\n\n**Context:** Máme podezření na drift mezi dokumentací a realitou (chybějící .env, porty).\n\n**Task:** Proveďte 'Documentation Integrity Audit'.\n\n**Protocol:**\n1. **Red Team**: Simuluj 'Fresh Developer' experience. Žádné předchozí znalosti. Zkus nasadit appku podle README. Reportuj každý fail.\n2. **Blue Team**: Analyzuj report. Navrhni fixy.\n\n**Output:** Chci vidět seznam kritických chyb a návrh řešení. Go."
             : "🔵 @BlueTeam 🔴 @RedTeam\n\n**Context:** Suspected drift between docs and reality (missing .env, ports).\n\n**Task:** Execute 'Documentation Integrity Audit'.\n\n**Protocol:**\n1. **Red Team**: Simulate 'Fresh Developer' experience. Zero prior knowledge. Try to deploy app per README. Report every fail.\n2. **Blue Team**: Analyze report. Propose fixes.\n\n**Output:** I want a list of critical errors and a solution proposal. Go.",
-          color: "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-600 font-mono text-xs"
+          color: "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-600 font-mono text-xs",
+          timingModifier: -2
         },
         {
           role: "blue",
@@ -38,7 +41,8 @@ export function getABTestPhases(locale: string): ABTestPhase[] {
           message: locale === 'cs'
             ? "Excelentní otázka. Spouštím comprehensive documentation audit. 🔍\n\nZačínám 'Red Team' analýzou - budu simulovat fresh developer experience. Otevřu README.md a pokusím se nasadit platformu přesně podle instrukcí, bez jakýchkoliv předchozích znalostí. Zaznamenám každý bloker, každou nejasnost.\n\nČekej moment..."
             : "Excellent question. Starting comprehensive documentation audit. 🔍\n\nBeginning 'Red Team' analysis - will simulate fresh developer experience. Opening README.md and trying to deploy the platform exactly per instructions, with zero prior knowledge. Recording every blocker, every confusion.\n\nHold on...",
-          color: "bg-blue-500/10 border-blue-400/30 text-blue-700 dark:text-blue-200 shadow-[0_0_15px_rgba(59,130,246,0.1)]"
+          color: "bg-blue-500/10 border-blue-400/30 text-blue-700 dark:text-blue-200 shadow-[0_0_15px_rgba(59,130,246,0.1)]",
+          timingModifier: -1
         }
       ]
     },
@@ -54,7 +58,8 @@ export function getABTestPhases(locale: string): ABTestPhase[] {
           message: locale === 'cs'
             ? "🚨 RED TEAM CRITICAL REPORT\n\nProvedl jsem simulaci 'nový developer na novém stroji'. Našel jsem 9 závažných problémů:\n\n**CRITICAL (Must Fix Now):**\n1. .env file chybí v Quick Start - README říká 'docker compose up', ale .env neexistuje. INSTANT BLOCKER.\n2. Dead file references - DEPLOYMENT_STRATEGY.md (deleted), AGENT-STATE.md (neexistuje)\n3. Contradictory DB instructions - README (Nuclear Reset), MEMORY.md (Nuclear OR Alembic?), DEV_GUIDE (Alembic for prod)\n4. n8n běží na port 5678 - nikde není vysvětleno co to je, proč to běží\n5. .env.prod.example INCOMPLETE - chybí DATABASE_URL, REDIS_URL, CORS, admin user\n\n**MINOR (Should Fix):**\n6. Alembic workflow není linkován z README\n7. Port troubleshooting incomplete - chybí rebuild instrukce\n8. DATABASE_MIGRATIONS.md - žádné rollback instrukce\n9. PROJECT_CONTEXT.md - chybí Redis a n8n services\n\nPro nového vývojáře: Time to working platform = ∞ (zablokovaný na .env)."
             : "🚨 RED TEAM CRITICAL REPORT\n\nSimulated 'new developer on fresh machine'. Found 9 critical issues:\n\n**CRITICAL (Must Fix Now):**\n1. .env file missing from Quick Start - README says 'docker compose up', but .env doesn't exist. INSTANT BLOCKER.\n2. Dead file references - DEPLOYMENT_STRATEGY.md (deleted), AGENT-STATE.md (doesn't exist)\n3. Contradictory DB instructions - README (Nuclear Reset), MEMORY.md (Nuclear OR Alembic?), DEV_GUIDE (Alembic for prod)\n4. n8n running on port 5678 - nowhere explained what it is, why it's running\n5. .env.prod.example INCOMPLETE - missing DATABASE_URL, REDIS_URL, CORS, admin user\n\n**MINOR (Should Fix):**\n6. Alembic workflow not linked from README\n7. Port troubleshooting incomplete - missing rebuild instructions\n8. DATABASE_MIGRATIONS.md - no rollback instructions\n9. PROJECT_CONTEXT.md - missing Redis and n8n services\n\nFor new developer: Time to working platform = ∞ (blocked on .env).",
-          color: "bg-red-900/10 dark:bg-red-900/40 border-red-500/30 text-red-700 dark:text-red-200"
+          color: "bg-red-900/10 dark:bg-red-900/40 border-red-500/30 text-red-700 dark:text-red-200",
+          timingModifier: -2
         },
         {
           role: "user",
@@ -63,7 +68,8 @@ export function getABTestPhases(locale: string): ABTestPhase[] {
           message: locale === 'cs'
             ? "Díky za report. Tohle je nepřijatelné pro onboarding.\n\n**Action Plan:** Spustíme **A/B Test** pro validaci fixů.\n\n**Scénář:**\n1. Vytvoř 2 izolované instance: `/tmp/baseline` a `/tmp/improved`\n2. **Baseline**: Clone main branch. Změř čas do failu.\n3. **Improved**: Aplikuj fixy do nové git branch `docs/fix-onboarding`. Přidej `/health` endpoint pro monitoring.\n4. **Sync**: Pushni změny, udělej fresh clone, změř čas do success.\n\nChci vidět tvrdá data. Execute."
             : "Thanks for the report. Unacceptable for onboarding.\n\n**Action Plan:** Initiate **A/B Test** to validate fixes.\n\n**Scenario:**\n1. Create 2 isolated instances: `/tmp/baseline` and `/tmp/improved`\n2. **Baseline**: Clone main branch. Measure time to fail.\n3. **Improved**: Apply fixes to new git branch `docs/fix-onboarding`. Add `/health` endpoint for monitoring.\n4. **Sync**: Push changes, fresh clone, measure time to success.\n\nI want hard data. Execute.",
-          color: "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-600 font-mono text-xs"
+          color: "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-600 font-mono text-xs",
+          timingModifier: -1
         },
         {
           role: "blue",
@@ -72,7 +78,8 @@ export function getABTestPhases(locale: string): ABTestPhase[] {
           message: locale === 'cs'
             ? "Děkuji za report. Navrhuji vědecký přístup - A/B Testing Methodology:\n\n**PHASE 1: Baseline Test** (Současný stav)\n- Fresh clone do /tmp/test-baseline\n- Následuj README přesně, bez jakýchkoliv fixů\n- Změř: čas k funkční platformě, počet blokerů, otázky které vzniknou\n\n**PHASE 2: Apply Fixes**\n- Oprav všech 9 problémů z Red Team reportu\n- BONUS: Přidám /health endpoint pro system monitoring (PostgreSQL + Redis status)\n- Commit jako 'improved' baseline\n\n**PHASE 3: Improved Test**\n- Fresh clone do /tmp/test-improved\n- Následuj NOVÝ README\n- Změř stejné metriky\n\n**PHASE 4: Compare & Report**\nVytvořím detailed comparison report.\n\nChceš pokračovat s tímhle přístupem?"
             : "Thank you for the report. Proposing scientific approach - A/B Testing Methodology:\n\n**PHASE 1: Baseline Test** (Current state)\n- Fresh clone to /tmp/test-baseline\n- Follow README exactly, no fixes\n- Measure: time to working platform, blocker count, questions raised\n\n**PHASE 2: Apply Fixes**\n- Fix all 9 issues from Red Team report\n- BONUS: Add /health endpoint for system monitoring (PostgreSQL + Redis status)\n- Commit as 'improved' baseline\n\n**PHASE 3: Improved Test**\n- Fresh clone to /tmp/test-improved\n- Follow NEW README\n- Measure same metrics\n\n**PHASE 4: Compare & Report**\nCreate detailed comparison report.\n\nShall I proceed with this approach?",
-          color: "bg-blue-500/10 border-blue-400/30 text-blue-700 dark:text-blue-200 shadow-[0_0_15px_rgba(59,130,246,0.1)]"
+          color: "bg-blue-500/10 border-blue-400/30 text-blue-700 dark:text-blue-200 shadow-[0_0_15px_rgba(59,130,246,0.1)]",
+          timingModifier: 1
         },
         {
           role: "blue",
@@ -95,7 +102,8 @@ export function getABTestPhases(locale: string): ABTestPhase[] {
           name: "User",
           avatar: null,
           message: locale === 'cs' ? "MAS ZELENOU! Ano ber v potaz posledni blue team notes a JDI DO TOHO RED TEAME :)" : "GREEN LIGHT! Take the blue team notes into account and GO FOR IT RED TEAM :)",
-          color: "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-600"
+          color: "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-600",
+          timingModifier: -2
         },
         {
           role: "red",
@@ -104,7 +112,8 @@ export function getABTestPhases(locale: string): ABTestPhase[] {
           message: locale === 'cs'
             ? "❌ BASELINE TEST - EXECUTION LOG\n\n```bash\n$ cd /tmp && git clone repo test-baseline\nCloning... OK (30s)\n\n$ cd test-baseline && docker compose up -d --build\nERROR: env file /tmp/test-baseline/.env not found\n```\n\n**BLOCKER #1: Missing .env**\n- README říká 'just run docker compose up'\n- Očekávám .env existuje\n- Reality: .env neexistuje (je gitignorován)\n- Time wasted: ∞ (bez pomoci agenta INSTANT STOP)\n\n**Manual Fix Applied (simulace s agentem):**\n```bash\n$ cp .env.prod.example .env\n$ docker compose up -d --build\nERROR: Container name '/ai-db' already in use\n```\n\n**BLOCKER #2: Container conflicts**\n- README nezmíňuje multiple instance scenario\n\n**Manual Fix:**\n```bash\n$ sed -i 's/ai-/baseline-/g' docker-compose.yml\n$ docker compose up\nERROR: Port 5432 already allocated\n```\n\n**BLOCKER #3: Port conflicts**\n- Troubleshooting mentions ports, but not HOW to change\n\n**Final Manual Fixes:**\nZměna všech portů. Final čas: 17 minut (s expert pomocí).\nPro new dev: BLOCKED indefinitely na .env."
             : "❌ BASELINE TEST - EXECUTION LOG\n\n```bash\n$ cd /tmp && git clone repo test-baseline\nCloning... OK (30s)\n\n$ cd test-baseline && docker compose up -d --build\nERROR: env file /tmp/test-baseline/.env not found\n```\n\n**BLOCKER #1: Missing .env**\n- README says 'just run docker compose up'\n- Expected .env exists\n- Reality: .env doesn't exist (gitignored)\n- Time wasted: ∞ (without agent help INSTANT STOP)\n\n**Manual Fix Applied (simulation with agent):**\n```bash\n$ cp .env.prod.example .env\n$ docker compose up -d --build\nERROR: Container name '/ai-db' already in use\n```\n\n**BLOCKER #2: Container conflicts**\n- README doesn't mention multiple instance scenario\n\n**Manual Fix:**\n```bash\n$ sed -i 's/ai-/baseline-/g' docker-compose.yml\n$ docker compose up\nERROR: Port 5432 already allocated\n```\n\n**BLOCKER #3: Port conflicts**\n- Troubleshooting mentions ports, but not HOW to change\n\n**Final Manual Fixes:**\nChanged all ports. Final time: 17 minutes (s expert pomocí).\nPro new dev: BLOCKED indefinitely na .env.",
-          color: "bg-red-900/10 dark:bg-red-950/60 border-red-500/50 text-red-700 dark:text-red-300 font-mono text-xs"
+          color: "bg-red-900/10 dark:bg-red-950/60 border-red-500/50 text-red-700 dark:text-red-300 font-mono text-xs",
+          timingModifier: 1
         },
         {
           role: "user",
@@ -122,7 +131,8 @@ export function getABTestPhases(locale: string): ABTestPhase[] {
           message: locale === 'cs'
             ? "🫡 Rozumím. Zapracovávám review notes:\n\n```diff\n- # n8n Automation\n+ # n8n Automation (Advanced/Optional)\n```\n\n```python\n# Adding Redis check to health.py\ntry:\n    r = redis.from_url(os.getenv('REDIS_URL'))\n    r.ping()\n    services.append({'name': 'Redis', 'status': 'healthy'})\nexcept Exception as e:\n    services.append({'name': 'Redis', 'status': 'down'})\n```\n\nSpouštím Phase 3: Improved Test..."
             : "🫡 Understood. Addressing review notes:\n\n```diff\n- # n8n Automation\n+ # n8n Automation (Advanced/Optional)\n```\n\n```python\n# Adding Redis check to health.py\ntry:\n    r = redis.from_url(os.getenv('REDIS_URL'))\n    r.ping()\n    services.append({'name': 'Redis', 'status': 'healthy'})\nexcept Exception as e:\n    services.append({'name': 'Redis', 'status': 'down'})\n```\n\nStarting Phase 3: Improved Test...",
-          color: "bg-blue-500/10 border-blue-400/30 text-blue-700 dark:text-blue-200 shadow-[0_0_15px_rgba(59,130,246,0.1)]"
+          color: "bg-blue-500/10 border-blue-400/30 text-blue-700 dark:text-blue-200 shadow-[0_0_15px_rgba(59,130,246,0.1)]",
+          timingModifier: -2
         },
         {
           role: "blue",

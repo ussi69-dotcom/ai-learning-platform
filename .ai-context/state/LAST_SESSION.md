@@ -75,7 +75,7 @@
 ## Rozdělaná práce / Další kroky
 
 ### Technický dluh k řešení:
-1. **ABTestShowcase.tsx** - 614 řádků → rozdělit na animation/state/UI
+1. ~~**ABTestShowcase.tsx**~~ - ✅ HOTOVO (commit acce9d5) - rozdělen na 4 moduly
 2. **MarkdownRenderer.tsx** - 490 řádků → zvážit next-mdx-remote
 3. **Custom hook `useProgressCheck()`** - deduplikace Quiz + LabSection
 4. **Error boundary** - přidat `frontend/app/error.tsx`

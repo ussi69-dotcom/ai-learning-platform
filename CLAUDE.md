@@ -439,7 +439,7 @@ docker compose exec backend pytest  # Backend tests
 
 ### Technical Debt Tracking
 Known issues to address:
-- [ ] `ABTestShowcase.tsx` - 614 lines, needs splitting (animation/state/UI)
+- [x] `ABTestShowcase.tsx` - ✅ Split into 4 modules (commit acce9d5)
 - [ ] `MarkdownRenderer.tsx` - custom parser, consider next-mdx-remote
 - [ ] Custom hook needed: `useProgressCheck()` for Quiz/LabSection
 - [ ] Error boundary: `frontend/app/error.tsx` missing
