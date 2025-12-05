@@ -1,0 +1,126 @@
+# Kontrola Výstupního Formátu
+
+<Callout type="info">
+**Cíl mise:** Zastavit AI v povídání. Donuťte ji generovat JSON, CSV nebo Kód.
+⏳ **Čas čtení:** 15 min | 🧪 **3 Laboratoře**
+</Callout>
+
+## Problém: AI si ráda povídá
+
+Požádáte o seznam jmen.
+AI odpoví: *"Jistě! Zde je seznam jmen, o který jste žádali:"*
+1. Luke
+2. Leia
+
+Pokud jste člověk, je to zdvořilé. Pokud jste softwarový inženýr a píšete skript na parsování tohoto výstupu, **tato úvodní věta rozbije váš kód.**
+
+Pro integraci LLM do aplikací potřebujeme **Strukturovaný Výstup**.
+
+## 1. Omezení Formátu
+
+Musíte explicitně definovat výstupní formát v **Systémovém Promptu** nebo na konci vaší instrukce.
+
+*   **Slabé:** "Dej mi data."
+*   **Silné:** "Vypiš striktně jako JSON objekt."
+
+<Diagram type="prompt-structure-pyramid" />
+*(Zaměřte se na horní vrstvu: Formát je finální tvar odpovědi.)*
+
+## 2. Negativní Omezení ("Nedělej")
+
+LLM se snaží být nápomocné, což znamená, že přidávají konverzační výplň. Musíte jim říct, aby přestaly.
+> "Nevkládej žádný úvodní text. Neříkej 'Zde je kód'. Vrať POUZE hrubý řetězec."
+
+## 3. JSON Režim (Zlatý Standard)
+
+JSON (JavaScript Object Notation) je univerzální jazyk API.
+Abyste získali dokonalý JSON, poskytněte **Schéma** (šablonu).
+
+**Vzor Promptu:**
+```text
+Vypiš jako JSON podle tohoto schématu:
+{
+  "jmeno": "string",
+  "vek": "integer",
+  "dovednosti": ["pole stringů"]
+}
+```
+
+---
+
+## Interaktivní Laboratoř 01: JSON Extraktor
+
+<Steps>
+
+### Cíl
+Extrahovat detaily uživatele z neuspořádaného biografia do čistého JSON objektu.
+
+### Prompt
+Zkopírujte toto do chatu.
+
+```text
+Extrahuj jméno, věk a povolání z textu níže.
+Vypiš POUZE JSON objekt. Nepis žádná vysvětlení.
+
+Text:
+"""
+Ahoj, jsem Han Solo. Létám s loděmi už 35 let. Jsem povoláním Pašerák.
+"""
+
+JSON Schéma:
+{
+  "cele_jmeno": "string",
+  "leta_aktivni": "int",
+  "povolani": "string"
+}
+```
+
+### Pozorování
+AI by měla vrátit *pouze* blok `{...}`. Pokud přidá "Zde je JSON:", musíte být přísnější ve svých negativních omezeních.
+
+</Steps>
+
+---
+
+## Interaktivní Laboratoř 02: Markdown Tabulky do CSV
+
+<Steps>
+
+### Scénář
+Máte nepořádný report a potřebujete ho v Excelu (formát CSV).
+
+### Prompt
+```text
+Převeď následující seznam droidů do formátu CSV (Hodnoty oddělené čárkami).
+Zahrň hlavičkový řádek.
+Nepoužívej bloky kódu. Pouze hrubý text.
+
+Seznam:
+- R2-D2 (Astromech) - Modrá
+- C-3PO (Protokolární) - Zlatá
+- BB-8 (Astromech) - Oranžová
+```
+
+### Výsledek
+Měli byste dostat:
+```csv
+Jmeno,Typ,Barva
+R2-D2,Astromech,Modrá
+C-3PO,Protokolární,Zlatá
+BB-8,Astromech,Oranžová
+```
+Nyní to můžete zkopírovat přímo do souboru s názvem `droidi.csv`.
+
+</Steps>
+
+## Holokron
+
+<ConceptCard title="Kontrola Výstupu" icon="🎛️" jediQuote="Kontrolu, tu se musíš naučit.">
+
+*   **JSON:** Nejlepší formát pro integraci kódu.
+*   **Negativní Omezení:** Explicitně zakazují "upovídané" úvody.
+*   **Schémata:** Ukažte AI *přesně*, jak mají klíče JSON vypadat.
+*   **Hrubý Text:** Někdy nechcete markdown bloky kódu (```json ... ```). Požádejte o "Raw text".
+
+**Pro Tip:** Pokud AI tápe, dejte jí **One-Shot** (jednorázový) příklad přesného výstupu, který chcete.
+</ConceptCard>

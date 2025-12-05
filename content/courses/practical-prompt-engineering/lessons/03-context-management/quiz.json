@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What is the 'Context Window'?",
+    "option_a": "A pop-up on the website",
+    "option_b": "The limited amount of text (tokens) the AI can remember at once",
+    "option_c": "The time of day when the AI is smartest",
+    "option_d": "A browser feature",
+    "correct_answer": "B",
+    "explanation": "The context window is the fixed-size buffer that holds the conversation history and current prompt.",
+    "order": 1
+  },
+  {
+    "question": "What happens when the context window is full?",
+    "option_a": "The AI explodes",
+    "option_b": "The AI stops working entirely",
+    "option_c": "The oldest messages are usually dropped (forgotten) to make room for new ones",
+    "option_d": "The AI automatically buys more memory",
+    "correct_answer": "C",
+    "explanation": "Most systems use a FIFO (First-In-First-Out) strategy, dropping the oldest history to accept new tokens.",
+    "order": 2
+  },
+  {
+    "question": "What is the 'Lost in the Middle' phenomenon?",
+    "option_a": "AI losing its internet connection",
+    "option_b": "AI struggling to retrieve information buried in the middle of a long context",
+    "option_c": "AI forgetting the system prompt",
+    "option_d": "AI getting stuck in a loop",
+    "correct_answer": "B",
+    "explanation": "LLMs pay most attention to the beginning and end of the prompt, often missing details in the middle.",
+    "order": 3
+  },
+  {
+    "question": "Which is a valid strategy to manage context limits?",
+    "option_a": "Summarizing the conversation history",
+    "option_b": "Writing longer paragraphs",
+    "option_c": "Repeating the same question 10 times",
+    "option_d": "Using all capital letters",
+    "correct_answer": "A",
+    "explanation": "Summarization compresses the history, keeping the key points while freeing up token space.",
+    "order": 4
+  },
+  {
+    "question": "Roughly how many words is 1,000 tokens?",
+    "option_a": "100 words",
+    "option_b": "750 words",
+    "option_c": "1,000 words",
+    "option_d": "5,000 words",
+    "correct_answer": "B",
+    "explanation": "A common rule of thumb is that 1 token is approximately 0.75 words (for English).",
+    "order": 5
+  }
+]

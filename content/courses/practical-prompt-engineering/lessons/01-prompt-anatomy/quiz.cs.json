@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Který z následujících NENÍ jedním ze 4 pilířů promptu?",
+    "option_a": "Kontext",
+    "option_b": "Instrukce",
+    "option_c": "Rychlost",
+    "option_d": "Formát",
+    "correct_answer": "C",
+    "explanation": "Rychlost není strukturální pilíř. 4 pilíře jsou Kontext, Instrukce, Data a Formát.",
+    "order": 1
+  },
+  {
+    "question": "Proč v promptech používáme oddělovače (např. tři uvozovky)?",
+    "option_a": "Aby prompt vypadal hezčí",
+    "option_b": "Abychom jasně oddělili instrukce od dat",
+    "option_c": "Abychom zvýšili počet tokenů",
+    "option_d": "Abychom řekli AI, že má přestat generovat",
+    "correct_answer": "B",
+    "explanation": "Oddělovače zabraňují tomu, aby si AI spletla vaše vstupní data s instrukcemi, čímž snižují riziko Prompt Injection.",
+    "order": 2
+  },
+  {
+    "question": "Jaký je hlavní účel pilíře 'Kontext'?",
+    "option_a": "Říct AI, kým je, a poskytnout pozadí",
+    "option_b": "Určit výstupní formát JSON",
+    "option_c": "Předat AI vstupní data",
+    "option_d": "Položit konkrétní otázku",
+    "correct_answer": "A",
+    "explanation": "Kontext stanovuje Personu ('Chovej se jako...') a informace o pozadí, což pomáhá AI simulovat správného experta.",
+    "order": 3
+  },
+  {
+    "question": "Která část tohoto promptu je pilíř 'Formát'? 'Chovej se jako historik. Shrň Občanskou válku. Vypiš jako odrážkový seznam.'",
+    "option_a": "Chovej se jako historik",
+    "option_b": "Shrň Občanskou válku",
+    "option_c": "Vypiš jako odrážkový seznam",
+    "option_d": "Žádná z uvedených",
+    "correct_answer": "C",
+    "explanation": "'Vypiš jako odrážkový seznam' explicitně řídí strukturu odpovědi.",
+    "order": 4
+  },
+  {
+    "question": "Co je to 'Prompt Injection'?",
+    "option_a": "Když vložíte kód do databáze",
+    "option_b": "Když vstupní data přepíší původní instrukce",
+    "option_c": "Když AI dojde paměť",
+    "option_d": "Když použijete příliš mnoho oddělovačů",
+    "correct_answer": "B",
+    "explanation": "Prompt Injection nastává, když nedůvěryhodný vstup (Data) oklame AI, aby ignorovala své původní instrukce.",
+    "order": 5
+  }
+]

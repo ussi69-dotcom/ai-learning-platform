@@ -1,0 +1,115 @@
+# Context & Memory Management
+
+<Callout type="info">
+**Mission Goal:** Master the art of memory. Learn why the AI forgets and how to fix it.
+⏳ **Reading Time:** 15 min | 🧪 **3 Labs Included**
+</Callout>
+
+## The Goldfish Problem
+
+You might think the AI "learns" from your conversation forever. It doesn't.
+The AI has a fixed limit called the **Context Window**. It's like a sliding window of text. When new text comes in, old text falls out.
+
+If you talk for too long, the AI literally forgets your name.
+
+## What is the Context Window?
+
+Think of the Context Window as the AI's **Short-Term Memory (RAM)**.
+*   It includes: System Prompt + User History + Current Question.
+*   It is measured in **Tokens** (not words).
+*   It is **Finite** (e.g., 8k, 32k, 128k tokens).
+
+<Diagram type="traditional-vs-ml" />
+*(Note: Imagine the "ML" part as a pipeline where the input buffer has a fixed size.)*
+
+## The "Lost in the Middle" Phenomenon
+
+Even if the data fits in the window, LLMs are lazy. They tend to pay attention to the **Beginning** (System Prompt) and the **End** (Your latest question).
+Information buried in the middle of a long conversation is often ignored or hallucinated.
+
+## Strategies for Management
+
+### 1. Summarization (Compression)
+Don't paste the whole book. Ask the AI to summarize Chapter 1, then feed that summary into the prompt for Chapter 2.
+*   **Pro:** Keeps context small.
+*   **Con:** Loss of detail (lossy compression).
+
+### 2. Filtering (Selection)
+Only send relevant parts of the conversation history.
+*   **Pro:** High precision.
+*   **Con:** Hard to implement manually.
+
+### 3. Rebooting (Clear Context)
+Sometimes, the best fix is to start a new chat. A "polluted" context with errors leads to more errors.
+
+---
+
+## Interactive Lab 01: The Memory Test
+
+<Steps>
+
+### The Setup
+We will try to overload the AI's attention.
+
+### The Prompt
+Copy this block. It creates a long list of distractions and hides a secret key in the middle.
+
+```text
+I will give you a list of items. Remember the Secret Key.
+
+Item 1: Apple
+Item 2: Banana
+...
+Item 50: The Secret Key is "Blue Lightsaber"
+...
+Item 100: Zebra
+
+What is the Secret Key?
+```
+
+### Observation
+Most modern models will find it. But if you paste 10,000 items? It might fail. This represents the "Needle in a Haystack" problem.
+
+</Steps>
+
+---
+
+## Interactive Lab 02: Conversation Compression
+
+<Steps>
+
+### The Problem
+You have a long chat history about a project, and the AI is starting to forget early decisions.
+
+### The Fix (Recursive Summarization)
+Instead of pasting the whole log, ask the AI to compress it first.
+
+**Prompt 1 (Compression):**
+```text
+Summarize our discussion so far into 3 key bullet points that capture the technical decisions we made. Ignore the small talk.
+```
+
+**Prompt 2 (New Chat):**
+```text
+Here is the context of our project:
+[Paste Summary]
+
+Now, let's continue with the next step...
+```
+
+### Result
+You have "rebooted" the context while keeping the wisdom.
+
+</Steps>
+
+## The Holocron
+
+<ConceptCard title="Memory Management" icon="💾" jediQuote="Clear your mind of questions.">
+
+*   **Context Window:** The finite limit of the AI's attention.
+*   **Token:** The unit of memory (~0.75 words).
+*   **FIFO:** First In, First Out. Oldest messages are deleted first when full.
+*   **Compression:** Summarizing history to save space.
+
+**Pro Tip:** If the AI gets confused, don't argue. **Start a new chat.**
+</ConceptCard>

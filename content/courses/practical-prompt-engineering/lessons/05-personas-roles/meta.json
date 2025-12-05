@@ -1,0 +1,9 @@
+{
+  "title": "Personas & System Prompts",
+  "title_cs": "Persony a Systémové Prompty",
+  "description": "Using roles to improve response quality.",
+  "description_cs": "Využití rolí pro zlepšení kvality odpovědí.",
+  "order": 5,
+  "duration_minutes": 15,
+  "is_published": true
+}

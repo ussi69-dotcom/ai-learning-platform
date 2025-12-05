@@ -1,0 +1,9 @@
+{
+  "title": "Debugging & Iteration",
+  "title_cs": "Ladění a Iterace Promptů",
+  "description": "Strategies for fixing bad outputs.",
+  "description_cs": "Strategie pro opravu špatných výstupů.",
+  "order": 6,
+  "duration_minutes": 15,
+  "is_published": true
+}

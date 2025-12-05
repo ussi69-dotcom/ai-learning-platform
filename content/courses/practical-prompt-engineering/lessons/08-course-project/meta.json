@@ -1,0 +1,9 @@
+{
+  "title": "Project: Prompt Library",
+  "title_cs": "Projekt: Knihovna Promptů",
+  "description": "Build your own reusable prompt library.",
+  "description_cs": "Vytvořte si vlastní knihovnu znovupoužitelných promptů.",
+  "order": 8,
+  "duration_minutes": 15,
+  "is_published": true
+}

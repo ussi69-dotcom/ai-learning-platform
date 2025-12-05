@@ -1,0 +1,121 @@
+# Vzory a Šablony Promptů
+
+<Callout type="info">
+**Cíl mise:** Ovládnout triky mysli Jediů: Zero-shot, Few-shot a Chain of Thought.
+⏳ **Čas čtení:** 15 min | 🧪 **3 Laboratoře**
+</Callout>
+
+## Křivka Učení
+
+Většina lidí zachází s LLM jako s vyhledávači. Položí otázku a doufají v to nejlepší. Toto je **Zero-Shot** (nulový) prompting. Funguje pro obecné znalosti, ale selhává u specifických úkolů.
+
+Aby byla AI skutečně chytrá, musíme ji učit *přímo v promptu*. Používáme vzory, které vedou její proces uvažování.
+
+## 1. Zero-Shot Prompting
+Toto je základní linie. Zadáte úkol bez příkladů.
+> "Přelož 'Ahoj' do francouzštiny."
+
+Spoléhá zcela na předtrénované znalosti modelu.
+
+## 2. Few-Shot Prompting (Příklady)
+Tady se dějí zázraky. Poskytnutím několika příkladů (shots) drasticky zlepšíte výkon a dodržování formátu.
+
+<Diagram type="few-shot-learning" />
+
+**Proč to funguje:** Příklady fungují jako vzor, který má AI dokončit. Je to jako ukázat Padawanovi pohyb světelným mečem, než ho požádáte, aby ho zopakoval.
+
+### Struktura
+1.  Příklad Vstupu
+2.  Příklad Výstupu
+3.  Příklad Vstupu
+4.  Příklad Výstupu
+5.  **Skutečný Vstup** -> **?**
+
+## 3. Chain of Thought (CoT) - Myšlenkový řetězec
+U logiky, matematiky nebo složitého uvažování model často spěchá k odpovědi a splete se.
+**Oprava:** Donuťte ho "přemýšlet nahlas".
+
+<Diagram type="chain-of-thought" />
+
+Kouzelná fráze: **"Přemýšlejme krok za krokem."**
+To donutí model vygenerovat tokeny uvažování *před* finální odpovědí, což mu vlastně dává čas na "vypočítání" výsledku.
+
+---
+
+## Interaktivní Laboratoř 01: Učení Nového Jazyka
+
+<Steps>
+
+### Výzva
+Chceme, aby AI překládala češtinu do "Yoda-řeči".
+**Zero-Shot** pokus může selhat, protože může jen přeložit do standardní syntaxe nebo to přehnat.
+
+### Pokus Zero-Shot
+Zkuste toto:
+```text
+Přelož toto do Yoda-řeči: "Půjdu do obchodu."
+```
+*Výsledek: Pravděpodobně ušlý, ale možná nekonzistentní.*
+
+### Oprava Few-Shot
+Nyní vynuťme styl pomocí příkladů.
+
+```text
+Přelož češtinu do Yoda-řeči.
+
+Čeština: "Mám hlad."
+Yoda: "Hlad mám já."
+
+Čeština: "Síla je s tebou silná."
+Yoda: "Silná s tebou, síla je."
+
+Čeština: "Půjdu do obchodu."
+Yoda:
+```
+
+### Pozorování
+Model nyní dokonale napodobuje vzor syntaktické inverze z vašich příkladů.
+
+</Steps>
+
+---
+
+## Interaktivní Laboratoř 02: Matematický Problém
+
+<Steps>
+
+### Problém
+LLM jsou notoricky špatné v slovních úlohách, pokud odpovídají okamžitě.
+
+### Selhání (Standardní Prompt)
+```text
+Roger má 5 tenisových míčků. Koupí 2 další plechovky míčků. Každá plechovka má 3 míčky. Kolik míčků má nyní?
+Odpověz okamžitě jedním číslem.
+```
+*Riziko:* Model může říct 7 (5+2) místo 11 (5 + 2*3).
+
+### Oprava (Chain of Thought)
+```text
+Roger má 5 tenisových míčků. Koupí 2 další plechovky míčků. Každá plechovka má 3 míčky. Kolik míčků má nyní?
+Přemýšlejme krok za krokem.
+```
+
+### Pozorování
+Sledujte, jak to model rozebere:
+1.  Začíná s 5.
+2.  2 plechovky * 3 míčky/plechovka = 6 nových míčků.
+3.  5 + 6 = 11.
+**Výsledek:** Správná odpověď.
+
+</Steps>
+
+## Holokron
+
+<ConceptCard title="Vzory Promptování" icon="🧠" jediQuote="Dělej, nebo nedělej. Není žádné zkusím.">
+
+*   **Zero-Shot:** Rychlé, dobré pro obecné znalosti. (Žádné příklady)
+*   **Few-Shot:** Vysoká přesnost, učí styl/formát. (Využívá příklady)
+*   **Chain of Thought:** Kritické pro matematiku/logiku. (Využívá "Krok za krokem")
+
+**Pro Tip:** Kombinujte je! Použijte Few-Shot příklady, které *obsahují* Chain of Thought uvažování.
+</ConceptCard>

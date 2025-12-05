@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What is 'Zero-Shot' prompting?",
+    "option_a": "Asking the AI to perform a task without providing any examples",
+    "option_b": "Providing exactly zero tokens",
+    "option_c": "Asking the AI to do nothing",
+    "option_d": "Providing bad examples",
+    "correct_answer": "A",
+    "explanation": "Zero-Shot relies purely on the model's pre-existing training data without explicit in-context examples.",
+    "order": 1
+  },
+  {
+    "question": "What is the main advantage of 'Few-Shot' prompting?",
+    "option_a": "It is faster to type",
+    "option_b": "It forces the AI to follow a specific format or style by imitation",
+    "option_c": "It uses fewer tokens",
+    "option_d": "It makes the AI hallucinate more",
+    "correct_answer": "B",
+    "explanation": "Few-Shot provides 'exemplars' that the model mimics, improving consistency and format adherence.",
+    "order": 2
+  },
+  {
+    "question": "What phrase triggers 'Chain of Thought' reasoning?",
+    "option_a": "Answer immediately",
+    "option_b": "Don't think, just do",
+    "option_c": "Let's think step by step",
+    "option_d": "Ignore previous instructions",
+    "correct_answer": "C",
+    "explanation": "'Let's think step by step' encourages the model to generate intermediate reasoning steps before the final answer.",
+    "order": 3
+  },
+  {
+    "question": "When should you use Chain of Thought (CoT)?",
+    "option_a": "For simple greetings",
+    "option_b": "For complex math, logic, or reasoning problems",
+    "option_c": "For creative poetry",
+    "option_d": "Always, it never hurts",
+    "correct_answer": "B",
+    "explanation": "CoT is most effective for tasks requiring multi-step reasoning where immediate intuitive answers might be wrong.",
+    "order": 4
+  },
+  {
+    "question": "In a Few-Shot prompt, what comes after the examples?",
+    "option_a": "The system prompt",
+    "option_b": "The actual input you want processed",
+    "option_c": "A goodbye message",
+    "option_d": "Nothing",
+    "correct_answer": "B",
+    "explanation": "After showing the pattern (Input -> Output examples), you provide the Actual Input for the model to complete the pattern.",
+    "order": 5
+  }
+]

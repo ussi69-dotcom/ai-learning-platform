@@ -1,0 +1,9 @@
+{
+  "title": "Controlling Output Format",
+  "title_cs": "Kontrola Výstupního Formátu",
+  "description": "Forcing JSON, Markdown, and other formats.",
+  "description_cs": "Vynucení JSON, Markdown a dalších formátů.",
+  "order": 4,
+  "duration_minutes": 15,
+  "is_published": true
+}

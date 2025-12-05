@@ -1,0 +1,115 @@
+# Správa Kontextu a Paměti
+
+<Callout type="info">
+**Cíl mise:** Ovládnout umění paměti. Zjistěte, proč AI zapomíná a jak to napravit.
+⏳ **Čas čtení:** 15 min | 🧪 **3 Laboratoře**
+</Callout>
+
+## Problém Zlaté Rybky
+
+Možná si myslíte, že se AI "učí" z vaší konverzace navždy. Neučí.
+AI má pevný limit zvaný **Kontextové Okno (Context Window)**. Je to jako posuvné okno textu. Když přijde nový text, starý vypadne.
+
+Pokud mluvíte příliš dlouho, AI doslova zapomene vaše jméno.
+
+## Co je to Kontextové Okno?
+
+Představte si Kontextové Okno jako **Krátkodobou Paměť (RAM)** AI.
+*   Zahrnuje: Systémový Prompt + Historii Uživatele + Aktuální Otázku.
+*   Měří se v **Tokenech** (ne slovech).
+*   Je **Konečné** (např. 8k, 32k, 128k tokenů).
+
+<Diagram type="traditional-vs-ml" />
+*(Poznámka: Představte si část "ML" jako potrubí, kde vstupní buffer má pevnou velikost.)*
+
+## Fenomén "Ztraceno Uprostřed" (Lost in the Middle)
+
+I když se data vejdou do okna, LLM jsou líné. Mají tendenci věnovat pozornost **Začátku** (Systémový Prompt) a **Konci** (Vaše poslední otázka).
+Informace pohřbené uprostřed dlouhé konverzace jsou často ignorovány nebo halucinovány.
+
+## Strategie Správy
+
+### 1. Sumarizace (Komprese)
+Nekopírujte celou knihu. Požádejte AI, aby shrnula Kapitolu 1, a pak vložte toto shrnutí do promptu pro Kapitolu 2.
+*   **Pro:** Udržuje kontext malý.
+*   **Proti:** Ztráta detailů (ztrátová komprese).
+
+### 2. Filtrování (Výběr)
+Posílejte pouze relevantní části historie konverzace.
+*   **Pro:** Vysoká přesnost.
+*   **Proti:** Těžké implementovat ručně.
+
+### 3. Restart (Čistý Kontext)
+Někdy je nejlepší opravou začít nový chat. "Znečištěný" kontext s chybami vede k dalším chybám.
+
+---
+
+## Interaktivní Laboratoř 01: Test Paměti
+
+<Steps>
+
+### Nastavení
+Pokusíme se přetížit pozornost AI.
+
+### Prompt
+Zkopírujte tento blok. Vytváří dlouhý seznam rozptýlení a ukrývá tajný klíč uprostřed.
+
+```text
+Dám ti seznam položek. Zapamatuj si Tajný Klíč.
+
+Položka 1: Jablko
+Položka 2: Banán
+...
+Položka 50: Tajný Klíč je "Modrý Světelný Meč"
+...
+Položka 100: Zebra
+
+Jaký je Tajný Klíč?
+```
+
+### Pozorování
+Většina moderních modelů ho najde. Ale pokud vložíte 10 000 položek? Může selhat. To představuje problém "Jehly v kupce sena".
+
+</Steps>
+
+---
+
+## Interaktivní Laboratoř 02: Komprese Konverzace
+
+<Steps>
+
+### Problém
+Máte dlouhou historii chatu o projektu a AI začíná zapomínat dřívější rozhodnutí.
+
+### Oprava (Rekurzivní Sumarizace)
+Místo vkládání celého logu požádejte AI, aby ho nejprve zkomprimovala.
+
+**Prompt 1 (Komprese):**
+```text
+Shrň naši dosavadní diskusi do 3 klíčových bodů, které zachycují technická rozhodnutí, která jsme učinili. Ignoruj nezávaznou konverzaci.
+```
+
+**Prompt 2 (Nový Chat):**
+```text
+Zde je kontext našeho projektu:
+[Vložte Shrnutí]
+
+Nyní pokračujme dalším krokem...
+```
+
+### Výsledek
+"Restartovali" jste kontext, ale zachovali jste moudrost.
+
+</Steps>
+
+## Holokron
+
+<ConceptCard title="Správa Paměti" icon="💾" jediQuote="Vyčisti svou mysl od otázek.">
+
+*   **Kontextové Okno:** Konečný limit pozornosti AI.
+*   **Token:** Jednotka paměti (~0.75 slova).
+*   **FIFO:** First In, First Out (První dovnitř, první ven). Nejstarší zprávy jsou smazány jako první, když je plno.
+*   **Komprese:** Shrnutí historie pro úsporu místa.
+
+**Pro Tip:** Pokud je AI zmatená, nehádejte se. **Začněte nový chat.**
+</ConceptCard>

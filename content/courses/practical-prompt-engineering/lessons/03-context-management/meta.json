@@ -1,0 +1,9 @@
+{
+  "title": "Context & Memory Management",
+  "title_cs": "Správa Kontextu a Paměti",
+  "description": "How to handle context window limits.",
+  "description_cs": "Jak pracovat s limity kontextového okna.",
+  "order": 3,
+  "duration_minutes": 15,
+  "is_published": true
+}

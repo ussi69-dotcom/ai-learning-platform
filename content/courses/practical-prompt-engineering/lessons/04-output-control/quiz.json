@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Why is conversational filler (e.g., 'Here is your code') bad for software integration?",
+    "option_a": "It is rude",
+    "option_b": "It breaks parsers that expect structured data (like JSON) to start immediately",
+    "option_c": "It costs too much money",
+    "option_d": "It makes the AI tired",
+    "correct_answer": "B",
+    "explanation": "Automated scripts expect clean data. Introductory text causes syntax errors when parsing JSON or Code.",
+    "order": 1
+  },
+  {
+    "question": "What is the best way to ensure the AI outputs valid JSON?",
+    "option_a": "Ask nicely",
+    "option_b": "Provide a JSON Schema or Example in the prompt",
+    "option_c": "Use Python code",
+    "option_d": "Hope for the best",
+    "correct_answer": "B",
+    "explanation": "Providing a schema (template) shows the AI exactly the structure, keys, and data types required.",
+    "order": 2
+  },
+  {
+    "question": "What is a 'Negative Constraint'?",
+    "option_a": "Telling the AI what NOT to do (e.g., 'Do not explain')",
+    "option_b": "Insulting the AI",
+    "option_c": "Using negative numbers",
+    "option_d": "Deleting the prompt",
+    "correct_answer": "A",
+    "explanation": "Negative constraints explicitly forbid behaviors like adding conversational filler or markdown backticks.",
+    "order": 3
+  },
+  {
+    "question": "If you want to generate a CSV file for Excel, what should you ask for?",
+    "option_a": "A JSON object",
+    "option_b": "A story about spreadsheets",
+    "option_c": "Comma Separated Values with a header row",
+    "option_d": "A PDF",
+    "correct_answer": "C",
+    "explanation": "CSV (Comma Separated Values) is the standard text format for spreadsheet data.",
+    "order": 4
+  },
+  {
+    "question": "Where should output formatting instructions usually go?",
+    "option_a": "Hidden in the middle of the text",
+    "option_b": "At the very end of the prompt or in the System Prompt",
+    "option_c": "In the user's bio",
+    "option_d": "Nowhere",
+    "correct_answer": "B",
+    "explanation": "Placing format instructions at the end (Recency Bias) or in the System Prompt ensures they are not forgotten.",
+    "order": 5
+  }
+]

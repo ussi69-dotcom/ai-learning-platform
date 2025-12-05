@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Proč je konverzační výplň (např. 'Zde je váš kód') špatná pro softwarovou integraci?",
+    "option_a": "Je to neslušné",
+    "option_b": "Rozbíjí to parsery, které očekávají, že strukturovaná data (jako JSON) začnou okamžitě",
+    "option_c": "Stojí to příliš mnoho peněz",
+    "option_d": "Unavuje to AI",
+    "correct_answer": "B",
+    "explanation": "Automatizované skripty očekávají čistá data. Úvodní text způsobuje syntaktické chyby při parsování JSONu nebo kódu.",
+    "order": 1
+  },
+  {
+    "question": "Jaký je nejlepší způsob, jak zajistit, že AI vypíše validní JSON?",
+    "option_a": "Hezky poprosit",
+    "option_b": "Poskytnout JSON Schéma nebo Příklad v promptu",
+    "option_c": "Použít Python kód",
+    "option_d": "Doufat v to nejlepší",
+    "correct_answer": "B",
+    "explanation": "Poskytnutí schématu (šablony) ukazuje AI přesně strukturu, klíče a datové typy, které jsou vyžadovány.",
+    "order": 2
+  },
+  {
+    "question": "Co je to 'Negativní Omezení'?",
+    "option_a": "Říct AI, co NEMÁ dělat (např. 'Nevysvětluj')",
+    "option_b": "Urážení AI",
+    "option_c": "Používání záporných čísel",
+    "option_d": "Smazání promptu",
+    "correct_answer": "A",
+    "explanation": "Negativní omezení explicitně zakazují chování, jako je přidávání konverzační výplně nebo markdown uvozovek.",
+    "order": 3
+  },
+  {
+    "question": "Pokud chcete vygenerovat soubor CSV pro Excel, o co byste měli požádat?",
+    "option_a": "JSON objekt",
+    "option_b": "Příběh o tabulkách",
+    "option_c": "Hodnoty oddělené čárkami (Comma Separated Values) s hlavičkovým řádkem",
+    "option_d": "PDF",
+    "correct_answer": "C",
+    "explanation": "CSV (Comma Separated Values) je standardní textový formát pro tabulková data.",
+    "order": 4
+  },
+  {
+    "question": "Kam by se obvykle měly umístit instrukce pro formátování výstupu?",
+    "option_a": "Schované uprostřed textu",
+    "option_b": "Úplně na konec promptu nebo do Systémového Promptu",
+    "option_c": "Do biografie uživatele",
+    "option_d": "Nikam",
+    "correct_answer": "B",
+    "explanation": "Umístění instrukcí pro formátování na konec (Efekt novosti) nebo do Systémového Promptu zajišťuje, že nebudou zapomenuty.",
+    "order": 5
+  }
+]

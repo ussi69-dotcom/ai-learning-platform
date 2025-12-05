@@ -1,0 +1,126 @@
+# Controlling Output Format
+
+<Callout type="info">
+**Mission Goal:** Stop the AI from chatting. Force it to output JSON, CSV, or Code.
+⏳ **Reading Time:** 15 min | 🧪 **3 Labs Included**
+</Callout>
+
+## The Problem: AI Loves to Chat
+
+You ask for a list of names.
+The AI replies: *"Sure! Here is a list of names you asked for:"*
+1. Luke
+2. Leia
+
+If you are a human, this is polite. If you are a software engineer writing a script to parse this output, **that intro sentence breaks your code.**
+
+To integrate LLMs into apps, we need **Structured Output**.
+
+## 1. The Format Constraint
+
+You must explicitly define the output format in the **System Prompt** or at the end of your instruction.
+
+*   **Weak:** "Give me data."
+*   **Strong:** "Output strictly as a JSON object."
+
+<Diagram type="prompt-structure-pyramid" />
+*(Focus on the top layer: Format is the final shape of the response.)*
+
+## 2. Negative Constraints ("Do Not")
+
+LLMs try to be helpful, which means they add conversational filler. You must tell them to stop.
+> "Do not include any introductory text. Do not say 'Here is the code'. Return ONLY the raw string."
+
+## 3. JSON Mode (The Golden Standard)
+
+JSON (JavaScript Object Notation) is the universal language of APIs.
+To get perfect JSON, provide a **Schema** (a template).
+
+**Prompt Pattern:**
+```text
+Output as JSON following this schema:
+{
+  "name": "string",
+  "age": "integer",
+  "skills": ["array of strings"]
+}
+```
+
+---
+
+## Interactive Lab 01: The JSON Extractor
+
+<Steps>
+
+### The Goal
+Extract user details from a messy bio into a clean JSON object.
+
+### The Prompt
+Copy this into the chat.
+
+```text
+Extract the name, age, and job from the text below.
+Output ONLY a JSON object. Do not write explanations.
+
+Text:
+"""
+Hi, I'm Han Solo. I've been flying ships for 35 years. I'm a Smuggler by trade.
+"""
+
+JSON Schema:
+{
+  "full_name": "string",
+  "years_active": "int",
+  "occupation": "string"
+}
+```
+
+### Observation
+The AI should return *only* the `{...}` block. If it adds "Here is the JSON:", you need to be stricter with your negative constraints.
+
+</Steps>
+
+---
+
+## Interactive Lab 02: Markdown Tables to CSV
+
+<Steps>
+
+### The Scenario
+You have a messy report and need it in Excel (CSV format).
+
+### The Prompt
+```text
+Convert the following list of droids into a CSV format (Comma Separated Values).
+Include a header row.
+Do not use code blocks. Just raw text.
+
+List:
+- R2-D2 (Astromech) - Blue
+- C-3PO (Protocol) - Gold
+- BB-8 (Astromech) - Orange
+```
+
+### Result
+You should get:
+```csv
+Name,Type,Color
+R2-D2,Astromech,Blue
+C-3PO,Protocol,Gold
+BB-8,Astromech,Orange
+```
+Now you can copy-paste this directly into a file named `droids.csv`.
+
+</Steps>
+
+## The Holocron
+
+<ConceptCard title="Output Control" icon="🎛️" jediQuote="Control, you must learn control.">
+
+*   **JSON:** The best format for code integration.
+*   **Negative Constraints:** explicitly forbid "chatty" intros.
+*   **Schemas:** Show the AI *exactly* what the JSON keys should look like.
+*   **Raw Text:** Sometimes you don't want markdown code blocks (```json ... ```). Ask for "Raw text".
+
+**Pro Tip:** If the AI struggles, give it a **One-Shot** example of the exact output you want.
+</ConceptCard>

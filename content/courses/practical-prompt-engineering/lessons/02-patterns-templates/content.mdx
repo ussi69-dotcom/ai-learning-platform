@@ -1,0 +1,121 @@
+# Prompt Patterns & Templates
+
+<Callout type="info">
+**Mission Goal:** Master the Jedi mind tricks: Zero-shot, Few-shot, and Chain of Thought.
+⏳ **Reading Time:** 15 min | 🧪 **3 Labs Included**
+</Callout>
+
+## The Learning Curve
+
+Most people treat LLMs like search engines. They ask a question and hope for the best. This is **Zero-Shot** prompting. It works for general knowledge, but fails at specific tasks.
+
+To make the AI truly smart, we must teach it *in the prompt*. We use patterns that guide its reasoning process.
+
+## 1. Zero-Shot Prompting
+This is the baseline. You give the task without examples.
+> "Translate 'Hello' to French."
+
+It relies entirely on the model's pre-trained knowledge.
+
+## 2. Few-Shot Prompting (The Exemplars)
+This is where the magic happens. By providing a few examples (shots), you drastically improve performance and adherence to format.
+
+<Diagram type="few-shot-learning" />
+
+**Why it works:** The examples act as a pattern for the AI to complete. It's like showing a Padawan a lightsaber move before asking them to replicate it.
+
+### Structure
+1.  Example Input
+2.  Example Output
+3.  Example Input
+4.  Example Output
+5.  **Actual Input** -> **?**
+
+## 3. Chain of Thought (CoT)
+For logic, math, or complex reasoning, the model often rushes to an answer and gets it wrong.
+**The Fix:** Force it to "think out loud."
+
+<Diagram type="chain-of-thought" />
+
+The magic phrase: **"Let's think step by step."**
+This forces the model to generate reasoning tokens *before* the final answer, which actually gives it time to "compute" the result.
+
+---
+
+## Interactive Lab 01: Teaching a New Language
+
+<Steps>
+
+### The Challenge
+We want the AI to translate English into "Yoda-speak".
+A **Zero-Shot** attempt might fail because it might just translate to standard syntax or overdo it.
+
+### The Zero-Shot Attempt
+Try this:
+```text
+Translate this to Yoda-speak: "I will go to the store."
+```
+*Result: Likely okay, but maybe inconsistent.*
+
+### The Few-Shot Fix
+Now, let's force the style using examples.
+
+```text
+Translate English to Yoda-speak.
+
+English: "I am hungry."
+Yoda: "Hungry I am."
+
+English: "The force is strong with you."
+Yoda: "Strong with you, the force is."
+
+English: "I will go to the store."
+Yoda:
+```
+
+### Observation
+The model now perfectly mimics the syntactic inversion pattern from your examples.
+
+</Steps>
+
+---
+
+## Interactive Lab 02: The Math Problem
+
+<Steps>
+
+### The Problem
+LLMs are notoriously bad at word problems if they answer immediately.
+
+### The Fail (Standard Prompt)
+```text
+Roger has 5 tennis balls. He buys 2 more cans of tennis balls. Each can has 3 tennis balls. How many tennis balls does he have now?
+Answer immediately with a single number.
+```
+*Risk:* The model might say 7 (5+2) instead of 11 (5 + 2*3).
+
+### The Fix (Chain of Thought)
+```text
+Roger has 5 tennis balls. He buys 2 more cans of tennis balls. Each can has 3 tennis balls. How many tennis balls does he have now?
+Let's think step by step.
+```
+
+### Observation
+Watch the model break it down:
+1.  Starts with 5.
+2.  2 cans * 3 balls/can = 6 new balls.
+3.  5 + 6 = 11.
+**Result:** Correct answer.
+
+</Steps>
+
+## The Holocron
+
+<ConceptCard title="The Prompting Patterns" icon="🧠" jediQuote="Do or do not. There is no try.">
+
+*   **Zero-Shot:** Fast, good for general knowledge. (No examples)
+*   **Few-Shot:** High precision, teaches style/format. (Uses Exemplars)
+*   **Chain of Thought:** Critical for math/logic. (Uses "Step by step")
+
+**Pro Tip:** Combine them! Use Few-Shot examples that *include* Chain of Thought reasoning.
+</ConceptCard>

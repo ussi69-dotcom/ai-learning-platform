@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Which of the following is NOT one of the 4 Pillars of a Prompt?",
+    "option_a": "Context",
+    "option_b": "Instruction",
+    "option_c": "Speed",
+    "option_d": "Format",
+    "correct_answer": "C",
+    "explanation": "Speed is not a structural pillar. The 4 pillars are Context, Instruction, Data, and Format.",
+    "order": 1
+  },
+  {
+    "question": "Why do we use delimiters (like triple quotes) in prompts?",
+    "option_a": "To make the prompt look prettier",
+    "option_b": "To clearly separate instructions from data",
+    "option_c": "To increase the token count",
+    "option_d": "To tell the AI to stop generating",
+    "correct_answer": "B",
+    "explanation": "Delimiters prevent the AI from confusing your input data with your instructions, reducing the risk of Prompt Injection.",
+    "order": 2
+  },
+  {
+    "question": "What is the primary purpose of the 'Context' pillar?",
+    "option_a": "To tell the AI who it is and provide background",
+    "option_b": "To specify the JSON output format",
+    "option_c": "To give the AI the input data",
+    "option_d": "To ask the specific question",
+    "correct_answer": "A",
+    "explanation": "Context establishes the Persona ('Act as...') and background information, helping the AI simulate the right expert.",
+    "order": 3
+  },
+  {
+    "question": "Which part of this prompt is the 'Format' pillar? 'Act as a historian. Summarize the Civil War. Output as a bulleted list.'",
+    "option_a": "Act as a historian",
+    "option_b": "Summarize the Civil War",
+    "option_c": "Output as a bulleted list",
+    "option_d": "None of the above",
+    "correct_answer": "C",
+    "explanation": "'Output as a bulleted list' explicitly controls the structure of the response.",
+    "order": 4
+  },
+  {
+    "question": "What is a 'Prompt Injection'?",
+    "option_a": "When you inject code into the database",
+    "option_b": "When input data overrides the original instructions",
+    "option_c": "When the AI runs out of memory",
+    "option_d": "When you use too many delimiters",
+    "correct_answer": "B",
+    "explanation": "Prompt Injection occurs when untrusted input (Data) tricks the AI into ignoring its original instructions.",
+    "order": 5
+  }
+]

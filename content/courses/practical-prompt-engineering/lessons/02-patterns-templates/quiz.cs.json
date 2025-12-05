@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Co je to 'Zero-Shot' prompting?",
+    "option_a": "Žádost na AI, aby provedla úkol bez poskytnutí jakýchkoli příkladů",
+    "option_b": "Poskytnutí přesně nula tokenů",
+    "option_c": "Žádost na AI, aby nic nedělala",
+    "option_d": "Poskytnutí špatných příkladů",
+    "correct_answer": "A",
+    "explanation": "Zero-Shot spoléhá čistě na předtrénovaná data modelu bez explicitních příkladů v kontextu.",
+    "order": 1
+  },
+  {
+    "question": "Jaká je hlavní výhoda 'Few-Shot' promptingu?",
+    "option_a": "Je rychlejší na napsání",
+    "option_b": "Nutí AI dodržovat specifický formát nebo styl pomocí nápodoby",
+    "option_c": "Spotřebuje méně tokenů",
+    "option_d": "Způsobuje více halucinací",
+    "correct_answer": "B",
+    "explanation": "Few-Shot poskytuje 'vzory' (exemplars), které model napodobuje, čímž zlepšuje konzistenci a dodržování formátu.",
+    "order": 2
+  },
+  {
+    "question": "Jaká fráze spouští uvažování 'Chain of Thought' (Myšlenkový řetězec)?",
+    "option_a": "Odpověz okamžitě",
+    "option_b": "Nepřemýšlej, prostě to udělej",
+    "option_c": "Přemýšlejme krok za krokem",
+    "option_d": "Ignoruj předchozí instrukce",
+    "correct_answer": "C",
+    "explanation": "'Přemýšlejme krok za krokem' povzbuzuje model, aby generoval mezikroky uvažování před finální odpovědí.",
+    "order": 3
+  },
+  {
+    "question": "Kdy byste měli použít Chain of Thought (CoT)?",
+    "option_a": "Pro jednoduché pozdravy",
+    "option_b": "Pro složité matematické, logické nebo uvažovací problémy",
+    "option_c": "Pro kreativní poezii",
+    "option_d": "Vždy, nikdy to neuškodí",
+    "correct_answer": "B",
+    "explanation": "CoT je nejúčinnější pro úkoly vyžadující vícekrokové uvažování, kde okamžité intuitivní odpovědi mohou být chybné.",
+    "order": 4
+  },
+  {
+    "question": "Co následuje v Few-Shot promptu po příkladech?",
+    "option_a": "Systémový prompt",
+    "option_b": "Skutečný vstup, který chcete zpracovat",
+    "option_c": "Zpráva na rozloučenou",
+    "option_d": "Nic",
+    "correct_answer": "B",
+    "explanation": "Poté, co ukážete vzor (příklady Vstup -> Výstup), poskytnete Skutečný Vstup, aby model dokončil vzor.",
+    "order": 5
+  }
+]

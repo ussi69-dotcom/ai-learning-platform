@@ -1,0 +1,9 @@
+{
+  "title": "Prompt Patterns & Templates",
+  "title_cs": "Vzory a Šablony Promptů",
+  "description": "Zero-shot, Few-shot, and Chain of Thought.",
+  "description_cs": "Zero-shot, Few-shot a Chain of Thought.",
+  "order": 2,
+  "duration_minutes": 15,
+  "is_published": true
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Co je to 'Kontextové Okno'?",
+    "option_a": "Vyskakovací okno na webu",
+    "option_b": "Omezené množství textu (tokenů), které si AI pamatuje najednou",
+    "option_c": "Denní doba, kdy je AI nejchytřejší",
+    "option_d": "Funkce prohlížeče",
+    "correct_answer": "B",
+    "explanation": "Kontextové okno je buffer pevné velikosti, který uchovává historii konverzace a aktuální prompt.",
+    "order": 1
+  },
+  {
+    "question": "Co se stane, když je kontextové okno plné?",
+    "option_a": "AI exploduje",
+    "option_b": "AI úplně přestane fungovat",
+    "option_c": "Nejstarší zprávy jsou obvykle zahozeny (zapomenuty), aby se uvolnilo místo",
+    "option_d": "AI si automaticky koupí více paměti",
+    "correct_answer": "C",
+    "explanation": "Většina systémů používá strategii FIFO (First-In-First-Out), kdy zahazuje nejstarší historii, aby přijala nové tokeny.",
+    "order": 2
+  },
+  {
+    "question": "Co je to fenomén 'Ztraceno Uprostřed' (Lost in the Middle)?",
+    "option_a": "AI ztrácí připojení k internetu",
+    "option_b": "AI má potíže s vyhledáním informací pohřbených uprostřed dlouhého kontextu",
+    "option_c": "AI zapomíná systémový prompt",
+    "option_d": "AI se zasekne ve smyčce",
+    "correct_answer": "B",
+    "explanation": "LLM věnují největší pozornost začátku a konci promptu, často přehlížejí detaily uprostřed.",
+    "order": 3
+  },
+  {
+    "question": "Která z následujících je platnou strategií pro správu limitů kontextu?",
+    "option_a": "Shrnutí historie konverzace",
+    "option_b": "Psaní delších odstavců",
+    "option_c": "Opakování stejné otázky 10krát",
+    "option_d": "Psaní velkými písmeny",
+    "correct_answer": "A",
+    "explanation": "Sumarizace komprimuje historii, zachovává klíčové body a uvolňuje místo pro tokeny.",
+    "order": 4
+  },
+  {
+    "question": "Kolik slov je zhruba 1 000 tokenů?",
+    "option_a": "100 slov",
+    "option_b": "750 slov",
+    "option_c": "1 000 slov",
+    "option_d": "5 000 slov",
+    "correct_answer": "B",
+    "explanation": "Běžné pravidlo je, že 1 token je přibližně 0,75 slova (pro angličtinu).",
+    "order": 5
+  }
+]

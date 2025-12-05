@@ -1,6 +1,8 @@
 {
   "title": "Practical Prompt Engineering",
+  "title_cs": "Praktický Prompt Engineering",
   "description": "Master the art of prompt engineering. Learn patterns, techniques, and best practices.",
+  "description_cs": "Ovládněte umění prompt engineeringu. Naučte se vzory, techniky a osvědčené postupy.",
   "image_url": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=600&h=400&fit=crop",
   "difficulty_level": "LETS_ROCK"
 }
