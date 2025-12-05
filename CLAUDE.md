@@ -412,6 +412,38 @@ Update `NEXT_PUBLIC_API_URL` in `.env` if changing backend port.
 - slowapi (rate limiting)
 - redis (caching)
 
+## Agent Coordination Protocol
+
+### Single Source of Truth
+- **SSOT:** `.ai-context/state/MEMORY.md` contains project state, protocols, decisions
+- **Short-term:** `LAST_SESSION.md` for immediate context handoff
+- **Archive:** `SESSION_LOG.md` is append-only history (don't read at startup)
+
+### Critical Rules
+1. **Stability First:** Never break working functionality to fix minor issues
+2. **Architecture Alignment:** Before implementing, check `vps-deployment` branch for production patterns
+3. **Atomic Operations:** One logical unit per commit, test before commit
+4. **No Placeholder Code:** Never commit `// TODO` or incomplete implementations
+
+### Multi-Agent Strategy
+When delegating to subagents (via Task tool):
+- **Haiku:** Quick tasks - lint, type check, simple searches
+- **Sonnet:** Implementation - code changes, API work
+- **Opus:** Architecture - design decisions, complex refactoring
+
+### Code Quality Checklist (Before Commit)
+```bash
+cd frontend && npm run verify   # TypeScript + ESLint + Build
+docker compose exec backend pytest  # Backend tests
+```
+
+### Technical Debt Tracking
+Known issues to address:
+- [ ] `ABTestShowcase.tsx` - 614 lines, needs splitting (animation/state/UI)
+- [ ] `MarkdownRenderer.tsx` - custom parser, consider next-mdx-remote
+- [ ] Custom hook needed: `useProgressCheck()` for Quiz/LabSection
+- [ ] Error boundary: `frontend/app/error.tsx` missing
+
 ## Additional Documentation
 
 For deeper context, check:

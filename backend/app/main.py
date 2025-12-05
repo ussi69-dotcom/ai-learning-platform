@@ -118,24 +118,16 @@ def verify_email(token: str, db: Session = Depends(database.get_db)):
 @app.post("/auth/token", response_model=schemas.Token)
 @limiter.limit("5/minute")
 def login_for_access_token(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
-    print(f"DEBUG: Login attempt for username: {form_data.username}")
     user = db.query(models.User).filter(models.User.email == form_data.username).first()
-    
+
     if not user:
-        print("DEBUG: User not found in DB")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    
-    print(f"DEBUG: User found: {user.email}, Hash in DB: {user.hashed_password[:20]}...")
-    
-    is_valid = auth.verify_password(form_data.password, user.hashed_password)
-    print(f"DEBUG: Password verification result: {is_valid}")
-    
-    if not is_valid:
-        print("DEBUG: Password invalid")
+
+    if not auth.verify_password(form_data.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
@@ -143,18 +135,16 @@ def login_for_access_token(request: Request, form_data: OAuth2PasswordRequestFor
         )
 
     if not user.is_verified:
-        print("DEBUG: User email not verified")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Email not verified. Please check your inbox.",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    
+
     access_token_expires = timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = auth.create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
-    print("DEBUG: Token generated successfully")
     return {"access_token": access_token, "token_type": "bearer"}
 
 @app.get("/")
