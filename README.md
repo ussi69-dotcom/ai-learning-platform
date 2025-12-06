@@ -9,13 +9,14 @@ Gamifikovaná platforma pro výuku AI konceptů s českou lokalizací.
 
 > **Poznámka:** Nepotřebuješ Node.js ani Python lokálně - vše běží v Dockeru!
 >
-> 🤖 **Pro AI Agenty:** Začněte v [.ai-context/INDEX.md](.ai-context/INDEX.md).
+> 🤖 **Pro AI Agenty:** Viz [.ai-context/workflows/MULTI_AGENT_WORKFLOW.md](.ai-context/workflows/MULTI_AGENT_WORKFLOW.md) pro workflow spolupráce (Claude = Orchestrator, Gemini = Researcher).
 > 🌟 **Vize Projektu:** Viz [.ai-context/core/VISION.md](.ai-context/core/VISION.md).
 
 ---
 
 ## 🌟 Klíčové Funkce
 
+- **AI-Native Workflow:** Platforma je spoluvytvářena agenty Claude (Orchestrace/QA) a Gemini (Research/Content).
 - **Interactive AI Showcase:** Reálná demonstrace spolupráce Claude (Red Team) a Gemini (Blue Team) při řešení problémů.
 - **Live System Status:** Transparentní monitoring infrastruktury (PostgreSQL + Redis) přímo na webu.
 - **Gamifikace:** XP systém, úrovně obtížnosti (Piece of Cake až Damn I'm Good), vizuální progress.

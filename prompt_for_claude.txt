@@ -1,0 +1,7 @@
+Analyzuj soubor `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md` z pohledu tvé role "Implementátor" a "Tool Expert".
+1. Jak ti tento workflow vyhovuje?
+2. Vidíš nějaká rizika v handoff procesu (přes shell)?
+3. Je pro tebe efektivnější dostávat malé atomické tasky, nebo větší bloky s kontextem?
+4. Jak bys vylepšil sekci "Tool use" nebo "QA Pipeline"?
+5. Máš přístup k MCP toolům `mcp__gemini-cli`? (Ověř si to ve své konfiguraci, pokud můžeš).
+Odpověz stručně, v bodech. Neupravuj soubor, jen analyzuj.

@@ -19,18 +19,17 @@ Regardless of your interface (CLI or IDE), start here.
 - [**PROJECT_CONTEXT.md**](./core/PROJECT_CONTEXT.md): High-level goals.
 - [**GLOSSARY.md**](./core/GLOSSARY.md): Terminology.
 - [**COMPONENT_PATTERNS.md**](./core/COMPONENT_PATTERNS.md): UI Component usage.
-- [**STRATEGY.md**](./core/STRATEGY.md): Long-term vision.
+- [**CURRICULUM_ROADMAP.md**](./core/CURRICULUM_ROADMAP.md): Curriculum phases & progress.
 - [**VISION.md**](./core/VISION.md): High-level project vision and purpose.
 
 ### 🛠️ Workflows (`/workflows`)
 > *How-To Guides.*
-- [**AGENT_HANDOFF.md**](./workflows/AGENT_HANDOFF.md): Multi-agent coordination (Claude ↔ Gemini).
+- [**MULTI_AGENT_WORKFLOW.md**](./workflows/MULTI_AGENT_WORKFLOW.md): 🔥 **HLAVNÍ** - Agent spolupráce (Claude = Orchestrator, Gemini = Worker).
 - [**DATABASE_MIGRATIONS.md**](./workflows/DATABASE_MIGRATIONS.md): Alembic workflow.
 - [**DEV_AND_DEPLOYMENT_GUIDE.md**](./workflows/DEV_AND_DEPLOYMENT_GUIDE.md): Deployment SOP.
 - [**DOMAIN_CHANGE_GUIDE.md**](./workflows/DOMAIN_CHANGE_GUIDE.md): Checklist for changing project domain.
 - [**INCIDENT_REPORTING.md**](./workflows/INCIDENT_REPORTING.md): How to report failures.
 - [**MCP_SETUP.md**](./workflows/MCP_SETUP.md): Model Context Protocol server configuration.
-- [**NEW-LESSON-PROMPT.md**](./workflows/NEW-LESSON-PROMPT.md): Prompt for generating lessons.
 - [**SUBAGENT_STRATEGY.md**](./workflows/SUBAGENT_STRATEGY.md): When and how to use Task tool (subagents).
 - [**VISUAL_INSPECTION.md**](./workflows/VISUAL_INSPECTION.md): How to see the UI.
 

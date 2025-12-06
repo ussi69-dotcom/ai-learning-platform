@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useLocale } from 'next-intl';
+import SystemPromptDiagram from './DiagramPersona';
 
 interface DiagramProps {
   type: string;
@@ -10,6 +11,10 @@ interface DiagramProps {
 export default function DiagramPrompting({ type }: DiagramProps) {
   const locale = useLocale();
   const isCs = locale === 'cs';
+
+  if (type === 'system-prompt-flow') {
+    return <SystemPromptDiagram />;
+  }
 
   if (type === 'few-shot-learning') {
     return (

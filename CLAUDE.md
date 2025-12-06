@@ -7,9 +7,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **IHNED při startu přečti tyto soubory:**
 
 ```
-1. .ai-context/state/LAST_SESSION.md   ← 🔥 KDE JSME SKONČILI
-2. .ai-context/state/MEMORY.md         ← Stack, protokoly
-3. .agent/rules/rules.md               ← Pravidla agenta
+1. .ai-context/state/LAST_SESSION.md      ← 🔥 KDE JSME SKONČILI
+2. .ai-context/state/MEMORY.md            ← Stack, protokoly
+3. .ai-context/workflows/MULTI_AGENT_WORKFLOW.md ← ⚡ SPOLUPRÁCE S GEMINI
+4. .agent/rules/rules.md                  ← Pravidla agenta
 ```
 
 **Po načtení OKAMŽITĚ odpověz:**
@@ -425,11 +426,17 @@ Update `NEXT_PUBLIC_API_URL` in `.env` if changing backend port.
 3. **Atomic Operations:** One logical unit per commit, test before commit
 4. **No Placeholder Code:** Never commit `// TODO` or incomplete implementations
 
-### Multi-Agent Strategy
-When delegating to subagents (via Task tool):
-- **Haiku:** Quick tasks - lint, type check, simple searches
-- **Sonnet:** Implementation - code changes, API work
-- **Opus:** Architecture - design decisions, complex refactoring
+### Multi-Agent Strategy (Gemini + Claude)
+Follow the protocol in `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`.
+
+**Roles:**
+- **Gemini:** Strategist, Architect, Content Creator (Orchestrator)
+- **Claude:** Implementer, Tool Expert, Blue Team (Worker)
+
+**Handoff Rules:**
+- **Start:** Read `LAST_SESSION.md` to see pending tasks from Gemini.
+- **Finish:** Write summary to `LAST_SESSION.md` or specific output file.
+- **DoD:** Ensure "Definition of Done" is met (tests pass, lint passes).
 
 ### Code Quality Checklist (Before Commit)
 ```bash

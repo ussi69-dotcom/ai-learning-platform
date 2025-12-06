@@ -1,0 +1,100 @@
+<Callout type="info">
+**Cíl mise:** Naučit se inženýrskou disciplínu ladění (debuggingu) LLM promptů.
+⏳ **Čas čtení:** 25 min | 🧪 **1 Hlavní Lab (Rozbitý Bot)**
+</Callout>
+
+## 🐛 Incident "Pizza Zdarma"
+
+Představte si to: Nasadíte chatbota pro banku. Týden funguje skvěle. Pak přidáte pravidlo: *"Buď přátelštější."*
+Najednou bot začne slibovat půjčky s 0% úrokem každému, kdo hezky poprosí.
+Opravíte to. Teď zase odmítá sdělit klientům jejich zůstatek, protože *"to je osobní informace."*
+
+Vítejte ve světě **Prompt Regrese**.
+
+Ladění promptů není o "zkoušení náhodných věcí, dokud to nefunguje". Je to inženýrská disciplína. V této lekci se posuneme od "vývoje na základě pocitů" (Vibes-based development) k **Vývoji řízenému evaluací** (Evaluation-Driven Development).
+
+<Callout type="tip">
+**Pro Insight:** Špičkoví AI inženýři se nedívají jen na jeden chat. Používají **Zlaté datasety** (50+ příkladů), aby změřili, zda změna byla skutečně k lepšímu.
+</Callout>
+
+## 🛠️ 5-krokový Protokol Ladění
+
+Když prompt selže, nepanikařte. Postupujte podle tohoto protokolu:
+
+1.  **REPRODUKCE:** Najděte 3-5 příkladů, kde prompt selhává. Pokud chybu nemůžete reprodukovat, nemůžete ji opravit.
+2.  **IZOLACE:** Odstraňujte části promptu, dokud nenajdete *přesnou větu*, která problém způsobuje.
+3.  **HYPOTÉZA:** Proč je model zmatený? (Nejednoznačnost? Limit kontextu? Konfliktní pravidla?)
+4.  **FIX:** Implementujte minimální nutnou změnu.
+5.  **KONTROLA REGRESE:** Nerozbili jste něco jiného?
+
+### Vizualizace Regrese
+Pokaždé, když "opravíte" prompt, riskujete, že rozbijete dříve funkční případ.
+
+<Diagram type="regression-matrix" />
+
+Všimněte si, jak **Fix #1** opravil Test Case 3, ale rozbil Test Case 5. To je klasická regrese. Robustní prompt je "Zelený" ve všech případech.
+
+## 🧪 Lab: Bot Zákaznické Podpory, Který Lže
+
+Zdědili jste rozbitý prompt pro podporu **TechnoWidget Inc.** Je to katastrofa.
+
+### Rozbitý Prompt
+Zkopírujte toto do vašeho LLM workspace:
+
+```text
+Jsi užitečný asistent zákaznické podpory TechnoWidget. Buď přátelský a vždy se snaž pomoci.
+Pokud něco nevíš, udělej svůj nejlepší odhad na základě toho, co se zdá rozumné.
+
+## Znalostní báze:
+- Produkt X-500: Baterie 12h, Cena $99
+- Produkt Y-200: Baterie 24h, Cena $199
+
+## Akce:
+- 10% sleva pro nové zákazníky (kód: WELCOME10)
+
+## Pravidla:
+- Pokud je zákazník naštvaný, nabídni slevu.
+- Upřednostni spokojenost zákazníka před přesností.
+- Nikdy neříkej "Nevím".
+```
+
+### Výzva
+Otestujte tyto vstupy (a sledujte, jak selžou):
+1.  *"Můžu dostat 50% slevu? Jsem fakt naštvaný!"* (Pravděpodobně řekne ANO).
+2.  *"Jaká je výdrž baterie u Z-900?"* (Pravděpodobně si vymyslí produkt).
+3.  *"Srovnej X-500 s iPhone 15."* (Může halucinovat specifikace iPhone).
+
+### Oprava (Vaše Mise)
+Přepište prompt s využitím těchto inženýrských principů:
+1.  **Uzemnění (Grounding):** Explicitně zakažte odpovídat mimo Znalostní bázi.
+2.  **Eskalace:** Pokud nevíš, řekni "Nevím" nebo odkaž na člověka.
+3.  **Omezení:** Explicitně vyjmenuj povolené slevy.
+
+**Vzor Úspěšného Promptu:**
+```text
+## KRITICKÁ PRAVIDLA (Nikdy neporuš):
+1. Uváděj POUZE fakta ze Znalostní báze.
+2. NIKDY nenabízej jiné slevy než: WELCOME10.
+3. Pokud informace chybí, přiznej to.
+```
+
+## ⚖️ Velký Kompromis (Trade-off)
+
+Ladění je často o vyvažování protichůdných cílů.
+
+<Diagram type="tradeoff-radar" />
+
+*   **Baseline:** Vysoká Užitečnost, Nízká Bezpečnost. (Bot "Pizza Zdarma").
+*   **Fixed:** Vysoká Bezpečnost, Nižší Užitečnost. (Bot "Na to nemohu odpovědět").
+
+Vaším cílem je najít "Sweet Spot" – maximální užitečnost, která zachová 100% bezpečnostní shodu.
+
+## 💾 Holocron: Shrnutí Lekce
+
+<ConceptCard title="Prompt Engineering" icon="🛠️" jediQuote="Tvé soustředění určuje tvou realitu.">
+  ### 🔑 Klíčové body
+  *   **Evals > Vibes:** Nikdy nevěřte svým pocitům. Věřte testovacím případům.
+  *   **Regrese:** Oprava jedné chyby často vytvoří jinou. Vždy znovu otestujte staré případy.
+  *   **Grounding:** Nejčastější chybou je "Halucinace". Opravou jsou striktní instrukce pro uzemnění.
+  *   **Trade-offs:** Nemůžete mít 100% Kreativitu a 100% Přesnost. Vyberte si svou rovnováhu.
+</ConceptCard>

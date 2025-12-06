@@ -1,378 +1,326 @@
-# Multi-Agent Workflow
+# Multi-Agent Workflow v2.0
 
-## ⚡ Quick Reference (PŘEČTI JAKO PRVNÍ)
+## ⚡ Quick Reference
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    AGENT SETUP                              │
+│                    ROLE ASSIGNMENT                          │
 ├─────────────────────────────────────────────────────────────┤
-│  GEMINI 3 Pro (1M context)    │  CLAUDE Opus 4.5 (200K)     │
-│  • Orchestrátor               │  • Implementátor            │
-│  • Strategy & Analysis        │  • Coding & Tool use        │
-│  • 91.9% reasoning            │  • 98.2% tool use           │
+│  CLAUDE (CLI Primary)         │  GEMINI (via ask-gemini)    │
+│  • ORCHESTRÁTOR               │  • RESEARCHER               │
+│  • QA Gate (Senior Analyst)   │  • Content Generator        │
+│  • Visual Check (Playwright)  │  • Brainstormer             │
+│  • Git Operations             │  • Deep Analysis (1M ctx)   │
+│  • Final Decision Maker       │  • Draft Creator            │
 ├─────────────────────────────────────────────────────────────┤
-│  Gemini → Claude:             │  Claude → Gemini:           │
-│  claude -p "prompt"           │  mcp__gemini-cli__ask-gemini│
+│  Sporné body → USER (finální arbitr)                        │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+**Proč tento model:**
+- Claude má spolehlivější tool use (98.2% benchmark)
+- Claude má MCP pro visual check (Playwright)
+- Menší context window = větší disciplína a přesnost
+- Gemini má 1M context = perfektní pro research a analýzu materiálů
 
 ---
 
 ## 1. Paměť a Kontext
 
-### Kde co hledat
+### Soubory (kdo čte co)
 
-| Soubor | Účel | Kdo čte |
-|--------|------|---------|
+| Soubor | Účel | Primární |
+|--------|------|----------|
 | `CLAUDE.md` | Boot instrukce pro Claude | Claude |
-| `~/.gemini/GEMINI.md` | Boot instrukce pro Gemini | Gemini |
-| `.ai-context/state/MEMORY.md` | **SDÍLENÁ PAMĚŤ** - stack, protokoly, lessons learned | Oba |
-| `.ai-context/state/LAST_SESSION.md` | Kde jsme skončili, co dělat dál | Oba |
-| `.ai-context/core/ARCHITECTURE.md` | Technická architektura projektu | Oba |
-| `.ai-context/core/CONTENT_GUIDELINES.md` | Pravidla pro MDX lekce | Oba |
+| `.ai-context/state/MEMORY.md` | Sdílená paměť, protokoly | Oba |
+| `.ai-context/state/LAST_SESSION.md` | Kde jsme skončili | Oba |
+| `.ai-context/core/CONTENT_GUIDELINES.md` | Pravidla pro content | Oba |
+| `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md` | Tento soubor | Oba |
 
 ### Boot Sequence
 
 **Claude při startu:**
 ```
-1. Přečti CLAUDE.md
-2. Přečti .ai-context/state/LAST_SESSION.md
-3. Přečti .ai-context/state/MEMORY.md
-4. Odpověz: "Pokračujeme od [X]. Stav: [Y]. Další: [Z]."
-```
-
-**Gemini při startu:**
-```
-1. Přečti ~/.gemini/GEMINI.md (nebo @CLAUDE.md v projektu)
-2. Přečti @.ai-context/state/LAST_SESSION.md
-3. Přečti @.ai-context/state/MEMORY.md
+1. Přečti CLAUDE.md (automaticky)
+2. Přečti LAST_SESSION.md
+3. Přečti MEMORY.md
 4. Odpověz: "Pokračujeme od [X]. Stav: [Y]. Další: [Z]."
 ```
 
 ---
 
-## 2. Role a Zodpovědnosti
+## 2. Content Creation Workflow (Hlavní proces)
 
-### Gemini 3 Pro - STRATEGIST
+### 🔄 The Excellence Loop
+
 ```
-Context: 1M tokenů
-Reasoning: 91.9% (benchmark)
-
-Zodpovědnosti:
-✓ Analýza celého codebase najednou
-✓ Architektonická rozhodnutí
-✓ Content generation (MDX lekce)
-✓ QA review (big picture)
-✓ Red Team security audit
-✓ Orchestrace komplexních tasků
-
-Kdy použít Gemini:
-- "Analyzuj celý projekt a najdi problémy"
-- "Navrhni architekturu pro feature X"
-- "Vytvoř lekci o Y"
-- "Co je špatně na tomto designu?"
-```
-
-### Claude Opus 4.5 - IMPLEMENTER
-```
-Context: 200K tokenů
-Tool use: 98.2% (benchmark)
-Computer use: 66.3%
-
-Zodpovědnosti:
-✓ Implementace kódu
-✓ Git operace (commit, PR)
-✓ CI/CD pipeline
-✓ Tool orchestrace (Playwright, GitHub MCP)
-✓ Blue Team security fixes
-✓ Precizní editing
-
-Kdy použít Claude:
-- "Implementuj feature X"
-- "Oprav tento bug"
-- "Udělej refactor komponenty Y"
-- "Commitni a vytvoř PR"
+┌──────────────────────────────────────────────────────────────┐
+│  PHASE 1: RESEARCH                                           │
+│  [Claude] → Připraví task brief s persona pro Gemini         │
+│  [Gemini] → Deep research (YouTube, docs, best practices)    │
+│  [Claude] → Validuje research, přidá vlastní input           │
+├──────────────────────────────────────────────────────────────┤
+│  PHASE 2: GENERATION                                         │
+│  [Gemini] → Generuje draft content                           │
+│  [Claude] → QA jako "Senior QA Analyst" (viz Persona níže)   │
+├──────────────────────────────────────────────────────────────┤
+│  PHASE 3: ITERATION                                          │
+│  Opakovat Phase 2 dokud není 99% quality                     │
+│  Sporné body → User                                          │
+├──────────────────────────────────────────────────────────────┤
+│  PHASE 4: FINALIZATION                                       │
+│  [Claude] → Visual check v browseru (Playwright MCP)         │
+│  [Claude] → Ověří EN + CS soubory existují a jsou správné    │
+│  [Claude] → Commit + update LAST_SESSION.md                  │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-### Claude Subagenti (Volitelné - pro cost optimization)
-```
-Pokud používáš Opus pro vše, subagenty nepotřebuješ.
-Subagenti jsou jen pro úsporu nákladů:
+### Task Brief Template (Claude → Gemini)
 
-Haiku  → Quick tasks (lint, grep)     ~$0.001/task
-Sonnet → Standard coding              ~$0.05/task
-Opus   → Vše (default)                ~$0.50/task
+```markdown
+## 🎯 Task Brief
+
+**Úkol:** [Konkrétní task]
+**Persona:** [Role kterou má Gemini přijmout]
+**Výstup:** [Co přesně očekávám]
+**DoD (Definition of Done):**
+- [ ] Kritérium 1
+- [ ] Kritérium 2
+- [ ] ...
+
+**Kontext:**
+[Relevantní informace, soubory, předchozí práce]
+
+**Omezení:**
+- [Co NESMÍ dělat]
+- [Časový limit pokud relevantní]
 ```
 
 ---
 
-## 3. Jak se Volat Navzájem
+## 3. QA Protocol (Claude jako Senior QA Analyst)
 
-### Gemini → Claude
-```bash
-# Přímé volání přes shell
-claude -p "Implementuj funkci X v souboru Y"
-claude --dangerously-skip-permissions -p "Oprav všechny TypeScript chyby"
+### Povinná Persona pro QA Review
 
-# S work directory
-cd ~/ai-learning-platform && claude -p "..."
+Když Claude kontroluje Gemini output, MUSÍ použít tuto personu:
+
+```
+Jsi Senior QA Analyst s 15 lety zkušeností v tech dokumentaci.
+Tvůj úkol je KRITICKY posoudit tento obsah.
+
+Kontroluj:
+1. FAKTICKÁ SPRÁVNOST - Jsou tvrzení pravdivá a přesná?
+2. HLOUBKA - Je to dostatečně hluboké pro pokročilé uživatele?
+3. STRUKTURA - Dodržuje CONTENT_GUIDELINES.md?
+4. LABY - Jsou interaktivní, ne jen copy-paste?
+5. LOKALIZACE - EN a CS soubory existují a jsou ve správném jazyce?
+6. DIAGRAMY - Má každý komplexní koncept vizualizaci?
+
+Buď BRUTÁLNĚ upřímný. "Dobré" není dost dobré.
+Najdi 3 konkrétní věci k vylepšení, i když se zdá být perfektní.
 ```
 
-### Claude → Gemini
-```
-# Přes MCP tool (v Claude Code)
-mcp__gemini-cli__ask-gemini
-  - prompt: "Analyzuj tuto architekturu"
-  - model: "gemini-3-pro-preview"
+### Verification Checklist (POVINNÝ po každém content tasku)
 
-# Pro brainstorming
-mcp__gemini-cli__brainstorm
-  - prompt: "Jak vyřešit problém X"
-```
+```markdown
+## ✅ Content Verification Checklist
 
-### Příklady
+### Soubory
+- [ ] EN soubor (`content.mdx`) existuje a obsahuje ANGLICKÝ text
+- [ ] CS soubor (`content.cs.mdx`) existuje a obsahuje ČESKÝ text
+- [ ] Žádný soubor není prázdný placeholder
+- [ ] Oba soubory mají podobnou délku (±20%)
 
-**Gemini orchestruje implementaci:**
-```bash
-gemini "Analyzuj ~/ai-learning-platform/frontend/components.
-Pro každou komponentu > 300 řádků:
-1. Identifikuj co refaktorovat
-2. Použij 'claude -p' k provedení refactoru
-3. Ověř že testy prochází"
-```
+### Struktura
+- [ ] Header Callout (cíl, čas čtení, počet labů)
+- [ ] Video link (EN + ideálně CZ alternativa)
+- [ ] Minimálně 1500 slov (pokud není čistě praktická lekce)
+- [ ] Alespoň 1 interaktivní lab (ne copy-paste)
+- [ ] Holocron summary na konci
 
-**Claude žádá Gemini o review:**
-```
-Claude: "Implementoval jsem feature X. Zeptám se Gemini na review."
-→ mcp__gemini-cli__ask-gemini(prompt="Review tento kód: ...")
-→ Gemini: "Vidím 3 problémy: ..."
-→ Claude: Opraví problémy
+### Vizuály
+- [ ] Diagramy pro komplexní koncepty
+- [ ] Dark mode kompatibilita
+
+### Technické
+- [ ] `npm run verify` prochází
+- [ ] Visual check v browseru (EN i CS verze)
 ```
 
 ---
 
-## 4. Authority Hierarchy
+## 4. Handoff Protocol
+
+### GENERATE → WRITE → VERIFY (Povinný pro Gemini)
+
+**Zlaté pravidlo:** Nikdy neprohlásit "hotovo" bez verifikace.
+
+```
+1. GENERATE: Vytvoř obsah
+2. WRITE: Zapiš do souborů
+3. VERIFY: Přečti soubory zpět a ověř:
+   - Není prázdný/placeholder
+   - Je ve správném jazyce
+   - Má očekávanou délku
+```
+
+### Claude → Gemini (ask-gemini)
+
+```javascript
+// Vždy specifikuj:
+{
+  prompt: `
+    ## Task Brief
+    [Viz template výše]
+
+    ## Persona
+    [Konkrétní role pro tento task]
+
+    ## Definition of Done
+    [Měřitelná kritéria]
+  `,
+  model: "gemini-2.5-pro"  // nebo flash pro rychlé tasky
+}
+```
+
+### Gemini → Claude (reporting)
+
+Gemini MUSÍ na konci každého tasku reportovat:
+```markdown
+## 📋 Task Report
+
+**Status:** [DONE / PARTIAL / BLOCKED]
+**Vytvořené soubory:**
+- [cesta]: [krátký popis]
+
+**Verifikace:**
+- [x/✗] Soubor přečten zpět
+- [x/✗] Obsah odpovídá zadání
+- [x/✗] Správný jazyk
+
+**Poznámky pro QA:**
+[Co by měl Claude zkontrolovat]
+```
+
+---
+
+## 5. Decision Authority
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│  DECISION AUTHORITY (od nejvyšší po nejnižší)              │
+│  DECISION HIERARCHY                                        │
 ├────────────────────────────────────────────────────────────┤
 │  1. 👤 USER              - Finální arbitr (vždy)           │
-│  2. 🔴 GEMINI 3 Pro      - Strategy, Architecture design   │
-│  3. 🔵 CLAUDE Opus       - Implementation veto, Tool use   │
-│  4. ⚡ CLAUDE Sonnet     - Standard coding decisions       │
-│  5. 🔍 CLAUDE Haiku      - QA findings (advisory)          │
+│  2. 🔵 CLAUDE            - Orchestrace, QA, Implementation │
+│  3. 🔴 GEMINI            - Research, Drafts, Brainstorm    │
 └────────────────────────────────────────────────────────────┘
 ```
 
-### Kdo rozhoduje co
+### Kdy eskalovat k User
 
-| Rozhodnutí | Primární | Může vetovat |
-|------------|----------|--------------|
-| "Jak strukturovat feature?" | Gemini | User |
-| "Který pattern použít?" | Gemini | Claude Opus |
-| "Jak implementovat detail?" | Claude Sonnet | Claude Opus |
-| "Je kód kvalitní?" | Gemini + Haiku | User |
-| "Security concern?" | Gemini (Red) + Claude (Blue) | User |
-| "Novel problem?" | Všichni + User | User vždy |
+- **Architektonické rozhodnutí** s dlouhodobým dopadem
+- **Sporný bod** kde Claude a Gemini nesouhlasí
+- **Nejistota** o požadavcích nebo směru
+- **Potenciálně destruktivní operace** (DB reset, force push)
 
 ---
 
-## 5. Workflow Patterns
+## 6. Error Recovery
 
-### Pattern A: Gemini-Led Analysis
-```
-User → Gemini: "Analyzuj projekt"
-         │
-         ▼
-    ┌─────────────┐
-    │ GEMINI      │ Analyzuje celý codebase (1M context)
-    │ Analysis    │ Vytvoří report s findings
-    └──────┬──────┘
-           │
-           ▼ claude -p "fix finding 1"
-    ┌─────────────┐
-    │ CLAUDE      │ Implementuje jednotlivé fixy
-    │ Implementation
-    └──────┬──────┘
-           │
-           ▼
-    ┌─────────────┐
-    │ GEMINI      │ Validuje výsledek
-    │ Review      │
-    └─────────────┘
-```
+### Když Gemini selže
 
-### Pattern B: Claude-Led Implementation
-```
-User → Claude: "Implementuj feature X"
-         │
-         ▼
-    ┌─────────────┐
-    │ CLAUDE      │ Implementuje feature
-    │ Coding      │
-    └──────┬──────┘
-           │ Potřebuji second opinion
-           ▼
-    ┌─────────────┐
-    │ GEMINI      │ mcp__gemini-cli__ask-gemini
-    │ Review      │ Dává feedback
-    └──────┬──────┘
-           │
-           ▼
-    ┌─────────────┐
-    │ CLAUDE      │ Aplikuje feedback, commituje
-    │ Finalize    │
-    └─────────────┘
-```
+1. **Identifikuj typ chyby:**
+   - Faktická chyba → Poskytni správná data a nech přegenerovat
+   - Procesní chyba → Zpřesni task brief
+   - Tool chyba → Zkontroluj cesty, zkus znovu
 
-### Pattern C: Red/Blue Team Security
-```
-    ┌─────────────┐
-    │ GEMINI      │ Red Team: Hledá vulnerabilities
-    │ Red Team    │ "Simuluj útočníka..."
-    └──────┬──────┘
-           │ Report
-           ▼
-    ┌─────────────┐
-    │ CLAUDE      │ Blue Team: Implementuje fixy
-    │ Blue Team   │ "Oprav tyto vulnerabilities..."
-    └──────┬──────┘
-           │
-           ▼
-    ┌─────────────┐
-    │ USER        │ Manual checkpoint (novel problems <40%)
-    │ Validation  │
-    └─────────────┘
-```
+2. **Zapiš do Lessons Learned** (MEMORY.md) pokud je chyba systémová
 
----
+3. **Nikdy neprohlašuj hotovo** dokud není verifikováno
 
-## 6. Sdílená Paměť - MEMORY.md
-
-### Co tam patří
+### Recovery Checklist
 
 ```markdown
-# MEMORY.md
-
-## Stack
-- Frontend: Next.js 16, TypeScript, Tailwind v4
-- Backend: FastAPI, PostgreSQL, Redis
-- Deploy: Docker Compose
-
-## Active Protocols
-- QA: Max 5 findings per review
-- Security: Weekly Red/Blue team
-- Commits: Conventional commits + emoji
-
-## Lessons Learned
-- [2025-12-05] MCP není potřeba pro cross-agent volání - stačí shell
-- [2025-12-05] Gemini má lepší reasoning (91.9%), Claude lepší tool use (98.2%)
-
-## Decisions Log
-| Date | Decision | Reason | Who |
-|------|----------|--------|-----|
-| 2025-12-05 | Gemini = strategist | Benchmark data | User |
+- [ ] Identifikována root cause
+- [ ] Opraveno (ne jen workaround)
+- [ ] Verifikováno že oprava funguje
+- [ ] Zapsáno do MEMORY.md (pokud systémové)
 ```
-
-### Kdy aktualizovat
-
-- Po každém **architektonickém rozhodnutí**
-- Po každém **lessons learned**
-- Po každém **novém protokolu**
-- Když se **něco pokazí** (pro budoucnost)
 
 ---
 
-## 7. QA Pipeline
+## 7. Content-Specific Protocols
 
-### Pre-commit (Automatic)
-```bash
-# .husky/pre-commit
-cd frontend && npm run typecheck
+### Nová lekce (krok za krokem)
+
+```
+1. [Claude] Definuj topic a cíle
+2. [Claude → Gemini] Task Brief: "Research top 3 resources on [topic]"
+3. [Gemini] Dodá research s YouTube linky (EN + CZ)
+4. [Claude] Validuje research, vybere nejlepší zdroje
+5. [Claude → Gemini] Task Brief: "Draft lesson structure"
+6. [Gemini] Dodá outline
+7. [Claude] Review, úpravy, schválení struktury
+8. [Claude → Gemini] Task Brief: "Write full EN content"
+9. [Gemini] Dodá EN draft
+10. [Claude] QA review (Senior Analyst persona)
+11. [Iterace] Dokud není 99%
+12. [Claude → Gemini] Task Brief: "Translate to CS"
+13. [Gemini] Dodá CS verzi
+14. [Claude] Verification Checklist
+15. [Claude] Visual check (Playwright)
+16. [Claude] Commit
 ```
 
-### Post-Implementation Review
+### Oprava existující lekce
+
 ```
-1. Claude: Implementuje
-2. Claude Haiku: npm run verify
-3. Gemini: Code review (volitelné)
-4. Claude: Commit
+1. [Claude] Identifikuj problémy (QA review)
+2. [Claude → Gemini] Task Brief: "Fix these specific issues: [...]"
+3. [Gemini] Dodá opravený content
+4. [Claude] Verify fixes + regression check
+5. [Claude] Visual check + Commit
 ```
 
-### QA Findings Format
+---
+
+## 8. Session Management
+
+### Start Session
+
 ```markdown
-| # | Category | Severity | Finding | Response |
-|---|----------|----------|---------|----------|
-| 1 | 🐛 BUG | P1 | Null check missing | ✅ ACCEPT |
-| 2 | ⚡ PERF | P2 | useEffect loop | ✅ ACCEPT |
-| 3 | 🎨 UX | P3 | Button too small | ❌ REJECT |
+1. Claude čte LAST_SESSION.md
+2. Claude odpovídá: "Pokračujeme od [X]. Stav: [Y]. Další: [Z]."
+3. Pokud je pending task, pokračuj
+4. Pokud ne, čekej na User input
+```
+
+### End Session
+
+```markdown
+1. Aktualizuj LAST_SESSION.md:
+   - Co bylo dokončeno
+   - Co zůstává (pending)
+   - Blocker (pokud existuje)
+2. Aktualizuj MEMORY.md pokud byly lessons learned
+3. Commit změny (pokud relevantní)
 ```
 
 ---
 
-## 8. Cost Optimization
+## 9. Tool Matrix
 
-| Agent | Cost/Task | Kdy použít |
-|-------|-----------|------------|
-| Gemini 3 Pro | ~$0.00 (free tier) | Analýza, content, review |
-| Claude Haiku | $0.001-0.01 | Lint, grep, validation |
-| Claude Sonnet | $0.05-0.20 | Standard coding |
-| Claude Opus | $0.50-2.00 | Architecture only |
-
-### Strategy
-1. **Gemini first** pro analýzu (free)
-2. **Haiku** pro quick checks (cheap)
-3. **Sonnet** pro implementation (moderate)
-4. **Opus** jen pro critical decisions (expensive)
+| Tool | Claude | Gemini | Poznámka |
+|------|--------|--------|----------|
+| File read/write | ✅ | ✅ | Základní |
+| Git operations | ✅ | ❌ | Claude only |
+| Playwright (visual) | ✅ | ❌ | MCP |
+| GitHub MCP | ✅ | ❌ | MCP |
+| Web Search | ✅ | ✅ | Oba |
+| ask-gemini | ✅ | - | Claude volá Gemini |
+| brainstorm | ✅ | - | Gemini tool |
 
 ---
 
-## 9. Troubleshooting
-
-### Gemini nevidí context
-```bash
-# Použij @ syntax pro soubory
-gemini "@CLAUDE.md @.ai-context/state/MEMORY.md Analyzuj projekt"
-```
-
-### Claude volání z Gemini nefunguje
-```bash
-# Ověř že Claude CLI je v PATH
-which claude
-claude --version
-
-# Použij plnou cestu
-/home/ussi/.claude/local/claude -p "..."
-```
-
-### Agent neví kde je
-```
-# Vždy začni s boot sequence - odkaz na LAST_SESSION.md
-"Přečti .ai-context/state/LAST_SESSION.md a pokračuj"
-```
-
----
-
-## 10. Checklist pro Novou Session
-
-### Gemini Start
-- [ ] `@.ai-context/state/LAST_SESSION.md` - kde jsme skončili
-- [ ] `@.ai-context/state/MEMORY.md` - kontext a protokoly
-- [ ] Odpovědět: "Pokračujeme od X. Další: Y."
-
-### Claude Start
-- [ ] CLAUDE.md boot sequence (automaticky)
-- [ ] `LAST_SESSION.md` - kde jsme skončili
-- [ ] `MEMORY.md` - kontext a protokoly
-- [ ] Odpovědět: "Pokračujeme od X. Další: Y."
-
-### End of Session
-- [ ] Aktualizovat `LAST_SESSION.md` (co jsme udělali, co dál)
-- [ ] Aktualizovat `MEMORY.md` pokud bylo lessons learned
-- [ ] Commit pokud jsou změny
-
----
-
-*Last updated: 2025-12-05*
-*Setup: Gemini 3 Pro (strategist) + Claude Opus 4.5 (implementer)*
+*Last updated: 2025-12-05 (v2.0)*
+*Major change: Claude = Orchestrator, Gemini = Worker/Researcher*

@@ -6,9 +6,10 @@ import DiagramTraining from './diagrams/DiagramTraining';
 import DiagramConcepts from './diagrams/DiagramConcepts';
 import DiagramPrompting from './diagrams/DiagramPrompting';
 import DiagramUI from './diagrams/DiagramUI';
+import DiagramEvaluation from './diagrams/DiagramEvaluation';
 
 interface DiagramProps {
-  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop' | 'prompt-cheat-sheet' | 'traditional-vs-ml';
+  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop' | 'prompt-cheat-sheet' | 'traditional-vs-ml' | 'system-prompt-flow' | 'regression-matrix' | 'tradeoff-radar';
 }
 
 export default function Diagram({ type }: DiagramProps) {
@@ -28,13 +29,18 @@ export default function Diagram({ type }: DiagramProps) {
   }
 
   // Prompting & Interaction
-  if (['few-shot-learning', 'chain-of-thought', 'prompt-structure-pyramid', 'prompt-cheat-sheet'].includes(type)) {
+  if (['few-shot-learning', 'chain-of-thought', 'prompt-structure-pyramid', 'prompt-cheat-sheet', 'system-prompt-flow'].includes(type)) {
     return <DiagramPrompting type={type} />;
   }
 
   // UI & Visualization
   if (['meeting-timeline', 'dashboard-ui', 'data-analysis-chart'].includes(type)) {
     return <DiagramUI type={type} />;
+  }
+
+  // Evaluation & Debugging
+  if (['regression-matrix', 'tradeoff-radar'].includes(type)) {
+    return <DiagramEvaluation type={type} />;
   }
 
   // Missing implementations (placeholder or null)

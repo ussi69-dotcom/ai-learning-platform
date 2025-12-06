@@ -1,63 +1,89 @@
-# Current Task - Cycle 46
+# Current Task - Cycle 47 (Workflow Pivot)
 
-**Status:** ✅ COMPLETE - Content Generation (Phase 2)
-**Agent:** Gemini CLI
+**Status:** 🟢 DOCUMENTATION COMPLETE - Ready for Content Fix
+**Agent:** Claude Code (Orchestrator)
 **Date:** 2025-12-05
 
 ---
 
-## What Was Done This Cycle
+## 📜 What Was Done This Session
 
-1.  **Content Generation (Practical Prompt Engineering)** ✅
-    -   Created lesson skeletons (01-08).
-    -   Wrote full content for Lessons 01-04 (EN + CS).
-    -   Lessons included: Anatomy, Patterns, Context, Output Control.
-    -   Followed "Masterpiece Standard" (Diagrams, Labs, Holocron).
+### 1. Forensic Analysis of Gemini Failure
+- Identified that Lesson 06 EN had CZECH content (critical bug)
+- Identified that Lesson 06 CS was empty placeholder
+- Confirmed Lesson 05 was too shallow (110 lines)
+- Called Gemini for explanation - admitted missing verification step
 
-2.  **Quiz Fixes** 🔧
-    -   Fixed quiz format incompatibility (dict vs list).
-    -   Updated all 8 lessons (01-04 full, 05-08 stubs) to use correct JSON list format.
+### 2. Workflow Pivot (v2.0)
+- **Old Model:** Gemini = Orchestrator, Claude = Worker
+- **New Model:** Claude = Orchestrator/QA, Gemini = Researcher/Worker
+- Created comprehensive MULTI_AGENT_WORKFLOW.md v2.0
+- Added GENERATE → WRITE → VERIFY protocol
+- Added mandatory QA Checklist
 
-3.  **Database Seeding** 🌱
-    -   Ran `docker compose exec backend python seed.py`.
-    -   Successfully seeded all 8 lessons into DB.
-
-4.  **Tools** 🛠️
-    -   Created `scripts/generate_skeletons.py` for mass content generation.
-
----
-
-## Next Priority: Content Completion (Phase 2)
-
-Per EXECUTION_PLAN.md, the next focus is completing the **Prompt Engineering course**.
-
-### Immediate Actions
-
-1.  **Write Lessons 05-08** (Gemini CLI)
-    -   Current status: Stubs with placeholder quizzes.
-    -   Need full MDX content (EN+CS) and real quizzes.
-    -   Topics: Personas, Debugging, Real World, Project.
-
-2.  **Visual Polish** (Claude Code)
-    -   Verify diagrams render correctly in the new lessons.
-    -   Check dark mode compatibility.
+### 3. Documentation Updates
+- **MULTI_AGENT_WORKFLOW.md** - Complete rewrite (v2.0)
+- **MEMORY.md** - Updated with true state, lessons learned
+- **CONTENT_GUIDELINES.md** - Added Audience definition, Lab Template, Anti-Patterns (v2.1)
+- **README.md** - Updated AI workflow description
 
 ---
 
-## Content Status
+## 🎯 Next Steps (Priority Order)
 
-| Course | Progress | Priority |
-|--------|----------|----------|
-| AI Basics | ✅ 100% | Done |
-| Prompt Engineering | 🟡 50% | **NOW** (01-04 Done) |
-| Advanced AI | 🔴 STUB | Next |
-| AI Engineering | 🔴 STUB | Future |
+### C1 (Critical) - Fix Broken Lessons
+1. **Lesson 06 EN** - Translate Czech content to English
+2. **Lesson 06 CS** - Write full Czech content (currently empty)
+3. **Lesson 05** - Expand depth, improve lab quality
+
+### C2 (High) - Visual Verification
+4. Run visual check in browser (Playwright MCP)
+5. Verify diagrams render correctly
+
+### C3 (Normal) - Continue Course
+6. Continue with Lesson 07+ using new workflow
 
 ---
 
-## Handoff Notes
+## 🔧 How to Fix Lessons (New Workflow)
 
--   Lessons 01-04 are live in DB.
--   Lessons 05-08 exist as stubs (to satisfy seed script).
--   Quiz format is now standard list-based.
--   `scripts/generate_skeletons.py` is available for future courses.
+```
+1. [Claude] Analyze current state of broken lesson
+2. [Claude → Gemini] Task Brief: "Research [topic], provide sources"
+3. [Gemini] Delivers Research Handoff Package
+4. [Claude] Validates research, adds input
+5. [Claude → Gemini] Task Brief: "Write EN content based on research"
+6. [Gemini] Delivers EN draft
+7. [Claude] QA Review (Senior Analyst persona)
+8. [Iterate] Until 99% quality
+9. [Claude → Gemini] Task Brief: "Translate to CS"
+10. [Gemini] Delivers CS version
+11. [Claude] Verification Checklist + Visual Check
+12. [Claude] Commit
+```
+
+---
+
+## 📋 Files Changed This Session
+
+| File | Change |
+|------|--------|
+| `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md` | Complete rewrite (v2.0) |
+| `.ai-context/state/MEMORY.md` | Updated state, lessons learned |
+| `.ai-context/core/CONTENT_GUIDELINES.md` | Added sections (v2.1) |
+| `README.md` | Updated AI workflow description |
+
+---
+
+## 🚨 Known Issues (Still Pending)
+
+| Issue | Status |
+|-------|--------|
+| Lesson 05 too shallow | ❌ Needs fix |
+| Lesson 06 EN has CZ content | ❌ CRITICAL |
+| Lesson 06 CS is empty | ❌ CRITICAL |
+
+---
+
+*Session ended: 2025-12-05*
+*Ready to test new workflow on lesson fixes*

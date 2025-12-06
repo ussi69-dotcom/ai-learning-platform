@@ -1,129 +1,271 @@
-# 📜 Content Guidelines (The Golden Standard)
+# 📜 Content Guidelines (Masterpiece Standard v2.1)
 
-This document defines the "Masterpiece" quality standard for all course content.
+This document defines the **Masterpiece v2** quality standard. "Good enough" is failure. We aim for **Excellence**.
 
-## 1. Core Philosophy
-*   **"Liquid Glass" Aesthetic:** Content must look native to the dark-mode, neon-accented UI.
-*   **Interactive First:** No passive reading. Labs and Quizzes drive engagement.
-*   **Jedi/Sith Theme:** Use analogies (The Force, Droids, Holocrons) but keep it professional.
+---
 
-## 2. Structure of a Lesson
+## 1. Audience & Tone of Voice
+
+### Target Persona: The Ambitious Learner
+
+Our primary audience is technically curious and motivated, but not necessarily a senior developer. They may be:
+- A student exploring AI
+- A junior developer transitioning to ML/AI
+- A data analyst wanting to understand LLMs
+- A product manager needing deep AI knowledge
+
+### Tone Guidelines
+
+| Principle | Description |
+|-----------|-------------|
+| **Expert, but Approachable** | We are a trusted mentor, not an academic journal. Explain complex topics simply, without dumbing them down. |
+| **Inspirational** | Use the Jedi/Sith theme to create excitement. Frame learning as a heroic journey. |
+| **Pragmatic** | Every theory connects to practice. Reader must understand *why* they're learning something. |
+| **Empathetic** | Acknowledge difficulty. For tool installations (WSL, Docker, LM Studio), assume zero prior setup. |
+
+---
+
+## 2. Core Philosophy
+
+* **Research-First:** Never write from memory. Synthesize top-tier sources (YouTube, Papers, Blogs).
+* **Deep & Interactive:** No short articles. No passive reading. Labs must *challenge* the user.
+* **Visual Storytelling:** Every complex concept must have a diagram.
+* **Jedi/Sith Theme:** Use analogies (The Force, Droids, Holocrons) but keep it professional.
+
+---
+
+## 3. Quality Assurance Process
+
+The full QA workflow is defined in `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`.
+
+**Key Points:**
+1. **Claude = Orchestrator & QA Gate** - Reviews all content before publish
+2. **Gemini = Researcher & Draft Creator** - Deep research, content generation
+3. **Excellence Loop** - Iterate until 99% quality
+4. **Verification Checklist** - See WORKFLOW.md Section 3
+
+> ⚠️ **Never publish without passing the QA Checklist in WORKFLOW.md**
+
+---
+
+## 4. Structure of a Lesson
+
 Every lesson MUST follow this structure:
 
-1.  **Header Callout:**
-    ```markdown
-    <Callout type="info">
-    **Mission Goal:** [One sentence goal]
-    ⏳ **Reading Time:** 15 min | 🧪 **[X] Labs Included**
-    </Callout>
-    ```
-2.  **The Hook:** Why does this matter? (Star Wars analogy allowed).
-3.  **Core Concepts:** Broken down into sections with **Visual Anchors**.
-4.  **Interactive Labs:** Copy-Paste ready prompts.
-5.  **The Holocron:** A summary ConceptCard at the end.
+### A. The Hook & Video 🎥
 
-## 3. Visual Rules (SVG First) 🎨
-*   **NO Raster Images:** Do not use `.png` or `.jpg` files unless absolutely necessary (and approved).
-*   **Use Diagrams:** Use the `<Diagram type="...">` component.
-    *   **Check First:** Before creating a new diagram, check `frontend/components/mdx/diagrams/` to see if a suitable one already exists. **Do not create duplicates.**
-    *   *Available Types:* `neural-network`, `training-loop`, `traditional-vs-ml`, `ai-timeline`, `dashboard-ui`, `data-analysis-chart`, etc.
-    *   *Why?* Scales perfectly, respects Dark Mode, editable via code.
-*   **Icons:** Use `LessonIcon` and `CourseIcon` components for UI elements.
+* **Why it matters:** Strong opening (Star Wars analogy allowed).
+* **Curated Video:** MUST include a link to a high-quality video explanation.
+  * **Primary:** Best English video available (e.g., Andrej Karpathy, 3Blue1Brown, Elvis Saravia).
+  * **Local:** Best Czech video (or EN with high-quality CS subs).
 
-## 4. Component Usage
+**Recommended YouTube Channels:**
+| Topic | EN Channels | CZ Channels |
+|-------|-------------|-------------|
+| LLM Fundamentals | Andrej Karpathy, 3Blue1Brown | - |
+| Prompt Engineering | Elvis Saravia, Learn Prompting | - |
+| AI News/Trends | AI Explained, Two Minute Papers | board_room.io |
+| Practical AI | Matt Wolfe, All About AI | - |
+
+### B. Core Concepts (Deep Dives) 🧠
+
+* **Depth:** No surface-level skimming. Go deep. Explain *why*, not just *what*.
+* **Visual Anchors:** Every major concept needs a `<Diagram>` or `<ConceptCard>`.
+* **Length:** A lesson under 1500 words is likely too shallow (unless purely practical).
+* **Progressive Complexity:** Start accessible, build to advanced. Each lesson slightly harder than previous.
+
+### C. Interactive Labs (The Dojo) 🧪
+
+**What's BANNED:**
+* ❌ Passive "Copy this prompt and see what happens"
+* ❌ Vague instructions ("try different prompts")
+* ❌ Labs without clear success criteria
+
+**What's REQUIRED:**
+* ✅ Result-oriented missions with clear objectives
+* ✅ Explicit verification steps (how to know you succeeded)
+* ✅ Real tools when appropriate (WSL, Python, LM Studio, Promptfoo)
+
+#### Lab Structure Template
+
+Every lab MUST follow this template:
+
+```markdown
+## 🧪 Lab: [Descriptive Name]
+
+### 🎯 Objective
+One sentence: what will the user achieve?
+> Example: "Modify a system prompt to bypass safety guardrails."
+
+### 📋 Prerequisites
+- Tool/knowledge requirement 1
+- Tool/knowledge requirement 2
+
+### 🛠️ Steps
+
+#### Phase 1: Setup
+[Numbered steps with exact commands]
+
+#### Phase 2: The Challenge
+[The actual task - what they need to figure out]
+
+#### Phase 3: Verification
+[How to confirm success]
+
+### ✅ Success Criteria
+Clear description of expected outcome.
+> Example: "Success when the model responds as a pirate without safety warnings."
+
+### 💡 Hints (Optional)
+Collapsible hints for stuck users.
+```
+
+#### Lab Progression by Difficulty
+
+| Difficulty | Lab Type | Example |
+|------------|----------|---------|
+| Beginner | Browser-based, copy-modify | Modify prompt in ChatGPT |
+| Intermediate | Tool installation + use | Install LM Studio, run local model |
+| Advanced | Multi-tool workflow | Promptfoo eval + local LLM + Python script |
+
+### D. The Holocron (Summary) 💾
+
+* A summary `<ConceptCard>` at the end.
+* Must synthesize the "Aha!" moment of the lesson.
+* Include 3-5 key takeaways as bullet points.
+
+---
+
+## 5. Visual Rules (SVG First) 🎨
+
+* **NO Raster Images:** Use `<Diagram type="...">` (SVG).
+* **Mandatory Diagrams:** If you explain a system, process, or relationship, draw it.
+* **Dark Mode:** Always use `fill-slate-600 dark:fill-slate-400` for compatibility.
+* **Registration:** New diagram types must be registered in `frontend/components/mdx/Diagram.tsx`.
+
+### Available Diagram Types
+
+Check `frontend/components/mdx/diagrams/` for existing diagrams before creating new ones:
+- History: `traditional-vs-ml`, `ai-timeline`, `ai-history-timeline`
+- Training: `training-loop`, `training-pipeline`
+- Concepts: `tokenization-viz`, `llm-next-token`, `context-window`, `temperature-scale`
+- Prompting: `few-shot-learning`, `chain-of-thought`, `system-prompt-flow`
+- Evaluation: `regression-matrix`, `tradeoff-radar`
+- UI: `dashboard-ui`, `data-analysis-chart`
+
+---
+
+## 6. Component Usage
 
 ### `<ConceptCard>`
 Use for key definitions or summaries.
 ```tsx
 <ConceptCard title="The Student" icon="🎓" jediQuote="Much to learn...">
-  Content...
+  Content with **markdown** support...
 </ConceptCard>
 ```
 
-### `<Steps>`
-Use for sequential instructions or lab analysis.
-
 ### `<Callout>`
-Use for warnings (Hallucinations) or tips.
-*   `type="info"`: General info (Blue)
-*   `type="warning"`: Risks/Hallucinations (Yellow/Red)
-*   `type="success"`: Achievements (Green)
-*   `type="tip"`: Pro Tips (Purple)
+| Type | Use Case |
+|------|----------|
+| `type="info"` | Lesson goals, reading time, lab count |
+| `type="warning"` | Hallucinations, Security Risks, Common Mistakes |
+| `type="tip"` | Pro tricks, hidden mechanics, best practices |
+| `type="success"` | Achievements, correct approaches |
 
-## 5. Lab Standards
-Labs must be "Copy-Paste" ready. Don't describe the prompt. Write it.
+### `<Steps>`
+For sequential instructions or lab analysis.
 
-**Bad:** "Ask the AI to write a poem."
-**Good:**
+### `<Diagram>`
+For SVG visualizations (see Visual Rules above).
+
+---
+
+## 7. Research Protocol 🕵️
+
+### Context Loading (Before Starting)
+
+Agent generating content MUST read these files first:
+1. `.ai-context/state/MEMORY.md` (Project state)
+2. `.ai-context/core/CONTENT_GUIDELINES.md` (This file - the "Bible")
+3. `.ai-context/core/CURRICULUM_ROADMAP.md` (Curriculum goals & progress)
+4. `frontend/components/mdx/diagrams/` (Available visual components)
+
+### Research Steps
+
+Before writing a single word:
+
+1. **Search:** Find top 3-5 videos/articles on the topic
+2. **Watch/Read:** Actually consume the content, take notes
+3. **Synthesize:** What is the "Killer Feature" of this topic?
+4. **Localize:** Find Czech context/terminology
+5. **Document:** Save research in Handoff Package for QA review
+
+### Research Handoff Package
+
+When Gemini completes research, deliver to Claude:
 ```markdown
-**The Prompt:**
-```text
-Write a poem about a robot who loves gardening.
+## Research Brief: [Topic]
+
+### Top Sources
+1. [Title](URL) - Key takeaway
+2. [Title](URL) - Key takeaway
+3. [Title](URL) - Key takeaway
+
+### Recommended Videos
+- **EN Primary:** [Video](URL) - Why it's good
+- **CZ Alternative:** [Video](URL) or "None found, use EN with CS subs"
+
+### Key Concepts to Cover
+- Concept 1
+- Concept 2
+- Concept 3
+
+### Potential Diagrams
+- [Description of diagram 1]
+- [Description of diagram 2]
 ```
-```
 
-## 6. Tone & Voice
-*   **Empowering:** You are the Jedi Master guiding a Padawan.
-*   **Precise:** No fluff. Short paragraphs.
-*   **Formatted:** Use **Bold** for key terms. Use lists often.
-
-## 7. Technical Best Practices 🔧
-
-### Diagram Design
-*   **Light Mode Contrast:** ALWAYS use dark-mode-aware color classes for text:
-    ```tsx
-    // ✅ CORRECT
-    className="fill-slate-600 dark:fill-slate-400"
-    
-    // ❌ WRONG (unreadable in light mode)
-    className="fill-slate-400"
-    ```
-*   **Legibility:** Ensure SVG paths (arrows, lines) DO NOT overlap with text labels. Test visually.
-*   **Context Match:** Ensure the diagram fits the specific pedagogical goal (e.g., use `traditional-vs-ml` for rule-based vs learning, and `training-loop` for the feedback cycle).
-*   **Font Sizes:** Minimum `text-xs` for body text, `text-[10px]` for labels.
-*   **Test Both Modes:** Verify diagrams in both light and dark themes before committing.
-
-### Component Capabilities
-*   **Nested Markdown:** `<ConceptCard>` and `<Callout>` support complex Markdown (Lists, Code Blocks, Headings) thanks to recursive parsing.
-    *   **Requirement:** Ensure valid Markdown structure.
-    *   **Pattern:**
-      ```markdown
-      <ConceptCard ...>
-      ### 🔑 Key Points
-      *   **Item 1:** Description
-      ```
-*   **Diagrams in Cards:** While possible, avoid putting heavy `<Diagram>` components inside `<ConceptCard>` to prevent layout clutter. Use them *between* cards.
-
-### Code Blocks
-*   **Language Identifier:** Always specify language for syntax highlighting:
-    ```markdown
-    ```python  ← Specify language
-    def example():
-        pass
-    ```  ← Close properly
-    ```
-*   **Where They Work:** Code blocks are supported everywhere (not just `<Steps>`).
-*   **Styling:** Code blocks automatically get Mac-style window dots (🔴🟡🟢) and a Copy button.
-
-### Summary Section Pattern
-*   **Inspiration:** Use Lesson 3's Holocron as the gold standard.
-*   **Icon Usage:** One icon per key concept improves scannability.
-*   **Avoid:** Long paragraphs, walls of text, ASCII art dividers.
+---
 
 ## 8. Localization Protocol 🌍
-**CRITICAL:** The platform supports both English (`en`) and Czech (`cs`).
-*   **Dual Update Rule:** When modifying content (fixing typos, changing images, merging pages), you **MUST** update both:
-    *   `content.mdx` (English)
-    *   `content.cs.mdx` (Czech)
-*   **Syncing:** After updating files, run `docker-compose exec backend python seed.py` to sync changes to the database.
-*   **Verification:** Verify changes in both languages if possible, or at least ensure the file structure matches.
 
-## 9. Design System Rules 🎨
-*   **Light Mode (Jedi):** "Purple Lightsaber" theme.
-    *   Primary Action Color: Purple (`purple-600` to `purple-800`).
-    *   Gradients: Purple/Fuchsia mix.
-    *   Text Highlights: Purple.
-*   **Dark Mode (Sith):** "Sith Red & Silver" theme.
-    *   Primary Action Color: Red (`red-500` to `red-700`).
-    *   Headings: Silver/White (`slate-200` to `slate-400`).
-    *   Text Highlights: Red.
+* **Dual Files:** `content.mdx` (EN) + `content.cs.mdx` (CS)
+* **No Machine Translation:** Use idiomatic Czech
+* **Terminology:** Keep English terms where standard ("Prompt", "Token", "Fine-tuning")
+* **Videos:** EN lessons get EN video, CS lessons get CZ video (or EN with CS subs note)
+
+### Verification (CRITICAL)
+
+After writing, ALWAYS verify:
+- [ ] EN file contains ENGLISH text
+- [ ] CS file contains CZECH text
+- [ ] Neither file is a placeholder
+- [ ] Both files have similar length (±20%)
+
+---
+
+## 9. Technical Best Practices
+
+* **Code Blocks:** Always specify language (`python`, `bash`, `text`)
+* **Markdown:** Use nested lists, bolding for scanning, clear headers
+* **Links:** Use descriptive link text, not "click here"
+* **Sync:** Run `docker compose restart backend` after content changes
+
+---
+
+## 10. Anti-Patterns (What NOT to Do)
+
+| Anti-Pattern | Why It's Bad | Do This Instead |
+|--------------|--------------|-----------------|
+| "Let's explore..." opening | Weak, passive | Start with bold claim or question |
+| Copy-paste-only labs | No learning | Mission-oriented challenges |
+| Wall of text | Overwhelming | Break with visuals, callouts |
+| Vague instructions | Frustrating | Exact commands, clear criteria |
+| Assuming tool setup | Users get stuck | Step-by-step from zero |
+| Surface-level explanation | No value | Explain WHY, not just WHAT |
+
+---
+
+*Last updated: 2025-12-05 (v2.1)*
+*Changes: Added Audience definition, Lab Template, Research Handoff, Anti-Patterns*
