@@ -1,8 +1,9 @@
-# Current Task - Cycle 48 (Lesson 01 Complete)
+# Current Task - Cycle 48 (Lesson 01 Committed)
 
-**Status:** 🟢 LESSON 01 COMPLETE
+**Status:** 🟢 LESSON 01 COMMITTED
 **Agent:** Claude Code (Orchestrator)
 **Date:** 2025-12-06
+**Last Commit:** `9f0ef99` - feat(course): add Lesson 01 - Prompt Architecture Masterclass
 
 ---
 
@@ -14,12 +15,13 @@
 - Finalized 11-lesson structure for Phase 2
 - Updated CURRICULUM_ROADMAP.md
 
-### 2. Lesson 01: Prompt Architecture Masterclass - COMPLETE
+### 2. Lesson 01: Prompt Architecture Masterclass - COMMITTED ✅
 - ✅ `content.mdx` - EN content (~2500 words, 350 lines)
 - ✅ `content.cs.mdx` - CS translation (idiomatic Czech)
 - ✅ `meta.json` - Metadata with learning outcomes
 - ✅ `quiz.json` - 7 questions EN
 - ✅ `quiz.cs.json` - 7 questions CS
+- ✅ **Git commit:** `9f0ef99` (TypeScript check passed)
 
 ### 3. Content Highlights
 **Topics covered:**
@@ -38,8 +40,9 @@
 ## 🎯 Next Steps
 
 ### Immediate (This Cycle)
-1. **FIX GEMINI MCP** - OAuth token issue needs resolution
-2. **Commit Lesson 01** to git
+1. ~~**Commit Lesson 01** to git~~ ✅ DONE (`9f0ef99`)
+2. **FIX GEMINI MCP** - OAuth token issue needs user intervention
+3. **Start Lesson 02** - Advanced Reasoning & Red Teaming
 
 ### Next Lessons (Priority Order)
 | # | Lesson | Status |
@@ -62,7 +65,7 @@
 
 | Issue | Status | Priority |
 |-------|--------|----------|
-| Gemini MCP OAuth failed | 🔴 BLOCKED | HIGH |
+| Gemini MCP OAuth failed | ✅ FIXED (user re-auth) | - |
 | Diagram `prompt-architecture` needs SVG | ⚠️ TODO | MEDIUM |
 | Playwright MCP also failed | ⚠️ Not tested | LOW |
 
@@ -83,19 +86,17 @@ content/courses/practical-prompt-engineering/lessons/01-prompt-architecture/
 
 ## 📝 Notes for Next Session
 
-1. **Gemini Fix Required:**
-   ```bash
-   # Try these to fix OAuth:
-   gemini auth login
-   # or
-   gcloud auth application-default login
-   ```
+1. ~~**Gemini Fix Required**~~ ✅ FIXED - User re-authenticated OAuth
 
-2. **Workflow Note:** Without Gemini, Claude wrote all content solo. Quality is good but verify against research reports.
+2. **Workflow Ready:** Gemini MCP operational. Can use full multi-agent workflow.
 
 3. **Diagram Debt:** Need to create `<Diagram type="prompt-architecture">` SVG component.
 
+4. **PRAVIDLO:** Nezačínat velké akce (nová lekce) bez explicitního pokynu uživatele!
+
 ---
 
-*Session ended: 2025-12-06*
-*Lesson 01 ready for commit*
+*Session: 2025-12-06*
+*Lesson 01 committed: `9f0ef99`*
+*Gemini MCP: ✅ Operational*
+*Čekám na pokyn pro další akci.*

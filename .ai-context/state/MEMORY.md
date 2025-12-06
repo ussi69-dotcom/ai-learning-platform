@@ -60,24 +60,34 @@ Claude MUSÍ použít "Senior QA Analyst" personu při review:
 
 ## 📊 Current State Snapshot
 
-### Cycle: 47 (Workflow Pivot)
-**Status:** 🔴 CRITICAL - Lekce 05 a 06 vyžadují opravu
+### Cycle: 48 (Lesson 01 Complete)
+**Status:** 🟢 READY - Čekám na pokyn pro další akci
 
-### Known Issues
-| Lekce | Problém | Status |
-|-------|---------|--------|
-| 05-personas-roles | Příliš krátká (110 řádků), povrchní lab | ❌ Needs fix |
-| 06-debugging-prompts | EN obsahuje CZ text, CS je prázdná | ❌ CRITICAL |
+### Completed
+| Item | Status |
+|------|--------|
+| Lesson 01: Prompt Architecture | ✅ Committed (`9f0ef99`) |
+| Gemini MCP OAuth | ✅ Fixed (user re-auth) |
+| Course Restructure (11 lessons) | ✅ Done |
 
-### Recent Changes (2025-12-05)
-- [v2.0] Workflow pivot: Claude = Orchestrator, Gemini = Worker
-- [v2.0] Přidán GENERATE → WRITE → VERIFY protokol
-- [v2.0] Přidán povinný QA checklist
-- [FIX] Identifikována root cause selhání: missing verification step
+### Pending
+| Item | Status |
+|------|--------|
+| Lesson 02-11 | ⏳ Awaiting instructions |
+| Diagram `prompt-architecture` SVG | ⚠️ Tech debt |
+
+### Recent Changes (2025-12-06)
+- [FEAT] Lesson 01 complete (EN + CS + quiz)
+- [FIX] Gemini MCP OAuth restored
+- [RULE] Big actions require explicit user permission
 
 ---
 
 ## 📝 Lessons Learned
+
+### 2025-12-06: Big Actions Require Permission
+**Rule:** NIKDY nezačínej velké akce (nová lekce, velký refactor) bez explicitního souhlasu uživatele.
+**Důvod:** Workflow může být v rozporu s aktuálními prioritami. Vždy se zeptej/ověř.
 
 ### 2025-12-05: Verification Failure Incident
 **Co se stalo:** Gemini prohlásil lekce za hotové bez verifikace. EN/CS soubory byly prohozené.
@@ -97,10 +107,11 @@ Claude MUSÍ použít "Senior QA Analyst" personu při review:
 
 ## 🎯 Priority Queue
 
-1. **C1 (Critical):** Opravit dokumentaci a workflow ✅ DONE
-2. **C1 (Critical):** Opravit lekce 05 a 06 (test nového workflow)
-3. **C2 (High):** Pokračovat s lekcemi 07+
+1. ~~**C1 (Critical):** Opravit dokumentaci a workflow~~ ✅ DONE
+2. ~~**C1 (Critical):** Course restructure~~ ✅ DONE (11 lessons)
+3. ~~**C1:** Lesson 01~~ ✅ COMMITTED
+4. **NEXT:** Lesson 02 (čeká na pokyn uživatele)
 
 ---
 
-*Last updated: 2025-12-05 (Cycle 47)*
+*Last updated: 2025-12-06 (Cycle 48)*
