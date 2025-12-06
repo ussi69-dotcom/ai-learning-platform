@@ -44,5 +44,12 @@ To, co dělá tento projekt unikátním, není jen kód, ale způsob, jakým vzn
 *   **AI-Agent Spolupráce:** Vývoj probíhá v symbióze mezi lidským vývojářem a AI agenty (vybavenými nástroji jako Context7 MCP pro přístup k živé dokumentaci).
 *   **Visual Inspection:** Máme automatizované vizuální testy (Playwright), které "vidí" aplikaci a generují screenshoty pro kontrolu designu předtím, než se změny schválí.
 
+## 🎨 Design Philosophy
+- **Style:** "Holographic Datapad" (Glassmorphism, Neon Accents)
+- **Themes:** Dual-mode system: **Jedi (Light/Indigo)** vs **Sith (Dark/Red/Gold)**
+- **Assets:** No stock photos. Only code, CSS diagrams, or educational SVGs
+- **Reference:** See `CONTENT_GUIDELINES.md` for strict UI rules
+
 ---
-*Originally generated: 27.11.2025 | Last reviewed: 05.12.2025 (Cycle 47)*
+*Originally generated: 27.11.2025 | Last reviewed: 06.12.2025 (Cycle 48)*
+*Merged from PROJECT_CONTEXT.md during v3.0 redesign*

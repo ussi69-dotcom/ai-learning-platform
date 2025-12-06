@@ -85,6 +85,23 @@ Claude MUSÍ použít "Senior QA Analyst" personu při review:
 
 ## 📝 Lessons Learned
 
+### 2025-12-06: STAY CURRENT - Date & Online Research ⚠️ CRITICAL
+**Rule:** VŽDY ověř aktuální datum a používej ONLINE zdroje pro:
+- Aktuální verze modelů, knihoven, nástrojů
+- Trendy, best practices, nové MCP servery
+- GitHub projekty, dokumentace
+- **DNEŠNÍ DATUM: Použij systémové datum, NE svůj knowledge cutoff!**
+
+**Proč:** Agent opakovaně používal rok 2024 místo 2025. Toto způsobuje:
+- Zastaralé informace v dokumentaci
+- Špatné verze závislostí
+- Irelevantní doporučení
+
+**Akce:**
+1. Před research VŽDY použij WebSearch pro aktuální data
+2. Ověř verze knihoven přes Context7 MCP nebo npm/pip
+3. Při nejistotě o datu → zkontroluj systémové datum
+
 ### 2025-12-06: Big Actions Require Permission
 **Rule:** NIKDY nezačínej velké akce (nová lekce, velký refactor) bez explicitního souhlasu uživatele.
 **Důvod:** Workflow může být v rozporu s aktuálními prioritami. Vždy se zeptej/ověř.

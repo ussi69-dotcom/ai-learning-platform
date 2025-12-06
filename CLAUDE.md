@@ -2,28 +2,35 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 🚀 Boot Sequence
+## 🚀 Boot Sequence (v3.0)
 
 **IHNED při startu přečti tyto soubory:**
 
 ```
-1. .ai-context/state/LAST_SESSION.md      ← 🔥 KDE JSME SKONČILI
-2. .ai-context/state/MEMORY.md            ← Stack, protokoly
-3. .ai-context/workflows/MULTI_AGENT_WORKFLOW.md ← ⚡ SPOLUPRÁCE S GEMINI
-4. .agent/rules/rules.md                  ← Pravidla agenta
+1. .ai-context/AGENT_PROTOCOL.md          ← 🔥 SPOLEČNÁ PRAVIDLA
+2. .ai-context/state/WORKING_CONTEXT.md   ← KDE JSME, CO DĚLÁME
+3. .ai-context/state/MEMORY.md            ← Protokoly, lessons learned
 ```
 
 **Po načtení OKAMŽITĚ odpověz:**
-> "Pokračujeme od [aktivita]. Stav: [status]. Další: [co teď]."
+> "Pokračujeme od [task]. Stav: [status]. Další: [next step]."
 
 **Během práce:**
-- Průběžně aktualizuj `LAST_SESSION.md`
+- Průběžně aktualizuj `WORKING_CONTEXT.md`
+
+**Před context compactem (80%):**
+- POVINNĚ aktualizuj `WORKING_CONTEXT.md`!
 
 **Na konci session:**
-- Aktualizuj `LAST_SESSION.md` (stav pro příště)
+- Aktualizuj `WORKING_CONTEXT.md` (stav pro příště)
 - Přidej záznam do `SESSION_LOG.md` (archiv)
 
-**NEČTI při startu:** `SESSION_LOG.md` (je to archiv, 500+ řádků)
+**Role-based loading (dle typu úkolu):**
+- Content → `core/CONTENT_GUIDELINES.md`
+- Multi-agent → `workflows/MULTI_AGENT_WORKFLOW.md`
+- Codebase exploration → `workflows/SUBAGENT_STRATEGY.md`
+
+**NEČTI při startu:** `SESSION_LOG.md`, `history/*` (archiv)
 
 ---
 
@@ -413,30 +420,33 @@ Update `NEXT_PUBLIC_API_URL` in `.env` if changing backend port.
 - slowapi (rate limiting)
 - redis (caching)
 
-## Agent Coordination Protocol
+## Agent Coordination Protocol (v3.0)
 
-### Single Source of Truth
-- **SSOT:** `.ai-context/state/MEMORY.md` contains project state, protocols, decisions
-- **Short-term:** `LAST_SESSION.md` for immediate context handoff
-- **Archive:** `SESSION_LOG.md` is append-only history (don't read at startup)
+### Memory Architecture
+| Typ | Soubor | Účel |
+|-----|--------|------|
+| **Working** | `WORKING_CONTEXT.md` | Aktuální task, stav (aktualizuj průběžně!) |
+| **Long-term** | `MEMORY.md` | Protokoly, lessons learned |
+| **Archive** | `SESSION_LOG.md` | Historie (append only) |
 
 ### Critical Rules
-1. **Stability First:** Never break working functionality to fix minor issues
-2. **Architecture Alignment:** Before implementing, check `vps-deployment` branch for production patterns
-3. **Atomic Operations:** One logical unit per commit, test before commit
-4. **No Placeholder Code:** Never commit `// TODO` or incomplete implementations
+Kompletní pravidla: `.ai-context/AGENT_PROTOCOL.md`
 
-### Multi-Agent Strategy (Gemini + Claude)
-Follow the protocol in `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`.
+1. **GENERATE → WRITE → VERIFY** - Nikdy neprohlašuj "hotovo" bez verifikace
+2. **No Big Actions Without Permission** - Velké změny → ptej se uživatele
+3. **Stay Current** - Použij systémové datum, pro verze/trendy → WebSearch
+4. **Verify Before Commit** - `npm run verify` + `pytest` MUSÍ projít
 
-**Roles:**
-- **Gemini:** Strategist, Architect, Content Creator (Orchestrator)
-- **Claude:** Implementer, Tool Expert, Blue Team (Worker)
+### Multi-Agent Strategy (v3.0)
+| Agent | Entry Point | Role |
+|-------|-------------|------|
+| Claude Code | `CLAUDE.md` | Orchestrator, QA, Implementer |
+| Gemini CLI | `GEMINI.md` | Researcher, Content Generator |
+| Antigravity | `rules.md` | Full-stack Developer |
 
-**Handoff Rules:**
-- **Start:** Read `LAST_SESSION.md` to see pending tasks from Gemini.
-- **Finish:** Write summary to `LAST_SESSION.md` or specific output file.
-- **DoD:** Ensure "Definition of Done" is met (tests pass, lint passes).
+Všichni sdílí: `AGENT_PROTOCOL.md`, `WORKING_CONTEXT.md`, `MEMORY.md`
+
+**Handoff:** Aktualizuj `WORKING_CONTEXT.md` před předáním.
 
 ### Code Quality Checklist (Before Commit)
 ```bash
@@ -453,9 +463,12 @@ Known issues to address:
 
 ## Additional Documentation
 
-For deeper context, check:
-- `.ai-context/core/ARCHITECTURE.md` - Technical architecture
-- `.ai-context/core/VISION.md` - Project vision
-- `.ai-context/core/CONTENT_GUIDELINES.md` - Content writing standards
-- `.ai-context/state/SESSION_LOG.md` - Development history
-- `README.md` - Quick start guide (Czech)
+| Potřebuji... | Viz soubor |
+|--------------|------------|
+| Navigaci/mapu | `.ai-context/INDEX.md` |
+| Společná pravidla | `.ai-context/AGENT_PROTOCOL.md` |
+| Architekturu | `.ai-context/core/ARCHITECTURE.md` |
+| Vizi projektu | `.ai-context/core/VISION.md` |
+| Content pravidla | `.ai-context/core/CONTENT_GUIDELINES.md` |
+| Multi-agent workflow | `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md` |
+| Subagent strategy | `.ai-context/workflows/SUBAGENT_STRATEGY.md` |

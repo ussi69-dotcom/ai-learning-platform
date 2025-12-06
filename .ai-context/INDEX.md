@@ -1,72 +1,131 @@
-# 🗺️ AI Learning Platform - Documentation Index
+# 🗺️ AI Learning Platform - Documentation Index (v3.0)
 
-**Welcome, Intelligence.** This is your map.
-Regardless of your interface (CLI or IDE), start here.
-
-## 📂 Directory Structure
-
-### 🧠 State (`/state`)
-> *Read/Write. The living memory of the project.*
-- [**LAST_SESSION.md**](./state/LAST_SESSION.md): **🔥 ČTI PRVNÍ!** Kde jsme skončili. Aktualizuj průběžně.
-- [**MEMORY.md**](./state/MEMORY.md): Dlouhodobá paměť (stack, protokoly). Aktualizuj zřídka.
-- [**CURRENT_TASK.md**](./state/CURRENT_TASK.md): Aktivní úkol.
-- [**SESSION_LOG.md**](./state/SESSION_LOG.md): ⚠️ **ARCHIV - NEČÍST PŘI STARTU** (500+ řádků).
-
-### 🧱 Core (`/core`)
-> *Read-Only. The immutable laws.*
-- [**ARCHITECTURE.md**](./core/ARCHITECTURE.md): Tech stack & patterns.
-- [**CONTENT_GUIDELINES.md**](./core/CONTENT_GUIDELINES.md): How to write lessons (MDX).
-- [**PROJECT_CONTEXT.md**](./core/PROJECT_CONTEXT.md): High-level goals.
-- [**GLOSSARY.md**](./core/GLOSSARY.md): Terminology.
-- [**COMPONENT_PATTERNS.md**](./core/COMPONENT_PATTERNS.md): UI Component usage.
-- [**CURRICULUM_ROADMAP.md**](./core/CURRICULUM_ROADMAP.md): Curriculum phases & progress.
-- [**VISION.md**](./core/VISION.md): High-level project vision and purpose.
-
-### 🛠️ Workflows (`/workflows`)
-> *How-To Guides.*
-- [**MULTI_AGENT_WORKFLOW.md**](./workflows/MULTI_AGENT_WORKFLOW.md): 🔥 **HLAVNÍ** - Agent spolupráce (Claude = Orchestrator, Gemini = Worker).
-- [**DATABASE_MIGRATIONS.md**](./workflows/DATABASE_MIGRATIONS.md): Alembic workflow.
-- [**DEV_AND_DEPLOYMENT_GUIDE.md**](./workflows/DEV_AND_DEPLOYMENT_GUIDE.md): Deployment SOP.
-- [**DOMAIN_CHANGE_GUIDE.md**](./workflows/DOMAIN_CHANGE_GUIDE.md): Checklist for changing project domain.
-- [**INCIDENT_REPORTING.md**](./workflows/INCIDENT_REPORTING.md): How to report failures.
-- [**MCP_SETUP.md**](./workflows/MCP_SETUP.md): Model Context Protocol server configuration.
-- [**SUBAGENT_STRATEGY.md**](./workflows/SUBAGENT_STRATEGY.md): When and how to use Task tool (subagents).
-- [**VISUAL_INSPECTION.md**](./workflows/VISUAL_INSPECTION.md): How to see the UI.
-
-### 📚 Learning (`/learning`)
-> *Knowledge Base.*
-- [**walkthrough.md**](./learning/walkthrough.md): Codebase tour.
-- [**IDEAS.md**](./learning/IDEAS.md): Future concepts and improvements.
-- [**CI_AND_CODE_QUALITY.md**](./learning/CI_AND_CODE_QUALITY.md): ESLint, CI/CD, warnings explained (sysadmin-friendly).
-
-### 📜 History (`/history`)
-> *Archives.*
-- [**completed_cycles/**](./history/completed_cycles/): Past work.
-- [**incidents/**](./history/incidents/): RCA and incident reports.
-- [**archive/**](./history/archive/): Ancient history.
+**Welcome, Agent.** This is your navigation map.
 
 ---
 
-## 🤖 Agent Protocols
+## 🚀 Quick Start: Which Agent Are You?
 
-### 1. Start of Session (Boot Sequence)
+| Agent | Entry Point | Then Read |
+|-------|-------------|-----------|
+| **Claude Code** | `CLAUDE.md` (auto) | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` |
+| **Gemini CLI** | `GEMINI.md` (auto) | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` |
+| **Antigravity/IDE** | `.agent/rules/rules.md` | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` |
+
+**Po načtení odpověz:**
+> "Jsem [agent]. Pokračujeme od [task]. Stav: [status]. Další: [next step]."
+
+---
+
+## 📂 Directory Structure (v3.0)
+
+### 🔴 Boot Files (Načíst při startu)
+| Soubor | Účel | Kdo čte |
+|--------|------|---------|
+| `AGENT_PROTOCOL.md` | Společná pravidla všech agentů | Všichni |
+| `state/WORKING_CONTEXT.md` | Kde jsme, co děláme | Všichni |
+| `state/MEMORY.md` | Dlouhodobá paměť, protokoly | Všichni |
+
+### 🟡 State Files (`/state`)
+> *Read/Write. Živá paměť projektu.*
+
+| Soubor | Účel | Kdy aktualizovat |
+|--------|------|------------------|
+| **WORKING_CONTEXT.md** | Aktuální task, progress | Průběžně, PŘED compactem! |
+| **MEMORY.md** | Protokoly, lessons learned | Při nových poznatcích |
+| **SESSION_LOG.md** | Archiv sessions | Na konci session (append) |
+
+### 🟢 Core Files (`/core`)
+> *Read-Only. Reference dokumenty.*
+
+| Soubor | Obsah |
+|--------|-------|
+| **CONTENT_GUIDELINES.md** | Jak psát lekce (MDX, komponenty) |
+| **CURRICULUM_ROADMAP.md** | Struktura kurzů, progress |
+| **ARCHITECTURE.md** | Tech stack, infrastruktura |
+| **VISION.md** | Vize projektu, design philosophy |
+| **COMPONENT_PATTERNS.md** | UI komponenty specs |
+| **GLOSSARY.md** | Terminologie |
+
+### 🔵 Workflows (`/workflows`)
+> *How-To Guides. Načti dle potřeby.*
+
+| Soubor | Kdy načíst |
+|--------|------------|
+| **MULTI_AGENT_WORKFLOW.md** | Spolupráce Claude/Gemini |
+| **SUBAGENT_STRATEGY.md** | Použití Task tool (Explore, Plan, etc.) |
+| **MCP_SETUP.md** | MCP konfigurace |
+| **VISUAL_INSPECTION.md** | Playwright visual testing |
+| **DEV_AND_DEPLOYMENT_GUIDE.md** | Deployment, Docker |
+| **DATABASE_MIGRATIONS.md** | Alembic workflow |
+| **DOMAIN_CHANGE_GUIDE.md** | Změna domény |
+| **INCIDENT_REPORTING.md** | Hlášení incidentů |
+
+### 📚 Learning (`/learning`)
+> *Knowledge Base.*
+
+| Soubor | Obsah |
+|--------|-------|
+| **walkthrough.md** | Prohlídka codebase |
+| **IDEAS.md** | Nápady, brainstorming |
+| **CI_AND_CODE_QUALITY.md** | CI/CD, linting |
+
+### 📦 Guides (`/guides`)
+> *External research, reference materials.*
+
+| Soubor | Obsah |
+|--------|-------|
+| **GITHUB_GUIDE.md** | GitHub workflow |
+| **\*_2ndcourse.md** | Research pro Phase 2 kurzy |
+
+### ⚫ Archive (`/history`)
+> *NEČÍST při startu. Historické záznamy.*
+
+- `completed_cycles/` - Staré cykly
+- `incidents/` - Incident reports
+- `archive/` - Archivované dokumenty
+
+---
+
+## 🔄 Memory Protocol
+
 ```
-1. INDEX.md (toto) → navigace
-2. LAST_SESSION.md → CO SE DĚLO NAPOSLEDY (krátkodobá paměť)
-3. MEMORY.md → dlouhodobý kontext (stack, protokoly)
-4. CURRENT_TASK.md → aktivní úkol
+┌─────────────────────────────────────────────────┐
+│  WORKING_CONTEXT.md (Short-term)                │
+│  Aktualizuj: průběžně, před compactem           │
+│  Obsah: current task, progress, decisions       │
+└─────────────────┬───────────────────────────────┘
+                  │ lessons learned
+                  ▼
+┌─────────────────────────────────────────────────┐
+│  MEMORY.md (Long-term)                          │
+│  Aktualizuj: při nových poznatcích              │
+│  Obsah: protokoly, pravidla, patterns           │
+└─────────────────┬───────────────────────────────┘
+                  │ end of session
+                  ▼
+┌─────────────────────────────────────────────────┐
+│  SESSION_LOG.md (Archive)                       │
+│  Aktualizuj: na konci session (append only)     │
+│  Obsah: stručný záznam co bylo hotovo           │
+└─────────────────────────────────────────────────┘
 ```
 
-**Po načtení hned řekni:**
-> "Pokračujeme od [poslední aktivita]. Stav: [status]. Další krok: [co teď]."
+---
 
-### 2. During Work
-- **Průběžně aktualizuj** `LAST_SESSION.md` (co děláš, co je hotovo)
-- Update `CURRENT_TASK.md` při změně úkolu
-- Document new learnings in `learning/`
+## 📋 Role-Based Loading
 
-### 3. End of Session (Handoff)
-- **LAST_SESSION.md** - aktualizuj s přesným stavem pro příští session
-- **SESSION_LOG.md** - přidej záznam do archivu (stručně)
-- **MEMORY.md** - aktualizuj JEN pokud je něco dlouhodobě důležitého
-- Commit & push changes
+| Když děláš... | Načti dodatečně |
+|---------------|-----------------|
+| Content creation | `core/CONTENT_GUIDELINES.md`, `core/CURRICULUM_ROADMAP.md` |
+| Coding/Tech | `core/ARCHITECTURE.md` |
+| Multi-agent work | `workflows/MULTI_AGENT_WORKFLOW.md` |
+| Codebase exploration | `workflows/SUBAGENT_STRATEGY.md` |
+| Deployment | `workflows/DEV_AND_DEPLOYMENT_GUIDE.md` |
+| Visual testing | `workflows/VISUAL_INSPECTION.md` |
+
+---
+
+*Version: 3.0*
+*Updated: 2025-12-06*
+*Previous: INDEX.md v2.0 (archived)*

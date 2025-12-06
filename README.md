@@ -301,13 +301,94 @@ Vytvořeno při prvním seedování (`backend/seed.py`).
 
 ---
 
+## 🤖 Multi-Agent Workflow (v3.0)
+
+Projekt využívá **více AI agentů** kteří spolupracují:
+
+### Architektura
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         ENTRY POINTS                                     │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────────────┐   │
+│  │ Claude Code  │    │ Gemini CLI   │    │ Antigravity/IDE          │   │
+│  │ (CLAUDE.md)  │    │ (GEMINI.md)  │    │ (.agent/rules/rules.md)  │   │
+│  └──────┬───────┘    └──────┬───────┘    └────────────┬─────────────┘   │
+│         │                   │                         │                  │
+│         └───────────────────┴─────────────────────────┘                  │
+│                             │                                            │
+│                             ▼                                            │
+│              ┌──────────────────────────────┐                           │
+│              │     AGENT_PROTOCOL.md        │ ← Společná pravidla       │
+│              └──────────────┬───────────────┘                           │
+│                             │                                            │
+│                             ▼                                            │
+│              ┌──────────────────────────────┐                           │
+│              │  WORKING_CONTEXT.md          │ ← Kde jsme, co děláme     │
+│              │  + MEMORY.md                 │ ← Dlouhodobá paměť        │
+│              └──────────────┬───────────────┘                           │
+│                             │                                            │
+│                             ▼                                            │
+│              ┌──────────────────────────────┐                           │
+│              │   Role-Based Loading         │                           │
+│              │   (dle typu úkolu)           │                           │
+│              └──────────────────────────────┘                           │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Role agentů
+
+| Agent | Role | Kdy se používá |
+|-------|------|----------------|
+| **Claude Code** | Orchestrator, QA Gate, Implementer | Hlavní vývojový agent |
+| **Gemini CLI** | Researcher, Content Generator | Deep research, content creation |
+| **Antigravity/IDE** | Full-stack Developer | IDE-based vývoj |
+| **Subagenti** | Explore, Plan, General | Specializované úkoly |
+
+### Memory systém (3-tier)
+
+```
+WORKING_CONTEXT.md (Short-term)
+       │
+       │ lessons learned
+       ▼
+MEMORY.md (Long-term)
+       │
+       │ end of session
+       ▼
+SESSION_LOG.md (Archive)
+```
+
+### Klíčové soubory
+
+| Soubor | Účel |
+|--------|------|
+| `.ai-context/AGENT_PROTOCOL.md` | Společná pravidla všech agentů |
+| `.ai-context/state/WORKING_CONTEXT.md` | Aktuální task a stav |
+| `.ai-context/state/MEMORY.md` | Dlouhodobá paměť, protokoly |
+| `.ai-context/INDEX.md` | Navigační mapa dokumentace |
+| `GEMINI.md` | Konfigurace pro Gemini CLI |
+
+### Pro vývojáře
+
+Pokud chceš pracovat s AI agenty:
+1. Přečti `.ai-context/INDEX.md` pro navigaci
+2. Aktuální stav je v `.ai-context/state/WORKING_CONTEXT.md`
+3. Pravidla spolupráce: `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`
+
+---
+
 ## 🆘 Podpora
 
 Mrkni do `.ai-context/` pro:
-- `CONTENT_GUIDELINES.md` - jak psát lekce
-- `ARCHITECTURE.md` - tech stack a struktura
-- `state/CURRENT_TASK.md` - aktuální úkoly agenta
-- `state/SESSION_LOG.md` - historie změn
+- `INDEX.md` - mapa dokumentace
+- `AGENT_PROTOCOL.md` - pravidla pro AI agenty
+- `core/CONTENT_GUIDELINES.md` - jak psát lekce
+- `core/ARCHITECTURE.md` - tech stack a struktura
+- `state/WORKING_CONTEXT.md` - aktuální stav projektu
 
 ---
 
