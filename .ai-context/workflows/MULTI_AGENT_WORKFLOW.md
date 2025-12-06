@@ -179,7 +179,7 @@ Najdi 3 konkrétní věci k vylepšení, i když se zdá být perfektní.
     ## Definition of Done
     [Měřitelná kritéria]
   `,
-  model: "gemini-2.5-pro"  // nebo flash pro rychlé tasky
+  model: "gemini-3-pro-preview"  // nebo flash pro rychlé tasky
 }
 ```
 

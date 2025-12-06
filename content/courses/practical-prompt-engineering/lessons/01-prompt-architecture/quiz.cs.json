@@ -1,0 +1,98 @@
+{
+  "title": "Mistrovská třída: Architektura promptů",
+  "description": "Otestuj své porozumění struktuře a architektuře promptů.",
+  "passing_score": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single",
+      "question": "Co je důležitější pro efektivní prompty?",
+      "options": [
+        { "id": "a", "text": "Používání konkrétních 'magických slov' a power frází" },
+        { "id": "b", "text": "Struktura a organizace promptu" },
+        { "id": "c", "text": "Délka promptu" },
+        { "id": "d", "text": "Emocionální jazyk pro motivaci AI" }
+      ],
+      "correct": "b",
+      "explanation": "Struktura je důležitější než konkrétní slova. Dobře organizovaný prompt s jasnými sekcemi pokaždé překoná chaotický prompt s 'magickými frázemi'."
+    },
+    {
+      "id": "q2",
+      "type": "single",
+      "question": "Jaké jsou čtyři vrstvy Prompt Stacku (ve správném pořadí)?",
+      "options": [
+        { "id": "a", "text": "Kontext, Instrukce, Formát, Systém" },
+        { "id": "b", "text": "Systém, Kontext, Instrukce, Formát" },
+        { "id": "c", "text": "Instrukce, Systém, Kontext, Formát" },
+        { "id": "d", "text": "Formát, Kontext, Systém, Instrukce" }
+      ],
+      "correct": "b",
+      "explanation": "Správné pořadí je: System Prompt (OS), Kontext (pracovní paměť), Instrukce (příkaz) a Formát (šablona výstupu)."
+    },
+    {
+      "id": "q3",
+      "type": "single",
+      "question": "Proč se System Prompt přirovnává k 'operačnímu systému'?",
+      "options": [
+        { "id": "a", "text": "Protože běží na pozadí bez vědomí uživatele" },
+        { "id": "b", "text": "Protože definuje základní chování, které řídí všechny následující interakce" },
+        { "id": "c", "text": "Protože potřebuje častou aktualizaci" },
+        { "id": "d", "text": "Protože ovládá hardware" }
+      ],
+      "correct": "b",
+      "explanation": "Stejně jako OS poskytuje základ pro všechny aplikace, System Prompt definuje základní chování a 'ústavu', která řídí, jak AI reaguje na všechny zprávy uživatele."
+    },
+    {
+      "id": "q4",
+      "type": "single",
+      "question": "Který strukturální vzor je Claude specificky trénován respektovat?",
+      "options": [
+        { "id": "a", "text": "JSON objekty" },
+        { "id": "b", "text": "Python bloky kódu" },
+        { "id": "c", "text": "XML tagy" },
+        { "id": "d", "text": "YAML formát" }
+      ],
+      "correct": "c",
+      "explanation": "Claude byl specificky trénován respektovat XML tagy jako <context></context> a <task></task>. To dělá z XML nejspolehlivější strukturální vzor pro Claude."
+    },
+    {
+      "id": "q5",
+      "type": "single",
+      "question": "Co je 'prompt injection'?",
+      "options": [
+        { "id": "a", "text": "Technika pro prodloužení promptů" },
+        { "id": "b", "text": "Když nedůvěryhodný vstup přiměje prompt udělat něco nechtěného" },
+        { "id": "c", "text": "Metoda pro vložení kódu do AI modelu" },
+        { "id": "d", "text": "Přidávání příkladů pro zlepšení kvality promptu" }
+      ],
+      "correct": "b",
+      "explanation": "Prompt injection nastává, když škodlivý nebo nedůvěryhodný vstup uživatele obsahuje instrukce, které přepíší zamýšlené chování tvého promptu. Je to podobné SQL injection v zabezpečení webu."
+    },
+    {
+      "id": "q6",
+      "type": "single",
+      "question": "Jaká je nejjednodušší obrana proti prompt injection?",
+      "options": [
+        { "id": "a", "text": "Používání delších promptů" },
+        { "id": "b", "text": "Přidání více pravidel do system promptu" },
+        { "id": "c", "text": "Zabalení uživatelského vstupu do oddělovačů a zacházení s ním jako s daty" },
+        { "id": "d", "text": "Omezení délky uživatelského vstupu" }
+      ],
+      "correct": "c",
+      "explanation": "Nejjednodušší obrana je zabalit uživatelský vstup do jasných oddělovačů (jako trojité uvozovky nebo XML tagy) a explicitně říct modelu, aby se vším uvnitř zacházel jako s doslovnými daty, ne instrukcemi."
+    },
+    {
+      "id": "q7",
+      "type": "single",
+      "question": "Proč bys měl udržovat čtyři vrstvy promptu jasně oddělené?",
+      "options": [
+        { "id": "a", "text": "Prompt vypadá profesionálněji" },
+        { "id": "b", "text": "AI účtuje méně za strukturované prompty" },
+        { "id": "c", "text": "Snižuje to nejednoznačnost a pomáhá modelu správně parsovat tvůj záměr" },
+        { "id": "d", "text": "Oddělené vrstvy běží rychleji" }
+      ],
+      "correct": "c",
+      "explanation": "Když smícháš system prompt, kontext a instrukce do jednoho chaotického odstavce, model musí hádat, co je co. Jasné oddělení snižuje nejednoznačnost a zlepšuje konzistenci."
+    }
+  ]
+}

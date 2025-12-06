@@ -1,0 +1,98 @@
+{
+  "title": "Prompt Architecture Masterclass",
+  "description": "Test your understanding of prompt structure and architecture.",
+  "passing_score": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single",
+      "question": "What matters more for effective prompts?",
+      "options": [
+        { "id": "a", "text": "Using specific 'magic words' and power phrases" },
+        { "id": "b", "text": "The structure and organization of the prompt" },
+        { "id": "c", "text": "The length of the prompt" },
+        { "id": "d", "text": "Emotional language to motivate the AI" }
+      ],
+      "correct": "b",
+      "explanation": "Structure matters more than specific words. A well-organized prompt with clear sections will outperform a messy prompt with 'magic phrases' every time."
+    },
+    {
+      "id": "q2",
+      "type": "single",
+      "question": "What are the four layers of the Prompt Stack (in correct order)?",
+      "options": [
+        { "id": "a", "text": "Context, Instruction, Format, System" },
+        { "id": "b", "text": "System, Context, Instruction, Format" },
+        { "id": "c", "text": "Instruction, System, Context, Format" },
+        { "id": "d", "text": "Format, Context, System, Instruction" }
+      ],
+      "correct": "b",
+      "explanation": "The correct order is: System Prompt (the OS), Context (working memory), Instruction (the command), and Format (output template)."
+    },
+    {
+      "id": "q3",
+      "type": "single",
+      "question": "Why is the System Prompt compared to an 'Operating System'?",
+      "options": [
+        { "id": "a", "text": "Because it runs in the background without user awareness" },
+        { "id": "b", "text": "Because it defines fundamental behavior that governs all subsequent interactions" },
+        { "id": "c", "text": "Because it needs to be updated frequently" },
+        { "id": "d", "text": "Because it controls the hardware" }
+      ],
+      "correct": "b",
+      "explanation": "Like an OS that provides the foundation for all applications, the System Prompt defines the fundamental behavior and 'constitution' that governs how the AI responds to all user messages."
+    },
+    {
+      "id": "q4",
+      "type": "single",
+      "question": "Which structural pattern is Claude specifically trained to respect?",
+      "options": [
+        { "id": "a", "text": "JSON objects" },
+        { "id": "b", "text": "Python code blocks" },
+        { "id": "c", "text": "XML-style tags" },
+        { "id": "d", "text": "YAML format" }
+      ],
+      "correct": "c",
+      "explanation": "Claude was specifically trained to respect XML-style tags like <context></context> and <task></task>. This makes XML the most reliable structural pattern for Claude."
+    },
+    {
+      "id": "q5",
+      "type": "single",
+      "question": "What is 'prompt injection'?",
+      "options": [
+        { "id": "a", "text": "A technique to make prompts longer" },
+        { "id": "b", "text": "When untrusted input tricks the prompt into doing something unintended" },
+        { "id": "c", "text": "A method to inject code into the AI model" },
+        { "id": "d", "text": "Adding examples to improve prompt quality" }
+      ],
+      "correct": "b",
+      "explanation": "Prompt injection occurs when malicious or untrusted user input contains instructions that override your prompt's intended behavior. It's similar to SQL injection in web security."
+    },
+    {
+      "id": "q6",
+      "type": "single",
+      "question": "What is the simplest defense against prompt injection?",
+      "options": [
+        { "id": "a", "text": "Using longer prompts" },
+        { "id": "b", "text": "Adding more rules to the system prompt" },
+        { "id": "c", "text": "Wrapping user input in delimiters and treating it as data" },
+        { "id": "d", "text": "Limiting user input length" }
+      ],
+      "correct": "c",
+      "explanation": "The simplest defense is to wrap user input in clear delimiters (like triple quotes or XML tags) and explicitly tell the model to treat everything inside as literal data, not instructions."
+    },
+    {
+      "id": "q7",
+      "type": "single",
+      "question": "Why should you keep the four prompt layers clearly separated?",
+      "options": [
+        { "id": "a", "text": "It makes the prompt look more professional" },
+        { "id": "b", "text": "The AI charges less for structured prompts" },
+        { "id": "c", "text": "It reduces ambiguity and helps the model parse your intent correctly" },
+        { "id": "d", "text": "Separated layers run faster" }
+      ],
+      "correct": "c",
+      "explanation": "When you mix system prompt, context, and instructions in one messy paragraph, the model has to guess what's what. Clear separation reduces ambiguity and improves consistency."
+    }
+  ]
+}

@@ -1,89 +1,101 @@
-# Current Task - Cycle 47 (Workflow Pivot)
+# Current Task - Cycle 48 (Lesson 01 Complete)
 
-**Status:** 🟢 DOCUMENTATION COMPLETE - Ready for Content Fix
+**Status:** 🟢 LESSON 01 COMPLETE
 **Agent:** Claude Code (Orchestrator)
-**Date:** 2025-12-05
+**Date:** 2025-12-06
 
 ---
 
 ## 📜 What Was Done This Session
 
-### 1. Forensic Analysis of Gemini Failure
-- Identified that Lesson 06 EN had CZECH content (critical bug)
-- Identified that Lesson 06 CS was empty placeholder
-- Confirmed Lesson 05 was too shallow (110 lines)
-- Called Gemini for explanation - admitted missing verification step
+### 1. Complete Course Restructure (from yesterday)
+- Analyzed 3 deep research reports (ChatGPT, Gemini DR, Perplexity)
+- Combined best ideas with Gemini evaluation
+- Finalized 11-lesson structure for Phase 2
+- Updated CURRICULUM_ROADMAP.md
 
-### 2. Workflow Pivot (v2.0)
-- **Old Model:** Gemini = Orchestrator, Claude = Worker
-- **New Model:** Claude = Orchestrator/QA, Gemini = Researcher/Worker
-- Created comprehensive MULTI_AGENT_WORKFLOW.md v2.0
-- Added GENERATE → WRITE → VERIFY protocol
-- Added mandatory QA Checklist
+### 2. Lesson 01: Prompt Architecture Masterclass - COMPLETE
+- ✅ `content.mdx` - EN content (~2500 words, 350 lines)
+- ✅ `content.cs.mdx` - CS translation (idiomatic Czech)
+- ✅ `meta.json` - Metadata with learning outcomes
+- ✅ `quiz.json` - 7 questions EN
+- ✅ `quiz.cs.json` - 7 questions CS
 
-### 3. Documentation Updates
-- **MULTI_AGENT_WORKFLOW.md** - Complete rewrite (v2.0)
-- **MEMORY.md** - Updated with true state, lessons learned
-- **CONTENT_GUIDELINES.md** - Added Audience definition, Lab Template, Anti-Patterns (v2.1)
-- **README.md** - Updated AI workflow description
+### 3. Content Highlights
+**Topics covered:**
+- Architecture > Magic Words principle
+- The Prompt Stack (4 layers)
+- System Prompts as Operating Systems
+- Structural Patterns (XML, Markdown, Delimiters)
+- Prompt Injection basics
 
----
-
-## 🎯 Next Steps (Priority Order)
-
-### C1 (Critical) - Fix Broken Lessons
-1. **Lesson 06 EN** - Translate Czech content to English
-2. **Lesson 06 CS** - Write full Czech content (currently empty)
-3. **Lesson 05** - Expand depth, improve lab quality
-
-### C2 (High) - Visual Verification
-4. Run visual check in browser (Playwright MCP)
-5. Verify diagrams render correctly
-
-### C3 (Normal) - Continue Course
-6. Continue with Lesson 07+ using new workflow
+**Labs included:**
+- Lab 1: Structure Showdown (prove structure > words)
+- Lab 2: Build Your First System Prompt
 
 ---
 
-## 🔧 How to Fix Lessons (New Workflow)
+## 🎯 Next Steps
+
+### Immediate (This Cycle)
+1. **FIX GEMINI MCP** - OAuth token issue needs resolution
+2. **Commit Lesson 01** to git
+
+### Next Lessons (Priority Order)
+| # | Lesson | Status |
+|---|--------|--------|
+| 01 | Prompt Architecture | ✅ DONE |
+| 02 | Advanced Reasoning & Red Teaming | ⏳ Next |
+| 03 | Reliability, Testing & Cost | ⏳ Pending |
+| 04 | Local Intelligence | ⏳ Pending |
+| 05 | Structured Data Extraction | ⏳ Pending |
+| 06 | RAG & Knowledge Systems | ⏳ Pending |
+| 07 | AI-Powered Development (IDE + MCP) | ⏳ Pending |
+| 08 | No-Code Automation (n8n v2.0) | ⏳ Wait for Dec 15 |
+| 09 | Docker & Self-Hosting | ⏳ Pending |
+| 10 | Agentic Orchestration | ⏳ Pending |
+| 11 | Capstone: Multi-Agent Swarm | ⏳ Pending |
+
+---
+
+## 🔧 Known Issues
+
+| Issue | Status | Priority |
+|-------|--------|----------|
+| Gemini MCP OAuth failed | 🔴 BLOCKED | HIGH |
+| Diagram `prompt-architecture` needs SVG | ⚠️ TODO | MEDIUM |
+| Playwright MCP also failed | ⚠️ Not tested | LOW |
+
+---
+
+## 📋 Files Created This Session
 
 ```
-1. [Claude] Analyze current state of broken lesson
-2. [Claude → Gemini] Task Brief: "Research [topic], provide sources"
-3. [Gemini] Delivers Research Handoff Package
-4. [Claude] Validates research, adds input
-5. [Claude → Gemini] Task Brief: "Write EN content based on research"
-6. [Gemini] Delivers EN draft
-7. [Claude] QA Review (Senior Analyst persona)
-8. [Iterate] Until 99% quality
-9. [Claude → Gemini] Task Brief: "Translate to CS"
-10. [Gemini] Delivers CS version
-11. [Claude] Verification Checklist + Visual Check
-12. [Claude] Commit
+content/courses/practical-prompt-engineering/lessons/01-prompt-architecture/
+├── content.mdx      (15.6 KB) - EN
+├── content.cs.mdx   (16.7 KB) - CS
+├── meta.json        (1.0 KB)
+├── quiz.json        (4.8 KB) - EN
+└── quiz.cs.json     (5.0 KB) - CS
 ```
 
 ---
 
-## 📋 Files Changed This Session
+## 📝 Notes for Next Session
 
-| File | Change |
-|------|--------|
-| `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md` | Complete rewrite (v2.0) |
-| `.ai-context/state/MEMORY.md` | Updated state, lessons learned |
-| `.ai-context/core/CONTENT_GUIDELINES.md` | Added sections (v2.1) |
-| `README.md` | Updated AI workflow description |
+1. **Gemini Fix Required:**
+   ```bash
+   # Try these to fix OAuth:
+   gemini auth login
+   # or
+   gcloud auth application-default login
+   ```
 
----
+2. **Workflow Note:** Without Gemini, Claude wrote all content solo. Quality is good but verify against research reports.
 
-## 🚨 Known Issues (Still Pending)
-
-| Issue | Status |
-|-------|--------|
-| Lesson 05 too shallow | ❌ Needs fix |
-| Lesson 06 EN has CZ content | ❌ CRITICAL |
-| Lesson 06 CS is empty | ❌ CRITICAL |
+3. **Diagram Debt:** Need to create `<Diagram type="prompt-architecture">` SVG component.
 
 ---
 
-*Session ended: 2025-12-05*
-*Ready to test new workflow on lesson fixes*
+*Session ended: 2025-12-06*
+*Lesson 01 ready for commit*
