@@ -61,11 +61,13 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
       if (line.trim().startsWith('<YouTube')) {
         const { endIndex: openEnd, tagContent } = readOpeningTag(i);
         
-        const idMatch = tagContent.match(/id=['"]([^'"']+)['"]/);
-        const titleMatch = tagContent.match(/title=['"]([^'"']+)['"]/);
+        const idMatch = tagContent.match(/id=["']([^"']+)["']/);
+        const titleMatch = tagContent.match(/title=["']([^"']+)["']/);
         
         const id = idMatch?.[1] || '';
         const title = titleMatch?.[1] || 'YouTube Video';
+        
+        console.log('[YouTube] Parsed tag:', { tagContent, id, title });
         
         elements.push(
           <YouTube key={`youtube-${i}`} id={id} title={title} />

@@ -23,9 +23,16 @@ const splitIntoSlides = (content: string): string[] => {
   const lines = content.split('\n');
   const slides: string[] = [];
   let currentSlide: string[] = [];
+  let insideCodeBlock = false;
 
   lines.forEach((line) => {
-    if (line.match(/^##\s+[^#]/)) {
+    // Track code block state
+    if (line.trim().startsWith('```')) {
+      insideCodeBlock = !insideCodeBlock;
+    }
+    
+    // Only split on ## headings when NOT inside a code block
+    if (!insideCodeBlock && line.match(/^##\s+[^#]/)) {
       if (currentSlide.length > 0) {
         slides.push(currentSlide.join('\n'));
         currentSlide = [];

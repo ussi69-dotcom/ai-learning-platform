@@ -310,17 +310,70 @@ Gemini MUSÍ na konci každého tasku reportovat:
 
 ## 9. Tool Matrix
 
-| Tool | Claude | Gemini | Poznámka |
-|------|--------|--------|----------|
-| File read/write | ✅ | ✅ | Základní |
-| Git operations | ✅ | ❌ | Claude only |
-| Playwright (visual) | ✅ | ❌ | MCP |
-| GitHub MCP | ✅ | ❌ | MCP |
-| Web Search | ✅ | ✅ | Oba |
-| ask-gemini | ✅ | - | Claude volá Gemini |
-| brainstorm | ✅ | - | Gemini tool |
+| Tool | Claude CLI | Gemini CLI | Antigravity (IDE) | Poznámka |
+|------|------------|------------|-------------------|----------|
+| File read/write | ✅ | ✅ | ✅ | Základní |
+| Git operations | ✅ | ❌ | ✅ | CLI příkazy |
+| Playwright (visual) | ✅ | ❌ | ⚠️ | IDE via CLI workaround |
+| GitHub MCP | ✅ | ❌ | ❌ | MCP only |
+| Web Search | ✅ | ✅ | ✅ | Všichni |
+| ask-gemini | ✅ | - | ❌ | Claude only MCP |
+| generate_image | ❌ | ❌ | ✅ | IDE only |
+| browser_subagent | ❌ | ❌ | ⚠️ | Nefunguje ve WSL |
 
 ---
 
-*Last updated: 2025-12-05 (v2.0)*
-*Major change: Claude = Orchestrator, Gemini = Worker/Researcher*
+## 10. IDE Agent Mode (Antigravity ve WSL)
+
+### Setup Requirements
+Antigravity ve WSL má specifická omezení kvůli network boundary WSL ↔ Windows.
+
+**browser_subagent NEFUNGUJE** - používejte Playwright CLI workaround.
+
+### Visual Check Workaround (Playwright CLI)
+
+```bash
+# Screenshot
+npx playwright screenshot http://localhost:3000 ./screenshot.png --wait-for-timeout=3000
+
+# S konkrétní stránkou
+npx playwright screenshot http://localhost:3000/courses/slug/lesson ./lesson.png
+```
+
+### Kdy Antigravity může pracovat samostatně
+
+| Task | Samostatně? | Jak |
+|------|-------------|-----|
+| Content generation | ✅ | Full file access |
+| Research | ✅ | Web search tool |
+| Visual check | ⚠️ | `npx playwright screenshot` |
+| npm verify | ✅ | Command execution |
+| Diagram creation | ✅ | generate_image tool |
+| Git commit | ✅ | Run command |
+| PR creation | ❌ | Needs GitHub MCP → přepnout na Claude |
+
+### Manual Handoff Protocol (IDE ↔ CLI)
+
+**Před přepnutím na jiného agenta:**
+1. Aktualizuj `WORKING_CONTEXT.md`:
+   - Co je hotovo
+   - Co zbývá
+   - Task Brief pro dalšího agenta (pokud relevantní)
+2. Oznám: *"Handoff připraven. Další agent: přečti WORKING_CONTEXT.md"*
+
+**Po přepnutí (nový agent):**
+1. Přečti `WORKING_CONTEXT.md`
+2. Přečti `MEMORY.md`
+3. Pokračuj od posledního bodu
+
+### Kdy přepnout na Claude CLI
+
+- [ ] Potřebuji GitHub MCP (PR, issues, code review)
+- [ ] Potřebuji komplexní Playwright test (ne jen screenshot)
+- [ ] Potřebuji "Senior QA" second opinion
+- [ ] Konfliktní architektonické rozhodnutí
+
+---
+
+*Last updated: 2025-12-07 (v2.1)*
+*Added: IDE/Antigravity WSL workflow, Playwright CLI workaround*

@@ -250,5 +250,221 @@ export default function DiagramPrompting({ type }: DiagramProps) {
     );
   }
 
+  // =====================
+  // AIM Framework Diagram
+  // =====================
+  if (type === 'aim-framework') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 700 200" className="w-full h-auto" role="img" aria-label="AIM Framework: Actor + Input + Mission">
+            <defs>
+              <linearGradient id="aim-grad-actor" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#a855f7" />
+                <stop offset="100%" stopColor="#7c3aed" />
+              </linearGradient>
+              <linearGradient id="aim-grad-input" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#1d4ed8" />
+              </linearGradient>
+              <linearGradient id="aim-grad-mission" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#22c55e" />
+                <stop offset="100%" stopColor="#16a34a" />
+              </linearGradient>
+              <marker id="aim-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+              </marker>
+            </defs>
+
+            {/* Actor Circle */}
+            <g transform="translate(100, 100)">
+              <circle cx="0" cy="0" r="60" fill="url(#aim-grad-actor)" opacity="0.9" />
+              <text x="0" y="-10" textAnchor="middle" className="text-2xl font-bold fill-white">A</text>
+              <text x="0" y="15" textAnchor="middle" className="text-sm font-semibold fill-white/90">Actor</text>
+              <text x="0" y="80" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'Kdo je AI?' : 'Who is the AI?'}</text>
+            </g>
+
+            {/* Arrow 1 */}
+            <path d="M 170 100 L 230 100" stroke="#64748b" strokeWidth="3" markerEnd="url(#aim-arrow)" />
+            <text x="200" y="80" textAnchor="middle" className="text-lg fill-slate-500">+</text>
+
+            {/* Input Circle */}
+            <g transform="translate(300, 100)">
+              <circle cx="0" cy="0" r="60" fill="url(#aim-grad-input)" opacity="0.9" />
+              <text x="0" y="-10" textAnchor="middle" className="text-2xl font-bold fill-white">I</text>
+              <text x="0" y="15" textAnchor="middle" className="text-sm font-semibold fill-white/90">Input</text>
+              <text x="0" y="80" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'Co dostane?' : 'What context?'}</text>
+            </g>
+
+            {/* Arrow 2 */}
+            <path d="M 370 100 L 430 100" stroke="#64748b" strokeWidth="3" markerEnd="url(#aim-arrow)" />
+            <text x="400" y="80" textAnchor="middle" className="text-lg fill-slate-500">+</text>
+
+            {/* Mission Circle */}
+            <g transform="translate(500, 100)">
+              <circle cx="0" cy="0" r="60" fill="url(#aim-grad-mission)" opacity="0.9" />
+              <text x="0" y="-10" textAnchor="middle" className="text-2xl font-bold fill-white">M</text>
+              <text x="0" y="15" textAnchor="middle" className="text-sm font-semibold fill-white/90">Mission</text>
+              <text x="0" y="80" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'Co má udělat?' : "What's the goal?"}</text>
+            </g>
+
+            {/* Result Arrow */}
+            <path d="M 570 100 L 650 100" stroke="#22c55e" strokeWidth="3" markerEnd="url(#aim-arrow)" />
+            <text x="655" y="105" className="text-xl fill-green-500">✓</text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // MAP Framework Diagram
+  // =====================
+  if (type === 'map-framework') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl">
+          <svg viewBox="0 0 800 220" className="w-full h-auto" role="img" aria-label="MAP Framework: Memory + Assets + Actions + Prompt">
+            <defs>
+              <linearGradient id="map-grad-memory" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#f59e0b" />
+                <stop offset="100%" stopColor="#d97706" />
+              </linearGradient>
+              <linearGradient id="map-grad-assets" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#1d4ed8" />
+              </linearGradient>
+              <linearGradient id="map-grad-actions" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#a855f7" />
+                <stop offset="100%" stopColor="#7c3aed" />
+              </linearGradient>
+              <linearGradient id="map-grad-prompt" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#22c55e" />
+                <stop offset="100%" stopColor="#16a34a" />
+              </linearGradient>
+            </defs>
+
+            {/* Memory Column */}
+            <g transform="translate(50, 30)">
+              <rect x="0" y="0" width="140" height="160" rx="12" fill="url(#map-grad-memory)" opacity="0.15" stroke="#f59e0b" strokeWidth="2" />
+              <text x="70" y="35" textAnchor="middle" className="text-3xl">🧠</text>
+              <text x="70" y="65" textAnchor="middle" className="text-lg font-bold fill-amber-600 dark:fill-amber-400">Memory</text>
+              <text x="70" y="90" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'Historie' : 'History'}</text>
+              <text x="70" y="110" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'konverzace' : 'of chat'}</text>
+              <rect x="20" y="125" width="100" height="25" rx="4" fill="#f59e0b" fillOpacity="0.2" />
+              <text x="70" y="142" textAnchor="middle" className="text-[10px] fill-amber-700 dark:fill-amber-300">@previous</text>
+            </g>
+
+            {/* Assets Column */}
+            <g transform="translate(220, 30)">
+              <rect x="0" y="0" width="140" height="160" rx="12" fill="url(#map-grad-assets)" opacity="0.15" stroke="#3b82f6" strokeWidth="2" />
+              <text x="70" y="35" textAnchor="middle" className="text-3xl">📂</text>
+              <text x="70" y="65" textAnchor="middle" className="text-lg font-bold fill-blue-600 dark:fill-blue-400">Assets</text>
+              <text x="70" y="90" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'Soubory' : 'Files'}</text>
+              <text x="70" y="110" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'a dokumenty' : '& documents'}</text>
+              <rect x="20" y="125" width="100" height="25" rx="4" fill="#3b82f6" fillOpacity="0.2" />
+              <text x="70" y="142" textAnchor="middle" className="text-[10px] fill-blue-700 dark:fill-blue-300">report.pdf</text>
+            </g>
+
+            {/* Actions Column */}
+            <g transform="translate(390, 30)">
+              <rect x="0" y="0" width="140" height="160" rx="12" fill="url(#map-grad-actions)" opacity="0.15" stroke="#a855f7" strokeWidth="2" />
+              <text x="70" y="35" textAnchor="middle" className="text-3xl">⚡</text>
+              <text x="70" y="65" textAnchor="middle" className="text-lg font-bold fill-purple-600 dark:fill-purple-400">Actions</text>
+              <text x="70" y="90" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'Nástroje' : 'Tools'}</text>
+              <text x="70" y="110" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'a web search' : '& web search'}</text>
+              <rect x="20" y="125" width="100" height="25" rx="4" fill="#a855f7" fillOpacity="0.2" />
+              <text x="70" y="142" textAnchor="middle" className="text-[10px] fill-purple-700 dark:fill-purple-300">@web</text>
+            </g>
+
+            {/* Prompt Column */}
+            <g transform="translate(560, 30)">
+              <rect x="0" y="0" width="180" height="160" rx="12" fill="url(#map-grad-prompt)" opacity="0.15" stroke="#22c55e" strokeWidth="2" />
+              <text x="90" y="35" textAnchor="middle" className="text-3xl">🎯</text>
+              <text x="90" y="65" textAnchor="middle" className="text-lg font-bold fill-green-600 dark:fill-green-400">Prompt</text>
+              <text x="90" y="90" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'Supercharged' : 'Supercharged'}</text>
+              <text x="90" y="110" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'instrukce' : 'instructions'}</text>
+              <rect x="15" y="125" width="150" height="25" rx="4" fill="#22c55e" fillOpacity="0.3" />
+              <text x="90" y="142" textAnchor="middle" className="text-[10px] font-bold fill-green-700 dark:fill-green-300">{isCs ? 'M+A+A = 🚀' : 'M+A+A = 🚀'}</text>
+            </g>
+
+            {/* Connecting Arrows */}
+            <path d="M 195 110 L 215 110" stroke="#64748b" strokeWidth="2" strokeDasharray="4 2" />
+            <path d="M 365 110 L 385 110" stroke="#64748b" strokeWidth="2" strokeDasharray="4 2" />
+            <path d="M 535 110 L 555 110" stroke="#64748b" strokeWidth="2" strokeDasharray="4 2" />
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // Prompt Stack Diagram
+  // =====================
+  if (type === 'prompt-stack') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 700 320" className="w-full h-auto" role="img" aria-label="Prompt Stack: 4 Layers">
+            <defs>
+              <linearGradient id="stack-grad-system" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#1e40af" />
+                <stop offset="100%" stopColor="#3b82f6" />
+              </linearGradient>
+              <linearGradient id="stack-grad-context" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#7c3aed" />
+                <stop offset="100%" stopColor="#a855f7" />
+              </linearGradient>
+              <linearGradient id="stack-grad-instruction" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#059669" />
+                <stop offset="100%" stopColor="#22c55e" />
+              </linearGradient>
+              <linearGradient id="stack-grad-format" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#d97706" />
+                <stop offset="100%" stopColor="#f59e0b" />
+              </linearGradient>
+            </defs>
+
+            {/* Layer 1: System Prompt (Bottom) */}
+            <g transform="translate(50, 240)">
+              <rect x="0" y="0" width="600" height="60" rx="8" fill="url(#stack-grad-system)" opacity="0.9" />
+              <text x="50" y="25" className="text-sm font-bold fill-white">1️⃣ SYSTEM PROMPT</text>
+              <text x="50" y="45" className="text-xs fill-white/80">{isCs ? '"Jsi senior analytik s 20 lety zkušeností..."' : '"You are a senior analyst with 20 years..."'}</text>
+              <text x="550" y="35" textAnchor="middle" className="text-2xl">🖥️</text>
+            </g>
+
+            {/* Layer 2: Context */}
+            <g transform="translate(80, 175)">
+              <rect x="0" y="0" width="540" height="55" rx="8" fill="url(#stack-grad-context)" opacity="0.9" />
+              <text x="40" y="22" className="text-sm font-bold fill-white">2️⃣ CONTEXT</text>
+              <text x="40" y="42" className="text-xs fill-white/80">{isCs ? '"Uživatel je majitel restaurace..."' : '"The user is a restaurant owner..."'}</text>
+              <text x="490" y="32" textAnchor="middle" className="text-2xl">📚</text>
+            </g>
+
+            {/* Layer 3: Instruction */}
+            <g transform="translate(110, 110)">
+              <rect x="0" y="0" width="480" height="55" rx="8" fill="url(#stack-grad-instruction)" opacity="0.9" />
+              <text x="40" y="22" className="text-sm font-bold fill-white">3️⃣ INSTRUCTION</text>
+              <text x="40" y="42" className="text-xs fill-white/80">{isCs ? '"Analyzuj a navrhni 3 doporučení..."' : '"Analyze and suggest 3 recommendations..."'}</text>
+              <text x="430" y="32" textAnchor="middle" className="text-2xl">⚡</text>
+            </g>
+
+            {/* Layer 4: Format (Top) */}
+            <g transform="translate(140, 45)">
+              <rect x="0" y="0" width="420" height="55" rx="8" fill="url(#stack-grad-format)" opacity="0.9" />
+              <text x="40" y="22" className="text-sm font-bold fill-white">4️⃣ FORMAT</text>
+              <text x="40" y="42" className="text-xs fill-white/80">{isCs ? '"Výstup jako tabulka: Oblast | Úspora..."' : '"Output as table: Area | Savings..."'}</text>
+              <text x="370" y="32" textAnchor="middle" className="text-2xl">📐</text>
+            </g>
+
+            {/* Stack indicator arrows */}
+            <path d="M 350 30 L 350 5" stroke="#64748b" strokeWidth="2" strokeDasharray="4 2" />
+            <text x="350" y="-5" textAnchor="middle" className="text-xs fill-slate-500 dark:fill-slate-400">{isCs ? 'VÝSTUP' : 'OUTPUT'}</text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }

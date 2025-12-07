@@ -12,8 +12,8 @@
   "duration_minutes": 120,
   "difficulty": "intermediate",
   "video_url": {
-    "en": "https://www.youtube.com/watch?v=bZQun8Y4L2A",
-    "cs": null
+    "en": "https://www.youtube.com/embed/EWFFaKxsz_s",
+    "cs": "https://www.youtube.com/embed/EWFFaKxsz_s"
   },
   "tags": ["prompt-engineering", "architecture", "system-prompts", "security"],
   "prerequisites": ["ai-basics-beginner"],

@@ -9,7 +9,7 @@ import DiagramUI from './diagrams/DiagramUI';
 import DiagramEvaluation from './diagrams/DiagramEvaluation';
 
 interface DiagramProps {
-  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop' | 'prompt-cheat-sheet' | 'traditional-vs-ml' | 'system-prompt-flow' | 'regression-matrix' | 'tradeoff-radar';
+  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop' | 'prompt-cheat-sheet' | 'traditional-vs-ml' | 'system-prompt-flow' | 'regression-matrix' | 'tradeoff-radar' | 'aim-framework' | 'map-framework' | 'prompt-stack';
 }
 
 export default function Diagram({ type }: DiagramProps) {
@@ -28,8 +28,8 @@ export default function Diagram({ type }: DiagramProps) {
     return <DiagramConcepts type={type} />;
   }
 
-  // Prompting & Interaction
-  if (['few-shot-learning', 'chain-of-thought', 'prompt-structure-pyramid', 'prompt-cheat-sheet', 'system-prompt-flow'].includes(type)) {
+  // Prompting & Interaction (UPDATED: added aim-framework, map-framework, prompt-stack)
+  if (['few-shot-learning', 'chain-of-thought', 'prompt-structure-pyramid', 'prompt-cheat-sheet', 'system-prompt-flow', 'aim-framework', 'map-framework', 'prompt-stack'].includes(type)) {
     return <DiagramPrompting type={type} />;
   }
 

@@ -127,6 +127,32 @@ Claude MUSÍ použít "Senior QA Analyst" personu při review:
 - Zmiňuj aktuální modely: Claude Opus 4.5, Gemini 3, GPT-4o
 - NE: Gemini 2.0, Claude 3.5, GPT-4 (zastaralé)
 
+### 2025-12-07: Video Embed Format ⚠️ CRITICAL
+**Rule:** Video URL v `meta.json` MUSÍ být ve formátu embed!
+```
+ŠPATNĚ: https://www.youtube.com/watch?v=XXX
+SPRÁVNĚ: https://www.youtube.com/embed/XXX
+```
+**Proč:** `watch?v=` URL nefunguje v iframe (X-Frame-Options block).
+
+### 2025-12-07: Diagnóza PŘED opravou
+**Rule:** Vždy nejdřív zjisti KDE je problém, pak teprve opravuj.
+**Příklad:** Video nefungovalo → měnil jsem `<YouTube>` v MDX, ale problém byl v `meta.json`.
+**Postup:**
+1. Konzole browseru → najít chybu
+2. `grep -r "hledaný_text"` → najít zdroj dat
+3. Ověřit API response / meta.json
+4. Teprve pak opravit
+
+### 2025-12-07: Reference existující lekce
+**Rule:** Před úpravou lekce se VŽDY podívat na existující lekce STEJNÉHO kurzu.
+**Proč:** Konzistence formátu (Holocron, emojis, struktury).
+**Příklad:** Holocron v Lesson 01 měl mít stejný styl jako beginner kurz.
+
+### 2025-12-07: Backend restart po změně content
+**Rule:** Po změně `content/*` nebo `meta.json` → `docker compose restart backend`
+**Proč:** Backend cachuje data z content souborů.
+
 ### General
 - **Don't hold back.** User wants engineering depth, not generic tutorials.
 - **Verify file paths.** Check if you are writing to `.cs.mdx` or `.mdx`.
