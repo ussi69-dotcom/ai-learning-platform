@@ -1,0 +1,277 @@
+<Callout type="info">
+**Mission:** Master the art of running state-of-the-art LLMs on your own hardware. You will decouple your AI workflows from cloud dependencies, ensuring maximum privacy, zero latency, and fixed costs. By the end of this lesson, you will be running Llama 4 8B on your local machine and integrating it into a Python application.
+
+⏳ **Reading Time:** 30 min | 🧪 **[2] Labs Included**
+</Callout>
+
+## 🎥 Recommended Watching
+
+<Callout type="tip">
+While reading is essential, seeing local inference in action helps solidify the concepts. Watch this overview of the local LLM landscape (Dec 2025 edition).
+*(Video Placeholder: https://youtube.com/watch?v=placeholder-local-llm-guide)*
+</Callout>
+
+## 🏰 Why Run Models Locally?
+
+In an era dominated by massive API providers like OpenAI and Anthropic, the movement towards **Local Intelligence**—running models on your own hardware (or private VPCs)—has exploded. Why bother managing your own infrastructure when APIs are so convenient?
+
+There are four critical drivers:
+
+### 1. Privacy & Data Sovereignty
+This is the "killer feature" for enterprise and personal usage alike. When you use an API, you are sending your data (prompts, context, RAG documents) to a third party. Even with "zero retention" policies, the data leaves your perimeter.
+*   **Local:** Your data never leaves your RAM. You can feed it PII, medical records, or proprietary code with zero risk of leakage or training scrape.
+*   **Air-gapped:** You can run these models on machines with no internet connection entirely.
+
+### 2. Cost Predictability
+API costs scale linearly with usage. A viral agentic workflow could cost $5 today and $500 tomorrow.
+*   **Local:** The cost is upfront (hardware) plus electricity. Once you have the GPU, running 1 million tokens costs the same as running 10. This is crucial for "Agentic Loops" where models might think, critique, and retry hundreds of times for a single task.
+
+### 3. Latency
+Network round-trips add latency.
+*   **Local:** You are limited only by your memory bandwidth. On a Mac Studio (M4 Ultra) or an NVIDIA RTX 5090, the "Time to First Token" (TTFT) is often faster than an API call can even handshake.
+
+### 4. Uncensored & Specialized Control
+API models are heavily RLHF'd (Reinforced Learning with Human Feedback) for safety, which often leads to "refusal" behaviors on benign but edge-case tasks.
+*   **Local:** You can run "abliterated" or fine-tuned versions of models that do exactly what you tell them, without moralizing lectures.
+
+---
+
+## 📉 Quantization Explained
+
+To run a model, you need to load its **Weights** into VRAM (Video RAM). Standard training happens in **FP16** (16-bit Floating Point) or **BF16**.
+
+*   **FP16:** Each parameter takes **2 bytes**.
+*   **Llama 4 8B @ FP16:** 8,000,000,000 × 2 bytes = 16 GB.
+
+For many consumer cards with 8GB or 12GB VRAM, this is too big. Enter **Quantization**.
+
+Quantization reduces the precision of the weights from 16-bit floats to lower-bit integers (Int8, Int4, etc.).
+
+*   **Q8 (8-bit):** Almost lossless. 1 byte per param. (~8GB for 8B model).
+*   **Q4_K_M (4-bit):** The "Sweet Spot". 0.5 bytes per param roughly.
+*   **Q2 (2-bit):** Significant brain damage (model becomes incoherent).
+
+**Does it hurt intelligence?**
+Surprisingly, modern quantization techniques (like GGUF/llama.cpp k-quants) show that **Q4** retains about **95-98%** of the model's reasoning capability compared to FP16, while requiring **60-70% less memory**.
+
+<ConceptCard title="The Format War: GGUF vs Safetensors">
+**Safetensors:** The standard for raw weights (Hugging Face default). Fast to load, safe (no pickle execution), but usually requires conversion for specific engines.
+
+**GGUF (GPT-Generated Unified Format):** The king of local inference. Designed for `llama.cpp`. It packs the model weights *and* the tokenizer info into a single file. It supports **memory mapping**, meaning you can load a model larger than your RAM by offloading parts to disk (though this is slow).
+</ConceptCard>
+
+---
+
+## 🧮 VRAM Math: Can I Run It?
+
+Before downloading a model, you must calculate if it fits. If you exceed VRAM, the model layers offload to System RAM (CPU), slowing generation from 100 tokens/sec to 2 tokens/sec.
+
+### The Formula
+
+```
+Total VRAM ≈ (Params × BytesPerParam) + KV Cache + Activation Overhead
+```
+
+**Rule of Thumb (Q4_K_M):**
+Allow **0.7 GB** per **1 Billion** parameters, plus **2-4 GB buffer** for the context window (KV Cache).
+
+*   **8B Model:** 8 × 0.7 = 5.6 GB. Fits comfortably on an 8GB card.
+*   **70B Model:** 70 × 0.7 = 49 GB. Requires dual 24GB cards (RTX 3090/4090) or a Mac with 64GB+ Unified Memory.
+
+### The VRAM Landscape (December 2025)
+
+| Category | Model | VRAM (Q4_K_M) | Use Case |
+|----------|-------|---------------|----------|
+| **Tiny** | Gemma 3 2B | < 2 GB | CPU inference, fast classification, IoT devices |
+| **Standard** | Llama 4 8B | ~ 6 GB | The daily driver. Great summarization, simple coding. |
+| **Mid** | Qwen 3 14B | ~ 10 GB | The reasoning king of mid-range. Requires 12GB+ VRAM. |
+| **Reasoning**| DeepSeek-R1 | ~ 12 GB | Specialized for math, logic, and complex COT (Chain of Thought). |
+| **Large** | Llama 4 70B | ~ 40 GB | Production grade. Replaces GPT-4 for 90% of tasks. |
+
+<Callout type="warning">
+**Context Window Impact:** The standard VRAM requirements above assume a small context (4k-8k). If you want to fill the 128k context window of Llama 4, the KV Cache can grow to consume tens of gigabytes on its own! Flash Attention helps, but context is never free.
+</Callout>
+
+---
+
+## 🏎️ Inference Engines
+
+How do you actually execute these GGUF or Safetensor files?
+
+### 1. Ollama
+*   **Best for:** Developers, Beginners, Mac/Linux users.
+*   **The "Docker" of AI:** It abstracts everything behind a simple CLI. `ollama run llama4`.
+*   **Backend:** Built on `llama.cpp`.
+*   **API:** Provides a local API compatible with OpenAI's spec.
+
+### 2. LM Studio
+*   **Best for:** Visual learners, Model discovery.
+*   **UI:** A polished desktop app to search HuggingFace, download GGUFs, and chat.
+*   **Feature:** Great visualizer for how much VRAM a model will take before you load it.
+
+### 3. vLLM
+*   **Best for:** Production, High Throughput.
+*   **Tech:** PagedAttention. It optimizes memory specifically for serving concurrent requests.
+*   **Usage:** If you are building a backend to serve 100 users simultaneously, use vLLM, not Ollama.
+
+---
+
+## 🧪 Lab 1: Up and Running with Ollama
+
+### 🎯 Objective
+Install the Ollama runtime and perform your first local inference using the Llama 4 8B model.
+
+### 📋 Prerequisites
+- Linux, macOS, or Windows (WSL2 recommended).
+- At least 8GB of RAM (16GB recommended).
+- Optional but recommended: NVIDIA GPU or Apple Silicon (M1/M2/M3/M4).
+
+### 🛠️ Steps
+
+#### 1. Install Ollama
+Open your terminal.
+
+**Linux / macOS:**
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+**Windows:**
+Download the executable from [ollama.com](https://ollama.com).
+
+#### 2. Verify Installation
+Check the version and ensure the service is running.
+```bash
+ollama --version
+# Output example: ollama version 0.5.12
+```
+
+#### 3. Pull and Run Llama 4
+We will use the 8 Billion parameter version. It balances speed and intelligence perfectly for consumer hardware.
+
+```bash
+ollama run llama4:8b
+```
+
+*Note: This will download approximately 4.7 GB of data. The first run takes time.*
+
+#### 4. Chat Interaction
+Once the prompt appears (`>>>`), try these queries to test reasoning speed:
+
+1.  **Creative:** "Write a haiku about a robot learning to love."
+2.  **Logic:** "If I have 3 apples and eat one, then buy two more, how many do I have?"
+3.  **Coding:** "Write a Python function to reverse a string."
+
+Use `/bye` to exit the chat loop.
+
+#### 5. Check Resource Usage
+While the model is generating text, open a new terminal window to see the compute impact.
+
+**Linux (NVIDIA):**
+```bash
+watch -n 1 nvidia-smi
+```
+*Look for the VRAM usage (Memory-Usage) and GPU-Util.*
+
+**macOS:**
+Open `Activity Monitor` -> `GPU History` (Cmd+4).
+
+### ✅ Success Criteria
+- You successfully entered the interactive chat mode.
+- Responses are generated locally (disconnect wifi to prove it!).
+- You observed the memory spike on your system when the model loaded.
+
+---
+
+## 🧪 Lab 2: Python Integration via API
+
+### 🎯 Objective
+Control your local LLM programmatically using Python. This is the foundation for building agents.
+
+### 📋 Prerequisites
+- Python 3.10+ installed.
+- Ollama running in the background (`ollama serve` or just having the app open).
+
+### 🛠️ Steps
+
+#### 1. Setup Environment
+Create a folder for your project and install the official library.
+
+```bash
+mkdir local-agent
+cd local-agent
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install ollama
+```
+
+#### 2. Create the Inference Script
+Create a file named `agent.py`.
+
+```python
+import ollama
+import time
+
+# Define the model we pulled in Lab 1
+MODEL = "llama4:8b"
+
+def chat_with_local_model(prompt):
+    print(f"\n🤖 Sending to {MODEL}...\n")
+
+    start_time = time.time()
+
+    # The 'stream=True' option allows us to see tokens as they generate
+    # just like the ChatGPT UI
+    stream = ollama.chat(
+        model=MODEL,
+        messages=[{'role': 'user', 'content': prompt}],
+        stream=True,
+    )
+
+    full_response = ""
+    for chunk in stream:
+        content = chunk['message']['content']
+        print(content, end='', flush=True)
+        full_response += content
+
+    end_time = time.time()
+    duration = end_time - start_time
+
+    # Calculate tokens per second (approximate)
+    # A rough heuristic: 1 word ~= 1.3 tokens
+    token_count = len(full_response.split()) * 1.3
+    tps = token_count / duration
+
+    print(f"\n\n⚡ Stats: {tps:.2f} tokens/sec | Time: {duration:.2f}s")
+
+if __name__ == "__main__":
+    user_input = input("Enter your prompt: ")
+    chat_with_local_model(user_input)
+```
+
+#### 3. Run the Script
+```bash
+python agent.py
+```
+
+**Test Input:** "Explain the concept of recursion to a 5-year-old."
+
+### 📝 Troubleshooting
+*   **Connection Refused:** Ensure Ollama is running. By default it listens on `127.0.0.1:11434`.
+*   **Slow Generation:** If you see < 2 tokens/second, the model likely didn't fit in VRAM and is running on CPU. Try a smaller model like `gemma3:2b`.
+
+### ✅ Success Criteria
+- The script executes without connection errors.
+- The output streams to the console in real-time.
+- You receive a stats summary at the end showing your tokens per second (TPS).
+
+---
+
+## 🔮 Holocron: Key Takeaways
+
+<ConceptCard title="Local Intelligence Architecture">
+1.  **Models are Files:** They are just large binary files (GGUF/Safetensors) containing weights.
+2.  **RAM is the Limit:** Your VRAM determines how "smart" a model you can run. Quantization (Q4) allows you to fit larger models into smaller RAM with minimal quality loss.
+3.  **Inference Engines:** Tools like Ollama act as the "operating system" for these files, exposing them via HTTP APIs for your code to consume.
+4.  **The Trade-off:** You trade the infinite scale of the cloud for the privacy, cost-control, and sovereignty of local silicon.
+</ConceptCard>

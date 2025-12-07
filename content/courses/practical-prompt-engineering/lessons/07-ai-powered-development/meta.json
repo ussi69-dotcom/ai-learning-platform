@@ -1,0 +1,19 @@
+{
+  "title": "AI-Powered Development",
+  "title_cs": "Vývoj s AI asistencí",
+  "description": "Master the AI-native development ecosystem with MCP, context management, and AI coding tools.",
+  "description_cs": "Ovládněte ekosystém AI-nativního vývoje s MCP, správou kontextu a AI nástroji pro kódování.",
+  "order": 7,
+  "video_url": {
+    "en": "https://youtube.com/watch?v=placeholder-mcp-explained",
+    "cs": "https://youtube.com/watch?v=placeholder-mcp-explained"
+  },
+  "tags": ["mcp", "cursor", "windsurf", "claude-code", "ai-ide", "context-management"],
+  "prerequisites": ["01-prompt-architecture", "04-local-intelligence"],
+  "learning_objectives": [
+    "Understand MCP (Model Context Protocol) architecture",
+    "Compare AI coding tools (Cursor, Windsurf, Claude Code)",
+    "Build a custom MCP server with FastMCP",
+    "Implement security best practices for AI agents"
+  ]
+}

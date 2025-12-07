@@ -1,0 +1,111 @@
+{
+  "title": "AI-Powered Development",
+  "description": "Test your understanding of MCP architecture, AI coding tools, and security best practices.",
+  "passing_score": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single",
+      "question": "What is the primary purpose of the Model Context Protocol (MCP)?",
+      "options": [
+        { "id": "a", "text": "To train AI models faster" },
+        { "id": "b", "text": "To standardize how AI models connect to external tools and data" },
+        { "id": "c", "text": "To replace all existing APIs" },
+        { "id": "d", "text": "To encrypt AI communications" }
+      ],
+      "correct": "b",
+      "explanation": "MCP acts as a 'USB-C for AI applications' - it standardizes how LLMs connect to databases, APIs, and other tools. This eliminates the need for custom integrations for every tool-model combination."
+    },
+    {
+      "id": "q2",
+      "type": "single",
+      "question": "In MCP architecture, what are the three main components?",
+      "options": [
+        { "id": "a", "text": "Frontend, Backend, Database" },
+        { "id": "b", "text": "Client, Server, Model" },
+        { "id": "c", "text": "Input, Processing, Output" },
+        { "id": "d", "text": "User, Agent, Tool" }
+      ],
+      "correct": "b",
+      "explanation": "MCP uses a three-part architecture: Client (the host application like Claude Desktop), Server (exposes tools and resources), and Model (the LLM that uses the tools)."
+    },
+    {
+      "id": "q3",
+      "type": "single",
+      "question": "Which AI IDE is best suited for 'deep surgery' across multiple interconnected modules?",
+      "options": [
+        { "id": "a", "text": "Cursor" },
+        { "id": "b", "text": "Windsurf" },
+        { "id": "c", "text": "Claude Code" },
+        { "id": "d", "text": "Antigravity" }
+      ],
+      "correct": "b",
+      "explanation": "Windsurf (by Codeium) excels at understanding variable flow across your application. Its 'Cascade' flow allows it to plan and execute multi-step changes across frontend, backend, and database more effectively."
+    },
+    {
+      "id": "q4",
+      "type": "single",
+      "question": "What is the purpose of the .cursorrules or .windsurfrules file?",
+      "options": [
+        { "id": "a", "text": "To configure IDE keyboard shortcuts" },
+        { "id": "b", "text": "To define project-specific coding standards and context for the AI" },
+        { "id": "c", "text": "To store API credentials securely" },
+        { "id": "d", "text": "To set up version control rules" }
+      ],
+      "correct": "b",
+      "explanation": "These files act as a system prompt injected into every chat session. They define your stack, coding standards, testing requirements, and what the AI should avoid. Without them, the AI might suggest patterns inconsistent with your project."
+    },
+    {
+      "id": "q5",
+      "type": "single",
+      "question": "Which security principle should you apply when connecting MCP servers to external services?",
+      "options": [
+        { "id": "a", "text": "Grant full read/write access for convenience" },
+        { "id": "b", "text": "Principle of least privilege - only grant necessary permissions" },
+        { "id": "c", "text": "Disable all security features for faster performance" },
+        { "id": "d", "text": "Share credentials across all MCP servers" }
+      ],
+      "correct": "b",
+      "explanation": "Always use the principle of least privilege. For example, if you only need to read GitHub issues, use scope 'read:issue' instead of 'repo' which grants full repository control."
+    },
+    {
+      "id": "q6",
+      "type": "single",
+      "question": "What is the recommended way to run untrusted MCP servers?",
+      "options": [
+        { "id": "a", "text": "Directly on the host machine for best performance" },
+        { "id": "b", "text": "Inside a Docker container for isolation" },
+        { "id": "c", "text": "With administrator privileges" },
+        { "id": "d", "text": "Without any network restrictions" }
+      ],
+      "correct": "b",
+      "explanation": "Container sandboxing isolates untrusted code from your host system. A malicious MCP server running in Docker cannot easily access your credentials, sensitive files, or execute arbitrary code on your machine."
+    },
+    {
+      "id": "q7",
+      "type": "single",
+      "question": "What library makes building MCP servers trivial in Python?",
+      "options": [
+        { "id": "a", "text": "Flask" },
+        { "id": "b", "text": "FastAPI" },
+        { "id": "c", "text": "FastMCP" },
+        { "id": "d", "text": "Django" }
+      ],
+      "correct": "c",
+      "explanation": "FastMCP is a high-level library that simplifies MCP server development. You can expose tools using simple decorators like @mcp.tool(), making it easy to add custom functionality to AI assistants."
+    },
+    {
+      "id": "q8",
+      "type": "single",
+      "question": "Which critical operations should always require explicit user confirmation in MCP servers?",
+      "options": [
+        { "id": "a", "text": "Reading file contents" },
+        { "id": "b", "text": "Listing directory contents" },
+        { "id": "c", "text": "DELETE, DROP TABLE, git push --force" },
+        { "id": "d", "text": "Checking system stats" }
+      ],
+      "correct": "c",
+      "explanation": "High-risk, potentially destructive operations like DELETE, DROP TABLE, and force push should require Human-in-the-Loop (HITL) confirmation. Configure your MCP servers to flag these tools as 'requires_approval'."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "title": "Local Intelligence",
+  "title_cs": "Lokální inteligence",
+  "description": "Master the art of running LLMs on your own hardware with maximum privacy and zero cloud costs.",
+  "description_cs": "Ovládněte umění spouštění LLM modelů na vlastním hardware s maximální privátností a bez cloudových nákladů.",
+  "order": 4,
+  "video_url": {
+    "en": "https://youtube.com/watch?v=placeholder-local-llm-guide",
+    "cs": "https://youtube.com/watch?v=placeholder-local-llm-guide"
+  },
+  "tags": ["ollama", "llama", "local-ai", "quantization", "vram", "inference"],
+  "prerequisites": ["01-prompt-architecture"],
+  "learning_objectives": [
+    "Understand why local AI matters (privacy, cost, latency, control)",
+    "Calculate VRAM requirements for any model size",
+    "Install and run Ollama with Llama 4 8B",
+    "Integrate local LLMs into Python applications"
+  ]
+}

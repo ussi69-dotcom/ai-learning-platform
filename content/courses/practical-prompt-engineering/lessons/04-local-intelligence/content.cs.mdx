@@ -1,0 +1,274 @@
+<Callout type="info">
+**Mise:** Ovládněte umění provozování nejmodernějších (state-of-the-art) LLM na vlastním hardwaru. Oddělíte své AI workflow od závislosti na cloudu, čímž zajistíte maximální soukromí, nulovou latenci a fixní náklady. Na konci této lekce budete na svém lokálním stroji provozovat Llama 4 8B a integrovat ji do Python aplikace.
+
+⏳ **Čas čtení:** 30 min | 🧪 **[2] Laby součástí**
+</Callout>
+
+## 🎥 Doporučené sledování
+
+<Callout type="tip">
+Ačkoliv je čtení zásadní, vidět lokální inferenci v akci pomáhá upevnit koncepty. Podívejte se na tento přehled prostředí lokálních LLM (edice Prosinec 2025).
+*(Video Placeholder: https://youtube.com/watch?v=placeholder-local-llm-guide)*
+</Callout>
+
+## 🏰 Proč spouštět modely lokálně?
+
+V éře, které dominují masivní poskytovatelé API jako OpenAI a Anthropic, hnutí směrem k **Lokální Inteligenci**—spouštění modelů na vlastním hardwaru (nebo privátních VPC)—explodovalo. Proč se obtěžovat správou vlastní infrastruktury, když jsou API tak pohodlná?
+
+Existují čtyři kritické faktory:
+
+### 1. Soukromí a datová suverenita
+Toto je "killer feature" pro podnikové i osobní použití. Když používáte API, posíláte svá data (prompty, kontext, RAG dokumenty) třetí straně. I s politikami "nulového uchovávání" (zero retention) data opouštějí váš perimetr.
+*   **Lokálně:** Vaše data nikdy neopustí vaši RAM. Můžete je krmit PII, lékařskými záznamy nebo proprietárním kódem s nulovým rizikem úniku nebo scrapingu pro trénování.
+*   **Air-gapped:** Tyto modely můžete provozovat na strojích, které jsou zcela bez připojení k internetu.
+
+### 2. Předvídatelnost nákladů
+Náklady na API rostou lineárně s používáním. Virální agentní workflow může dnes stát $5 a zítra $500.
+*   **Lokálně:** Náklady jsou fixní (hardware) plus elektřina. Jakmile máte GPU, spuštění 1 milionu tokenů stojí stejně jako spuštění 10. To je klíčové pro "Agentní smyčky" (Agentic Loops), kde modely mohou přemýšlet, kritizovat a opakovat pokusy stokrát pro jediný úkol.
+
+### 3. Latence
+Síťové round-tripy přidávají latenci.
+*   **Lokálně:** Jste omezeni pouze propustností paměti. Na Mac Studio (M4 Ultra) nebo NVIDIA RTX 5090 je "Time to First Token" (TTFT) často rychlejší, než API call stihne provést handshake.
+
+### 4. Necenzurovaná a specializovaná kontrola
+API modely jsou silně upraveny pomocí RLHF (Reinforced Learning with Human Feedback) pro bezpečnost, což často vede k chování "odmítnutí" (refusal) u neškodných, ale hraničních úkolů.
+*   **Lokálně:** Můžete spouštět "abliterated" nebo fine-tuned verze modelů, které dělají přesně to, co jim řeknete, bez moralizujících kázání.
+
+---
+
+## 📉 Vysvětlení kvantizace
+
+Pro spuštění modelu musíte načíst jeho **Váhy** (Weights) do VRAM (Video RAM). Standardní trénink probíhá v **FP16** (16-bit Floating Point) nebo **BF16**.
+
+*   **FP16:** Každý parametr zabírá **2 byty**.
+*   **Llama 4 8B @ FP16:** 8 000 000 000 × 2 byty = 16 GB.
+
+Pro mnoho spotřebitelských karet s 8GB nebo 12GB VRAM je to příliš mnoho. Přichází **Kvantizace**.
+
+Kvantizace snižuje přesnost vah z 16bitových floatů na lower-bit integery (Int8, Int4, atd.).
+
+*   **Q8 (8-bit):** Téměř bezztrátové. 1 byte na parametr (~8GB pro 8B model).
+*   **Q4_K_M (4-bit):** Tzv. "Sweet Spot". Zhruba 0,5 bytu na parametr.
+*   **Q2 (2-bit):** Významné poškození mozku (model se stává nesouvislým).
+
+**Poškozuje to inteligenci?**
+Překvapivě, moderní techniky kvantizace (jako GGUF/llama.cpp k-quants) ukazují, že **Q4** si zachovává asi **95-98 %** schopností usuzování modelu ve srovnání s FP16, zatímco vyžaduje o **60-70 % méně paměti**.
+
+<ConceptCard title="Válka formátů: GGUF vs Safetensors">
+**Safetensors:** Standard pro surové váhy (Hugging Face default). Rychlé načítání, bezpečné (žádné spouštění pickle), ale obvykle vyžaduje konverzi pro specifické enginy.
+
+**GGUF (GPT-Generated Unified Format):** Král lokální inference. Navržen pro `llama.cpp`. Balí váhy modelu *a* informace o tokenizéru do jediného souboru. Podporuje **memory mapping**, což znamená, že můžete načíst model větší než vaše RAM odložením částí na disk (i když je to pomalé).
+</ConceptCard>
+
+---
+
+## 🧮 Matematika VRAM: Spustím to?
+
+Před stažením modelu si musíte spočítat, zda se vám vejde do paměti. Pokud překročíte kapacitu VRAM, vrstvy modelu se přesunou do systémové RAM (CPU), což zpomalí generování ze 100 tokenů/s na 2 tokeny/s.
+
+### Vzoreček
+
+```
+Celková VRAM ≈ (Parametry × BajtyNaParametr) + KV Cache + Režie aktivace
+```
+
+**Obecné pravidlo (Q4_K_M):**
+Počítejte s **0,7 GB** na **1 miliardu** parametrů, plus **2-4 GB rezervy** pro kontextové okno (KV Cache).
+
+*   **8B Model:** 8 × 0,7 = 5,6 GB. Vejde se pohodlně na 8GB kartu.
+*   **70B Model:** 70 × 0,7 = 49 GB. Vyžaduje dvě 24GB karty nebo Mac s 64GB+ Unified Memory.
+
+### Přehled nároků na VRAM (Prosinec 2025)
+
+| Kategorie | Model | VRAM (Q4_K_M) | Použití |
+|----------|-------|---------------|----------|
+| **Tiny** | Gemma 3 2B | < 2 GB | CPU inference, IoT |
+| **Standard** | Llama 4 8B | ~ 6 GB | Každodenní použití |
+| **Mid** | Qwen 3 14B | ~ 10 GB | Král logiky |
+| **Reasoning**| DeepSeek-R1 | ~ 12 GB | Matematika, logika |
+| **Large** | Llama 4 70B | ~ 40 GB | Produkční kvalita |
+
+<Callout type="warning">
+**Dopad kontextového okna:** Požadavky na VRAM předpokládají malý kontext (4k-8k). Zaplnění 128k kontextu může spotřebovat desítky GB v KV Cache!
+</Callout>
+
+---
+
+## 🏎️ Inferenční enginy
+
+Jak vlastně spouštíte tyto GGUF nebo Safetensor soubory?
+
+### 1. Ollama
+*   **Nejlepší pro:** Vývojáře, začátečníky, uživatele Mac/Linux.
+*   **"Docker" pro AI:** Abstrahuje vše za jednoduché CLI. `ollama run llama4`.
+*   **Backend:** Postaven na `llama.cpp`.
+*   **API:** Poskytuje lokální API kompatibilní se specifikací OpenAI.
+
+### 2. LM Studio
+*   **Nejlepší pro:** Vizuální typy, objevování modelů.
+*   **UI:** Vyleštěná desktopová aplikace pro prohledávání HuggingFace, stahování GGUF a chatování.
+*   **Funkce:** Skvělý vizualizér, kolik VRAM model zabere, než ho načtete.
+
+### 3. vLLM
+*   **Nejlepší pro:** Produkci, vysokou propustnost (High Throughput).
+*   **Tech:** PagedAttention. Optimalizuje paměť specificky pro obsluhu souběžných požadavků.
+*   **Použití:** Pokud stavíte backend pro obsluhu 100 uživatelů současně, použijte vLLM, ne Ollama.
+
+---
+
+## 🧪 Lab 1: Zprovoznění Ollama
+
+### 🎯 Cíl
+Nainstalujte runtime Ollama a proveďte svou první lokální inferenci pomocí modelu Llama 4 8B.
+
+### 📋 Prerekvizity
+- Linux, macOS nebo Windows (doporučeno WSL2).
+- Alespoň 8 GB RAM (doporučeno 16 GB).
+- Volitelné, ale doporučené: NVIDIA GPU nebo Apple Silicon (M1/M2/M3/M4).
+
+### 🛠️ Kroky
+
+#### 1. Instalace Ollama
+Otevřete terminál.
+
+**Linux / macOS:**
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+**Windows:**
+Stáhněte si spustitelný soubor z [ollama.com](https://ollama.com).
+
+#### 2. Ověření instalace
+```bash
+ollama --version
+# Příklad výstupu: ollama version 0.5.12
+```
+
+#### 3. Stažení a spuštění Llama 4
+```bash
+ollama run llama4:8b
+```
+
+*Poznámka: Tímto se stáhne přibližně 4,7 GB dat. První spuštění trvá déle.*
+
+#### 4. Chatová interakce
+Jakmile se objeví prompt (`>>>`), zkuste tyto dotazy:
+
+1.  **Kreativní:** "Napiš haiku o robotovi, který se učí milovat."
+2.  **Logika:** "Když mám 3 jablka, jedno sním a pak koupím dvě další, kolik jich mám?"
+3.  **Kódování:** "Napiš funkci v Pythonu pro obrácení řetězce."
+
+Použijte `/bye` pro ukončení chatu.
+
+#### 5. Kontrola využití zdrojů
+Zatímco model generuje text, otevřete nový terminál pro sledování využití:
+
+**Linux (NVIDIA):**
+```bash
+watch -n 1 nvidia-smi
+```
+*Sledujte VRAM usage (Memory-Usage) a GPU-Util.*
+
+**macOS:**
+Otevřete `Activity Monitor` -> `GPU History` (Cmd+4).
+
+### ✅ Kritéria úspěchu
+- Úspěšně jste vstoupili do interaktivního režimu chatu.
+- Odpovědi jsou generovány lokálně (odpojte wifi pro důkaz!).
+- Zaznamenali jste nárůst využití paměti ve vašem systému.
+
+---
+
+## 🧪 Lab 2: Integrace Pythonu přes API
+
+### 🎯 Cíl
+Ovládejte svůj lokální LLM programově pomocí Pythonu. Toto je základ pro budování agentů.
+
+### 📋 Prerekvizity
+- Nainstalovaný Python 3.10+.
+- Ollama běžící na pozadí (`ollama serve` nebo mít aplikaci otevřenou).
+
+### 🛠️ Kroky
+
+#### 1. Nastavení prostředí
+Vytvořte složku pro projekt a nainstalujte oficiální knihovnu.
+
+```bash
+mkdir local-agent
+cd local-agent
+python3 -m venv venv
+source venv/bin/activate  # Na Windows: venv\Scripts\activate
+pip install ollama
+```
+
+#### 2. Vytvoření inferenčního skriptu
+Vytvořte soubor s názvem `agent.py`.
+
+```python
+import ollama
+import time
+
+# Definujeme model, který jsme stáhli v Lab 1
+MODEL = "llama4:8b"
+
+def chat_with_local_model(prompt):
+    print(f"\n🤖 Odesílám do {MODEL}...\n")
+
+    start_time = time.time()
+
+    # Volba 'stream=True' umožňuje vidět tokeny tak, jak se generují
+    # stejně jako v ChatGPT UI
+    stream = ollama.chat(
+        model=MODEL,
+        messages=[{'role': 'user', 'content': prompt}],
+        stream=True,
+    )
+
+    full_response = ""
+    for chunk in stream:
+        content = chunk['message']['content']
+        print(content, end='', flush=True)
+        full_response += content
+
+    end_time = time.time()
+    duration = end_time - start_time
+
+    # Výpočet tokenů za sekundu (přibližně)
+    # Hrubá heuristika: 1 slovo ~= 1.3 tokenu
+    token_count = len(full_response.split()) * 1.3
+    tps = token_count / duration
+
+    print(f"\n\n⚡ Statistiky: {tps:.2f} tokenů/s | Čas: {duration:.2f}s")
+
+if __name__ == "__main__":
+    user_input = input("Zadejte prompt: ")
+    chat_with_local_model(user_input)
+```
+
+#### 3. Spuštění skriptu
+```bash
+python agent.py
+```
+
+**Testovací vstup:** "Vysvětli koncept rekurze pětiletému dítěti."
+
+### 📝 Řešení problémů
+*   **Odmítnutí připojení:** Ujistěte se, že Ollama běží. Ve výchozím nastavení naslouchá na `127.0.0.1:11434`.
+*   **Pomalé generování:** Pokud vidíte < 2 tokeny/s, model se pravděpodobně nevešel do VRAM a běží na CPU. Zkuste menší model jako `gemma3:2b`.
+
+### ✅ Kritéria úspěchu
+- Skript se spustí bez chyb připojení.
+- Výstup se streamuje do konzole v reálném čase.
+- Na konci vidíte souhrn statistik ukazující tokeny za sekundu (TPS).
+
+---
+
+## 🔮 Holocron: Klíčové poznatky
+
+<ConceptCard title="Architektura lokální inteligence">
+1.  **Modely jsou soubory:** Jsou to prostě velké binární soubory (GGUF/Safetensors) obsahující váhy.
+2.  **RAM je limit:** Vaše VRAM určuje, jak "chytrý" model můžete spustit. Kvantizace (Q4) umožňuje vejít větší modely do menší RAM s minimální ztrátou kvality.
+3.  **Inferenční enginy:** Nástroje jako Ollama fungují jako "operační systém" pro tyto soubory, vystavují je přes HTTP API pro vaši aplikaci.
+4.  **Kompromis:** Vyměňujete nekonečnou škálovatelnost cloudu za soukromí, kontrolu nákladů a suverenitu lokálního křemíku.
+</ConceptCard>

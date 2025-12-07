@@ -1,0 +1,111 @@
+{
+  "title": "Vývoj s AI asistencí",
+  "description": "Otestujte své znalosti architektury MCP, AI nástrojů pro kódování a bezpečnostních best practices.",
+  "passing_score": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single",
+      "question": "Jaký je hlavní účel Model Context Protocol (MCP)?",
+      "options": [
+        { "id": "a", "text": "Trénovat AI modely rychleji" },
+        { "id": "b", "text": "Standardizovat způsob, jakým se AI modely připojují k externím nástrojům a datům" },
+        { "id": "c", "text": "Nahradit všechna existující API" },
+        { "id": "d", "text": "Šifrovat AI komunikaci" }
+      ],
+      "correct": "b",
+      "explanation": "MCP funguje jako 'USB-C pro AI aplikace' - standardizuje způsob, jakým se LLM připojují k databázím, API a dalším nástrojům. To eliminuje potřebu vlastních integrací pro každou kombinaci nástroj-model."
+    },
+    {
+      "id": "q2",
+      "type": "single",
+      "question": "Jaké jsou tři hlavní komponenty v architektuře MCP?",
+      "options": [
+        { "id": "a", "text": "Frontend, Backend, Databáze" },
+        { "id": "b", "text": "Client, Server, Model" },
+        { "id": "c", "text": "Vstup, Zpracování, Výstup" },
+        { "id": "d", "text": "Uživatel, Agent, Nástroj" }
+      ],
+      "correct": "b",
+      "explanation": "MCP používá třídílnou architekturu: Client (hostitelská aplikace jako Claude Desktop), Server (vystavuje nástroje a zdroje) a Model (LLM, které nástroje používá)."
+    },
+    {
+      "id": "q3",
+      "type": "single",
+      "question": "Které AI IDE je nejvhodnější pro 'hlubokou chirurgii' napříč více propojenými moduly?",
+      "options": [
+        { "id": "a", "text": "Cursor" },
+        { "id": "b", "text": "Windsurf" },
+        { "id": "c", "text": "Claude Code" },
+        { "id": "d", "text": "Antigravity" }
+      ],
+      "correct": "b",
+      "explanation": "Windsurf (od Codeium) exceluje v pochopení toku proměnných napříč vaší aplikací. Jeho 'Cascade' flow umožňuje plánovat a provádět vícekrokové změny napříč frontendem, backendem a databází efektivněji."
+    },
+    {
+      "id": "q4",
+      "type": "single",
+      "question": "Jaký je účel souboru .cursorrules nebo .windsurfrules?",
+      "options": [
+        { "id": "a", "text": "Konfigurovat klávesové zkratky IDE" },
+        { "id": "b", "text": "Definovat standardy kódování a kontext specifický pro projekt pro AI" },
+        { "id": "c", "text": "Bezpečně ukládat API credentials" },
+        { "id": "d", "text": "Nastavit pravidla pro version control" }
+      ],
+      "correct": "b",
+      "explanation": "Tyto soubory fungují jako system prompt vkládaný do každé chatové relace. Definují váš stack, standardy kódování, požadavky na testování a čemu se má AI vyhnout. Bez nich by AI mohla navrhovat vzory nekonzistentní s vaším projektem."
+    },
+    {
+      "id": "q5",
+      "type": "single",
+      "question": "Jaký bezpečnostní princip byste měli aplikovat při připojování MCP serverů k externím službám?",
+      "options": [
+        { "id": "a", "text": "Udělit plný read/write přístup pro pohodlí" },
+        { "id": "b", "text": "Princip nejmenších oprávnění - udělit pouze nezbytná oprávnění" },
+        { "id": "c", "text": "Zakázat všechny bezpečnostní funkce pro rychlejší výkon" },
+        { "id": "d", "text": "Sdílet credentials napříč všemi MCP servery" }
+      ],
+      "correct": "b",
+      "explanation": "Vždy používejte princip nejmenších oprávnění. Například pokud potřebujete pouze číst GitHub issues, použijte scope 'read:issue' místo 'repo', který uděluje plnou kontrolu nad repozitářem."
+    },
+    {
+      "id": "q6",
+      "type": "single",
+      "question": "Jaký je doporučený způsob spouštění nedůvěryhodných MCP serverů?",
+      "options": [
+        { "id": "a", "text": "Přímo na host stroji pro nejlepší výkon" },
+        { "id": "b", "text": "Uvnitř Docker kontejneru pro izolaci" },
+        { "id": "c", "text": "S administrátorskými oprávněními" },
+        { "id": "d", "text": "Bez jakýchkoli síťových omezení" }
+      ],
+      "correct": "b",
+      "explanation": "Container sandboxing izoluje nedůvěryhodný kód od vašeho host systému. Škodlivý MCP server běžící v Dockeru nemůže snadno přistupovat k vašim credentials, citlivým souborům ani spouštět libovolný kód na vašem stroji."
+    },
+    {
+      "id": "q7",
+      "type": "single",
+      "question": "Která knihovna zjednodušuje budování MCP serverů v Pythonu?",
+      "options": [
+        { "id": "a", "text": "Flask" },
+        { "id": "b", "text": "FastAPI" },
+        { "id": "c", "text": "FastMCP" },
+        { "id": "d", "text": "Django" }
+      ],
+      "correct": "c",
+      "explanation": "FastMCP je high-level knihovna, která zjednodušuje vývoj MCP serverů. Nástroje můžete vystavovat pomocí jednoduchých dekorátorů jako @mcp.tool(), což usnadňuje přidávání vlastní funkcionality k AI asistentům."
+    },
+    {
+      "id": "q8",
+      "type": "single",
+      "question": "Které kritické operace by měly vždy vyžadovat explicitní potvrzení uživatelem v MCP serverech?",
+      "options": [
+        { "id": "a", "text": "Čtení obsahu souborů" },
+        { "id": "b", "text": "Výpis obsahu adresářů" },
+        { "id": "c", "text": "DELETE, DROP TABLE, git push --force" },
+        { "id": "d", "text": "Kontrola systémových statistik" }
+      ],
+      "correct": "c",
+      "explanation": "Vysoce rizikové, potenciálně destruktivní operace jako DELETE, DROP TABLE a force push by měly vyžadovat Human-in-the-Loop (HITL) potvrzení. Nakonfigurujte vaše MCP servery, aby označovaly tyto nástroje jako 'requires_approval'."
+    }
+  ]
+}

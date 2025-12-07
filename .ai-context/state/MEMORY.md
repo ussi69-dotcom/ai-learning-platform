@@ -115,6 +115,18 @@ Claude MUSÍ použít "Senior QA Analyst" personu při review:
 **Co se stalo:** Agent sám rozhodl, že splnil DoD bez externího ověření.
 **Řešení:** Claude jako QA gate, nikdy "fire & forget".
 
+### 2025-12-06: ALWAYS USE NEWEST MODELS ⚠️ CRITICAL
+**Rule:** Pro research a generování VŽDY používej NEJNOVĚJŠÍ dostupné modely:
+- **Gemini:** `gemini-3-pro-preview` (NE 2.5-pro!)
+- **Claude:** `claude-opus-4-5-20251101` (aktuální)
+- Pokud nejsi jistý verzí → nech na AUTO nebo se zeptej
+
+**Proč:** Starší modely mají zastaralé znalosti a horší výkon.
+
+**V obsahu kurzu:**
+- Zmiňuj aktuální modely: Claude Opus 4.5, Gemini 3, GPT-4o
+- NE: Gemini 2.0, Claude 3.5, GPT-4 (zastaralé)
+
 ### General
 - **Don't hold back.** User wants engineering depth, not generic tutorials.
 - **Verify file paths.** Check if you are writing to `.cs.mdx` or `.mdx`.
@@ -127,8 +139,38 @@ Claude MUSÍ použít "Senior QA Analyst" personu při review:
 1. ~~**C1 (Critical):** Opravit dokumentaci a workflow~~ ✅ DONE
 2. ~~**C1 (Critical):** Course restructure~~ ✅ DONE (11 lessons)
 3. ~~**C1:** Lesson 01~~ ✅ COMMITTED
-4. **NEXT:** Lesson 02 (čeká na pokyn uživatele)
+4. ~~**C1:** Content Research~~ ✅ DONE (Perplexity + Gemini synthesis)
+
+### NEXT: Implementace lekcí (dle CONTENT_FOUNDATION)
+| Priorita | Lekce | Co | Podklady |
+|----------|-------|-----|----------|
+| 🔴 CRITICAL | 02 | Prompt Injection Defense | `Perplexity_assist/CONTENT_FOUNDATION_SYNTHESIS.md` |
+| 🔴 CRITICAL | 04 | Update Models (Llama 4, Qwen 3) | VRAM tabulka v CONTENT_FOUNDATION |
+| 🔴 CRITICAL | 07 | MCP Lab | FastMCP kód v CONTENT_FOUNDATION |
+| 🟡 HIGH | 06 | GraphRAG | comprehensive_research_report.md |
+| 🟡 HIGH | 10 | LangGraph Focus | executive_brief.md |
 
 ---
 
-*Last updated: 2025-12-06 (Cycle 48)*
+## 📚 Research Repository (Dec 2025)
+
+**Location:** `.ai-context/Perplexity_assist/`
+
+| File | Content | Lines |
+|------|---------|-------|
+| `CONTENT_FOUNDATION_SYNTHESIS.md` | **MASTER** - 11 lekcí, laby, kód | 301 |
+| `comprehensive_research_report.md` | Perplexity 6-part analysis | 431 |
+| `executive_brief.md` | Executive summary | 272 |
+| `Lessons_content_research.md` | Video recommendations | 425 |
+
+**Sources:** 90+ citations, Perplexity + Gemini 3 Pro synthesis
+
+**Key Data Points:**
+- Claude Opus 4.5: 80.9% SWE-bench (best coding)
+- Llama 4 8B: ~6GB VRAM (recommended local)
+- MCP: Production-ready Dec 2025
+- LangGraph: #1 agent framework
+
+---
+
+*Last updated: 2025-12-06 (Cycle 50 - Content Research Complete)*

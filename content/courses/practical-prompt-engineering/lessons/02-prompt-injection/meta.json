@@ -1,0 +1,27 @@
+{
+  "id": "02-prompt-injection",
+  "title": {
+    "en": "Advanced Reasoning & Red Teaming",
+    "cs": "Pokročilé reasoning techniky a Red Teaming"
+  },
+  "description": {
+    "en": "Master defense-in-depth strategies against prompt injection while learning to think like an attacker.",
+    "cs": "Ovládněte strategie hloubkové obrany proti prompt injection a naučte se myslet jako útočník."
+  },
+  "order": 2,
+  "duration_minutes": 90,
+  "difficulty": "intermediate",
+  "video_url": {
+    "en": "https://www.youtube.com/watch?v=zjkBMFhNj_g",
+    "cs": null
+  },
+  "tags": ["prompt-injection", "security", "red-teaming", "defense", "reasoning"],
+  "prerequisites": ["01-prompt-architecture"],
+  "learning_outcomes": [
+    "Understand how prompt injection attacks work",
+    "Apply 5 defense-in-depth techniques (Sandwich, Spotlighting, Parametric, Refusal, Filtering)",
+    "Execute red teaming exercises to find vulnerabilities",
+    "Design secure prompts that resist common attack vectors",
+    "Use tools like Lakera Guard for automated security testing"
+  ]
+}

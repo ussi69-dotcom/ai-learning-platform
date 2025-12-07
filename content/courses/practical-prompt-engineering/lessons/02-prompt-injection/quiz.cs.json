@@ -1,0 +1,111 @@
+{
+  "title": "Pokročilé reasoning techniky a Red Teaming",
+  "description": "Otestujte své znalosti obran proti prompt injection a red teaming technik.",
+  "passing_score": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single",
+      "question": "Proč je prompt injection považován za bezpečnostní riziko číslo 1 pro LLM aplikace?",
+      "options": [
+        { "id": "a", "text": "LLM jsou příliš drahé na řádné zabezpečení" },
+        { "id": "b", "text": "LLM nedokáží spolehlivě rozlišit instrukce od dat" },
+        { "id": "c", "text": "Prompt injection ovlivňuje pouze starší modely" },
+        { "id": "d", "text": "Je snadné detekovat a blokovat všechny pokusy o injection" }
+      ],
+      "correct": "b",
+      "explanation": "LLM zpracovávají vše jako textové tokeny. Nemají nativní mechanismus pro rozlišení 'důvěryhodných instrukcí' od 'nedůvěryhodných dat', což umožňuje interpretovat uživatelský vstup jako příkazy."
+    },
+    {
+      "id": "q2",
+      "type": "single",
+      "question": "Co je technika 'Sandwich Defense'?",
+      "options": [
+        { "id": "a", "text": "Použití dvou různých AI modelů ke zpracování stejného požadavku" },
+        { "id": "b", "text": "Šifrování uživatelského vstupu před zpracováním" },
+        { "id": "c", "text": "Umístění kritických instrukcí PŘED i ZA uživatelský vstup" },
+        { "id": "d", "text": "Rozdělení promptu na více menších promptů" }
+      ],
+      "correct": "c",
+      "explanation": "Sandwich Defense umísťuje kritické instrukce a omezení před uživatelský vstup a poté je posiluje za vstupem. Tato 'připomínka' po potenciálním injection pomáhá modelu udržet zamýšlené chování."
+    },
+    {
+      "id": "q3",
+      "type": "single",
+      "question": "Jaký je účel 'Spotlighting' (označování dat)?",
+      "options": [
+        { "id": "a", "text": "Zvýraznění důležitých částí odpovědi" },
+        { "id": "b", "text": "Explicitní označení uživatelského vstupu jako nedůvěryhodných dat pomocí XML tagů nebo delimiterů" },
+        { "id": "c", "text": "Zpříjemnění čitelnosti promptu pro lidi" },
+        { "id": "d", "text": "Zvýšení rychlosti zpracování modelem" }
+      ],
+      "correct": "b",
+      "explanation": "Spotlighting používá jasné značky (jako XML tagy) k explicitnímu sdělení modelu, že obsah v těchto značkách má být zpracován jako literální data, ne jako instrukce k následování."
+    },
+    {
+      "id": "q4",
+      "type": "single",
+      "question": "Co je útok 'DAN'?",
+      "options": [
+        { "id": "a", "text": "Technický exploit, který zhroutí model" },
+        { "id": "b", "text": "Roleplay jailbreak, který vytváří personu bez etických zásad" },
+        { "id": "c", "text": "Denial-of-service útok na AI servery" },
+        { "id": "d", "text": "Metoda pro zrychlení AI odpovědí" }
+      ],
+      "correct": "b",
+      "explanation": "DAN (Do Anything Now) je pokus o jailbreak založený na roleplay, kdy se útočník snaží přimět model k přijetí alternativní persony, která tvrdí, že nemá žádná omezení ani etické zásady."
+    },
+    {
+      "id": "q5",
+      "type": "single",
+      "question": "Jak funguje 'Payload Splitting' jako útočný vektor?",
+      "options": [
+        { "id": "a", "text": "Rozděluje škodlivou instrukci přes více zpráv nebo kódování, aby se vyhnul detekci" },
+        { "id": "b", "text": "Rozděluje odpověď AI na menší kousky" },
+        { "id": "c", "text": "Vytváří více kopií stejného požadavku" },
+        { "id": "d", "text": "Komprimuje prompt pro použití méně tokenů" }
+      ],
+      "correct": "a",
+      "explanation": "Payload Splitting skrývá útok jeho distribucí přes více zpráv, použitím kódování jako Base64, nebo postupným budováním instrukce kousek po kousku, takže žádná jednotlivá zpráva neobsahuje kompletní škodlivý požadavek."
+    },
+    {
+      "id": "q6",
+      "type": "single",
+      "question": "Co je 'Output Filtering' (obrana Vrstva 5)?",
+      "options": [
+        { "id": "a", "text": "Odstranění vulgarismů z výstupů modelu" },
+        { "id": "b", "text": "Použití druhého LLM k ověření výstupů před odesláním uživatelům" },
+        { "id": "c", "text": "Omezení délky odpovědí modelu" },
+        { "id": "d", "text": "Převod výstupu do jiného formátu" }
+      ],
+      "correct": "b",
+      "explanation": "Output Filtering používá druhý model jako 'soudce' ke kontrole každé odpovědi na bezpečnostní problémy jako únik system promptu, porušení pravidel nebo známky úspěšného prompt injection před odesláním uživatelům."
+    },
+    {
+      "id": "q7",
+      "type": "single",
+      "question": "Co je 'Indirect Injection' (Supply Chain útok)?",
+      "options": [
+        { "id": "a", "text": "Útok skrytý v externím obsahu, který model načte (jako webové stránky nebo dokumenty)" },
+        { "id": "b", "text": "Útok na model přes jeho API místo chat rozhraní" },
+        { "id": "c", "text": "Použití VPN k skrytí identity útočníka" },
+        { "id": "d", "text": "Vložení kódu do trénovacích dat modelu" }
+      ],
+      "correct": "a",
+      "explanation": "Indirect Injection umísťuje škodlivé instrukce ne do zprávy uživatele, ale do externího obsahu, který má model zpracovat (webové stránky, dokumenty, emaily). Když model tento obsah čte, může následovat skryté instrukce."
+    },
+    {
+      "id": "q8",
+      "type": "single",
+      "question": "Proč je red teaming mentalita důležitá pro bezpečnost promptů?",
+      "options": [
+        { "id": "a", "text": "Pomáhá psát rychlejší prompty" },
+        { "id": "b", "text": "Pokud jsi nezkoušel prolomit vlastní prompt, předpokládej, že je prolomitelný" },
+        { "id": "c", "text": "Je důležitá pouze pro vládní aplikace" },
+        { "id": "d", "text": "Red teaming je volitelný pro produkční systémy" }
+      ],
+      "correct": "b",
+      "explanation": "Red team mentalita předpokládá, že pokud jsi aktivně nezkoušel prolomit vlastní prompt pomocí známých útočných technik, pravděpodobně existují zranitelnosti, které jsi neobjevil. Pravidelné self-testing je nezbytné."
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "title": "Local Intelligence",
+  "description": "Test your understanding of local LLM deployment, quantization, and VRAM requirements.",
+  "passing_score": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single",
+      "question": "What is the primary advantage of running LLMs locally instead of using cloud APIs?",
+      "options": [
+        { "id": "a", "text": "Local models are always smarter than cloud models" },
+        { "id": "b", "text": "Your data never leaves your machine, ensuring complete privacy" },
+        { "id": "c", "text": "Local inference is always faster than API calls" },
+        { "id": "d", "text": "Local models don't require any hardware investment" }
+      ],
+      "correct": "b",
+      "explanation": "The #1 advantage of local LLMs is data sovereignty - your prompts, documents, and outputs never leave your RAM. This is critical for handling PII, medical records, or proprietary code."
+    },
+    {
+      "id": "q2",
+      "type": "single",
+      "question": "What does Q4_K_M quantization mean?",
+      "options": [
+        { "id": "a", "text": "The model uses 4 GPUs for inference" },
+        { "id": "b", "text": "The model weights are compressed to approximately 4-bit precision" },
+        { "id": "c", "text": "The model has 4 billion parameters" },
+        { "id": "d", "text": "The model runs 4x faster than the original" }
+      ],
+      "correct": "b",
+      "explanation": "Q4_K_M is a quantization format that reduces weight precision from 16-bit to approximately 4-bit. This allows models to fit in 60-70% less VRAM while retaining 95-98% of reasoning capability."
+    },
+    {
+      "id": "q3",
+      "type": "single",
+      "question": "Using the rule of thumb (0.7 GB per 1B parameters for Q4), how much VRAM does a 70B model require?",
+      "options": [
+        { "id": "a", "text": "~7 GB" },
+        { "id": "b", "text": "~14 GB" },
+        { "id": "c", "text": "~49 GB" },
+        { "id": "d", "text": "~140 GB" }
+      ],
+      "correct": "c",
+      "explanation": "70 billion parameters × 0.7 GB = 49 GB. This means you'd need dual 24GB GPUs (RTX 3090/4090) or a Mac with 64GB+ unified memory to run a 70B model in Q4."
+    },
+    {
+      "id": "q4",
+      "type": "single",
+      "question": "What is the difference between GGUF and Safetensors formats?",
+      "options": [
+        { "id": "a", "text": "GGUF is for training, Safetensors is for inference" },
+        { "id": "b", "text": "GGUF packs weights and tokenizer together; Safetensors stores only weights" },
+        { "id": "c", "text": "Safetensors is newer and always faster" },
+        { "id": "d", "text": "They are the same format with different names" }
+      ],
+      "correct": "b",
+      "explanation": "GGUF (GPT-Generated Unified Format) packs model weights AND tokenizer into a single file, making it ideal for llama.cpp and Ollama. Safetensors is the HuggingFace standard that stores only weights."
+    },
+    {
+      "id": "q5",
+      "type": "single",
+      "question": "What happens if your model exceeds available VRAM?",
+      "options": [
+        { "id": "a", "text": "The model refuses to load" },
+        { "id": "b", "text": "Layers offload to CPU RAM, dramatically slowing inference" },
+        { "id": "c", "text": "The GPU automatically allocates more memory" },
+        { "id": "d", "text": "The model quality decreases automatically" }
+      ],
+      "correct": "b",
+      "explanation": "When VRAM is exceeded, model layers spill over to system RAM (CPU). This can slow generation from 100 tokens/sec to just 2 tokens/sec because CPU memory bandwidth is much lower than GPU."
+    },
+    {
+      "id": "q6",
+      "type": "single",
+      "question": "Which inference engine is best for serving 100 concurrent users?",
+      "options": [
+        { "id": "a", "text": "Ollama" },
+        { "id": "b", "text": "LM Studio" },
+        { "id": "c", "text": "vLLM" },
+        { "id": "d", "text": "llama.cpp directly" }
+      ],
+      "correct": "c",
+      "explanation": "vLLM uses PagedAttention to optimize memory for concurrent requests, making it ideal for production backends serving many users. Ollama is great for single-user development but not designed for high concurrency."
+    },
+    {
+      "id": "q7",
+      "type": "single",
+      "question": "What command installs Ollama on Linux/macOS?",
+      "options": [
+        { "id": "a", "text": "pip install ollama" },
+        { "id": "b", "text": "npm install -g ollama" },
+        { "id": "c", "text": "curl -fsSL https://ollama.com/install.sh | sh" },
+        { "id": "d", "text": "apt install ollama" }
+      ],
+      "correct": "c",
+      "explanation": "Ollama is installed via a shell script from ollama.com. This script handles installation across different Linux distributions and macOS versions automatically."
+    },
+    {
+      "id": "q8",
+      "type": "single",
+      "question": "What is the default local API port for Ollama?",
+      "options": [
+        { "id": "a", "text": "8080" },
+        { "id": "b", "text": "3000" },
+        { "id": "c", "text": "11434" },
+        { "id": "d", "text": "5000" }
+      ],
+      "correct": "c",
+      "explanation": "Ollama exposes its API on port 11434 by default (127.0.0.1:11434). The Python library and other clients connect to this port to send requests."
+    }
+  ]
+}

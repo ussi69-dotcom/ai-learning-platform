@@ -1,0 +1,111 @@
+{
+  "title": "Advanced Reasoning & Red Teaming",
+  "description": "Test your understanding of prompt injection defenses and red teaming techniques.",
+  "passing_score": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single",
+      "question": "Why is prompt injection considered the #1 security risk for LLM applications?",
+      "options": [
+        { "id": "a", "text": "LLMs are too expensive to secure properly" },
+        { "id": "b", "text": "LLMs cannot reliably distinguish instructions from data" },
+        { "id": "c", "text": "Prompt injection only affects older models" },
+        { "id": "d", "text": "It's easy to detect and block all injection attempts" }
+      ],
+      "correct": "b",
+      "explanation": "LLMs process everything as text tokens. They have no native mechanism to distinguish 'trusted instructions' from 'untrusted data,' making it possible for user input to be interpreted as commands."
+    },
+    {
+      "id": "q2",
+      "type": "single",
+      "question": "What is the 'Sandwich Defense' technique?",
+      "options": [
+        { "id": "a", "text": "Using two different AI models to process the same request" },
+        { "id": "b", "text": "Encrypting user input before processing" },
+        { "id": "c", "text": "Placing critical instructions both before AND after user input" },
+        { "id": "d", "text": "Splitting the prompt into multiple smaller prompts" }
+      ],
+      "correct": "c",
+      "explanation": "Sandwich Defense places critical instructions and constraints before the user input, then reinforces them after the input. This 'reminder' after potential injection helps the model maintain its intended behavior."
+    },
+    {
+      "id": "q3",
+      "type": "single",
+      "question": "What is the purpose of 'Spotlighting' (data marking)?",
+      "options": [
+        { "id": "a", "text": "To highlight important parts of the response" },
+        { "id": "b", "text": "To explicitly mark user input as untrusted data using XML tags or delimiters" },
+        { "id": "c", "text": "To make the prompt more readable for humans" },
+        { "id": "d", "text": "To increase the model's processing speed" }
+      ],
+      "correct": "b",
+      "explanation": "Spotlighting uses clear markers (like XML tags) to explicitly tell the model that content within those markers should be treated as literal data, not as instructions to follow."
+    },
+    {
+      "id": "q4",
+      "type": "single",
+      "question": "What is a 'DAN' attack?",
+      "options": [
+        { "id": "a", "text": "A technical exploit that crashes the model" },
+        { "id": "b", "text": "A roleplay jailbreak that creates a persona without ethical guidelines" },
+        { "id": "c", "text": "A denial-of-service attack on AI servers" },
+        { "id": "d", "text": "A method to speed up AI responses" }
+      ],
+      "correct": "b",
+      "explanation": "DAN (Do Anything Now) is a roleplay-based jailbreak attempt where the attacker tries to make the model adopt an alternate persona that claims to have no restrictions or ethical guidelines."
+    },
+    {
+      "id": "q5",
+      "type": "single",
+      "question": "How does 'Payload Splitting' work as an attack vector?",
+      "options": [
+        { "id": "a", "text": "It divides the malicious instruction across multiple messages or encodings to evade detection" },
+        { "id": "b", "text": "It splits the AI's response into smaller chunks" },
+        { "id": "c", "text": "It creates multiple copies of the same request" },
+        { "id": "d", "text": "It compresses the prompt to use fewer tokens" }
+      ],
+      "correct": "a",
+      "explanation": "Payload Splitting hides the attack by distributing it across multiple messages, using encodings like Base64, or building up the instruction piece by piece so no single message contains the complete malicious request."
+    },
+    {
+      "id": "q6",
+      "type": "single",
+      "question": "What is 'Output Filtering' (Layer 5 defense)?",
+      "options": [
+        { "id": "a", "text": "Removing profanity from model outputs" },
+        { "id": "b", "text": "Using a second LLM to verify outputs before sending to users" },
+        { "id": "c", "text": "Limiting the length of model responses" },
+        { "id": "d", "text": "Converting output to a different format" }
+      ],
+      "correct": "b",
+      "explanation": "Output Filtering uses a second model as a 'judge' to check each response for security issues like system prompt leakage, policy violations, or signs of successful prompt injection before sending to users."
+    },
+    {
+      "id": "q7",
+      "type": "single",
+      "question": "What is 'Indirect Injection' (Supply Chain attack)?",
+      "options": [
+        { "id": "a", "text": "An attack hidden in external content that the model retrieves (like webpages or documents)" },
+        { "id": "b", "text": "Attacking the model through its API rather than the chat interface" },
+        { "id": "c", "text": "Using a VPN to hide the attacker's identity" },
+        { "id": "d", "text": "Injecting code into the model's training data" }
+      ],
+      "correct": "a",
+      "explanation": "Indirect Injection places malicious instructions not in the user's message, but in external content the model is asked to process (web pages, documents, emails). When the model reads this content, it may follow the hidden instructions."
+    },
+    {
+      "id": "q8",
+      "type": "single",
+      "question": "Why is the red teaming mindset important for prompt security?",
+      "options": [
+        { "id": "a", "text": "It helps you write faster prompts" },
+        { "id": "b", "text": "If you haven't tried to break your own prompt, assume it's breakable" },
+        { "id": "c", "text": "It's only important for government applications" },
+        { "id": "d", "text": "Red teaming is optional for production systems" }
+      ],
+      "correct": "b",
+      "explanation": "The red team mindset assumes that if you haven't actively tried to break your own prompt using known attack techniques, there are likely vulnerabilities you haven't discovered. Regular self-testing is essential."
+    }
+  ]
+}

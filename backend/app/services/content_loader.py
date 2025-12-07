@@ -104,19 +104,39 @@ class ContentLoader:
         if lab_match:
             lab_count = int(lab_match.group(1))
 
-        logger.info(f"  📖 Processing lesson: {meta.get('title')} ({duration}, {lab_count} labs)")
+        # Handle localization (support both string and dict formats)
+        title = meta["title"]
+        title_cs = meta.get("title_cs")
+        if isinstance(title, dict):
+            title_cs = title.get("cs")
+            title = title.get("en")
 
-        lesson = db.query(Lesson).filter(Lesson.title == meta["title"], Lesson.course_id == course_id).first()
+        description = meta["description"]
+        description_cs = meta.get("description_cs")
+        if isinstance(description, dict):
+            description_cs = description.get("cs")
+            description = description.get("en")
+            
+        video_url = meta.get("video_url")
+        if isinstance(video_url, dict):
+            # We currently only store one video_url in DB, usually EN. 
+            # If we want to support both, we might need schema change or pick based on context.
+            # For now, picking EN as default.
+            video_url = video_url.get("en")
+
+        logger.info(f"  📖 Processing lesson: {title} ({duration}, {lab_count} labs)")
+
+        lesson = db.query(Lesson).filter(Lesson.title == title, Lesson.course_id == course_id).first()
         if not lesson:
             lesson = Lesson(
-                title=meta["title"],
-                title_cs=meta.get("title_cs"),
+                title=title,
+                title_cs=title_cs,
                 slug=lesson_dir.name, # Use directory name as slug
-                description=meta["description"],
-                description_cs=meta.get("description_cs"),
+                description=description,
+                description_cs=description_cs,
                 content=content,
                 content_cs=content_cs,
-                video_url=meta.get("video_url"),
+                video_url=video_url,
                 order=meta["order"],
                 course_id=course_id,
                 duration=duration,
@@ -127,12 +147,12 @@ class ContentLoader:
             db.refresh(lesson)
         else:
             lesson.slug = lesson_dir.name # Ensure slug is set
-            lesson.description = meta["description"]
-            lesson.title_cs = meta.get("title_cs")
-            lesson.description_cs = meta.get("description_cs")
+            lesson.description = description
+            lesson.title_cs = title_cs
+            lesson.description_cs = description_cs
             lesson.content = content
             lesson.content_cs = content_cs
-            lesson.video_url = meta.get("video_url")
+            lesson.video_url = video_url
             lesson.order = meta["order"]
             lesson.duration = duration
             lesson.lab_count = lab_count
@@ -147,13 +167,21 @@ class ContentLoader:
         with open(quiz_path, "r", encoding="utf-8") as f:
             quizzes_data = json.load(f)
 
+        # Normalize to list if wrapped in dict (e.g. {"questions": [...]})
+        if isinstance(quizzes_data, dict):
+            quizzes_data = quizzes_data.get("questions", [])
+
         # Try to load localized quizzes (CZ)
         quiz_cs_path = quiz_path.parent / "quiz.cs.json"
         quizzes_cs_data = []
         if quiz_cs_path.exists():
             try:
                 with open(quiz_cs_path, "r", encoding="utf-8") as f:
-                    quizzes_cs_data = json.load(f)
+                    data = json.load(f)
+                    if isinstance(data, dict):
+                        quizzes_cs_data = data.get("questions", [])
+                    elif isinstance(data, list):
+                        quizzes_cs_data = data
             except Exception as e:
                 logger.warning(f"⚠️ Failed to load {quiz_cs_path}: {e}")
 
@@ -162,25 +190,43 @@ class ContentLoader:
         
         for i, q_data in enumerate(quizzes_data):
             # Find matching CS data by index (assuming same order)
+            # Find matching CS data by index
             q_cs = quizzes_cs_data[i] if i < len(quizzes_cs_data) else {}
+
+            # Helper to extract options whether flat or in list
+            def get_option(data, opt_id):
+                # Try flat first
+                val = data.get(f"option_{opt_id}")
+                if val: return val
+                # Try list
+                options = data.get("options", [])
+                for opt in options:
+                    if opt.get("id") == opt_id:
+                        return opt.get("text")
+                return None
+
+            option_a = get_option(q_data, "a")
+            option_b = get_option(q_data, "b")
+            option_c = get_option(q_data, "c")
+            option_d = get_option(q_data, "d")
 
             quiz = Quiz(
                 question=q_data["question"],
                 question_cs=q_cs.get("question"), # CS localization
                 
-                option_a=q_data["option_a"],
-                option_a_cs=q_cs.get("option_a"),
+                option_a=option_a,
+                option_a_cs=get_option(q_cs, "a"),
                 
-                option_b=q_data["option_b"],
-                option_b_cs=q_cs.get("option_b"),
+                option_b=option_b,
+                option_b_cs=get_option(q_cs, "b"),
                 
-                option_c=q_data["option_c"],
-                option_c_cs=q_cs.get("option_c"),
+                option_c=option_c,
+                option_c_cs=get_option(q_cs, "c"),
                 
-                option_d=q_data["option_d"],
-                option_d_cs=q_cs.get("option_d"),
+                option_d=option_d,
+                option_d_cs=get_option(q_cs, "d"),
                 
-                correct_answer=q_data["correct_answer"],
+                correct_answer=q_data.get("correct_answer") or q_data.get("correct"),
                 explanation=q_data["explanation"],
                 explanation_cs=q_cs.get("explanation"),
                 

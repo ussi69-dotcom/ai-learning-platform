@@ -34,6 +34,96 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ---
 
+## ⛔ KRITICKÁ PRAVIDLA (NEIGNORUJ!)
+
+### Content Creation = DELEGUJ NA GEMINI
+```
+NIKDY nepiš content sám!
+1. Vytvoř Task Brief s Persona + DoD
+2. Zavolej Gemini přes BASH CLI (ne MCP tool!):
+   cat << 'EOF' | gemini -m gemini-3-pro-preview 2>&1
+   [prompt]
+   EOF
+3. Model: gemini-3-pro-preview (NE 2.5!)
+4. Proveď QA review výsledku
+```
+
+### Gemini OAuth Fix (když nefunguje)
+```bash
+# MCP token konflikt - smaž tento soubor:
+rm -f ~/.gemini/mcp-oauth-tokens-v2.json
+# Pak normální volání přes Bash CLI funguje
+```
+
+### Gemini Model
+```
+VŽDY: gemini-3-pro-preview
+NIKDY: gemini-2.5-pro, gemini-pro, nebo jiné
+```
+
+### Před KAŽDOU major akcí
+```
+□ Content? → Gemini (gemini-3-pro-preview)
+□ Commit? → npm run verify MUSÍ projít
+□ Velká změna? → Zeptej se uživatele
+```
+
+---
+
+## 🧪 QA Workflow (POVINNÉ po content generation!)
+
+**Po KAŽDÉM vytvoření/úpravě lesson obsahu MUSÍŠ provést:**
+
+### 1. Backend Verification
+```bash
+# Restartuj backend pro načtení nového obsahu
+docker compose restart backend
+
+# Zkontroluj logy - hledej správný lab count a reading time
+docker compose logs backend 2>&1 | grep -E "(Processing lesson|Error)"
+
+# Očekávaný formát: "📖 Processing lesson: [Name] (XX min, Y labs)"
+```
+
+### 2. Visual QA (Playwright)
+```bash
+# Přihlaš se jako admin a ověř vizuálně
+1. Otevři http://localhost:3000/cs/login
+2. Přihlaš se: admin@ai-platform.com / admin123
+3. Naviguj na kurz → ověř lab count a reading time v seznamu
+4. Otevři lekci → zkontroluj:
+   - ✅ Callout se renderuje správně
+   - ✅ Tabulky mají správnou strukturu
+   - ✅ Code blocks mají "Copy" tlačítko
+   - ✅ Lab sekce má správné emoji a formátování
+   - ✅ Navigace mezi stránkami funguje
+```
+
+### 3. Content Format Requirements
+```markdown
+# Header Callout MUSÍ obsahovat (pro správné parsování):
+⏳ **Reading Time:** XX min | 🧪 **[N] Labs Included**
+
+# Česká verze:
+⏳ **Čas čtení:** XX min | 🧪 **[N] Laby součástí**
+
+# ŠPATNĚ (backend neparsuje):
+**Time:** ~35 min read | **Labs:** 2 practical exercises
+```
+
+### 4. QA Checklist před označením jako "hotovo"
+```
+□ Backend log ukazuje správný lab count
+□ Vizuálně ověřeno v prohlížeči (přihlášen!)
+□ Všechny sekce se renderují správně
+□ Code blocks fungují
+□ Quiz soubory existují (quiz.json + quiz.cs.json)
+```
+
+**⚠️ NIKDY neprohlašuj content jako "hotovo" bez provedení tohoto QA workflow!**
+
+---
+
 ## Project Overview
 
 Gamified AI learning platform with Czech localization (English/Czech). Features Star Wars theming (Jedi/Sith), XP progression, interactive labs, and MDX-based course content. Built with Next.js 16 (App Router), FastAPI, PostgreSQL, and Redis, deployed via Docker Compose.

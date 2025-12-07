@@ -1,0 +1,111 @@
+{
+  "title": "Lokální inteligence",
+  "description": "Otestujte své znalosti nasazení lokálních LLM, kvantizace a požadavků na VRAM.",
+  "passing_score": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single",
+      "question": "Jaká je hlavní výhoda provozování LLM lokálně oproti cloudovým API?",
+      "options": [
+        { "id": "a", "text": "Lokální modely jsou vždy chytřejší než cloudové" },
+        { "id": "b", "text": "Vaše data nikdy neopustí váš počítač, což zajišťuje kompletní soukromí" },
+        { "id": "c", "text": "Lokální inference je vždy rychlejší než API volání" },
+        { "id": "d", "text": "Lokální modely nevyžadují žádnou investici do hardware" }
+      ],
+      "correct": "b",
+      "explanation": "Hlavní výhodou lokálních LLM je datová suverenita - vaše prompty, dokumenty a výstupy nikdy neopustí vaši RAM. To je kritické pro práci s osobními údaji, lékařskými záznamy nebo proprietárním kódem."
+    },
+    {
+      "id": "q2",
+      "type": "single",
+      "question": "Co znamená kvantizace Q4_K_M?",
+      "options": [
+        { "id": "a", "text": "Model používá 4 GPU pro inference" },
+        { "id": "b", "text": "Váhy modelu jsou komprimovány na přibližně 4-bitovou přesnost" },
+        { "id": "c", "text": "Model má 4 miliardy parametrů" },
+        { "id": "d", "text": "Model běží 4x rychleji než originál" }
+      ],
+      "correct": "b",
+      "explanation": "Q4_K_M je formát kvantizace, který snižuje přesnost vah z 16-bit na přibližně 4-bit. To umožňuje modelům vejít se do 60-70% méně VRAM při zachování 95-98% schopnosti uvažování."
+    },
+    {
+      "id": "q3",
+      "type": "single",
+      "question": "Pomocí pravidla palce (0.7 GB na 1B parametrů pro Q4), kolik VRAM vyžaduje 70B model?",
+      "options": [
+        { "id": "a", "text": "~7 GB" },
+        { "id": "b", "text": "~14 GB" },
+        { "id": "c", "text": "~49 GB" },
+        { "id": "d", "text": "~140 GB" }
+      ],
+      "correct": "c",
+      "explanation": "70 miliard parametrů × 0.7 GB = 49 GB. To znamená, že byste potřebovali dvě 24GB GPU (RTX 3090/4090) nebo Mac s 64GB+ unifikované paměti pro spuštění 70B modelu v Q4."
+    },
+    {
+      "id": "q4",
+      "type": "single",
+      "question": "Jaký je rozdíl mezi formáty GGUF a Safetensors?",
+      "options": [
+        { "id": "a", "text": "GGUF je pro trénování, Safetensors pro inference" },
+        { "id": "b", "text": "GGUF balí váhy a tokenizer dohromady; Safetensors ukládá pouze váhy" },
+        { "id": "c", "text": "Safetensors je novější a vždy rychlejší" },
+        { "id": "d", "text": "Jsou to stejné formáty s různými jmény" }
+      ],
+      "correct": "b",
+      "explanation": "GGUF (GPT-Generated Unified Format) balí váhy modelu A tokenizer do jednoho souboru, což je ideální pro llama.cpp a Ollama. Safetensors je HuggingFace standard, který ukládá pouze váhy."
+    },
+    {
+      "id": "q5",
+      "type": "single",
+      "question": "Co se stane, když model překročí dostupnou VRAM?",
+      "options": [
+        { "id": "a", "text": "Model se odmítne načíst" },
+        { "id": "b", "text": "Vrstvy se přesunou do CPU RAM, což dramaticky zpomalí inference" },
+        { "id": "c", "text": "GPU automaticky alokuje více paměti" },
+        { "id": "d", "text": "Kvalita modelu se automaticky sníží" }
+      ],
+      "correct": "b",
+      "explanation": "Když je VRAM překročena, vrstvy modelu přetečou do systémové RAM (CPU). To může zpomalit generování ze 100 tokenů/s na pouhé 2 tokeny/s, protože propustnost CPU paměti je mnohem nižší než GPU."
+    },
+    {
+      "id": "q6",
+      "type": "single",
+      "question": "Který inference engine je nejlepší pro obsluhu 100 souběžných uživatelů?",
+      "options": [
+        { "id": "a", "text": "Ollama" },
+        { "id": "b", "text": "LM Studio" },
+        { "id": "c", "text": "vLLM" },
+        { "id": "d", "text": "Přímo llama.cpp" }
+      ],
+      "correct": "c",
+      "explanation": "vLLM používá PagedAttention pro optimalizaci paměti při souběžných požadavcích, což je ideální pro produkční backendy obsluhující mnoho uživatelů. Ollama je skvělá pro jednouživatelský vývoj, ale není navržena pro vysokou souběžnost."
+    },
+    {
+      "id": "q7",
+      "type": "single",
+      "question": "Jakým příkazem se instaluje Ollama na Linux/macOS?",
+      "options": [
+        { "id": "a", "text": "pip install ollama" },
+        { "id": "b", "text": "npm install -g ollama" },
+        { "id": "c", "text": "curl -fsSL https://ollama.com/install.sh | sh" },
+        { "id": "d", "text": "apt install ollama" }
+      ],
+      "correct": "c",
+      "explanation": "Ollama se instaluje pomocí shell skriptu z ollama.com. Tento skript automaticky zvládne instalaci napříč různými distribucemi Linuxu a verzemi macOS."
+    },
+    {
+      "id": "q8",
+      "type": "single",
+      "question": "Jaký je výchozí port lokálního API pro Ollama?",
+      "options": [
+        { "id": "a", "text": "8080" },
+        { "id": "b", "text": "3000" },
+        { "id": "c", "text": "11434" },
+        { "id": "d", "text": "5000" }
+      ],
+      "correct": "c",
+      "explanation": "Ollama vystavuje své API na portu 11434 ve výchozím nastavení (127.0.0.1:11434). Python knihovna a další klienti se připojují na tento port pro odesílání požadavků."
+    }
+  ]
+}

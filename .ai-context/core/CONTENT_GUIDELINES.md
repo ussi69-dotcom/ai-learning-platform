@@ -267,5 +267,85 @@ After writing, ALWAYS verify:
 
 ---
 
-*Last updated: 2025-12-05 (v2.1)*
-*Changes: Added Audience definition, Lab Template, Research Handoff, Anti-Patterns*
+## 11. Content QA Workflow 🔍
+
+**POVINNÉ po KAŽDÉ content generation!** Bez tohoto kroku je lekce NEPLATNÁ.
+
+### A. Backend Verification
+
+```bash
+# 1. Restart backend (načte nový content)
+docker compose restart backend
+
+# 2. Ověř že se lekce načetla správně
+docker compose logs backend 2>&1 | grep "Processing lesson"
+# Očekávaný výstup: "📖 Processing lesson: [Title] (XX min, N labs)"
+```
+
+### B. Callout Format (KRITICKÉ!)
+
+Backend parsuje reading time a lab count z prvního Callout. **Musí být přesný formát:**
+
+```markdown
+# ✅ SPRÁVNĚ (backend parsuje):
+<Callout type="info">
+**Mission:** [popis mise]
+
+⏳ **Reading Time:** 35 min | 🧪 **[2] Labs Included**
+</Callout>
+
+# ❌ ŠPATNĚ (backend NEPARSUJE):
+**Time:** ~35 min read | **Labs:** 2 practical exercises
+```
+
+**Regex v content_loader.py:**
+```python
+# Reading time
+time_match = re.search(r"⏳ \*\*(?:Reading Time|Čas čtení):\*\* (\d+)", content)
+
+# Lab count
+lab_match = re.search(r"🧪 \*\*\[?(\d+)\]? Labs? (?:Included|součástí)\*\*", content)
+```
+
+### C. Visual QA (Playwright)
+
+```bash
+# Po backend restart:
+1. Login: http://localhost:3000/cs/login
+   - Email: admin@ai-platform.com
+   - Password: admin123
+
+2. Navigate: Courses → [Course] → [Lesson]
+
+3. Verify:
+   - [ ] Lab count správný v course listu
+   - [ ] Reading time správný
+   - [ ] Code blocks renderují
+   - [ ] Tables renderují
+   - [ ] Callouts mají správný styl
+   - [ ] Copy button funguje
+```
+
+### D. Checklist Before Publish
+
+| Check | Command/Action |
+|-------|----------------|
+| Backend loaded? | `grep "Processing lesson" logs` |
+| Lab count correct? | Vizuální QA v course listu |
+| Both languages? | `content.mdx` + `content.cs.mdx` existují |
+| Quiz files? | `quiz.json` + `quiz.cs.json` existují |
+| No placeholders? | Přečti zpět všechny soubory |
+
+### E. Common Issues
+
+| Problém | Příčina | Řešení |
+|---------|---------|--------|
+| "0 labs" zobrazeno | Špatný Callout formát | Použij `🧪 **[N] Labs Included**` |
+| Lekce se nezobrazuje | Content not loaded | `docker compose restart backend` |
+| Staré lekce zůstávají | ContentLoader je append-only | Nuclear reset: `docker volume rm postgres_data` |
+| "Not authenticated" | JWT session expired po DB reset | Logout + fresh login |
+
+---
+
+*Last updated: 2025-12-07 (v2.2)*
+*Changes: Added Content QA Workflow (Section 11)*
