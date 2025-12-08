@@ -23,7 +23,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Na konci session:**
 - Aktualizuj `WORKING_CONTEXT.md` (stav pro příště)
-- Přidej záznam do `SESSION_LOG.md` (archiv)
 
 **Role-based loading (dle typu úkolu):**
 - Content → `core/CONTENT_GUIDELINES.md`
@@ -512,12 +511,11 @@ Update `NEXT_PUBLIC_API_URL` in `.env` if changing backend port.
 
 ## Agent Coordination Protocol (v3.0)
 
-### Memory Architecture
+### Memory Architecture (v3.1)
 | Typ | Soubor | Účel |
 |-----|--------|------|
-| **Working** | `WORKING_CONTEXT.md` | Aktuální task, stav (aktualizuj průběžně!) |
+| **Working** | `WORKING_CONTEXT.md` | Aktuální task + mini log (aktualizuj průběžně!) |
 | **Long-term** | `MEMORY.md` | Protokoly, lessons learned |
-| **Archive** | `SESSION_LOG.md` | Historie (append only) |
 
 ### Critical Rules
 Kompletní pravidla: `.ai-context/AGENT_PROTOCOL.md`

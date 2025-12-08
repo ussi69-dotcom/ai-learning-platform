@@ -26,14 +26,13 @@
 | `state/WORKING_CONTEXT.md` | Kde jsme, co děláme | Všichni |
 | `state/MEMORY.md` | Dlouhodobá paměť, protokoly | Všichni |
 
-### 🟡 State Files (`/state`)
-> *Read/Write. Živá paměť projektu.*
+### 🟡 State Files (`/state`) - Simplified v3.1
+> *Read/Write. Živá paměť projektu. POUZE 2 soubory.*
 
 | Soubor | Účel | Kdy aktualizovat |
 |--------|------|------------------|
-| **WORKING_CONTEXT.md** | Aktuální task, progress | Průběžně, PŘED compactem! |
+| **WORKING_CONTEXT.md** | Aktuální task, progress, mini log | Průběžně, PŘED compactem! |
 | **MEMORY.md** | Protokoly, lessons learned | Při nových poznatcích |
-| **SESSION_LOG.md** | Archiv sessions | Na konci session (append) |
 
 ### 🟢 Core Files (`/core`)
 > *Read-Only. Reference dokumenty.*
@@ -87,13 +86,13 @@
 
 ---
 
-## 🔄 Memory Protocol
+## 🔄 Memory Protocol (Simplified v3.1)
 
 ```
 ┌─────────────────────────────────────────────────┐
-│  WORKING_CONTEXT.md (Short-term)                │
+│  WORKING_CONTEXT.md (Short-term + Mini Log)     │
 │  Aktualizuj: průběžně, před compactem           │
-│  Obsah: current task, progress, decisions       │
+│  Obsah: current task, progress, posledních 5    │
 └─────────────────┬───────────────────────────────┘
                   │ lessons learned
                   ▼
@@ -101,13 +100,6 @@
 │  MEMORY.md (Long-term)                          │
 │  Aktualizuj: při nových poznatcích              │
 │  Obsah: protokoly, pravidla, patterns           │
-└─────────────────┬───────────────────────────────┘
-                  │ end of session
-                  ▼
-┌─────────────────────────────────────────────────┐
-│  SESSION_LOG.md (Archive)                       │
-│  Aktualizuj: na konci session (append only)     │
-│  Obsah: stručný záznam co bylo hotovo           │
 └─────────────────────────────────────────────────┘
 ```
 

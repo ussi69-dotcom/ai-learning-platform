@@ -25,24 +25,25 @@
 
 ---
 
-## 1. Paměť a Kontext
+## 1. Paměť a Kontext (v3.1)
 
 ### Soubory (kdo čte co)
 
 | Soubor | Účel | Primární |
 |--------|------|----------|
-| `CLAUDE.md` | Boot instrukce pro Claude | Claude |
+| `CLAUDE.md` / `GEMINI.md` | Boot instrukce | Claude / Gemini |
+| `.ai-context/state/WORKING_CONTEXT.md` | Aktuální stav + mini log | Oba |
 | `.ai-context/state/MEMORY.md` | Sdílená paměť, protokoly | Oba |
-| `.ai-context/state/LAST_SESSION.md` | Kde jsme skončili | Oba |
 | `.ai-context/core/CONTENT_GUIDELINES.md` | Pravidla pro content | Oba |
-| `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md` | Tento soubor | Oba |
+
+> ⚠️ **SESSION_LOG a LAST_SESSION zrušeny** (Dec 2025)
 
 ### Boot Sequence
 
-**Claude při startu:**
+**Každý agent při startu:**
 ```
-1. Přečti CLAUDE.md (automaticky)
-2. Přečti LAST_SESSION.md
+1. Přečti svůj entry point (CLAUDE.md / GEMINI.md / rules.md)
+2. Přečti WORKING_CONTEXT.md
 3. Přečti MEMORY.md
 4. Odpověz: "Pokračujeme od [X]. Stav: [Y]. Další: [Z]."
 ```

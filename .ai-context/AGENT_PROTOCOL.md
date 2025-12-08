@@ -78,27 +78,38 @@ Pro KAŽDÝ content/code output:
 
 ---
 
-## 🧠 Memory Protocol
+## 🧠 Memory Protocol (Simplified v3.1)
 
-### WORKING_CONTEXT.md (Short-term)
-| Kdy aktualizovat | Co zapsat |
-|------------------|-----------|
-| Průběžně během práce | Aktuální task, progress, rozhodnutí |
-| **PŘED context compactem** | Vše důležité pro kontinuitu! |
-| Při změně tasku | Nový task, stav předchozího |
+### Pouze 2 soubory:
 
-### MEMORY.md (Long-term)
-| Kdy aktualizovat | Co zapsat |
-|------------------|-----------|
-| Při lessons learned | Nové pravidlo, incident, pattern |
-| Při změně protokolu | Aktualizovaný SOP |
-| **Zřídka** | Jen dlouhodobě důležité věci |
+| Soubor | Účel | Kdy aktualizovat |
+|--------|------|------------------|
+| **WORKING_CONTEXT.md** | Aktuální task, stav, mini log | Průběžně + před compactem |
+| **MEMORY.md** | Dlouhodobé poznatky, pravidla | Při lessons learned |
 
-### SESSION_LOG.md (Archive)
-| Kdy aktualizovat | Co zapsat |
-|------------------|-----------|
-| Na konci session | Stručný záznam: co hotovo, co pending |
-| **Append only** | Nikdy nemazat historii |
+> ⚠️ **SESSION_LOG.md zrušen** (Dec 2025) - Mini log je nyní součástí WORKING_CONTEXT
+
+---
+
+## ⚡ Incremental Save Protocol (KRITICKÉ!)
+
+### POVINNÉ triggery:
+
+| Kdy | Co udělat |
+|-----|-----------|
+| ✅ Po dokončení sub-tasku | `git commit -m "feat: ..."` |
+| ✅ Po ~30 min práce | Update `WORKING_CONTEXT.md` |
+| ✅ Před odpovědí uživateli | Update `WORKING_CONTEXT.md` |
+| ✅ Před context compactem | Update `WORKING_CONTEXT.md` (KRITICKÉ!) |
+| ✅ Po úspěšném verify | `git commit` pokud necommitováno |
+
+### Pravidlo malých commitů:
+```
+✅ SPRÁVNĚ: "feat(lesson-01): add AIM framework section"
+❌ ŠPATNĚ: "feat: complete entire lesson" (na konci dne)
+```
+
+---
 
 ### 📝 "Zapiš si pravidlo" Protocol
 Když uživatel řekne "zapiš si" nebo "pamatuj si":
@@ -135,9 +146,8 @@ Když uživatel řekne "zapiš si" nebo "pamatuj si":
    - Co je hotovo
    - Co zbývá
    - Důležité detaily
-2. Aktualizuj `SESSION_LOG.md` (stručně)
-3. Commit změny (pokud relevantní)
-4. Řekni: "Handoff připraven. Další agent: přečti WORKING_CONTEXT.md"
+2. Commit změny (pokud relevantní)
+3. Řekni: "Handoff připraven. Další agent: přečti WORKING_CONTEXT.md"
 
 ### Když přebíráš práci:
 1. Přečti `WORKING_CONTEXT.md`
