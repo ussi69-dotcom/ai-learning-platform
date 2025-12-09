@@ -1,35 +1,44 @@
 # Working Context
 
-**Last Updated:** 2025-12-08 09:00 (Agent: Antigravity)
-**Status:** 🟢 READY - Documentation optimization in progress
+**Last Updated:** 2025-12-09 15:30 (Agent: Claude Code)
+**Status:** 🟢 READY - VideoSwitcher system complete
 
 ---
 
-## 🎯 Current Task
+## 🎯 Current State
 
-**Documentation System Optimization** - IN PROGRESS
+### Completed Lessons (Dec 2025)
+| Lesson | Folder | Status |
+|--------|--------|--------|
+| 01 - Prompt Architecture | `01-prompt-architecture/` | ✅ Complete |
+| 02 - Prompt Injection | `02-prompt-injection/` | ✅ Complete |
+| 04 - Local Intelligence | `04-local-intelligence/` | ✅ Complete |
+| 05 - AI-Powered Development | `05-ai-powered-development/` | ✅ Complete |
 
-### What's Happening Now:
-- Simplifying memory system (4 files → 2 files)
-- Adding Incremental Save Protocol
-- Synchronizing all boot sequences
+### Recent Feature: Video System (Dec 9)
+| Component | Status | Notes |
+|-----------|--------|-------|
+| VideoPlayer PIN | ✅ Done | Sticky video during scroll |
+| VideoSwitcher | ✅ Done | Alternative videos in MDX |
+| Video Registry | ✅ Done | Global state for video switching |
+| All lessons updated | ✅ Done | Alt videos added to all 4 lessons |
 
 ---
 
-## 📋 Project Status
+## 📋 Recent Commits (Last 10)
 
-### Completed (Ready as Templates)
-| Item | Commit | Notes |
-|------|--------|-------|
-| Lesson 01: Prompt Architecture | `169bdf0` | AIM/MAP frameworks, template for future lessons |
-| Course restructure (11 lessons) | ✅ | Practical Prompt Engineering |
-| Documentation Redesign v3.0 | `96764fa` | AGENT_PROTOCOL, INDEX, workflows |
-
-### Pending
-| Item | Priority | Notes |
-|------|----------|-------|
-| Lessons 02-11 | Next | Use Lesson 01 as template |
-| Diagram `prompt-architecture` SVG | Medium | Tech debt |
+```
+c9030ef docs: Update MEMORY.md and artifact with Video System details
+cc924d0 fix: Video alternatives for all lessons per user request
+a555309 fix: L02 video - use verified MIT Monk instead of blocked Computerphile
+0f5c61b fix: L02 video ID - Computerphile Qy8M7qPj2Wk verified
+6e6a947 fix: Correct video assignments per lesson
+79140bb fix: VideoSwitcher single-line JSON + comprehensive references.md
+84cd380 feat: Update videos for L01 & L02 based on research
+d195e5c fix: VideoRegistry stacking bug when navigating between lessons
+f15817e style: Enhanced VideoPlayer with thumbnails, badges, descriptions
+07cdc2d feat: VideoSwitcher + lesson renumbering + model updates
+```
 
 ---
 
@@ -37,23 +46,33 @@
 
 | Date | Agent | What |
 |------|-------|------|
+| 2025-12-09 | Claude | Fix outdated WORKING_CONTEXT (was 8 commits behind!) |
+| 2025-12-09 | ? | Video alternatives added to all lessons |
+| 2025-12-09 | ? | MEMORY.md updated with Video System docs |
+| 2025-12-09 | ? | L02 video fix (MIT Monk instead of Computerphile) |
 | 2025-12-08 | Antigravity | Documentation system optimization |
-| 2025-12-07 | Antigravity | Lesson 01 AIM/MAP rewrite + commit |
-| 2025-12-06 | Claude | Lesson 01 first version + Gemini MCP fix |
-| 2025-12-06 | Claude | Documentation v3.0 redesign |
-| 2025-12-05 | Gemini | Lessons 01-04 content generation |
+
+---
+
+## ⚠️ Known Issues
+
+1. **WORKING_CONTEXT drift** - This file wasn't updated for 8 commits!
+   - Root cause: Agents not following Incremental Save Protocol
+   - Fix: Added stricter rules to AGENT_PROTOCOL.md
 
 ---
 
 ## 🔗 Quick Reference
 
-| Need | File |
-|------|------|
-| Next lesson content | `content/courses/practical-prompt-engineering/lessons/02-*/` |
-| Research foundation | `.ai-context/Perplexity_assist/CONTENT_FOUNDATION_SYNTHESIS.md` |
+| Need | Location |
+|------|----------|
+| Video System docs | `MEMORY.md` → "Video System Architecture" |
+| Content foundation | `.ai-context/Perplexity_assist/CONTENT_FOUNDATION_SYNTHESIS.md` |
 | Lesson template | `content/courses/.../01-prompt-architecture/content.mdx` |
+| VideoPlayer | `frontend/components/VideoPlayer.tsx` |
+| VideoSwitcher | `frontend/components/mdx/VideoSwitcher.tsx` |
 
 ---
 
 *This file is the SINGLE SOURCE OF TRUTH for current project state.*
-*Updated by: Antigravity (2025-12-08 09:00)*
+*Updated by: Claude Code (2025-12-09 15:30)*

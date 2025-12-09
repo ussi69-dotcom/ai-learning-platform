@@ -249,30 +249,57 @@ MDX (VideoSwitcher)    →  window.__videoRegistry (global)
 3. Přidej objekt do `VideoSwitcher videos` pole
 4. Nemusíš restartovat backend (MDX se parsuje na frontendu)
 
+### 2025-12-09: WORKING_CONTEXT Drift Prevention ⚠️ CRITICAL
+
+**Co se stalo:** WORKING_CONTEXT.md zůstával 8 commitů pozadu. Agent (Claude) načetl zastaralé informace a byl dezorientovaný o skutečném stavu projektu.
+
+**Root cause:** Agenti commitovali změny, ale neaktualizovali WORKING_CONTEXT.md po každém commitu.
+
+**Řešení (přidáno do AGENT_PROTOCOL.md):**
+1. **PO KAŽDÉM COMMITU** → Aktualizuj WORKING_CONTEXT.md
+2. **Při boot sequence** → Porovnej `git log -1` s commits v WORKING_CONTEXT
+3. Pokud se neshodují → Nedůvěřuj WORKING_CONTEXT, nejdřív aktualizuj
+
+**Checksum pravidlo:**
+```
+WORKING_CONTEXT.md MUSÍ obsahovat hash posledního relevantního commitu!
+Při neshodě = zastaralý kontext!
+```
+
 ### General
 
 - **Don't hold back.** User wants engineering depth, not generic tutorials.
 - **Verify file paths.** Check if you are writing to `.cs.mdx` or `.mdx`.
 - **Never trust "done" without verification.** Always read back what was written.
+- **Update WORKING_CONTEXT after every commit!** (New Dec 2025)
 
 ---
 
-## 🎯 Priority Queue
+## 🎯 Priority Queue (Updated Dec 9, 2025)
 
-1. ~~**C1 (Critical):** Opravit dokumentaci a workflow~~ ✅ DONE
-2. ~~**C1 (Critical):** Course restructure~~ ✅ DONE (11 lessons)
-3. ~~**C1:** Lesson 01~~ ✅ COMMITTED
-4. ~~**C1:** Content Research~~ ✅ DONE (Perplexity + Gemini synthesis)
+### Completed
+| Item | Status |
+|------|--------|
+| Documentation & workflow | ✅ DONE |
+| Course restructure | ✅ DONE |
+| Lesson 01 - Prompt Architecture | ✅ DONE |
+| Lesson 02 - Prompt Injection | ✅ DONE |
+| Lesson 04 - Local Intelligence | ✅ DONE |
+| Lesson 05 - AI-Powered Development | ✅ DONE |
+| Content Research | ✅ DONE |
+| VideoSwitcher + PIN feature | ✅ DONE |
 
-### NEXT: Implementace lekcí (dle CONTENT_FOUNDATION)
+### Current Lessons (4 total)
+```
+content/courses/practical-prompt-engineering/lessons/
+├── 01-prompt-architecture/
+├── 02-prompt-injection/
+├── 04-local-intelligence/
+└── 05-ai-powered-development/
+```
 
-| Priorita    | Lekce | Co                              | Podklady                                            |
-| ----------- | ----- | ------------------------------- | --------------------------------------------------- |
-| 🔴 CRITICAL | 02    | Prompt Injection Defense        | `Perplexity_assist/CONTENT_FOUNDATION_SYNTHESIS.md` |
-| 🔴 CRITICAL | 04    | Update Models (Llama 4, Qwen 3) | VRAM tabulka v CONTENT_FOUNDATION                   |
-| 🔴 CRITICAL | 07    | MCP Lab                         | FastMCP kód v CONTENT_FOUNDATION                    |
-| 🟡 HIGH     | 06    | GraphRAG                        | comprehensive_research_report.md                    |
-| 🟡 HIGH     | 10    | LangGraph Focus                 | executive_brief.md                                  |
+### NEXT: Další lekce dle potřeby
+(Aktuální 4 lekce jsou kompletní včetně videí)
 
 ---
 
@@ -298,4 +325,4 @@ MDX (VideoSwitcher)    →  window.__videoRegistry (global)
 
 ---
 
-_Last updated: 2025-12-06 (Cycle 50 - Content Research Complete)_
+_Last updated: 2025-12-09 (WORKING_CONTEXT drift fix + Priority Queue sync)_

@@ -28,6 +28,15 @@ READ: .ai-context/state/WORKING_CONTEXT.md  ← Kde jsme, co děláme
 READ: .ai-context/state/MEMORY.md           ← Protokoly, lessons learned
 ```
 
+### 2b. ⚠️ OVĚŘ AKTUÁLNOST (NOVÉ - Dec 2025!)
+```bash
+git log -1 --oneline  # Porovnej s commits v WORKING_CONTEXT
+```
+Pokud se neshodují → **NEČTI WORKING_CONTEXT jako pravdu!** Místo toho:
+1. Podívej se na `git log --oneline -10` pro skutečný stav
+2. Aktualizuj WORKING_CONTEXT.md
+3. Až pak pokračuj
+
 ### 3. Odpověz uživateli
 ```
 "Jsem [agent]. Pokračujeme od [task]. Stav: [status]. Další: [next step]."
@@ -93,15 +102,31 @@ Pro KAŽDÝ content/code output:
 
 ## ⚡ Incremental Save Protocol (KRITICKÉ!)
 
+### ⚠️ NOVÉ PRAVIDLO (Dec 2025): WORKING_CONTEXT MUSÍ být aktuální!
+
+**Lesson Learned:** WORKING_CONTEXT.md zůstával 8 commitů pozadu, což způsobovalo dezorientaci agentů.
+
+**Nové striktní pravidlo:**
+```
+PO KAŽDÉM COMMITU → Aktualizuj WORKING_CONTEXT.md!
+```
+
 ### POVINNÉ triggery:
 
 | Kdy | Co udělat |
 |-----|-----------|
+| ✅ **PO KAŽDÉM COMMITU** | Update `WORKING_CONTEXT.md` (NOVÉ!) |
 | ✅ Po dokončení sub-tasku | `git commit -m "feat: ..."` |
 | ✅ Po ~30 min práce | Update `WORKING_CONTEXT.md` |
 | ✅ Před odpovědí uživateli | Update `WORKING_CONTEXT.md` |
 | ✅ Před context compactem | Update `WORKING_CONTEXT.md` (KRITICKÉ!) |
 | ✅ Po úspěšném verify | `git commit` pokud necommitováno |
+
+### Automatický check:
+Při boot sequence VŽDY porovnej:
+1. Poslední commit hash v WORKING_CONTEXT
+2. Aktuální `git log -1 --oneline`
+Pokud se neshodují → **WORKING_CONTEXT je zastaralý!**
 
 ### Pravidlo malých commitů:
 ```
