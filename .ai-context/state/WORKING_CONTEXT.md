@@ -1,7 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-09 15:30 (Agent: Claude Code)
-**Status:** 🟢 READY - VideoSwitcher system complete
+**Last Updated:** 2025-12-09 16:30 (Agent: Claude Code)
+**Last Commit:** `1d77317` fix: Video validation fixes for all lessons
+**Status:** 🟢 READY - All video validations passed
 
 ---
 
@@ -28,6 +29,8 @@
 ## 📋 Recent Commits (Last 10)
 
 ```
+1d77317 fix: Video validation fixes for all lessons
+f0a7cc1 fix(docs): Add WORKING_CONTEXT drift prevention protocol
 c9030ef docs: Update MEMORY.md and artifact with Video System details
 cc924d0 fix: Video alternatives for all lessons per user request
 a555309 fix: L02 video - use verified MIT Monk instead of blocked Computerphile
@@ -36,8 +39,6 @@ a555309 fix: L02 video - use verified MIT Monk instead of blocked Computerphile
 79140bb fix: VideoSwitcher single-line JSON + comprehensive references.md
 84cd380 feat: Update videos for L01 & L02 based on research
 d195e5c fix: VideoRegistry stacking bug when navigating between lessons
-f15817e style: Enhanced VideoPlayer with thumbnails, badges, descriptions
-07cdc2d feat: VideoSwitcher + lesson renumbering + model updates
 ```
 
 ---
@@ -46,19 +47,20 @@ f15817e style: Enhanced VideoPlayer with thumbnails, badges, descriptions
 
 | Date | Agent | What |
 |------|-------|------|
+| 2025-12-09 | Claude | Video validation: L02 main fixed, L04/L05 VideoSwitcher JSON fixed |
 | 2025-12-09 | Claude | Fix outdated WORKING_CONTEXT (was 8 commits behind!) |
 | 2025-12-09 | ? | Video alternatives added to all lessons |
 | 2025-12-09 | ? | MEMORY.md updated with Video System docs |
-| 2025-12-09 | ? | L02 video fix (MIT Monk instead of Computerphile) |
 | 2025-12-08 | Antigravity | Documentation system optimization |
 
 ---
 
 ## ⚠️ Known Issues
 
-1. **WORKING_CONTEXT drift** - This file wasn't updated for 8 commits!
-   - Root cause: Agents not following Incremental Save Protocol
-   - Fix: Added stricter rules to AGENT_PROTOCOL.md
+1. ~~**WORKING_CONTEXT drift**~~ ✅ FIXED - Added stricter rules to AGENT_PROTOCOL.md
+2. **VideoSwitcher JSON format** - Must use single-line valid JSON, not multiline JS objects
+   - Bad: `{ id: "...", title: "..." }` (JS object syntax)
+   - Good: `{"id":"...","title":"..."}` (valid JSON)
 
 ---
 
