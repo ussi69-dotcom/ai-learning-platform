@@ -266,6 +266,69 @@ WORKING_CONTEXT.md MUSÍ obsahovat hash posledního relevantního commitu!
 Při neshodě = zastaralý kontext!
 ```
 
+### 2025-12-09: Edutainment v3.0 Mass Upgrade - Lessons Learned 🎬
+
+**Kontext:** Upgrade 11 lekcí (2 kurzy) na Edutainment standard během jedné session.
+
+**Co fungovalo skvěle:**
+
+1. **LESSON_UPGRADE_GUIDE.md jako checklist**
+   - Vytvořil jsem detailní plán PŘED začátkem práce
+   - Každá lekce měla: video ID, HOOK text, změny k provedení
+   - Mohl jsem systematicky odškrtávat a neztratit se
+
+2. **Paralelní EN/CS úpravy**
+   - Vždy jsem upravoval oba soubory najednou (content.mdx + content.cs.mdx)
+   - Eliminace "zapomněl jsem CS verzi" chyb
+
+3. **Backend verification po každém bloku**
+   - `docker compose logs backend | grep "Processing lesson"`
+   - Okamžitě vidím, zda backend parsuje správně (lab count, reading time)
+
+**VideoSwitcher formát (KRITICKÉ):**
+```mdx
+# SPRÁVNĚ - single-line JSON, alternatives (ne videos!)
+<VideoSwitcher alternatives={[{"id":"VIDEO_ID","title":"Title"}]} />
+
+# ŠPATNĚ - multi-line, videos prop
+<VideoSwitcher videos={[
+  { id: "VIDEO_ID", title: "Title" }
+]} />
+```
+
+**⚠️ FIX 2025-12-09:** MarkdownRenderer regex nyní podporuje OBOJÍ:
+- `videos={...}` (legacy)
+- `alternatives={...}` (nový formát)
+
+Regex: `/(?:videos|alternatives)=\{(\[.*\])\}/`
+
+**HOOK Section Pattern:**
+```mdx
+## ⚡ [Provokativní název]
+
+**[Šokující tvrzení nebo otázka v první větě.]**
+
+[2-3 věty rozvíjející téma, budující napětí...]
+```
+
+**Časté chyby k vyhnutí:**
+- ❌ Zapomenout aktualizovat lab count v header Callout po přidání labu
+- ❌ Duplikovat content (HOOK + původní intro = redundance)
+- ❌ Použít `videos={...}` místo `alternatives={...}`
+- ❌ Nechat prázdné řádky uvnitř VideoSwitcher JSON
+
+**Video výběr - kvalitativní kritéria:**
+| Typ | Příklad | Použití |
+|-----|---------|---------|
+| High Energy | NetworkChuck, Fireship | HOOK, motivace |
+| Deep Technical | 3Blue1Brown | Koncepty, vizualizace |
+| Storytelling | ColdFusion | Historie, kontext |
+| Practical | Jeff Su, All About AI | Tutoriály, how-to |
+
+**Efektivita:**
+- 11 lekcí upgradováno za ~2 hodiny
+- Klíč: Dobrá příprava (LESSON_UPGRADE_GUIDE) + systematický přístup
+
 ### General
 
 - **Don't hold back.** User wants engineering depth, not generic tutorials.
@@ -282,24 +345,39 @@ Při neshodě = zastaralý kontext!
 |------|--------|
 | Documentation & workflow | ✅ DONE |
 | Course restructure | ✅ DONE |
-| Lesson 01 - Prompt Architecture | ✅ DONE |
-| Lesson 02 - Prompt Injection | ✅ DONE |
-| Lesson 04 - Local Intelligence | ✅ DONE |
-| Lesson 05 - AI-Powered Development | ✅ DONE |
 | Content Research | ✅ DONE |
 | VideoSwitcher + PIN feature | ✅ DONE |
+| **Edutainment v3.0 - AI Basics (7 lessons)** | ✅ DONE |
+| **Edutainment v3.0 - Practical PE (4 lessons)** | ✅ DONE |
 
-### Current Lessons (4 total)
+### Current Courses (Fully Upgraded)
+
+**AI Basics (7 lessons):**
+```
+content/courses/ai-basics-beginner/lessons/
+├── 01-what-is-ai/           ✅ ColdFusion + IBM
+├── 02-how-ai-learns/        ✅ 3B1B + Backprop
+├── 03-llms-explained/       ✅ 3B1B + Attention
+├── 04-talking-to-ai/        ✅ Jeff Su + GenAI
+├── 05-dark-side/            ✅ Deepfakes + ColdFusion
+├── 06-ai-at-work/           ✅ Excel + n8n
+└── 07-course-summary/       ✅ Two Minute Papers
+```
+
+**Practical PE (4 lessons):**
 ```
 content/courses/practical-prompt-engineering/lessons/
-├── 01-prompt-architecture/
-├── 02-prompt-injection/
-├── 04-local-intelligence/
-└── 05-ai-powered-development/
+├── 01-prompt-architecture/  ✅ theMITmonk + XML Tags
+├── 02-prompt-injection/     ✅ NetworkChuck + Gandalf Lab
+├── 04-local-intelligence/   ✅ NetworkChuck + DeepSeek
+└── 05-ai-powered-development/ ✅ Fireship + MCP
 ```
 
-### NEXT: Další lekce dle potřeby
-(Aktuální 4 lekce jsou kompletní včetně videí)
+### Low Priority (Optional)
+| Item | Notes |
+|------|-------|
+| SVG Diagrams | ai-ml-dl-circles, attention-mechanism, sql-vs-prompt-injection |
+| Visual QA | Manual browser testing |
 
 ---
 
