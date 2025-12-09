@@ -4,9 +4,20 @@
 **Mise:** Ovládněte umění provozování nejmodernějších LLM na vlastním hardwaru. Získáte maximální soukromí, nulovou latenci a fixní náklady.
 
 ⏳ **Reading Time:** 40 min | 🧪 **[3] Labs Included**
+
 </Callout>
 
-<VideoSwitcher videos={[{"id":"Wjrdr0NU4Sk","title":"host ALL your AI locally","author":"NetworkChuck","description":"Complete local AI setup guide from zero to production.","lang":"en"},{"id":"QVOy61pXdSo","title":"Why Run AI Locally","author":"David Ondrej","description":"Local-first philosophy and model selection.","lang":"en"}]} />
+<VideoSwitcher
+  videos={[
+    {
+      id: "QVOy61pXdSo",
+      title: "Why Run AI Locally",
+      author: "David Ondrej",
+      description: "Local-first philosophy and model selection.",
+      lang: "en",
+    },
+  ]}
+/>
 
 ---
 
@@ -18,6 +29,7 @@ Toto video od NetworkChuck ukazuje kompletní postup od nuly po funkční lokál
 🔗 **EN:** [host ALL your AI locally](https://www.youtube.com/watch?v=Wjrdr0NU4Sk) — NetworkChuck (20 min)
 
 🇨🇿 **CZ Alternativa:** [ChatGPT na vašem počítači](https://www.youtube.com/watch?v=R_iA-S2N-iE) — AI s rozumem
+
 </Callout>
 
 ---
@@ -30,16 +42,17 @@ V éře dominance API jako OpenAI a Anthropic hnutí k **Lokální Inteligenci**
 
 ### 4 kritické důvody
 
-| Důvod | Cloud API | Lokální LLM |
-|-------|-----------|-------------|
-| **🔒 Soukromí** | Data opouští perimetr | Data nikdy neopustí RAM |
-| **💰 Náklady** | $0.01-0.06 / 1k tokenů | Fixní (HW + elektřina) |
-| **⚡ Latence** | 150-400ms | 10-20ms |
-| **🎛️ Kontrola** | Censored, RLHF | Plná kontrola, fine-tuning |
+| Důvod           | Cloud API              | Lokální LLM                |
+| --------------- | ---------------------- | -------------------------- |
+| **🔒 Soukromí** | Data opouští perimetr  | Data nikdy neopustí RAM    |
+| **💰 Náklady**  | $0.01-0.06 / 1k tokenů | Fixní (HW + elektřina)     |
+| **⚡ Latence**  | 150-400ms              | 10-20ms                    |
+| **🎛️ Kontrola** | Censored, RLHF         | Plná kontrola, fine-tuning |
 
 <Callout type="warning">
-**Reality Check 2025:** 1 milion tokenů přes GPT-4o stojí ~$30. Lokálně na RTX 4090 stojí ~$0.02 (elektřina).
-Pro agentní smyčky, kde model iteruje 100×, je rozdíl astronomický.
+  **Reality Check 2025:** 1 milion tokenů přes GPT-4o stojí ~$30. Lokálně na RTX
+  4090 stojí ~$0.02 (elektřina). Pro agentní smyčky, kde model iteruje 100×, je
+  rozdíl astronomický.
 </Callout>
 
 ---
@@ -52,18 +65,19 @@ Jak si lokální modely vedou proti cloudovým gigantům?
 
 ### Detailní srovnání
 
-| Model | MMLU-Pro | VRAM (Q4) | Tokeny/s (RTX 5090) | Poznámka |
-|-------|----------|-----------|---------------------|----------|
-| **GPT-5.1** | 92.1% | ☁️ Cloud | N/A | Reference cloud |
-| **Claude Opus 4.5** | 91.5% | ☁️ Cloud | N/A | Nejlepší pro kód |
-| **Gemini 3 Pro** | 91.0% | ☁️ Cloud | N/A | 1M kontext |
-| **Llama 4 Maverick** | 89.2% | ~45 GB | 35 t/s | Nejlepší open-source |
-| **Qwen 3 235B** | 88.5% | ~90 GB | 15 t/s | Alibaba flagship |
-| **Llama 4 Scout** | 80.5% | ~8 GB | 100 t/s | Budget král |
-| **DeepSeek-R1** | 78.3% | ~12 GB | 60 t/s | Reasoning specialist |
+| Model                | MMLU-Pro | VRAM (Q4) | Tokeny/s (RTX 5090) | Poznámka             |
+| -------------------- | -------- | --------- | ------------------- | -------------------- |
+| **GPT-5.1**          | 92.1%    | ☁️ Cloud  | N/A                 | Reference cloud      |
+| **Claude Opus 4.5**  | 91.5%    | ☁️ Cloud  | N/A                 | Nejlepší pro kód     |
+| **Gemini 3 Pro**     | 91.0%    | ☁️ Cloud  | N/A                 | 1M kontext           |
+| **Llama 4 Maverick** | 89.2%    | ~45 GB    | 35 t/s              | Nejlepší open-source |
+| **Qwen 3 235B**      | 88.5%    | ~90 GB    | 15 t/s              | Alibaba flagship     |
+| **Llama 4 Scout**    | 80.5%    | ~8 GB     | 100 t/s             | Budget král          |
+| **DeepSeek-R1**      | 78.3%    | ~12 GB    | 60 t/s              | Reasoning specialist |
 
 <Callout type="tip">
-**Pro Tip:** **Llama 4 Scout** je sweet spot pro většinu použití. 80.5% na MMLU-Pro je lepší než GPT-4 a běží na 8GB GPU.
+  **Pro Tip:** **Llama 4 Scout** je sweet spot pro většinu použití. 80.5% na
+  MMLU-Pro je lepší než GPT-4 a běží na 8GB GPU.
 </Callout>
 
 ---
@@ -84,12 +98,12 @@ Llama 4 8B @ Q4_K_M:
 
 ### Typy kvantizace
 
-| Typ | Bitů | Kvalita | Použití |
-|-----|------|---------|---------|
-| **FP16** | 16 | 100% | Trénink, reference |
-| **Q8** | 8 | ~99% | Téměř bezztrátové |
-| **Q4_K_M** | 4 | ~95-98% | ⭐ Sweet spot |
-| **Q2** | 2 | ~70% | Pouze experimenty |
+| Typ        | Bitů | Kvalita | Použití            |
+| ---------- | ---- | ------- | ------------------ |
+| **FP16**   | 16   | 100%    | Trénink, reference |
+| **Q8**     | 8    | ~99%    | Téměř bezztrátové  |
+| **Q4_K_M** | 4    | ~95-98% | ⭐ Sweet spot      |
+| **Q2**     | 2    | ~70%    | Pouze experimenty  |
 
 <Diagram type="vram-stack" />
 
@@ -108,16 +122,17 @@ Pravidlo palce (Q4_K_M):
 
 ### Přehled nároků (Prosinec 2025)
 
-| Kategorie | Model | VRAM (Q4) | Tvůj HW |
-|-----------|-------|-----------|---------|
-| **Tiny** | Gemma 3 2B | < 2 GB | Jakýkoli |
-| **Standard** | Llama 4 8B | ~6 GB | RTX 3060+ |
-| **Mid** | Qwen 3 14B | ~10 GB | RTX 4070+ |
-| **Reasoning** | DeepSeek-R1 | ~12 GB | RTX 4080+ |
-| **Large** | Llama 4 70B | ~40 GB | 2× RTX 4090 nebo M4 Ultra |
+| Kategorie     | Model       | VRAM (Q4) | Tvůj HW                   |
+| ------------- | ----------- | --------- | ------------------------- |
+| **Tiny**      | Gemma 3 2B  | < 2 GB    | Jakýkoli                  |
+| **Standard**  | Llama 4 8B  | ~6 GB     | RTX 3060+                 |
+| **Mid**       | Qwen 3 14B  | ~10 GB    | RTX 4070+                 |
+| **Reasoning** | DeepSeek-R1 | ~12 GB    | RTX 4080+                 |
+| **Large**     | Llama 4 70B | ~40 GB    | 2× RTX 4090 nebo M4 Ultra |
 
 <Callout type="warning">
-**Pozor na kontext!** Tabulka předpokládá 4-8k kontext. 128k kontext může spotřebovat desítky GB navíc v KV Cache!
+  **Pozor na kontext!** Tabulka předpokládá 4-8k kontext. 128k kontext může
+  spotřebovat desítky GB navíc v KV Cache!
 </Callout>
 
 ---
@@ -152,12 +167,12 @@ Pravidlo palce (Q4_K_M):
 
 ### Inferenční enginy
 
-| Engine | Nejlepší pro | Poznámka |
-|--------|--------------|----------|
-| **Ollama** | Vývojáři, začátečníci | "Docker pro AI" |
-| **LM Studio** | Vizuální typy | GUI, HuggingFace browser |
-| **vLLM** | Produkce | PagedAttention, vysoká propustnost |
-| **llama.cpp** | Maximální výkon | Low-level, C++ |
+| Engine        | Nejlepší pro          | Poznámka                           |
+| ------------- | --------------------- | ---------------------------------- |
+| **Ollama**    | Vývojáři, začátečníci | "Docker pro AI"                    |
+| **LM Studio** | Vizuální typy         | GUI, HuggingFace browser           |
+| **vLLM**      | Produkce              | PagedAttention, vysoká propustnost |
+| **llama.cpp** | Maximální výkon       | Low-level, C++                     |
 
 ### Formáty souborů
 
@@ -168,6 +183,7 @@ Pravidlo palce (Q4_K_M):
 **Safetensors:** Standard HuggingFace. Rychlé, bezpečné, ale vyžaduje konverzi.
 
 **Pravidlo:** Pro Ollama vždy stahuj GGUF!
+
 </ConceptCard>
 
 ---
@@ -175,15 +191,18 @@ Pravidlo palce (Q4_K_M):
 ## 🧪 Lab 1: Zprovoznění Ollama
 
 ### 🎯 Cíl
+
 Nainstalujte Ollama a spusťte první lokální inferenci.
 
 ### 📋 Prerekvizity
+
 - Linux, macOS nebo Windows (WSL2)
 - 8+ GB RAM (16 GB doporučeno)
 - GPU volitelné ale doporučené
 
 <Callout type="warning">
-**Před začátkem:** Ujistěte se, že máte alespoň 10 GB volného místa na disku pro modely.
+  **Před začátkem:** Ujistěte se, že máte alespoň 10 GB volného místa na disku
+  pro modely.
 </Callout>
 
 ### 🛠️ Kroky
@@ -218,6 +237,7 @@ ollama run llama4:scout
 ```
 
 Vyzkoušejte:
+
 - "Napiš haiku o robotovi, který se učí milovat."
 - "Kolik je 3 jablka minus 1 plus 2?"
 - "Napiš funkci v Pythonu pro Fibonacci sekvenci."
@@ -235,6 +255,7 @@ watch -n 1 nvidia-smi
 ```
 
 ### ✅ Kritéria úspěchu
+
 - [x] Ollama nainstalována
 - [x] Model stažen a běží
 - [x] Odpovědi se generují lokálně (zkuste odpojit wifi!)
@@ -246,9 +267,11 @@ watch -n 1 nvidia-smi
 ## 🧪 Lab 2: Python integrace
 
 ### 🎯 Cíl
+
 Ovládejte lokální LLM programově přes Python.
 
 ### 📋 Prerekvizity
+
 - Python 3.10+
 - Ollama běžící na pozadí
 
@@ -276,23 +299,23 @@ MODEL = "llama4:scout"
 def chat(prompt: str) -> str:
     print(f"\n🤖 Sending to {MODEL}...\n")
     start = time.time()
-    
+
     response = ""
     stream = ollama.chat(
         model=MODEL,
         messages=[{"role": "user", "content": prompt}],
         stream=True
     )
-    
+
     for chunk in stream:
         content = chunk["message"]["content"]
         print(content, end="", flush=True)
         response += content
-    
+
     duration = time.time() - start
     tokens = len(response.split()) * 1.3  # ~estimate
     print(f"\n\n⚡ {tokens/duration:.1f} tok/s | {duration:.1f}s")
-    
+
     return response
 
 if __name__ == "__main__":
@@ -308,13 +331,14 @@ python agent.py
 
 ### 📝 Troubleshooting
 
-| Problém | Řešení |
-|---------|--------|
-| Connection refused | `ollama serve` v jiném terminálu |
-| < 2 tok/s | Model běží na CPU, zkuste menší model |
-| Out of memory | Zkuste `gemma2:2b` |
+| Problém            | Řešení                                |
+| ------------------ | ------------------------------------- |
+| Connection refused | `ollama serve` v jiném terminálu      |
+| < 2 tok/s          | Model běží na CPU, zkuste menší model |
+| Out of memory      | Zkuste `gemma2:2b`                    |
 
 ### ✅ Kritéria úspěchu
+
 - [x] Skript běží bez chyb
 - [x] Výstup se streamuje v reálném čase
 - [x] Vidíte statistiky rychlosti
@@ -326,13 +350,16 @@ python agent.py
 ## 🧪 Lab 3: Generování obrázků lokálně 🖼️
 
 ### 🎯 Cíl
+
 Spusťte lokální image generation jako přípravu pro MCP integraci.
 
 <Callout type="tip">
-**Proč to děláme:** V Lekci 05 budete tento lokální model připojovat přes MCP k vašemu AI asistentovi!
+  **Proč to děláme:** V Lekci 05 budete tento lokální model připojovat přes MCP
+  k vašemu AI asistentovi!
 </Callout>
 
 ### 📋 Prerekvizity
+
 - NVIDIA GPU s 8+ GB VRAM (doporučeno)
 - Ollama nainstalovaná
 
@@ -368,6 +395,7 @@ python main.py
 ```
 
 ### ✅ Kritéria úspěchu
+
 - [x] LLaVA model stažen
 - [x] Úspěšná analýza obrázku
 - [x] (Bonus) ComfyUI běží
@@ -382,17 +410,18 @@ Ne všechno musí běžet lokálně. Chytrá architektura kombinuje obojí.
 
 ### Decision tree
 
-| Scénář | Řešení | Důvod |
-|--------|--------|-------|
-| Citlivá data (PII, zdravotní) | **Local** | Compliance, GDPR |
-| Vysoký objem (>1M tok/den) | **Local** | Náklady |
-| Realtime (chatbot, IDE) | **Local** | Latence |
-| One-off analýza | **Cloud** | Pohodlí |
-| Frontier capability (GPT-5) | **Cloud** | Nedostupné lokálně |
-| Prototyp / POC | **Cloud** | Rychlost startu |
+| Scénář                        | Řešení    | Důvod              |
+| ----------------------------- | --------- | ------------------ |
+| Citlivá data (PII, zdravotní) | **Local** | Compliance, GDPR   |
+| Vysoký objem (>1M tok/den)    | **Local** | Náklady            |
+| Realtime (chatbot, IDE)       | **Local** | Latence            |
+| One-off analýza               | **Cloud** | Pohodlí            |
+| Frontier capability (GPT-5)   | **Cloud** | Nedostupné lokálně |
+| Prototyp / POC                | **Cloud** | Rychlost startu    |
 
 <Callout type="tip">
-**Pro Tip:** Začněte na cloudu pro POC, přesuňte do lokálu pro produkci. "Cloud for dev, local for prod."
+  **Pro Tip:** Začněte na cloudu pro POC, přesuňte do lokálu pro produkci.
+  "Cloud for dev, local for prod."
 </Callout>
 
 ---
@@ -435,7 +464,8 @@ ollama run llama4:scout
 ---
 
 <Callout type="success">
-🎉 **Gratulace!** Nyní máte lokální AI stack. V Lekci 05 ho propojíme s MCP a uděláme z něj plnohodnotného agenta.
+  🎉 **Gratulace!** Nyní máte lokální AI stack. V Lekci 05 ho propojíme s MCP a
+  uděláme z něj plnohodnotného agenta.
 </Callout>
 
 **Další:** Lekce 05 — Vývoj s AI asistencí (MCP, Antigravity, Context Management)
