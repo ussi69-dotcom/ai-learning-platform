@@ -1,32 +1,50 @@
 # Mluvíme s AI: Tvůj první prompt 🗣️
 
 <Callout type="info">
-**Cíl mise:** Naučit se umění **Prompt Engineeringu** pro přesné ovládání AI.
-⏳ **Čas čtení:** 25 min | 🧪 **6 Laboratoří**
+  **Cíl mise:** Naučit se umění **Prompt Engineeringu** pro přesné ovládání AI.
+  ⏳ **Čas čtení:** 25 min | 🧪 **[6] Laby součástí**
 </Callout>
 
-Nepřišel bys k Mistrovi Jedi a neřekl "Pomoz mi." Řekl bys: "Mistře, pouč mě o způsobech boje se světelným mečem Formy III."
+<VideoSwitcher
+  alternatives={[
+    { id: "jC4v5AS4RIM", title: "Perfektní Prompt Formule (Jeff Su)" },
+    { id: "CBfgQDpgiMk", title: "Generative AI 2025" },
+  ]}
+/>
 
-Ten rozdíl je v **Přesnosti**.
-V terminologii AI tomu říkáme **Prompt Engineering** (Inženýrství promptů). Je to umění mluvit "strojově".
+## ⚡ 10× Multiplikátor
+
+**90 % lidí používá AI špatně.**
+
+Napíšou „Pomoz mi napsat email" a dostanou generické smetí. Pak prohlásí „AI je přeceňovaná."
+
+Ale těch zbylých 10 %? Ti dostanou AI, aby psala emaily, které uzavírají obchody. Vytvářela prezentace za minuty. Debugovala kód, který by trval hodiny. Rozdíl není v AI—je v **promptu**.
+
+Tato lekce je tvůj ROI moment. Co se tu naučíš, použiješ **zítra v 9 ráno**.
+
+Podívej se na video od Jeffa Su výše—vyškolil tisíce korporátních profesionálů přesně na tuto formuli.
 
 ---
 
 ## 🏛️ 1. Myšlení inženýra
 
 Většina Padawanů dělá chybu, že se k AI chová jako ke Googlu.
-*   🔍 **Google:** Vyhledává existující informace. *"Najdi stránku X."*
-*   ✨ **AI (LLM):** Generuje *nové* informace. *"Vytvoř myšlenku Y."*
+
+- 🔍 **Google:** Vyhledává existující informace. _"Najdi stránku X."_
+- ✨ **AI (LLM):** Generuje _nové_ informace. _"Vytvoř myšlenku Y."_
 
 K ovládání tohoto generování používáme **6 Pilířů přesnosti**.
 
-<ConceptCard title="6 Pilířů" icon="💠" jediQuote="Ovládání. Ovládání. Musíš se naučit ovládání.">
-1.  **🎭 Persona:** Za koho AI hraje? (Role)
-2.  **⚔️ Úkol:** Jaká je konkrétní akce? (Sloveso)
-3.  **🌍 Kontext:** Proč to potřebuji? Pro koho to je? (Pozadí)
-4.  **👯 Příklady:** Ukaž, neříkej (Few-Shot Examples).
-5.  **📐 Formát:** JSON, Tabulka, Seznam? (Struktura)
-6.  **🎨 Tón:** Profesionální, Vtipný, Sarkastický? (Vibe)
+<ConceptCard
+  title="6 Pilířů"
+  icon="💠"
+  jediQuote="Ovládání. Ovládání. Musíš se naučit ovládání."
+>
+  1. **🎭 Persona:** Za koho AI hraje? (Role) 2. **⚔️ Úkol:** Jaká je konkrétní
+  akce? (Sloveso) 3. **🌍 Kontext:** Proč to potřebuji? Pro koho to je? (Pozadí)
+  4. **👯 Příklady:** Ukaž, neříkej (Few-Shot Examples). 5. **📐 Formát:** JSON,
+  Tabulka, Seznam? (Struktura) 6. **🎨 Tón:** Profesionální, Vtipný,
+  Sarkastický? (Vibe)
 </ConceptCard>
 
 ---
@@ -38,10 +56,10 @@ Dokonalý prompt je jako pyramida. Potřebuje silný základ.
 
 <Diagram type="prompt-structure-pyramid" />
 
-*   **Kontext:** Základna. Bez ní se AI vznáší v prázdnotě.
-*   **Instrukce:** Hlavní akce.
-*   **Data:** Materiál, se kterým se pracuje.
-*   **Formát:** Finální úprava.
+- **Kontext:** Základna. Bez ní se AI vznáší v prázdnotě.
+- **Instrukce:** Hlavní akce.
+- **Data:** Materiál, se kterým se pracuje.
+- **Formát:** Finální úprava.
 
 Pokud ti chybí jedna vrstva, pyramida se zhroutí.
 
@@ -52,14 +70,15 @@ Pokud ti chybí jedna vrstva, pyramida se zhroutí.
 Pokud nenastavíš Personu, AI použije výchozí "Nápomocný asistent" (nuda).
 Odemkni specifické uvažování přiřazením role.
 
-*   **Bez Persony:** "Vysvětli kvantovou fyziku." (Obecné shrnutí z Wikipedie)
-*   **S Personou:** "Hraj roli 5letého dítěte." (Analogie s hračkami)
+- **Bez Persony:** "Vysvětli kvantovou fyziku." (Obecné shrnutí z Wikipedie)
+- **S Personou:** "Hraj roli 5letého dítěte." (Analogie s hračkami)
 
 ### 🔬 Lab 1: Změna Persony
 
-**Cíl:** Vidět, jak Persona mění *obsah* odpovědi.
+**Cíl:** Vidět, jak Persona mění _obsah_ odpovědi.
 
 **Prompt:**
+
 ```text
 Hraj roli mrzutého strážce majáku z 19. století.
 Tón: Podezřívavý, staromódní, tajemný.
@@ -68,7 +87,7 @@ Kontext: Nikdy jsi neviděl technologii, ale cítíš signály ve vzduchu.
 ```
 
 **Analýza:**
-Všímáš si slovní zásoby? "Neviditelní duchové", "magické proudy". Mění to způsob, *jak* vysvětluje koncept.
+Všímáš si slovní zásoby? "Neviditelní duchové", "magické proudy". Mění to způsob, _jak_ vysvětluje koncept.
 
 <LabComplete labId="lab-persona-shift" />
 
@@ -78,11 +97,12 @@ Všímáš si slovní zásoby? "Neviditelní duchové", "magické proudy". Měn�
 
 Nejčastějším selháním je zadání Úkolu bez Kontextu.
 
-*   ❌ **Slabé:** "Napiš e-mail."
-*   ✅ **Silné:** "Napiš **zamítací e-mail** dodavateli, který byl **příliš drahý**, ale **nech dveře otevřené pro budoucí spolupráci**."
+- ❌ **Slabé:** "Napiš e-mail."
+- ✅ **Silné:** "Napiš **zamítací e-mail** dodavateli, který byl **příliš drahý**, ale **nech dveře otevřené pro budoucí spolupráci**."
 
 <KeyTakeaway title="Pravidlo kontextu" icon="🗺️">
-Vždy odpověz: **Pro koho** to je? **Proč** to potřebuji? **Jaká** jsou omezení?
+  Vždy odpověz: **Pro koho** to je? **Proč** to potřebuji? **Jaká** jsou
+  omezení?
 </KeyTakeaway>
 
 ---
@@ -93,7 +113,8 @@ Mistři inženýři používají **Oddělovače** k oddělení instrukcí od dat
 Běžné oddělovače: `"""`, `---`, `###`.
 
 <ConceptCard title="Bezpečnost především" icon="🛡️">
-Použití oddělovačů zabraňuje **Prompt Injection** (kdy text oklame AI). Říká AI: "Vše uvnitř těchto uvozovek jsou DATA, ne INSTRUKCE."
+  Použití oddělovačů zabraňuje **Prompt Injection** (kdy text oklame AI). Říká
+  AI: "Vše uvnitř těchto uvozovek jsou DATA, ne INSTRUKCE."
 </ConceptCard>
 
 ### 🔬 Lab 2: Oddělovač dat
@@ -101,6 +122,7 @@ Použití oddělovačů zabraňuje **Prompt Injection** (kdy text oklame AI). Ř
 **Cíl:** Shrnout text bez zmatení.
 
 **Prompt:**
+
 ```text
 Hraj roli výkonného asistenta.
 Shrň níže uvedený e-mail do 3 odrážek.
@@ -121,8 +143,8 @@ hlavně chci mluvit o situaci s kávovarem.
 
 Toto je tajná zbraň. Nepopisuj vzor. **Ukaž ho.**
 
-*   **Zero-Shot:** Zeptáš se, AI hádá.
-*   **Few-Shot:** Dáš příklady, AI napodobuje.
+- **Zero-Shot:** Zeptáš se, AI hádá.
+- **Few-Shot:** Dáš příklady, AI napodobuje.
 
 <Diagram type="few-shot-learning" />
 
@@ -131,6 +153,7 @@ Toto je tajná zbraň. Nepopisuj vzor. **Ukaž ho.**
 **Cíl:** Vynutit specifický formát bez složitých pravidel.
 
 **Prompt:**
+
 ```text
 Extrahuj předvolbu z těchto čísel. Dodržuj přesně vzor.
 
@@ -141,7 +164,7 @@ Vstup: 212-555-0199
 Výstup: Předvolba: 212
 
 Vstup: 415.555.0100
-Výstup: 
+Výstup:
 ```
 
 <LabComplete labId="lab-pattern-master" />
@@ -158,6 +181,7 @@ Potřebuješ **Tabulku**? **JSON**? **Odrážky**?
 **Cíl:** Přeměnit text na strukturovanou tabulku.
 
 **Prompt:**
+
 ```text
 Hraj roli datového analytika.
 Analyzuj text níže.
@@ -176,10 +200,10 @@ Leia je princezna/generál a také používá blaster.
 
 ## 🐘 8. "Růžový slon" (Omezení)
 
-Vyhni se negativním omezením (*"Nedělej X"*). Používej pozitivní omezení (*"Udělej Y"*).
+Vyhni se negativním omezením (_"Nedělej X"_). Používej pozitivní omezení (_"Udělej Y"_).
 
-*   ❌ "Nepiš dlouhé věty."
-*   ✅ "Používej krátké věty (pod 10 slov)."
+- ❌ "Nepiš dlouhé věty."
+- ✅ "Používej krátké věty (pod 10 slov)."
 
 ---
 
@@ -195,6 +219,7 @@ Donuť ji zpomalit magickou frází: **"Pojďme přemýšlet krok za krokem."**
 **Cíl:** Donutit AI zvládnout složitá omezení, která zahltí její krátkodobou paměť.
 
 **Prompt:**
+
 ```text
 Plánuješ rozvrh workshopu.
 Omezení 1: Máme 3 místnosti (Červená, Modrá, Zelená).
@@ -207,9 +232,10 @@ Pojďme přemýšlet krok za krokem.
 ```
 
 **Analýza:**
-*   **Bez CoT:** AI často vyhalucinuje rozvrh, kde se A a C střetávají, nebo dá B do Modré místnosti. Snaží se "uhádnout" odpověď najednou.
-*   **S CoT:** Magická fráze ji donutí napsat: *"Nejprve umístíme Sezení B do Červené. Dále naplánujeme A a C do různých časů..."* Toto myšlení "nanečisto" zajišťuje přesnost.
-</LabSection>
+
+- **Bez CoT:** AI často vyhalucinuje rozvrh, kde se A a C střetávají, nebo dá B do Modré místnosti. Snaží se "uhádnout" odpověď najednou.
+- **S CoT:** Magická fráze ji donutí napsat: _"Nejprve umístíme Sezení B do Červené. Dále naplánujeme A a C do různých časů..."_ Toto myšlení "nanečisto" zajišťuje přesnost.
+  </LabSection>
 
 <LabComplete labId="lab-reasoning-anchor" />
 
@@ -224,24 +250,13 @@ Nevíš, na co se zeptat? Nech AI, ať vyzpovídá TEBE.
 **Cíl:** Vytvořit plán, když nemáš ponětí.
 
 **Prompt:**
+
 ```text
 Chci se naučit Python, ale nevím, kde začít.
 Ptej se mě na mé cíle, čas a zkušenosti, dokud nebudeš mít dost informací k vytvoření dokonalého studijního plánu pro mě.
 ```
 
 <LabComplete labId="lab-consultant" />
-
----
-
-## 🚀 Pokročilé: Volitelný zdroj
-
-Chceš jít hlouběji? Toto video pokrývá pokročilé techniky promptování.
-
-<Callout type="warning">
-**Volitelný obsah:** Toto je pro Padawany, kteří chtějí jít nad rámec základů.
-</Callout>
-
-<YouTube id="pwWBcsxEoLk" title="Pokročilé techniky promptování" />
 
 ---
 
@@ -253,12 +268,12 @@ Nyní vlastníš sadu nástrojů Mistra.
 
 ### 🔑 6 Pilířů přesnosti
 
-*   🎭 **1. Persona:** Kdo hraje? (*"Hraj roli Senior Python vývojáře"*)
-*   ⚔️ **2. Úkol:** Co dělat? (*"Napiš skript na scrapování dat"*)
-*   🌍 **3. Kontext:** Proč/Pro koho? (*"Pro tutoriál pro začátečníky"*)
-*   👯 **4. Příklady:** Ukaž mi jak? (*"Vstup: A, Výstup: B"*)
-*   📐 **5. Formát:** Jak to má vypadat? (*"Výstup jako Markdown tabulka"*)
-*   🎨 **6. Tón:** Jaký vibe? (*"Profesionální, ale povzbuzující"*)
+- 🎭 **1. Persona:** Kdo hraje? (_"Hraj roli Senior Python vývojáře"_)
+- ⚔️ **2. Úkol:** Co dělat? (_"Napiš skript na scrapování dat"_)
+- 🌍 **3. Kontext:** Proč/Pro koho? (_"Pro tutoriál pro začátečníky"_)
+- 👯 **4. Příklady:** Ukaž mi jak? (_"Vstup: A, Výstup: B"_)
+- 📐 **5. Formát:** Jak to má vypadat? (_"Výstup jako Markdown tabulka"_)
+- 🎨 **6. Tón:** Jaký vibe? (_"Profesionální, ale povzbuzující"_)
 
 ### 🛠️ Mistrovská šablona (Copy-Paste)
 

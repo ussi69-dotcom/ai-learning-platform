@@ -1,55 +1,172 @@
-# 🚀 Clippy Learns AI: The Next-Gen AI Learning Platform
+# 🚀 Clippy Learns AI: The Edutainment AI Learning Platform
 
-## 🌟 Vize a Účel
-**"Udělat z učení AI hru, ne povinnost."**
+## 🌟 Vize a Účel (v3.0 - Edutainment Revolution)
 
-Projekt **Clippy Learns AI** vznikl s jasným cílem: demystifikovat složité koncepty umělé inteligence a prezentovat je formou, která je vizuálně podmanivá, interaktivní a zábavná. Není to jen další sbírka textových tutoriálů. Je to gamifikovaná platforma, kde uživatel (provázený naším maskotem Clippym) získává XP, odemyká odznaky a postupuje od úrovně *Rookie* až po *Experta*.
+**"Transformovat pasivní konzumenty na aktivní tvůrce. Zaháknout a nepustit."**
 
-## 📈 Evoluce: Od prototypu k "Beginner Gold Standard"
-Projekt nevznikl přes noc. Prošel přísným iterativním vývojem, který nazýváme **Cykly (Cycles)**.
+Projekt **Clippy Learns AI** není jen další vzdělávací platforma. Je to **Edutainment revoluce** - strategický posun od "přenosu informací" k "inženýrství inspirace". Kombinujeme:
 
-*   **Počátky:** Jednoduché prototypy zaměřené na strukturu obsahu.
-*   **Hledání identity:** Experimentování s vizuálními styly, které vyústilo v náš unikátní designový jazyk.
-*   **Cycle 27 (Zlomový bod):** Dosažení tzv. "Beginner Golden Standard". V této fázi jsme finalizovali základní kurzy, odladili architekturu a zbavili se závislostí na externích obrázcích ve prospěch generovaných SVG diagramů.
-*   **Současnost:** Plně funkční full-stack aplikace běžící v kontejnerech, připravená na škálování.
+- 🔥 **Vysokou energii** (NetworkChuck styl)
+- 🎨 **Vizuální intuici** (3Blue1Brown styl)
+- ⚡ **Okamžité ROI** (Jeff Su styl)
+- 🎮 **Gamifikaci** (Lakera Gandalf styl)
+
+### Proč Edutainment?
+
+> "Tradiční formát přednášek – charakterizovaný statickými snímky, monotónním přednesem a extenzivní délkou – se stal v kontextu roku 2025 zastaralým."
+
+**Statistika retence znalostí:**
+| Metoda | Retence |
+|--------|---------|
+| 📖 Čistý text | ~20% |
+| 🎨 Vizuální obsah | ~60% |
+| 🎬 Video + Interakce | ~80% |
+| 🧪 Praktický lab | ~90% |
+
+**Náš cíl:** Každá lekce musí dosáhnout 80%+ retence kombinací všech metod.
+
+---
+
+## 📈 Evoluce: Od prototypu k Edutainment standardu
+
+| Fáze | Milestone | Status |
+|------|-----------|--------|
+| **Prototyp** | Struktura obsahu | ✅ Done |
+| **Identity** | Liquid Glass UI, Jedi/Sith theme | ✅ Done |
+| **Cycle 27** | "Beginner Golden Standard" | ✅ Done |
+| **Cycle 48** | Full-stack kontejnerizace | ✅ Done |
+| **Cycle 50+** | 🆕 **Edutainment Revolution** | 🚧 In Progress |
+
+### Edutainment Revolution zahrnuje:
+
+1. **Video-First** - Každá lekce začíná kurátovaným videem od top tvůrců
+2. **SVG Explosion** - 3x více diagramů, vizualizace KAŽDÉHO konceptu
+3. **Gamified Labs** - Gandalf-style challenges, leaderboardy
+4. **Instant ROI** - "Použij to zítra v 9 ráno"
+
+---
+
+## 🎬 Pedagogické profily tvůrců (Reference)
+
+Tito tvůrci definují náš Edutainment standard:
+
+| Tvůrce | Styl | Superpower | Best For |
+|--------|------|------------|----------|
+| **NetworkChuck** | Hacker-energy, káva, "musíte to zkusit hned teď!" | Odbourává bariéry vstupu | Local AI, DevOps, Security |
+| **3Blue1Brown** | Matematická vizualizace, Manim engine | Činí abstraktní intuitivním | Neuronové sítě, Transformers |
+| **Fireship** | 100 seconds, vysoká hustota, memes | Efektivita a pragmatismus | Quick overviews, trends |
+| **Jeff Su** | Korporátní produktivita, precizní střih | Okamžitá ROI pro pracovníky | Excel, e-maily, prompting |
+| **ColdFusion** | Dokumentární filmy, historický kontext | Humanizace technologie | AI history, sociální dopady |
+| **Two Minute Papers** | "What a time to be alive!", úžas | Inspirace a optimismus | Future, vědecký potenciál AI |
+
+**Klíčová metrika:** Pokud lekce nevyvolá "Wow" reakci do 30 sekund, je nutná revize.
+
+---
 
 ## 🛠️ Technologie pod kapotou
-Využíváme "Bleeding Edge" technologie, abychom zajistili maximální výkon a nejlepší DX (Developer Experience).
 
 ### Frontend: Rychlost a Krása
-*   **Next.js 16 (App Router):** Pro nejmodernější routing a server-side rendering.
-*   **React 19:** Využíváme nejnovější hooky a features pro plynulou interaktivitu.
-*   **Tailwind CSS 4:** Pro atomické stylování bez kompromisů.
-*   **Liquid Glass UI:** Náš vlastní design systém postavený na `backdrop-blur`, průhlednosti a temném režimu. Žádné nudné solidní pozadí, vše je "tekuté" a moderní.
+* **Next.js 16 (App Router):** Pro nejmodernější routing a server-side rendering.
+* **React 19:** Využíváme nejnovější hooky a features pro plynulou interaktivitu.
+* **Tailwind CSS 4:** Pro atomické stylování bez kompromisů.
+* **Liquid Glass UI:** Náš vlastní design systém postavený na `backdrop-blur`, průhlednosti a temném režimu.
+* 🆕 **SVG Diagram System:** Vlastní komponenty pro vizualizaci každého konceptu.
+* 🆕 **VideoPlayer PIN:** Sticky video player s VideoSwitcher pro alternativní videa.
 
 ### Backend: Výkon a Typová Bezpečnost
-*   **FastAPI (Python 3.11+):** Protože rychlost odezvy je klíčová. Asynchronní zpracování nám umožňuje škálovat.
-*   **Pydantic v2:** Pro robustní validaci dat. Co není validní, to neprojde.
-*   **PostgreSQL & Redis:** Osvědčená klasika pro perzistenci dat a bleskové cachování.
+* **FastAPI (Python 3.11+):** Protože rychlost odezvy je klíčová.
+* **Pydantic v2:** Pro robustní validaci dat.
+* **PostgreSQL & Redis:** Perzistence dat a bleskové cachování.
+* 🆕 **ContentLoader:** Automatické parsování MDX, reading time, lab count.
 
-### Proč tento stack?
-Nespokojili jsme se s průměrem. Next.js 16 a React 19 nám dávají náskok před standardem trhu. Python na backendu je "lingua franca" světa AI, což nám umožňuje v budoucnu snadno integrovat skutečné AI modely přímo do výuky.
+---
 
 ## ⚙️ Jak to funguje
-Architektura je navržena jako **modulární a kontejnerizovaná**:
 
-1.  **Docker Orchestrace:** Celý stack (DB, Backend, Frontend, Cache) se spouští jedním příkazem.
-2.  **Content-as-Code:** Lekce jsou psány v MDX. Nejsou to jen statické texty, ale "živé" dokumenty, které renderují interaktivní React komponenty a diagramy přímo v obsahu.
-3.  **SVG First:** Místo nahrávání PNG obrázků definujeme diagramy kódem. To zajišťuje, že jsou vždy ostré, perfektně ladí s tématem (Dark/Light) a jsou snadno editovatelné.
+### Architektura
 
-## 🧠 Naše Metodika a Workflow
-To, co dělá tento projekt unikátním, není jen kód, ale způsob, jakým vzniká:
+1. **Docker Orchestrace:** Celý stack jedním příkazem.
+2. **Content-as-Code:** MDX s interaktivními React komponenty.
+3. **SVG First:** Diagramy kódem, ne raster obrázky.
+4. 🆕 **Video Registry:** Centrální správa videí pro lekce.
 
-*   **Context-Driven Development:** Využíváme složku `.ai-context`, která slouží jako "externí paměť" pro AI agenty. Obsahuje architektonická rozhodnutí, design systémy a stav projektu. Díky tomu každý zásah do kódu respektuje celkovou vizi.
-*   **AI-Agent Spolupráce:** Vývoj probíhá v symbióze mezi lidským vývojářem a AI agenty (vybavenými nástroji jako Context7 MCP pro přístup k živé dokumentaci).
-*   **Visual Inspection:** Máme automatizované vizuální testy (Playwright), které "vidí" aplikaci a generují screenshoty pro kontrolu designu předtím, než se změny schválí.
+### Edutainment Flow (New!)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. HOOK (30s)                                              │
+│  ├── Video embed (NetworkChuck/3B1B/Fireship style)         │
+│  └── Bold claim nebo otázka                                 │
+├─────────────────────────────────────────────────────────────┤
+│  2. VISUALIZE (každý koncept)                               │
+│  ├── SVG Diagram                                            │
+│  ├── ConceptCard s analogií                                 │
+│  └── Before/After ukázky                                    │
+├─────────────────────────────────────────────────────────────┤
+│  3. PRACTICE (lab)                                          │
+│  ├── Gamified challenge (Gandalf style)                     │
+│  ├── Copy-paste ready kód                                   │
+│  └── Clear success criteria                                 │
+├─────────────────────────────────────────────────────────────┤
+│  4. INSPIRE (závěr)                                         │
+│  ├── Holocron summary                                       │
+│  ├── "What a time to be alive!" moment                      │
+│  └── Next steps teaser                                      │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🧠 Strategické závěry (2025+)
+
+### 1. Posun k "Agent Engineering"
+> Prompt Engineering se mění na Agent Engineering. Statické prompty již nestačí; dynamické systémy, které "konají", jsou novým standardem.
+
+### 2. "Lokální AI Rebelie"
+> Silný spodní proud směrem k lokální AI - soukromí, náklady, necenzurované modely. Ollama je "Hello World" tohoto hnutí.
+
+### 3. Bezpečnost jako priorita první třídy
+> S nástupem agentů se Prompt Injection stává kritickou zranitelností. Neučíme jen stavět, ale i "tvrzovat" (harden).
+
+### 4. Edutainment není nice-to-have
+> Retence znalostí je primárně řízena "Wow efektem". Využijeme kulturní kapitál tvůrců jako NetworkChuck a Fireship.
+
+---
 
 ## 🎨 Design Philosophy
+
 - **Style:** "Holographic Datapad" (Glassmorphism, Neon Accents)
-- **Themes:** Dual-mode system: **Jedi (Light/Indigo)** vs **Sith (Dark/Red/Gold)**
+- **Themes:** Dual-mode: **Jedi (Light/Indigo)** vs **Sith (Dark/Red/Gold)**
 - **Assets:** No stock photos. Only code, CSS diagrams, or educational SVGs
+- **Video:** Curated from top Edutainment creators
 - **Reference:** See `CONTENT_GUIDELINES.md` for strict UI rules
 
 ---
-*Originally generated: 27.11.2025 | Last reviewed: 06.12.2025 (Cycle 48)*
-*Merged from PROJECT_CONTEXT.md during v3.0 redesign*
+
+## 🎯 Akční plán (Edutainment Rollout)
+
+### Fáze 1: Hook & Engage (Týden 1-2)
+- [ ] L01 Video Upgrade - ColdFusion/NetworkChuck
+- [ ] L02 Gandalf Lab - Gamifikovaný security challenge
+- [ ] SVG Diagram audit - Minimum 3 diagramy na lekci
+
+### Fáze 2: Depth & Breadth (Týden 3-4)
+- [ ] AI Basics Course - 7 lekcí s Edutainment standardem
+- [ ] Model comparison tables
+- [ ] MCP Deep Dive lab
+
+### Fáze 3: Advanced Track (Měsíc 2)
+- [ ] L09: Reasoning Models (DeepSeek R1, o3)
+- [ ] L10: Multimodal AI
+- [ ] L11: Agentic DevOps
+- [ ] L12: Custom Model Training (Unsloth)
+
+### Fáze 4: Viral Content (Ongoing)
+- [ ] Monthly trends updates
+- [ ] Video Gen module
+
+---
+
+*Originally generated: 27.11.2025*
+*Last major update: 09.12.2025 (Edutainment Revolution v3.0)*
+*Next review: After Phase 1 completion*

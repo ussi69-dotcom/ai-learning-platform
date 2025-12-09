@@ -2,19 +2,54 @@
 
 <Callout type="info">
 **Cíl mise:** Zvládnout 3 způsoby, jak se stroje učí, záhadu "Černé skříňky" a tajný 4. způsob.
-⏳ **Čas čtení:** 20 min | 🧪 **3 Laboratoře**
+⏳ **Čas čtení:** 20 min | 🧪 **[3] Laby součástí**
 </Callout>
 
-Vítej zpět. V minulé lekci jsme se naučili, že AI je student, ne kalkulačka.
-Ale jak přesně učíš stroj? Nemůžeš mu prostě nahrát učebnici do mozku (zatím).
+<VideoSwitcher alternatives={[{"id":"Ilg3gGewQ5U","title":"Backpropagation (3B1B)"},{"id":"aircAruvnKk","title":"Neuronové sítě (3B1B Klasika)"}]} />
 
-Jak ukazuje video, používáme tři odlišné styly výuky. Představ si je jako **Tréninkové metody Jediů**.
+## ⚡ Zjevení
+
+**Neuron je jen číslo.**
+
+To je celé. Žádná magie. Žádné vědomí. Jen číslo mezi 0 a 1 uložené v počítači. A přesto, když propojíš biliony těchto čísel správným způsobem... dostaneš GPT-5.1.
+
+Jak může přidání dalších čísel vytvořit *porozumění*? Jak se hromada matematiky naučí psát poezii, programovat software a diagnostikovat nemoci?
+
+**Právě se to dozvíš.**
+
+Podívej se na video výše—je to nejkrásnější vysvětlení neuronových sítí, jaké kdy vzniklo. Vizualizace od 3Blue1Brown navždy změní způsob, jakým vidíš AI.
+
+---
+
+## 🧠 1. Uvnitř stroje (MNIST Zjevení)
+
+Video ukazuje něco hlubokého: AI se učí rozpoznávat ručně psané číslice.
+
+**Nastavení:**
+- Vstup: 784 pixelů (obrázek 28×28 ručně psaného čísla)
+- Výstup: Která číslice to je? (0-9)
+- Střed: Tisíce neuronů, každý drží jen... číslo.
+
+<Diagram type="neural-network" />
+
+### 💡 Klíčový vhled
+Každý neuron se „aktivuje" (přiblíží se k 1), když detekuje specifický vzor. Některé neurony se naučí detekovat **hrany**. Jiné detekují **křivky**. Další detekují **smyčku v devítce**.
+
+Nikdo tyto vzory neprogramuje. Síť je **objevuje sama**.
+
+*Toto je učení.*
+
+---
+
+## 🎓 Tři tréninkové metody
+
+Teď, když vidíme, CO neuronová síť je, pojďme pochopit, JAK ji trénujeme. Představ si je jako **Tréninkové metody Jediů**.
 
 <Diagram type="learning-types-overview" />
 
 ---
 
-## 📚 1. Učení s učitelem (Supervised Learning - Třída)
+## 📚 2. Učení s učitelem (Supervised Learning - Třída)
 
 Toto je nejběžnější metoda. Funguje jako přísná školní třída.
 **Učitel (Člověk)** dává **Studentovi (AI)** problém A ODPOVĚĎ.
@@ -68,7 +103,7 @@ Nakonec: Popiš pravidlo, které jsi objevil/a.
 
 ---
 
-## 🧩 2. Učení bez učitele (Unsupervised Learning - Meditace)
+## 🧩 3. Učení bez učitele (Unsupervised Learning - Meditace)
 
 Co když nemáme štítky? Co když na AI prostě vysypeme hrubá data a řekneme "Přeber si to"?
 To je **Učení bez učitele**. AI medituje nad daty, dokud nenajde skryté struktury.
@@ -118,7 +153,7 @@ Pro KAŽDÉ slovo VYSVĚTLI pravidlo, které jsi použil/a.
 
 ---
 
-## ⚔️ 3. Učení posilováním (Reinforcement Learning - Bojový výcvik)
+## ⚔️ 4. Učení posilováním (Reinforcement Learning - Bojový výcvik)
 
 Toto je nejpokročilejší metoda. Takto učíme AI hrát hry (Šachy, Go) nebo chodit (Roboti).
 Je to **Pokus a Omyl** na steroidech.
@@ -167,7 +202,7 @@ Téma: Recenzuji zubní pastu "MátaNádhera 3000" po 2 týdnech používání.
 
 ---
 
-## 📉 4. Jak se vlastně zlepšuje (Hra na přihořívá)
+## 📉 5. Jak se vlastně zlepšuje (Hra na přihořívá)
 
 Možná si říkáš: *"Dobře, ale jak se ta AI skutečně zlepšuje?"*
 Hádá prostě náhodně, dokud se netrefí?
@@ -194,7 +229,7 @@ Tento proces opakuje **miliony krát**.
 
 ---
 
-## 📦 5. Problém "Černé skříňky"
+## 📦 6. Problém "Černé skříňky"
 
 Tady je ta děsivá část. Známe **Vstup** (Data) a známe **Výstup** (Předpověď).
 Ale ten střed? Ta část, kde AI skutečně "přemýšlí"?
@@ -203,7 +238,7 @@ Je to **Černá skříňka**.
 
 <Diagram type="black-box" />
 
-Uvnitř moderní AI (jako GPT-4) jsou **biliony** čísel (parametrů), které interagují složitými způsoby.
+Uvnitř moderní AI (jako GPT-5.1) jsou **biliony** čísel (parametrů), které interagují složitými způsoby.
 Když se zeptáš inženýra *"Proč AI řekla 'Ahoj' místo 'Čau'?"*, nemůže ukázat na konkrétní řádek kódu.
 Může jen říct: *"Protože matematika rozhodla, že to bylo o 0,001 % pravděpodobnější."*
 
@@ -214,7 +249,7 @@ Může jen říct: *"Protože matematika rozhodla, že to bylo o 0,001 % pravdě
 
 ---
 
-## 🤝 6. Tajná zbraň: RLHF
+## 🤝 7. Tajná zbraň: RLHF
 
 Jak jsme dostali ChatGPT? Nebyla to jen jedna metoda. Byla to kombinace.
 Tou tajnou přísadou je **RLHF (Reinforcement Learning from Human Feedback - Učení posilováním z lidské zpětné vazby)**.
@@ -228,7 +263,7 @@ Tím se mimozemská inteligence sladila s lidskými hodnotami.
 
 ---
 
-## 🏆 7. Závěrečná zpráva z mise
+## 🏆 8. Závěrečná zpráva z mise
 
 Nyní znáš tři pilíře učení AI.
 

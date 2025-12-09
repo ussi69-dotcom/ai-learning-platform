@@ -1,178 +1,188 @@
-# Co je umělá inteligence?
+# Co je Umělá inteligence?
 
 <Callout type="info">
-**Cíl mise:** Pochopit zásadní posun od "Programování" k "Učení".
-⏳ **Čas čtení:** 20 min | 🧪 **3 Laboratoře**
+**Cíl mise:** Pochopit zásadní posun od „programování" k „učení".
+⏳ **Čas čtení:** 20 min | 🧪 **[3] Laby součástí**
 </Callout>
 
-Vítej, Padawane. Chystáš se vstoupit do většího světa.
+<VideoSwitcher alternatives={[{"id":"5sLYAQS9sWQ","title":"AI/ML/DL Explained (IBM)"},{"id":"QVOy61pXdSo","title":"AI pro Začátečníky (CZ)"}]} />
 
-Většina lidí si myslí, že AI je jen rychlejší počítač. **To není.**
-Je to zcela nový způsob řešení problémů. Je to rozdíl mezi kalkulačkou, která se řídí pravidly, a studentem, který se učí vzorce.
+## ⚡ Jiskra
 
-Jak vysvětluje **Jeff z IBM** ve videu, přesouváme se z věku **Výpočtů** do věku **Poznání**.
+**Všeho nechte.**
+
+Podívejte se na zařízení, na kterém toto čtete. Po 70 let byly počítače poslušnými otroky. Dělaly přesně to, co jsme jim řekli. Nic víc. Nic míň.
+
+**Tato éra skončila.**
+
+Postavili jsme něco nového. Něco, co příkazy nejen *poslouchá*, ale *chápe* je. Přešli jsme z věku **Kalkulačky** do věku **Tvůrce**.
+
+Nejste tu proto, abyste se naučili používat rychlejší nástroj. Jste tu, abyste se setkali s novým druhem inteligence.
 
 ---
 
----
+## 📜 1. Nemožný sen (Historie „bomb")
 
-## 📜 1. Stručná historie inteligence
-
-AI není nová. Byl to sen už od 50. let.
-Ale po desetiletí byla zaseknutá.
+Příběh AI není přímka. Je to série explozí.
 
 <Diagram type="ai-history-timeline" />
 
-*   **1950s (Sen):** Alan Turing se ptá "Mohou stroje myslet?"
-*   **1997 (Logika):** Deep Blue poráží Kasparova v šachu. (Čistá logika).
-*   **2012 (Probuzení):** AlexNet identifikuje kočky na fotkách. (Hluboké učení).
-*   **2017 (Revoluce):** Google vynalézá architekturu "Transformer".
-*   **2022 (Exploze):** ChatGPT přináší AI všem.
+### 💣 První bomba: Alan Turing (1950)
+Začalo to otázkou, která v roce 1950 zněla šíleně: **„Mohou stroje myslet?"**
+Alan Turing, muž, který prolomil kód Enigma a zachránil miliony životů ve 2. světové válce, navrhl test. Pokud si s vámi stroj dokáže povídat a vy nepoznáte, že je to stroj... záleží na tom, jestli má duši?
+*Semínko bylo zasazeno.*
 
-Nyní se nacházíme ve **Zlatém věku**.
+### ❄️ Dlouhá zima
+Ale pak... ticho. Po celá desetiletí byla AI jen pro smích.
+Vědci slibovali robotické sluhy. Dostali jsme kalkulačky. Finance vyschly. Naděje zemřela. To byla **AI Winter** (zima umělé inteligence). Všichni si mysleli, že ten sen je nemožný.
+
+### 👁️ Probuzení: ImageNet (2012)
+Pak přišel okamžik, který všechno změnil. Tým výzkumníků (včetně Geoffreyho Hintona) postavil neuronovou síť nazvanou **AlexNet**.
+Neprogramovali ji, aby viděla kočky. Ukázali jí miliony obrázků.
+A poprvé v historii se počítač **PODÍVAL** na obrázek a **VĚDĚL**, co na něm je.
+*Oko se otevřelo.*
+
+### 🚀 Exploze: ChatGPT (2022)
+Zbytek je historie, kterou jste sami zažili. Logika strojů se setkala s kreativitou umění.
 
 ---
 
-## 🤖 2. Stará republika: Tradiční software
+## 🤖 2. Stará republika vs. Nový řád
 
-Posledních 50 let byly počítače jako **C-3PO**. Dodržovaly přísné protokoly.
+Abyste pochopili AI, musíte zapomenout to, co víte o počítačích.
+
+### Starý způsob: Tradiční software (Kalkulačka)
+50 let byly počítače jako **C-3PO**. Strnulé. Zdvořilé. Úzkostlivé.
 Když programátor napsal: `pokud x > 10, udělej y`, počítač poslechl. **Ve 100 % případů.**
+*   💻 **Logika:** Explicitní pravidla.
+*   👨‍💻 **Tvůrce:** Lidé píší každý řádek.
+*   🚧 **Limit:** Neumí udělat to, co mu nebylo řečeno.
 
-Vzpomeň si na Excel. Vzpomeň si na své bankovnictví.
-*   💻 **Logika:** Explicitní pravidla (`Když Toto Tak Tamto`).
-*   👨‍💻 **Tvůrce:** Lidský programátor musí napsat *každý jednotlivý řádek*.
-*   🚧 **Limit:** Nemůže udělat nic, co mu nebylo řečeno.
-
-<ConceptCard title="Kalkulačka (Tradiční)" icon="🧮">
-Je perfektní pro matematiku, logiku a definované úkoly.
-Ale selhává u "nepřehledných" lidských věcí:
-*   ❌ Rozpoznání obličeje.
-*   ❌ Pochopení vtipu.
-*   ❌ Napsání básně.
-</ConceptCard>
-
----
-
-## 🧠 3. Nový řád: Strojové učení
-
-Teď si představ počítač, který se učí jako **Jedi Youngling**.
-Místo programování pravidel mu ukážeme **DATA**.
-
-Nepíšeme kód, abychom definovali kočku (např. "uši jsou špičaté", "má vousky").
-Místo toho ukážeme AI **10 000 fotek koček** a **10 000 fotek psů**.
-
-AI se podívá na pixely a *sama přijde na pravidla*.
-To je **Strojové učení (Machine Learning - ML)**.
-
-<ConceptCard title="Student (AI)" icon="🎓" jediQuote="Mnoho k učení, stále máš.">
-*   **Logika:** Založená na vzorech (Pravděpodobnostní).
-*   **Tvůrce:** Algoritmus se učí z dat.
-*   **Síla:** Dokáže řešit problémy, které žádný člověk neumí naprogramovat (jako skládání proteinů, řízení aut nebo tvorba umění).
-</ConceptCard>
+### Nový způsob: Machine Learning (Student)
+AI je jako **mladý učedník Jedi**.
+Nedáváme mu pravidla. Dáváme mu **DATA**.
+Ukážeme mu 10 000 fotek koček. AI si sama odvodí, co je to „kočka".
 
 <Diagram type="traditional-vs-ml" />
 
+<ConceptCard title="Změna paradigmatu" icon="🔄">
+**Tradiční:** Vstup + Pravidla = Výstup
+**AI (Machine Learning):** Vstup + Výstup = Pravidla
+</ConceptCard>
+
 ---
 
-## 🌊 4. Dvě vlny AI
+## 🧅 3. Hierarchie inteligence
 
-Ne všechna AI je stejná. Právě prožíváme masivní technologický posun.
-
-### Vlna 1: Diskriminativní AI (Soudce) ⚖️
-Tato AI se podívá na data a **rozhodne**. Je analytická.
-*   📺 **Netflix:** "Líbily se ti Hvězdné války? Bude se ti líbit Mandalorian." (Klasifikace)
-*   🚗 **Tesla:** "Je to chodec nebo popelnice?" (Detekce objektů)
-*   📧 **Gmail:** "Je tento email Spam?" (Filtrování)
-
-*Klasifikuje existující věci.*
-
-### Vlna 2: Generativní AI (Tvůrce) 🎨
-Toto je nová revoluce (ChatGPT, Midjourney, Gemini).
-Tato AI se podívá na data a **vytvoří něco nového**.
-*   📝 **ChatGPT:** "Napiš báseň o depresivním robotovi."
-*   🎨 **Midjourney:** "Namaluj kyberpunkové město ve stylu Van Gogha."
-*   💻 **Copilot:** "Napiš Python skript pro analýzu tohoto CSV."
-
-*Generuje nové věci.*
+"AI" je módní slovo. Buďme přesní. Je to jako matrjoška.
 
 <Diagram type="ai-timeline" />
 
+| Vrstva | Co to je | Příklad |
+|-------|-----------|---------|
+| **AI** | Velký obal. Jakákoliv technika, která umožňuje počítačům napodobovat lidské chování. | Siri, Šachová AI |
+| **ML** | Podmnožina AI. Stroje, které se *učí* z dat místo toho, aby byly explicitně programovány. | Doporučení Netflixu |
+| **DL** | Podmnožina ML. Neuronové sítě s mnoha vrstvami (inspirované lidským mozkem). | Rozpoznávání obrazu |
+| **GenAI** | Špička ledovce. DL modely, které umí *tvořit* nový obsah. | ChatGPT, Midjourney |
+
+**Vy jste tu kvůli středu kruhu: Generative AI.**
+
 ---
 
-## 🔮 5. Záhada "Černé skříňky"
+## 🌊 4. Dvě vlny
 
-Tady je ta děsivá část. Protože se AI naučila vzory sama (laděním miliard vnitřních parametrů), ne vždy víme, *proč* dělá to, co dělá.
-Je to **Černá skříňka (Black Box)**.
+Prožíváme přechod od „čtení" k „psaní".
 
-Známe matematiku. Známe kód. Ale nevíme, který konkrétní "neuron" se aktivuje pro koncept "Lásky" nebo "Demokracie".
+### Vlna 1: Diskriminativní AI (Kritik) ⚖️
+Dívá se na svět a *posuzuje* ho.
+*   „Je to spam?"
+*   „Je to obličej?"
+*   „Klikne uživatel na tuto reklamu?"
+*   *Analyzuje existující data.*
 
-<Diagram type="black-box" />
+### Vlna 2: Generative AI (Umělec) 🎨
+Dívá se na svět a *tvoří* nové věci.
+*   „Napiš báseň."
+*   „Nakresli kyberpunkové město."
+*   „Naprogramuj tuto aplikaci."
+*   *Generuje nová data.*
+
+---
+
+## 🔮 5. Záhada „Černé skříňky" (Black Box)
+
+Tady přichází ta děsivá část.
+Postavili jsme mozek. Známe matematiku. Ale nevíme *přesně*, jak myslí.
+
+AI se učila laděním miliard vnitřních knoflíků (parametrů). Který knoflík představuje „lásku"? Který představuje „pravdu"?
+Nevíme. Je to **Black Box** (černá skříňka).
 
 <Callout type="warning">
-**Past pravděpodobnosti:** AI "nezná" fakta. Předpovídá další pravděpodobný token.
-Je **90% přesná**, ale **10% halucinace**. Nikdy jí slepě nevěř u kritických úkolů.
+**Past pravděpodobnosti:** AI působí sebejistě, ale pouze předpovídá další slovo.
+Je z **90 % přesná**, ale z **10 % halucinuje**.
+Nikdy jí slepě nevěřte. Vždy ověřujte.
 </Callout>
 
 ---
 
-## 🔬 Lab 1: Univerzální překladač
+## 🔬 Lab 1: Univerzální překladatel
 
-AI není databáze. Je to motor, který generuje text na základě **role a kontextu**. Stejný obsah lze transformovat do jakékoliv formy bez ztráty jádra.
+AI není databáze. Je to motor, který generuje text na základě **role a kontextu**. Stejný obsah lze transformovat do libovolné formy, aniž by se ztratil jeho hlavní význam.
 
-**Cíl:** Sleduj, jak AI přizpůsobí STEJNOU informaci do úplně jiných stylů.
+**Cíl:** Zjistit, jak AI adaptuje STEJNOU informaci do zcela odlišných stylů.
 
 **Prompt:**
-Zkopíruj toto do ChatGPT/Gemini:
+Zkopírujte toto do ChatGPT/Gemini:
 
 ```text
 Vysvětli, jak funguje gravitace. Udělej to TŘEMI různými způsoby:
 
 1️⃣ VERZE A (Naštvaný teenager):
 Jsi frustrovaný teenager, kterého rodiče nutí vysvětlit fyziku babičce.
-Všechno tě štve, ale musíš to říct. Nahlas. S přístupem.
+Všechno tě štve, ale musíš to říct. Nahlas. Se štěkem.
 
 2️⃣ VERZE B (Shakespeare):
 Jsi William Shakespeare v 16. století. Právě jsi objevil gravitaci.
-Piš o tom jako o dramatu - s metaforami, archaickým jazykem a vášní.
+Napiš o tom jako drama - s metaforami, archaickým jazykem a vášní.
 
 3️⃣ VERZE C (LinkedIn motivační kouč):
-Jsi startupový motivátor na LinkedIn. Gravitace je životní lekce.
-Použij hodně emoji, řečnických otázek a "mindset energie".
+Jsi startup motivátor na LinkedInu. Gravitace je životní lekce.
+Použij hodně emoji, řečnické otázky a „mindset energii".
 
 ---
-Napiš 1-2 odstavce pro každou verzi. Udělej je VELMI odlišné v tónu.
+Napiš 1-2 odstavce pro každou verzi. Musí se VELMI lišit tónem.
 ```
 
 **Analýza:**
 *   **Verze A:** "Takže jako, věci padaj dolů, jo babi? Říká se tomu gravitace, whatever..." (cynismus, nuda)
-*   **Verze B:** "Co světlo temnotou vesmíru probleskne! / Země a Měsíc, v objetí lásky..." (poetické, archaické)
-*   **Verze C:** "🚀 Gravitace tě netáhne DOLŮ, táhne tě K ÚČELU! Tady je můj 3-krokový framework..." (buzzwords, emoji)
+*   **Verze B:** "Jaké světlo skrze kosmickou tmu proráží! / Země a Měsíc, v lásky objetí..." (poetické, archaické)
+*   **Verze C:** "🚀 Gravitace tě netahá DOLŮ, tahá tě K ÚČELU! Tady je můj 3-krokový framework..." (buzzwordy, emoji)
 
-**💡 Aha Moment:** "AI není jedna fixní osobnost. Je to chameleon. Řeknu jí, jakou personu má použít, a ona generuje naživo. Žádné šablony—čistá adaptace."
+**💡 Aha Moment:** "AI není jedna fixní osobnost. Je to chameleon. Řeknu jí, jakou osobu má použít, a ona generuje naživo. Žádné šablony - čistá adaptace."
 
 <LabComplete labId="lab-universal-translator" />
 
 ---
 
-## 🔬 Lab 2: Detektiv v chaosu
+## 🔬 Lab 2: Detektiv chaosu
 
-AI nerozumí jen strukturovaným datům. Dokáže vzít **chaotický lidský myšlenkový proud** a extrahovat z něj vzory, logiku a strukturu. To je skrytá superschopnost.
+AI nerozumí jen strukturovaným datům. Umí vzít **chaotický proud lidských myšlenek** a extrahovat z něj vzory, logiku a strukturu. To je její skrytá superschopnost.
 
 **Cíl:** Transformovat chaotický, nestrukturovaný text do čisté, organizované tabulky.
 
 **Prompt:**
 ```text
-Mám chaotický "brain dump" o svém zítřku. Je to nesouvislé, bez struktury.
-Přeměň to na tabulku s logickými časy a kategoriemi.
+Mám chaotický "brain dump" o zítřku. Nesouvislý, bez struktury.
+Přeměň ho na JSON tabulku s logickými časy a kategoriemi.
 
 [CHAOTICKÝ VSTUP]
-"Ráno musím vyvenčit psa, asi v 7. Pak mám call s Petrem, to je ten projekt X,
-asi hodinu. Jo a nezapomenout, že v 10:00 mi končí aukce na eBay.
-Oběd s mámou ve 12:30 v té italské restauraci. V 15:00 zubař, tam budu tak 45 minut.
-Večer chci jít běhat. A taky mám nový projekt pro práci, ale to padá někam na 18:00?"
+"Ráno musím venčit psa, kolem 7. Pak mám hovor s Petrem, to je projekt X,
+asi hodina. Jo a nezapomeň, v 10:00 končí moje eBay aukce.
+Oběd s mámou v 12:30 v té italské restauraci. V 15:00 zubař, budu tam asi 45 min.
+Večer chci jít běhat. A mám ten nový pracovní projekt, ale to padá někam kolem 18:00?"
 
 [TVŮJ ÚKOL]
-Strukturuj to do tabulky s:
+Strukturuj toto do tabulky s:
 - Čas (od-do) → pokud chybí, LOGICKY odhadni a označ hvězdičkou (*)
 - Aktivita
 - Kategorie: (Zdraví/Práce/Rodina/Osobní)
@@ -185,83 +195,79 @@ Vysvětli, kde jsi musel "hádat" a proč tvá logika dává smysl.
 AI by měla vytvořit něco jako:
 
 | Čas | Aktivita | Kategorie | Priorita |
-|-----|----------|-----------|----------|
+|------|----------|----------|----------|
 | 07:00–07:30 | Venčení psa | Osobní | Normální |
-| 09:00–10:00 | Call Petr (projekt X) | Práce | Urgentní |
+| 09:00–10:00 | Hovor s Petrem (projekt X) | Práce | Urgentní |
 | 10:00–10:05 | eBay aukce končí | Osobní | Urgentní |
 | 12:30–13:30 | Oběd s mámou | Rodina | Normální |
 | 15:00–15:45 | Zubař | Zdraví | Normální |
 | 18:00–19:00* | Příprava nového projektu | Práce | Normální |
-| 19:30–20:30* | Běh | Zdraví | Nízká |
+| 19:30–20:30* | Běhání | Zdraví | Nízká |
 
-**💡 Aha Moment:** "Tohle není jen kopírování. AI CHÁPE čas, kontext, priority. Spojuje informace a doplňuje logické mezery. Skutečně přemýšlí o mém dni."
+**💡 Aha Moment:** "Toto není jen copy-paste. AI ROZUMÍ času, kontextu, prioritě. Propojuje informace a vyplňuje logické mezery. Skutečně přemýšlí o mém dni."
 
 <LabComplete labId="lab-chaos-detective" />
 
 ---
 
-## 🔬 Lab 3: Sokratovský učitel
+## 🔬 Lab 3: Sókratovský učitel
 
-AI nemusí být encyklopedie. Může být **Sokrates**—někdo, kdo učí prostřednictvím otázek, ne odpovědí. Když AI přepneš do režimu "Sokratovské dotazování", stane se nástrojem myšlení, ne nástrojem znalostí.
+AI nemusí být encyklopedie. Může být **Sókratés** - někdo, kdo učí skrze otázky, ne odpovědi. Když AI přepne do režimu "sókratovského dotazování", stane se nástrojem myšlení, ne nástrojem znalostí.
 
-**Cíl:** Zažij AI jako interaktivního tutora, který tě vede k objevování odpovědí.
+**Cíl:** Zažít AI jako interaktivního tutora, který vás navede, abyste na odpovědi přišli sami.
 
 **Prompt:**
 ```text
 Chci se naučit, jak funguje FOTOSYNTÉZA. Ale prosím, NEVYSVĚTLUJ mi to přímo.
 
-Hraj roli SOKRATA. Jsi starověký řecký filozof, který učí prostřednictvím OTÁZEK.
+Hraj roli SÓKRATA. Jsi starověký řecký filozof, který učí skrze OTÁZKY.
 Měl bys:
 
-1. Ptát se mě na to, co VÍM (nebo si myslím, že vím)
+1. Zeptat se mě na to, co VÍM (nebo si myslím, že vím)
 2. Vést mě otázkami k rozporům (kde si uvědomím, že si nejsem jistý)
-3. Postupně mě tlačit k odpovědi, kterou mám objevit sám
-4. Být TRPĚLIVÝ a nikdy mě přímo nepoučovat
+3. Postupně mě tlačit k odpovědi, na kterou bych měl přijít sám
+4. Být TRPĚLIVÝ a nikdy mi přímo nepřednášet
 
-Začni jednoduchou otázkou o rostlinách a slunci.
-Čekej na mou odpověď - nepiš odpovědi za mě.
+Začni jednoduchou otázkou o rostlinách a slunečním světle.
+Čekej na mou odpověď - nepiš moje odpovědi za mě.
 ```
 
 **Analýza:**
 AI by měla odpovědět něco jako:
 
-*Sokrates: "Zdravím tě, zvídavý příteli. Řekni mi - zamyslel ses někdy nad tím, proč rostliny každý den obracejí své tváře ke slunci? Co myslíš, že hledají?"*
+*Sókratés: "Zdravím tě, zvídavý příteli. Řekni mi - přemýšlel jsi někdy, proč rostliny každý den obracejí své tváře ke slunci? Co si myslíš, že hledají?"*
 
 [Ty odpovíš]
 
-*Sokrates: "Zajímavé! Říkáš, že chtějí teplo. Řekni mi tedy - všechny živé bytosti, které hledají teplo, potřebují také světlo? Nebo by mohlo být teplo a světlo něco jiného?"*
+*Sókratés: "Zajímavé! Takže říkáš, že chtějí teplo. Řekni mi tedy - potřebují všechny živé bytosti, které hledají teplo, také světlo? Nebo by teplo a světlo mohly být různé věci?"*
 
 [Dialog pokračuje...]
 
-**💡 Aha Moment:** "Nemusím se nechat krmit odpověďmi. Mohu přinutit AI, aby mi pomáhala MYSLET. Tohle je nejmocnější věc, kterou s AI můžu dělat—ne získávat informace, ale rozvíjet svůj myšlenkový proces."
+**💡 Aha Moment:** "Nemusím být krmen odpověďmi. Mohu donutit AI, aby mi pomohla MYSLET. Toto je ta nejmocnější věc, kterou mohu s AI dělat - ne získávat informace, ale rozvíjet svůj myšlenkový proces."
 
 <LabComplete labId="lab-socratic-teacher" />
 
 ---
 
-## 🏆 6. Závěrečná zpráva z mise
+## 🏆 6. Debriefing mise
 
-Nyní chápeš povahu bestie.
-AI není databáze pravdy. Je to **Pravděpodobnostní motor**, který napodobuje lidské vzory—a právě to z ní dělá tak mocný nástroj.
+Udělali jste první krok do většího světa.
 
 <ConceptCard title="Holocron: Základy AI" icon="💎">
 
 ### 🔑 Klíčové koncepty
-*   **Tradiční kód:** Založený na pravidlech. Pevný. 100% Předvídatelný. (C-3PO)
+*   **Tradiční kód:** Založený na pravidlech. Pevný. 100% předvídatelný. (C-3PO)
 *   **AI/ML:** Založené na datech. Flexibilní. Pravděpodobnostní. (Intuice Jediů)
-*   **Diskriminativní AI:** Klasifikuje data (Netflix, Spam filtry).
-*   **Generativní AI:** Vytváří nová data (ChatGPT, Umění).
+*   **Generative AI:** Nová síla *tvořit* (text, obrazy, kód).
 
-### 💪 Superschopnosti AI, které jsi objevil
-*   **Chameleon:** Okamžitě se přizpůsobí jakékoliv persóně, stylu nebo formátu.
-*   **Hledač vzorů:** Extrahuje strukturu z chaosu.
-*   **Partner pro myšlení:** Může učit prostřednictvím otázek, ne jen odpovědí.
+### 🧠 Hierarchie
+*   **AI** > **Machine Learning** > **Deep Learning** > **Generative AI**
 
-### 🛡️ Bezpečnost především
-*   **Halucinace:** AI může znít sebevědomě, i když se mýlí.
-*   **Černá skříňka:** Ne vždy víme, *proč* to funguje.
-*   **Ověřuj:** Vždy kontroluj kritická fakta.
+### 🛡️ Bezpečnostní varování
+*   **Halucinace:** AI je kreativní motor, ne faktografický motor.
+*   **Black Box:** To „proč" je často skryté.
+*   **Verifikace:** Důvěřuj, ale prověřuj.
 
 </ConceptCard>
 
-**Příští lekce:** Jak se AI vlastně učí? Prozkoumáme tři typy **Strojového učení**.
+**Příští lekce:** Jak ten kouzelnický trik ve skutečnosti funguje? Podíváme se pod kapotu **Machine Learning**.

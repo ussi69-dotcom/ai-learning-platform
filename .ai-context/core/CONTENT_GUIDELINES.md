@@ -1,6 +1,44 @@
-# 📜 Content Guidelines (Masterpiece Standard v2.1)
+# 📜 Content Guidelines (Edutainment Standard v3.0)
 
-This document defines the **Masterpiece v2** quality standard. "Good enough" is failure. We aim for **Excellence**.
+This document defines the **Edutainment v3.0** quality standard. "Good enough" is failure. We aim for **Wow Effect**.
+
+> **Klíčová změna v3.0:** Vizuální obsah zajistí 60% retence vs 20% u čistého textu. SVG diagramy jsou POVINNÉ pro každý koncept.
+
+---
+
+## 🎬 EDUTAINMENT VISION (NEW!)
+
+### Proč Edutainment?
+
+| Metoda | Retence znalostí |
+|--------|------------------|
+| 📖 Čistý text | ~20% |
+| 🎨 Vizuální obsah | ~60% |
+| 🎬 Video + Interakce | ~80% |
+| 🧪 Praktický lab | ~90% |
+
+**Náš cíl:** Každá lekce kombinuje VŠECHNY metody pro 80%+ retenci.
+
+### 4 pilíře Edutainmentu
+
+| Pilíř | Vzor | Implementace |
+|-------|------|--------------|
+| 🔥 **Vysoká energie** | NetworkChuck | Bold claims, call-to-action, "musíte to zkusit hned!" |
+| 🎨 **Vizuální intuice** | 3Blue1Brown | SVG diagram pro KAŽDÝ koncept, animace kde možné |
+| ⚡ **Okamžité ROI** | Jeff Su | "Použij to zítra v 9 ráno", copy-paste šablony |
+| 🎮 **Gamifikace** | Lakera Gandalf | Challenges, leaderboardy, achievement badges |
+
+### "Wow" Checklist (MUST PASS)
+
+```markdown
+□ Hook v prvních 30 sekundách?
+□ Video embed od kvalitního tvůrce?
+□ Min. 3 SVG diagramy na lekci?
+□ Praktický "try it now" moment?
+□ Copy-paste ready kód/prompty?
+□ "Wow" moment nebo překvapení?
+□ Jasná ROI - "co z toho mám"?
+```
 
 ---
 
@@ -22,6 +60,7 @@ Our primary audience is technically curious and motivated, but not necessarily a
 | **Inspirational** | Use the Jedi/Sith theme to create excitement. Frame learning as a heroic journey. |
 | **Pragmatic** | Every theory connects to practice. Reader must understand *why* they're learning something. |
 | **Empathetic** | Acknowledge difficulty. For tool installations (WSL, Docker, LM Studio), assume zero prior setup. |
+| 🆕 **High-Energy** | Channel NetworkChuck - enthusiastic, direct calls to action, "you need to try this!" |
 
 ---
 
@@ -138,10 +177,23 @@ Collapsible hints for stuck users.
 
 ## 5. Visual Rules (SVG First) 🎨
 
+> **⚠️ CRITICAL v3.0:** Vizuální obsah = 60% retence. SVG diagramy jsou POVINNÉ, ne volitelné!
+
+### Minimální požadavky na lekci
+
+| Délka lekce | Min. diagramů | Min. tabulek |
+|-------------|---------------|--------------|
+| < 2000 slov | 3 | 2 |
+| 2000-4000 slov | 5 | 3 |
+| > 4000 slov | 7+ | 4+ |
+
+### SVG Pravidla
+
 * **NO Raster Images:** Use `<Diagram type="...">` (SVG).
-* **Mandatory Diagrams:** If you explain a system, process, or relationship, draw it.
+* **Mandatory Diagrams:** KAŽDÝ koncept = 1 diagram. Bez výjimek.
 * **Dark Mode:** Always use `fill-slate-600 dark:fill-slate-400` for compatibility.
 * **Registration:** New diagram types must be registered in `frontend/components/mdx/Diagram.tsx`.
+* 🆕 **Gemini Generator:** Pro nové diagramy použij Gemini CLI k generování SVG kódu.
 
 ### Available Diagram Types
 
@@ -150,8 +202,29 @@ Check `frontend/components/mdx/diagrams/` for existing diagrams before creating 
 - Training: `training-loop`, `training-pipeline`
 - Concepts: `tokenization-viz`, `llm-next-token`, `context-window`, `temperature-scale`
 - Prompting: `few-shot-learning`, `chain-of-thought`, `system-prompt-flow`
+- Security: `prompt-injection-flow`, `sql-vs-prompt-injection`, `defense-layers`
 - Evaluation: `regression-matrix`, `tradeoff-radar`
+- Local AI: `ollama-architecture`, `model-comparison`, `gpu-vs-cpu`
+- IDE: `ide-comparison-radar`, `mcp-architecture`, `antigravity-workflow`
 - UI: `dashboard-ui`, `data-analysis-chart`
+
+### 🆕 Nový diagram workflow
+
+```bash
+# 1. Popsat diagram Gemini
+cat << 'EOF' | gemini -m gemini-3-pro-preview 2>&1
+Vytvoř SVG diagram pro koncept "Prompt Injection vs SQL Injection".
+Požadavky:
+- Dark mode kompatibilní barvy (slate-600/400)
+- Minimalistický styl
+- Max 300x200px
+- Bez externích závislostí
+EOF
+
+# 2. Uložit do diagrams/ složky
+# 3. Registrovat v Diagram.tsx
+# 4. Použít: <Diagram type="sql-vs-prompt-injection" />
+```
 
 ---
 

@@ -138,7 +138,7 @@ export function SystemPromptDiagram({ className = '' }: SystemPromptDiagramProps
           className="fill-white/70"
           fontSize="12"
         >
-          (GPT-4, Claude, etc.)
+          (GPT-5.1, Claude 4.5, etc.)
         </text>
       </g>
 

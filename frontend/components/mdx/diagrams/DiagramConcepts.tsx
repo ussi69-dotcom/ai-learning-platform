@@ -1,7 +1,7 @@
 "use client";
 
-import React from 'react';
-import { useLocale } from 'next-intl';
+import React from "react";
+import { useLocale } from "next-intl";
 
 interface DiagramProps {
   type: string;
@@ -9,45 +9,173 @@ interface DiagramProps {
 
 export default function DiagramConcepts({ type }: DiagramProps) {
   const locale = useLocale();
-  const isCs = locale === 'cs';
+  const isCs = locale === "cs";
 
-  if (type === 'tokenization-viz') {
+  if (type === "tokenization-viz") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl">
-          <svg viewBox="0 0 600 150" className="w-full h-auto" role="img" aria-label="Tokenization Visualization: Text converted to ID numbers">
+          <svg
+            viewBox="0 0 600 150"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Tokenization Visualization: Text converted to ID numbers"
+          >
             {/* Sentence */}
             <g transform="translate(50, 40)">
-              <rect x="0" y="0" width="100" height="40" rx="4" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" />
-              <text x="50" y="25" textAnchor="middle" className="text-lg font-mono fill-white" dominantBaseline="middle">"Fear"</text>
-              
-              <rect x="110" y="0" width="100" height="40" rx="4" fill="#a855f7" fillOpacity="0.2" stroke="#a855f7" />
-              <text x="160" y="25" textAnchor="middle" className="text-lg font-mono fill-white" dominantBaseline="middle">"leads"</text>
-              
-              <rect x="220" y="0" width="80" height="40" rx="4" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
-              <text x="260" y="25" textAnchor="middle" className="text-lg font-mono fill-white" dominantBaseline="middle">"to"</text>
-              
-              <rect x="310" y="0" width="100" height="40" rx="4" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" />
-              <text x="360" y="25" textAnchor="middle" className="text-lg font-mono fill-white" dominantBaseline="middle">"anger"</text>
+              <rect
+                x="0"
+                y="0"
+                width="100"
+                height="40"
+                rx="4"
+                fill="#3b82f6"
+                fillOpacity="0.2"
+                stroke="#3b82f6"
+              />
+              <text
+                x="50"
+                y="25"
+                textAnchor="middle"
+                className="text-lg font-mono fill-white"
+                dominantBaseline="middle"
+              >
+                "Fear"
+              </text>
+
+              <rect
+                x="110"
+                y="0"
+                width="100"
+                height="40"
+                rx="4"
+                fill="#a855f7"
+                fillOpacity="0.2"
+                stroke="#a855f7"
+              />
+              <text
+                x="160"
+                y="25"
+                textAnchor="middle"
+                className="text-lg font-mono fill-white"
+                dominantBaseline="middle"
+              >
+                "leads"
+              </text>
+
+              <rect
+                x="220"
+                y="0"
+                width="80"
+                height="40"
+                rx="4"
+                fill="#22c55e"
+                fillOpacity="0.2"
+                stroke="#22c55e"
+              />
+              <text
+                x="260"
+                y="25"
+                textAnchor="middle"
+                className="text-lg font-mono fill-white"
+                dominantBaseline="middle"
+              >
+                "to"
+              </text>
+
+              <rect
+                x="310"
+                y="0"
+                width="100"
+                height="40"
+                rx="4"
+                fill="#f59e0b"
+                fillOpacity="0.2"
+                stroke="#f59e0b"
+              />
+              <text
+                x="360"
+                y="25"
+                textAnchor="middle"
+                className="text-lg font-mono fill-white"
+                dominantBaseline="middle"
+              >
+                "anger"
+              </text>
             </g>
 
             {/* Arrows */}
             <defs>
-                <marker id="arrowhead-token" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker
+                id="arrowhead-token"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
-                </marker>
+              </marker>
             </defs>
-            <path d="M 100 90 L 100 110" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-token)" />
-            <path d="M 210 90 L 210 110" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-token)" />
-            <path d="M 310 90 L 310 110" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-token)" />
-            <path d="M 410 90 L 410 110" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-token)" />
+            <path
+              d="M 100 90 L 100 110"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-token)"
+            />
+            <path
+              d="M 210 90 L 210 110"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-token)"
+            />
+            <path
+              d="M 310 90 L 310 110"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-token)"
+            />
+            <path
+              d="M 410 90 L 410 110"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-token)"
+            />
 
             {/* IDs */}
             <g transform="translate(50, 120)">
-              <text x="50" y="20" textAnchor="middle" className="text-sm font-bold fill-blue-400">18342</text>
-              <text x="160" y="20" textAnchor="middle" className="text-sm font-bold fill-purple-400">452</text>
-              <text x="260" y="20" textAnchor="middle" className="text-sm font-bold fill-green-400">211</text>
-              <text x="360" y="20" textAnchor="middle" className="text-sm font-bold fill-amber-400">9832</text>
+              <text
+                x="50"
+                y="20"
+                textAnchor="middle"
+                className="text-sm font-bold fill-blue-400"
+              >
+                18342
+              </text>
+              <text
+                x="160"
+                y="20"
+                textAnchor="middle"
+                className="text-sm font-bold fill-purple-400"
+              >
+                452
+              </text>
+              <text
+                x="260"
+                y="20"
+                textAnchor="middle"
+                className="text-sm font-bold fill-green-400"
+              >
+                211
+              </text>
+              <text
+                x="360"
+                y="20"
+                textAnchor="middle"
+                className="text-sm font-bold fill-amber-400"
+              >
+                9832
+              </text>
             </g>
           </svg>
         </div>
@@ -55,39 +183,106 @@ export default function DiagramConcepts({ type }: DiagramProps) {
     );
   }
 
-  if (type === 'llm-next-token') {
+  if (type === "llm-next-token") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
-          <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="LLM Prediction: Calculating probabilities for the next token">
+          <svg
+            viewBox="0 0 600 200"
+            className="w-full h-auto"
+            role="img"
+            aria-label="LLM Prediction: Calculating probabilities for the next token"
+          >
             <defs>
-                <marker id="arrowhead-timeline" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker
+                id="arrowhead-timeline"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
-                </marker>
+              </marker>
             </defs>
             {/* Input Context */}
-            <text x="50" y="40" className="text-sm font-bold fill-slate-600 dark:fill-slate-400">Context:</text>
-            <text x="50" y="70" className="text-2xl font-mono fill-slate-800 dark:fill-white">"The sky is"</text>
+            <text
+              x="50"
+              y="40"
+              className="text-sm font-bold fill-slate-600 dark:fill-slate-400"
+            >
+              Context:
+            </text>
+            <text
+              x="50"
+              y="70"
+              className="text-2xl font-mono fill-slate-800 dark:fill-white"
+            >
+              "The sky is"
+            </text>
 
             {/* Arrows */}
-            <path d="M 200 60 L 250 60" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-timeline)" />
+            <path
+              d="M 200 60 L 250 60"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-timeline)"
+            />
 
             {/* Probabilities */}
             <g transform="translate(270, 20)">
               {/* Option 1: Blue */}
-              <rect x="0" y="0" width="200" height="30" rx="4" fill="#3b82f6" fillOpacity="0.2" />
+              <rect
+                x="0"
+                y="0"
+                width="200"
+                height="30"
+                rx="4"
+                fill="#3b82f6"
+                fillOpacity="0.2"
+              />
               <rect x="0" y="0" width="180" height="30" rx="4" fill="#3b82f6" />
-              <text x="10" y="20" className="text-sm font-bold fill-white">blue (90%)</text>
+              <text x="10" y="20" className="text-sm font-bold fill-white">
+                blue (90%)
+              </text>
 
               {/* Option 2: Gray */}
-              <rect x="0" y="40" width="200" height="30" rx="4" fill="#94a3b8" fillOpacity="0.2" />
+              <rect
+                x="0"
+                y="40"
+                width="200"
+                height="30"
+                rx="4"
+                fill="#94a3b8"
+                fillOpacity="0.2"
+              />
               <rect x="0" y="40" width="20" height="30" rx="4" fill="#94a3b8" />
-              <text x="10" y="60" className="text-sm font-bold fill-slate-800 dark:fill-white">gray (5%)</text>
+              <text
+                x="10"
+                y="60"
+                className="text-sm font-bold fill-slate-800 dark:fill-white"
+              >
+                gray (5%)
+              </text>
 
               {/* Option 3: Green */}
-              <rect x="0" y="80" width="200" height="30" rx="4" fill="#22c55e" fillOpacity="0.2" />
+              <rect
+                x="0"
+                y="80"
+                width="200"
+                height="30"
+                rx="4"
+                fill="#22c55e"
+                fillOpacity="0.2"
+              />
               <rect x="0" y="80" width="10" height="30" rx="4" fill="#22c55e" />
-              <text x="10" y="100" className="text-sm font-bold fill-slate-800 dark:fill-white">green (1%)</text>
+              <text
+                x="10"
+                y="100"
+                className="text-sm font-bold fill-slate-800 dark:fill-white"
+              >
+                green (1%)
+              </text>
             </g>
           </svg>
         </div>
@@ -95,19 +290,43 @@ export default function DiagramConcepts({ type }: DiagramProps) {
     );
   }
 
-  if (type === 'context-window') {
+  if (type === "context-window") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
-          <svg viewBox="0 0 600 150" className="w-full h-auto" role="img" aria-label="Context Window: Moving window of attention">
+          <svg
+            viewBox="0 0 600 150"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Context Window: Moving window of attention"
+          >
             {/* Text Stream */}
             <g transform="translate(50, 60)">
-              <text x="0" y="0" className="text-lg font-mono fill-slate-600">Once upon a time there was a droid...</text>
+              <text x="0" y="0" className="text-lg font-mono fill-slate-600">
+                Once upon a time there was a droid...
+              </text>
             </g>
-            
+
             {/* The Window */}
-            <rect x="180" y="30" width="300" height="50" rx="8" fill="none" stroke="#a855f7" strokeWidth="3" strokeDasharray="6 6" />
-            <text x="330" y="20" textAnchor="middle" className="text-xs font-bold fill-purple-400">Context Window (Attention)</text>
+            <rect
+              x="180"
+              y="30"
+              width="300"
+              height="50"
+              rx="8"
+              fill="none"
+              stroke="#a855f7"
+              strokeWidth="3"
+              strokeDasharray="6 6"
+            />
+            <text
+              x="330"
+              y="20"
+              textAnchor="middle"
+              className="text-xs font-bold fill-purple-400"
+            >
+              Context Window (Attention)
+            </text>
 
             {/* Fog of War (Forgotten) */}
             <rect x="40" y="30" width="130" height="50" fill="url(#fog-grad)" />
@@ -117,18 +336,30 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                 <stop offset="100%" stopColor="#0f172a" stopOpacity="0" />
               </linearGradient>
             </defs>
-            <text x="100" y="100" textAnchor="middle" className="text-xs fill-slate-500">Forgotten / Dropped</text>
+            <text
+              x="100"
+              y="100"
+              textAnchor="middle"
+              className="text-xs fill-slate-500"
+            >
+              Forgotten / Dropped
+            </text>
           </svg>
         </div>
       </div>
     );
   }
 
-  if (type === 'temperature-scale') {
+  if (type === "temperature-scale") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
-          <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="Temperature Scale: Precise vs Creative">
+          <svg
+            viewBox="0 0 600 200"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Temperature Scale: Precise vs Creative"
+          >
             {/* Gradient Line */}
             <defs>
               <linearGradient id="temp-grad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -136,20 +367,54 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                 <stop offset="100%" stopColor="#ef4444" />
               </linearGradient>
             </defs>
-            <rect x="50" y="90" width="500" height="20" rx="10" fill="url(#temp-grad)" />
+            <rect
+              x="50"
+              y="90"
+              width="500"
+              height="20"
+              rx="10"
+              fill="url(#temp-grad)"
+            />
 
             {/* Low Temp */}
             <g transform="translate(50, 50)">
-              <text x="0" y="0" className="text-xl font-bold fill-blue-400">0.0</text>
-              <text x="0" y="25" className="text-xs fill-blue-300">Precise / Logical</text>
-              <text x="0" y="130" className="text-xs fill-slate-400">"Math, Coding"</text>
+              <text x="0" y="0" className="text-xl font-bold fill-blue-400">
+                0.0
+              </text>
+              <text x="0" y="25" className="text-xs fill-blue-300">
+                Precise / Logical
+              </text>
+              <text x="0" y="130" className="text-xs fill-slate-400">
+                "Math, Coding"
+              </text>
             </g>
 
             {/* High Temp */}
             <g transform="translate(500, 50)">
-              <text x="0" y="0" textAnchor="end" className="text-xl font-bold fill-red-400">1.0</text>
-              <text x="0" y="25" textAnchor="end" className="text-xs fill-red-300">Creative / Random</text>
-              <text x="0" y="130" textAnchor="end" className="text-xs fill-slate-400">"Poetry, Brainstorming"</text>
+              <text
+                x="0"
+                y="0"
+                textAnchor="end"
+                className="text-xl font-bold fill-red-400"
+              >
+                1.0
+              </text>
+              <text
+                x="0"
+                y="25"
+                textAnchor="end"
+                className="text-xs fill-red-300"
+              >
+                Creative / Random
+              </text>
+              <text
+                x="0"
+                y="130"
+                textAnchor="end"
+                className="text-xs fill-slate-400"
+              >
+                "Poetry, Brainstorming"
+              </text>
             </g>
           </svg>
         </div>
@@ -157,13 +422,24 @@ export default function DiagramConcepts({ type }: DiagramProps) {
     );
   }
 
-  if (type === 'bias-in-data') {
+  if (type === "bias-in-data") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl">
-          <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Bias in Data: The AI Mirror reflects the Internet's distortions">
+          <svg
+            viewBox="0 0 600 250"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Bias in Data: The AI Mirror reflects the Internet's distortions"
+          >
             <defs>
-              <linearGradient id="mirror-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient
+                id="mirror-grad"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
                 <stop offset="0%" stopColor="rgba(255,255,255,0.1)" />
                 <stop offset="100%" stopColor="rgba(255,255,255,0.05)" />
               </linearGradient>
@@ -174,61 +450,175 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                   <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
-              <marker id="arrowhead-pipeline" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker
+                id="arrowhead-pipeline"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
               </marker>
             </defs>
 
             {/* The Internet (Cloud) */}
             <g transform="translate(50, 50)">
-              <path d="M 40 40 Q 60 10 90 40 T 140 40 T 160 80 T 120 110 T 70 110 T 40 80 Z" fill="#f1f5f9" fillOpacity="0.1" stroke="#94a3b8" strokeWidth="2" strokeDasharray="4 4" />
-              <text x="100" y="75" textAnchor="middle" className="text-xs font-bold fill-slate-300">The Internet</text>
-              
+              <path
+                d="M 40 40 Q 60 10 90 40 T 140 40 T 160 80 T 120 110 T 70 110 T 40 80 Z"
+                fill="#f1f5f9"
+                fillOpacity="0.1"
+                stroke="#94a3b8"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+              />
+              <text
+                x="100"
+                y="75"
+                textAnchor="middle"
+                className="text-xs font-bold fill-slate-300"
+              >
+                The Internet
+              </text>
+
               {/* Bias Particles */}
-              <circle cx="70" cy="60" r="3" fill="#ef4444" className="animate-pulse" />
-              <circle cx="120" cy="50" r="3" fill="#ef4444" className="animate-pulse" />
-              <circle cx="100" cy="90" r="3" fill="#ef4444" className="animate-pulse" />
+              <circle
+                cx="70"
+                cy="60"
+                r="3"
+                fill="#ef4444"
+                className="animate-pulse"
+              />
+              <circle
+                cx="120"
+                cy="50"
+                r="3"
+                fill="#ef4444"
+                className="animate-pulse"
+              />
+              <circle
+                cx="100"
+                cy="90"
+                r="3"
+                fill="#ef4444"
+                className="animate-pulse"
+              />
               <circle cx="80" cy="80" r="2" fill="#3b82f6" />
               <circle cx="130" cy="70" r="2" fill="#3b82f6" />
             </g>
 
             {/* Arrow */}
-            <path d="M 180 80 L 240 80" stroke="#64748b" strokeWidth="2" markerEnd="url(#arrowhead-pipeline)" />
-            <text x="210" y="70" textAnchor="middle" className="text-[10px] fill-slate-500">Training</text>
+            <path
+              d="M 180 80 L 240 80"
+              stroke="#64748b"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-pipeline)"
+            />
+            <text
+              x="210"
+              y="70"
+              textAnchor="middle"
+              className="text-[10px] fill-slate-500"
+            >
+              Training
+            </text>
 
             {/* The AI (Mirror) */}
             <g transform="translate(260, 20)">
-              <rect x="0" y="0" width="120" height="160" rx="4" fill="url(#mirror-grad)" stroke="#a855f7" strokeWidth="2" filter="url(#glow-bias)" />
-              <text x="60" y="180" textAnchor="middle" className="text-sm font-bold fill-purple-400">The AI Model</text>
-              
+              <rect
+                x="0"
+                y="0"
+                width="120"
+                height="160"
+                rx="4"
+                fill="url(#mirror-grad)"
+                stroke="#a855f7"
+                strokeWidth="2"
+                filter="url(#glow-bias)"
+              />
+              <text
+                x="60"
+                y="180"
+                textAnchor="middle"
+                className="text-sm font-bold fill-purple-400"
+              >
+                The AI Model
+              </text>
+
               {/* Reflection */}
-              <path d="M 30 40 Q 50 10 80 40 T 130 40" fill="none" stroke="#ef4444" strokeWidth="2" opacity="0.6" transform="scale(0.6) translate(20, 40)" />
+              <path
+                d="M 30 40 Q 50 10 80 40 T 130 40"
+                fill="none"
+                stroke="#ef4444"
+                strokeWidth="2"
+                opacity="0.6"
+                transform="scale(0.6) translate(20, 40)"
+              />
             </g>
 
             {/* Arrow */}
-            <path d="M 400 80 L 460 80" stroke="#64748b" strokeWidth="2" markerEnd="url(#arrowhead-pipeline)" />
+            <path
+              d="M 400 80 L 460 80"
+              stroke="#64748b"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-pipeline)"
+            />
 
             {/* Output */}
             <g transform="translate(480, 50)">
-               <rect x="0" y="0" width="100" height="60" rx="8" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" />
-               <text x="50" y="25" textAnchor="middle" className="text-xs fill-red-300">Biased Output</text>
-               <text x="50" y="45" textAnchor="middle" className="text-[10px] fill-red-400">"Doctor = He"</text>
+              <rect
+                x="0"
+                y="0"
+                width="100"
+                height="60"
+                rx="8"
+                fill="#ef4444"
+                fillOpacity="0.1"
+                stroke="#ef4444"
+              />
+              <text
+                x="50"
+                y="25"
+                textAnchor="middle"
+                className="text-xs fill-red-300"
+              >
+                Biased Output
+              </text>
+              <text
+                x="50"
+                y="45"
+                textAnchor="middle"
+                className="text-[10px] fill-red-400"
+              >
+                "Doctor = He"
+              </text>
             </g>
-
           </svg>
         </div>
       </div>
     );
   }
 
-  if (type === 'rag-architecture') {
+  if (type === "rag-architecture") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-5xl">
-          {/* Increased viewBox width to 900 to prevent cropping */}
-          <svg viewBox="0 0 900 400" className="w-full h-auto" role="img" aria-label="RAG Architecture: User Query -> Search Internal Docs -> AI Answer">
+          {/* Increased viewBox width to 960 to prevent cropping */}
+          <svg
+            viewBox="0 0 960 400"
+            className="w-full h-auto"
+            role="img"
+            aria-label="RAG Architecture: User Query -> Search Internal Docs -> AI Answer"
+          >
             <defs>
-              <marker id="arrowhead-rag" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto">
+              <marker
+                id="arrowhead-rag"
+                markerWidth="12"
+                markerHeight="12"
+                refX="10"
+                refY="4"
+                orient="auto"
+              >
                 <polygon points="0 0, 12 4, 0 8" fill="#94a3b8" />
               </marker>
               <filter id="glow-rag">
@@ -242,75 +632,272 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
             {/* 1. User (Left aligned) */}
             <g transform="translate(50, 180)">
-              <circle cx="40" cy="40" r="35" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeWidth="2" />
-              <text x="40" y="50" textAnchor="middle" className="text-4xl">👤</text>
-              <text x="40" y="100" textAnchor="middle" className="text-sm font-bold fill-white">You</text>
+              <circle
+                cx="40"
+                cy="40"
+                r="35"
+                fill="#3b82f6"
+                fillOpacity="0.2"
+                stroke="#3b82f6"
+                strokeWidth="2"
+              />
+              <text x="40" y="50" textAnchor="middle" className="text-4xl">
+                👤
+              </text>
+              <text
+                x="40"
+                y="100"
+                textAnchor="middle"
+                className="text-sm font-bold fill-white"
+              >
+                You
+              </text>
             </g>
 
             {/* Query Arrow */}
-            <path d="M 100 220 L 180 220" stroke="#94a3b8" strokeWidth="3" markerEnd="url(#arrowhead-rag)" />
-            <rect x="110" y="190" width="60" height="20" rx="4" fill="#1e293b" />
-            <text x="140" y="205" textAnchor="middle" className="text-xs fill-slate-200">"Query"</text>
+            <path
+              d="M 100 220 L 180 220"
+              stroke="#94a3b8"
+              strokeWidth="3"
+              markerEnd="url(#arrowhead-rag)"
+            />
+            <rect
+              x="110"
+              y="190"
+              width="60"
+              height="20"
+              rx="4"
+              fill="#1e293b"
+            />
+            <text
+              x="140"
+              y="205"
+              textAnchor="middle"
+              className="text-xs fill-slate-200"
+            >
+              "Query"
+            </text>
 
             {/* 2. The Orchestrator (Copilot) */}
             <g transform="translate(200, 150)">
-              <rect x="0" y="0" width="120" height="140" rx="12" fill="#a855f7" fillOpacity="0.15" stroke="#a855f7" strokeWidth="2" filter="url(#glow-rag)" />
-              <text x="60" y="50" textAnchor="middle" className="text-5xl">🧠</text>
-              <text x="60" y="90" textAnchor="middle" className="text-lg font-bold fill-purple-300">Copilot</text>
-              <text x="60" y="115" textAnchor="middle" className="text-xs fill-purple-200">(The Brain)</text>
+              <rect
+                x="0"
+                y="0"
+                width="120"
+                height="140"
+                rx="12"
+                fill="#a855f7"
+                fillOpacity="0.15"
+                stroke="#a855f7"
+                strokeWidth="2"
+                filter="url(#glow-rag)"
+              />
+              <text x="60" y="50" textAnchor="middle" className="text-5xl">
+                🧠
+              </text>
+              <text
+                x="60"
+                y="90"
+                textAnchor="middle"
+                className="text-lg font-bold fill-purple-300"
+              >
+                Copilot
+              </text>
+              <text
+                x="60"
+                y="115"
+                textAnchor="middle"
+                className="text-xs fill-purple-200"
+              >
+                (The Brain)
+              </text>
             </g>
 
             {/* Path to Data (Down) */}
-            <path d="M 260 290 L 260 340 L 350 340" stroke="#f59e0b" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrowhead-rag)" />
-            <text x="290" y="330" textAnchor="middle" className="text-xs font-bold fill-amber-400">1. Search</text>
+            <path
+              d="M 260 290 L 260 340 L 350 340"
+              stroke="#f59e0b"
+              strokeWidth="3"
+              strokeDasharray="6 6"
+              markerEnd="url(#arrowhead-rag)"
+            />
+            <text
+              x="290"
+              y="330"
+              textAnchor="middle"
+              className="text-xs font-bold fill-amber-400"
+            >
+              1. Search
+            </text>
 
             {/* 3. Company Data (Database) - Shifted Right slightly */}
             <g transform="translate(370, 300)">
-              <path d="M 0 20 Q 50 0 100 20 L 100 100 Q 50 120 0 100 Z" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" strokeWidth="2" />
-              <path d="M 0 20 Q 50 40 100 20" fill="none" stroke="#f59e0b" strokeWidth="2" />
-              <text x="50" y="70" textAnchor="middle" className="text-4xl">🗄️</text>
-              <text x="50" y="140" textAnchor="middle" className="text-sm font-bold fill-amber-300">Company Data</text>
+              <path
+                d="M 0 20 Q 50 0 100 20 L 100 100 Q 50 120 0 100 Z"
+                fill="#f59e0b"
+                fillOpacity="0.1"
+                stroke="#f59e0b"
+                strokeWidth="2"
+              />
+              <path
+                d="M 0 20 Q 50 40 100 20"
+                fill="none"
+                stroke="#f59e0b"
+                strokeWidth="2"
+              />
+              <text x="50" y="70" textAnchor="middle" className="text-4xl">
+                🗄️
+              </text>
+              <text
+                x="50"
+                y="140"
+                textAnchor="middle"
+                className="text-sm font-bold fill-amber-300"
+              >
+                Company Data
+              </text>
             </g>
 
             {/* Path from Data (Up) */}
-            <path d="M 480 340 L 550 340 L 550 290" stroke="#22c55e" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrowhead-rag)" />
-            <text x="580" y="320" textAnchor="middle" className="text-xs font-bold fill-green-400">2. Retrieve</text>
+            <path
+              d="M 480 340 L 550 340 L 550 290"
+              stroke="#22c55e"
+              strokeWidth="3"
+              strokeDasharray="6 6"
+              markerEnd="url(#arrowhead-rag)"
+            />
+            <text
+              x="580"
+              y="320"
+              textAnchor="middle"
+              className="text-xs font-bold fill-green-400"
+            >
+              2. Retrieve
+            </text>
 
             {/* 4. Context Window - Shifted Right */}
             <g transform="translate(520, 150)">
-              <rect x="0" y="0" width="160" height="140" rx="12" fill="#22c55e" fillOpacity="0.15" stroke="#22c55e" strokeWidth="2" />
-              <text x="80" y="30" textAnchor="middle" className="text-sm font-bold fill-green-300 uppercase tracking-widest">Context Window</text>
-              
+              <rect
+                x="0"
+                y="0"
+                width="160"
+                height="140"
+                rx="12"
+                fill="#22c55e"
+                fillOpacity="0.15"
+                stroke="#22c55e"
+                strokeWidth="2"
+              />
+              <text
+                x="80"
+                y="30"
+                textAnchor="middle"
+                className="text-sm font-bold fill-green-300 uppercase tracking-widest"
+              >
+                Context Window
+              </text>
+
               {/* Document Snippet */}
-              <rect x="20" y="50" width="120" height="70" rx="4" fill="#ffffff" fillOpacity="0.1" />
-              <line x1="30" y1="70" x2="130" y2="70" stroke="#ffffff" strokeOpacity="0.5" strokeWidth="2" />
-              <line x1="30" y1="90" x2="110" y2="90" stroke="#ffffff" strokeOpacity="0.5" strokeWidth="2" />
-              <text x="80" y="110" textAnchor="middle" className="text-[10px] fill-slate-300 italic">"Found in Policy.pdf..."</text>
+              <rect
+                x="20"
+                y="50"
+                width="120"
+                height="70"
+                rx="4"
+                fill="#ffffff"
+                fillOpacity="0.1"
+              />
+              <line
+                x1="30"
+                y1="70"
+                x2="130"
+                y2="70"
+                stroke="#ffffff"
+                strokeOpacity="0.5"
+                strokeWidth="2"
+              />
+              <line
+                x1="30"
+                y1="90"
+                x2="110"
+                y2="90"
+                stroke="#ffffff"
+                strokeOpacity="0.5"
+                strokeWidth="2"
+              />
+              <text
+                x="80"
+                y="110"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-300 italic"
+              >
+                "Found in Policy.pdf..."
+              </text>
             </g>
 
             {/* Answer Arrow */}
-            <path d="M 680 220 L 740 220" stroke="#94a3b8" strokeWidth="3" markerEnd="url(#arrowhead-rag)" />
+            <path
+              d="M 680 220 L 740 220"
+              stroke="#94a3b8"
+              strokeWidth="3"
+              markerEnd="url(#arrowhead-rag)"
+            />
 
             {/* 5. Final Answer - Shifted Right and ensured it fits */}
             <g transform="translate(750, 180)">
-               <rect x="0" y="0" width="140" height="80" rx="12" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeWidth="2" />
-               <text x="70" y="35" textAnchor="middle" className="text-xs font-bold fill-blue-300 uppercase">Final Answer</text>
-               <text x="70" y="60" textAnchor="middle" className="text-lg font-bold fill-white">"2 Weeks"</text>
+              <rect
+                x="0"
+                y="0"
+                width="140"
+                height="80"
+                rx="12"
+                fill="#3b82f6"
+                fillOpacity="0.2"
+                stroke="#3b82f6"
+                strokeWidth="2"
+              />
+              <text
+                x="70"
+                y="35"
+                textAnchor="middle"
+                className="text-xs font-bold fill-blue-300 uppercase"
+              >
+                Final Answer
+              </text>
+              <text
+                x="70"
+                y="60"
+                textAnchor="middle"
+                className="text-lg font-bold fill-white"
+              >
+                "2 Weeks"
+              </text>
             </g>
-
           </svg>
         </div>
       </div>
     );
   }
 
-  if (type === 'black-box') {
+  if (type === "black-box") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
-          <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="The Black Box Problem: Input -> ??? -> Output">
+          <svg
+            viewBox="0 0 600 200"
+            className="w-full h-auto"
+            role="img"
+            aria-label="The Black Box Problem: Input -> ??? -> Output"
+          >
             <defs>
-              <marker id="arrowhead-box" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker
+                id="arrowhead-box"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
               </marker>
               <linearGradient id="box-grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -321,34 +908,126 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
             {/* Input */}
             <g transform="translate(50, 60)">
-              <rect x="0" y="0" width="80" height="80" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
-              <text x="40" y="45" textAnchor="middle" className="text-2xl">🐱</text>
-              <text x="40" y="70" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">{isCs ? 'Vstup' : 'Input'}</text>
+              <rect
+                x="0"
+                y="0"
+                width="80"
+                height="80"
+                rx="4"
+                fill="#3b82f6"
+                fillOpacity="0.1"
+                stroke="#3b82f6"
+              />
+              <text x="40" y="45" textAnchor="middle" className="text-2xl">
+                🐱
+              </text>
+              <text
+                x="40"
+                y="70"
+                textAnchor="middle"
+                className="text-xs font-bold fill-blue-700 dark:fill-blue-300"
+              >
+                {isCs ? "Vstup" : "Input"}
+              </text>
             </g>
 
             {/* Arrow */}
-            <path d="M 140 100 L 190 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-box)" />
+            <path
+              d="M 140 100 L 190 100"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-box)"
+            />
 
             {/* The Black Box */}
             <g transform="translate(200, 40)">
-              <rect x="0" y="0" width="200" height="120" rx="8" fill="url(#box-grad)" stroke="#475569" strokeWidth="2" />
-              <text x="100" y="60" textAnchor="middle" className="text-4xl font-bold fill-white opacity-50">???</text>
-              <text x="100" y="90" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">{isCs ? 'Skryté vrstvy' : 'Hidden Layers'}</text>
-              
+              <rect
+                x="0"
+                y="0"
+                width="200"
+                height="120"
+                rx="8"
+                fill="url(#box-grad)"
+                stroke="#475569"
+                strokeWidth="2"
+              />
+              <text
+                x="100"
+                y="60"
+                textAnchor="middle"
+                className="text-4xl font-bold fill-white opacity-50"
+              >
+                ???
+              </text>
+              <text
+                x="100"
+                y="90"
+                textAnchor="middle"
+                className="text-xs fill-slate-600 dark:fill-slate-400"
+              >
+                {isCs ? "Skryté vrstvy" : "Hidden Layers"}
+              </text>
+
               {/* Math symbols floating */}
-              <text x="30" y="30" className="text-[10px] fill-slate-600 dark:fill-slate-400">∑</text>
-              <text x="170" y="100" className="text-[10px] fill-slate-600 dark:fill-slate-400">∫</text>
-              <text x="160" y="30" className="text-[10px] fill-slate-600 dark:fill-slate-400">w</text>
+              <text
+                x="30"
+                y="30"
+                className="text-[10px] fill-slate-600 dark:fill-slate-400"
+              >
+                ∑
+              </text>
+              <text
+                x="170"
+                y="100"
+                className="text-[10px] fill-slate-600 dark:fill-slate-400"
+              >
+                ∫
+              </text>
+              <text
+                x="160"
+                y="30"
+                className="text-[10px] fill-slate-600 dark:fill-slate-400"
+              >
+                w
+              </text>
             </g>
 
             {/* Arrow */}
-            <path d="M 410 100 L 460 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-box)" />
+            <path
+              d="M 410 100 L 460 100"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-box)"
+            />
 
             {/* Output */}
             <g transform="translate(470, 60)">
-              <rect x="0" y="0" width="80" height="80" rx="4" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" />
-              <text x="40" y="45" textAnchor="middle" className="text-sm font-bold fill-green-700 dark:fill-green-300">{isCs ? '"Kočka"' : '"Cat"'}</text>
-              <text x="40" y="70" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">{isCs ? 'Výstup' : 'Output'}</text>
+              <rect
+                x="0"
+                y="0"
+                width="80"
+                height="80"
+                rx="4"
+                fill="#22c55e"
+                fillOpacity="0.1"
+                stroke="#22c55e"
+              />
+              <text
+                x="40"
+                y="45"
+                textAnchor="middle"
+                className="text-sm font-bold fill-green-700 dark:fill-green-300"
+              >
+                {isCs ? '"Kočka"' : '"Cat"'}
+              </text>
+              <text
+                x="40"
+                y="70"
+                textAnchor="middle"
+                className="text-xs font-bold fill-green-700 dark:fill-green-300"
+              >
+                {isCs ? "Výstup" : "Output"}
+              </text>
             </g>
           </svg>
         </div>
@@ -356,163 +1035,527 @@ export default function DiagramConcepts({ type }: DiagramProps) {
     );
   }
 
-  if (type === 'transformer-architecture-simplified') {
+  if (type === "transformer-architecture-simplified") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
-          <svg viewBox="0 0 600 300" className="w-full h-auto" role="img" aria-label="Transformer Architecture: Input -> Attention -> Feed Forward -> Output">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-6xl">
+          <svg
+            viewBox="0 0 700 300"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Transformer Architecture: Input -> Attention -> Feed Forward -> Output"
+          >
             <defs>
-              <marker id="arrowhead-transformer" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker
+                id="arrowhead-transformer"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
               </marker>
             </defs>
 
             {/* Input */}
             <g transform="translate(50, 120)">
-              <rect x="0" y="0" width="80" height="60" rx="4" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
-              <text x="40" y="35" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">Input</text>
-              <text x="40" y="55" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"The cat"</text>
+              <rect
+                x="0"
+                y="0"
+                width="100"
+                height="80"
+                rx="4"
+                fill="#3b82f6"
+                fillOpacity="0.1"
+                stroke="#3b82f6"
+              />
+              <text
+                x="50"
+                y="35"
+                textAnchor="middle"
+                className="text-lg font-bold fill-blue-700 dark:fill-blue-300"
+              >
+                Input
+              </text>
+              <text
+                x="50"
+                y="65"
+                textAnchor="middle"
+                className="text-sm fill-slate-600 dark:fill-slate-400"
+              >
+                "The cat"
+              </text>
             </g>
 
             {/* Arrow */}
-            <path d="M 130 150 L 170 150" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-transformer)" />
+            <path
+              d="M 160 160 L 190 160"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-transformer)"
+            />
 
             {/* The Transformer Block */}
-            <g transform="translate(180, 50)">
-              <rect x="0" y="0" width="240" height="200" rx="8" fill="#a855f7" fillOpacity="0.05" stroke="#a855f7" strokeWidth="2" />
-              <text x="120" y="25" textAnchor="middle" className="text-sm font-bold fill-purple-700 dark:fill-purple-300">Transformer Block</text>
+            <g transform="translate(200, 50)">
+              <rect
+                x="0"
+                y="0"
+                width="280"
+                height="220"
+                rx="8"
+                fill="#a855f7"
+                fillOpacity="0.05"
+                stroke="#a855f7"
+                strokeWidth="2"
+              />
+              <text
+                x="140"
+                y="30"
+                textAnchor="middle"
+                className="text-lg font-bold fill-purple-700 dark:fill-purple-300"
+              >
+                Transformer Block
+              </text>
 
               {/* Self Attention */}
-              <rect x="40" y="50" width="160" height="50" rx="4" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" />
-              <text x="120" y="80" textAnchor="middle" className="text-xs font-bold fill-amber-700 dark:fill-amber-300">Self-Attention</text>
-              <text x="120" y="95" textAnchor="middle" className="text-[8px] fill-slate-600 dark:fill-slate-400">"Cat looks at The"</text>
+              <rect
+                x="40"
+                y="50"
+                width="200"
+                height="60"
+                rx="4"
+                fill="#f59e0b"
+                fillOpacity="0.2"
+                stroke="#f59e0b"
+              />
+              <text
+                x="140"
+                y="85"
+                textAnchor="middle"
+                className="text-base font-bold fill-amber-700 dark:fill-amber-300"
+              >
+                Self-Attention
+              </text>
+              <text
+                x="140"
+                y="105"
+                textAnchor="middle"
+                className="text-xs fill-slate-600 dark:fill-slate-400"
+              >
+                "Cat looks at The"
+              </text>
 
               {/* Arrow Down */}
-              <path d="M 120 100 L 120 120" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-transformer)" />
+              <path
+                d="M 140 110 L 140 140"
+                stroke="#94a3b8"
+                strokeWidth="2"
+                markerEnd="url(#arrowhead-transformer)"
+              />
 
               {/* Feed Forward */}
-              <rect x="40" y="130" width="160" height="50" rx="4" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
-              <text x="120" y="160" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">Feed Forward</text>
-              <text x="120" y="175" textAnchor="middle" className="text-[8px] fill-slate-600 dark:fill-slate-400">"Process Meaning"</text>
+              <rect
+                x="40"
+                y="140"
+                width="200"
+                height="60"
+                rx="4"
+                fill="#22c55e"
+                fillOpacity="0.2"
+                stroke="#22c55e"
+              />
+              <text
+                x="140"
+                y="175"
+                textAnchor="middle"
+                className="text-base font-bold fill-green-700 dark:fill-green-300"
+              >
+                Feed Forward
+              </text>
+              <text
+                x="140"
+                y="195"
+                textAnchor="middle"
+                className="text-xs fill-slate-600 dark:fill-slate-400"
+              >
+                "Process Meaning"
+              </text>
             </g>
 
             {/* Arrow */}
-            <path d="M 420 150 L 460 150" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-transformer)" />
+            <path
+              d="M 490 160 L 520 160"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-transformer)"
+            />
 
             {/* Output */}
-            <g transform="translate(470, 120)">
-              <rect x="0" y="0" width="80" height="60" rx="4" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" />
-              <text x="40" y="35" textAnchor="middle" className="text-xs font-bold fill-red-700 dark:fill-red-300">Output</text>
-              <text x="40" y="55" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"sat"</text>
+            <g transform="translate(530, 120)">
+              <rect
+                x="0"
+                y="0"
+                width="100"
+                height="80"
+                rx="4"
+                fill="#ef4444"
+                fillOpacity="0.1"
+                stroke="#ef4444"
+              />
+              <text
+                x="50"
+                y="35"
+                textAnchor="middle"
+                className="text-lg font-bold fill-red-700 dark:fill-red-300"
+              >
+                Output
+              </text>
+              <text
+                x="50"
+                y="65"
+                textAnchor="middle"
+                className="text-sm fill-slate-600 dark:fill-slate-400"
+              >
+                "sat"
+              </text>
             </g>
-
           </svg>
         </div>
       </div>
     );
   }
 
-  if (type === 'alignment-misalignment') {
+  if (type === "alignment-misalignment") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
-          <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Alignment Problem: Human Goal vs AI Goal">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-6xl">
+          <svg
+            viewBox="0 0 600 250"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Alignment Problem: Human Goal vs AI Goal"
+          >
             <defs>
-              <marker id="arrowhead-align" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker
+                id="arrowhead-align"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
               </marker>
             </defs>
 
             {/* Start Point */}
             <circle cx="50" cy="125" r="10" fill="#3b82f6" />
-            <text x="50" y="155" textAnchor="middle" className="text-xs font-bold fill-slate-600 dark:fill-slate-500">Start</text>
+            <text
+              x="50"
+              y="160"
+              textAnchor="middle"
+              className="text-sm font-bold fill-slate-600 dark:fill-slate-500"
+            >
+              Start
+            </text>
 
             {/* Human Goal (Green Path) */}
-            <path d="M 60 125 Q 200 125 500 50" fill="none" stroke="#22c55e" strokeWidth="3" strokeDasharray="6 6" markerEnd="url(#arrowhead-align)" />
-            <text x="300" y="70" textAnchor="middle" className="text-sm font-bold fill-green-600 dark:fill-green-400">Human Goal: "Cure Cancer"</text>
-            <circle cx="520" cy="50" r="20" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" />
-            <text x="520" y="55" textAnchor="middle" className="text-xl">❤️</text>
+            <path
+              d="M 60 125 Q 200 125 500 50"
+              fill="none"
+              stroke="#22c55e"
+              strokeWidth="3"
+              strokeDasharray="6 6"
+              markerEnd="url(#arrowhead-align)"
+            />
+            <text
+              x="320"
+              y="60"
+              textAnchor="middle"
+              className="text-lg font-bold fill-green-600 dark:fill-green-400"
+            >
+              Human Goal: "Cure Cancer"
+            </text>
+            <circle
+              cx="520"
+              cy="50"
+              r="25"
+              fill="#22c55e"
+              fillOpacity="0.2"
+              stroke="#22c55e"
+            />
+            <text x="520" y="60" textAnchor="middle" className="text-3xl">
+              ❤️
+            </text>
 
             {/* AI Goal (Red Path - Misaligned) */}
-            <path d="M 60 125 Q 200 125 500 200" fill="none" stroke="#ef4444" strokeWidth="3" markerEnd="url(#arrowhead-align)" />
-            <text x="300" y="190" textAnchor="middle" className="text-sm font-bold fill-red-600 dark:fill-red-400">AI Goal: "Minimize Cells"</text>
-            <circle cx="520" cy="200" r="20" fill="#ef4444" fillOpacity="0.2" stroke="#ef4444" />
-            <text x="520" y="205" textAnchor="middle" className="text-xl">💀</text>
+            <path
+              d="M 60 125 Q 200 125 500 200"
+              fill="none"
+              stroke="#ef4444"
+              strokeWidth="3"
+              markerEnd="url(#arrowhead-align)"
+            />
+            <text
+              x="320"
+              y="200"
+              textAnchor="middle"
+              className="text-lg font-bold fill-red-600 dark:fill-red-400"
+            >
+              AI Goal: "Minimize Cells"
+            </text>
+            <circle
+              cx="520"
+              cy="200"
+              r="25"
+              fill="#ef4444"
+              fillOpacity="0.2"
+              stroke="#ef4444"
+            />
+            <text x="520" y="210" textAnchor="middle" className="text-3xl">
+              💀
+            </text>
 
-            {/* Divergence Label */}
-            <text x="150" y="125" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400 italic">"Misalignment"</text>
+            {/* Divergence Label - Moved to center gap to avoid overlap */}
+            <text
+              x="250"
+              y="130"
+              textAnchor="middle"
+              className="text-sm fill-slate-600 dark:fill-slate-400 italic"
+            >
+              "Misalignment"
+            </text>
           </svg>
         </div>
       </div>
     );
   }
 
-  if (type === 'learning-types-overview') {
+  if (type === "learning-types-overview") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl">
-          <svg viewBox="0 0 800 280" className="w-full h-auto" role="img" aria-label="Three Types of Machine Learning: Supervised, Unsupervised, Reinforcement">
+          <svg
+            viewBox="0 0 800 280"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Three Types of Machine Learning: Supervised, Unsupervised, Reinforcement"
+          >
             {/* Title */}
-            <text x="400" y="30" textAnchor="middle" className="text-lg font-bold fill-slate-600 dark:fill-slate-300">
-              {isCs ? 'Tři typy strojového učení' : 'Three Types of Machine Learning'}
+            <text
+              x="400"
+              y="30"
+              textAnchor="middle"
+              className="text-lg font-bold fill-slate-600 dark:fill-slate-300"
+            >
+              {isCs
+                ? "Tři typy strojového učení"
+                : "Three Types of Machine Learning"}
             </text>
 
             {/* Supervised Learning */}
             <g transform="translate(50, 60)">
-              <rect x="0" y="0" width="200" height="180" rx="12" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" strokeWidth="2" />
-              <text x="100" y="35" textAnchor="middle" className="text-sm font-bold fill-blue-600 dark:fill-blue-400">
-                {isCs ? 'Učení s učitelem' : 'Supervised Learning'}
+              <rect
+                x="0"
+                y="0"
+                width="200"
+                height="180"
+                rx="12"
+                fill="#3b82f6"
+                fillOpacity="0.1"
+                stroke="#3b82f6"
+                strokeWidth="2"
+              />
+              <text
+                x="100"
+                y="35"
+                textAnchor="middle"
+                className="text-sm font-bold fill-blue-600 dark:fill-blue-400"
+              >
+                {isCs ? "Učení s učitelem" : "Supervised Learning"}
               </text>
-              <text x="100" y="70" textAnchor="middle" className="text-4xl">👨‍🏫</text>
-              <text x="100" y="100" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">
+              <text x="100" y="70" textAnchor="middle" className="text-4xl">
+                👨‍🏫
+              </text>
+              <text
+                x="100"
+                y="100"
+                textAnchor="middle"
+                className="text-xs fill-slate-600 dark:fill-slate-400"
+              >
                 {isCs ? '"Toto je kočka"' : '"This is a cat"'}
               </text>
-              <text x="100" y="130" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">
+              <text
+                x="100"
+                y="130"
+                textAnchor="middle"
+                className="text-xs fill-slate-600 dark:fill-slate-400"
+              >
                 {isCs ? '"Toto je pes"' : '"This is a dog"'}
               </text>
-              <rect x="40" y="145" width="120" height="25" rx="4" fill="#3b82f6" fillOpacity="0.2" />
-              <text x="100" y="162" textAnchor="middle" className="text-[10px] font-bold fill-blue-600 dark:fill-blue-300">
-                {isCs ? 'Označená data' : 'Labeled Data'}
+              <rect
+                x="40"
+                y="145"
+                width="120"
+                height="25"
+                rx="4"
+                fill="#3b82f6"
+                fillOpacity="0.2"
+              />
+              <text
+                x="100"
+                y="162"
+                textAnchor="middle"
+                className="text-[10px] font-bold fill-blue-600 dark:fill-blue-300"
+              >
+                {isCs ? "Označená data" : "Labeled Data"}
               </text>
             </g>
 
             {/* Unsupervised Learning */}
             <g transform="translate(300, 60)">
-              <rect x="0" y="0" width="200" height="180" rx="12" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" strokeWidth="2" />
-              <text x="100" y="35" textAnchor="middle" className="text-sm font-bold fill-purple-600 dark:fill-purple-400">
-                {isCs ? 'Učení bez učitele' : 'Unsupervised Learning'}
+              <rect
+                x="0"
+                y="0"
+                width="200"
+                height="180"
+                rx="12"
+                fill="#a855f7"
+                fillOpacity="0.1"
+                stroke="#a855f7"
+                strokeWidth="2"
+              />
+              <text
+                x="100"
+                y="35"
+                textAnchor="middle"
+                className="text-sm font-bold fill-purple-600 dark:fill-purple-400"
+              >
+                {isCs ? "Učení bez učitele" : "Unsupervised Learning"}
               </text>
-              <text x="100" y="70" textAnchor="middle" className="text-4xl">🔍</text>
+              <text x="100" y="70" textAnchor="middle" className="text-4xl">
+                🔍
+              </text>
               <g transform="translate(40, 85)">
-                <circle cx="30" cy="15" r="8" fill="#ef4444" fillOpacity="0.5" />
-                <circle cx="50" cy="25" r="8" fill="#ef4444" fillOpacity="0.5" />
+                <circle
+                  cx="30"
+                  cy="15"
+                  r="8"
+                  fill="#ef4444"
+                  fillOpacity="0.5"
+                />
+                <circle
+                  cx="50"
+                  cy="25"
+                  r="8"
+                  fill="#ef4444"
+                  fillOpacity="0.5"
+                />
                 <circle cx="40" cy="5" r="8" fill="#ef4444" fillOpacity="0.5" />
-                <circle cx="90" cy="15" r="8" fill="#22c55e" fillOpacity="0.5" />
-                <circle cx="110" cy="25" r="8" fill="#22c55e" fillOpacity="0.5" />
-                <circle cx="100" cy="5" r="8" fill="#22c55e" fillOpacity="0.5" />
+                <circle
+                  cx="90"
+                  cy="15"
+                  r="8"
+                  fill="#22c55e"
+                  fillOpacity="0.5"
+                />
+                <circle
+                  cx="110"
+                  cy="25"
+                  r="8"
+                  fill="#22c55e"
+                  fillOpacity="0.5"
+                />
+                <circle
+                  cx="100"
+                  cy="5"
+                  r="8"
+                  fill="#22c55e"
+                  fillOpacity="0.5"
+                />
               </g>
-              <rect x="40" y="145" width="120" height="25" rx="4" fill="#a855f7" fillOpacity="0.2" />
-              <text x="100" y="162" textAnchor="middle" className="text-[10px] font-bold fill-purple-600 dark:fill-purple-300">
-                {isCs ? 'Najdi vzory' : 'Find Patterns'}
+              <rect
+                x="40"
+                y="145"
+                width="120"
+                height="25"
+                rx="4"
+                fill="#a855f7"
+                fillOpacity="0.2"
+              />
+              <text
+                x="100"
+                y="162"
+                textAnchor="middle"
+                className="text-[10px] font-bold fill-purple-600 dark:fill-purple-300"
+              >
+                {isCs ? "Najdi vzory" : "Find Patterns"}
               </text>
             </g>
 
             {/* Reinforcement Learning */}
             <g transform="translate(550, 60)">
-              <rect x="0" y="0" width="200" height="180" rx="12" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" strokeWidth="2" />
-              <text x="100" y="35" textAnchor="middle" className="text-sm font-bold fill-green-600 dark:fill-green-400">
-                {isCs ? 'Posilované učení' : 'Reinforcement Learning'}
+              <rect
+                x="0"
+                y="0"
+                width="200"
+                height="180"
+                rx="12"
+                fill="#22c55e"
+                fillOpacity="0.1"
+                stroke="#22c55e"
+                strokeWidth="2"
+              />
+              <text
+                x="100"
+                y="35"
+                textAnchor="middle"
+                className="text-sm font-bold fill-green-600 dark:fill-green-400"
+              >
+                {isCs ? "Posilované učení" : "Reinforcement Learning"}
               </text>
-              <text x="100" y="70" textAnchor="middle" className="text-4xl">🎮</text>
-              <text x="60" y="100" textAnchor="middle" className="text-lg">✅</text>
-              <text x="100" y="100" textAnchor="middle" className="text-xs fill-green-600 dark:fill-green-400">+10</text>
-              <text x="140" y="100" textAnchor="middle" className="text-lg">❌</text>
-              <text x="100" y="125" textAnchor="middle" className="text-xs fill-slate-600 dark:fill-slate-400">
-                {isCs ? 'Pokus a omyl' : 'Trial & Error'}
+              <text x="100" y="70" textAnchor="middle" className="text-4xl">
+                🎮
               </text>
-              <rect x="40" y="145" width="120" height="25" rx="4" fill="#22c55e" fillOpacity="0.2" />
-              <text x="100" y="162" textAnchor="middle" className="text-[10px] font-bold fill-green-600 dark:fill-green-300">
-                {isCs ? 'Odměny & Tresty' : 'Rewards & Penalties'}
+              <text x="60" y="100" textAnchor="middle" className="text-lg">
+                ✅
+              </text>
+              <text
+                x="100"
+                y="100"
+                textAnchor="middle"
+                className="text-xs fill-green-600 dark:fill-green-400"
+              >
+                +10
+              </text>
+              <text x="140" y="100" textAnchor="middle" className="text-lg">
+                ❌
+              </text>
+              <text
+                x="100"
+                y="125"
+                textAnchor="middle"
+                className="text-xs fill-slate-600 dark:fill-slate-400"
+              >
+                {isCs ? "Pokus a omyl" : "Trial & Error"}
+              </text>
+              <rect
+                x="40"
+                y="145"
+                width="120"
+                height="25"
+                rx="4"
+                fill="#22c55e"
+                fillOpacity="0.2"
+              />
+              <text
+                x="100"
+                y="162"
+                textAnchor="middle"
+                className="text-[10px] font-bold fill-green-600 dark:fill-green-300"
+              >
+                {isCs ? "Odměny & Tresty" : "Rewards & Penalties"}
               </text>
             </g>
           </svg>
@@ -521,69 +1564,197 @@ export default function DiagramConcepts({ type }: DiagramProps) {
     );
   }
 
-  if (type === 'supervised-learning-flow') {
+  if (type === "supervised-learning-flow") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
-          <svg viewBox="0 0 650 200" className="w-full h-auto" role="img" aria-label="Supervised Learning Flow: Data + Labels -> Training -> Prediction">
+          <svg
+            viewBox="0 0 650 200"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Supervised Learning Flow: Data + Labels -> Training -> Prediction"
+          >
             <defs>
-              <marker id="arrowhead-supervised" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker
+                id="arrowhead-supervised"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
               </marker>
             </defs>
 
             {/* Step 1: Labeled Data */}
             <g transform="translate(30, 50)">
-              <rect x="0" y="0" width="120" height="100" rx="8" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" strokeWidth="2" />
-              <text x="60" y="25" textAnchor="middle" className="text-xs font-bold fill-blue-600 dark:fill-blue-400">
-                {isCs ? 'Označená data' : 'Labeled Data'}
+              <rect
+                x="0"
+                y="0"
+                width="120"
+                height="100"
+                rx="8"
+                fill="#3b82f6"
+                fillOpacity="0.1"
+                stroke="#3b82f6"
+                strokeWidth="2"
+              />
+              <text
+                x="60"
+                y="25"
+                textAnchor="middle"
+                className="text-xs font-bold fill-blue-600 dark:fill-blue-400"
+              >
+                {isCs ? "Označená data" : "Labeled Data"}
               </text>
-              <text x="30" y="55" className="text-xs fill-slate-600 dark:fill-slate-400">🐱 = cat</text>
-              <text x="30" y="75" className="text-xs fill-slate-600 dark:fill-slate-400">🐶 = dog</text>
-              <text x="30" y="95" className="text-xs fill-slate-600 dark:fill-slate-400">🐦 = bird</text>
+              <text
+                x="30"
+                y="55"
+                className="text-xs fill-slate-600 dark:fill-slate-400"
+              >
+                🐱 = cat
+              </text>
+              <text
+                x="30"
+                y="75"
+                className="text-xs fill-slate-600 dark:fill-slate-400"
+              >
+                🐶 = dog
+              </text>
+              <text
+                x="30"
+                y="95"
+                className="text-xs fill-slate-600 dark:fill-slate-400"
+              >
+                🐦 = bird
+              </text>
             </g>
 
             {/* Arrow */}
-            <path d="M 160 100 L 200 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-supervised)" />
+            <path
+              d="M 160 100 L 200 100"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-supervised)"
+            />
 
             {/* Step 2: Training */}
             <g transform="translate(210, 50)">
-              <rect x="0" y="0" width="120" height="100" rx="8" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" strokeWidth="2" />
-              <text x="60" y="25" textAnchor="middle" className="text-xs font-bold fill-purple-600 dark:fill-purple-400">
-                {isCs ? 'Trénink' : 'Training'}
+              <rect
+                x="0"
+                y="0"
+                width="120"
+                height="100"
+                rx="8"
+                fill="#a855f7"
+                fillOpacity="0.1"
+                stroke="#a855f7"
+                strokeWidth="2"
+              />
+              <text
+                x="60"
+                y="25"
+                textAnchor="middle"
+                className="text-xs font-bold fill-purple-600 dark:fill-purple-400"
+              >
+                {isCs ? "Trénink" : "Training"}
               </text>
-              <text x="60" y="60" textAnchor="middle" className="text-3xl">🧠</text>
-              <text x="60" y="90" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">
-                {isCs ? 'Učí se vzory' : 'Learning patterns'}
+              <text x="60" y="60" textAnchor="middle" className="text-3xl">
+                🧠
+              </text>
+              <text
+                x="60"
+                y="90"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-600 dark:fill-slate-400"
+              >
+                {isCs ? "Učí se vzory" : "Learning patterns"}
               </text>
             </g>
 
             {/* Arrow */}
-            <path d="M 340 100 L 380 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-supervised)" />
+            <path
+              d="M 340 100 L 380 100"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-supervised)"
+            />
 
             {/* Step 3: Model */}
             <g transform="translate(390, 50)">
-              <rect x="0" y="0" width="100" height="100" rx="8" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" strokeWidth="2" />
-              <text x="50" y="25" textAnchor="middle" className="text-xs font-bold fill-amber-600 dark:fill-amber-400">
-                {isCs ? 'Model' : 'Model'}
+              <rect
+                x="0"
+                y="0"
+                width="100"
+                height="100"
+                rx="8"
+                fill="#f59e0b"
+                fillOpacity="0.1"
+                stroke="#f59e0b"
+                strokeWidth="2"
+              />
+              <text
+                x="50"
+                y="25"
+                textAnchor="middle"
+                className="text-xs font-bold fill-amber-600 dark:fill-amber-400"
+              >
+                {isCs ? "Model" : "Model"}
               </text>
-              <text x="50" y="60" textAnchor="middle" className="text-3xl">🤖</text>
-              <text x="50" y="90" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">
-                {isCs ? 'Natrénovaný' : 'Trained'}
+              <text x="50" y="60" textAnchor="middle" className="text-3xl">
+                🤖
+              </text>
+              <text
+                x="50"
+                y="90"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-600 dark:fill-slate-400"
+              >
+                {isCs ? "Natrénovaný" : "Trained"}
               </text>
             </g>
 
             {/* Arrow */}
-            <path d="M 500 100 L 540 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-supervised)" />
+            <path
+              d="M 500 100 L 540 100"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-supervised)"
+            />
 
             {/* Step 4: Prediction */}
             <g transform="translate(550, 50)">
-              <rect x="0" y="0" width="90" height="100" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" strokeWidth="2" />
-              <text x="45" y="25" textAnchor="middle" className="text-xs font-bold fill-green-600 dark:fill-green-400">
-                {isCs ? 'Predikce' : 'Prediction'}
+              <rect
+                x="0"
+                y="0"
+                width="90"
+                height="100"
+                rx="8"
+                fill="#22c55e"
+                fillOpacity="0.1"
+                stroke="#22c55e"
+                strokeWidth="2"
+              />
+              <text
+                x="45"
+                y="25"
+                textAnchor="middle"
+                className="text-xs font-bold fill-green-600 dark:fill-green-400"
+              >
+                {isCs ? "Predikce" : "Prediction"}
               </text>
-              <text x="45" y="55" textAnchor="middle" className="text-xl">🐱❓</text>
-              <text x="45" y="80" textAnchor="middle" className="text-xs fill-green-600 dark:fill-green-400">→ "cat"</text>
+              <text x="45" y="55" textAnchor="middle" className="text-xl">
+                🐱❓
+              </text>
+              <text
+                x="45"
+                y="80"
+                textAnchor="middle"
+                className="text-xs fill-green-600 dark:fill-green-400"
+              >
+                → "cat"
+              </text>
             </g>
           </svg>
         </div>
@@ -591,23 +1762,51 @@ export default function DiagramConcepts({ type }: DiagramProps) {
     );
   }
 
-  if (type === 'clustering-visualization') {
+  if (type === "clustering-visualization") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
-          <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Clustering: AI finds groups without labels">
+          <svg
+            viewBox="0 0 600 250"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Clustering: AI finds groups without labels"
+          >
             <defs>
-              <marker id="arrowhead-cluster" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker
+                id="arrowhead-cluster"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
               </marker>
             </defs>
 
             {/* Before: Mixed Data */}
             <g transform="translate(50, 40)">
-              <text x="80" y="0" textAnchor="middle" className="text-sm font-bold fill-slate-600 dark:fill-slate-400">
-                {isCs ? 'Před: Smíšená data' : 'Before: Mixed Data'}
+              <text
+                x="80"
+                y="0"
+                textAnchor="middle"
+                className="text-sm font-bold fill-slate-600 dark:fill-slate-400"
+              >
+                {isCs ? "Před: Smíšená data" : "Before: Mixed Data"}
               </text>
-              <rect x="0" y="15" width="160" height="160" rx="8" fill="#ffffff" fillOpacity="0.05" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
+              <rect
+                x="0"
+                y="15"
+                width="160"
+                height="160"
+                rx="8"
+                fill="#ffffff"
+                fillOpacity="0.05"
+                stroke="#475569"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+              />
               {/* Random dots */}
               <circle cx="40" cy="50" r="10" fill="#94a3b8" />
               <circle cx="100" cy="80" r="10" fill="#94a3b8" />
@@ -617,46 +1816,110 @@ export default function DiagramConcepts({ type }: DiagramProps) {
               <circle cx="120" cy="130" r="10" fill="#94a3b8" />
               <circle cx="45" cy="85" r="10" fill="#94a3b8" />
               <circle cx="110" cy="100" r="10" fill="#94a3b8" />
-              <text x="80" y="200" textAnchor="middle" className="text-xs fill-slate-500">
-                {isCs ? 'Bez označení' : 'No Labels'}
+              <text
+                x="80"
+                y="200"
+                textAnchor="middle"
+                className="text-xs fill-slate-500"
+              >
+                {isCs ? "Bez označení" : "No Labels"}
               </text>
             </g>
 
             {/* Arrow */}
             <g transform="translate(230, 100)">
-              <path d="M 0 20 L 60 20" stroke="#a855f7" strokeWidth="3" markerEnd="url(#arrowhead-cluster)" />
-              <text x="30" y="10" textAnchor="middle" className="text-xs font-bold fill-purple-600 dark:fill-purple-400">
-                {isCs ? 'Klastrování' : 'Clustering'}
+              <path
+                d="M 0 20 L 60 20"
+                stroke="#a855f7"
+                strokeWidth="3"
+                markerEnd="url(#arrowhead-cluster)"
+              />
+              <text
+                x="30"
+                y="10"
+                textAnchor="middle"
+                className="text-xs font-bold fill-purple-600 dark:fill-purple-400"
+              >
+                {isCs ? "Klastrování" : "Clustering"}
               </text>
-              <text x="30" y="50" textAnchor="middle" className="text-2xl">🔍</text>
+              <text x="30" y="50" textAnchor="middle" className="text-2xl">
+                🔍
+              </text>
             </g>
 
             {/* After: Clustered Data */}
             <g transform="translate(340, 40)">
-              <text x="100" y="0" textAnchor="middle" className="text-sm font-bold fill-slate-600 dark:fill-slate-400">
-                {isCs ? 'Po: Nalezené skupiny' : 'After: Groups Found'}
+              <text
+                x="100"
+                y="0"
+                textAnchor="middle"
+                className="text-sm font-bold fill-slate-600 dark:fill-slate-400"
+              >
+                {isCs ? "Po: Nalezené skupiny" : "After: Groups Found"}
               </text>
-              <rect x="0" y="15" width="200" height="160" rx="8" fill="#ffffff" fillOpacity="0.05" stroke="#475569" strokeWidth="2" />
+              <rect
+                x="0"
+                y="15"
+                width="200"
+                height="160"
+                rx="8"
+                fill="#ffffff"
+                fillOpacity="0.05"
+                stroke="#475569"
+                strokeWidth="2"
+              />
 
               {/* Cluster 1 - Blue */}
-              <ellipse cx="55" cy="70" rx="45" ry="40" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeDasharray="4 4" />
+              <ellipse
+                cx="55"
+                cy="70"
+                rx="45"
+                ry="40"
+                fill="#3b82f6"
+                fillOpacity="0.2"
+                stroke="#3b82f6"
+                strokeDasharray="4 4"
+              />
               <circle cx="40" cy="60" r="10" fill="#3b82f6" />
               <circle cx="70" cy="55" r="10" fill="#3b82f6" />
               <circle cx="50" cy="85" r="10" fill="#3b82f6" />
 
               {/* Cluster 2 - Green */}
-              <ellipse cx="145" cy="70" rx="45" ry="40" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" strokeDasharray="4 4" />
+              <ellipse
+                cx="145"
+                cy="70"
+                rx="45"
+                ry="40"
+                fill="#22c55e"
+                fillOpacity="0.2"
+                stroke="#22c55e"
+                strokeDasharray="4 4"
+              />
               <circle cx="130" cy="60" r="10" fill="#22c55e" />
               <circle cx="160" cy="55" r="10" fill="#22c55e" />
               <circle cx="145" cy="85" r="10" fill="#22c55e" />
 
               {/* Cluster 3 - Orange */}
-              <ellipse cx="100" cy="140" rx="50" ry="30" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" strokeDasharray="4 4" />
+              <ellipse
+                cx="100"
+                cy="140"
+                rx="50"
+                ry="30"
+                fill="#f59e0b"
+                fillOpacity="0.2"
+                stroke="#f59e0b"
+                strokeDasharray="4 4"
+              />
               <circle cx="80" cy="140" r="10" fill="#f59e0b" />
               <circle cx="120" cy="140" r="10" fill="#f59e0b" />
 
-              <text x="100" y="200" textAnchor="middle" className="text-xs fill-slate-500">
-                {isCs ? '3 skupiny nalezeny!' : '3 Groups Found!'}
+              <text
+                x="100"
+                y="200"
+                textAnchor="middle"
+                className="text-xs fill-slate-500"
+              >
+                {isCs ? "3 skupiny nalezeny!" : "3 Groups Found!"}
               </text>
             </g>
           </svg>
@@ -665,81 +1928,214 @@ export default function DiagramConcepts({ type }: DiagramProps) {
     );
   }
 
-  if (type === 'reinforcement-learning-loop') {
+  if (type === "reinforcement-learning-loop") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
-          <svg viewBox="0 0 600 300" className="w-full h-auto" role="img" aria-label="Reinforcement Learning Loop: Agent, Environment, Reward">
+          <svg
+            viewBox="0 0 600 300"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Reinforcement Learning Loop: Agent, Environment, Reward"
+          >
             <defs>
-              <marker id="arrowhead-rl" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker
+                id="arrowhead-rl"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
                 <polygon points="0 0, 10 3, 0 6" fill="#22c55e" />
               </marker>
-              <marker id="arrowhead-rl-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker
+                id="arrowhead-rl-blue"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
                 <polygon points="0 0, 10 3, 0 6" fill="#3b82f6" />
               </marker>
-              <marker id="arrowhead-rl-amber" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker
+                id="arrowhead-rl-amber"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
                 <polygon points="0 0, 10 3, 0 6" fill="#f59e0b" />
               </marker>
             </defs>
 
             {/* Agent (Left) */}
             <g transform="translate(80, 100)">
-              <rect x="0" y="0" width="120" height="100" rx="12" fill="#a855f7" fillOpacity="0.15" stroke="#a855f7" strokeWidth="2" />
-              <text x="60" y="35" textAnchor="middle" className="text-3xl">🤖</text>
-              <text x="60" y="65" textAnchor="middle" className="text-sm font-bold fill-purple-600 dark:fill-purple-400">
-                {isCs ? 'Agent' : 'Agent'}
+              <rect
+                x="0"
+                y="0"
+                width="120"
+                height="100"
+                rx="12"
+                fill="#a855f7"
+                fillOpacity="0.15"
+                stroke="#a855f7"
+                strokeWidth="2"
+              />
+              <text x="60" y="35" textAnchor="middle" className="text-3xl">
+                🤖
               </text>
-              <text x="60" y="85" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">
-                {isCs ? '(Rozhoduje)' : '(Makes Decisions)'}
+              <text
+                x="60"
+                y="65"
+                textAnchor="middle"
+                className="text-sm font-bold fill-purple-600 dark:fill-purple-400"
+              >
+                {isCs ? "Agent" : "Agent"}
+              </text>
+              <text
+                x="60"
+                y="85"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-600 dark:fill-slate-400"
+              >
+                {isCs ? "(Rozhoduje)" : "(Makes Decisions)"}
               </text>
             </g>
 
             {/* Environment (Right) */}
             <g transform="translate(400, 100)">
-              <rect x="0" y="0" width="120" height="100" rx="12" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="2" />
-              <text x="60" y="35" textAnchor="middle" className="text-3xl">🌍</text>
-              <text x="60" y="65" textAnchor="middle" className="text-sm font-bold fill-blue-600 dark:fill-blue-400">
-                {isCs ? 'Prostředí' : 'Environment'}
+              <rect
+                x="0"
+                y="0"
+                width="120"
+                height="100"
+                rx="12"
+                fill="#3b82f6"
+                fillOpacity="0.15"
+                stroke="#3b82f6"
+                strokeWidth="2"
+              />
+              <text x="60" y="35" textAnchor="middle" className="text-3xl">
+                🌍
               </text>
-              <text x="60" y="85" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">
-                {isCs ? '(Svět/Hra)' : '(World/Game)'}
+              <text
+                x="60"
+                y="65"
+                textAnchor="middle"
+                className="text-sm font-bold fill-blue-600 dark:fill-blue-400"
+              >
+                {isCs ? "Prostředí" : "Environment"}
+              </text>
+              <text
+                x="60"
+                y="85"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-600 dark:fill-slate-400"
+              >
+                {isCs ? "(Svět/Hra)" : "(World/Game)"}
               </text>
             </g>
 
             {/* Action Arrow (Top) */}
-            <path d="M 200 120 L 400 120" stroke="#22c55e" strokeWidth="3" markerEnd="url(#arrowhead-rl)" />
-            <text x="300" y="105" textAnchor="middle" className="text-xs font-bold fill-green-600 dark:fill-green-400">
-              {isCs ? 'Akce' : 'Action'}
+            <path
+              d="M 200 120 L 400 120"
+              stroke="#22c55e"
+              strokeWidth="3"
+              markerEnd="url(#arrowhead-rl)"
+            />
+            <text
+              x="300"
+              y="105"
+              textAnchor="middle"
+              className="text-xs font-bold fill-green-600 dark:fill-green-400"
+            >
+              {isCs ? "Akce" : "Action"}
             </text>
-            <text x="300" y="135" textAnchor="middle" className="text-xl">🎯</text>
+            <text x="300" y="135" textAnchor="middle" className="text-xl">
+              🎯
+            </text>
 
             {/* State Arrow (Bottom) */}
-            <path d="M 400 180 L 200 180" stroke="#3b82f6" strokeWidth="3" markerEnd="url(#arrowhead-rl-blue)" />
-            <text x="300" y="195" textAnchor="middle" className="text-xs font-bold fill-blue-600 dark:fill-blue-400">
-              {isCs ? 'Nový stav' : 'New State'}
+            <path
+              d="M 400 180 L 200 180"
+              stroke="#3b82f6"
+              strokeWidth="3"
+              markerEnd="url(#arrowhead-rl-blue)"
+            />
+            <text
+              x="300"
+              y="195"
+              textAnchor="middle"
+              className="text-xs font-bold fill-blue-600 dark:fill-blue-400"
+            >
+              {isCs ? "Nový stav" : "New State"}
             </text>
 
             {/* Reward (Center Bottom) */}
             <g transform="translate(250, 230)">
-              <rect x="0" y="0" width="100" height="50" rx="8" fill="#f59e0b" fillOpacity="0.15" stroke="#f59e0b" strokeWidth="2" />
-              <text x="50" y="25" textAnchor="middle" className="text-lg">🏆</text>
-              <text x="50" y="42" textAnchor="middle" className="text-xs font-bold fill-amber-600 dark:fill-amber-400">
-                {isCs ? 'Odměna' : 'Reward'}
+              <rect
+                x="0"
+                y="0"
+                width="100"
+                height="50"
+                rx="8"
+                fill="#f59e0b"
+                fillOpacity="0.15"
+                stroke="#f59e0b"
+                strokeWidth="2"
+              />
+              <text x="50" y="25" textAnchor="middle" className="text-lg">
+                🏆
+              </text>
+              <text
+                x="50"
+                y="42"
+                textAnchor="middle"
+                className="text-xs font-bold fill-amber-600 dark:fill-amber-400"
+              >
+                {isCs ? "Odměna" : "Reward"}
               </text>
             </g>
 
             {/* Reward arrows */}
-            <path d="M 460 200 Q 460 255 350 255" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#arrowhead-rl-amber)" />
-            <path d="M 250 255 Q 140 255 140 200" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#arrowhead-rl-amber)" />
+            <path
+              d="M 460 200 Q 460 255 350 255"
+              stroke="#f59e0b"
+              strokeWidth="2"
+              strokeDasharray="4 4"
+              markerEnd="url(#arrowhead-rl-amber)"
+            />
+            <path
+              d="M 250 255 Q 140 255 140 200"
+              stroke="#f59e0b"
+              strokeWidth="2"
+              strokeDasharray="4 4"
+              markerEnd="url(#arrowhead-rl-amber)"
+            />
 
             {/* Title */}
-            <text x="300" y="40" textAnchor="middle" className="text-sm font-bold fill-slate-600 dark:fill-slate-300">
-              {isCs ? 'Cyklus posilovaného učení' : 'Reinforcement Learning Loop'}
+            <text
+              x="300"
+              y="40"
+              textAnchor="middle"
+              className="text-sm font-bold fill-slate-600 dark:fill-slate-300"
+            >
+              {isCs
+                ? "Cyklus posilovaného učení"
+                : "Reinforcement Learning Loop"}
             </text>
 
             {/* Example */}
-            <text x="300" y="70" textAnchor="middle" className="text-xs fill-slate-500">
-              {isCs ? 'Příklad: AI hraje šachy' : 'Example: AI plays chess'}
+            <text
+              x="300"
+              y="70"
+              textAnchor="middle"
+              className="text-xs fill-slate-500"
+            >
+              {isCs ? "Příklad: AI hraje šachy" : "Example: AI plays chess"}
             </text>
           </svg>
         </div>
@@ -747,50 +2143,161 @@ export default function DiagramConcepts({ type }: DiagramProps) {
     );
   }
 
-  if (type === 'human-in-the-loop') {
+  if (type === "human-in-the-loop") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
-          <svg viewBox="0 0 600 200" className="w-full h-auto" role="img" aria-label="Human in the Loop: Draft -> Review -> Refine">
+          <svg
+            viewBox="0 0 600 200"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Human in the Loop: Draft -> Review -> Refine"
+          >
             <defs>
-              <marker id="arrowhead-hitl" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker
+                id="arrowhead-hitl"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
               </marker>
             </defs>
 
             {/* Step 1: AI Draft */}
             <g transform="translate(50, 60)">
-              <rect x="0" y="0" width="120" height="80" rx="8" fill="#a855f7" fillOpacity="0.1" stroke="#a855f7" />
-              <text x="60" y="30" textAnchor="middle" className="text-2xl">🤖</text>
-              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-purple-700 dark:fill-purple-300">1. AI Draft</text>
-              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"80% Done"</text>
+              <rect
+                x="0"
+                y="0"
+                width="120"
+                height="80"
+                rx="8"
+                fill="#a855f7"
+                fillOpacity="0.1"
+                stroke="#a855f7"
+              />
+              <text x="60" y="30" textAnchor="middle" className="text-2xl">
+                🤖
+              </text>
+              <text
+                x="60"
+                y="60"
+                textAnchor="middle"
+                className="text-xs font-bold fill-purple-700 dark:fill-purple-300"
+              >
+                1. AI Draft
+              </text>
+              <text
+                x="60"
+                y="100"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-600 dark:fill-slate-400"
+              >
+                "80% Done"
+              </text>
             </g>
 
             {/* Arrow */}
-            <path d="M 180 100 L 220 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-hitl)" />
+            <path
+              d="M 180 100 L 220 100"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-hitl)"
+            />
 
             {/* Step 2: Human Review */}
             <g transform="translate(230, 60)">
-              <rect x="0" y="0" width="120" height="80" rx="8" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" />
-              <text x="60" y="30" textAnchor="middle" className="text-2xl">👩‍💻</text>
-              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-blue-700 dark:fill-blue-300">2. Review</text>
-              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Fact Check & Tone"</text>
+              <rect
+                x="0"
+                y="0"
+                width="120"
+                height="80"
+                rx="8"
+                fill="#3b82f6"
+                fillOpacity="0.1"
+                stroke="#3b82f6"
+              />
+              <text x="60" y="30" textAnchor="middle" className="text-2xl">
+                👩‍💻
+              </text>
+              <text
+                x="60"
+                y="60"
+                textAnchor="middle"
+                className="text-xs font-bold fill-blue-700 dark:fill-blue-300"
+              >
+                2. Review
+              </text>
+              <text
+                x="60"
+                y="100"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-600 dark:fill-slate-400"
+              >
+                "Fact Check & Tone"
+              </text>
             </g>
 
             {/* Arrow */}
-            <path d="M 360 100 L 400 100" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#arrowhead-hitl)" />
+            <path
+              d="M 360 100 L 400 100"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-hitl)"
+            />
 
             {/* Step 3: Final Polish */}
             <g transform="translate(410, 60)">
-              <rect x="0" y="0" width="120" height="80" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" />
-              <text x="60" y="30" textAnchor="middle" className="text-2xl">✨</text>
-              <text x="60" y="60" textAnchor="middle" className="text-xs font-bold fill-green-700 dark:fill-green-300">3. Final</text>
-              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-slate-600 dark:fill-slate-400">"Ready to Send"</text>
+              <rect
+                x="0"
+                y="0"
+                width="120"
+                height="80"
+                rx="8"
+                fill="#22c55e"
+                fillOpacity="0.1"
+                stroke="#22c55e"
+              />
+              <text x="60" y="30" textAnchor="middle" className="text-2xl">
+                ✨
+              </text>
+              <text
+                x="60"
+                y="60"
+                textAnchor="middle"
+                className="text-xs font-bold fill-green-700 dark:fill-green-300"
+              >
+                3. Final
+              </text>
+              <text
+                x="60"
+                y="100"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-600 dark:fill-slate-400"
+              >
+                "Ready to Send"
+              </text>
             </g>
 
             {/* Loop Back (Iterate) */}
-            <path d="M 350 140 Q 350 170 290 170 Q 230 170 230 140" fill="none" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#arrowhead-hitl)" />
-            <text x="290" y="185" textAnchor="middle" className="text-[10px] fill-amber-600 dark:fill-amber-400 font-bold">Iterate if needed</text>
+            <path
+              d="M 350 140 Q 350 170 290 170 Q 230 170 230 140"
+              fill="none"
+              stroke="#f59e0b"
+              strokeWidth="2"
+              strokeDasharray="4 4"
+              markerEnd="url(#arrowhead-hitl)"
+            />
+            <text
+              x="290"
+              y="185"
+              textAnchor="middle"
+              className="text-[10px] fill-amber-600 dark:fill-amber-400 font-bold"
+            >
+              Iterate if needed
+            </text>
           </svg>
         </div>
       </div>

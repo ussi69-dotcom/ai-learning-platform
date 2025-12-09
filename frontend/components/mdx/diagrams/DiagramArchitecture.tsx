@@ -428,7 +428,7 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
               <rect x="0" y="25" width="120" height="90" rx="8" fill="#f97316" fillOpacity="0.2" stroke="#f97316" strokeWidth="2" />
               <text x="60" y="65" textAnchor="middle" className="text-2xl">🤖</text>
               <text x="60" y="85" textAnchor="middle" className="text-xs font-bold fill-orange-400">AI Agent</text>
-              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-orange-300">Gemini 2.5</text>
+              <text x="60" y="100" textAnchor="middle" className="text-[10px] fill-orange-300">Gemini 3</text>
               <text x="60" y="150" textAnchor="middle" className="text-[10px] fill-slate-400">{isCs ? 'Generuje kód' : 'Generates code'}</text>
             </g>
 

@@ -1,32 +1,50 @@
 # Talking to AI: Your First Prompt 🗣️
 
 <Callout type="info">
-**Mission Goal:** Learn the art of **Prompt Engineering** to control the AI with precision.
-⏳ **Reading Time:** 25 min | 🧪 **6 Labs Included**
+  **Mission Goal:** Learn the art of **Prompt Engineering** to control the AI
+  with precision. ⏳ **Reading Time:** 25 min | 🧪 **[6] Labs Included**
 </Callout>
 
-You wouldn't walk up to a Jedi Master and say "Help me." You would say, "Master, instruct me in the ways of Form III lightsaber combat."
+<VideoSwitcher
+  alternatives={[
+    { id: "jC4v5AS4RIM", title: "Perfect Prompt Formula (Jeff Su)" },
+    { id: "CBfgQDpgiMk", title: "Generative AI Explained 2025" },
+  ]}
+/>
 
-The difference is **Precision**.
-In AI terms, we call this **Prompt Engineering**. It is the art of speaking "Machine".
+## ⚡ The 10x Multiplier
+
+**90% of people use AI wrong.**
+
+They type "Help me write an email" and get generic garbage. Then they declare "AI is overhyped."
+
+But 10% of people? They get AI to write emails that close deals. Create presentations in minutes. Debug code that would take hours. The difference isn't the AI—it's the **prompt**.
+
+This lesson is your ROI moment. What you learn here, you will use **tomorrow at 9 AM**.
+
+Watch Jeff Su's video above—he's trained thousands of corporate professionals on this exact formula.
 
 ---
 
 ## 🏛️ 1. The Engineer's Mindset
 
 Most Padawans make the mistake of treating the AI like Google.
-*   🔍 **Google:** Retrieves existing info. *"Find page X."*
-*   ✨ **AI (LLM):** Generates *new* info. *"Create thought Y."*
+
+- 🔍 **Google:** Retrieves existing info. _"Find page X."_
+- ✨ **AI (LLM):** Generates _new_ info. _"Create thought Y."_
 
 To control this generation, we use the **6 Pillars of Precision**.
 
-<ConceptCard title="The 6 Pillars" icon="💠" jediQuote="Control. Control. You must learn control.">
-1.  **🎭 Persona:** Who is the AI acting as? (The Role)
-2.  **⚔️ Task:** What is the specific action? (The Verb)
-3.  **🌍 Context:** Why do I need this? Who is it for? (The Background)
-4.  **👯 Exemplars:** Show, don't tell (Few-Shot Examples).
-5.  **📐 Format:** JSON, Table, List? (The Structure)
-6.  **🎨 Tone:** Professional, Funny, Sarcastic? (The Vibe)
+<ConceptCard
+  title="The 6 Pillars"
+  icon="💠"
+  jediQuote="Control. Control. You must learn control."
+>
+  1. **🎭 Persona:** Who is the AI acting as? (The Role) 2. **⚔️ Task:** What is
+  the specific action? (The Verb) 3. **🌍 Context:** Why do I need this? Who is
+  it for? (The Background) 4. **👯 Exemplars:** Show, don't tell (Few-Shot
+  Examples). 5. **📐 Format:** JSON, Table, List? (The Structure) 6. **🎨
+  Tone:** Professional, Funny, Sarcastic? (The Vibe)
 </ConceptCard>
 
 ---
@@ -38,10 +56,10 @@ A perfect prompt is like a pyramid. It needs a strong foundation.
 
 <Diagram type="prompt-structure-pyramid" />
 
-*   **Context:** The base. Without it, the AI floats in a void.
-*   **Instruction:** The core action.
-*   **Data:** The material to work on.
-*   **Format:** The final polish.
+- **Context:** The base. Without it, the AI floats in a void.
+- **Instruction:** The core action.
+- **Data:** The material to work on.
+- **Format:** The final polish.
 
 If you miss one layer, the pyramid collapses.
 
@@ -52,14 +70,15 @@ If you miss one layer, the pyramid collapses.
 If you don't set a Persona, the AI defaults to "Helpful Assistant" (boring).
 Unlock specific reasoning by assigning a role.
 
-*   **Without Persona:** "Explain quantum physics." (Generic Wikipedia summary)
-*   **With Persona:** "Act as a 5-year-old." (Analogy with toys)
+- **Without Persona:** "Explain quantum physics." (Generic Wikipedia summary)
+- **With Persona:** "Act as a 5-year-old." (Analogy with toys)
 
 ### 🔬 Lab 1: The Persona Shift
 
-**Objective:** See how Persona changes the *content* of the answer.
+**Objective:** See how Persona changes the _content_ of the answer.
 
 **The Prompt:**
+
 ```text
 Act as a grumpy 19th-century Lighthouse Keeper.
 Tone: Suspicious, old-fashioned, cryptic.
@@ -68,7 +87,7 @@ Context: You have never seen technology, but you feel the signals in the air.
 ```
 
 **Analysis:**
-Notice the vocabulary? "Invisible spirits," "magic currents." It changes *how* it explains the concept.
+Notice the vocabulary? "Invisible spirits," "magic currents." It changes _how_ it explains the concept.
 
 <LabComplete labId="lab-persona-shift" />
 
@@ -78,11 +97,12 @@ Notice the vocabulary? "Invisible spirits," "magic currents." It changes *how* i
 
 The most common failure is giving a Task without Context.
 
-*   ❌ **Weak:** "Write an email."
-*   ✅ **Strong:** "Write a **rejection email** to a **vendor who was too expensive**, but **keep the door open for future work**."
+- ❌ **Weak:** "Write an email."
+- ✅ **Strong:** "Write a **rejection email** to a **vendor who was too expensive**, but **keep the door open for future work**."
 
 <KeyTakeaway title="The Context Rule" icon="🗺️">
-Always answer: **Who** is this for? **Why** do I need it? **What** are the constraints?
+  Always answer: **Who** is this for? **Why** do I need it? **What** are the
+  constraints?
 </KeyTakeaway>
 
 ---
@@ -93,7 +113,8 @@ Master Engineers use **Delimiters** to separate instructions from data.
 Common delimiters: `"""`, `---`, `###`.
 
 <ConceptCard title="Safety First" icon="🛡️">
-Using delimiters prevents **Prompt Injection** (where the text tricks the AI). It tells the AI: "Everything inside these quotes is DATA, not INSTRUCTIONS."
+  Using delimiters prevents **Prompt Injection** (where the text tricks the AI).
+  It tells the AI: "Everything inside these quotes is DATA, not INSTRUCTIONS."
 </ConceptCard>
 
 ### 🔬 Lab 2: The Data Separator
@@ -101,6 +122,7 @@ Using delimiters prevents **Prompt Injection** (where the text tricks the AI). I
 **Objective:** Summarize text without getting confused.
 
 **The Prompt:**
+
 ```text
 Act as an Executive Assistant.
 Summarize the email below into 3 bullet points.
@@ -108,7 +130,7 @@ The email is delimited by triple quotes.
 
 """
 Hi team, just wanted to say that the meeting for tuesday is moved to wednesday because
-Dave is sick and the projector is broken and we need to discuss the Q3 goals but 
+Dave is sick and the projector is broken and we need to discuss the Q3 goals but
 mostly I want to talk about the coffee machine situation.
 """
 ```
@@ -121,8 +143,8 @@ mostly I want to talk about the coffee machine situation.
 
 This is the secret weapon. Don't describe the pattern. **Show it.**
 
-*   **Zero-Shot:** You ask, AI guesses.
-*   **Few-Shot:** You give examples, AI mimics.
+- **Zero-Shot:** You ask, AI guesses.
+- **Few-Shot:** You give examples, AI mimics.
 
 <Diagram type="few-shot-learning" />
 
@@ -131,6 +153,7 @@ This is the secret weapon. Don't describe the pattern. **Show it.**
 **Objective:** Force a specific format without complex rules.
 
 **The Prompt:**
+
 ```text
 Extract the area code from these numbers. Follow the pattern exactly.
 
@@ -141,7 +164,7 @@ Input: 212-555-0199
 Output: Area Code: 212
 
 Input: 415.555.0100
-Output: 
+Output:
 ```
 
 <LabComplete labId="lab-pattern-master" />
@@ -158,14 +181,15 @@ Do you need a **Table**? **JSON**? **Bullet Points**?
 **Objective:** Turn text into a structured table.
 
 **The Prompt:**
+
 ```text
 Act as a Data Analyst.
 Analyze the text below.
 Output a Markdown Table with columns: "Name", "Role", "Weapon".
 
 Text: """
-Luke is a pilot who uses a blue saber. 
-Han is a smuggler with a blaster. 
+Luke is a pilot who uses a blue saber.
+Han is a smuggler with a blaster.
 Leia is a princess/general and uses a blaster too.
 """
 ```
@@ -176,10 +200,10 @@ Leia is a princess/general and uses a blaster too.
 
 ## 🐘 8. The "Pink Elephant" (Constraints)
 
-Avoid negative constraints (*"Don't do X"*). Use positive constraints (*"Do Y"*).
+Avoid negative constraints (_"Don't do X"_). Use positive constraints (_"Do Y"_).
 
-*   ❌ "Don't write long sentences."
-*   ✅ "Use short sentences (under 10 words)."
+- ❌ "Don't write long sentences."
+- ✅ "Use short sentences (under 10 words)."
 
 ---
 
@@ -195,6 +219,7 @@ Force it to slow down with the magic phrase: **"Let's think step by step."**
 **Objective:** Force the AI to handle complex constraints that overwhelm its short-term memory.
 
 **The Prompt:**
+
 ```text
 You are planning a workshop schedule.
 Constraint 1: We have 3 rooms (Red, Blue, Green).
@@ -207,9 +232,10 @@ Let's think step by step.
 ```
 
 **Analysis:**
-*   **Without CoT:** The AI often hallucinates a schedule where Session A and C clash, or puts Session B in the Blue room. It tries to "guess" the answer in one go.
-*   **With CoT:** The magic phrase forces it to write: *"First, let's place Session B in Red. Next, let's schedule A and C in different slots..."* This "scratchpad" thinking ensures accuracy.
-</LabSection>
+
+- **Without CoT:** The AI often hallucinates a schedule where Session A and C clash, or puts Session B in the Blue room. It tries to "guess" the answer in one go.
+- **With CoT:** The magic phrase forces it to write: _"First, let's place Session B in Red. Next, let's schedule A and C in different slots..."_ This "scratchpad" thinking ensures accuracy.
+  </LabSection>
 
 <LabComplete labId="lab-reasoning-anchor" />
 
@@ -224,24 +250,13 @@ Don't know what to ask? Make the AI interview YOU.
 **Objective:** Build a plan when you are clueless.
 
 **The Prompt:**
+
 ```text
 I want to learn Python, but I don't know where to start.
 Ask me questions about my goals, time, and background until you have enough info to create a perfect study plan for me.
 ```
 
 <LabComplete labId="lab-consultant" />
-
----
-
-## 🚀 Advanced: Optional Resource
-
-Want to dive deeper? This video covers advanced prompting techniques.
-
-<Callout type="warning">
-**Optional Content:** This is for Padawans who want to go beyond the basics.
-</Callout>
-
-<YouTube id="pwWBcsxEoLk" title="Advanced Prompting Techniques" />
 
 ---
 
@@ -253,12 +268,12 @@ You now possess the toolkit of a Master.
 
 ### 🔑 The 6 Pillars of Precision
 
-*   🎭 **1. Persona:** Who is acting? (*"Act as a Senior Python Developer"*)
-*   ⚔️ **2. Task:** What to do? (*"Write a script to scrape data"*)
-*   🌍 **3. Context:** Why/For whom? (*"For a beginner tutorial"*)
-*   👯 **4. Exemplars:** Show me how? (*"Input: A, Output: B"*)
-*   📐 **5. Format:** How to look? (*"Output as a Markdown Table"*)
-*   🎨 **6. Tone:** What vibe? (*"Professional but encouraging"*)
+- 🎭 **1. Persona:** Who is acting? (_"Act as a Senior Python Developer"_)
+- ⚔️ **2. Task:** What to do? (_"Write a script to scrape data"_)
+- 🌍 **3. Context:** Why/For whom? (_"For a beginner tutorial"_)
+- 👯 **4. Exemplars:** Show me how? (_"Input: A, Output: B"_)
+- 📐 **5. Format:** How to look? (_"Output as a Markdown Table"_)
+- 🎨 **6. Tone:** What vibe? (_"Professional but encouraging"_)
 
 ### 🛠️ The Master Template (Copy-Paste)
 

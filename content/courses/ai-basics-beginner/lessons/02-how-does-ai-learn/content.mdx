@@ -2,19 +2,54 @@
 
 <Callout type="info">
 **Mission Goal:** Master the 3 ways machines learn, the "Black Box" mystery, and the secret 4th way.
-⏳ **Reading Time:** 20 min | 🧪 **3 Labs Included**
+⏳ **Reading Time:** 20 min | 🧪 **[3] Labs Included**
 </Callout>
 
-Welcome back. In the last lesson, we learned that AI is a student, not a calculator.
-But how exactly do you teach a machine? You can't just upload a textbook into its brain (yet).
+<VideoSwitcher alternatives={[{"id":"Ilg3gGewQ5U","title":"Backpropagation Explained (3B1B)"},{"id":"aircAruvnKk","title":"Neural Networks (3B1B Classic)"}]} />
 
-As shown in the video, we use three distinct teaching styles. Think of them as the **Jedi Training Methods**.
+## ⚡ The Revelation
+
+**A neuron is just a number.**
+
+That's it. No magic. No consciousness. Just a number between 0 and 1 stored in a computer. And yet, when you connect trillions of these numbers in the right way... you get GPT-5.1.
+
+How does adding more numbers create *understanding*? How does a pile of math learn to write poetry, code software, and diagnose diseases?
+
+**You're about to find out.**
+
+Watch the video above—it's the most beautiful explanation of neural networks ever created. 3Blue1Brown's visualization will permanently change how you see AI.
+
+---
+
+## 🧠 1. Inside the Machine (The MNIST Revelation)
+
+The video shows something profound: AI learning to recognize handwritten digits.
+
+**The Setup:**
+- Input: 784 pixels (28×28 image of a handwritten number)
+- Output: Which digit is it? (0-9)
+- Middle: Thousands of neurons, each just holding... a number.
+
+<Diagram type="neural-network" />
+
+### 💡 The Key Insight
+Each neuron "activates" (gets closer to 1) when it detects a specific pattern. Some neurons learn to detect **edges**. Others detect **curves**. Others detect **the loop in a 9**.
+
+Nobody programs these patterns. The network **discovers them by itself**.
+
+*This is learning.*
+
+---
+
+## 🎓 The Three Training Methods
+
+Now that we see WHAT a neural network is, let's understand HOW we train it. Think of them as the **Jedi Training Methods**.
 
 <Diagram type="learning-types-overview" />
 
 ---
 
-## 📚 1. Supervised Learning (The Classroom)
+## 📚 2. Supervised Learning (The Classroom)
 
 This is the most common method. It works like a strict classroom.
 **The Teacher (Human)** gives the **Student (AI)** a problem AND the answer.
@@ -68,7 +103,7 @@ Finally: Describe the rule you discovered.
 
 ---
 
-## 🧩 2. Unsupervised Learning (The Meditation)
+## 🧩 3. Unsupervised Learning (The Meditation)
 
 What if we don't have labels? What if we just dump raw data on the AI and say "Figure it out"?
 This is **Unsupervised Learning**. The AI meditates on the data until it finds hidden structures.
@@ -118,7 +153,7 @@ For EACH word, EXPLAIN the rule you applied.
 
 ---
 
-## ⚔️ 3. Reinforcement Learning (The Combat Training)
+## ⚔️ 4. Reinforcement Learning (The Combat Training)
 
 This is the most advanced method. It is how we teach AI to play games (Chess, Go) or walk (Robots).
 It is **Trial and Error** on steroids.
@@ -167,7 +202,7 @@ Topic: Reviewing "MintFresh 3000" toothpaste after 2 weeks of use.
 
 ---
 
-## 📉 4. How It Actually Improves (The Hot & Cold Game)
+## 📉 5. How It Actually Improves (The Hot & Cold Game)
 
 You might be wondering: *"Okay, but how does the AI actually get better?"*
 Does it just guess randomly until it gets it right?
@@ -194,7 +229,7 @@ It repeats this process **millions of times**.
 
 ---
 
-## 📦 5. The "Black Box" Problem
+## 📦 6. The "Black Box" Problem
 
 Here is the scary part. We know the **Input** (Data) and we know the **Output** (Prediction).
 But the middle? The part where the AI actually "thinks"?
@@ -203,7 +238,7 @@ It's a **Black Box**.
 
 <Diagram type="black-box" />
 
-Inside a modern AI (like GPT-4), there are **trillions** of numbers (parameters) interacting in complex ways.
+Inside a modern AI (like GPT-5.1), there are **trillions** of numbers (parameters) interacting in complex ways.
 If you ask an engineer *"Why did the AI say 'Hello' instead of 'Hi'?"*, they can't point to a specific line of code.
 They can only say: *"Because the math decided it was 0.001% more likely."*
 
@@ -214,7 +249,7 @@ They can only say: *"Because the math decided it was 0.001% more likely."*
 
 ---
 
-## 🤝 6. The Secret Weapon: RLHF
+## 🤝 7. The Secret Weapon: RLHF
 
 How did we get ChatGPT? It wasn't just one method. It was a combination.
 The secret sauce is **RLHF (Reinforcement Learning from Human Feedback)**.
@@ -228,7 +263,7 @@ This aligned the alien intelligence with human values.
 
 ---
 
-## 🏆 7. Final Mission Report
+## 🏆 8. Final Mission Report
 
 You now know the three pillars of AI learning.
 
