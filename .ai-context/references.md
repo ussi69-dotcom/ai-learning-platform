@@ -44,7 +44,10 @@
 | 2024-12-08 | Video | [AI pro Začátečníky: Robot vs Chatbot](https://www.youtube.com/watch?v=QVOy61pXdSo) | David Strejc - Paradigm shift from chatbot to autonomous agent (ČESKY) | **Lesson 0 (NEW)** | ✅ Ready |
 | 2024-12-08 | Video | [Google Antigravity: 14 Min Expert](https://www.youtube.com/watch?v=mbxq88TOxp4) | Alex Finn - Gemini 3 IDE, agent orchestration, artifact-based iteration | **Lesson 7 / 10** | ✅ Ready |
 | 2024-12-08 | Video | [Build $1M AI Business (0 to $1M+)](https://www.youtube.com/watch?v=IWdvG9Up8Mc) | theMITmonk - Founder's Triangle, DREAM framework, moats, solo founder economics | **Lesson 11** | ✅ Ready |
-
+| 2024-12-09 | Video | [7 Steps To AI Mastery](https://www.youtube.com/watch?v=EWFFaKxsz_s) | theMITmonk - Validated beginner guide (Prompting) | **Lesson 01** | ✅ Ready |
+| 2024-12-09 | Video | [Prompt Engineering: The only video you need to watch](https://www.youtube.com/watch?v=sI-zR5MbdQ0) | David Ondrej - *Placeholder for L01 Alt* (TBD check ID) | **Lesson 01** | ⏳ Check |
+| 2024-12-09 | Video | [Glitch Tokens and Prompt Injection](https://www.youtube.com/watch?v=WOjLISk9FPs) | Computerphile - Technical explanation of token vulnerabilities | **Lesson 02** | ✅ Ready |
+| 2024-12-09 | Video | [Threat Hunting & Security](https://www.youtube.com/watch?v=F6t5040e04Q) | David Strejc - CyberCon talk on security mindset (CZ) | **Lesson 02 (CZ)** | ✅ Ready |
 
 
 ### Formát pro přidání:

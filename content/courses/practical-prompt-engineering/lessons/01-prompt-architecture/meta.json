@@ -1,27 +1,17 @@
 {
-  "id": "01-prompt-architecture",
   "title": {
     "en": "Prompt Architecture Masterclass",
     "cs": "Mistrovská třída: Architektura promptů"
   },
   "description": {
-    "en": "Master the art of prompt structure — the hidden force that separates amateurs from engineers.",
-    "cs": "Ovládněte umění struktury promptů — skrytou sílu, která odděluje amatéry od inženýrů."
+    "en": "Learn the modular prompt design patterns used by AI engineers.",
+    "cs": "Nauč se modulární návrhové vzory promptů, které používají AI inženýři."
   },
-  "order": 1,
-  "duration_minutes": 120,
-  "difficulty": "intermediate",
   "video_url": {
     "en": "https://www.youtube.com/embed/EWFFaKxsz_s",
     "cs": "https://www.youtube.com/embed/EWFFaKxsz_s"
   },
-  "tags": ["prompt-engineering", "architecture", "system-prompts", "security"],
-  "prerequisites": ["ai-basics-beginner"],
-  "learning_outcomes": [
-    "Understand why prompt structure matters more than word choice",
-    "Design prompts using the four-layer architecture",
-    "Write effective system prompts as AI operating systems",
-    "Use structural patterns: XML tags, delimiters, markdown",
-    "Apply basic defenses against prompt injection"
-  ]
+  "duration_minutes": 25,
+  "difficulty": "intermediate",
+  "order": 1
 }

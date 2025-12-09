@@ -1,27 +1,17 @@
 {
-  "id": "02-prompt-injection",
   "title": {
     "en": "Advanced Reasoning & Red Teaming",
     "cs": "Pokročilé reasoning techniky a Red Teaming"
   },
   "description": {
-    "en": "Learn Chain-of-Thought techniques and master defense-in-depth strategies against prompt injection.",
-    "cs": "Naučte se Chain-of-Thought techniky a ovládněte strategie hloubkové obrany proti prompt injection."
+    "en": "Master Chain-of-Thought prompting and learn how to jailbreak your own prompts.",
+    "cs": "Ovládni Chain-of-Thought promptování a nauč se jailbreakovat vlastní prompty."
   },
-  "order": 2,
-  "duration_minutes": 90,
-  "difficulty": "intermediate",
   "video_url": {
-    "en": "https://www.youtube.com/embed/C_gf9KNScIo",
-    "cs": "https://www.youtube.com/embed/C_gf9KNScIo"
+    "en": "https://www.youtube.com/embed/WOjLISk9FPs",
+    "cs": "https://www.youtube.com/embed/F6t5040e04Q"
   },
-  "tags": ["chain-of-thought", "prompt-injection", "security", "red-teaming", "defense", "reasoning"],
-  "prerequisites": ["01-prompt-architecture"],
-  "learning_outcomes": [
-    "Use Chain-of-Thought to make AI reason step by step",
-    "Apply 5 defense-in-depth techniques (Sandwich, Spotlighting, Parametric, Refusal, Filtering)",
-    "Execute red teaming exercises to find vulnerabilities",
-    "Understand 5 common attack vectors and their defenses",
-    "Use tools like PyRIT and Garak for automated security testing"
-  ]
+  "duration_minutes": 35,
+  "difficulty": "advanced",
+  "order": 2
 }
