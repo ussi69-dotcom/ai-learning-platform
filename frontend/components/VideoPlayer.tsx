@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocale } from 'next-intl';
 
 interface Video {
@@ -13,7 +13,6 @@ interface Video {
 }
 
 interface VideoPlayerProps {
-  /** Fallback video URL if no videos are provided */
   fallbackUrl?: string;
   fallbackTitle?: string;
 }
@@ -56,9 +55,6 @@ function getVideoRegistry() {
   return window.__videoRegistry;
 }
 
-/**
- * VideoPlayer component with integrated video switching and PIN functionality
- */
 export const VideoPlayer = ({ fallbackUrl, fallbackTitle }: VideoPlayerProps) => {
   const locale = useLocale();
   const [isPinned, setIsPinned] = useState(false);
@@ -79,7 +75,6 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle }: VideoPlayerProps) =>
             title: fallbackTitle || 'Video',
             isMain: true
           };
-          // Add main video if not already present
           if (!registry.videos.some(v => v.id === id)) {
             registry.videos.unshift(mainVideo);
           }
@@ -101,9 +96,7 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle }: VideoPlayerProps) =>
       forceUpdate({});
     });
 
-    // Initial sync
     setVideos([...registry.videos]);
-
     return unsubscribe;
   }, []);
 
@@ -137,18 +130,37 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle }: VideoPlayerProps) =>
         />
       </div>
       
-      {/* Controls Bar */}
-      <div className="flex items-center justify-between mt-3 gap-4">
-        {/* Current Video Info */}
-        <div className="flex-1 min-w-0">
-          <div className="text-sm font-medium text-foreground truncate">
-            {activeVideo.title}
-          </div>
-          {activeVideo.author && (
-            <div className="text-xs text-muted-foreground">
-              {activeVideo.author}
-            </div>
+      {/* Current Video Info + Controls */}
+      <div className="flex items-center justify-between mt-3 gap-4 px-1">
+        <div className="flex-1 min-w-0 flex items-center gap-3">
+          {/* Language Badge */}
+          {activeVideo.lang && (
+            <span className={`shrink-0 px-2 py-0.5 rounded text-xs font-bold ${
+              activeVideo.lang === 'cs' 
+                ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
+                : 'bg-red-500/20 text-red-400 border border-red-500/30'
+            }`}>
+              {activeVideo.lang === 'cs' ? '🇨🇿 CZ' : '🇬🇧 EN'}
+            </span>
           )}
+          
+          {/* Main Badge */}
+          {activeVideo.isMain && (
+            <span className="shrink-0 px-2 py-0.5 rounded text-xs font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
+              ⭐ MAIN
+            </span>
+          )}
+          
+          <div className="min-w-0">
+            <div className="text-sm font-medium text-foreground truncate">
+              {activeVideo.title}
+            </div>
+            {activeVideo.author && (
+              <div className="text-xs text-muted-foreground">
+                👤 {activeVideo.author}
+              </div>
+            )}
+          </div>
         </div>
         
         {/* Pin Button */}
@@ -162,7 +174,6 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle }: VideoPlayerProps) =>
               : 'bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-foreground border border-white/10'
             }
           `}
-          title={isPinned ? 'Odepnout video' : 'Připnout video nahoře'}
         >
           <span>{isPinned ? '📌' : '📍'}</span>
           <span className="hidden sm:inline">{isPinned ? 'Odepnout' : 'Připnout'}</span>
@@ -191,48 +202,19 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle }: VideoPlayerProps) =>
           </button>
           
           {isExpanded && (
-            <div className="mt-2 space-y-2 animate-in slide-in-from-top-2 duration-200">
-              {alternativeVideos.map((video) => {
-                const langEmoji = video.lang === 'cs' ? '🇨🇿' : video.lang === 'en' ? '🇬🇧' : '🎬';
-                
-                return (
-                  <button
-                    key={video.id}
-                    onClick={() => {
-                      setActiveVideoId(video.id);
-                      setIsExpanded(false);
-                    }}
-                    className="w-full flex items-start gap-3 p-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-200 text-left group"
-                  >
-                    {/* Thumbnail placeholder */}
-                    <div className="w-24 h-14 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                      <span className="text-2xl">{langEmoji}</span>
-                    </div>
-                    
-                    {/* Video Info */}
-                    <div className="flex-1 min-w-0">
-                      <div className="font-medium text-foreground group-hover:text-primary transition-colors">
-                        {video.title}
-                      </div>
-                      {video.author && (
-                        <div className="text-xs text-muted-foreground mt-0.5">
-                          {video.author}
-                        </div>
-                      )}
-                      {video.description && (
-                        <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                          {video.description}
-                        </div>
-                      )}
-                    </div>
-                    
-                    {/* Play indicator */}
-                    <div className="text-muted-foreground group-hover:text-primary transition-colors shrink-0">
-                      ▶
-                    </div>
-                  </button>
-                );
-              })}
+            <div className="mt-3 space-y-3 animate-in slide-in-from-top-2 duration-200">
+              {alternativeVideos.map((video) => (
+                <VideoCard 
+                  key={video.id}
+                  video={video}
+                  onSelect={() => {
+                    setActiveVideoId(video.id);
+                    setIsExpanded(false);
+                    // Scroll to top of video
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                />
+              ))}
             </div>
           )}
         </div>
@@ -240,6 +222,91 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle }: VideoPlayerProps) =>
     </div>
   );
 };
+
+// Video Card Component with YouTube Thumbnail
+function VideoCard({ video, onSelect }: { video: Video; onSelect: () => void }) {
+  const thumbnailUrl = `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`;
+  
+  return (
+    <button
+      onClick={onSelect}
+      className="w-full flex items-start gap-4 p-4 bg-gradient-to-r from-white/5 to-white/[0.02] hover:from-white/10 hover:to-white/5 rounded-xl border border-white/10 hover:border-white/20 transition-all duration-200 text-left group"
+    >
+      {/* YouTube Thumbnail */}
+      <div className="relative shrink-0 w-32 h-20 rounded-lg overflow-hidden bg-black/50 group-hover:scale-105 transition-transform duration-200 shadow-lg">
+        <img 
+          src={thumbnailUrl} 
+          alt={video.title}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            // Fallback to gradient if thumbnail fails
+            (e.target as HTMLImageElement).style.display = 'none';
+          }}
+        />
+        {/* Play overlay */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition-colors">
+          <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <span className="text-white text-sm ml-0.5">▶</span>
+          </div>
+        </div>
+        
+        {/* Duration badge placeholder */}
+        <div className="absolute bottom-1 right-1 bg-black/80 text-white text-xs px-1 rounded">
+          {video.lang === 'cs' ? '🇨🇿' : '🇬🇧'}
+        </div>
+      </div>
+      
+      {/* Video Info */}
+      <div className="flex-1 min-w-0 py-1">
+        {/* Badges Row */}
+        <div className="flex items-center gap-2 mb-1.5">
+          {/* Language Badge */}
+          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+            video.lang === 'cs' 
+              ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
+              : 'bg-red-500/20 text-red-400 border border-red-500/30'
+          }`}>
+            {video.lang === 'cs' ? 'Čeština' : 'English'}
+          </span>
+          
+          {/* Main/Recommended Badge */}
+          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+            video.isMain 
+              ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' 
+              : 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+          }`}>
+            {video.isMain ? '⭐ Main' : '💡 Doporučeno'}
+          </span>
+        </div>
+        
+        {/* Title */}
+        <div className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+          {video.title}
+        </div>
+        
+        {/* Author */}
+        {video.author && (
+          <div className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
+            <span>👤</span>
+            <span>{video.author}</span>
+          </div>
+        )}
+        
+        {/* Description */}
+        {video.description && (
+          <div className="text-xs text-muted-foreground/80 mt-1.5 line-clamp-2 leading-relaxed">
+            {video.description}
+          </div>
+        )}
+      </div>
+      
+      {/* Arrow indicator */}
+      <div className="shrink-0 self-center text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all">
+        →
+      </div>
+    </button>
+  );
+}
 
 function extractVideoId(url: string): string | null {
   if (!url) return null;
