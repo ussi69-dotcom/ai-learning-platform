@@ -82,25 +82,33 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
       if (line.trim().startsWith('<VideoSwitcher')) {
         const { endIndex: openEnd, tagContent } = readOpeningTag(i);
         
+        console.log('[VideoSwitcher] Found tag, content:', tagContent.substring(0, 200));
+        
         // Parse videos prop - expects JSON array format
-        // Example: videos={[{id:"abc",title:"Video 1"},{id:"def",title:"Video 2"}]}
-        const videosMatch = tagContent.match(/videos=\{(\[[\s\S]*?\])\}/);
+        // Use greedy match to capture entire array including nested objects
+        const videosMatch = tagContent.match(/videos=\{(\[.*\])\}/);
+        
+        console.log('[VideoSwitcher] Regex match:', videosMatch ? 'YES' : 'NO');
         
         if (videosMatch) {
           try {
-            // Clean up the JSON - replace single quotes with double quotes if needed
-            let videosJson = videosMatch[1]
-              .replace(/(\w+):/g, '"$1":')  // Add quotes to keys
-              .replace(/'/g, '"');           // Replace single quotes
+            let videosJson = videosMatch[1];
+            console.log('[VideoSwitcher] Raw JSON:', videosJson.substring(0, 100));
+            
+            // Only add quotes to unquoted keys (not already quoted)
+            videosJson = videosJson.replace(/(\{|,)\s*(\w+)\s*:/g, '$1"$2":');
             
             const videos = JSON.parse(videosJson);
+            console.log('[VideoSwitcher] Parsed videos:', videos.length);
             
             elements.push(
               <VideoSwitcher key={`videoswitcher-${i}`} videos={videos} />
             );
           } catch (e) {
-            console.error('[VideoSwitcher] Failed to parse videos:', e);
+            console.error('[VideoSwitcher] Failed to parse videos:', e, videosMatch[1]);
           }
+        } else {
+          console.warn('[VideoSwitcher] No videos prop matched in:', tagContent);
         }
         
         i = openEnd + 1;

@@ -87,6 +87,19 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
   const slides = lesson ? splitIntoSlides(lesson.content) : [];
   const hasQuiz = quizzes.length > 0;
   const calculatedTotalPages = slides.length + (hasQuiz ? 1 : 0);
+  
+  // DEBUG: Check if content has VideoSwitcher
+  useEffect(() => {
+    if (lesson?.content) {
+      const hasVideoSwitcher = lesson.content.includes('<VideoSwitcher');
+      console.log('[DEBUG] Content has VideoSwitcher:', hasVideoSwitcher);
+      if (hasVideoSwitcher) {
+        const match = lesson.content.match(/<VideoSwitcher[^>]*>/);
+        console.log('[DEBUG] VideoSwitcher tag found:', match?.[0]?.substring(0, 100));
+      }
+      console.log('[DEBUG] First 500 chars of content:', lesson.content.substring(0, 500));
+    }
+  }, [lesson?.content]);
 
   // Fetch all data
   useEffect(() => {
