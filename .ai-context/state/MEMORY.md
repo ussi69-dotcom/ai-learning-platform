@@ -153,6 +153,49 @@ SPRÁVNĚ: https://www.youtube.com/embed/XXX
 **Rule:** Po změně `content/*` nebo `meta.json` → `docker compose restart backend`
 **Proč:** Backend cachuje data z content souborů.
 
+### 2025-12-09: Video System (VideoSwitcher + VideoPlayer) 🎬
+**Architektura:**
+```
+meta.json (video_url)  →  VideoPlayer (hlavní video)
+                              ↑
+MDX (VideoSwitcher)    →  window.__videoRegistry (global)
+```
+
+**Kde se definují videa:**
+
+1. **Hlavní video** → `meta.json`
+   ```json
+   "video_url": {
+     "en": "https://www.youtube.com/embed/VIDEO_ID",
+     "cs": "https://www.youtube.com/embed/VIDEO_ID_CS"
+   }
+   ```
+
+2. **Alternativní videa** → `content.mdx` (VideoSwitcher v MDX)
+   ```jsx
+   <VideoSwitcher videos={[
+     {"id":"VIDEO_ID","title":"Název","author":"Autor","lang":"en"},
+     {"id":"VIDEO_ID_2","title":"Jiné video","author":"Autor 2","lang":"cs"}
+   ]} />
+   ```
+
+**Jak to funguje:**
+- `VideoPlayer` (v page layout) zobrazuje hlavní video z `meta.json`
+- `VideoSwitcher` (v MDX) registruje alternativní videa do `window.__videoRegistry`
+- VideoPlayer naslouchá na změny registru a zobrazuje "Další doporučená videa"
+- Uživatel může přepínat mezi videi + použít PIN pro sticky positioning
+
+**Soubory:**
+- `frontend/components/VideoPlayer.tsx` - hlavní přehrávač s PIN
+- `frontend/components/mdx/VideoSwitcher.tsx` - registrace alternativ
+- `frontend/components/MarkdownRenderer.tsx` - parser pro VideoSwitcher v MDX
+
+**Kdy přidat nové video:**
+1. Najdi lekci v `content/courses/.../lessons/XX-name/`
+2. Otevři `content.cs.mdx` a `content.mdx`
+3. Přidej objekt do `VideoSwitcher videos` pole
+4. Nemusíš restartovat backend (MDX se parsuje na frontendu)
+
 ### General
 - **Don't hold back.** User wants engineering depth, not generic tutorials.
 - **Verify file paths.** Check if you are writing to `.cs.mdx` or `.mdx`.

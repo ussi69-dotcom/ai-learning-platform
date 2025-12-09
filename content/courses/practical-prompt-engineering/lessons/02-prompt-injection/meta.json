@@ -5,23 +5,23 @@
     "cs": "Pokročilé reasoning techniky a Red Teaming"
   },
   "description": {
-    "en": "Master defense-in-depth strategies against prompt injection while learning to think like an attacker.",
-    "cs": "Ovládněte strategie hloubkové obrany proti prompt injection a naučte se myslet jako útočník."
+    "en": "Learn Chain-of-Thought techniques and master defense-in-depth strategies against prompt injection.",
+    "cs": "Naučte se Chain-of-Thought techniky a ovládněte strategie hloubkové obrany proti prompt injection."
   },
   "order": 2,
   "duration_minutes": 90,
   "difficulty": "intermediate",
   "video_url": {
-    "en": "https://www.youtube.com/watch?v=zjkBMFhNj_g",
-    "cs": null
+    "en": "https://www.youtube.com/embed/C_gf9KNScIo",
+    "cs": "https://www.youtube.com/embed/C_gf9KNScIo"
   },
-  "tags": ["prompt-injection", "security", "red-teaming", "defense", "reasoning"],
+  "tags": ["chain-of-thought", "prompt-injection", "security", "red-teaming", "defense", "reasoning"],
   "prerequisites": ["01-prompt-architecture"],
   "learning_outcomes": [
-    "Understand how prompt injection attacks work",
+    "Use Chain-of-Thought to make AI reason step by step",
     "Apply 5 defense-in-depth techniques (Sandwich, Spotlighting, Parametric, Refusal, Filtering)",
     "Execute red teaming exercises to find vulnerabilities",
-    "Design secure prompts that resist common attack vectors",
-    "Use tools like Lakera Guard for automated security testing"
+    "Understand 5 common attack vectors and their defenses",
+    "Use tools like PyRIT and Garak for automated security testing"
   ]
 }

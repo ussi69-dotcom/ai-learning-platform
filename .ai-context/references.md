@@ -38,7 +38,14 @@
 
 | Datum | Typ | Odkaz | Popis | Pro lekci | Status |
 |-------|-----|-------|-------|-----------|--------|
-| 2025-12-07 | Video | [Příklad](https://youtube.com/...) | Popis obsahu | Lesson XX | ⏳ Čeká |
+|| 2024-12-08 | Video | [you need to learn MCP RIGHT NOW!!](https://youtube.com/watch?v=...) | NetworkChuck - MCP tutorial, security, production patterns | Lesson 7 | ✅ |
+| 2024-12-08 | Video | [Run AI Locally you're behind](https://youtube.com/watch?v=QVOy61pXdSo) | David Ondrej - Local-first philosophy, model selection | Lesson 4 | ✅ |
+| 2024-12-08 | Video | [AI Business $1M+](https://youtube.com/watch?v=IWdvG9Up8Mc) | theMITmonk - Case study, scaling, real outcomes | Lesson 11 | ✅ |
+| 2024-12-08 | Video | [AI pro Začátečníky: Robot vs Chatbot](https://www.youtube.com/watch?v=QVOy61pXdSo) | David Strejc - Paradigm shift from chatbot to autonomous agent (ČESKY) | **Lesson 0 (NEW)** | ✅ Ready |
+| 2024-12-08 | Video | [Google Antigravity: 14 Min Expert](https://www.youtube.com/watch?v=mbxq88TOxp4) | Alex Finn - Gemini 3 IDE, agent orchestration, artifact-based iteration | **Lesson 7 / 10** | ✅ Ready |
+| 2024-12-08 | Video | [Build $1M AI Business (0 to $1M+)](https://www.youtube.com/watch?v=IWdvG9Up8Mc) | theMITmonk - Founder's Triangle, DREAM framework, moats, solo founder economics | **Lesson 11** | ✅ Ready |
+
+
 
 ### Formát pro přidání:
 ```markdown

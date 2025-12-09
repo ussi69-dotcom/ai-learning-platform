@@ -12,6 +12,7 @@ import Sandbox from './mdx/Sandbox';
 import Diagram from './mdx/Diagram';
 import KeyTakeaway from './mdx/KeyTakeaway';
 import { YouTube } from './mdx/YouTube';
+import { VideoSwitcher } from './mdx/VideoSwitcher';
 
 interface MarkdownRendererProps {
   content: string;
@@ -72,6 +73,35 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         elements.push(
           <YouTube key={`youtube-${i}`} id={id} title={title} />
         );
+        
+        i = openEnd + 1;
+        continue;
+      }
+
+      // 0b. Handle <VideoSwitcher> component
+      if (line.trim().startsWith('<VideoSwitcher')) {
+        const { endIndex: openEnd, tagContent } = readOpeningTag(i);
+        
+        // Parse videos prop - expects JSON array format
+        // Example: videos={[{id:"abc",title:"Video 1"},{id:"def",title:"Video 2"}]}
+        const videosMatch = tagContent.match(/videos=\{(\[[\s\S]*?\])\}/);
+        
+        if (videosMatch) {
+          try {
+            // Clean up the JSON - replace single quotes with double quotes if needed
+            let videosJson = videosMatch[1]
+              .replace(/(\w+):/g, '"$1":')  // Add quotes to keys
+              .replace(/'/g, '"');           // Replace single quotes
+            
+            const videos = JSON.parse(videosJson);
+            
+            elements.push(
+              <VideoSwitcher key={`videoswitcher-${i}`} videos={videos} />
+            );
+          } catch (e) {
+            console.error('[VideoSwitcher] Failed to parse videos:', e);
+          }
+        }
         
         i = openEnd + 1;
         continue;

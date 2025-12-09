@@ -466,5 +466,96 @@ export default function DiagramPrompting({ type }: DiagramProps) {
     );
   }
 
+  // =====================
+  // Defense Shield Diagram
+  // =====================
+  if (type === 'defense-shield') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl">
+          <svg viewBox="0 0 800 400" className="w-full h-auto" role="img" aria-label="Defense-in-Depth Shield: 5 Layers">
+             <defs>
+               <radialGradient id="shield-core-glow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                 <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.6" />
+                 <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+               </radialGradient>
+             </defs>
+
+             {/* Background Grid */}
+             <pattern id="grid-defense" width="40" height="40" patternUnits="userSpaceOnUse">
+               <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" strokeWidth="0.5" strokeOpacity="0.3"/>
+             </pattern>
+             <rect width="800" height="400" fill="url(#grid-defense)" />
+
+             {/* Central Shield Visualization */}
+             <g transform="translate(400, 200)">
+               
+               {/* Layer 1: Sandwich Defense (Outer) */}
+               <circle cx="0" cy="0" r="160" fill="none" stroke="#64748b" strokeWidth="2" strokeDasharray="4 4" className="animate-[spin_20s_linear_infinite]" />
+               <path d="M -160 0 A 160 160 0 0 1 160 0" fill="none" stroke="#64748b" strokeWidth="8" strokeOpacity="0.3" />
+               <text x="0" y="-175" textAnchor="middle" className="text-xs font-bold fill-slate-500 uppercase tracking-widest">1. Sandwich Defense</text>
+               
+               {/* Layer 2: Spotlighting */}
+               <circle cx="0" cy="0" r="130" fill="none" stroke="#a855f7" strokeWidth="3" opacity="0.4" />
+               <circle cx="0" cy="0" r="130" fill="none" stroke="#a855f7" strokeWidth="1" strokeDasharray="10 5" className="animate-[spin_15s_linear_infinite_reverse]" />
+               <text x="0" y="-138" textAnchor="middle" className="text-xs font-bold fill-purple-500 uppercase tracking-widest">2. Spotlighting</text>
+
+               {/* Layer 3: Parametric */}
+               <rect x="-100" y="-100" width="200" height="200" rx="20" fill="none" stroke="#f59e0b" strokeWidth="2" transform="rotate(45)" opacity="0.5" />
+               <text x="-90" y="-90" textAnchor="middle" className="text-xs font-bold fill-amber-500 uppercase tracking-widest" transform="rotate(-45 -90 -90)">3. Parametric</text>
+
+               {/* Layer 4: In-Context Refusal */}
+               <circle cx="0" cy="0" r="70" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" strokeWidth="2" />
+               <text x="0" y="-80" textAnchor="middle" className="text-xs font-bold fill-red-500 uppercase tracking-widest">4. Refusal</text>
+
+               {/* Layer 5: Output Filter (Core) */}
+               <circle cx="0" cy="0" r="40" fill="url(#shield-core-glow)" />
+               <circle cx="0" cy="0" r="30" fill="#3b82f6" fillOpacity="0.8" stroke="#60a5fa" strokeWidth="2" className="animate-pulse" />
+               <text x="0" y="5" textAnchor="middle" className="text-2xl">🛡️</text>
+               <text x="0" y="45" textAnchor="middle" className="text-[10px] font-bold fill-blue-300 uppercase">5. Filter</text>
+             </g>
+
+             {/* Labels / Legend Right */}
+             <g transform="translate(600, 50)">
+               <text x="0" y="0" className="text-sm font-bold fill-slate-300">Defense Layers</text>
+               
+               <g transform="translate(0, 30)">
+                 <circle cx="10" cy="5" r="5" fill="#64748b" />
+                 <text x="25" y="10" className="text-xs fill-slate-400">Structure (Sandwich)</text>
+               </g>
+               <g transform="translate(0, 60)">
+                 <circle cx="10" cy="5" r="5" fill="#a855f7" />
+                 <text x="25" y="10" className="text-xs fill-slate-400">Syntax (XML Tags)</text>
+               </g>
+               <g transform="translate(0, 90)">
+                 <rect x="5" y="0" width="10" height="10" fill="#f59e0b" transform="rotate(45 10 5)" />
+                 <text x="25" y="10" className="text-xs fill-slate-400">Separation (Params)</text>
+               </g>
+               <g transform="translate(0, 120)">
+                 <circle cx="10" cy="5" r="5" fill="#ef4444" />
+                 <text x="25" y="10" className="text-xs fill-slate-400">Examples (Refusal)</text>
+               </g>
+               <g transform="translate(0, 150)">
+                 <circle cx="10" cy="5" r="5" fill="#3b82f6" />
+                 <text x="25" y="10" className="text-xs fill-slate-400">Verdict (Filter)</text>
+               </g>
+             </g>
+
+             {/* Attacker Left */}
+             <g transform="translate(50, 180)">
+               <text x="0" y="0" className="text-lg font-bold fill-red-500">🔴 Attacker</text>
+               <path d="M 100 0 L 220 0" stroke="#ef4444" strokeWidth="2" strokeDasharray="5 5" markerEnd="url(#aim-arrow)" />
+               <text x="160" y="-10" textAnchor="middle" className="text-xs fill-red-400">Injection Attempt</text>
+               
+               {/* Blocked */}
+               <text x="235" y="5" className="text-xl fill-red-500 font-bold">✕</text>
+             </g>
+
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }

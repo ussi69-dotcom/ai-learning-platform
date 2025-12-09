@@ -45,13 +45,13 @@ Students start as **Padawans** (Users) and graduate as **Jedi Knights** (Builder
 
 | # | Lesson | Core Concept | Key Tools (Dec 2025) | Duration |
 |---|--------|--------------|---------------------|----------|
-| 01 | **Prompt Architecture Masterclass** | Structure > magic words, System Prompts as OS | Claude 4.5, Gemini 3 Pro, GPT-4o | 2h |
+| 01 | **Prompt Architecture Masterclass** | Structure > magic words, System Prompts as OS | Claude Opus 4.5, Gemini 3 Pro, GPT-5.1 | 2h |
 | 02 | **Advanced Reasoning & Red Teaming** | CoT, CoVe, Self-Consistency, ToT, Injection Defense | Playgrounds | 2h |
 | 03 | **Reliability, Testing & Cost** | Promptfoo, Prompt Caching, Token Economics, Versioning | Promptfoo, Helicone | 2.5h |
-| 04 | **Local Intelligence** | VRAM math, Quantization, Model Scouting | Ministral 8B, Gemma 3 4B, Qwen3-14B, LM Studio, Ollama | 2h |
-| 05 | **Structured Data Extraction** | JSON Mode, Schema validation, DSPy intro | Ollama JSON mode | 2h |
-| 06 | **RAG & Knowledge Systems** | Embeddings, Vector search, Privacy-first | Chroma, nomic-embed | 2.5h |
-| 07 | **AI-Powered Development** | IDE setup, MCP servers, Multi-model workflow | Antigravity, Cursor, Cline, MCP | 2h |
+| 04 | **Local Intelligence** | VRAM math, Quantization, Model Scouting | Llama 4 Scout, Qwen 3, Ollama | 2h |
+| 05 | **AI-Powered Development** | IDE setup, MCP servers, Multi-model workflow | Antigravity, Cursor, Cline, MCP | 2h |
+| 06 | **Structured Data Extraction** | JSON Mode, Schema validation, DSPy intro | Ollama JSON mode | 2h |
+| 07 | **RAG & Knowledge Systems** | Embeddings, Vector search, Privacy-first | Chroma, nomic-embed | 2.5h |
 | 08 | **No-Code Automation** | Visual workflows, Triggers, Error handling | n8n v2.0 | 2h |
 | 09 | **Docker & Self-Hosting** | Containers, Persistence, Networking | Docker, Ollama server | 2h |
 | 10 | **Agentic Orchestration** | Router pattern, Tool calling, Ensemble, Memory | LangGraph, CrewAI v1.6 | 2.5h |

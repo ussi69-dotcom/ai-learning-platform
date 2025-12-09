@@ -1,8 +1,27 @@
 # 📚 Lesson Production Workflow
 
-> **Verze:** 1.0 | **Aktualizováno:** 2025-12-07
+> **Verze:** 1.1 | **Aktualizováno:** 2025-12-09
 
 Kompletní workflow pro efektivní tvorbu a úpravu lekcí s minimálním pokus-omyl.
+
+---
+
+> [!CAUTION]
+> ## ⚠️ KRITICKÉ PRAVIDLO: Real-Time Verification
+> 
+> **Před zmíněním JAKÉHOKOLI modelu nebo nástroje v obsahu MUSÍŠ:**
+> 1. Provést **real-time web search** pro aktuální verze
+> 2. Ověřit, že model/nástroj stále existuje a je aktuální
+> 3. Použít **správný název verze** (např. GPT-5.1, ne GPT-4o; Claude Opus 4.5, ne Claude 3.5)
+> 
+> **Aktuální modely (prosinec 2025):**
+> - OpenAI: **GPT-5.1** (GPT-5.2 launching)
+> - Anthropic: **Claude Opus 4.5**, Sonnet 4.5, Haiku 4.5
+> - Google: **Gemini 3 Pro**, Gemini 3 Deep Think
+> - Meta: **Llama 4 Maverick/Scout** (open-source)
+> - Alibaba: **Qwen 3** (235B flagship)
+> 
+> **NIKDY nepoužívej zastaralé názvy jako GPT-4o, Claude 3.5, Gemini 2.5!**
 
 ---
 
@@ -123,7 +142,7 @@ Před pokračováním zkontroluj:
 
 ---
 
-## 📋 Fáze 3: POLISH (Gemini 2.5 Pro)
+## 📋 Fáze 3: POLISH (Gemini 3 Pro)
 
 ### Kdy použít Gemini
 - Vizuální vylepšení
@@ -187,7 +206,7 @@ Pro rychlé opravy použij Claude Sonnet 4.5 s konkrétním popisem problému.
 | Deep research | **Perplexity Pro** | Aktuální zdroje, citace |
 | Tvorba nové lekce | **Claude Opus 4.5** | Nejlepší kvalita textu |
 | Úpravy existující lekce | **Claude Sonnet 4.5** | Rychlé, přesné, levné |
-| Vizuální polish | **Gemini 2.5 Pro** | Rychlé, multimodální |
+| Vizuální polish | **Gemini 3 Pro** | Rychlé, multimodální, 1M kontext |
 | Kódování (komponenty) | **Claude Sonnet 4.5** | Nejlepší pro kód |
 | QA a debugging | **Claude Sonnet 4.5** | Systematický, přesný |
 

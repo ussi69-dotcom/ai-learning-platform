@@ -1,0 +1,21 @@
+{
+  "title": "AI-Powered Development",
+  "title_cs": "Vývoj s AI asistencí",
+  "description": "Master the AI-native development ecosystem with MCP, Antigravity, context management, and AI coding tools.",
+  "description_cs": "Ovládněte ekosystém AI-nativního vývoje s MCP, Antigravity, správou kontextu a AI nástroji pro kódování.",
+  "order": 5,
+  "video_url": {
+    "en": "https://www.youtube.com/embed/mbxq88TOxp4",
+    "cs": "https://www.youtube.com/embed/mbxq88TOxp4"
+  },
+  "tags": ["mcp", "cursor", "windsurf", "claude-code", "antigravity", "ai-ide", "context-management"],
+  "prerequisites": ["01-prompt-architecture", "04-local-intelligence"],
+  "learning_objectives": [
+    "Understand MCP (Model Context Protocol) architecture",
+    "Master Antigravity for rapid prototyping",
+    "Compare AI coding tools (Cursor, Windsurf, Claude Code, Antigravity)",
+    "Build a custom MCP server with FastMCP",
+    "Connect IDE to local Ollama model",
+    "Implement security best practices for AI agents"
+  ]
+}

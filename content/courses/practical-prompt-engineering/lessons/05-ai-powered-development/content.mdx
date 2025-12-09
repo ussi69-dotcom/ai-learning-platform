@@ -1,0 +1,501 @@
+# AI-Powered Development 🤖
+
+<Callout type="info">
+**Mission:** Master the AI-native development ecosystem. Move from code completion to orchestrating AI agents via MCP.
+
+⏳ **Reading Time:** 45 min | 🧪 **[3] Labs Included**
+</Callout>
+
+<VideoSwitcher videos={[{"id":"mbxq88TOxp4","title":"Antigravity Guide","author":"Alex Finn","lang":"en","isMain":true},{"id":"QVOy61pXdSo","title":"Why Local First","author":"David Ondrej","lang":"en"}]} />
+
+---
+
+## 1. The New Developer Stack 🔄
+
+The era of "Stack Overflow driven development" is ending. We're entering the era of **Context-Aware AI Development**.
+
+### Workflow Evolution
+
+| Year | Paradigm | Tool | Limit |
+|------|----------|------|-------|
+| **2021-22** | Code Completion | GitHub Copilot | Current file only |
+| **2023** | Chat Integration | ChatGPT + copy/paste | Manual context |
+| **2024** | Context-Aware IDE | Cursor, Windsurf | RAG over codebase |
+| **2025** | Agentic Architecture | MCP + local LLM | **No limit** 🚀 |
+
+<ConceptCard title="AI-Native Developer" icon="👨‍💻">
+A developer who focuses on **system architecture**, **context management**, and **verifying AI output**, rather than writing syntax.
+
+The role shifts from "code writer" to **"director of AI agents"**.
+</ConceptCard>
+
+---
+
+## 2. Deep Dive: Antigravity 🚀
+
+Antigravity is the new star on the AI IDE scene. Let's see why.
+
+<Diagram type="antigravity-workflow" />
+
+### What Makes Antigravity Different?
+
+| Aspect | Cursor / Windsurf | **Antigravity** |
+|--------|-------------------|-----------------|
+| **Price** | $10-20/month | **FREE** 🎉 |
+| **Installation** | Desktop app | **Browser-based** |
+| **Language** | Any | **Python-native** |
+| **Canvas** | Code only | **Visual canvas** |
+| **Model** | OpenAI / Anthropic | **Gemini 2.5 Pro** |
+| **Deploy** | Manual | **One click** |
+
+### When to Use Antigravity?
+
+<Callout type="tip">
+**Ideal use cases:**
+- 🚀 Quick prototypes (hours, not days)
+- 🎨 Visual projects (dashboards, UI)
+- 🐍 Python projects (data science, automation)
+- 💸 When you don't want to pay $20/month for Cursor
+</Callout>
+
+### Workflow: From Idea to Deploy
+
+1. **💡 Idea:** "Build me a sales dashboard"
+2. **🎨 Canvas:** Drag & drop components
+3. **🤖 AI Agent:** Gemini generates code
+4. **💻 Code:** Complete Python/JS project
+5. **🌐 Deploy:** One click → production
+
+---
+
+## 3. AI IDE Comparison (2025) 🔧
+
+<Diagram type="ide-comparison-radar" />
+
+### Detailed Breakdown
+
+| IDE | Speed | Agent | Price | MCP | Local LLM | Best For |
+|-----|-------|-------|-------|-----|-----------|----------|
+| **Antigravity** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | FREE | ✓ | ✓ | Prototypes |
+| **Cursor** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | $20 | ✓ | ✓ | Daily driver |
+| **Windsurf** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | $10 | ✓ | ✓ | Big refactors |
+| **Claude Code** | ⭐⭐⭐ | ⭐⭐⭐⭐ | $20 | ✓ | ✗ | Architecture |
+| **Zed** | ⭐⭐⭐⭐⭐ | ⭐⭐ | FREE | ✓ | ✓ | Performance |
+
+### My Recommendation
+
+<Callout type="tip">
+**My strategy:**
+1. **Prototype:** Antigravity (free, fast)
+2. **Daily work:** Cursor (speed, UX)
+3. **Big refactor:** Windsurf Cascade (deep context)
+4. **Architecture:** Claude Code (reasoning)
+</Callout>
+
+---
+
+## 4. MCP Architecture 🔌
+
+**Model Context Protocol (MCP)** is the most critical shift in AI development since GPT-4. It works as **"USB-C for AI applications"**.
+
+<Diagram type="mcp-architecture" />
+
+### Three Parts of MCP
+
+| Component | Role | Examples |
+|-----------|------|----------|
+| **Client (Host)** | Where AI lives | Claude Desktop, Cursor, Antigravity |
+| **Protocol** | Standard communication | JSON-RPC over stdio/HTTP |
+| **Server** | Exposes capabilities | Filesystem, GitHub, Postgres |
+
+### Capability Types
+
+| Type | Description | Example |
+|------|-------------|---------|
+| **Resources** | Passive data | Reading a file, log |
+| **Tools** | Executable functions | `git commit`, `query_db` |
+| **Prompts** | Predefined templates | "Analyze this PR" |
+
+### Key MCP Servers (2025)
+
+| Server | Released | Capabilities |
+|--------|----------|--------------|
+| **GitHub MCP** | Nov 2024 | Issues, PR, file history |
+| **Microsoft 365** | Dec 2024 | Teams, Outlook, OneDrive |
+| **Postgres MCP** | Dec 2024 | SQL queries, schema |
+| **Filesystem** | Built-in | Read/write files |
+
+<Callout type="warning">
+**Security:** MCP server can access sensitive data. ALWAYS check permissions!
+</Callout>
+
+---
+
+## 5. Context Management 🧠
+
+If LLM is the engine, **context** is the fuel. Without proper context, AI guesses.
+
+### Context Files
+
+| IDE | File | Location |
+|-----|------|----------|
+| Cursor | `.cursorrules` | Repo root |
+| Windsurf | `.windsurfrules` | Repo root |
+| Antigravity | In-memory | Session-based |
+| Claude Code | `CLAUDE.md` | Repo root |
+
+### Example `.cursorrules`
+
+```text
+# Project Context
+Stack: Next.js 15 (App Router), Tailwind CSS, Supabase, TypeScript.
+
+# Coding Standards
+- Use functional components only.
+- Prefer `const` over `let`.
+- ALL async code must handle errors with try/catch.
+
+# DO NOT
+- Never use `any` type in TypeScript.
+- Never commit secrets or API keys.
+
+# Testing
+- Write tests using Playwright for E2E.
+- Mock all external API calls in unit tests.
+```
+
+<Callout type="tip">
+**Pro Tip:** Your `.cursorrules` is as important as your code. It defines the agent's intelligence level.
+</Callout>
+
+---
+
+## 🧪 Lab 1: MCP Server with FastMCP
+
+### 🎯 Goal
+Create your own MCP server that Claude/Cursor can use.
+
+### 📋 Prerequisites
+- Python 3.10+
+- Claude Desktop or Cursor
+
+<Callout type="warning">
+**Before you start:** This lab requires access to an MCP-compatible client.
+</Callout>
+
+### 🛠️ Steps
+
+**Step 1: Installation**
+
+```bash
+pip install mcp[cli] psutil
+```
+
+**Step 2: Server code**
+
+Create `monitor_server.py`:
+
+```python
+from mcp.server.fastmcp import FastMCP
+import psutil
+
+mcp = FastMCP("SystemMonitor")
+
+@mcp.tool()
+def get_system_stats() -> str:
+    """Returns CPU and RAM usage.
+    Use when user asks about system performance."""
+    cpu = psutil.cpu_percent(interval=1)
+    ram = psutil.virtual_memory().percent
+    return f"CPU: {cpu}%\nRAM: {ram}%"
+
+@mcp.tool()
+def get_disk_usage() -> str:
+    """Returns disk usage for all partitions."""
+    partitions = psutil.disk_partitions()
+    result = []
+    for p in partitions:
+        usage = psutil.disk_usage(p.mountpoint)
+        result.append(f"{p.mountpoint}: {usage.percent}%")
+    return "\n".join(result)
+
+if __name__ == "__main__":
+    mcp.run()
+```
+
+**Step 3: Configure Claude Desktop**
+
+Edit `claude_desktop_config.json`:
+- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "system-monitor": {
+      "command": "python",
+      "args": ["/absolute/path/to/monitor_server.py"]
+    }
+  }
+}
+```
+
+**Step 4: Test**
+
+1. Restart Claude Desktop
+2. Look for the 🔌 icon (connected servers)
+3. Ask: "How is my system doing?"
+
+### ✅ Success Criteria
+- [x] Server runs without errors
+- [x] Claude recognizes the server
+- [x] Tool returns live data
+
+<LabComplete labId="lab-mcp-server" />
+
+---
+
+## 🧪 Lab 2: Antigravity Prototype
+
+### 🎯 Goal
+Create a working prototype using Antigravity in 15 minutes.
+
+### 📋 Prerequisites
+- Modern browser (Chrome, Firefox)
+- Google account
+
+### 🛠️ Steps
+
+**Step 1: Open Antigravity**
+
+Go to [antigravity.google.com](https://antigravity.google.com) and sign in.
+
+**Step 2: New Project**
+
+Click "New Project" and describe your goal:
+
+```text
+Create a cryptocurrency tracking dashboard.
+Show current prices for BTC, ETH, SOL.
+Use dark design with charts.
+Update every 30 seconds.
+```
+
+**Step 3: Watch AI Work**
+
+Observe how Antigravity:
+1. Generates project structure
+2. Creates components
+3. Adds API calls
+4. Styles UI
+
+**Step 4: Iterate**
+
+Add requirements:
+- "Add alert when BTC exceeds $100k"
+- "Show historical chart for 24h"
+
+**Step 5: Deploy**
+
+Click "Deploy" → get a public URL.
+
+### ✅ Success Criteria
+- [x] Project created
+- [x] Dashboard shows data
+- [x] Deployed to public URL
+
+<LabComplete labId="lab-antigravity-prototype" />
+
+---
+
+## 🧪 Lab 3: Connect to Local LLM
+
+### 🎯 Goal
+Connect Cursor/Windsurf to your local Ollama from Lesson 04.
+
+### 📋 Prerequisites
+- Completed Lesson 04 (Ollama running)
+- Cursor or Windsurf installed
+
+<Callout type="tip">
+**Why we do this:** Combine local model (privacy, speed) with professional IDE (UX).
+</Callout>
+
+### 🛠️ Steps
+
+**Step 1: Verify Ollama**
+
+```bash
+ollama list
+# Should see llama4:scout
+```
+
+**Step 2: Cursor Configuration**
+
+1. Open Cursor Settings (`Cmd+,` / `Ctrl+,`)
+2. Go to `Models` → `Add Model`
+3. Select "Ollama"
+4. URL: `http://localhost:11434`
+5. Model: `llama4:scout`
+
+**Step 3: Test**
+
+1. Open any project
+2. Select local model in Cursor Composer
+3. Request a change: "Refactor this function"
+
+**Step 4: Compare**
+
+Try the same prompt with:
+- Local model (Llama)
+- Cloud model (GPT-5.1)
+
+Note differences in speed and quality.
+
+### ✅ Success Criteria
+- [x] Cursor recognizes Ollama
+- [x] Local model generates responses
+- [x] Comparison with cloud model
+
+<LabComplete labId="lab-local-ide" />
+
+---
+
+## 6. Security Best Practices 🔒
+
+Giving AI access to shell and database is risky. Security must be proactive.
+
+### Principles
+
+| Principle | Implementation |
+|-----------|----------------|
+| **Least Privilege** | Grant minimal permissions |
+| **Sandboxing** | MCP servers in Docker containers |
+| **Audit Logging** | Log all tool calls |
+| **Human-in-the-Loop** | Critical operations require confirmation |
+
+### Example: Docker Sandbox
+
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+
+# No network unless required
+# Only stdio communication
+CMD ["python", "server.py"]
+```
+
+### Red Flags
+
+<Callout type="warning">
+**Immediately disable MCP server if it:**
+- Tries to read `.env` files
+- Calls unexpected API endpoints
+- Generates code with `eval()` or `exec()`
+- Requests permission escalation
+</Callout>
+
+---
+
+## 7. Context Management Patterns 📋
+
+### Pattern 1: Project Constitution
+
+Define rules in root file:
+
+```text
+# CLAUDE.md / .cursorrules
+
+## Absolute Rules
+- NEVER commit secrets
+- ALWAYS use TypeScript strict mode
+- ALWAYS write tests before implementation
+
+## Stack
+- Next.js 15, App Router
+- Prisma + PostgreSQL
+- Tailwind + shadcn/ui
+
+## Conventions
+- Components: PascalCase
+- Functions: camelCase
+- Constants: SCREAMING_SNAKE_CASE
+```
+
+### Pattern 2: Task-specific Context
+
+For complex tasks, add inline context:
+
+```text
+# Context for this task
+Refactoring authentication module.
+Current state: JWT in localStorage (security risk).
+Goal: HttpOnly cookies + refresh token rotation.
+Constraint: Backward compatibility with mobile app.
+```
+
+### Pattern 3: Memory Files
+
+For long-term projects:
+
+```text
+# .ai-context/MEMORY.md
+## Lessons Learned
+- 2024-01: Prisma migrations must be idempotent
+- 2024-03: Redis cache TTL max 1 hour
+- 2024-06: Never use any in API responses
+```
+
+---
+
+## 🏆 Holocron: Key Takeaways
+
+<ConceptCard title="Holocron: AI-Powered Development" icon="💎">
+
+### 🔑 Key Takeaways
+
+1. 🔌 **MCP is the new standard.** One protocol, all tools. No vendor lock-in.
+2. 🚀 **Antigravity for prototypes.** FREE, browser-based, visual canvas.
+3. 🧠 **Context is king.** Your `.cursorrules` defines agent intelligence.
+4. 🔒 **Security first.** Treat AI agents like junior devs: limit, audit, verify.
+
+### 🛠️ Your 2025 Dev Stack
+
+```text
+IDE:        Antigravity (prototype) → Cursor (daily)
+Local LLM:  Ollama + Llama 4 8B
+Protocol:   MCP (JSON-RPC)
+Context:    .cursorrules + MEMORY.md
+Security:   Docker sandbox + audit logs
+```
+
+### 📝 MCP Quick Start
+
+```python
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("MyServer")
+
+@mcp.tool()
+def my_tool() -> str:
+    """Tool description."""
+    return "result"
+
+if __name__ == "__main__":
+    mcp.run()
+```
+
+</ConceptCard>
+
+---
+
+<Callout type="success">
+🎉 **Congratulations!** You're now an AI-native developer. You can orchestrate agents, manage context, and build secure systems.
+</Callout>
+
+**Next steps:**
+- Try connecting multiple MCP servers (GitHub + Postgres + Filesystem)
+- Create your own Antigravity project
+- Share your `.cursorrules` with your team

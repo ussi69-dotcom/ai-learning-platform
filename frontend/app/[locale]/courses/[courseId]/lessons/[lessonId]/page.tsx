@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useAuth } from '@/context/AuthContext';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
+import { VideoPlayer } from '@/components/VideoPlayer';
 import Quiz, { QuizQuestion } from '@/components/Quiz';
 import LessonComplete from '@/components/LessonComplete';
 import ProgressDots from "@/components/mdx/ProgressDots";
@@ -328,7 +329,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-background transition-colors duration-500 relative overflow-hidden">
+      <div className="min-h-screen bg-background transition-colors duration-500 relative">
 
         {/* Ambient Background Blobs */}
         <div className="fixed inset-0 -z-10 pointer-events-none">
@@ -397,20 +398,11 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">{lesson.description}</p>
           </div>
 
-          {/* Video Section */}
-          {lesson.video_url && (
-            <div className="mb-10">
-              <div className="aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border-4 border-border ring-1 ring-black/5">
-                <iframe
-                  className="w-full h-full"
-                  src={`${lesson.video_url}${lesson.video_url.includes('?') ? '&' : '?'}cc_load_policy=1&cc_lang_pref=${locale}&hl=${locale}`}
-                  title={lesson.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            </div>
-          )}
+          {/* Video Section - Now using VideoPlayer with context */}
+          <VideoPlayer 
+            fallbackUrl={lesson.video_url} 
+            fallbackTitle={lesson.title} 
+          />
 
           {/* Content Card */}
           <div id="lesson-content-container" className="glass-panel rounded-3xl p-6 md:p-10 mb-8 min-h-[400px] relative animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 border border-border/50 shadow-xl shadow-primary/5 dark:shadow-primary/10 hover:shadow-2xl hover:shadow-primary/10 transition-shadow duration-500">

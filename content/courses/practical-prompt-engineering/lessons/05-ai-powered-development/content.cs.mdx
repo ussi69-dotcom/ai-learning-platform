@@ -1,0 +1,501 @@
+# Vývoj s AI asistencí 🤖
+
+<Callout type="info">
+**Mise:** Ovládněte AI-native vývojářský ekosystém. Přejděte od doplňování kódu k orchestraci AI agentů přes MCP.
+
+⏳ **Reading Time:** 45 min | 🧪 **[3] Labs Included**
+</Callout>
+
+<VideoSwitcher videos={[{"id":"mbxq88TOxp4","title":"Antigravity Guide","author":"Alex Finn","lang":"en","isMain":true},{"id":"QVOy61pXdSo","title":"Why Local First","author":"David Ondrej","lang":"en"}]} />
+
+---
+
+## 1. Nový vývojářský stack 🔄
+
+Éra "Stack Overflow driven development" končí. Vstupujeme do éry **Context-Aware AI Development**.
+
+### Evoluce workflow
+
+| Rok | Paradigma | Nástroj | Limit |
+|-----|-----------|---------|-------|
+| **2021-22** | Code Completion | GitHub Copilot | Pouze aktuální soubor |
+| **2023** | Chat Integration | ChatGPT + copy/paste | Manuální kontext |
+| **2024** | Context-Aware IDE | Cursor, Windsurf | RAG nad codebase |
+| **2025** | Agentic Architecture | MCP + lokální LLM | **Žádný limit** 🚀 |
+
+<ConceptCard title="AI-Native vývojář" icon="👨‍💻">
+Vývojář, který se zaměřuje na **systémovou architekturu**, **správu kontextu** a **ověřování výstupů AI**, místo psaní syntaxe.
+
+Role se posouvá od "pisatele kódu" k **"režisérovi AI agentů"**.
+</ConceptCard>
+
+---
+
+## 2. Deep Dive: Antigravity 🚀
+
+Antigravity je nová hvězda na scéně AI IDE. Pojďme se podívat, proč.
+
+<Diagram type="antigravity-workflow" />
+
+### Co dělá Antigravity jinak?
+
+| Aspekt | Cursor / Windsurf | **Antigravity** |
+|--------|-------------------|-----------------|
+| **Cena** | $10-20/měsíc | **ZDARMA** 🎉 |
+| **Instalace** | Desktop app | **Browser-based** |
+| **Jazyk** | Jakýkoli | **Python-native** |
+| **Canvas** | Kód only | **Vizuální canvas** |
+| **Model** | OpenAI / Anthropic | **Gemini 2.5 Pro** |
+| **Deploy** | Ruční | **Jeden klik** |
+
+### Kdy použít Antigravity?
+
+<Callout type="tip">
+**Ideální use cases:**
+- 🚀 Rychlé prototypy (hodiny, ne dny)
+- 🎨 Vizuální projekty (dashboardy, UI)
+- 🐍 Python projekty (data science, automation)
+- 💸 Když nechceš platit $20/měsíc za Cursor
+</Callout>
+
+### Workflow: Od nápadu k deploy
+
+1. **💡 Nápad:** "Udělej mi dashboard pro prodeje"
+2. **🎨 Canvas:** Drag & drop komponenty
+3. **🤖 AI Agent:** Gemini generuje kód
+4. **💻 Code:** Hotový Python/JS projekt
+5. **🌐 Deploy:** Jeden klik → produkce
+
+---
+
+## 3. Srovnání AI IDE (2025) 🔧
+
+<Diagram type="ide-comparison-radar" />
+
+### Detailní breakdown
+
+| IDE | Rychlost | Agent | Cena | MCP | Lokální LLM | Best For |
+|-----|----------|-------|------|-----|-------------|----------|
+| **Antigravity** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | FREE | ✓ | ✓ | Prototypy |
+| **Cursor** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | $20 | ✓ | ✓ | Daily driver |
+| **Windsurf** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | $10 | ✓ | ✓ | Velké refactory |
+| **Claude Code** | ⭐⭐⭐ | ⭐⭐⭐⭐ | $20 | ✓ | ✗ | Architektura |
+| **Zed** | ⭐⭐⭐⭐⭐ | ⭐⭐ | FREE | ✓ | ✓ | Performance |
+
+### Doporučení
+
+<Callout type="tip">
+**Moje strategie:**
+1. **Prototyp:** Antigravity (zdarma, rychle)
+2. **Denní práce:** Cursor (rychlost, UX)
+3. **Velký refactor:** Windsurf Cascade (hluboký kontext)
+4. **Architektura:** Claude Code (reasoning)
+</Callout>
+
+---
+
+## 4. MCP Architektura 🔌
+
+**Model Context Protocol (MCP)** je nejkritičtější posun v AI vývoji od GPT-4. Funguje jako **"USB-C pro AI aplikace"**.
+
+<Diagram type="mcp-architecture" />
+
+### Tři části MCP
+
+| Komponenta | Role | Příklady |
+|------------|------|----------|
+| **Client (Host)** | Kde AI žije | Claude Desktop, Cursor, Antigravity |
+| **Protocol** | Standardní komunikace | JSON-RPC přes stdio/HTTP |
+| **Server** | Vystavuje schopnosti | Filesystem, GitHub, Postgres |
+
+### Typy schopností
+
+| Typ | Popis | Příklad |
+|-----|-------|---------|
+| **Resources** | Pasivní data | Čtení souboru, log |
+| **Tools** | Spustitelné funkce | `git commit`, `query_db` |
+| **Prompts** | Předdefinované šablony | "Analyzuj tento PR" |
+
+### Klíčové MCP servery (2025)
+
+| Server | Vydáno | Schopnosti |
+|--------|--------|------------|
+| **GitHub MCP** | Nov 2024 | Issues, PR, file history |
+| **Microsoft 365** | Dec 2024 | Teams, Outlook, OneDrive |
+| **Postgres MCP** | Dec 2024 | SQL dotazy, schema |
+| **Filesystem** | Built-in | Čtení/zápis souborů |
+
+<Callout type="warning">
+**Bezpečnost:** MCP server může mít přístup k citlivým datům. VŽDY kontroluj oprávnění!
+</Callout>
+
+---
+
+## 5. Správa kontextu 🧠
+
+Pokud je LLM motor, **kontext** je palivo. Bez správného kontextu AI hádá.
+
+### Context Files
+
+| IDE | Soubor | Umístění |
+|-----|--------|----------|
+| Cursor | `.cursorrules` | Root repozitáře |
+| Windsurf | `.windsurfrules` | Root repozitáře |
+| Antigravity | In-memory | Session-based |
+| Claude Code | `CLAUDE.md` | Root repozitáře |
+
+### Příklad `.cursorrules`
+
+```text
+# Project Context
+Stack: Next.js 15 (App Router), Tailwind CSS, Supabase, TypeScript.
+
+# Coding Standards
+- Use functional components only.
+- Prefer `const` over `let`.
+- ALL async code must handle errors with try/catch.
+
+# DO NOT
+- Never use `any` type in TypeScript.
+- Never commit secrets or API keys.
+
+# Testing
+- Write tests using Playwright for E2E.
+- Mock all external API calls in unit tests.
+```
+
+<Callout type="tip">
+**Pro Tip:** Tvůj `.cursorrules` je stejně důležitý jako tvůj kód. Definuje úroveň inteligence agenta.
+</Callout>
+
+---
+
+## 🧪 Lab 1: MCP Server s FastMCP
+
+### 🎯 Cíl
+Vytvoř vlastní MCP server, který Claude/Cursor může používat.
+
+### 📋 Prerekvizity
+- Python 3.10+
+- Claude Desktop nebo Cursor
+
+<Callout type="warning">
+**Před začátkem:** Tento lab vyžaduje přístup k MCP-kompatibilnímu klientovi.
+</Callout>
+
+### 🛠️ Kroky
+
+**Krok 1: Instalace**
+
+```bash
+pip install mcp[cli] psutil
+```
+
+**Krok 2: Server kód**
+
+Vytvořte `monitor_server.py`:
+
+```python
+from mcp.server.fastmcp import FastMCP
+import psutil
+
+mcp = FastMCP("SystemMonitor")
+
+@mcp.tool()
+def get_system_stats() -> str:
+    """Returns CPU and RAM usage.
+    Use when user asks about system performance."""
+    cpu = psutil.cpu_percent(interval=1)
+    ram = psutil.virtual_memory().percent
+    return f"CPU: {cpu}%\nRAM: {ram}%"
+
+@mcp.tool()
+def get_disk_usage() -> str:
+    """Returns disk usage for all partitions."""
+    partitions = psutil.disk_partitions()
+    result = []
+    for p in partitions:
+        usage = psutil.disk_usage(p.mountpoint)
+        result.append(f"{p.mountpoint}: {usage.percent}%")
+    return "\n".join(result)
+
+if __name__ == "__main__":
+    mcp.run()
+```
+
+**Krok 3: Konfigurace Claude Desktop**
+
+Upravte `claude_desktop_config.json`:
+- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "system-monitor": {
+      "command": "python",
+      "args": ["/absolutni/cesta/k/monitor_server.py"]
+    }
+  }
+}
+```
+
+**Krok 4: Test**
+
+1. Restartujte Claude Desktop
+2. Hledejte ikonu 🔌 (připojené servery)
+3. Zeptejte se: "Jak si vede můj systém?"
+
+### ✅ Kritéria úspěchu
+- [x] Server běží bez chyb
+- [x] Claude rozpozná server
+- [x] Tool vrací živá data
+
+<LabComplete labId="lab-mcp-server" />
+
+---
+
+## 🧪 Lab 2: Antigravity Prototyp
+
+### 🎯 Cíl
+Vytvořte funkční prototyp pomocí Antigravity za 15 minut.
+
+### 📋 Prerekvizity
+- Moderní browser (Chrome, Firefox)
+- Google účet
+
+### 🛠️ Kroky
+
+**Krok 1: Otevřete Antigravity**
+
+Jděte na [antigravity.google.com](https://antigravity.google.com) a přihlaste se.
+
+**Krok 2: Nový projekt**
+
+Klikněte "New Project" a popište svůj záměr:
+
+```text
+Vytvoř dashboard pro sledování kryptoměn.
+Zobraz aktuální ceny BTC, ETH, SOL.
+Použij tmavý design s grafy.
+Aktualizuj každých 30 sekund.
+```
+
+**Krok 3: Sledujte AI**
+
+Pozorujte, jak Antigravity:
+1. Generuje strukturu projektu
+2. Vytváří komponenty
+3. Přidává API volání
+4. Styluje UI
+
+**Krok 4: Iterace**
+
+Přidejte požadavky:
+- "Přidej alert když BTC překročí $100k"
+- "Zobraz historický graf za 24h"
+
+**Krok 5: Deploy**
+
+Klikněte "Deploy" → získáte veřejnou URL.
+
+### ✅ Kritéria úspěchu
+- [x] Projekt vytvořen
+- [x] Dashboard zobrazuje data
+- [x] Deploy na veřejnou URL
+
+<LabComplete labId="lab-antigravity-prototype" />
+
+---
+
+## 🧪 Lab 3: Propojení s lokálním LLM
+
+### 🎯 Cíl
+Připojte Cursor/Windsurf k vašemu lokálnímu Ollama z Lekce 04.
+
+### 📋 Prerekvizity
+- Dokončená Lekce 04 (Ollama běží)
+- Cursor nebo Windsurf nainstalovaný
+
+<Callout type="tip">
+**Proč to děláme:** Kombinace lokálního modelu (soukromí, rychlost) s profesionálním IDE (UX).
+</Callout>
+
+### 🛠️ Kroky
+
+**Krok 1: Ověřte Ollama**
+
+```bash
+ollama list
+# Měli byste vidět llama4:scout
+```
+
+**Krok 2: Cursor konfigurace**
+
+1. Otevřete Cursor Settings (`Cmd+,` / `Ctrl+,`)
+2. Jděte do `Models` → `Add Model`
+3. Vyberte "Ollama"
+4. URL: `http://localhost:11434`
+5. Model: `llama4:scout`
+
+**Krok 3: Test**
+
+1. Otevřete libovolný projekt
+2. Vyberte lokální model v Cursor Composer
+3. Požádejte o change: "Refaktoruj tuto funkci"
+
+**Krok 4: Porovnejte**
+
+Zkuste stejný prompt s:
+- Lokálním modelem (Llama)
+- Cloud modelem (GPT-5.1)
+
+Všimněte si rozdílů v rychlosti a kvalitě.
+
+### ✅ Kritéria úspěchu
+- [x] Cursor rozpozná Ollama
+- [x] Lokální model generuje odpovědi
+- [x] Porovnání s cloud modelem
+
+<LabComplete labId="lab-local-ide" />
+
+---
+
+## 6. Bezpečnostní best practices 🔒
+
+Dát AI přístup k shellu a databázi je riskantní. Bezpečnost musí být proaktivní.
+
+### Principy
+
+| Princip | Implementace |
+|---------|--------------|
+| **Least Privilege** | Uděluj minimální oprávnění |
+| **Sandboxing** | MCP servery v Docker kontejnerech |
+| **Audit Logging** | Loguj všechna volání tools |
+| **Human-in-the-Loop** | Kritické operace vyžadují potvrzení |
+
+### Příklad: Docker sandbox
+
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+
+# Žádná síť pokud není vyžadována
+# Pouze stdio komunikace
+CMD ["python", "server.py"]
+```
+
+### Red flags
+
+<Callout type="warning">
+**Okamžitě vypněte MCP server, pokud:**
+- Pokouší se číst `.env` soubory
+- Volá neočekávané API endpointy
+- Generuje kód s `eval()` nebo `exec()`
+- Žádá o rozšíření oprávnění
+</Callout>
+
+---
+
+## 7. Context Management Patterns 📋
+
+### Pattern 1: Projekt Ústava
+
+Definuj pravidla v root souboru:
+
+```text
+# CLAUDE.md / .cursorrules
+
+## Absolutní pravidla
+- NIKDY necommituj secrets
+- VžDY používej TypeScript strict mode
+- VŽDY piš testy před implementací
+
+## Stack
+- Next.js 15, App Router
+- Prisma + PostgreSQL
+- Tailwind + shadcn/ui
+
+## Konvence
+- Komponenty: PascalCase
+- Funkce: camelCase
+- Konstanty: SCREAMING_SNAKE_CASE
+```
+
+### Pattern 2: Task-specific Context
+
+Pro komplexní úkoly přidej inline kontext:
+
+```text
+# Kontext pro tento task
+Refaktoruji autentikační modul.
+Současný stav: JWT v localStorage (bezpečnostní riziko).
+Cíl: HttpOnly cookies + refresh token rotace.
+Omezení: Zpětná kompatibilita s mobilní app.
+```
+
+### Pattern 3: Memory Files
+
+Pro dlouhodobé projekty:
+
+```text
+# .ai-context/MEMORY.md
+## Lessons Learned
+- 2024-01: Prisma migrace musí být idempotentní
+- 2024-03: Redis cache TTL max 1 hodina
+- 2024-06: Nikdy nepoužívat any v API responses
+```
+
+---
+
+## 🏆 Holocron: Klíčové poznatky
+
+<ConceptCard title="Holocron: AI-Powered Development" icon="💎">
+
+### 🔑 Key Takeaways
+
+1. 🔌 **MCP je nový standard.** Jeden protokol, všechny nástroje. Žádný vendor lock-in.
+2. 🚀 **Antigravity pro prototypy.** ZDARMA, browser-based, vizuální canvas.
+3. 🧠 **Kontext je král.** Tvůj `.cursorrules` definuje inteligenci agenta.
+4. 🔒 **Bezpečnost first.** Treat AI agents jako junior devs: omezte, auditujte, ověřujte.
+
+### 🛠️ Tvůj 2025 Dev Stack
+
+```text
+IDE:        Antigravity (prototype) → Cursor (daily)
+Local LLM:  Ollama + Llama 4 8B
+Protocol:   MCP (JSON-RPC)
+Context:    .cursorrules + MEMORY.md
+Security:   Docker sandbox + audit logs
+```
+
+### 📝 MCP Quick Start
+
+```python
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("MyServer")
+
+@mcp.tool()
+def my_tool() -> str:
+    """Tool description."""
+    return "result"
+
+if __name__ == "__main__":
+    mcp.run()
+```
+
+</ConceptCard>
+
+---
+
+<Callout type="success">
+🎉 **Gratulace!** Teď jste AI-native vývojář. Umíte orchestrovat agenty, spravovat kontext a stavět bezpečné systémy.
+</Callout>
+
+**Další kroky:**
+- Zkuste propojit více MCP serverů (GitHub + Postgres + Filesystem)
+- Vytvořte vlastní Antigravity projekt
+- Sdílejte své `.cursorrules` s týmem
