@@ -2143,6 +2143,203 @@ export default function DiagramConcepts({ type }: DiagramProps) {
     );
   }
 
+  if (type === "ai-ml-dl-circles") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-2xl">
+          <svg
+            viewBox="0 0 500 400"
+            className="w-full h-auto"
+            role="img"
+            aria-label="AI Hierarchy: Concentric circles showing AI > ML > DL > GenAI"
+          >
+            <defs>
+              <filter id="glow-circles">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                <feMerge>
+                  <feMergeNode in="coloredBlur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            {/* Outer Circle: AI */}
+            <circle
+              cx="250"
+              cy="200"
+              r="175"
+              fill="#3b82f6"
+              fillOpacity="0.1"
+              stroke="#3b82f6"
+              strokeWidth="3"
+            />
+            <text
+              x="250"
+              y="45"
+              textAnchor="middle"
+              className="text-lg font-bold fill-blue-600 dark:fill-blue-400"
+            >
+              {isCs ? "Umělá Inteligence" : "Artificial Intelligence"}
+            </text>
+            <text
+              x="250"
+              y="65"
+              textAnchor="middle"
+              className="text-xs fill-blue-500 dark:fill-blue-300"
+            >
+              {isCs ? "Jakákoli technika napodobující člověka" : "Any technique mimicking humans"}
+            </text>
+
+            {/* Middle Circle: ML */}
+            <circle
+              cx="250"
+              cy="200"
+              r="130"
+              fill="#a855f7"
+              fillOpacity="0.15"
+              stroke="#a855f7"
+              strokeWidth="3"
+            />
+            <text
+              x="250"
+              y="90"
+              textAnchor="middle"
+              className="text-base font-bold fill-purple-600 dark:fill-purple-400"
+            >
+              {isCs ? "Strojové Učení" : "Machine Learning"}
+            </text>
+            <text
+              x="250"
+              y="108"
+              textAnchor="middle"
+              className="text-[10px] fill-purple-500 dark:fill-purple-300"
+            >
+              {isCs ? "Učení z dat" : "Learning from data"}
+            </text>
+
+            {/* Inner Circle: DL */}
+            <circle
+              cx="250"
+              cy="200"
+              r="85"
+              fill="#22c55e"
+              fillOpacity="0.2"
+              stroke="#22c55e"
+              strokeWidth="3"
+            />
+            <text
+              x="250"
+              y="135"
+              textAnchor="middle"
+              className="text-sm font-bold fill-green-600 dark:fill-green-400"
+            >
+              {isCs ? "Hluboké Učení" : "Deep Learning"}
+            </text>
+            <text
+              x="250"
+              y="150"
+              textAnchor="middle"
+              className="text-[10px] fill-green-500 dark:fill-green-300"
+            >
+              {isCs ? "Neuronové sítě" : "Neural networks"}
+            </text>
+
+            {/* Core Circle: GenAI */}
+            <circle
+              cx="250"
+              cy="200"
+              r="45"
+              fill="#f59e0b"
+              fillOpacity="0.3"
+              stroke="#f59e0b"
+              strokeWidth="3"
+              filter="url(#glow-circles)"
+            />
+            <text
+              x="250"
+              y="195"
+              textAnchor="middle"
+              className="text-sm font-bold fill-amber-600 dark:fill-amber-400"
+            >
+              GenAI
+            </text>
+            <text
+              x="250"
+              y="210"
+              textAnchor="middle"
+              className="text-[9px] fill-amber-500 dark:fill-amber-300"
+            >
+              {isCs ? "Tvoří nové" : "Creates new"}
+            </text>
+
+            {/* "You are here" indicator */}
+            <g transform="translate(310, 200)">
+              <line
+                x1="0"
+                y1="0"
+                x2="50"
+                y2="-30"
+                stroke="#f59e0b"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+              />
+              <rect
+                x="50"
+                y="-55"
+                width="90"
+                height="30"
+                rx="4"
+                fill="#f59e0b"
+                fillOpacity="0.2"
+                stroke="#f59e0b"
+              />
+              <text
+                x="95"
+                y="-35"
+                textAnchor="middle"
+                className="text-xs font-bold fill-amber-600 dark:fill-amber-300"
+              >
+                {isCs ? "📍 Jsi zde!" : "📍 You are here!"}
+              </text>
+            </g>
+
+            {/* Examples on the right */}
+            <g transform="translate(420, 320)">
+              <text
+                x="0"
+                y="0"
+                className="text-[10px] fill-blue-500 dark:fill-blue-400"
+              >
+                Siri, Chess AI
+              </text>
+              <text
+                x="0"
+                y="15"
+                className="text-[10px] fill-purple-500 dark:fill-purple-400"
+              >
+                Netflix, Spotify
+              </text>
+              <text
+                x="0"
+                y="30"
+                className="text-[10px] fill-green-500 dark:fill-green-400"
+              >
+                Image Recognition
+              </text>
+              <text
+                x="0"
+                y="45"
+                className="text-[10px] fill-amber-500 dark:fill-amber-400"
+              >
+                ChatGPT, Midjourney
+              </text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   if (type === "human-in-the-loop") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
@@ -2298,6 +2495,403 @@ export default function DiagramConcepts({ type }: DiagramProps) {
             >
               Iterate if needed
             </text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "multi-agent-workflow") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl">
+          <svg
+            viewBox="0 0 700 500"
+            className="w-full h-auto"
+            role="img"
+            aria-label={
+              isCs
+                ? "Multi-Agent Workflow: Claude, Gemini, Antigravity"
+                : "Multi-Agent Workflow: Claude, Gemini, Antigravity"
+            }
+          >
+            <defs>
+              <marker
+                id="arrowhead-maw"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+              >
+                <polygon
+                  points="0 0, 10 3, 0 6"
+                  className="fill-slate-400 dark:fill-slate-500"
+                />
+              </marker>
+              <linearGradient
+                id="antigravity-grad"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop offset="0%" stopColor="#6366f1" />
+                <stop offset="50%" stopColor="#a855f7" />
+                <stop offset="100%" stopColor="#ec4899" />
+              </linearGradient>
+              {/* Glow filters */}
+              <filter id="glow-claude" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="glow-gemini" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            {/* Title */}
+            <text
+              x="350"
+              y="30"
+              textAnchor="middle"
+              className="text-lg font-bold fill-slate-700 dark:fill-slate-200"
+            >
+              {isCs ? "🤖 Multi-Agent Workflow v3.0" : "🤖 Multi-Agent Workflow v3.0"}
+            </text>
+
+            {/* ═══ ENTRY POINTS (Top Row) ═══ */}
+            <text
+              x="350"
+              y="60"
+              textAnchor="middle"
+              className="text-[10px] font-mono fill-slate-500 dark:fill-slate-400"
+            >
+              ENTRY POINTS
+            </text>
+
+            {/* Claude Code - Primary color (theme aware) */}
+            <g transform="translate(80, 80)" filter="url(#glow-claude)">
+              <rect
+                x="0"
+                y="0"
+                width="150"
+                height="90"
+                rx="12"
+                className="fill-blue-500/10 dark:fill-red-500/10 stroke-blue-500 dark:stroke-red-500"
+                strokeWidth="2"
+              />
+              <text x="75" y="35" textAnchor="middle" className="text-2xl">
+                🤖
+              </text>
+              <text
+                x="75"
+                y="55"
+                textAnchor="middle"
+                className="text-sm font-bold fill-blue-600 dark:fill-red-400"
+              >
+                Claude Code
+              </text>
+              <text
+                x="75"
+                y="72"
+                textAnchor="middle"
+                className="text-[9px] font-mono fill-slate-500 dark:fill-slate-400"
+              >
+                CLAUDE.md
+              </text>
+              <text
+                x="75"
+                y="110"
+                textAnchor="middle"
+                className="text-[10px] fill-blue-600 dark:fill-red-400"
+              >
+                {isCs ? "Orchestrator, QA Gate" : "Orchestrator, QA Gate"}
+              </text>
+            </g>
+
+            {/* Gemini CLI - Blue/Cyan */}
+            <g transform="translate(275, 80)" filter="url(#glow-gemini)">
+              <rect
+                x="0"
+                y="0"
+                width="150"
+                height="90"
+                rx="12"
+                fill="#3b82f6"
+                fillOpacity="0.1"
+                stroke="#06b6d4"
+                strokeWidth="2"
+              />
+              <text x="75" y="35" textAnchor="middle" className="text-2xl">
+                ✨
+              </text>
+              <text
+                x="75"
+                y="55"
+                textAnchor="middle"
+                className="text-sm font-bold fill-cyan-600 dark:fill-cyan-400"
+              >
+                Gemini CLI
+              </text>
+              <text
+                x="75"
+                y="72"
+                textAnchor="middle"
+                className="text-[9px] font-mono fill-slate-500 dark:fill-slate-400"
+              >
+                GEMINI.md
+              </text>
+              <text
+                x="75"
+                y="110"
+                textAnchor="middle"
+                className="text-[10px] fill-cyan-600 dark:fill-cyan-400"
+              >
+                {isCs ? "Research, Content" : "Research, Content"}
+              </text>
+            </g>
+
+            {/* Antigravity - Gradient */}
+            <g transform="translate(470, 80)">
+              <rect
+                x="0"
+                y="0"
+                width="150"
+                height="90"
+                rx="12"
+                fill="url(#antigravity-grad)"
+                fillOpacity="0.15"
+                stroke="url(#antigravity-grad)"
+                strokeWidth="2"
+              />
+              <text x="75" y="35" textAnchor="middle" className="text-2xl">
+                🚀
+              </text>
+              <text
+                x="75"
+                y="55"
+                textAnchor="middle"
+                className="text-sm font-bold fill-indigo-600 dark:fill-indigo-400"
+              >
+                Antigravity
+              </text>
+              <text
+                x="75"
+                y="72"
+                textAnchor="middle"
+                className="text-[9px] font-mono fill-slate-500 dark:fill-slate-400"
+              >
+                rules.md
+              </text>
+              <text
+                x="75"
+                y="110"
+                textAnchor="middle"
+                className="text-[10px] fill-indigo-600 dark:fill-indigo-400"
+              >
+                {isCs ? "Full-Stack Dev" : "Full-Stack Dev"}
+              </text>
+            </g>
+
+            {/* ═══ ARROWS TO PROTOCOL ═══ */}
+            <line
+              x1="155"
+              y1="190"
+              x2="280"
+              y2="240"
+              className="stroke-slate-400 dark:stroke-slate-500"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-maw)"
+            />
+            <line
+              x1="350"
+              y1="190"
+              x2="350"
+              y2="235"
+              className="stroke-slate-400 dark:stroke-slate-500"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-maw)"
+            />
+            <line
+              x1="545"
+              y1="190"
+              x2="420"
+              y2="240"
+              className="stroke-slate-400 dark:stroke-slate-500"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-maw)"
+            />
+
+            {/* ═══ SHARED PROTOCOL (Center) ═══ */}
+            <g transform="translate(200, 245)">
+              <rect
+                x="0"
+                y="0"
+                width="300"
+                height="60"
+                rx="8"
+                className="fill-amber-500/10 dark:fill-amber-500/20 stroke-amber-500"
+                strokeWidth="2"
+                strokeDasharray="5,3"
+              />
+              <text x="150" y="25" textAnchor="middle" className="text-xl">
+                📜
+              </text>
+              <text
+                x="150"
+                y="45"
+                textAnchor="middle"
+                className="text-sm font-bold fill-amber-600 dark:fill-amber-400"
+              >
+                AGENT_PROTOCOL.md
+              </text>
+              <text
+                x="150"
+                y="70"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-500 dark:fill-slate-400"
+              >
+                {isCs ? "Společná pravidla všech agentů" : "Shared rules for all agents"}
+              </text>
+            </g>
+
+            {/* ═══ ARROW TO MEMORY ═══ */}
+            <line
+              x1="350"
+              y1="315"
+              x2="350"
+              y2="345"
+              className="stroke-slate-400 dark:stroke-slate-500"
+              strokeWidth="2"
+              markerEnd="url(#arrowhead-maw)"
+            />
+
+            {/* ═══ MEMORY SYSTEM (Bottom Row) ═══ */}
+            <text
+              x="350"
+              y="365"
+              textAnchor="middle"
+              className="text-[10px] font-mono fill-slate-500 dark:fill-slate-400"
+            >
+              {isCs ? "PAMĚŤOVÝ SYSTÉM" : "MEMORY SYSTEM"}
+            </text>
+
+            {/* Working Context - Short-term */}
+            <g transform="translate(80, 380)">
+              <rect
+                x="0"
+                y="0"
+                width="160"
+                height="70"
+                rx="8"
+                className="fill-emerald-500/10 dark:fill-emerald-500/20 stroke-emerald-500"
+                strokeWidth="1.5"
+              />
+              <text x="80" y="25" textAnchor="middle" className="text-lg">
+                💾
+              </text>
+              <text
+                x="80"
+                y="45"
+                textAnchor="middle"
+                className="text-[11px] font-bold fill-emerald-600 dark:fill-emerald-400"
+              >
+                WORKING_CONTEXT.md
+              </text>
+              <text
+                x="80"
+                y="60"
+                textAnchor="middle"
+                className="text-[9px] fill-slate-500 dark:fill-slate-400"
+              >
+                {isCs ? "Krátkodobá paměť" : "Short-term memory"}
+              </text>
+            </g>
+
+            {/* Memory - Long-term */}
+            <g transform="translate(270, 380)">
+              <rect
+                x="0"
+                y="0"
+                width="160"
+                height="70"
+                rx="8"
+                className="fill-purple-500/10 dark:fill-purple-500/20 stroke-purple-500"
+                strokeWidth="1.5"
+              />
+              <text x="80" y="25" textAnchor="middle" className="text-lg">
+                🧠
+              </text>
+              <text
+                x="80"
+                y="45"
+                textAnchor="middle"
+                className="text-[11px] font-bold fill-purple-600 dark:fill-purple-400"
+              >
+                MEMORY.md
+              </text>
+              <text
+                x="80"
+                y="60"
+                textAnchor="middle"
+                className="text-[9px] fill-slate-500 dark:fill-slate-400"
+              >
+                {isCs ? "Dlouhodobá paměť" : "Long-term memory"}
+              </text>
+            </g>
+
+            {/* Instructions */}
+            <g transform="translate(460, 380)">
+              <rect
+                x="0"
+                y="0"
+                width="160"
+                height="70"
+                rx="8"
+                className="fill-blue-500/10 dark:fill-blue-500/20 stroke-blue-500"
+                strokeWidth="1.5"
+              />
+              <text x="80" y="25" textAnchor="middle" className="text-lg">
+                📋
+              </text>
+              <text
+                x="80"
+                y="45"
+                textAnchor="middle"
+                className="text-[11px] font-bold fill-blue-600 dark:fill-blue-400"
+              >
+                {isCs ? "Instrukce" : "Instructions"}
+              </text>
+              <text
+                x="80"
+                y="60"
+                textAnchor="middle"
+                className="text-[9px] fill-slate-500 dark:fill-slate-400"
+              >
+                CLAUDE.md / GEMINI.md
+              </text>
+            </g>
+
+            {/* ═══ BOOT SEQUENCE indicator ═══ */}
+            <g transform="translate(50, 480)">
+              <text
+                x="0"
+                y="0"
+                className="text-[9px] font-mono fill-slate-400 dark:fill-slate-500"
+              >
+                {isCs
+                  ? "🚀 Boot: 1. AGENT_PROTOCOL → 2. WORKING_CONTEXT → 3. MEMORY → 4. Role-based docs"
+                  : "🚀 Boot: 1. AGENT_PROTOCOL → 2. WORKING_CONTEXT → 3. MEMORY → 4. Role-based docs"}
+              </text>
+            </g>
           </svg>
         </div>
       </div>

@@ -329,12 +329,75 @@ Regex: `/(?:videos|alternatives)=\{(\[.*\])\}/`
 - 11 lekcí upgradováno za ~2 hodiny
 - Klíč: Dobrá příprava (LESSON_UPGRADE_GUIDE) + systematický přístup
 
+### 2025-12-09: Edutainment Bible - Skalopevná pravidla 📜
+
+**Co:** Dokumentace Edutainment v3.0 standardu rozšířena o "Bible" sekci s absolutními pravidly.
+
+**Klíčové pravidla:**
+
+1. **30-SECOND RULE** - Každá lekce MUSÍ mít HOOK v prvních 30 sekundách
+   - ❌ "V této lekci se naučíte..."
+   - ✅ "**Stop everything.** Look at your screen..."
+
+2. **CINEMATIC STORYTELLING** - Inspirace ColdFusion, NetworkChuck, 3Blue1Brown
+   - "Bombs" = historické momenty, překvapivá fakta
+   - Narrative Arc = Setup → Conflict → Resolution
+   - Emotional Language = "The eye opened." / "That era is over."
+
+3. **VISUAL DENSITY** - Minimální počet diagramů podle délky lekce
+   - <15 min: 2 diagramy
+   - 15-30 min: 3-4 diagramy
+   - 30-45 min: 5-6 diagramů
+
+4. **LAB PHILOSOPHY** - Labs jsou MISE, ne cvičení
+   - Každý lab má "💡 Aha Moment"
+   - Copy-paste ready prompts
+   - Očekávaný výstup dokumentován
+
+**Soubor:** `.ai-context/core/CONTENT_GUIDELINES.md` (sekce "🔥 EDUTAINMENT BIBLE")
+
+### 2025-12-09: Multi-Agent Workflow v3.0 Architecture 🤖
+
+**Aktuální setup:**
+```
+CLAUDE OPUS 4.5 (Orchestrator)
+├── Řídí workflow, QA gate, git operace
+├── Visual verification (Playwright)
+└── Rozhoduje o dalších krocích
+
+GEMINI 3 PRO (Researcher/Content Creator)
+├── Deep research (1M context)
+├── Content generation
+└── Dostává Task Brief s Persona + DoD
+
+PERPLEXITY (Deep Research)
+├── Real-time webový výzkum
+├── Fact-checking
+└── 90+ citací na výzkumný cyklus
+
+ANTIGRAVITY (Full-Stack Builder)
+├── Gemini-powered VS Code agent
+├── Rychlé prototypování
+└── Same-day integrace nových AI modelů
+```
+
+**Memory System:**
+- `WORKING_CONTEXT.md` = Working memory (aktuální task)
+- `MEMORY.md` = Long-term memory (protokoly, lessons learned)
+- `CLAUDE.md` / `GEMINI.md` = Instructions (boot sequence, SOPs)
+
+**CI/CD Pipeline:**
+- Pre-commit: TypeScript check (Husky)
+- GitHub Actions: Lint → Type → Build → Test
+- `npm run verify` povinný před každým commitem
+
 ### General
 
 - **Don't hold back.** User wants engineering depth, not generic tutorials.
 - **Verify file paths.** Check if you are writing to `.cs.mdx` or `.mdx`.
 - **Never trust "done" without verification.** Always read back what was written.
 - **Update WORKING_CONTEXT after every commit!** (New Dec 2025)
+- **Edutainment Bible je SKALOPEVNÁ.** Žádné výjimky z 30-second rule, visual density, lab philosophy.
 
 ---
 

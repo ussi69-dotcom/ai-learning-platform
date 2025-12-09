@@ -6,7 +6,182 @@ This document defines the **Edutainment v3.0** quality standard. "Good enough" i
 
 ---
 
-## 🎬 EDUTAINMENT VISION (NEW!)
+## 🔥 EDUTAINMENT BIBLE (SKALOPEVNÁ PRAVIDLA)
+
+> **Tato pravidla jsou ABSOLUTNÍ. Žádné výjimky. Žádné "ale v tomto případě..."**
+
+### ⚡ 30-SECOND RULE
+
+**Každá lekce MUSÍ mít HOOK v prvních 30 sekundách.**
+
+| ❌ ZAKÁZÁNO | ✅ POVINNÉ |
+|-------------|-----------|
+| "V této lekci se naučíte..." | "**Stop everything.** Look at your screen..." |
+| "Pojďme se podívat na..." | "In 2025, GitHub Copilot writes 46% of all code." |
+| "Dnes si probereme..." | "What if every AI conversation stayed on your computer forever?" |
+| Neutrální úvodní věty | **BOLD CLAIM** nebo **PROVOCATIVE QUESTION** |
+
+**Formát HOOKu:**
+```markdown
+## ⚡ [Evokativní název sekce]
+
+**[BOLD STATEMENT v první větě.]**
+
+[Rozvinutí statement - proč je to důležité, co to znamená pro čtenáře]
+
+[Call to action nebo "You are not here to X. You are here to Y."]
+```
+
+### 🎬 CINEMATIC STORYTELLING
+
+**Inspirace:** ColdFusion (dokumentární narativ), NetworkChuck (high energy), 3Blue1Brown (vizuální intuice)
+
+| Element | Implementace |
+|---------|--------------|
+| **"Bombs"** | Historické momenty, překvapivá fakta, zlomové události |
+| **Narrative Arc** | Setup → Conflict → Resolution (AI Winter → ImageNet moment) |
+| **Personal Stakes** | "Your ideas, your company secrets — all of it, gone." |
+| **Emotional Language** | "The eye opened." / "The seed was planted." / "That era is over." |
+
+**Příklad "Bomb" struktury:**
+```markdown
+### 💣 The First Bomb: Alan Turing (1950)
+It started with a question that sounded insane in 1950: **"Can machines think?"**
+[Story context]
+*The seed was planted.*
+
+### ❄️ The Long Winter
+But then... silence. [Dramatic pause via ellipsis]
+[Conflict description]
+*Hope died.*
+
+### 👁️ The Awakening: ImageNet (2012)
+Then came the moment that changed everything.
+[Resolution]
+*The eye opened.*
+```
+
+### 📺 VIDEO SWITCHER (MANDATORY)
+
+**Každá lekce MUSÍ mít VideoSwitcher hned po úvodním Callout.**
+
+```markdown
+<VideoSwitcher alternatives={[
+  {"id":"PRIMARY_VIDEO_ID","title":"Primary Video Title"},
+  {"id":"ALTERNATIVE_VIDEO_ID","title":"Alternative Video Title"},
+  {"id":"CZ_VIDEO_ID","title":"Czech Alternative (CZ)"}
+]} />
+```
+
+**Video Selection Criteria:**
+| Priority | Source | Example |
+|----------|--------|---------|
+| 1st | Cinematic documentary | ColdFusion, Veritasium |
+| 2nd | High-energy tutorial | NetworkChuck, Fireship |
+| 3rd | Visual explanation | 3Blue1Brown, Computerphile |
+| 4th | Czech alternative | AI s rozumem, board_room.io |
+
+### 🎨 VISUAL DENSITY REQUIREMENTS
+
+**Minimální vizuální prvky na lekci:**
+
+| Délka | Diagramy | Tabulky | ConceptCards | Callouts |
+|-------|----------|---------|--------------|----------|
+| <15 min | 2 | 1 | 1 | 2 |
+| 15-30 min | 3-4 | 2 | 2 | 3 |
+| 30-45 min | 5-6 | 3 | 2-3 | 4 |
+| 45+ min | 7+ | 4+ | 3+ | 5+ |
+
+**Diagram Types pro každý koncept:**
+- **Hierarchie/Vztahy** → Concentric circles, Venn diagrams
+- **Procesy/Flow** → Pipeline diagrams, flowcharts
+- **Srovnání** → Side-by-side, radar charts
+- **Timeline** → Horizontal timeline s milníky
+
+### 🧪 LAB PHILOSOPHY
+
+**Labs nejsou cvičení. Labs jsou MISE.**
+
+| Aspekt | Špatně | Správně |
+|--------|--------|---------|
+| Název | "Lab 1: Try a prompt" | "🔬 Lab 1: The Universal Translator" |
+| Cíl | "See what happens" | "Transform SAME information into 3 different styles" |
+| Výstup | Vague | "💡 Aha Moment: [Konkrétní insight]" |
+| Engagement | Pasivní | Copy-paste ready + analýza + očekávaný výstup |
+
+**Lab Template v3.0:**
+```markdown
+## 🔬 Lab N: [Evokativní název]
+
+[Úvod: Proč je tento skill důležitý - 1-2 věty]
+
+**Objective:** [Konkrétní, měřitelný cíl]
+
+**The Prompt:**
+Copy this into ChatGPT/Gemini:
+
+\`\`\`text
+[PŘESNÝ prompt - copy-paste ready]
+\`\`\`
+
+**Analysis:**
+[Co očekávat, příklady výstupu]
+
+**💡 Aha Moment:** "[Insight v uvozovkách - co se uživatel naučil]"
+
+<LabComplete labId="lab-[id]" />
+```
+
+### 🏆 HOLOCRON STANDARD
+
+**Každá lekce končí Holocron summary ConceptCard.**
+
+```markdown
+<ConceptCard title="Holocron: [Topic]" icon="💎">
+
+### 🔑 Key Takeaways
+* **[Concept 1]:** [One-sentence explanation]
+* **[Concept 2]:** [One-sentence explanation]
+* **[Concept 3]:** [One-sentence explanation]
+
+### 🧠 [Optional: Mental Model / Framework]
+[Visual representation or hierarchy]
+
+### 🛡️ Safety Warning (if applicable)
+* **[Risk 1]:** [Mitigation]
+* **[Risk 2]:** [Mitigation]
+
+</ConceptCard>
+```
+
+### ✅ PRE-PUBLISH CHECKLIST (BLOCKING)
+
+**Před publikací MUSÍ projít VŠECHNY body:**
+
+```markdown
+## Content Quality
+□ HOOK v prvních 30 sekundách (bold claim/question)?
+□ VideoSwitcher s min. 2 alternativami?
+□ Minimální počet diagramů splněn?
+□ Všechny Labs mají "Aha Moment"?
+□ Holocron summary na konci?
+
+## Technical
+□ `npm run typecheck` prošel?
+□ Backend restart + logs ukazují správný lab count?
+□ Obě jazykové verze (EN + CS) existují?
+□ Quiz soubory existují (quiz.json + quiz.cs.json)?
+
+## Tone & Style
+□ Žádné pasivní úvody ("V této lekci...")?
+□ Emocionální jazyk použit?
+□ Star Wars/Jedi analogie konzistentní?
+□ Copy-paste ready prompts?
+```
+
+---
+
+## 🎬 EDUTAINMENT VISION
 
 ### Proč Edutainment?
 

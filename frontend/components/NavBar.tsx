@@ -69,9 +69,27 @@ export default function NavBar() {
         {/* Right: Actions */}
         <div className="flex items-center gap-3 flex-shrink-0">
           
-          {/* About Link */}
-          <Link href="/about" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden md:block mr-2">
-            {t('about') || 'About'}
+          {/* About Link - Enhanced with pulsing AI icon */}
+          <Link href="/about" className="hidden md:flex items-center gap-1.5 text-sm font-semibold transition-all duration-300 group mr-2 px-3 py-1.5 rounded-full border border-transparent hover:border-purple-300 dark:hover:border-red-500/50 hover:bg-purple-50 dark:hover:bg-red-950/30">
+            {/* Pulsing AI Brain Icon */}
+            <svg
+              className="w-5 h-5 animate-pulse"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Brain/AI neural network icon */}
+              <circle cx="12" cy="12" r="10" className="stroke-purple-500 dark:stroke-red-500" strokeWidth="1.5" strokeDasharray="3 2" />
+              <circle cx="12" cy="8" r="2" className="fill-purple-600 dark:fill-red-500" />
+              <circle cx="8" cy="14" r="2" className="fill-purple-500 dark:fill-red-400" />
+              <circle cx="16" cy="14" r="2" className="fill-purple-500 dark:fill-red-400" />
+              <path d="M12 10v2M10 13l-1 0.5M14 13l1 0.5" className="stroke-purple-400 dark:stroke-red-300" strokeWidth="1.5" strokeLinecap="round" />
+              {/* Central glow */}
+              <circle cx="12" cy="12" r="3" className="fill-purple-200/50 dark:fill-red-500/30 animate-ping" style={{ animationDuration: '2s' }} />
+            </svg>
+            <span className="text-purple-700 dark:text-red-400 group-hover:text-purple-900 dark:group-hover:text-red-300">
+              {t('about') || 'About'}
+            </span>
           </Link>
 
           {/* Theme Toggle */}

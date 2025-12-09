@@ -121,6 +121,36 @@ docker compose up -d --build
 
 ---
 
+## 🎬 Edutainment v3.0 (Filozofie Obsahu)
+
+Platforma využívá **Edutainment** přístup - kombinaci vzdělávání a zábavy inspirovanou YouTube tvůrci jako ColdFusion a NetworkChuck.
+
+### Klíčové principy
+
+| Princip | Popis |
+|---------|-------|
+| **30-Second Hook** | Každá lekce začíná provokativním tvrzením nebo otázkou |
+| **Cinematic Storytelling** | Narativní struktura s "bombami" (překvapivými momenty) |
+| **Video Switcher** | Alternativní videa pro různé styly učení |
+| **Visual Density** | Minimum 1 diagram na 5 minut čtení |
+| **Copy-Paste Labs** | Hotové prompty, žádné "zkuste si..." |
+| **Holocron Summary** | Každá lekce končí shrnutím v ConceptCard |
+
+### Příklad struktury lekce
+
+```
+1. Header Callout (cíl mise, čas, počet labů)
+2. VideoSwitcher (hlavní + alternativy)
+3. ⚡ HOOK (bold claim - 30 sekund)
+4. 📜 Historie ("bomby" - překvapivé momenty)
+5. 🔬 Labs (copy-paste ready prompty)
+6. 🏆 Holocron (shrnutí)
+```
+
+📚 **Detaily:** Viz `.ai-context/core/CONTENT_GUIDELINES.md` (sekce Edutainment Bible)
+
+---
+
 ## 🌍 Lokalizace (EN/CZ)
 
 Platforma podporuje **2 jazyky**: English (`/en`) a Čeština (`/cs`).

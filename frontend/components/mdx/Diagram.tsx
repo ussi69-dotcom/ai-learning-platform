@@ -10,7 +10,7 @@ import DiagramEvaluation from './diagrams/DiagramEvaluation';
 import DiagramArchitecture from './diagrams/DiagramArchitecture';
 
 interface DiagramProps {
-  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop' | 'prompt-cheat-sheet' | 'traditional-vs-ml' | 'system-prompt-flow' | 'regression-matrix' | 'tradeoff-radar' | 'aim-framework' | 'map-framework' | 'prompt-stack' | 'defense-shield' | 'local-llm-architecture' | 'mcp-architecture' | 'model-benchmark-chart' | 'vram-stack' | 'latency-comparison' | 'antigravity-workflow' | 'ide-comparison-radar' | 'ollama-ecosystem';
+  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop' | 'prompt-cheat-sheet' | 'traditional-vs-ml' | 'system-prompt-flow' | 'regression-matrix' | 'tradeoff-radar' | 'aim-framework' | 'map-framework' | 'prompt-stack' | 'defense-shield' | 'local-llm-architecture' | 'mcp-architecture' | 'model-benchmark-chart' | 'vram-stack' | 'latency-comparison' | 'antigravity-workflow' | 'ide-comparison-radar' | 'ollama-ecosystem' | 'ai-ml-dl-circles' | 'multi-agent-workflow';
 }
 
 export default function Diagram({ type }: DiagramProps) {
@@ -24,8 +24,8 @@ export default function Diagram({ type }: DiagramProps) {
     return <DiagramTraining type={type} />;
   }
 
-  // Core Concepts & Architectures
-  if (['tokenization-viz', 'llm-next-token', 'context-window', 'temperature-scale', 'bias-in-data', 'rag-architecture', 'black-box', 'transformer-architecture-simplified', 'alignment-misalignment', 'human-in-the-loop'].includes(type)) {
+  // Core Concepts & Architectures (including ai-ml-dl-circles and multi-agent-workflow)
+  if (['tokenization-viz', 'llm-next-token', 'context-window', 'temperature-scale', 'bias-in-data', 'rag-architecture', 'black-box', 'transformer-architecture-simplified', 'alignment-misalignment', 'human-in-the-loop', 'ai-ml-dl-circles', 'multi-agent-workflow'].includes(type)) {
     return <DiagramConcepts type={type} />;
   }
 

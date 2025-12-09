@@ -79,7 +79,8 @@
     "viewing_feedback": "Viewing feedback. Click Eye to hide.",
     "hide_feedback": "Hide Feedback",
     "view_feedback": "View Feedback",
-    "report_bug": "Report a Bug / Feedback"
+    "report_bug": "Report a Bug / Feedback",
+    "idle_hint": "Drag to bug location · Click for existing"
   },
   "Lab": {
     "complete": "Lab Completed",

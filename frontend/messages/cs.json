@@ -79,7 +79,8 @@
     "viewing_feedback": "Zobrazení zpětné vazby. Klikněte pro skrytí.",
     "hide_feedback": "Skrýt zpětnou vazbu",
     "view_feedback": "Zobrazit zpětnou vazbu",
-    "report_bug": "Nahlásit chybu / Zpětná vazba"
+    "report_bug": "Nahlásit chybu / Zpětná vazba",
+    "idle_hint": "Přetáhni na místo chyby · Klikni pro existující"
   },
   "Lab": {
     "complete": "Laboratoř dokončena",

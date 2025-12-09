@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import {
   Rocket,
   Brain,
-  Code2,
   Terminal,
   Zap,
   Users,
@@ -15,11 +14,9 @@ import {
   Layout,
   Database,
   Layers,
-  Workflow,
   GitBranch,
   MonitorPlay,
   Bot,
-  Search,
   Clapperboard,
   Clipboard,
   Play,
@@ -186,208 +183,6 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* NEW: Multi-Agent CLI Workflow Section - Theme Aware */}
-        <div className="mb-24 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-150">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-sm font-mono text-primary mb-4">
-              <Terminal className="w-4 h-4" />
-              <span>Claude Code CLI</span>
-            </div>
-            <h2 className="text-3xl font-bold mb-4">{t("multiagent_title")}</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              {t("multiagent_desc")}
-            </p>
-          </div>
-
-          {/* AI Agents Grid - 2x2 */}
-          <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto mb-8">
-            {/* Claude Card - Theme aware: Jedi=blue, Sith=red */}
-            <Card className="group relative overflow-hidden bg-card/50 border-primary/20 hover:border-primary/40 transition-all duration-300">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary/60" />
-              <CardContent className="p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2.5 rounded-xl bg-primary text-primary-foreground shadow-lg">
-                    <Bot className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold">
-                      {t("multiagent_claude_title")}
-                    </h3>
-                    <span className="text-xs font-mono text-primary">
-                      {t("multiagent_claude_role")}
-                    </span>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {t("multiagent_claude_desc")}
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* Gemini Card - Blue/Cyan */}
-            <Card className="group relative overflow-hidden bg-card/50 border-blue-500/20 hover:border-blue-500/40 transition-all duration-300">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500" />
-              <CardContent className="p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white shadow-lg">
-                    <Sparkles className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold">
-                      {t("multiagent_gemini_title")}
-                    </h3>
-                    <span className="text-xs font-mono text-blue-600 dark:text-blue-400">
-                      {t("multiagent_gemini_role")}
-                    </span>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {t("multiagent_gemini_desc")}
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* Perplexity Card - Teal */}
-            <Card className="group relative overflow-hidden bg-card/50 border-teal-500/20 hover:border-teal-500/40 transition-all duration-300">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 to-emerald-500" />
-              <CardContent className="p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2.5 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-500 text-white shadow-lg">
-                    <Search className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold">
-                      {t("multiagent_perplexity_title")}
-                    </h3>
-                    <span className="text-xs font-mono text-teal-600 dark:text-teal-400">
-                      {t("multiagent_perplexity_role")}
-                    </span>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {t("multiagent_perplexity_desc")}
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* Antigravity Card - Gradient */}
-            <Card className="group relative overflow-hidden bg-card/50 border-indigo-500/20 hover:border-indigo-500/40 transition-all duration-300">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
-              <CardContent className="p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2.5 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg">
-                    <Rocket className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold">
-                      {t("multiagent_antigravity_title")}
-                    </h3>
-                    <span className="text-xs font-mono text-indigo-600 dark:text-indigo-400">
-                      {t("multiagent_antigravity_role")}
-                    </span>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {t("multiagent_antigravity_desc")}
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Memory System */}
-          <div className="max-w-4xl mx-auto mb-8">
-            <Card className="bg-card/30 border-border/50">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400">
-                    <Brain className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold">{t("memory_title")}</h3>
-                    <p className="text-xs text-muted-foreground">
-                      {t("memory_desc")}
-                    </p>
-                  </div>
-                </div>
-                <div className="grid md:grid-cols-3 gap-3">
-                  <div className="p-3 rounded-lg bg-background/50 border border-border/30">
-                    <code className="text-xs font-mono text-amber-600 dark:text-amber-400">
-                      {t("memory_working")}
-                    </code>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {t("memory_working_desc")}
-                    </p>
-                  </div>
-                  <div className="p-3 rounded-lg bg-background/50 border border-border/30">
-                    <code className="text-xs font-mono text-emerald-600 dark:text-emerald-400">
-                      {t("memory_longterm")}
-                    </code>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {t("memory_longterm_desc")}
-                    </p>
-                  </div>
-                  <div className="p-3 rounded-lg bg-background/50 border border-border/30">
-                    <code className="text-xs font-mono text-blue-600 dark:text-blue-400">
-                      {t("memory_instructions")}
-                    </code>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {t("memory_instructions_desc")}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* CI/CD Pipeline */}
-          <div className="max-w-4xl mx-auto">
-            <Card className="bg-card/30 border-border/50">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 rounded-lg bg-green-500/10 text-green-600 dark:text-green-400">
-                    <GitBranch className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold">{t("cicd_title")}</h3>
-                    <p className="text-xs text-muted-foreground">
-                      {t("cicd_desc")}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 border border-border/30">
-                    <div className="w-2 h-2 rounded-full bg-yellow-500" />
-                    <code className="text-xs font-mono">
-                      {t("cicd_precommit")}
-                    </code>
-                    <span className="text-xs text-muted-foreground">
-                      → {t("cicd_precommit_desc")}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 border border-border/30">
-                    <div className="w-2 h-2 rounded-full bg-blue-500" />
-                    <code className="text-xs font-mono">
-                      {t("cicd_github")}
-                    </code>
-                    <span className="text-xs text-muted-foreground">
-                      → {t("cicd_github_desc")}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 border border-green-500/30">
-                    <div className="w-2 h-2 rounded-full bg-green-500" />
-                    <code className="text-xs font-mono">
-                      {t("cicd_verify")}
-                    </code>
-                    <span className="text-xs text-muted-foreground">
-                      → {t("cicd_verify_desc")}
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
         {/* NEW: Edutainment Philosophy Section */}
         <div className="mb-24 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
           <Card className="bg-gradient-to-br from-fuchsia-500/5 via-purple-500/5 to-indigo-500/5 dark:from-red-950/30 dark:via-red-900/10 dark:to-black border-purple-500/20 dark:border-red-900/50 overflow-hidden relative">
@@ -492,6 +287,73 @@ export default function AboutPage() {
           </div>
 
           <ABTestShowcase locale={locale} />
+        </div>
+
+        {/* Multi-Agent CLI Workflow Section - Theme Aware */}
+        <div className="mb-24 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-150">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-sm font-mono text-primary mb-4">
+              <Terminal className="w-4 h-4" />
+              <span>Claude Code CLI</span>
+            </div>
+            <h2 className="text-3xl font-bold mb-4">{t("multiagent_title")}</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              {t("multiagent_desc")}
+            </p>
+          </div>
+
+          {/* NEW: Multi-Agent Workflow Diagram */}
+          <div className="max-w-4xl mx-auto mb-12">
+            <Diagram type="multi-agent-workflow" />
+          </div>
+
+          {/* CI/CD Pipeline */}
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-card/30 border-border/50">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 rounded-lg bg-green-500/10 text-green-600 dark:text-green-400">
+                    <GitBranch className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold">{t("cicd_title")}</h3>
+                    <p className="text-xs text-muted-foreground">
+                      {t("cicd_desc")}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 border border-border/30">
+                    <div className="w-2 h-2 rounded-full bg-yellow-500" />
+                    <code className="text-xs font-mono">
+                      {t("cicd_precommit")}
+                    </code>
+                    <span className="text-xs text-muted-foreground">
+                      → {t("cicd_precommit_desc")}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 border border-border/30">
+                    <div className="w-2 h-2 rounded-full bg-blue-500" />
+                    <code className="text-xs font-mono">
+                      {t("cicd_github")}
+                    </code>
+                    <span className="text-xs text-muted-foreground">
+                      → {t("cicd_github_desc")}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 border border-green-500/30">
+                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                    <code className="text-xs font-mono">
+                      {t("cicd_verify")}
+                    </code>
+                    <span className="text-xs text-muted-foreground">
+                      → {t("cicd_verify_desc")}
+                    </span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
 

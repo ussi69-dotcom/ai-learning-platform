@@ -143,7 +143,7 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
 
   return (
     <ProtectedRoute>
-      <div id="course-content-container" className="container mx-auto py-12 px-4 max-w-4xl bg-white dark:bg-slate-950 transition-colors duration-300 min-h-screen relative">
+      <div id="course-content-container" className="container mx-auto py-12 px-4 max-w-4xl bg-white dark:bg-slate-950 transition-colors duration-300 min-h-screen relative overflow-visible">
         {/* Header */}
         <div className="mb-12 text-center space-y-6">
           <div className="w-full max-w-[512px] aspect-square mx-auto mb-6 animate-in zoom-in-50 duration-500">

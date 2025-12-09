@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-10 00:30 (Agent: Claude Code)
+**Last Updated:** 2025-12-10 01:30 (Agent: Claude Code)
 **Last Commit:** `c9030ef` docs: Update MEMORY.md and artifact with Video System details
-**Status:** 🟢 READY - About & Main Page Upgrade Complete
+**Status:** 🟢 READY FOR VPS DEPLOY - UX Improvements Complete
 
 ---
 
@@ -63,30 +63,36 @@
 
 ## 📋 Recent Session (Dec 10, 2025)
 
-### About & Main Page Upgrade Complete ✅
+### UX Improvements Complete ✅
 
 **Changes Made:**
-1. **About Page:**
-   - Added Multi-Agent CLI Workflow section (Claude Opus 4.5 + Gemini 3 Pro cards)
-   - Added Edutainment Philosophy section (HOOK, Cinematic, Labs pillars)
-   - Enhanced Tech Stack with 9 detailed cards (Next.js, Tailwind, FastAPI, PostgreSQL, SQLAlchemy+Alembic, Docker, Redis, Claude, Gemini)
-   - Updated timeline to reference Edutainment v3.0
 
-2. **Main Page:**
-   - Hero updated with "Multi-Agent CLI Workflow" badge
-   - Benefits section redesigned with Edutainment focus
-   - 4 primary cards: 30-Second Hooks, Curated Videos, Copy-Paste Labs, Multi-Agent Content
-   - 4 secondary compact badges for remaining benefits
+1. **FeedbackFAB Unified Button:**
+   - Merged desktop/mobile into single button (click = view, drag = report)
+   - Drag detection with 5px threshold
+   - Idle hint tooltip visible only on hover (`opacity-0 group-hover/fab:opacity-100`)
+   - Works on both desktop and mobile identically
 
-3. **Translation Files:**
-   - Added ~30 new translation keys to `en.json` and `cs.json`
-   - Full Czech localization for all new content
+2. **About Button in NavBar:**
+   - Added pulsing AI brain SVG icon (3 connected neurons)
+   - Jedi theme: Purple colors (`purple-500/600/700`)
+   - Sith theme: Red colors (`red-400/500`)
+   - `animate-pulse` + inner `animate-ping` for visual attention
+   - Hover effect with border and background change
+
+3. **Course Page Feedback Fix:**
+   - Added `overflow-visible` to course-content-container
+
+4. **New Translations:**
+   - `Feedback.idle_hint` EN: "Drag to bug location · Click for existing"
+   - `Feedback.idle_hint` CS: "Přetáhni na místo chyby · Klikni pro existující"
 
 **Files Modified:**
-- `frontend/app/[locale]/about/page.tsx`
-- `frontend/app/[locale]/page.tsx`
-- `frontend/messages/en.json`
-- `frontend/messages/cs.json`
+- `frontend/components/FeedbackFAB.tsx` - Unified button with hover tooltip
+- `frontend/components/NavBar.tsx` - Pulsing AI icon for About
+- `frontend/app/[locale]/courses/[courseId]/page.tsx` - overflow-visible
+- `frontend/messages/en.json` - idle_hint translation
+- `frontend/messages/cs.json` - idle_hint translation
 
 ---
 
@@ -105,11 +111,11 @@
 
 | Date       | Agent  | What                                                         |
 | ---------- | ------ | ------------------------------------------------------------ |
+| 2025-12-10 | Claude | **UX Polish** - About button pulsing AI icon, FeedbackFAB unified |
 | 2025-12-09 | Claude | **Practical PE L01-L05 ALL DONE** - Full Edutainment upgrade |
 | 2025-12-09 | Claude | NetworkChuck videos + Gandalf lab added to PE course         |
 | 2025-12-09 | Claude | **AI Basics L01-L07 ALL DONE** - Full Edutainment upgrade    |
 | 2025-12-09 | Claude | VideoSwitcher + HOOK sections for all lessons                |
-| 2025-12-09 | Claude | LESSON_UPGRADE_GUIDE.md created with both courses            |
 
 ---
 
