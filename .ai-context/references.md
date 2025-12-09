@@ -1,126 +1,152 @@
-# 📚 References & Resources
+# 📚 Video References - Lesson Assignment
 
-> **Účel:** Centrální místo pro všechny zdroje použité v kurzech a nové materiály k zapracování.
-> **Aktualizováno:** 2025-12-07
-
----
-
-## 📖 Obsah
-
-1. [Použité zdroje](#-použité-zdroje) - Videa a materiály již v kurzech
-2. [Nové zdroje k zapracování](#-nové-zdroje-k-zapracování) - User přidává, agent zpracovává
-3. [Research výstupy](#-research-výstupy) - Perplexity deep research
+> **Účel:** Centrální seznam videí pro každou lekci - agent z tohoto generuje VideoSwitcher a meta.json
+> **Aktualizováno:** 2025-12-09
 
 ---
 
-## ✅ Použité zdroje
+## 🎯 Pravidla přiřazení
 
-### Kurz: AI Basics (Beginner)
-
-| Lekce | Video | Kanál | Stav |
-|-------|-------|-------|------|
-| 04 - Your First Prompt | [Advanced Prompting Techniques](https://youtube.com/watch?v=pwWBcsxEoLk) | - | ✅ Aktivní |
-
-### Kurz: Practical Prompt Engineering
-
-| Lekce | Video | Kanál | Stav |
-|-------|-------|-------|------|
-| 01 - Prompt Architecture | [7 Steps To AI Mastery](https://youtube.com/watch?v=EWFFaKxsz_s) | theMITmonk | ✅ Aktivní |
-| 02 - Prompt Injection | TBD | - | ⏳ Potřeba |
-| 03 - Reliability & Cost | TBD | - | ⏳ Potřeba |
-| 04 - Local Intelligence | TBD | - | ⏳ Potřeba |
+1. **Každá lekce min. 2 videa** (max 5)
+2. **CZ lokalizace:** CZ video jako MAIN (pokud existuje), EN jako alternate
+3. **EN lokalizace:** EN video jako MAIN, CZ jako alternate
+4. **Format ID:** Pouze YouTube video ID (ne celá URL)
 
 ---
 
-## 🆕 Nové zdroje k zapracování
+## 📗 Kurz: AI Basics Beginner (7 lekcí)
 
-> **Instrukce pro uživatele:** Přidej nový zdroj do tabulky níže. Agent je zpracuje při příštím update.
+### Lesson 01 - What is AI
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | `bZQun8Y4L2A` | State of GPT | Andrej Karpathy | Deep dive do LLM fungování |
+| CZ | ALT | `QVOy61pXdSo` | AI pro Začátečníky | David Ondrej | Paradigm shift from chatbot to agent |
 
-| Datum | Typ | Odkaz | Popis | Pro lekci | Status |
-|-------|-----|-------|-------|-----------|--------|
-|| 2024-12-08 | Video | [you need to learn MCP RIGHT NOW!!](https://youtube.com/watch?v=...) | NetworkChuck - MCP tutorial, security, production patterns | Lesson 7 | ✅ |
-| 2024-12-08 | Video | [Run AI Locally you're behind](https://youtube.com/watch?v=QVOy61pXdSo) | David Ondrej - Local-first philosophy, model selection | Lesson 4 | ✅ |
-| 2024-12-08 | Video | [AI Business $1M+](https://youtube.com/watch?v=IWdvG9Up8Mc) | theMITmonk - Case study, scaling, real outcomes | Lesson 11 | ✅ |
-| 2024-12-08 | Video | [AI pro Začátečníky: Robot vs Chatbot](https://www.youtube.com/watch?v=QVOy61pXdSo) | David Strejc - Paradigm shift from chatbot to autonomous agent (ČESKY) | **Lesson 0 (NEW)** | ✅ Ready |
-| 2024-12-08 | Video | [Google Antigravity: 14 Min Expert](https://www.youtube.com/watch?v=mbxq88TOxp4) | Alex Finn - Gemini 3 IDE, agent orchestration, artifact-based iteration | **Lesson 7 / 10** | ✅ Ready |
-| 2024-12-08 | Video | [Build $1M AI Business (0 to $1M+)](https://www.youtube.com/watch?v=IWdvG9Up8Mc) | theMITmonk - Founder's Triangle, DREAM framework, moats, solo founder economics | **Lesson 11** | ✅ Ready |
-| 2024-12-09 | Video | [7 Steps To AI Mastery](https://www.youtube.com/watch?v=EWFFaKxsz_s) | theMITmonk - Validated beginner guide (Prompting) | **Lesson 01** | ✅ Ready |
-| 2024-12-09 | Video | [Prompt Engineering: The only video you need to watch](https://www.youtube.com/watch?v=sI-zR5MbdQ0) | David Ondrej - *Placeholder for L01 Alt* (TBD check ID) | **Lesson 01** | ⏳ Check |
-| 2024-12-09 | Video | [Glitch Tokens and Prompt Injection](https://www.youtube.com/watch?v=WOjLISk9FPs) | Computerphile - Technical explanation of token vulnerabilities | **Lesson 02** | ✅ Ready |
-| 2024-12-09 | Video | [Threat Hunting & Security](https://www.youtube.com/watch?v=F6t5040e04Q) | David Strejc - CyberCon talk on security mindset (CZ) | **Lesson 02 (CZ)** | ✅ Ready |
+### Lesson 02 - How Does AI Learn
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | `aircAruvnKk` | How ChatGPT Works | Fireship | 100 seconds of AI explained |
+| CZ | ALT | *(TBD - hledá se CZ verze)* | - | - | - |
 
+### Lesson 03 - LLMs Explained
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | `eMlx5fFnoYc` | But what is a GPT? | 3Blue1Brown | Vizuální vysvětlení transformerů |
+| CZ | ALT | *(TBD)* | - | - | - |
 
-### Formát pro přidání:
-```markdown
-| YYYY-MM-DD | Video/Article/Tool | [Název](URL) | Krátký popis | Číslo lekce nebo "General" | ⏳ Čeká |
-```
+### Lesson 04 - Your First Prompt
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | `pwWBcsxEoLk` | Advanced Prompting Techniques | - | Techniky promptování |
+| EN | ALT | `EWFFaKxsz_s` | 7 Steps To AI Mastery | theMITmonk | AIM + MAP frameworky |
+| CZ | ALT | *(TBD - AI Univerzita)* | Proměňte ChatGPT v génia | AI Univerzita | 5 tipů pro lepší prompty |
 
-### Statusy:
-- ⏳ **Čeká** - Nově přidáno, čeká na zpracování
-- 🔍 **Reviewing** - Agent hodnotí relevanci
-- ✅ **Zapracováno** - Přidáno do lekce
-- ❌ **Zamítnuto** - Nehodí se (s důvodem)
+### Lesson 05 - The Dark Side
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | `WOjLISk9FPs` | Glitch Tokens | Computerphile | Prompt injection basics |
+| CZ | ALT | `F6t5040e04Q` | Threat Hunting | David Strejc | CyberCon security talk |
+
+### Lesson 06 - AI at Work
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | `IWdvG9Up8Mc` | Build $1M AI Business | theMITmonk | AI pro business |
+| CZ | ALT | *(TBD)* | - | - | - |
+
+### Lesson 07 - Course Summary
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | `EWFFaKxsz_s` | 7 Steps To AI Mastery | theMITmonk | Recap all concepts |
+| CZ | ALT | *(TBD)* | - | - | - |
 
 ---
 
-## 🔬 Research výstupy
+## 📘 Kurz: Practical Prompt Engineering (11 lekcí)
 
 ### Lesson 01 - Prompt Architecture
-- **Soubor:** `.ai-context/Perplexity_assist/LESSON2-01.md`
-- **Datum:** 2025-12
-- **Klíčové zdroje:**
-  - Andrej Karpathy: State of GPT
-  - Anthropic: Claude documentation
-  - OpenAI: Prompt engineering guide
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | `EWFFaKxsz_s` | 7 Steps To AI Mastery | theMITmonk | AIM/MAP frameworky, struktura promptů |
+| EN | ALT | `mbxq88TOxp4` | Google Antigravity Guide | Alex Finn | AI-native development |
+| CZ | MAIN | `EWFFaKxsz_s` | 7 Steps To AI Mastery | theMITmonk | *(EN s titulky - CZ alternativa níže)* |
+| CZ | ALT | `QVOy61pXdSo` | Why Run AI Locally | David Ondrej | Lokální AI filozofie |
 
-### Lesson 02 - Prompt Injection
-- **Soubor:** TBD
-- **Potřebný research:** Aktuální attack vectors, defense strategies
+### Lesson 02 - Advanced Reasoning & Red Teaming
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | `WOjLISk9FPs` | Glitch Tokens and Prompt Injection | Computerphile | Technické vysvětlení vulnerabilit |
+| EN | ALT | `EWFFaKxsz_s` | 7 Steps To AI Mastery | theMITmonk | Recap L01 |
+| CZ | MAIN | `F6t5040e04Q` | Threat Hunting (CyberCon) | David Strejc | Security mindset |
+| CZ | ALT | `WOjLISk9FPs` | Glitch Tokens | Computerphile | EN originál |
+
+### Lesson 03 - Reliability, Testing & Cost *(TBD)*
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | *(TBD - Promptfoo video)* | - | - | - |
+| CZ | ALT | *(TBD)* | - | - | - |
+
+### Lesson 04 - Local Intelligence
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | `Wjrdr0NU4Sk` | host ALL your AI locally | NetworkChuck | Kompletní lokální AI setup |
+| EN | ALT | `QVOy61pXdSo` | Why Run AI Locally | David Ondrej | Filozofie local-first |
+| CZ | MAIN | `R_iA-S2N-iE` | ChatGPT na vašem počítači | AI s rozumem | CZ tutoriál Ollama |
+| CZ | ALT | `Wjrdr0NU4Sk` | host ALL your AI locally | NetworkChuck | EN originál |
+
+### Lesson 05 - AI-Powered Development
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | `mbxq88TOxp4` | Google Antigravity Guide | Alex Finn | Kompletní Antigravity průvodce |
+| EN | ALT | `QVOy61pXdSo` | Why Run AI Locally | David Ondrej | Local AI stack |
+| CZ | MAIN | `mbxq88TOxp4` | Google Antigravity Guide | Alex Finn | *(EN s titulky)* |
+| CZ | ALT | `QVOy61pXdSo` | Why Run AI Locally | David Ondrej | Lokální AI stack |
+
+### Lesson 06 - RAG & Knowledge Systems *(TBD)*
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | *(TBD - Harish Neel RAG)* | - | - | - |
+| CZ | ALT | *(TBD)* | - | - | - |
+
+### Lesson 07 - No-Code Automation (n8n) *(TBD)*
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | *(TBD - n8n tutorial)* | - | - | - |
+| CZ | ALT | *(TBD)* | - | - | - |
+
+### Lesson 08 - Agentic Orchestration (LangGraph) *(TBD)*
+| Lang | Type | Video ID | Title | Author | Description |
+|------|------|----------|-------|--------|-------------|
+| EN | MAIN | *(TBD - LangGraph video)* | - | - | - |
+| CZ | ALT | *(TBD)* | - | - | - |
 
 ---
 
-## 🎬 Ověřená videa (embed-friendly)
+## ✅ Ověřená YouTube ID (embed-friendly)
 
-Videa, která jsme ověřili že fungují v iframe embed:
-
-| Video ID | Název | Kanál | Embed OK |
-|----------|-------|-------|----------|
-| `EWFFaKxsz_s` | 7 Steps To AI Mastery | theMITmonk | ✅ |
-| `pwWBcsxEoLk` | Advanced Prompting Techniques | - | ✅ |
-| `bZQun8Y4L2A` | State of GPT | Andrej Karpathy | ✅ |
-
-### Formát embed URL
-```
-https://www.youtube.com/embed/[VIDEO_ID]
-```
-
-⚠️ **Pozor:** Nikdy nepoužívej `watch?v=` v meta.json - pouze `embed/`!
+| Video ID | Kanál | Embed OK |
+|----------|-------|----------|
+| `EWFFaKxsz_s` | theMITmonk | ✅ |
+| `pwWBcsxEoLk` | - | ✅ |
+| `bZQun8Y4L2A` | Andrej Karpathy | ✅ |
+| `mbxq88TOxp4` | Alex Finn | ✅ |
+| `QVOy61pXdSo` | David Ondrej | ✅ |
+| `Wjrdr0NU4Sk` | NetworkChuck | ✅ |
+| `WOjLISk9FPs` | Computerphile | ✅ |
+| `F6t5040e04Q` | David Strejc | ✅ |
+| `IWdvG9Up8Mc` | theMITmonk | ✅ |
+| `R_iA-S2N-iE` | AI s rozumem | ⚠️ Check |
 
 ---
 
-## 📌 Užitečné kanály
+## 📌 České kanály k použití
 
-### Angličtina (preferované)
-- **Andrej Karpathy** - Technické deep-dives
-- **Anthropic** - Claude dokumentace
-- **OpenAI** - GPT best practices
-- **DeepMind** - Research updates
-- **Yannic Kilcher** - Paper reviews
-- **Two Minute Papers** - Rychlé přehledy
-
-### Čeština
-- **AlzaTech** - Praktické tutoriály
-- **AI Univerzita** - Základy AI
-- **David Grudl** - PHP/dev komunita
+| Kanál | Zaměření | Kvalita |
+|-------|----------|---------|
+| **AI Univerzita** (ChatBuilders) | Prompting, ChatGPT | ⭐⭐⭐⭐⭐ |
+| **David Ondrej** | Local AI, Claude | ⭐⭐⭐⭐⭐ |
+| **David Strejc** | Security, Red teaming | ⭐⭐⭐⭐ |
+| **AI s rozumem** | Ollama, lokální modely | ⭐⭐⭐⭐ |
 
 ---
 
-## 📝 Notes
-
-- Video musí mít min. 10k views a být max. 12 měsíců staré
-- Preferuj videa s titulky (cc_load_policy=1)
-- Vždy ověř embed před přidáním do kurzu
-
----
-
-*Poslední update: 2025-12-07 by Claude*
+*Last update: 2025-12-09*
