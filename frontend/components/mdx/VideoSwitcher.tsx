@@ -15,18 +15,6 @@ interface VideoSwitcherProps {
   videos: Video[];
 }
 
-// Access the global video registry
-declare global {
-  interface Window {
-    __videoRegistry?: {
-      videos: Video[];
-      listeners: Set<() => void>;
-      addVideos: (videos: Video[]) => void;
-      subscribe: (listener: () => void) => () => void;
-    };
-  }
-}
-
 /**
  * VideoSwitcher registers videos with the VideoPlayer via global registry.
  * Place this component in MDX content to add alternative videos.
@@ -37,8 +25,10 @@ export const VideoSwitcher = ({ videos: propVideos }: VideoSwitcherProps) => {
     if (propVideos && propVideos.length > 0 && typeof window !== 'undefined') {
       // Wait for registry to be initialized by VideoPlayer
       const tryRegister = () => {
-        if (window.__videoRegistry) {
-          window.__videoRegistry.addVideos(propVideos);
+        // Access registry with type assertion (defined in VideoPlayer.tsx)
+        const registry = (window as any).__videoRegistry;
+        if (registry && typeof registry.addVideos === 'function') {
+          registry.addVideos(propVideos);
         } else {
           // Retry in 100ms if registry not ready
           setTimeout(tryRegister, 100);

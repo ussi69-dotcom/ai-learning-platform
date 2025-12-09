@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocale } from 'next-intl';
 
 interface Video {
@@ -15,6 +15,8 @@ interface Video {
 interface VideoPlayerProps {
   fallbackUrl?: string;
   fallbackTitle?: string;
+  /** Unique lesson identifier to reset video registry on navigation */
+  lessonKey?: string;
 }
 
 // Global video registry for cross-component communication
@@ -22,7 +24,9 @@ declare global {
   interface Window {
     __videoRegistry?: {
       videos: Video[];
+      currentLessonKey: string | null;
       listeners: Set<() => void>;
+      reset: (lessonKey: string) => void;
       addVideos: (videos: Video[]) => void;
       subscribe: (listener: () => void) => () => void;
     };
@@ -35,7 +39,17 @@ function getVideoRegistry() {
   if (!window.__videoRegistry) {
     window.__videoRegistry = {
       videos: [],
+      currentLessonKey: null,
       listeners: new Set(),
+      reset: (lessonKey: string) => {
+        const registry = window.__videoRegistry!;
+        if (registry.currentLessonKey !== lessonKey) {
+          // Clear all videos when lesson changes
+          registry.videos = [];
+          registry.currentLessonKey = lessonKey;
+          registry.listeners.forEach(listener => listener());
+        }
+      },
       addVideos: (newVideos: Video[]) => {
         const registry = window.__videoRegistry!;
         newVideos.forEach(v => {
@@ -55,17 +69,32 @@ function getVideoRegistry() {
   return window.__videoRegistry;
 }
 
-export const VideoPlayer = ({ fallbackUrl, fallbackTitle }: VideoPlayerProps) => {
+export const VideoPlayer = ({ fallbackUrl, fallbackTitle, lessonKey }: VideoPlayerProps) => {
   const locale = useLocale();
   const [isPinned, setIsPinned] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const [videos, setVideos] = useState<Video[]>([]);
   const [, forceUpdate] = useState({});
+  const initializedRef = useRef(false);
+
+  // Reset registry when lesson changes
+  useEffect(() => {
+    const registry = getVideoRegistry();
+    if (registry && lessonKey) {
+      registry.reset(lessonKey);
+    }
+    // Reset local state
+    setActiveVideoId(null);
+    setVideos([]);
+    setIsPinned(false);
+    setIsExpanded(false);
+    initializedRef.current = false;
+  }, [lessonKey]);
 
   // Initialize with fallback video
   useEffect(() => {
-    if (fallbackUrl) {
+    if (fallbackUrl && !initializedRef.current) {
       const id = extractVideoId(fallbackUrl);
       if (id) {
         const registry = getVideoRegistry();
@@ -75,16 +104,17 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle }: VideoPlayerProps) =>
             title: fallbackTitle || 'Video',
             isMain: true
           };
+          // Add main video only if not already present
           if (!registry.videos.some(v => v.id === id)) {
             registry.videos.unshift(mainVideo);
+            registry.listeners.forEach(listener => listener());
           }
         }
-        if (!activeVideoId) {
-          setActiveVideoId(id);
-        }
+        setActiveVideoId(id);
+        initializedRef.current = true;
       }
     }
-  }, [fallbackUrl, fallbackTitle, activeVideoId]);
+  }, [fallbackUrl, fallbackTitle, lessonKey]);
 
   // Subscribe to video registry changes
   useEffect(() => {
@@ -98,7 +128,7 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle }: VideoPlayerProps) =>
 
     setVideos([...registry.videos]);
     return unsubscribe;
-  }, []);
+  }, [lessonKey]);
 
   const activeVideo = videos.find(v => v.id === activeVideoId) || videos[0];
   const alternativeVideos = videos.filter(v => v.id !== activeVideo?.id);
@@ -210,7 +240,6 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle }: VideoPlayerProps) =>
                   onSelect={() => {
                     setActiveVideoId(video.id);
                     setIsExpanded(false);
-                    // Scroll to top of video
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                 />
@@ -239,7 +268,6 @@ function VideoCard({ video, onSelect }: { video: Video; onSelect: () => void }) 
           alt={video.title}
           className="w-full h-full object-cover"
           onError={(e) => {
-            // Fallback to gradient if thumbnail fails
             (e.target as HTMLImageElement).style.display = 'none';
           }}
         />
@@ -250,7 +278,7 @@ function VideoCard({ video, onSelect }: { video: Video; onSelect: () => void }) 
           </div>
         </div>
         
-        {/* Duration badge placeholder */}
+        {/* Language flag */}
         <div className="absolute bottom-1 right-1 bg-black/80 text-white text-xs px-1 rounded">
           {video.lang === 'cs' ? '🇨🇿' : '🇬🇧'}
         </div>

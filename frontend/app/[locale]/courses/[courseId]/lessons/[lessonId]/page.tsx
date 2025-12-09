@@ -401,7 +401,8 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
           {/* Video Section - Now using VideoPlayer with context */}
           <VideoPlayer 
             fallbackUrl={lesson.video_url} 
-            fallbackTitle={lesson.title} 
+            fallbackTitle={lesson.title}
+            lessonKey={lessonId}
           />
 
           {/* Content Card */}
