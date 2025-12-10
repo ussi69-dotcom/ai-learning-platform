@@ -199,11 +199,11 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
   // Initialize cube positions
   useEffect(() => {
     const initStates = GLOSSARY_TERMS.map((_, i) => ({
-      x: 50 + (i % 6) * 120 + Math.random() * 40,
-      y: -100 - Math.random() * 300 - i * 30,
+      x: 30 + (i % 6) * 140 + Math.random() * 30,
+      y: -120 - Math.random() * 400 - i * 40,
       vx: (Math.random() - 0.5) * 2,
       vy: 0,
-      rotation: Math.random() * 360,
+      rotation: (Math.random() - 0.5) * 30, // Start nearly upright
     }));
     setCubeStates(initStates);
   }, []);
@@ -215,9 +215,9 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
     const gravity = 0.3;
     const friction = 0.98;
     const bounce = 0.6;
-    const groundY = 270; // Floor (container height - cube size - padding)
+    const groundY = 230; // Floor (container height - cube size - padding)
     const ceilingY = 5;  // Ceiling
-    const cubeSize = 80;
+    const cubeSize = 120; // 50% bigger
 
     const animate = () => {
       setCubeStates((prev) =>
@@ -235,7 +235,10 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
           vx *= friction;
 
           // Rotation based on velocity
-          rotation += vx * 2;
+          rotation += vx * 1.5;
+
+          // Heavy bottom - stabilize rotation towards 0 (upright)
+          rotation *= 0.95; // Damping towards 0
 
           // Ground collision
           if (y > groundY) {
@@ -361,8 +364,8 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
                   left: state.x,
                   top: state.y,
                   transform: `rotate(${state.rotation}deg)`,
-                  width: 80,
-                  height: 80,
+                  width: 120,
+                  height: 120,
                 }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -408,7 +411,7 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
                   {/* Term text */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span
-                      className="text-white font-bold text-xs md:text-sm drop-shadow-lg text-center px-1 leading-tight"
+                      className="text-white font-bold text-sm md:text-base drop-shadow-lg text-center px-2 leading-tight"
                       style={{
                         textShadow: `0 0 10px hsla(${term.hue}, 70%, 60%, 0.5)`,
                       }}
