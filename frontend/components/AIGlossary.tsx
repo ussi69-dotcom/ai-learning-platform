@@ -168,7 +168,33 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
   const [cubeStates, setCubeStates] = useState<CubeState[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
+  const lastScrollY = useRef<number>(0);
   const lang = locale === "cs" ? "cs" : "en";
+
+  // Scroll-based impulse
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY.current;
+
+      // Only react to significant scroll
+      if (Math.abs(delta) > 5) {
+        setCubeStates((prev) =>
+          prev.map((cube) => ({
+            ...cube,
+            // Scroll down = cubes pushed down, scroll up = cubes jump up
+            vy: cube.vy + (delta > 0 ? 2 : -4),
+            vx: cube.vx + (Math.random() - 0.5) * 1.5,
+          }))
+        );
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Initialize cube positions
   useEffect(() => {
