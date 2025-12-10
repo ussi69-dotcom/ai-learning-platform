@@ -20,8 +20,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "AI Learning Platform",
-  description: "Learn AI by doing - Duke Nukem style",
+  title: "AI Edutainment | Learn AI by Doing",
+  description: "Interactive AI learning platform - Master artificial intelligence through hands-on labs, curated videos, and gamified progression.",
 };
 
 export default async function LocaleLayout({
