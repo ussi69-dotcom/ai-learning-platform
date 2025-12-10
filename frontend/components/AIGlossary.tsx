@@ -182,9 +182,9 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
         setCubeStates((prev) =>
           prev.map((cube) => ({
             ...cube,
-            // Scroll down = cubes pushed down, scroll up = cubes jump up
-            vy: cube.vy + (delta > 0 ? 2 : -4),
-            vx: cube.vx + (Math.random() - 0.5) * 1.5,
+            // Scroll down = cubes pushed down, scroll up = cubes jump up (gentle)
+            vy: cube.vy + (delta > 0 ? 0.8 : -1.5),
+            vx: cube.vx + (Math.random() - 0.5) * 0.5,
           }))
         );
       }
@@ -215,7 +215,8 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
     const gravity = 0.3;
     const friction = 0.98;
     const bounce = 0.6;
-    const groundY = 180;
+    const groundY = 270; // Floor (container height - cube size - padding)
+    const ceilingY = 5;  // Ceiling
     const cubeSize = 80;
 
     const animate = () => {
@@ -247,6 +248,12 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
               vy = -Math.random() * 3 - 1;
               vx += (Math.random() - 0.5) * 2;
             }
+          }
+
+          // Ceiling collision - don't fly out the top
+          if (y < ceilingY) {
+            y = ceilingY;
+            vy = Math.abs(vy) * bounce; // Bounce down
           }
 
           // Wall collisions
@@ -329,7 +336,7 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
         {/* Physics Container */}
         <div
           ref={containerRef}
-          className="relative h-[280px] w-full overflow-hidden rounded-xl bg-gradient-to-b from-slate-800/30 to-slate-900/50 border border-white/5"
+          className="relative h-[360px] w-full overflow-hidden rounded-xl bg-gradient-to-b from-slate-800/30 to-slate-900/50 border border-white/5"
           style={{
             background: "linear-gradient(180deg, rgba(15,23,42,0.3) 0%, rgba(15,23,42,0.6) 100%)",
           }}
