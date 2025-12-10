@@ -14,6 +14,7 @@ import FeedbackMarker from "@/components/FeedbackMarker";
 import DifficultyIcon from "@/components/DifficultyIcon";
 import SystemStatus from "@/components/SystemStatus";
 import ABTestShowcase from "@/components/ABTestShowcase";
+import AIGlossary from "@/components/AIGlossary";
 import { useLocale, useTranslations } from "next-intl";
 import { Rocket, Info, Code2, Zap, Users, GitBranch, Play, Video, Clipboard, Bot, Star, Construction } from "lucide-react";
 
@@ -499,6 +500,9 @@ export default function HomePage() {
           </div>
         )}
       </section>
+
+      {/* AI Glossary - Interactive Terms */}
+      <AIGlossary locale={locale} />
 
       {/* Benefits Section - Edutainment Enhanced */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900/50 dark:to-background border-t border-b border-border/50">
