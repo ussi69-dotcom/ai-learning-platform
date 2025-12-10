@@ -95,34 +95,98 @@ docker compose build --no-cache frontend
 
 ## 📊 Current State Snapshot
 
-### Cycle: 48 (Lesson 01 Complete)
+### Cycle: 49 (XP Level System Complete)
 
-**Status:** 🟢 READY - Čekám na pokyn pro další akci
+**Status:** 🟢 READY - XP-based leveling deployed
 
 ### Completed
 
-| Item                            | Status                   |
-| ------------------------------- | ------------------------ |
-| Lesson 01: Prompt Architecture  | ✅ Committed (`9f0ef99`) |
-| Gemini MCP OAuth                | ✅ Fixed (user re-auth)  |
-| Course Restructure (11 lessons) | ✅ Done                  |
+| Item | Status |
+|------|--------|
+| XP-Based Level System | ✅ Committed (`3cfb14a`) |
+| Content Loader Orphan Cleanup | ✅ Committed (`ba46cb1`) |
+| Under Construction Banner | ✅ Committed (`85794eb`) |
+| Page Title Update | ✅ Committed (`7f44f73`) |
+| Edutainment v3.0 (11 lessons) | ✅ Done |
 
 ### Pending
 
-| Item                              | Status                   |
-| --------------------------------- | ------------------------ |
-| Lesson 02-11                      | ⏳ Awaiting instructions |
-| Diagram `prompt-architecture` SVG | ⚠️ Tech debt             |
+| Item | Status |
+|------|--------|
+| Courses 3 & 4 content | 🚧 Under Construction |
+| SVG Diagrams | ⚠️ Tech debt (optional) |
 
-### Recent Changes (2025-12-06)
+### Recent Changes (2025-12-10)
 
-- [FEAT] Lesson 01 complete (EN + CS + quiz)
-- [FIX] Gemini MCP OAuth restored
-- [RULE] Big actions require explicit user permission
+- [FEAT] XP-based automatic leveling (no manual difficulty selection)
+- [FEAT] Level-up celebration modal with confetti
+- [FEAT] "Recommended" badge for courses matching level
+- [FEAT] "Under Construction" banner for courses 3 & 4
+- [FIX] Content loader auto-cleans orphaned lessons
+- [FIX] Pre-commit hook uses Docker for typecheck
 
 ---
 
 ## 📝 Lessons Learned
+
+### 2025-12-10: XP-Based Level System (Difficulty Refactor) 🎮
+
+**Co se změnilo:**
+- Uživatelé si už nevybírají difficulty při registraci (automaticky PIECE_OF_CAKE)
+- Level se počítá automaticky z XP: 0/500/2000/5000
+- Všechny kurzy jsou viditelné pro všechny (žádné zamykání)
+- "Recommended" badge ukazuje kurzy odpovídající úrovni
+- Level-up celebration modal s confetti při povýšení
+
+**Technické detaily:**
+```python
+# backend/app/models.py
+XP_THRESHOLDS = {
+    PIECE_OF_CAKE: 0,      # 0 - 499 XP
+    LETS_ROCK: 500,        # 500 - 1999 XP
+    COME_GET_SOME: 2000,   # 2000 - 4999 XP
+    DAMN_IM_GOOD: 5000,    # 5000+ XP
+}
+```
+
+**Pydantic computed fields:**
+```python
+@computed_field
+@property
+def calculated_level(self) -> str:
+    return calculate_level_from_xp(self.xp).value
+```
+
+**Frontend level-up detection:**
+- AuthContext sleduje `previousLevel` vs `calculated_level`
+- Při změně nahoru → zobrazí LevelUpModal s confetti
+
+### 2025-12-10: Content Loader - Orphan Cleanup 🗑️
+
+**Problém:** Staré placeholder lekce (01-patterns, 02-context) zůstávaly v DB i když content soubory neexistovaly.
+
+**Řešení:** content_loader nyní automaticky maže osiřelé lekce:
+```python
+# Po zpracování všech lekcí kurzu
+existing_lessons = db.query(Lesson).filter(Lesson.course_id == course.id).all()
+for lesson in existing_lessons:
+    if lesson.slug not in processed_slugs:
+        # Delete orphan + related UserProgress + Quizzes
+        db.delete(lesson)
+```
+
+### 2025-12-10: Pre-commit Hook + Docker 🐳
+
+**Problém:** Lokální node_modules měly špatná oprávnění (root-owned z Docker buildu).
+
+**Řešení:** Pre-commit hook nyní používá Docker pro typecheck:
+```bash
+if docker compose ps frontend --quiet 2>/dev/null; then
+  docker compose exec -T frontend npm run typecheck
+else
+  cd frontend && npm run typecheck
+fi
+```
 
 ### 2025-12-10: CVE-2025-55182 (React2Shell) Response 🚨
 
@@ -512,4 +576,4 @@ content/courses/practical-prompt-engineering/lessons/
 
 ---
 
-_Last updated: 2025-12-10 (Dependabot + npm audit CI setup)_
+_Last updated: 2025-12-10 22:30 (XP Level System + UI Updates)_
