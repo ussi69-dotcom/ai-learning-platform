@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-10 23:45 (Agent: Claude Code)
-**Last Commit:** `087097d` feat: AI Glossary with physics simulation and glass effect
-**Status:** 🟢 READY - AI Glossary Complete
+**Last Updated:** 2025-12-11 00:30 (Agent: Claude Code)
+**Last Commit:** `e474ea1` feat: AI Glossary - 50% bigger cubes with heavy bottom stabilization
+**Status:** 🟢 READY - AI Glossary v2 Complete
 
 ---
 
@@ -12,12 +12,32 @@
 
 | Task | Status | Commit |
 |------|--------|--------|
-| AI Glossary (Physics + Glass) | ✅ Done | `087097d` |
+| AI Glossary v2 (bigger + scroll + stabilization) | ✅ Done | `e474ea1` |
+| AI Glossary v1 (Physics + Glass) | ✅ Done | `087097d` |
 | XP-Based Level System | ✅ Done | `3cfb14a` |
 | Content Loader Orphan Cleanup | ✅ Done | `ba46cb1` |
 | Under Construction Banner (courses 3&4) | ✅ Done | `85794eb` |
 | Page Title (AI Edutainment) | ✅ Done | `7f44f73` |
-| Pre-commit Hook (Docker) | ✅ Done | `3cfb14a` |
+
+### AI Glossary Summary
+
+**Features:**
+- 12 bouncing ice cubes with AI terms (bilingual EN/CS)
+- Real physics: gravity, friction, bounce, collision detection
+- Glass morphism styling with backdrop-blur + hue-based colors
+- Scroll reaction: scroll down → cubes fall, scroll up → cubes jump
+- Heavy bottom stabilization: rotation tends to 0 (text upright)
+- Click → modal with definition + link to lesson
+
+**Technical:**
+- 120px cubes (50% bigger than original)
+- framer-motion for animations
+- requestAnimationFrame physics loop
+- Ceiling collision prevents flying out
+
+**File:** `frontend/components/AIGlossary.tsx`
+
+---
 
 ### XP-Based Level System Summary
 
@@ -83,10 +103,10 @@
 
 | Date | Agent | What |
 |------|-------|------|
-| 2025-12-10 | Claude | **AI Glossary** - 12 physics-based bouncing glass cubes, framer-motion |
+| 2025-12-11 | Claude | **AI Glossary v2** - 120px cubes, scroll reaction, heavy bottom |
+| 2025-12-10 | Claude | **AI Glossary v1** - physics, glass effect, 12 terms |
 | 2025-12-10 | Claude | **XP Level System** - Full difficulty refactor, level-up modal |
 | 2025-12-10 | Claude | **UI Updates** - Under Construction banner, page title |
-| 2025-12-10 | Claude | **UX Polish** - About button pulsing AI icon, FeedbackFAB unified |
 | 2025-12-09 | Claude | **Practical PE L01-L05 ALL DONE** - Full Edutainment upgrade |
 
 ---
@@ -105,4 +125,4 @@
 ---
 
 _This file is the SINGLE SOURCE OF TRUTH for current project state._
-_Updated by: Claude Code (2025-12-10 22:30)_
+_Updated by: Claude Code (2025-12-11 00:30)_
