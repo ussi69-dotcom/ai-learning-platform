@@ -15,7 +15,7 @@ import DifficultyIcon from "@/components/DifficultyIcon";
 import SystemStatus from "@/components/SystemStatus";
 import ABTestShowcase from "@/components/ABTestShowcase";
 import { useLocale, useTranslations } from "next-intl";
-import { Rocket, Info, Code2, Zap, Users, GitBranch, Play, Video, Clipboard, Bot, Star } from "lucide-react";
+import { Rocket, Info, Code2, Zap, Users, GitBranch, Play, Video, Clipboard, Bot, Star, Construction } from "lucide-react";
 
 type FeedbackMode = "idle" | "placing" | "viewing";
 
@@ -391,13 +391,33 @@ export default function HomePage() {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => {
               const isRecommended = course.difficulty_level === user.calculated_level;
+              const isUnderConstruction = course.id === 3 || course.id === 4;
               return (
                 <Card
                   key={course.id}
-                  className={`hover:border-primary/50 transition-all duration-300 group overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm ${
+                  className={`hover:border-primary/50 transition-all duration-300 group overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm relative ${
                     isRecommended ? "ring-2 ring-yellow-500/50 dark:ring-yellow-400/50" : ""
-                  }`}
+                  } ${isUnderConstruction ? "opacity-75" : ""}`}
                 >
+                  {/* Under Construction Overlay */}
+                  {isUnderConstruction && (
+                    <div className="absolute inset-0 z-20 bg-gradient-to-br from-amber-500/90 to-orange-600/90 dark:from-amber-600/90 dark:to-orange-700/90 flex flex-col items-center justify-center text-white backdrop-blur-sm">
+                      <div className="text-6xl mb-4 animate-bounce">🤖</div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Construction className="w-6 h-6" />
+                        <span className="text-xl font-bold">
+                          {locale === "cs" ? "Ve výstavbě" : "Under Construction"}
+                        </span>
+                        <Construction className="w-6 h-6" />
+                      </div>
+                      <p className="text-sm text-white/80 text-center px-4">
+                        {locale === "cs"
+                          ? "Náš robot pilně pracuje na tomto kurzu!"
+                          : "Our robot is working hard on this course!"}
+                      </p>
+                      <div className="mt-3 text-2xl">🔧⚙️🛠️</div>
+                    </div>
+                  )}
                   {/* Course Image / Icon Area */}
                   <div className="h-48 w-full bg-transparent relative p-4 flex items-center justify-center overflow-hidden">
                     <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity">
