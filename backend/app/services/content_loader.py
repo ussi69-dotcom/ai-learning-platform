@@ -2,7 +2,7 @@ import json
 import logging
 from pathlib import Path
 from sqlalchemy.orm import Session
-from app.models import Course, Lesson, Quiz, DifficultyLevel
+from app.models import Course, Lesson, Quiz, DifficultyLevel, UserProgress
 
 logger = logging.getLogger(__name__)
 
@@ -64,18 +64,34 @@ class ContentLoader:
 
         # Process Lessons
         lessons_dir = course_dir / "lessons"
+        processed_slugs = set()
         if lessons_dir.exists():
             for lesson_dir in sorted(lessons_dir.iterdir()):
                 if lesson_dir.is_dir():
-                    self._process_lesson(db, lesson_dir, course.id)
+                    slug = self._process_lesson(db, lesson_dir, course.id)
+                    if slug:
+                        processed_slugs.add(slug)
 
-    def _process_lesson(self, db: Session, lesson_dir: Path, course_id: int):
+        # Cleanup orphaned lessons (exist in DB but not in content)
+        existing_lessons = db.query(Lesson).filter(Lesson.course_id == course.id).all()
+        for lesson in existing_lessons:
+            if lesson.slug not in processed_slugs:
+                logger.info(f"  🗑️  Deleting orphaned lesson: {lesson.slug}")
+                # Delete related user progress first
+                db.query(UserProgress).filter(UserProgress.lesson_id == lesson.id).delete()
+                # Delete related quizzes
+                db.query(Quiz).filter(Quiz.lesson_id == lesson.id).delete()
+                db.delete(lesson)
+        db.commit()
+
+    def _process_lesson(self, db: Session, lesson_dir: Path, course_id: int) -> str | None:
+        """Process a lesson directory and return its slug, or None if skipped."""
         meta_path = lesson_dir / "meta.json"
         content_path = lesson_dir / "content.mdx"
         content_cs_path = lesson_dir / "content.cs.mdx"
-        
+
         if not meta_path.exists() or not content_path.exists():
-            return
+            return None
 
         with open(meta_path, "r", encoding="utf-8") as f:
             meta = json.load(f)
@@ -162,6 +178,8 @@ class ContentLoader:
         quiz_path = lesson_dir / "quiz.json"
         if quiz_path.exists():
             self._process_quizzes(db, quiz_path, lesson.id)
+
+        return lesson_dir.name  # Return slug for tracking
 
     def _process_quizzes(self, db: Session, quiz_path: Path, lesson_id: int):
         with open(quiz_path, "r", encoding="utf-8") as f:
