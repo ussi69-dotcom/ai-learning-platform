@@ -1,18 +1,23 @@
 # 💡 Ideas & Feature Requests
 
-## 🏠 Home Page
+## ✅ Completed
 
-- **Interactive AI Glossary**:
-  - Animated "jumping cubes/blocks" with AI terms.
-  - Interactive physics (elements moving/bouncing).
-  - Click behavior: Opens explanation + link to relevant lesson.
-  - Goal: Immediate engagement "in motion".
+### 🏠 Interactive AI Glossary (Dec 10, 2025)
+- ✅ Animated bouncing cubes with AI terms
+- ✅ Click → Modal popup with definition + lesson link
+- ✅ 8 terms: LLM, Prompt, Hallucination, Neural Net, RAG, Token, Fine-tuning, AI Agent
+- ✅ Bilingual (EN/CS)
+- Commit: `d044364`
 
-## 🎮 Gamification & Progression
+### 🎮 XP-Based Level System (Dec 10, 2025)
+- ✅ Removed explicit difficulty selection
+- ✅ "Recommended" badge based on XP level
+- ✅ Level-up celebration modal with confetti
+- Commit: `3cfb14a`
 
-- **Difficulty Selection**: Remove explicit choice.
-- **Recommended Difficulty**: Show "Recommended" tag based on user level/profile.
-- **Progression**: Next recommended level/content is revealed as the avatar levels up.
+---
+
+## 📋 Pending
 
 ## 📰 News & Updates
 
