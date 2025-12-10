@@ -10,17 +10,18 @@ router = APIRouter()
 
 @router.get("/courses/", response_model=List[schemas.Course])
 def read_courses(
-    skip: int = 0, 
-    limit: int = 100, 
+    skip: int = 0,
+    limit: int = 100,
     lang: str = "en",
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
-    # Filter courses by user's difficulty level
+    # Return ALL courses (no difficulty filtering - user sees everything)
+    # Frontend will show "Recommended" badge based on calculated_level
     courses = db.query(models.Course)\
-        .filter(models.Course.difficulty_level == current_user.difficulty)\
+        .order_by(models.Course.difficulty_level)\
         .offset(skip).limit(limit).all()
-    
+
     if lang == "cs":
         for course in courses:
             if course.title_cs:
@@ -41,9 +42,7 @@ def read_course(
     if course is None:
         raise HTTPException(status_code=404, detail="Course not found")
 
-    # Check if course matches user's difficulty level
-    if course.difficulty_level != current_user.difficulty:
-        raise HTTPException(status_code=403, detail="You don't have access to this course")
+    # All courses are accessible (no difficulty restriction)
 
     if lang == "cs":
         # Localize course

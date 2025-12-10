@@ -10,6 +10,33 @@ class DifficultyLevel(str, enum.Enum):
     COME_GET_SOME = "COME_GET_SOME"
     DAMN_IM_GOOD = "DAMN_IM_GOOD"
 
+# XP thresholds for automatic level calculation
+XP_THRESHOLDS = {
+    DifficultyLevel.PIECE_OF_CAKE: 0,      # 0 - 499 XP
+    DifficultyLevel.LETS_ROCK: 500,        # 500 - 1999 XP
+    DifficultyLevel.COME_GET_SOME: 2000,   # 2000 - 4999 XP
+    DifficultyLevel.DAMN_IM_GOOD: 5000,    # 5000+ XP
+}
+
+def calculate_level_from_xp(xp: int) -> DifficultyLevel:
+    """Calculate user's difficulty level based on their XP."""
+    if xp >= XP_THRESHOLDS[DifficultyLevel.DAMN_IM_GOOD]:
+        return DifficultyLevel.DAMN_IM_GOOD
+    elif xp >= XP_THRESHOLDS[DifficultyLevel.COME_GET_SOME]:
+        return DifficultyLevel.COME_GET_SOME
+    elif xp >= XP_THRESHOLDS[DifficultyLevel.LETS_ROCK]:
+        return DifficultyLevel.LETS_ROCK
+    else:
+        return DifficultyLevel.PIECE_OF_CAKE
+
+def get_next_level_xp(current_level: DifficultyLevel) -> int:
+    """Get XP needed for next level. Returns -1 if max level."""
+    levels = list(DifficultyLevel)
+    current_idx = levels.index(current_level)
+    if current_idx >= len(levels) - 1:
+        return -1  # Already at max level
+    return XP_THRESHOLDS[levels[current_idx + 1]]
+
 class User(Base):
     __tablename__ = "users"
 

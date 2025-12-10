@@ -7,6 +7,7 @@ import "../globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import NavBar from "@/components/NavBar";
 import ScrollToTop from "@/components/ScrollToTop";
+import LevelUpProvider from "@/components/LevelUpProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,6 +51,7 @@ export default async function LocaleLayout({
           <AuthProvider>
             <NavBar />
             <ScrollToTop />
+            <LevelUpProvider />
             {children}
           </AuthProvider>
         </NextIntlClientProvider>

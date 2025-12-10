@@ -1,41 +1,31 @@
 "use client";
 
 import { useState } from 'react';
-import { useRouter } from '@/i18n/routing'; // Updated import
-import { Link } from '@/i18n/routing'; // Updated import
+import { useRouter } from '@/i18n/routing';
+import { Link } from '@/i18n/routing';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import AvatarSelector from '@/components/AvatarSelector';
 import { useTranslations, useLocale } from 'next-intl';
 import { getErrorMessage } from '@/lib/utils';
-import { CheckCircle, XCircle } from 'lucide-react'; // Import icons
-import DifficultyIcon from '@/components/DifficultyIcon';
+import { CheckCircle, XCircle } from 'lucide-react';
 
-const MIN_PASSWORD_LENGTH = 8; // Define minimum password length
+const MIN_PASSWORD_LENGTH = 8;
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [difficulty, setDifficulty] = useState('LETS_ROCK');
-  const [avatar, setAvatar] = useState('jedi_1'); // Default avatar
+  const [avatar, setAvatar] = useState('jedi_1');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const { register } = useAuth();
   const router = useRouter();
   const t = useTranslations('Auth');
   const tCommon = useTranslations('Common');
   const locale = useLocale();
-
-  // Ideally move this to messages.json, but for now logic is here
-  const DIFFICULTY_LEVELS = [
-    { value: 'PIECE_OF_CAKE', label: 'Piece of Cake', description: locale === 'cs' ? 'Snadný režim pro začátečníky' : 'Easy mode for beginners' },
-    { value: 'LETS_ROCK', label: 'Let\'s Rock', description: locale === 'cs' ? 'Normální obtížnost' : 'Normal difficulty' },
-    { value: 'COME_GET_SOME', label: 'Come Get Some', description: locale === 'cs' ? 'Těžký režim pro zkušené' : 'Hard mode for experienced learners' },
-    { value: 'DAMN_IM_GOOD', label: 'Damn I\'m Good', description: locale === 'cs' ? 'Expert mód - žádná pomoc' : 'Expert mode - no hand-holding' },
-  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,9 +52,9 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      await register(email, password, difficulty, avatar);
-      // Redirect to login with a success message
-      router.push('/login?registered=true'); 
+      // New users start at PIECE_OF_CAKE, level up automatically via XP
+      await register(email, password, 'PIECE_OF_CAKE', avatar);
+      router.push('/login?registered=true');
     } catch (err: any) {
       setError(getErrorMessage(err, tCommon('error')));
     } finally {
@@ -162,38 +152,6 @@ export default function RegisterPage() {
                 className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400"
                 placeholder="••••••••"
               />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                {locale === 'cs' ? 'Obtížnost' : 'Difficulty Level'}
-              </label>
-              <div className="space-y-2">
-                {DIFFICULTY_LEVELS.map((level) => (
-                  <label
-                    key={level.value}
-                    className={`flex items-start p-3 border rounded-lg cursor-pointer transition-colors ${difficulty === level.value
-                        ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 dark:border-indigo-400'
-                        : 'border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500 dark:bg-slate-800'}`}
-                  >
-                    <input
-                      type="radio"
-                      name="difficulty"
-                      value={level.value}
-                      checked={difficulty === level.value}
-                      onChange={(e) => setDifficulty(e.target.value)}
-                      className="mt-1 mr-3"
-                    />
-                    <div className="flex-1">
-                      <div className="font-medium text-slate-900 dark:text-white flex items-center gap-2">
-                        <DifficultyIcon level={level.value} size={18} />
-                        {level.label}
-                      </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-400">{level.description}</div>
-                    </div>
-                  </label>
-                ))}
-              </div>
             </div>
 
             <Button 

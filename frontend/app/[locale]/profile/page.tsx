@@ -22,9 +22,7 @@ export default function ProfilePage() {
   const router = useRouter();
   const locale = useLocale();
 
-  const [isEditingDifficulty, setIsEditingDifficulty] = useState(false);
   const [isEditingAvatar, setIsEditingAvatar] = useState(false);
-  const [selectedDifficulty, setSelectedDifficulty] = useState(user?.difficulty || 'LETS_ROCK');
   const [isUpdating, setIsUpdating] = useState(false);
 
   // Delete Account State
@@ -38,29 +36,6 @@ export default function ProfilePage() {
     { value: 'COME_GET_SOME', label: 'Come Get Some' },
     { value: 'DAMN_IM_GOOD', label: 'Damn I\'m Good' },
   ];
-
-  const handleUpdateDifficulty = async () => {
-    if (!user || selectedDifficulty === user.difficulty) {
-      setIsEditingDifficulty(false);
-      return;
-    }
-
-    setIsUpdating(true);
-    try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      await axios.put(
-        `${API_BASE}/users/me/difficulty`,
-        { difficulty: selectedDifficulty },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      await refreshUser();
-      setIsEditingDifficulty(false);
-    } catch (error) {
-      console.error('Failed to update difficulty', error);
-    } finally {
-      setIsUpdating(false);
-    }
-  };
 
   const handleUpdateAvatar = async (avatarId: string) => {
     setIsUpdating(true);
@@ -230,57 +205,50 @@ export default function ProfilePage() {
             </Card>
           )}
 
-          {/* Difficulty Settings */}
+          {/* Level Display (XP-based, read-only) */}
           <Card className="dark:bg-slate-900/50 dark:border-slate-800 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <Settings className="w-5 h-5 text-slate-500" />
-                {t('difficulty_level')}
+                <Trophy className="w-5 h-5 text-yellow-500" />
+                {locale === 'cs' ? 'Tvoje úroveň' : 'Your Level'}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {!isEditingDifficulty ? (
-                <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700/50 transition-colors hover:border-indigo-500/30 dark:hover:border-red-500/30">
-                  <div className="flex items-center gap-3">
-                    <DifficultyIcon level={user.difficulty} />
-                    <span className="font-medium">{DIFFICULTY_LEVELS.find(l => l.value === user.difficulty)?.label}</span>
-                  </div>
-                  <Button variant="ghost" size="sm" onClick={() => {
-                    setSelectedDifficulty(user.difficulty);
-                    setIsEditingDifficulty(true);
-                  }}>
-                    Edit
-                  </Button>
+              <div className="p-4 bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-xl border border-yellow-200 dark:border-yellow-800/50">
+                <div className="flex items-center gap-3 mb-3">
+                  <DifficultyIcon level={user.calculated_level} size={28} />
+                  <span className="text-xl font-bold">{DIFFICULTY_LEVELS.find(l => l.value === user.calculated_level)?.label}</span>
                 </div>
-              ) : (
-                <div className="space-y-3 animate-in fade-in slide-in-from-top-2">
-                  {DIFFICULTY_LEVELS.map((level) => (
-                    <div
-                      key={level.value}
-                      className={cn(
-                        "flex items-center gap-3 p-3 rounded-xl cursor-pointer border transition-all duration-200",
-                        selectedDifficulty === level.value
-                          ? 'border-indigo-500 bg-indigo-50 dark:border-red-500 dark:bg-red-900/20 shadow-sm'
-                          : 'border-transparent hover:bg-slate-100 dark:hover:bg-slate-800'
-                      )}
-                      onClick={() => setSelectedDifficulty(level.value)}
-                    >
-                      <DifficultyIcon level={level.value} size={20} />
-                      <span className="text-sm font-medium">{level.label}</span>
+                {/* XP Progress to next level */}
+                {user.next_level_xp > 0 ? (
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm text-slate-600 dark:text-slate-400">
+                      <span>{user.xp} XP</span>
+                      <span>{user.next_level_xp} XP</span>
                     </div>
-                  ))}
-                  <div className="flex gap-2 pt-2">
-                    <Button size="sm" className="flex-1 bg-indigo-600 hover:bg-indigo-700 dark:bg-red-600 dark:hover:bg-red-700" onClick={handleUpdateDifficulty} disabled={isUpdating}>
-                      {isUpdating ? t('updating') : tCommon('save')}
-                    </Button>
-                    <Button size="sm" variant="ghost" className="flex-1" onClick={() => setIsEditingDifficulty(false)}>
-                      {tCommon('cancel')}
-                    </Button>
+                    <Progress
+                      value={((user.xp - user.xp_for_current_level) / (user.next_level_xp - user.xp_for_current_level)) * 100}
+                      className="h-2"
+                    />
+                    <p className="text-xs text-slate-500 text-center">
+                      {locale === 'cs'
+                        ? `${user.next_level_xp - user.xp} XP do další úrovně`
+                        : `${user.next_level_xp - user.xp} XP to next level`}
+                    </p>
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div className="flex items-center gap-2 text-yellow-600 dark:text-yellow-400">
+                    <Crown className="w-4 h-4" />
+                    <span className="text-sm font-medium">
+                      {locale === 'cs' ? 'Maximální úroveň dosažena!' : 'Maximum level reached!'}
+                    </span>
+                  </div>
+                )}
+              </div>
               <p className="text-xs text-slate-500 px-1">
-                {t('difficulty_desc')}
+                {locale === 'cs'
+                  ? 'Úroveň se automaticky zvyšuje s tvými XP. Dokončuj lekce, laby a kvízy pro získání XP!'
+                  : 'Level increases automatically with your XP. Complete lessons, labs, and quizzes to earn XP!'}
               </p>
             </CardContent>
           </Card>

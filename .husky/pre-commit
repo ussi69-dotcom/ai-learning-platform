@@ -1,4 +1,9 @@
 #!/bin/sh
 
-# Run frontend type check and lint on staged files
-cd frontend && npm run typecheck
+# Run frontend type check via Docker (more reliable with volume mounts)
+# Falls back to local npm if Docker is not available
+if docker compose ps frontend --quiet 2>/dev/null; then
+  docker compose exec -T frontend npm run typecheck
+else
+  cd frontend && npm run typecheck
+fi

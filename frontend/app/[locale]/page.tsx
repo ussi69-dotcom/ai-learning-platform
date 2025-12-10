@@ -15,7 +15,7 @@ import DifficultyIcon from "@/components/DifficultyIcon";
 import SystemStatus from "@/components/SystemStatus";
 import ABTestShowcase from "@/components/ABTestShowcase";
 import { useLocale, useTranslations } from "next-intl";
-import { Rocket, Info, Code2, Zap, Users, GitBranch, Play, Video, Clipboard, Bot } from "lucide-react";
+import { Rocket, Info, Code2, Zap, Users, GitBranch, Play, Video, Clipboard, Bot, Star } from "lucide-react";
 
 type FeedbackMode = "idle" | "placing" | "viewing";
 
@@ -354,21 +354,19 @@ export default function HomePage() {
 
       {/* Seznam Kurzů */}
       <section className="w-full py-12 md:py-24 container px-4 mx-auto">
-        <h2 className="text-3xl font-bold mb-8">
-          {user ? (
-            <span className="flex items-center gap-2">
-              {locale === "cs" ? "Kurzy pro " : "Courses for "}
-              <span className="inline-flex items-center gap-1 text-purple-600 dark:text-red-500">
-                <DifficultyIcon level={user.difficulty} size={24} />
-                {DIFFICULTY_LABELS[user.difficulty]}
-              </span>
-            </span>
-          ) : locale === "cs" ? (
-            "Dostupné kurzy"
-          ) : (
-            "Available Courses"
-          )}
+        <h2 className="text-3xl font-bold mb-4">
+          {locale === "cs" ? "Všechny kurzy" : "All Courses"}
         </h2>
+        {user && (
+          <p className="text-muted-foreground mb-8 flex items-center gap-2">
+            {locale === "cs" ? "Tvoje úroveň: " : "Your level: "}
+            <span className="inline-flex items-center gap-1 text-purple-600 dark:text-red-500 font-medium">
+              <DifficultyIcon level={user.calculated_level} size={18} />
+              {DIFFICULTY_LABELS[user.calculated_level]}
+            </span>
+            <span className="text-sm">({user.xp} XP)</span>
+          </p>
+        )}
 
         {error && (
           <div className="p-4 border border-destructive bg-destructive/10 text-destructive rounded-lg mb-6">
@@ -385,91 +383,99 @@ export default function HomePage() {
             </p>
             <p className="text-sm">
               {locale === "cs"
-                ? "Kurzy jsou personalizované podle vaší obtížnosti"
-                : "Courses are personalized based on your difficulty level"}
+                ? "Kurzy jsou doporučovány podle vaší úrovně"
+                : "Courses are recommended based on your level"}
             </p>
           </div>
-        ) : (
+        ) : courses.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {courses.filter((c) => c.difficulty_level === user.difficulty)
-              .length > 0 ? (
-              courses
-                .filter((c) => c.difficulty_level === user.difficulty)
-                .map((course) => (
-                  <Card
-                    key={course.id}
-                    className="hover:border-primary/50 transition-all duration-300 group overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm"
-                  >
-                    {/* Course Image / Icon Area */}
-                    <div className="h-48 w-full bg-transparent relative p-4 flex items-center justify-center overflow-hidden">
-                      <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity">
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.3),transparent_50%)]" />
-                      </div>
-                      <div className="absolute inset-0 w-full h-full flex items-center justify-center transform group-hover:scale-105 transition-transform duration-500">
-                        <CourseIcon
-                          courseId={course.id}
-                          slug={course.slug}
-                          imageUrl={course.image_url}
-                          objectFit="cover"
-                        />
-                      </div>
-                      <span className="absolute top-3 right-3 text-[10px] font-bold bg-black/50 backdrop-blur-md text-white px-2 py-1 rounded-full border border-white/10 flex items-center gap-1">
-                        <DifficultyIcon
-                          level={course.difficulty_level}
-                          size={12}
-                          className="text-white"
-                        />
-                        {DIFFICULTY_LABELS[course.difficulty_level]}
-                      </span>
+            {courses.map((course) => {
+              const isRecommended = course.difficulty_level === user.calculated_level;
+              return (
+                <Card
+                  key={course.id}
+                  className={`hover:border-primary/50 transition-all duration-300 group overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm ${
+                    isRecommended ? "ring-2 ring-yellow-500/50 dark:ring-yellow-400/50" : ""
+                  }`}
+                >
+                  {/* Course Image / Icon Area */}
+                  <div className="h-48 w-full bg-transparent relative p-4 flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity">
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.3),transparent_50%)]" />
                     </div>
+                    <div className="absolute inset-0 w-full h-full flex items-center justify-center transform group-hover:scale-105 transition-transform duration-500">
+                      <CourseIcon
+                        courseId={course.id}
+                        slug={course.slug}
+                        imageUrl={course.image_url}
+                        objectFit="cover"
+                      />
+                    </div>
+                    {/* Recommended badge */}
+                    {isRecommended && (
+                      <span className="absolute top-3 left-3 text-[10px] font-bold bg-yellow-500 text-black px-2 py-1 rounded-full flex items-center gap-1 shadow-lg">
+                        <Star size={10} fill="currentColor" />
+                        {locale === "cs" ? "Doporučeno" : "Recommended"}
+                      </span>
+                    )}
+                    {/* Difficulty badge */}
+                    <span className="absolute top-3 right-3 text-[10px] font-bold bg-black/50 backdrop-blur-md text-white px-2 py-1 rounded-full border border-white/10 flex items-center gap-1">
+                      <DifficultyIcon
+                        level={course.difficulty_level}
+                        size={12}
+                        className="text-white"
+                      />
+                      {DIFFICULTY_LABELS[course.difficulty_level]}
+                    </span>
+                  </div>
 
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-xl">
-                        <Link
-                          href={`/courses/${course.id}`}
-                          className="hover:text-primary transition-colors"
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-xl">
+                      <Link
+                        href={`/courses/${course.id}`}
+                        className="hover:text-primary transition-colors"
+                      >
+                        {course.title}
+                      </Link>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-6 text-sm line-clamp-2 h-[40px]">
+                      {course.description || "No description available."}
+                    </p>
+                    <div className="flex justify-between items-center pt-4 border-t border-border/50">
+                      <span className="text-xs text-muted-foreground font-mono">
+                        ID: {course.id}
+                      </span>
+
+                      <Link href={`/courses/${course.id}`}>
+                        <Button
+                          size="sm"
+                          className="bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none"
                         >
-                          {course.title}
-                        </Link>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground mb-6 text-sm line-clamp-2 h-[40px]">
-                        {course.description || "No description available."}
-                      </p>
-                      <div className="flex justify-between items-center pt-4 border-t border-border/50">
-                        <span className="text-xs text-muted-foreground font-mono">
-                          ID: {course.id}
-                        </span>
-
-                        <Link href={`/courses/${course.id}`}>
-                          <Button
-                            size="sm"
-                            className="bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none"
-                          >
-                            {locale === "cs"
-                              ? "Začít kurz →"
-                              : "Start Course →"}
-                          </Button>
-                        </Link>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-            ) : (
-              <div className="col-span-3 p-12 border-2 border-dashed border-border rounded-xl text-center text-muted-foreground glass-panel">
-                <p>
-                  {locale === "cs"
-                    ? "Pro vaši obtížnost zatím nejsou dostupné žádné kurzy."
-                    : "No courses available for your difficulty level yet."}
-                </p>
-                <p className="text-sm mt-2">
-                  {locale === "cs"
-                    ? "Zkuste to brzy znovu!"
-                    : "Check back soon!"}
-                </p>
-              </div>
-            )}
+                          {locale === "cs"
+                            ? "Začít kurz →"
+                            : "Start Course →"}
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="col-span-3 p-12 border-2 border-dashed border-border rounded-xl text-center text-muted-foreground glass-panel">
+            <p>
+              {locale === "cs"
+                ? "Zatím nejsou dostupné žádné kurzy."
+                : "No courses available yet."}
+            </p>
+            <p className="text-sm mt-2">
+              {locale === "cs"
+                ? "Zkuste to brzy znovu!"
+                : "Check back soon!"}
+            </p>
           </div>
         )}
       </section>

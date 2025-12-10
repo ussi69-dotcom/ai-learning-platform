@@ -9,10 +9,14 @@ import { useRouter } from 'next/navigation';
 interface User {
   id: number;
   email: string;
-  difficulty: string;
+  difficulty: string;  // Legacy field
   is_active: boolean;
   xp: number;
   avatar: string;
+  // New XP-based level system
+  calculated_level: string;  // Level based on XP
+  next_level_xp: number;     // XP needed for next level (-1 if max)
+  xp_for_current_level: number;  // XP threshold for current level
 }
 
 interface AuthContextType {
@@ -23,6 +27,9 @@ interface AuthContextType {
   logout: () => void;
   isLoading: boolean;
   refreshUser: () => Promise<void>;
+  // Level-up celebration
+  levelUpData: { show: boolean; newLevel: string };
+  dismissLevelUp: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -31,9 +38,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [previousLevel, setPreviousLevel] = useState<string | null>(null);
+  const [levelUpData, setLevelUpData] = useState<{ show: boolean; newLevel: string }>({
+    show: false,
+    newLevel: "",
+  });
   const router = useRouter();
 
   const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
+  const dismissLevelUp = useCallback(() => {
+    setLevelUpData({ show: false, newLevel: "" });
+  }, []);
 
   const logout = useCallback(() => {
     setUser(null);
@@ -78,14 +94,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, [logout, router]);
 
-  const fetchCurrentUser = async (authToken: string) => {
+  const fetchCurrentUser = async (authToken: string, checkLevelUp: boolean = false) => {
     try {
       const response = await axios.get(`${API_BASE}/users/me?t=${Date.now()}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
       });
-      setUser(response.data);
+      const newUser = response.data;
+
+      // Level-up detection: compare with previous level
+      if (checkLevelUp && previousLevel && newUser.calculated_level !== previousLevel) {
+        // Level changed! Show celebration modal
+        const levels = ["PIECE_OF_CAKE", "LETS_ROCK", "COME_GET_SOME", "DAMN_IM_GOOD"];
+        const oldIndex = levels.indexOf(previousLevel);
+        const newIndex = levels.indexOf(newUser.calculated_level);
+        if (newIndex > oldIndex) {
+          // User leveled UP (not down)
+          setLevelUpData({ show: true, newLevel: newUser.calculated_level });
+        }
+      }
+
+      // Update previous level for next comparison
+      setPreviousLevel(newUser.calculated_level);
+      setUser(newUser);
     } catch (error: any) {
       // Silently clear invalid/expired tokens, the interceptor will handle the redirect
       if (error.response?.status !== 401) {
@@ -132,12 +164,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshUser = useCallback(async () => {
     if (token) {
-      await fetchCurrentUser(token);
+      // Check for level-up when refreshing user data
+      await fetchCurrentUser(token, true);
     }
-  }, [token]);
+  }, [token, previousLevel]);
 
   return (
-    <AuthContext.Provider value={{ user, token, login, register, logout, isLoading, refreshUser }}>
+    <AuthContext.Provider value={{
+      user,
+      token,
+      login,
+      register,
+      logout,
+      isLoading,
+      refreshUser,
+      levelUpData,
+      dismissLevelUp,
+    }}>
       {children}
     </AuthContext.Provider>
   );

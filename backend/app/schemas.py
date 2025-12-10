@@ -1,9 +1,9 @@
 import enum
 import re
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, field_validator, computed_field
 from typing import List, Optional
 from datetime import datetime
-from app.models import FeedbackType
+from app.models import FeedbackType, calculate_level_from_xp, get_next_level_xp, XP_THRESHOLDS, DifficultyLevel
 
 # --- Lesson Schemas ---
 class LessonBase(BaseModel):
@@ -69,7 +69,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
-    difficulty: str = "LETS_ROCK"
+    difficulty: str = "PIECE_OF_CAKE"  # New users start at lowest level
     avatar: str = "droid_1"
     is_active: bool = True
 
@@ -86,10 +86,30 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
-    difficulty: str
+    difficulty: str  # Legacy field, kept for backwards compatibility
     xp: int = 0
     avatar: str = "droid_1"
     courses: List[Course] = []
+
+    @computed_field
+    @property
+    def calculated_level(self) -> str:
+        """User's level calculated from XP (replaces manual difficulty)."""
+        return calculate_level_from_xp(self.xp).value
+
+    @computed_field
+    @property
+    def next_level_xp(self) -> int:
+        """XP needed to reach next level. -1 if at max level."""
+        current = calculate_level_from_xp(self.xp)
+        return get_next_level_xp(current)
+
+    @computed_field
+    @property
+    def xp_for_current_level(self) -> int:
+        """XP threshold for current level (for progress bar)."""
+        current = calculate_level_from_xp(self.xp)
+        return XP_THRESHOLDS[current]
 
     class Config:
         from_attributes = True
