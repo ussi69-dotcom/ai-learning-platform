@@ -3,11 +3,13 @@
 ## ✅ Completed
 
 ### 🏠 Interactive AI Glossary (Dec 10, 2025)
-- ✅ Animated bouncing cubes with AI terms
+- ✅ Physics-based bouncing cubes (gravity, friction, collision)
+- ✅ Glass morphism ice cube styling with backdrop-blur
 - ✅ Click → Modal popup with definition + lesson link
-- ✅ 8 terms: LLM, Prompt, Hallucination, Neural Net, RAG, Token, Fine-tuning, AI Agent
+- ✅ 12 terms: LLM, Prompt, Hallucination, Neural Net, RAG, Token, Fine-tuning, AI Agent, Embedding, Transformer, GPT, Context Window
 - ✅ Bilingual (EN/CS)
-- Commit: `d044364`
+- ✅ framer-motion for animations
+- Commit: `087097d`
 
 ### 🎮 XP-Based Level System (Dec 10, 2025)
 - ✅ Removed explicit difficulty selection
