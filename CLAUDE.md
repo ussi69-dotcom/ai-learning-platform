@@ -399,10 +399,10 @@ npm run verify       # Full verification: lint + typecheck + build
 
 ### Automatic Checks (GitHub Actions)
 Every PR and push to `main` triggers `.github/workflows/ci.yml`:
-- **Frontend:** `npm ci` → `npm run lint` → `tsc --noEmit` → `npm run build`
+- **Frontend:** `npm ci` → `npm audit` → `npm run lint` → `tsc --noEmit` → `npm run build`
 - **Backend:** `pip install` → `pytest`
 
-PR cannot be merged if CI fails.
+PR cannot be merged if CI fails (including HIGH+ security vulnerabilities).
 
 ### Pre-commit Hooks (Husky)
 Local TypeScript check runs before every commit:
@@ -411,6 +411,21 @@ Local TypeScript check runs before every commit:
 # Hook: .husky/pre-commit
 ```
 If typecheck fails, commit is blocked.
+
+### Dependabot (Automated Dependency Updates)
+GitHub Dependabot automatically monitors dependencies and creates PRs:
+- **Config:** `.github/dependabot.yml`
+- **Schedule:** Weekly (Monday 9:00 CET) for minor/patch updates
+- **Security:** Immediate PRs for known vulnerabilities (CVEs)
+- **Scope:** Frontend (npm), Backend (pip), GitHub Actions
+
+**How it works:**
+1. Dependabot detects outdated/vulnerable package → creates PR
+2. CI runs automatically (build + tests + audit)
+3. If CI passes ✅ → safe to merge
+4. If CI fails ❌ → dependency breaks something, investigate before merge
+
+**Agent responsibility:** Review and merge Dependabot PRs during regular dev cycles. No special agent instructions needed - Dependabot is fully automated by GitHub.
 
 ### End-of-Cycle Checklist
 **IMPORTANT:** Before ending a development cycle, ALWAYS run:

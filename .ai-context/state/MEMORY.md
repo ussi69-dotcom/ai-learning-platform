@@ -33,7 +33,7 @@ PHASE 1: Research → PHASE 2: Generation → PHASE 3: Iteration → PHASE 4: Fi
 
 - **OS:** Linux (WSL2)
 - **Node.js:** v24.11.1
-- **Stack:** Next.js 16, FastAPI, PostgreSQL 15, Redis 7, Docker Compose.
+- **Stack:** Next.js 16.0.7, React 19.2.1, FastAPI, PostgreSQL 15, Redis 7, Docker Compose.
 - **Agent Mode:** Claude CLI primary, Gemini via MCP (`ask-gemini`)
 - **MCP Tools:** Playwright (visual check), GitHub, Context7, Figma
 
@@ -56,7 +56,34 @@ Claude MUSÍ použít "Senior QA Analyst" personu při review:
 - Interaktivita labů
 - Verifikace EN/CS souborů
 
-### 3. GENERATE → WRITE → VERIFY 📝
+### 3. Dependency Management (LCM) 🔒
+
+**Automatizace (žádná manuální práce):**
+- **Dependabot** hlídá závislosti automaticky (config: `.github/dependabot.yml`)
+- **Schedule:** Weekly (pondělí 9:00 CET) pro minor/patch
+- **Security:** Okamžité PR pro CVE zranitelnosti
+
+**Agent workflow při Dependabot PR:**
+1. Dependabot vytvoří PR → CI se spustí automaticky
+2. CI projde ✅ → bezpečné mergovat
+3. CI failne ❌ → dependency něco rozbila, investigovat
+
+**Manuální akce (jen při urgentní CVE):**
+```bash
+# Check vulnerabilities
+npm audit
+
+# Update specific package
+npm update <package-name>
+
+# Nuclear option (regenerate lock)
+rm package-lock.json && npm install
+docker compose build --no-cache frontend
+```
+
+**⚠️ KRITICKÉ:** Po CVE-2025-55182 (React2Shell) - Next.js/React musí být na patchovaných verzích!
+
+### 4. GENERATE → WRITE → VERIFY 📝
 
 **Povinný protokol pro každý content task:**
 
@@ -96,6 +123,24 @@ Claude MUSÍ použít "Senior QA Analyst" personu při review:
 ---
 
 ## 📝 Lessons Learned
+
+### 2025-12-10: CVE-2025-55182 (React2Shell) Response 🚨
+
+**Co se stalo:** Kritická RCE zranitelnost (CVSS 10) v React Server Components a Next.js. Aktivně exploitována čínskými APT skupinami od 3. prosince 2025.
+
+**Postižené verze:**
+- Next.js < 16.0.7 (a odpovídající verze 15.x, 14.x)
+- React 19.0, 19.1.0, 19.1.1, 19.2.0
+
+**Řešení:**
+1. Upgrade na Next.js 16.0.7+ a React 19.2.1+
+2. `npm audit` přidán do CI pipeline
+3. Dependabot nakonfigurován pro automatické security PR
+
+**Poučení:**
+- Dev environment není kritický, ale PROD ano
+- Dependabot zachytí budoucí CVE automaticky
+- Docker anonymous volumes přetrvávají mezi rebuildy → `docker volume prune` při upgrade
 
 ### 2025-12-06: STAY CURRENT - Date & Online Research ⚠️ CRITICAL
 
@@ -388,7 +433,8 @@ ANTIGRAVITY (Full-Stack Builder)
 
 **CI/CD Pipeline:**
 - Pre-commit: TypeScript check (Husky)
-- GitHub Actions: Lint → Type → Build → Test
+- GitHub Actions: Lint → Type → Build → Test + npm audit
+- Dependabot: Weekly security scans + auto-PR (`.github/dependabot.yml`)
 - `npm run verify` povinný před každým commitem
 
 ### General
@@ -466,4 +512,4 @@ content/courses/practical-prompt-engineering/lessons/
 
 ---
 
-_Last updated: 2025-12-09 (WORKING_CONTEXT drift fix + Priority Queue sync)_
+_Last updated: 2025-12-10 (Dependabot + npm audit CI setup)_

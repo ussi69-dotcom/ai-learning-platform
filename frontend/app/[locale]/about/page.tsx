@@ -24,6 +24,7 @@ import {
   Wind,
   Box,
   CircleDot,
+  Shield,
 } from "lucide-react";
 import Diagram from "@/components/mdx/Diagram";
 
@@ -348,6 +349,24 @@ export default function AboutPage() {
                     </code>
                     <span className="text-xs text-muted-foreground">
                       → {t("cicd_verify_desc")}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 border border-purple-500/30">
+                    <Shield className="w-3 h-3 text-purple-500" />
+                    <code className="text-xs font-mono">
+                      {t("cicd_dependabot")}
+                    </code>
+                    <span className="text-xs text-muted-foreground">
+                      → {t("cicd_dependabot_desc")}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 border border-orange-500/30">
+                    <div className="w-2 h-2 rounded-full bg-orange-500" />
+                    <code className="text-xs font-mono">
+                      {t("cicd_audit")}
+                    </code>
+                    <span className="text-xs text-muted-foreground">
+                      → {t("cicd_audit_desc")}
                     </span>
                   </div>
                 </div>
