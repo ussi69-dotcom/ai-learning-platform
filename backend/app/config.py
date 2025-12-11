@@ -34,10 +34,16 @@ class Settings(BaseSettings):
 
     # EMAIL
     SMTP_HOST: str = os.getenv("SMTP_HOST", "")
-    SMTP_PORT: int = int(os.getenv("SMTP_PORT", "587"))
+    SMTP_PORT: int = int(os.getenv("SMTP_PORT") or 587)
     SMTP_USER: str = os.getenv("SMTP_USER", "")
     SMTP_PASSWORD: str = os.getenv("SMTP_PASSWORD", "")
     EMAILS_FROM_EMAIL: EmailStr = os.getenv("EMAILS_FROM_EMAIL", "info@example.com")
+
+    @field_validator("SMTP_PORT", mode="before")
+    def parse_smtp_port(cls, v: Union[str, int, None]) -> int:
+        if v == "" or v is None:
+            return 587
+        return int(v)
 
     # FRONTEND
     # Used for generating links in emails

@@ -45,3 +45,22 @@ test-backend: ## Spustí testy v backendu
 security-check: ## Spustí bezpečnostní audit (jen pro VPS)
 	@echo "Toto by se mělo spouštět jen na serveru."
 	./scripts/setup_security.sh
+
+# -----------------------------------------------------------------------------
+# 🚀 PRODUCTION COMMANDS (Používejte na serveru)
+# -----------------------------------------------------------------------------
+
+deploy-prod: ## 🚀 BEZPEČNÝ DEPLOY NA PRODUKCI (Stopne dev, spustí prod, restartuje nginx)
+	@echo "🛑 Stopping any potentially running DEV containers..."
+	docker compose down --remove-orphans || true
+	@echo "🏗️  Building and starting PRODUCTION stack..."
+	env -u NEXT_PUBLIC_API_URL docker compose -f docker-compose.prod.yml up -d --build
+	@echo "🔄 Reloading Nginx..."
+	docker compose -f docker-compose.prod.yml restart nginx
+	@echo "✅ Deployment complete! Check logs with 'make logs-prod'"
+
+down-prod: ## Zastaví produkční stack
+	docker compose -f docker-compose.prod.yml down
+
+logs-prod: ## Zobrazí logy produkčního stacku
+	docker compose -f docker-compose.prod.yml logs -f

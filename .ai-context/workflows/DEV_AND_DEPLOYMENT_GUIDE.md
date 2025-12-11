@@ -119,10 +119,9 @@ Your VPS environment should be configured for production.
     ```
 
 5.  **Deploy New Version:**
-    Use your production Docker Compose file (`docker-compose.prod.yml`) to rebuild and restart services.
+    **ALWAYS use the Makefile.** Do not run docker compose commands manually on production.
     ```bash
-    docker compose -f docker-compose.prod.yml down
-    docker compose -f docker-compose.prod.yml up -d --build
+    make deploy-prod
     ```
     *Note: If you changed `backend/app/models.py`, you must apply migrations.*
     ```bash
@@ -137,5 +136,27 @@ Your VPS environment should be configured for production.
 *   **Performance & Scaling:** The `docker-compose.prod.yml` and `Dockerfile`s might need further optimization for production performance and scalability (e.g., Gunicorn for FastAPI, proper Next.js build caching).
 *   **Security:** Ensure all ports are properly firewalled on your VPS.
 
-This guide should help you maintain a clean and efficient development and deployment workflow.
-Good luck with your project!
+## 🛑 MANDATORY PRODUCTION PROTOCOLS (READ BEFORE DEPLOYING)
+
+**CRITICAL: DO NOT MANUALLY EDIT `.env` ON PRODUCTION WITHOUT APPROVAL.**
+
+### 1. The "Clean Shell" Rule
+When deploying on the VPS, shell environment variables (e.g., `NEXT_PUBLIC_API_URL=http://localhost:8000`) can silently override your `.env` file configuration.
+**SOLUTION:** ALWAYS use `make deploy-prod`. This command explicitly isolates the build process from polluted shell environments.
+
+### 2. The "Single Source of Truth" Rule
+*   **Development:** Uses `docker-compose.yml` (network: `default`, DB: `localhost`).
+*   **Production:** Uses `docker-compose.prod.yml` (network: `ai-network`, DB: `ai-db` volume).
+**FAILURE MODE:** Running `docker compose up` on production mixes these environments, causing "502 Bad Gateway" and database connection errors.
+**SOLUTION:** ALWAYS use `make deploy-prod`.
+
+### 3. The "Configuration Safety" Rule
+*   **`.env` Integrity:** Do not "fix" configuration files by guessing. Restore from `backups/` if a configuration is corrupted.
+*   **Secrets:** Never replace secure passwords with defaults like "admin" just to make a build pass. Ask the user.
+
+### 4. How to Deploy (The Only Way)
+```bash
+git pull
+make deploy-prod
+```
+If this fails, check `make logs-prod`. Do not attempt to fix it by editing config files or running manual docker commands.
