@@ -2,6 +2,13 @@
 
 ## ✅ Completed
 
+### 🧪 Lab Modernization (Dec 12, 2025)
+- ✅ Fixed 3 at-risk labs (rag-reality, hallucination-trap, tokenizer-view)
+- ✅ Added new Sycophancy Trap lab (EN+CS)
+- ✅ Tested prompts in ChatGPT via Playwright
+- ✅ Research reports in `.ai-context/reports/`
+- Commit: `2611dc9`
+
 ### 🏠 Interactive AI Glossary (Dec 10, 2025)
 - ✅ Physics-based bouncing cubes (gravity, friction, collision)
 - ✅ Glass morphism ice cube styling with backdrop-blur
