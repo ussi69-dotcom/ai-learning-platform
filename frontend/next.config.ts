@@ -21,6 +21,44 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      // News Feed - RSS thumbnails
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'techcrunch.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'wp.technologyreview.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'huggingface.co',
+        port: '',
+        pathname: '/**',
+      },
+      // News Feed - YouTube thumbnails
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ytimg.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async rewrites() {

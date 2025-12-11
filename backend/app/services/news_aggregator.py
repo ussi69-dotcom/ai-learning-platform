@@ -185,18 +185,18 @@ class RSSFetcher:
 class HackerNewsFetcher:
     """Fetches AI-related stories from Hacker News via Algolia API."""
 
-    API_URL = "https://hn.algolia.com/api/v1/search"
+    # Use search_by_date for recent stories sorted by date
+    API_URL = "https://hn.algolia.com/api/v1/search_by_date"
 
     async def fetch(self) -> List[Dict]:
         """Fetch latest AI/ML stories from Hacker News."""
         items = []
 
-        # Search for AI-related stories
+        # Search for AI-related stories from last 7 days
         params = {
             "query": "AI OR GPT OR LLM OR Claude OR Anthropic OR OpenAI",
             "tags": "story",
-            "numericFilters": f"created_at_i>{int((datetime.utcnow() - timedelta(days=7)).timestamp())}",
-            "hitsPerPage": 20,
+            "hitsPerPage": 25,
         }
 
         async with httpx.AsyncClient(timeout=30.0, follow_redirects=True) as client:
