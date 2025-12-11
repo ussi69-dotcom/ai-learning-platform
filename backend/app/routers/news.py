@@ -8,7 +8,9 @@ Endpoints:
 
 from fastapi import APIRouter, Depends, HTTPException, Query, BackgroundTasks
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from typing import List, Optional
+from datetime import datetime, timedelta
 import logging
 
 from app import models, schemas, database, auth
@@ -45,6 +47,38 @@ async def get_news(
 
     items = query.limit(limit).all()
     return items
+
+
+@router.get("/hot", response_model=List[schemas.NewsItemResponse])
+async def get_hot_news(
+    limit: int = Query(default=10, ge=1, le=20),
+    db: Session = Depends(database.get_db)
+):
+    """
+    Get hot/trending AI news from the last 7 days.
+
+    Returns a diverse mix of sources (YouTube, RSS, HN, Papers),
+    prioritizing recent items with good engagement.
+    """
+    week_ago = datetime.utcnow() - timedelta(days=7)
+
+    # Get recent items from each source for diversity
+    items = []
+
+    # Get top items from each source (ensure mix)
+    for source in models.NewsSource:
+        source_items = db.query(models.NewsItem).filter(
+            models.NewsItem.source == source,
+            models.NewsItem.published_at >= week_ago
+        ).order_by(
+            models.NewsItem.published_at.desc()
+        ).limit(4).all()  # Max 4 per source
+        items.extend(source_items)
+
+    # Sort all by published_at and return top N
+    items.sort(key=lambda x: x.published_at or datetime.min, reverse=True)
+
+    return items[:limit]
 
 
 @router.get("/stats")

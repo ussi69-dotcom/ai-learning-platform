@@ -12,6 +12,12 @@ interface NewsFilterProps {
 
 const filters = [
   {
+    id: "hot",
+    labelEn: "🔥 Hot",
+    labelCs: "🔥 Hot",
+    icon: TrendingUp,
+  },
+  {
     id: "all",
     labelEn: "All",
     labelCs: "Vše",
@@ -38,7 +44,7 @@ const filters = [
   {
     id: "papers",
     labelEn: "Papers",
-    labelCs: "Články",
+    labelCs: "Papers",
     icon: FileText,
   },
 ];

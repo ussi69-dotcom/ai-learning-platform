@@ -363,23 +363,32 @@ class NewsAggregator:
         return results
 
     def _store_items(self, items: List[Dict]) -> int:
-        """Store items in database using upsert."""
+        """Store items in database using upsert with title-based dedup."""
         if not items:
             return 0
 
         stored = 0
         for item in items:
             try:
-                # Check if exists
+                # Check if exists by external_id OR by title+source (dedup)
                 existing = self.db.query(models.NewsItem).filter(
                     models.NewsItem.external_id == item["external_id"]
                 ).first()
 
+                # Also check for duplicate titles from same source
+                if not existing:
+                    existing = self.db.query(models.NewsItem).filter(
+                        models.NewsItem.title == item["title"],
+                        models.NewsItem.source == item["source"]
+                    ).first()
+
                 if existing:
-                    # Update existing
-                    for key, value in item.items():
-                        if key != "external_id" and value is not None:
-                            setattr(existing, key, value)
+                    # Update existing (keep newer published_at if available)
+                    if item.get("published_at") and existing.published_at:
+                        if item["published_at"] > existing.published_at:
+                            for key, value in item.items():
+                                if key != "external_id" and value is not None:
+                                    setattr(existing, key, value)
                 else:
                     # Create new
                     news_item = models.NewsItem(**item)

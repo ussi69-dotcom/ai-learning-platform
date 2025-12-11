@@ -22,7 +22,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function NewsFeed({ locale }: NewsFeedProps) {
   const [items, setItems] = useState<NewsItem[]>([]);
-  const [filter, setFilter] = useState<string>("all");
+  const [filter, setFilter] = useState<string>("hot");  // Default to hot news
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [stats, setStats] = useState<NewsStats | null>(null);
@@ -32,12 +32,20 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
     setError(null);
 
     try {
-      const params = new URLSearchParams({ limit: "12" });
-      if (source !== "all") {
-        params.set("source", source);
+      let url: string;
+
+      if (source === "hot") {
+        // Use dedicated hot endpoint for curated mix
+        url = `${API_URL}/news/hot/?limit=10`;
+      } else {
+        const params = new URLSearchParams({ limit: "12" });
+        if (source !== "all") {
+          params.set("source", source);
+        }
+        url = `${API_URL}/news/?${params.toString()}`;
       }
 
-      const response = await fetch(`${API_URL}/news/?${params.toString()}`);
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }
