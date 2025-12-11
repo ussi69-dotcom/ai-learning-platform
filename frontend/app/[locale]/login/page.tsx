@@ -1,53 +1,59 @@
 "use client";
 
-import { useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { useRouter } from '@/i18n/routing';
-import { Link } from '@/i18n/routing';
-import { useAuth } from '@/context/AuthContext';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useTranslations } from 'next-intl';
-import { getErrorMessage } from '@/lib/utils';
+import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
+import { useAuth } from "@/context/AuthContext";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useTranslations } from "next-intl";
+import { getErrorMessage } from "@/lib/utils";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const { login } = useAuth();
   const router = useRouter();
-  const t = useTranslations('Auth');
-  const tCommon = useTranslations('Common');
+  const t = useTranslations("Auth");
+  const tCommon = useTranslations("Common");
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.get('registered') === 'true') {
-      setSuccess(t('registration_success_check_email')); // You might need to add this key to en.json/cs.json
+    if (searchParams.get("registered") === "true") {
+      setSuccess(t("registration_success_check_email")); // You might need to add this key to en.json/cs.json
     }
-    if (searchParams.get('verified') === 'true') {
-      setSuccess(t('email_verified_success')); // Add this key too
+    if (searchParams.get("verified") === "true") {
+      setSuccess(t("email_verified_success")); // Add this key too
     }
-    if (searchParams.get('error') === 'invalid_token') {
-      setError(t('invalid_verification_token'));
+    if (searchParams.get("error") === "invalid_token") {
+      setError(t("invalid_verification_token"));
     }
   }, [searchParams, t]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
     setIsLoading(true);
 
     try {
       await login(email, password);
-      router.push('/');
+      router.push("/");
     } catch (err: any) {
       // If the error is 401, it might be "User not verified" if backend distinguishes it.
       // Currently backend returns generic 401 for bad creds.
-      setError(getErrorMessage(err, tCommon('error')));
+      setError(getErrorMessage(err, tCommon("error")));
     } finally {
       setIsLoading(false);
     }
@@ -57,10 +63,10 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 transition-colors duration-300">
       <Card className="w-full max-w-md dark:bg-slate-900 dark:border-slate-800">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">{t('login_title')}</CardTitle>
-          <CardDescription>
-            {t('login_subtitle')}
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold">
+            {t("login_title")}
+          </CardTitle>
+          <CardDescription>{t("login_subtitle")}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -74,10 +80,13 @@ export default function LoginPage() {
                 {success}
               </div>
             )}
-            
+
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                {t('email')}
+              <label
+                htmlFor="email"
+                className="text-sm font-medium text-slate-700 dark:text-slate-300"
+              >
+                {t("email")}
               </label>
               <input
                 id="email"
@@ -92,11 +101,17 @@ export default function LoginPage() {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                  {t('password')}
+                <label
+                  htmlFor="password"
+                  className="text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  {t("password")}
                 </label>
-                <Link href="#" className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">
-                  {t('forgot_password')}
+                <Link
+                  href="#"
+                  className="text-xs text-violet-600 dark:text-red-400 hover:underline"
+                >
+                  {t("forgot_password")}
                 </Link>
               </div>
               <input
@@ -110,18 +125,21 @@ export default function LoginPage() {
               />
             </div>
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full bg-gradient-to-br from-violet-700 via-indigo-500 via-violet-400 to-violet-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700"
               disabled={isLoading}
             >
-              {isLoading ? tCommon('loading') : t('submit_login')}
+              {isLoading ? tCommon("loading") : t("submit_login")}
             </Button>
 
             <p className="text-center text-sm text-slate-600 dark:text-slate-400">
-              {t('no_account')}{' '}
-              <Link href="/register" className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium">
-                {t('register_link')}
+              {t("no_account")}{" "}
+              <Link
+                href="/register"
+                className="text-violet-600 dark:text-red-400 hover:underline font-medium"
+              >
+                {t("register_link")}
               </Link>
             </p>
           </form>
