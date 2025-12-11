@@ -68,6 +68,7 @@
 | **walkthrough.md** | Prohlídka codebase |
 | **IDEAS.md** | Nápady, brainstorming |
 | **CI_AND_CODE_QUALITY.md** | CI/CD, linting |
+| **PLAYWRIGHT_ARM64_SETUP.md** | Playwright MCP na ARM64 WSL2 |
 
 ### 📦 Guides (`/guides`)
 > *External research, reference materials.*

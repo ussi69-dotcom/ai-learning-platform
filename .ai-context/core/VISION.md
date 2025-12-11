@@ -145,21 +145,25 @@ Tito tvůrci definují náš Edutainment standard:
 
 ## 🎯 Akční plán (Edutainment Rollout)
 
-### Fáze 1: Hook & Engage (Týden 1-2)
-- [ ] L01 Video Upgrade - ColdFusion/NetworkChuck
-- [ ] L02 Gandalf Lab - Gamifikovaný security challenge
-- [ ] SVG Diagram audit - Minimum 3 diagramy na lekci
+### Fáze 1: Hook & Engage ✅ COMPLETE (Dec 9, 2025)
+- [x] L01 Video Upgrade - ColdFusion/NetworkChuck
+- [x] L02 Gandalf Lab - Gamifikovaný security challenge
+- [x] SVG Diagram audit - Minimum 3 diagramy na lekci
 
-### Fáze 2: Depth & Breadth (Týden 3-4)
-- [ ] AI Basics Course - 7 lekcí s Edutainment standardem
-- [ ] Model comparison tables
-- [ ] MCP Deep Dive lab
+### Fáze 2: Depth & Breadth ✅ COMPLETE (Dec 9, 2025)
+- [x] AI Basics Course - 7 lekcí s Edutainment standardem
+- [x] Practical PE Course - 5 lekcí s Edutainment standardem
+- [ ] Model comparison tables (moved to Phase 3)
+- [ ] MCP Deep Dive lab (moved to Phase 3)
 
-### Fáze 3: Advanced Track (Měsíc 2)
+### Fáze 3: Advanced Track (Next Priority)
+- [ ] L06: RAG & Vector Databases
+- [ ] L07: MCP Deep Dive
+- [ ] L08: Agent Frameworks (LangGraph)
 - [ ] L09: Reasoning Models (DeepSeek R1, o3)
 - [ ] L10: Multimodal AI
 - [ ] L11: Agentic DevOps
-- [ ] L12: Custom Model Training (Unsloth)
+- [ ] Model comparison tables
 
 ### Fáze 4: Viral Content (Ongoing)
 - [ ] Monthly trends updates
