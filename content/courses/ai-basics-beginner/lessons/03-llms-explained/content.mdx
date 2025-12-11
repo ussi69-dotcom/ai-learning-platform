@@ -73,19 +73,38 @@ The AI converts these tokens into numbers (e.g., `18342`), does math on them, an
 
 ## 🔬 Lab 1: The Tokenizer View
 
-It is time to see the Matrix. Let's force the AI to reveal how it sees language.
+It's time to see the Matrix. But here's the secret: AI can't actually *see* its own tokenization—it can only guess. Let's use a real tool instead.
 
-**Objective:** Visualize tokens.
+**Objective:** Visualize real tokenization and understand why it matters.
 
-**The Prompt:**
+**Part A: Use the Official Tool**
+
+1. Open OpenAI's Tokenizer: [platform.openai.com/tokenizer](https://platform.openai.com/tokenizer)
+2. Paste this word: `Supercalifragilisticexpialidocious`
+3. Count the tokens (should be ~9-11 depending on model)
+
+**Part B: See Why This Matters**
+
+Now test these inputs and observe the token count:
+
+| Input | Expected Behavior |
+|-------|------------------|
+| `hello` | 1 token |
+| `Hello` | 1 token (same!) |
+| ` hello` | 2 tokens (space is separate!) |
+| `hello!` | 2 tokens |
+| `🎉` | 1-3 tokens (emoji = expensive!) |
+
+**Part C: The AI Comparison**
+
+Ask an AI:
 ```text
-Please rewrite the word "Supercalifragilisticexpialidocious" but put a vertical bar "|" between every token you would perceive.
-Explain why you split it that way.
+How many tokens is the word "Supercalifragilisticexpialidocious" approximately?
 ```
 
-**Analysis:**
-*   It won't be one word. It will be `Super|cali|frag|...`.
-*   This proves the AI sees chunks of characters, not whole words. This is why AI sometimes struggles with spelling or rhyming—it doesn't see letters!
+Compare its estimate to the real tokenizer. How close was it?
+
+**💡 Aha Moment:** "AI doesn't see letters—it sees chunks. A space before a word is a whole extra token! Emoji can be 3 tokens! This is why AI sometimes struggles with spelling—it literally can't see individual characters."
 
 <LabComplete labId="lab-tokenizer-view" />
 
@@ -167,28 +186,34 @@ An LLM doesn't just appear. It is forged in two fires.
 
 ## 🔬 Lab 3: The Hallucination Trap
 
-LLMs are prediction engines—they generate the *most likely* next token. But what happens when you ask about something that doesn't exist? Will they admit ignorance, or confidently make things up?
+LLMs are prediction engines—they generate the *most likely* next token. But what happens when you ask about something that doesn't exist but *sounds* plausible? Will they admit ignorance, or confidently make things up?
 
-**Objective:** Test AI's ability to recognize its own limitations.
+**Objective:** Test AI's ability to recognize its own limitations in niche domains.
 
 **The Prompt:**
 ```text
-I just finished reading the 5th book in the Harry Potter series by J.K. Rowling, titled "Harry Potter and the Eternal Phoenix". Can you give me a summary of the main plot points?
+I'm researching antique tools. I found a strange device in my grandfather's workshop called a "plenum wrench". It has a bifurcated handle and a rotating tri-spoke head. The marking says "Sheffield 1892".
 
-Important: If you're unsure about this book, please say so clearly.
+Can you explain:
+1. What this tool was used for?
+2. How to use it correctly?
+3. Why it fell out of common use?
+
+Please be specific and detailed.
 ```
 
 **Analysis:**
 Watch carefully for one of these responses:
-*   ✅ **Honest:** "I'm not aware of a Harry Potter book titled 'The Eternal Phoenix'. The 5th book is 'Order of the Phoenix'. Are you perhaps thinking of that one?"
-*   ⚠️ **Hallucination:** The AI invents a detailed plot for a book that doesn't exist, complete with characters and events.
+*   ✅ **Honest:** "I'm not familiar with a 'plenum wrench'. This may be a very rare or specialized tool. Could you provide more details or a photo?"
+*   ⚠️ **Hallucination:** The AI invents a detailed history, purpose, and usage instructions for a tool that **doesn't exist**.
 
 **Why This Matters:**
-*   Modern AI (GPT-5.1, Claude 4.5, Gemini 3) should catch this trap and admit uncertainty
-*   Older or weaker models often "complete the pattern" and invent content
+*   The "plenum wrench" is completely made-up, but the description sounds believable
+*   The specific details (Sheffield 1892, bifurcated handle) give AI enough material to hallucinate
+*   Modern AI often "completes the pattern" rather than admitting uncertainty in niche domains
 *   This is why you **never trust AI for facts without verification**
 
-**💡 Aha Moment:** "AI doesn't 'know' things—it predicts what words usually come next. If I frame something as a fact ('I just finished reading...'), it might just play along instead of questioning the premise."
+**💡 Aha Moment:** "AI doesn't 'know' if something exists—it predicts what words usually follow the input. Give it enough plausible details, and it will invent an entire history for something that was never real."
 
 <LabComplete labId="lab-hallucination-trap" />
 

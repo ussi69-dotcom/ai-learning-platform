@@ -73,19 +73,38 @@ AI převede tyto tokeny na čísla (např. `18342`), provede na nich matematick�
 
 ## 🔬 Lab 1: Pohled Tokenizéru
 
-Je čas spatřit Matrix. Donuťme AI odhalit, jak vidí jazyk.
+Je čas spatřit Matrix. Ale tady je tajemství: AI ve skutečnosti *nevidí* svou vlastní tokenizaci—může ji pouze odhadovat. Použijme raději skutečný nástroj.
 
-**Cíl:** Vizualizovat tokeny.
+**Cíl:** Vizualizovat skutečnou tokenizaci a pochopit, proč na tom záleží.
 
-**Prompt:**
+**Část A: Použij Oficiální Nástroj**
+
+1. Otevři OpenAI Tokenizer: [platform.openai.com/tokenizer](https://platform.openai.com/tokenizer)
+2. Vlož toto slovo: `Nejneobhospodařovávatelnějšími`
+3. Spočítej tokeny (mělo by být ~8-12 podle modelu)
+
+**Část B: Podívej se, proč na tom záleží**
+
+Teď otestuj tyto vstupy a sleduj počet tokenů:
+
+| Vstup | Očekávané chování |
+|-------|------------------|
+| `ahoj` | 1 token |
+| `Ahoj` | 1 token (stejné!) |
+| ` ahoj` | 2 tokeny (mezera je extra!) |
+| `ahoj!` | 2 tokeny |
+| `🎉` | 1-3 tokeny (emoji = drahé!) |
+
+**Část C: Porovnání s AI**
+
+Zeptej se AI:
 ```text
-Přepiš prosím slovo "Nejneobhospodařovávatelnějšími" ale vlož svislou čáru "|" mezi každý token, který bys vnímal.
-Vysvětli, proč jsi to tak rozdělil.
+Kolik tokenů má přibližně slovo "Nejneobhospodařovávatelnějšími"?
 ```
 
-**Analýza:**
-*   Nebude to jedno slovo. Bude to `Nejne|obhos|podař|...`.
-*   To dokazuje, že AI vidí shluky znaků, ne celá slova. Proto má AI někdy problémy s pravopisem nebo rýmováním—nevidí písmena!
+Porovnej její odhad se skutečným tokenizérem. Jak přesná byla?
+
+**💡 Aha Moment:** "AI nevidí písmena—vidí shluky. Mezera před slovem je celý extra token! Emoji může být 3 tokeny! Proto má AI někdy problémy s pravopisem—doslova nevidí jednotlivé znaky."
 
 <LabComplete labId="lab-tokenizer-view" />
 
@@ -167,28 +186,34 @@ LLM se jen tak neobjeví. Je ukován ve dvou ohních.
 
 ## 🔬 Lab 3: Past na halucinace
 
-LLM jsou prediktivní motory—generují *nejpravděpodobnější* další token. Ale co se stane, když se zeptáš na něco, co neexistuje? Přizná AI svou nevědomost, nebo si sebevědomě něco vymyslí?
+LLM jsou prediktivní motory—generují *nejpravděpodobnější* další token. Ale co se stane, když se zeptáš na něco, co neexistuje, ale *zní* to věrohodně? Přizná AI svou nevědomost, nebo si sebevědomě něco vymyslí?
 
-**Cíl:** Otestovat schopnost AI rozpoznat vlastní limity.
+**Cíl:** Otestovat schopnost AI rozpoznat vlastní limity v niche doménách.
 
 **Prompt:**
 ```text
-Právě jsem dočetl 5. knihu série Harry Potter od J.K. Rowlingové s názvem "Harry Potter a Věčný Fénix". Můžeš mi shrnout hlavní body děje?
+Zkoumám starožitné nástroje. Našel jsem v dílně mého dědečka zvláštní nástroj nazvaný "plenumový klíč". Má vidlicovitou rukojeť a otočnou trojramennou hlavu. Značení říká "Sheffield 1892".
 
-Důležité: Pokud si touto knihou nejsi jistý/á, prosím řekni to jasně.
+Můžeš mi vysvětlit:
+1. K čemu se tento nástroj používal?
+2. Jak se správně používá?
+3. Proč přestal být běžně používán?
+
+Prosím, buď konkrétní a podrobný.
 ```
 
 **Analýza:**
 Pozorně sleduj, která odpověď přijde:
-*   ✅ **Upřímná:** "Nevím o žádné knize Harry Potter s názvem 'Věčný Fénix'. 5. kniha je 'Fénixův řád'. Možná myslíš tuhle?"
-*   ⚠️ **Halucinace:** AI vymyslí detailní děj pro knihu, která neexistuje, včetně postav a událostí.
+*   ✅ **Upřímná:** "Neznám 'plenumový klíč'. Může jít o velmi vzácný nebo specializovaný nástroj. Můžeš poskytnout více detailů nebo fotografii?"
+*   ⚠️ **Halucinace:** AI vymyslí detailní historii, účel a návod k použití pro nástroj, který **neexistuje**.
 
 **Proč na tom záleží:**
-*   Moderní AI (GPT-5.1, Claude 4.5, Gemini 3) by měla tuto past rozpoznat a přiznat nejistotu
-*   Starší nebo slabší modely často "dokončí vzor" a vymyslí obsah
+*   "Plenumový klíč" je zcela vymyšlený, ale popis zní věrohodně
+*   Konkrétní detaily (Sheffield 1892, vidlicovitá rukojeť) dávají AI dost materiálu k halucinaci
+*   Moderní AI často "dokončí vzor" místo aby přiznala nejistotu v niche oblastech
 *   Proto **nikdy nevěř AI v otázce faktů bez ověření**
 
-**💡 Aha Moment:** "AI 'neví' věci—předpovídá, jaká slova obvykle následují. Pokud něco prezentuji jako fakt ('Právě jsem dočetl...'), AI může prostě přitakat místo toho, aby zpochybnila premisu."
+**💡 Aha Moment:** "AI 'neví', jestli něco existuje—předpovídá, jaká slova obvykle následují po vstupu. Dej jí dost věrohodných detailů a vymyslí celou historii pro něco, co nikdy neexistovalo."
 
 <LabComplete labId="lab-hallucination-trap" />
 
