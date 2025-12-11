@@ -79,7 +79,7 @@ export default function SystemStatus() {
 
   return (
     <div
-      className="fixed bottom-20 left-4 z-40"
+      className="fixed bottom-4 left-4 z-40"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
