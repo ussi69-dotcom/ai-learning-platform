@@ -258,8 +258,8 @@ export const AVATARS: AvatarDef[] = [
     id: "cyber_7",
     type: "ICON",
     icon: Hexagon,
-    color: "#a855f7",
-    bg: "bg-purple-500/10",
+    color: "#d946ef",
+    bg: "bg-fuchsia-500/10",
     label: "Node",
   },
   {

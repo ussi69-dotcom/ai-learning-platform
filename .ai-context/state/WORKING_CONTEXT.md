@@ -54,6 +54,11 @@
 - Added `drop-shadow` and `box-shadow` for lightsaber glow effect.
 - **Strict Mode:** Updated `JediSithToggle`, `AvatarSelector`, and Icons to strictly use Red (removed Orange).
 
+**Jedi Violet Mode:**
+
+- Replaced generic `purple` with **Jedi Lightsaber Violet** (`fuchsia-600` / `violet`).
+- Applied to Text, Buttons, Toggles, and Avatars in Light Mode.
+
 **Build Fix:**
 
 - `package.json`: `"build": "NODE_ENV=production next build"`

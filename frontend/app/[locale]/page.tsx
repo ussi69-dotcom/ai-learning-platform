@@ -286,7 +286,7 @@ export default function HomePage() {
             <span>{tAbout("hero_subtitle")}</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm">
             {tAbout("hero_title")}
           </h1>
 
@@ -311,7 +311,7 @@ export default function HomePage() {
                 <Link href="/login">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_20px_rgba(220,38,38,0.5)] border-none"
+                    className="w-full sm:w-auto bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_20px_rgba(220,38,38,0.5)] border-none"
                   >
                     {tAuth("submit_login")}
                   </Button>
@@ -319,7 +319,7 @@ export default function HomePage() {
                 <Link href="/register">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-transparent dark:border dark:border-red-900 dark:hover:bg-red-950/30 dark:text-red-500 dark:hover:text-red-400"
+                    className="w-full sm:w-auto bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-transparent dark:border dark:border-red-900 dark:hover:bg-red-950/30 dark:text-red-500 dark:hover:text-red-400"
                   >
                     {tAuth("submit_register")}
                   </Button>
@@ -331,7 +331,7 @@ export default function HomePage() {
               >
                 <Button
                   size="lg"
-                  className="gap-2 w-full sm:w-auto shadow-lg shadow-purple-500/20 bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_20px_rgba(220,38,38,0.5)] border-none"
+                  className="gap-2 w-full sm:w-auto shadow-lg shadow-fuchsia-500/20 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_20px_rgba(220,38,38,0.5)] border-none"
                 >
                   {locale === "cs" ? "Pokračovat v učení" : "Resume Learning"}{" "}
                   <Rocket size={18} className="text-white" />
@@ -341,7 +341,7 @@ export default function HomePage() {
               <Link href={`/courses/${courses[0].id}`}>
                 <Button
                   size="lg"
-                  className="gap-2 w-full sm:w-auto shadow-lg shadow-purple-500/20 bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_20px_rgba(220,38,38,0.5)] border-none"
+                  className="gap-2 w-full sm:w-auto shadow-lg shadow-fuchsia-500/20 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_20px_rgba(220,38,38,0.5)] border-none"
                 >
                   {locale === "cs" ? "Začít s učením" : "Start Learning"}{" "}
                   <Rocket size={18} className="text-white" />
@@ -498,7 +498,7 @@ export default function HomePage() {
                       <Link href={`/courses/${course.id}`}>
                         <Button
                           size="sm"
-                          className="bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_10px_rgba(220,38,38,0.4)] border-none"
+                          className="bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_10px_rgba(220,38,38,0.4)] border-none"
                         >
                           {locale === "cs" ? "Začít kurz →" : "Start Course →"}
                         </Button>

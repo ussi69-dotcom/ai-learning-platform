@@ -95,7 +95,7 @@ export default function NavBar() {
                 {/* Profile Button - horizontal layout */}
                 <Link
                   href="/profile"
-                  className="flex items-center gap-2 px-2 sm:px-3 py-1.5 rounded-xl border border-transparent hover:border-fuchsia-400/50 dark:hover:border-red-600/50 hover:bg-purple-50/50 dark:hover:bg-red-950/40 transition-all duration-300"
+                  className="flex items-center gap-2 px-2 sm:px-3 py-1.5 rounded-xl border border-transparent hover:border-fuchsia-400/50 dark:hover:border-red-600/50 hover:bg-fuchsia-50/50 dark:hover:bg-red-950/40 transition-all duration-300"
                 >
                   {/* Avatar */}
                   <XPAvatarBadge
@@ -108,7 +108,7 @@ export default function NavBar() {
 
                   {/* Profile label + XP Bar */}
                   <div className="flex flex-col min-w-[60px] sm:min-w-[80px]">
-                    <span className="text-[10px] sm:text-xs font-bold text-purple-700 dark:text-red-500 uppercase tracking-wide">
+                    <span className="text-[10px] sm:text-xs font-bold text-fuchsia-700 dark:text-red-500 uppercase tracking-wide">
                       {t("profile") || "Profil"}
                     </span>
                     <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-0.5">
