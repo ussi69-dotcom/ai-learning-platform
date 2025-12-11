@@ -15,17 +15,25 @@ import DifficultyIcon from "@/components/DifficultyIcon";
 import SystemStatus from "@/components/SystemStatus";
 import ABTestShowcase from "@/components/ABTestShowcase";
 import AIGlossary from "@/components/AIGlossary";
+import { getBadgeLevel, BADGE_TIERS } from "@/components/XPAvatarBadge";
 import { useLocale, useTranslations } from "next-intl";
-import { Rocket, Info, Code2, Zap, Users, GitBranch, Play, Video, Clipboard, Bot, Star, Construction } from "lucide-react";
+import { Rocket, Info, Code2, Zap, Users, GitBranch, Play, Video, Clipboard, Bot, Star, Construction, Trophy } from "lucide-react";
 
 type FeedbackMode = "idle" | "placing" | "viewing";
 
-// Difficulty level labels (without emojis)
-const DIFFICULTY_LABELS: Record<string, string> = {
+// Course difficulty labels (Duke Nukem style - for COURSES only)
+const COURSE_DIFFICULTY_LABELS: Record<string, string> = {
   PIECE_OF_CAKE: "Piece of Cake",
   LETS_ROCK: "Let's Rock",
   COME_GET_SOME: "Come Get Some",
   DAMN_IM_GOOD: "Damn I'm Good",
+};
+
+// Get user badge name based on XP
+const getUserBadgeName = (xp: number, locale: string): string => {
+  const level = getBadgeLevel(xp);
+  const badge = BADGE_TIERS[level];
+  return locale === "cs" ? badge.nameCs : badge.name;
 };
 
 interface Course {
@@ -274,11 +282,12 @@ export default function HomePage() {
 
           {user && (
             <p className="text-sm text-muted-foreground mb-8 bg-card/50 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border">
-              {locale === "cs" ? "Vaše obtížnost: " : "Your difficulty: "}
+              {locale === "cs" ? "Tvoje hodnost: " : "Your rank: "}
               <span className="font-semibold text-purple-600 dark:text-red-500 flex items-center gap-1">
-                <DifficultyIcon level={user.difficulty} size={16} />
-                {DIFFICULTY_LABELS[user.difficulty]}
+                <Trophy size={16} />
+                {getUserBadgeName(user.xp || 0, locale)}
               </span>
+              <span className="text-xs opacity-70">({user.xp} XP)</span>
             </p>
           )}
 
@@ -360,10 +369,10 @@ export default function HomePage() {
         </h2>
         {user && (
           <p className="text-muted-foreground mb-8 flex items-center gap-2">
-            {locale === "cs" ? "Tvoje úroveň: " : "Your level: "}
+            {locale === "cs" ? "Tvoje hodnost: " : "Your rank: "}
             <span className="inline-flex items-center gap-1 text-purple-600 dark:text-red-500 font-medium">
-              <DifficultyIcon level={user.calculated_level} size={18} />
-              {DIFFICULTY_LABELS[user.calculated_level]}
+              <Trophy size={18} />
+              {getUserBadgeName(user.xp || 0, locale)}
             </span>
             <span className="text-sm">({user.xp} XP)</span>
           </p>
@@ -446,7 +455,7 @@ export default function HomePage() {
                         size={12}
                         className="text-white"
                       />
-                      {DIFFICULTY_LABELS[course.difficulty_level]}
+                      {COURSE_DIFFICULTY_LABELS[course.difficulty_level]}
                     </span>
                   </div>
 
@@ -464,11 +473,7 @@ export default function HomePage() {
                     <p className="text-muted-foreground mb-6 text-sm line-clamp-2 h-[40px]">
                       {course.description || "No description available."}
                     </p>
-                    <div className="flex justify-between items-center pt-4 border-t border-border/50">
-                      <span className="text-xs text-muted-foreground font-mono">
-                        ID: {course.id}
-                      </span>
-
+                    <div className="flex justify-end items-center pt-4 border-t border-border/50">
                       <Link href={`/courses/${course.id}`}>
                         <Button
                           size="sm"

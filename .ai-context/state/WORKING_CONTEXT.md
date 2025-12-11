@@ -1,101 +1,88 @@
 # Working Context
 
-**Last Updated:** 2025-12-11 00:30 (Agent: Claude Code)
-**Last Commit:** `e474ea1` feat: AI Glossary - 50% bigger cubes with heavy bottom stabilization
-**Status:** 🟢 READY - AI Glossary v2 Complete
+**Last Updated:** 2025-12-11 14:30 (Agent: Claude Code)
+**Last Commit:** `bcbf456` fix: navbar profile - horizontal layout with wider XP bar
+**Status:** 🟢 READY - Website Audit Complete + Footer Added
 
 ---
 
 ## 🎯 Current State
 
-### Latest Session (Dec 10, 2025 - Evening)
+### Latest Session (Dec 11, 2025 - Afternoon)
 
-| Task | Status | Commit |
-|------|--------|--------|
-| AI Glossary v2 (bigger + scroll + stabilization) | ✅ Done | `e474ea1` |
-| AI Glossary v1 (Physics + Glass) | ✅ Done | `087097d` |
-| XP-Based Level System | ✅ Done | `3cfb14a` |
-| Content Loader Orphan Cleanup | ✅ Done | `ba46cb1` |
-| Under Construction Banner (courses 3&4) | ✅ Done | `85794eb` |
-| Page Title (AI Edutainment) | ✅ Done | `7f44f73` |
+| Task | Status | Notes |
+|------|--------|-------|
+| Website Comprehensive Audit | ✅ Done | All pages reviewed |
+| SystemStatus Hover Button | ✅ Done | Discrete button bottom-left |
+| Difficulty Naming Unification | ✅ Done | Bronze/Silver/Gold/Diamond |
+| Course ID Hidden | ✅ Done | Removed debug info from cards |
+| Czech Translations | ✅ Done | Courses 3 & 4 translated |
+| NODE_ENV Build Fix | ✅ Done | Next.js 16 prerender bug |
+| Footer Component | ✅ Done | Links, GitHub, Tech Stack |
 
-### AI Glossary Summary
+### Key Changes
 
-**Features:**
-- 12 bouncing ice cubes with AI terms (bilingual EN/CS)
-- Real physics: gravity, friction, bounce, collision detection
-- Glass morphism styling with backdrop-blur + hue-based colors
-- Scroll reaction: scroll down → cubes fall, scroll up → cubes jump
-- Heavy bottom stabilization: rotation tends to 0 (text upright)
-- Click → modal with definition + link to lesson
+**Footer (`frontend/components/Footer.tsx`):**
+- Brand + description
+- Links: O projektu, GitHub, Kontakt
+- Tech Stack badges: Next.js 16, FastAPI, Claude Opus, Gemini 3
+- Copyright + "Vytvořeno s ❤️ lidmi & AI"
+- `pb-20` padding to avoid FAB overlap
 
-**Technical:**
-- 120px cubes (50% bigger than original)
-- framer-motion for animations
-- requestAnimationFrame physics loop
-- Ceiling collision prevents flying out
+**SystemStatus (`frontend/components/SystemStatus.tsx`):**
+- Converted from inline bar to hover button
+- Fixed position `bottom-20 left-4`
+- Green dot (collapsed) → expands on hover showing PostgreSQL, Redis, version
 
-**File:** `frontend/components/AIGlossary.tsx`
+**Naming Consistency:**
+- User rank: "Tvoje hodnost: Bronz/Stříbro/Zlato/Diamant" (XP-based)
+- Course difficulty: Duke Nukem style (Piece of Cake, Let's Rock, etc.)
+- Unified across homepage hero + course list
+
+**Build Fix:**
+- `package.json`: `"build": "NODE_ENV=production next build"`
+- Fixes Next.js 16 + React 19 prerender bug
+- Removed problematic `global-error.tsx`
+
+**Translations Added:**
+- `content/courses/advanced-ai-techniques/meta.json` → title_cs, description_cs
+- `content/courses/ai-engineering-deep-dive/meta.json` → title_cs, description_cs
 
 ---
 
-### XP-Based Level System Summary
+## 🎨 UI Components Summary
 
-**Backend Changes:**
-- XP thresholds: 0/500/2000/5000 for PIECE_OF_CAKE → LETS_ROCK → COME_GET_SOME → DAMN_IM_GOOD
-- New computed fields: `calculated_level`, `next_level_xp`, `xp_for_current_level`
-- `/courses/` returns ALL courses (no difficulty filtering)
-- Default difficulty: PIECE_OF_CAKE
+### Physics/Animation
+- **AI Glossary Cubes:** `framer-motion` (already installed, no new deps)
+- 12 bouncing ice cubes with physics simulation
+- requestAnimationFrame loop for smooth animations
 
-**Frontend Changes:**
-- Registration: Removed difficulty selector (auto PIECE_OF_CAKE)
-- Homepage: "Recommended" badge (⭐) for courses matching user's XP level
-- Homepage: "Under Construction" overlay on courses 3 & 4 (animated robot 🤖)
-- Profile: Read-only level display with XP progress bar
-- Level-up: Celebration modal with confetti animation
-- Page title: "AI Edutainment | Learn AI by Doing"
-
-**Files Modified:**
-- `backend/app/models.py` - XP thresholds, calculate_level_from_xp()
-- `backend/app/schemas.py` - computed fields
-- `backend/app/routers/lessons.py` - return all courses
-- `backend/app/services/content_loader.py` - orphan cleanup
-- `frontend/context/AuthContext.tsx` - level-up detection
-- `frontend/components/LevelUpModal.tsx` - NEW
-- `frontend/components/LevelUpProvider.tsx` - NEW
-- `frontend/app/[locale]/layout.tsx` - LevelUpProvider + metadata
-- `frontend/app/[locale]/page.tsx` - Recommended badge + Under Construction
-- `frontend/app/[locale]/profile/page.tsx` - read-only level
-- `frontend/app/[locale]/register/page.tsx` - removed difficulty
-- `frontend/app/global-error.tsx` - NEW (Next.js 16 fix)
-- `.husky/pre-commit` - Docker typecheck
+### Fixed Position Elements
+| Element | Position | Z-Index |
+|---------|----------|---------|
+| NavBar | `sticky top-0` | `z-50` |
+| SystemStatus | `fixed bottom-20 left-4` | `z-40` |
+| FeedbackFAB | `fixed bottom-6 right-4` | `z-40` |
+| ScrollToTop | `fixed bottom-4 right-4` | varies |
 
 ---
 
 ## 📋 Course Status
 
-### Active Courses (Edutainment v3.0 Complete)
-
-| Course | ID | Status | Notes |
-|--------|-----|--------|-------|
-| AI Basics for Beginners | 1 | ✅ Active | 7 lessons, PIECE_OF_CAKE |
-| Practical Prompt Engineering | 2 | ✅ Active | 4 lessons, LETS_ROCK |
-| AI Engineering Deep Dive | 3 | 🚧 Construction | Placeholder, DAMN_IM_GOOD |
-| Advanced AI Techniques | 4 | 🚧 Construction | Placeholder, COME_GET_SOME |
-
-### Orphaned Content Cleanup
-- Deleted: `01-patterns`, `02-context` (old placeholder lessons)
-- content_loader now auto-cleans orphans on seed
+| Course | ID | Status | CS Translation |
+|--------|-----|--------|----------------|
+| AI Basics for Beginners | 1 | ✅ Active | ✅ Complete |
+| Practical Prompt Engineering | 2 | ✅ Active | ✅ Complete |
+| AI Engineering Deep Dive | 3 | 🚧 Construction | ✅ Added |
+| Advanced AI Techniques | 4 | 🚧 Construction | ✅ Added |
 
 ---
 
 ## 📋 Next Actions (Low Priority)
 
 1. **Create content for courses 3 & 4** when ready
-2. **Create missing SVG diagrams** (Optional)
-   - `ai-ml-dl-circles`
-   - `attention-mechanism`
-   - `sql-vs-prompt-injection`
+2. **About page navbar icon** - currently just ℹ️, could add text label
+3. **Create missing SVG diagrams** (Optional)
 
 ---
 
@@ -103,10 +90,10 @@
 
 | Date | Agent | What |
 |------|-------|------|
+| 2025-12-11 | Claude | **Audit + Footer** - SystemStatus hover, naming fix, translations, footer |
+| 2025-12-11 | Claude | **NavBar Redesign** - Horizontal profile, responsive, XP bar |
 | 2025-12-11 | Claude | **AI Glossary v2** - 120px cubes, scroll reaction, heavy bottom |
-| 2025-12-10 | Claude | **AI Glossary v1** - physics, glass effect, 12 terms |
 | 2025-12-10 | Claude | **XP Level System** - Full difficulty refactor, level-up modal |
-| 2025-12-10 | Claude | **UI Updates** - Under Construction banner, page title |
 | 2025-12-09 | Claude | **Practical PE L01-L05 ALL DONE** - Full Edutainment upgrade |
 
 ---
@@ -119,10 +106,8 @@
 | Edutainment vision | `.ai-context/core/VISION.md` |
 | Content guidelines | `.ai-context/core/CONTENT_GUIDELINES.md` |
 | Video System docs | `MEMORY.md` → "Video System Architecture" |
-| AI Basics lessons | `content/courses/ai-basics-beginner/lessons/` |
-| Practical PE lessons | `content/courses/practical-prompt-engineering/lessons/` |
 
 ---
 
 _This file is the SINGLE SOURCE OF TRUTH for current project state._
-_Updated by: Claude Code (2025-12-11 00:30)_
+_Updated by: Claude Code (2025-12-11 14:30)_

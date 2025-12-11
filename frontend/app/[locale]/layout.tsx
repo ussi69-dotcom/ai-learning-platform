@@ -6,6 +6,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import LevelUpProvider from "@/components/LevelUpProvider";
 
@@ -44,7 +45,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors duration-300`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors duration-300 min-h-screen flex flex-col`}
         suppressHydrationWarning
       >
         <NextIntlClientProvider messages={messages}>
@@ -52,7 +53,10 @@ export default async function LocaleLayout({
             <NavBar />
             <ScrollToTop />
             <LevelUpProvider />
-            {children}
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
           </AuthProvider>
         </NextIntlClientProvider>
       </body>

@@ -1,6 +1,8 @@
 {
   "title": "AI Engineering Deep Dive",
+  "title_cs": "AI Engineering do hloubky",
   "description": "Production AI systems: RAG, fine-tuning, agents, and enterprise best practices.",
+  "description_cs": "Produkční AI systémy: RAG, fine-tuning, agenti a best practices pro enterprise.",
   "image_url": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=600&h=400&fit=crop",
   "difficulty_level": "DAMN_IM_GOOD"
 }

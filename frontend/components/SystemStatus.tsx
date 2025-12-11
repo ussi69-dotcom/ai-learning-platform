@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Activity, Database, Server, CheckCircle2, AlertTriangle, XCircle } from 'lucide-react';
-import { Card } from "@/components/ui/card";
 
 interface ServiceStatus {
   name: string;
@@ -20,6 +19,7 @@ interface HealthResponse {
 export default function SystemStatus() {
   const [healthData, setHealthData] = useState<HealthResponse | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const fetchHealth = async () => {
@@ -40,65 +40,109 @@ export default function SystemStatus() {
     };
 
     fetchHealth();
-    
+
     // Refresh every 30 seconds
     const interval = setInterval(fetchHealth, 30000);
     return () => clearInterval(interval);
   }, []);
 
-  if (loading) return null; // Don't show anything while loading to avoid layout shift
+  if (loading) return null;
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'healthy': return 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20';
-      case 'degraded': return 'text-amber-500 bg-amber-500/10 border-amber-500/20';
-      case 'down': return 'text-red-500 bg-red-500/10 border-red-500/20';
-      default: return 'text-slate-500 bg-slate-500/10 border-slate-500/20';
+      case 'healthy': return 'text-emerald-500';
+      case 'degraded': return 'text-amber-500';
+      case 'down': return 'text-red-500';
+      default: return 'text-slate-500';
+    }
+  };
+
+  const getStatusBgColor = (status: string) => {
+    switch (status) {
+      case 'healthy': return 'bg-emerald-500';
+      case 'degraded': return 'bg-amber-500';
+      case 'down': return 'bg-red-500';
+      default: return 'bg-slate-500';
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'healthy': return <CheckCircle2 className="w-4 h-4" />;
-      case 'degraded': return <AlertTriangle className="w-4 h-4" />;
-      case 'down': return <XCircle className="w-4 h-4" />;
-      default: return <Activity className="w-4 h-4" />;
+      case 'healthy': return <CheckCircle2 className="w-3 h-3" />;
+      case 'degraded': return <AlertTriangle className="w-3 h-3" />;
+      case 'down': return <XCircle className="w-3 h-3" />;
+      default: return <Activity className="w-3 h-3" />;
     }
   };
 
+  const overallStatus = healthData?.status || 'unknown';
+
   return (
-    <div className="w-full max-w-5xl mx-auto mt-8 px-4">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 rounded-xl border bg-card/30 backdrop-blur-sm border-border/50">
-        
-        <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-full ${getStatusColor(healthData?.status || 'unknown')}`}>
-            <Activity className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="text-sm font-bold text-foreground">System Status</h3>
-            <p className="text-xs text-muted-foreground">
-              {healthData?.status === 'healthy' ? 'All systems operational' : 'System issues detected'}
-            </p>
-          </div>
+    <div
+      className="fixed bottom-20 left-4 z-40"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Collapsed state - just a small indicator */}
+      <div
+        className={`
+          flex items-center gap-2 px-3 py-2 rounded-full
+          bg-white/90 dark:bg-slate-900/90 backdrop-blur-md
+          border border-slate-200 dark:border-slate-700
+          shadow-lg shadow-black/5 dark:shadow-black/20
+          cursor-pointer transition-all duration-300 ease-out
+          ${isHovered ? 'rounded-xl' : ''}
+        `}
+      >
+        {/* Status dot with pulse animation */}
+        <div className="relative flex items-center justify-center">
+          <div className={`w-2.5 h-2.5 rounded-full ${getStatusBgColor(overallStatus)}`} />
+          {overallStatus === 'healthy' && (
+            <div className={`absolute w-2.5 h-2.5 rounded-full ${getStatusBgColor(overallStatus)} animate-ping opacity-75`} />
+          )}
         </div>
 
-        <div className="flex items-center gap-2 md:gap-6 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
-          {healthData?.services.map((service) => (
-            <div key={service.name} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-background/50 border border-border/50 min-w-fit">
-              {service.name === 'PostgreSQL' ? <Database className="w-3.5 h-3.5 text-slate-400" /> : <Server className="w-3.5 h-3.5 text-slate-400" />}
-              <span className="text-xs font-medium text-foreground">{service.name}</span>
-              <span className={`flex items-center gap-1 text-[10px] uppercase font-bold px-1.5 py-0.5 rounded ${getStatusColor(service.status)}`}>
-                {getStatusIcon(service.status)}
-                {service.status}
-              </span>
+        {/* Expanded content on hover */}
+        <div
+          className={`
+            overflow-hidden transition-all duration-300 ease-out
+            ${isHovered ? 'max-w-[400px] opacity-100' : 'max-w-0 opacity-0'}
+          `}
+        >
+          <div className="flex items-center gap-3 whitespace-nowrap">
+            {/* System label */}
+            <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+              System
+            </span>
+
+            {/* Services */}
+            <div className="flex items-center gap-2">
+              {healthData?.services.map((service) => (
+                <div
+                  key={service.name}
+                  className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800"
+                >
+                  {service.name === 'PostgreSQL' ? (
+                    <Database className="w-3 h-3 text-slate-500 dark:text-slate-400" />
+                  ) : (
+                    <Server className="w-3 h-3 text-slate-500 dark:text-slate-400" />
+                  )}
+                  <span className="text-[10px] font-medium text-slate-600 dark:text-slate-400">
+                    {service.name}
+                  </span>
+                  <span className={`flex items-center gap-0.5 ${getStatusColor(service.status)}`}>
+                    {getStatusIcon(service.status)}
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
-          
-          <div className="text-[10px] font-mono text-muted-foreground ml-2">
-            v{healthData?.version}
+
+            {/* Version */}
+            <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
+              v{healthData?.version}
+            </span>
           </div>
         </div>
-
       </div>
     </div>
   );
