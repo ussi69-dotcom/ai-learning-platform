@@ -263,3 +263,44 @@ class SandboxResponse(BaseModel):
 
 # Update forward refs for recursive schema definition
 FeedbackItemResponse.model_rebuild()
+
+
+# --- NEWS FEED SCHEMAS ---
+
+class NewsSourceEnum(str, enum.Enum):
+    YOUTUBE = "youtube"
+    RSS = "rss"
+    HACKERNEWS = "hackernews"
+    PAPERS = "papers"
+
+
+class NewsItemBase(BaseModel):
+    title: str
+    description: Optional[str] = None
+    source: NewsSourceEnum
+    source_url: str
+    thumbnail_url: Optional[str] = None
+    channel_name: Optional[str] = None
+    published_at: Optional[datetime] = None
+    video_id: Optional[str] = None
+    duration_seconds: Optional[int] = None
+    score: Optional[int] = None
+
+
+class NewsItemCreate(NewsItemBase):
+    external_id: str
+
+
+class NewsItemResponse(NewsItemBase):
+    id: int
+    external_id: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class NewsRefreshResponse(BaseModel):
+    status: str
+    items_fetched: int
+    sources_status: dict  # {"youtube": "ok", "rss": "error", ...}

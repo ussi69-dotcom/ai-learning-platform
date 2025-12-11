@@ -16,3 +16,5 @@ slowapi
 redis
 fastapi-mail
 alembic
+feedparser
+apscheduler

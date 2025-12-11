@@ -220,3 +220,31 @@ class FeedbackVote(Base):
     __table_args__ = (
         UniqueConstraint('user_id', 'feedback_id', name='unique_user_feedback_vote'),
     )
+
+
+# --- NEWS FEED MODELS ---
+
+class NewsSource(str, enum.Enum):
+    YOUTUBE = "youtube"
+    RSS = "rss"
+    HACKERNEWS = "hackernews"
+    PAPERS = "papers"
+
+
+class NewsItem(Base):
+    __tablename__ = "news_items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    external_id = Column(String, unique=True, index=True)  # YouTube video ID, HN story ID, etc.
+    title = Column(String, nullable=False)
+    description = Column(Text, nullable=True)
+    source = Column(Enum(NewsSource), nullable=False, index=True)
+    source_url = Column(String, nullable=False)
+    thumbnail_url = Column(String, nullable=True)
+    channel_name = Column(String, nullable=True)  # YouTube channel or blog name
+    published_at = Column(DateTime(timezone=True), nullable=True, index=True)
+    video_id = Column(String, nullable=True)  # YouTube video ID for embedding
+    duration_seconds = Column(Integer, nullable=True)  # Video duration
+    score = Column(Integer, nullable=True)  # HN score, YouTube views
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())

@@ -10,7 +10,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from . import models, schemas, database, auth
-from app.routers import sandbox, lessons, feedback, users, health, certificates
+from app.routers import sandbox, lessons, feedback, users, health, certificates, news
 
 # Vytvoření tabulek (pro jistotu, i když to dělá seed)
 models.Base.metadata.create_all(bind=database.engine)
@@ -31,6 +31,7 @@ app.include_router(lessons.router)
 app.include_router(feedback.router)
 app.include_router(users.router)
 app.include_router(certificates.router, tags=["certificates"])
+app.include_router(news.router)
 
 # Mount content directory for static assets (images, etc.)
 # This maps http://localhost:8000/content/ -> /app/content/
@@ -67,6 +68,63 @@ async def add_security_headers(request: Request, call_next):
     return response
 
 from app.services.email import send_verification_email
+from app.services.news_aggregator import NewsAggregator
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+import logging
+
+# Setup logging for scheduler
+logging.basicConfig(level=logging.INFO)
+scheduler_logger = logging.getLogger("news_scheduler")
+
+# Initialize scheduler
+news_scheduler = AsyncIOScheduler()
+
+
+async def scheduled_news_refresh():
+    """Background task to refresh news every 30 minutes."""
+    scheduler_logger.info("🔄 Starting scheduled news refresh...")
+    try:
+        db = database.SessionLocal()
+        aggregator = NewsAggregator(db)
+        result = await aggregator.refresh_all()
+        scheduler_logger.info(f"✅ News refresh complete: {result.get('total', 0)} items")
+        db.close()
+    except Exception as e:
+        scheduler_logger.error(f"❌ Scheduled news refresh failed: {e}")
+
+
+@app.on_event("startup")
+async def start_news_scheduler():
+    """Start the news refresh scheduler on app startup."""
+    interval_minutes = int(os.getenv("NEWS_REFRESH_INTERVAL_MINUTES", "30"))
+    scheduler_logger.info(f"📰 Starting news scheduler (interval: {interval_minutes} min)")
+
+    # Schedule periodic refresh
+    news_scheduler.add_job(
+        scheduled_news_refresh,
+        'interval',
+        minutes=interval_minutes,
+        id='news_refresh',
+        replace_existing=True
+    )
+
+    # Also run initial refresh on startup (with delay to let DB initialize)
+    news_scheduler.add_job(
+        scheduled_news_refresh,
+        'date',
+        run_date=None,  # Run immediately
+        id='news_initial_refresh'
+    )
+
+    news_scheduler.start()
+    scheduler_logger.info("📰 News scheduler started")
+
+
+@app.on_event("shutdown")
+async def stop_news_scheduler():
+    """Stop the scheduler on app shutdown."""
+    news_scheduler.shutdown()
+    scheduler_logger.info("📰 News scheduler stopped")
 
 @app.post("/auth/register", response_model=schemas.User)
 @limiter.limit("5/minute")
