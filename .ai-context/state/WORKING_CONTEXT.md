@@ -52,6 +52,7 @@
 - Replaced mixed red/orange dark mode with pure **Sith Red** palette.
 - Used `red-600` (base), `red-900` (depth), `red-500` (glow/text).
 - Added `drop-shadow` and `box-shadow` for lightsaber glow effect.
+- **Strict Mode:** Updated `JediSithToggle`, `AvatarSelector`, and Icons to strictly use Red (removed Orange).
 
 **Build Fix:**
 

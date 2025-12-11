@@ -263,7 +263,7 @@ export default function CourseIcon({
             cx="75"
             cy="100"
             r="10"
-            fill="#f97316"
+            fill="#dc2626"
             stroke="#ea580c"
             strokeWidth="2"
             opacity="0.95"
@@ -340,7 +340,7 @@ export default function CourseIcon({
         <defs>
           <linearGradient id="grad-prompt" x1="0" y1="0" x2="200" y2="200">
             <stop stopColor="#f59e0b" />
-            <stop offset="1" stopColor="#ef4444" />
+            <stop offset="1" stopColor="#b91c1c" />
           </linearGradient>
         </defs>
 
