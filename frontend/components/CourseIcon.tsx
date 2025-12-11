@@ -439,8 +439,8 @@ export default function CourseIcon({
       >
         <defs>
           <linearGradient id="grad-adv" x1="0" y1="0" x2="200" y2="200">
-            <stop stopColor="#ec4899" />
-            <stop offset="1" stopColor="#a855f7" />
+            <stop stopColor="#8b5cf6" />
+            <stop offset="1" stopColor="#6366f1" />
           </linearGradient>
         </defs>
 

@@ -124,7 +124,7 @@ export default function AboutPage() {
       name: t("TechStack.gemini_name"),
       icon: <Sparkles className="w-6 h-6" />,
       desc: t("TechStack.gemini_desc"),
-      color: "from-fuchsia-500 to-pink-500",
+      color: "from-violet-500 to-indigo-500",
     },
   ];
 
@@ -163,7 +163,7 @@ export default function AboutPage() {
             <span>{t("hero_subtitle")}</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)] pb-2">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)] pb-2">
             {t("hero_title")}
           </h1>
 
@@ -186,11 +186,11 @@ export default function AboutPage() {
 
         {/* NEW: Edutainment Philosophy Section */}
         <div className="mb-24 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
-          <Card className="bg-gradient-to-br from-fuchsia-500/5 via-purple-500/5 to-indigo-500/5 dark:from-red-950/30 dark:via-red-900/10 dark:to-black border-fuchsia-500/20 dark:border-red-900/50 overflow-hidden relative">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-500 dark:from-red-900 dark:via-red-700 dark:to-red-950" />
+          <Card className="bg-gradient-to-br from-violet-500/5 via-indigo-500/5 to-blue-500/5 dark:from-red-950/30 dark:via-red-900/10 dark:to-black border-violet-500/20 dark:border-red-900/50 overflow-hidden relative">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500 dark:from-red-900 dark:via-red-700 dark:to-red-950" />
             <CardContent className="p-8 md:p-12">
               <div className="text-center mb-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fuchsia-500/10 dark:bg-red-950/50 border border-fuchsia-500/20 dark:border-red-900/50 text-sm font-mono text-fuchsia-600 dark:text-red-500 mb-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 dark:bg-red-950/50 border border-violet-500/20 dark:border-red-900/50 text-sm font-mono text-violet-600 dark:text-red-500 mb-4">
                   <Play className="w-4 h-4" />
                   <span>Education + Entertainment</span>
                 </div>
@@ -206,9 +206,9 @@ export default function AboutPage() {
                 {edutainmentFeatures.map((feature, i) => (
                   <div
                     key={i}
-                    className="text-center p-6 rounded-xl bg-background/50 border border-border/50 hover:border-fuchsia-500/30 dark:hover:border-red-900/50 transition-colors"
+                    className="text-center p-6 rounded-xl bg-background/50 border border-border/50 hover:border-violet-500/30 dark:hover:border-red-900/50 transition-colors"
                   >
-                    <div className="inline-flex p-3 rounded-full bg-gradient-to-br from-fuchsia-500/20 to-purple-500/20 dark:from-red-950/50 dark:to-red-900/50 text-fuchsia-600 dark:text-red-600 mb-4">
+                    <div className="inline-flex p-3 rounded-full bg-gradient-to-br from-violet-500/20 to-indigo-500/20 dark:from-red-950/50 dark:to-red-900/50 text-violet-600 dark:text-red-600 mb-4">
                       {feature.icon}
                     </div>
                     <h3 className="font-bold mb-2">{feature.title}</h3>
@@ -227,8 +227,8 @@ export default function AboutPage() {
           <Card className="bg-card/30 backdrop-blur-md border-primary/20 overflow-hidden relative">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
             <CardContent className="p-8 md:p-12 text-center space-y-6">
-              <Sparkles className="w-12 h-12 text-fuchsia-600 dark:text-slate-200 mx-auto opacity-80" />
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]">
+              <Sparkles className="w-12 h-12 text-violet-600 dark:text-slate-200 mx-auto opacity-80" />
+              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]">
                 {t("genesis_title")}
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
@@ -259,7 +259,7 @@ export default function AboutPage() {
                 <div className="ml-16 md:ml-0 w-full md:w-[45%]">
                   <Card className="bg-card/50 backdrop-blur-sm border-primary/10 hover:border-primary/30 transition-colors">
                     <CardHeader>
-                      <div className="text-sm font-bold font-mono mb-1 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent w-fit">
+                      <div className="text-sm font-bold font-mono mb-1 bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent w-fit">
                         {item.year}
                       </div>
                       <CardTitle className="text-xl">{item.title}</CardTitle>
@@ -277,7 +277,7 @@ export default function AboutPage() {
         {/* A/B Test Meta Showcase with Context */}
         <div id="cycle-35" className="mb-24 relative scroll-mt-40">
           <div className="text-center mb-8 max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fuchsia-500/10 dark:bg-red-500/10 border border-fuchsia-500/20 dark:border-red-500/20 text-sm font-mono text-fuchsia-600 dark:text-red-400 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 dark:bg-red-500/10 border border-violet-500/20 dark:border-red-500/20 text-sm font-mono text-violet-600 dark:text-red-400 mb-4">
               <MonitorPlay className="w-4 h-4" />
               <span>Cycle #35 Demo</span>
             </div>
@@ -351,8 +351,8 @@ export default function AboutPage() {
                       → {t("cicd_verify_desc")}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 border border-fuchsia-500/30">
-                    <Shield className="w-3 h-3 text-fuchsia-500" />
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 border border-violet-500/30">
+                    <Shield className="w-3 h-3 text-violet-500" />
                     <code className="text-xs font-mono">
                       {t("cicd_dependabot")}
                     </code>
@@ -441,7 +441,7 @@ export default function AboutPage() {
                 key={i}
                 className="p-4 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm text-center"
               >
-                <div className="text-3xl font-bold mb-2 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent inline-block">
+                <div className="text-3xl font-bold mb-2 bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent inline-block">
                   {i + 1}
                 </div>
                 <div className="font-medium">{step}</div>
@@ -461,7 +461,7 @@ export default function AboutPage() {
               <Link href="/">
                 <Button
                   size="lg"
-                  className="gap-2 text-lg px-8 h-12 rounded-full shadow-lg shadow-fuchsia-500/20 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none transition-all"
+                  className="gap-2 text-lg px-8 h-12 rounded-full shadow-lg shadow-violet-500/20 bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none transition-all"
                 >
                   {t("hero_title")} <Rocket className="w-5 h-5" />
                 </Button>
@@ -470,7 +470,7 @@ export default function AboutPage() {
               <Link href="/register">
                 <Button
                   size="lg"
-                  className="gap-2 text-lg px-8 h-12 rounded-full shadow-lg shadow-fuchsia-500/20 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none transition-all"
+                  className="gap-2 text-lg px-8 h-12 rounded-full shadow-lg shadow-violet-500/20 bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none transition-all"
                 >
                   {t("hero_title")} <Rocket className="w-5 h-5" />
                 </Button>

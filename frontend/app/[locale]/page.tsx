@@ -286,7 +286,7 @@ export default function HomePage() {
             <span>{tAbout("hero_subtitle")}</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm">
             {tAbout("hero_title")}
           </h1>
 
@@ -297,7 +297,7 @@ export default function HomePage() {
           {user && (
             <p className="text-sm text-muted-foreground mb-8 bg-card/50 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border">
               {locale === "cs" ? "Tvoje hodnost: " : "Your rank: "}
-              <span className="font-semibold text-fuchsia-600 dark:text-red-600 dark:drop-shadow-[0_0_8px_rgba(220,38,38,0.8)] flex items-center gap-1">
+              <span className="font-semibold text-violet-600 dark:text-red-600 dark:drop-shadow-[0_0_8px_rgba(220,38,38,0.8)] flex items-center gap-1">
                 <Trophy size={16} />
                 {getUserBadgeName(user.xp || 0, locale)}
               </span>
@@ -311,7 +311,7 @@ export default function HomePage() {
                 <Link href="/login">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_20px_rgba(220,38,38,0.5)] border-none"
+                    className="w-full sm:w-auto bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_20px_rgba(220,38,38,0.5)] border-none"
                   >
                     {tAuth("submit_login")}
                   </Button>
@@ -319,7 +319,7 @@ export default function HomePage() {
                 <Link href="/register">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-transparent dark:border dark:border-red-900 dark:hover:bg-red-950/30 dark:text-red-500 dark:hover:text-red-400"
+                    className="w-full sm:w-auto bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-transparent dark:border dark:border-red-900 dark:hover:bg-red-950/30 dark:text-red-500 dark:hover:text-red-400"
                   >
                     {tAuth("submit_register")}
                   </Button>
@@ -331,7 +331,7 @@ export default function HomePage() {
               >
                 <Button
                   size="lg"
-                  className="gap-2 w-full sm:w-auto shadow-lg shadow-fuchsia-500/20 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_20px_rgba(220,38,38,0.5)] border-none"
+                  className="gap-2 w-full sm:w-auto shadow-lg shadow-violet-500/20 bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_20px_rgba(220,38,38,0.5)] border-none"
                 >
                   {locale === "cs" ? "Pokračovat v učení" : "Resume Learning"}{" "}
                   <Rocket size={18} className="text-white" />
@@ -341,7 +341,7 @@ export default function HomePage() {
               <Link href={`/courses/${courses[0].id}`}>
                 <Button
                   size="lg"
-                  className="gap-2 w-full sm:w-auto shadow-lg shadow-fuchsia-500/20 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_20px_rgba(220,38,38,0.5)] border-none"
+                  className="gap-2 w-full sm:w-auto shadow-lg shadow-violet-500/20 bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_20px_rgba(220,38,38,0.5)] border-none"
                 >
                   {locale === "cs" ? "Začít s učením" : "Start Learning"}{" "}
                   <Rocket size={18} className="text-white" />
@@ -384,7 +384,7 @@ export default function HomePage() {
         {user && (
           <p className="text-muted-foreground mb-8 flex items-center gap-2">
             {locale === "cs" ? "Tvoje hodnost: " : "Your rank: "}
-            <span className="inline-flex items-center gap-1 text-fuchsia-600 dark:text-red-500 dark:drop-shadow-[0_0_5px_rgba(220,38,38,0.8)] font-medium">
+            <span className="inline-flex items-center gap-1 text-violet-600 dark:text-red-500 dark:drop-shadow-[0_0_5px_rgba(220,38,38,0.8)] font-medium">
               <Trophy size={18} />
               {getUserBadgeName(user.xp || 0, locale)}
             </span>
@@ -498,7 +498,7 @@ export default function HomePage() {
                       <Link href={`/courses/${course.id}`}>
                         <Button
                           size="sm"
-                          className="bg-gradient-to-r from-fuchsia-600 via-purple-600 to-fuchsia-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_10px_rgba(220,38,38,0.4)] border-none"
+                          className="bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_10px_rgba(220,38,38,0.4)] border-none"
                         >
                           {locale === "cs" ? "Začít kurz →" : "Start Course →"}
                         </Button>
@@ -530,7 +530,7 @@ export default function HomePage() {
       <section className="w-full py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900/50 dark:to-background border-t border-b border-border/50">
         <div className="container px-4 mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/20 text-sm font-mono text-fuchsia-600 dark:text-fuchsia-400 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-sm font-mono text-violet-600 dark:text-violet-400 mb-4">
               <Play className="w-4 h-4" />
               <span>Edutainment v3.0</span>
             </div>

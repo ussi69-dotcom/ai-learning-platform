@@ -82,8 +82,8 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
       <div
         className={`relative overflow-hidden rounded-2xl border transition-all duration-700 ease-in-out ${
           isExpanded
-            ? "border-fuchsia-500/30 dark:border-red-600/50 bg-slate-50 dark:bg-slate-950/80 shadow-2xl shadow-fuchsia-900/20 dark:shadow-red-900/40"
-            : "border-slate-200 dark:border-red-900/20 bg-white dark:bg-slate-900/40 hover:border-fuchsia-500/20 dark:hover:border-red-600/40"
+            ? "border-violet-500/30 dark:border-red-600/50 bg-slate-50 dark:bg-slate-950/80 shadow-2xl shadow-violet-900/20 dark:shadow-red-900/40"
+            : "border-slate-200 dark:border-red-900/20 bg-white dark:bg-slate-900/40 hover:border-violet-500/20 dark:hover:border-red-600/40"
         } backdrop-blur-xl`}
       >
         {/* Background Glow */}
@@ -98,13 +98,13 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
             <div className="flex items-center gap-5">
               <div className="relative">
                 <div className="absolute inset-0 bg-purple-500 dark:bg-red-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
-                <div className="relative p-3 rounded-xl bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-red-900/30 shadow-lg group-hover:border-fuchsia-500/30 dark:group-hover:border-red-500/50 transition-colors">
-                  <GitMerge className="w-6 h-6 text-fuchsia-600 dark:text-red-500" />
+                <div className="relative p-3 rounded-xl bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-red-900/30 shadow-lg group-hover:border-violet-500/30 dark:group-hover:border-red-500/50 transition-colors">
+                  <GitMerge className="w-6 h-6 text-violet-600 dark:text-red-500" />
                 </div>
               </div>
               <div className="text-left">
-                <div className="flex items-center gap-2 text-[10px] font-mono text-fuchsia-600 dark:text-red-500 mb-1 tracking-widest uppercase">
-                  <span className="px-2 py-0.5 rounded-full bg-fuchsia-500/10 dark:bg-red-500/10 border border-fuchsia-500/20 dark:border-red-500/30">
+                <div className="flex items-center gap-2 text-[10px] font-mono text-violet-600 dark:text-red-500 mb-1 tracking-widest uppercase">
+                  <span className="px-2 py-0.5 rounded-full bg-violet-500/10 dark:bg-red-500/10 border border-violet-500/20 dark:border-red-500/30">
                     Cycle #35
                   </span>
                   <span className="text-slate-400 dark:text-slate-700">|</span>
@@ -112,7 +112,7 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
                     <Clock className="w-3 h-3" /> Dec 2, 2025
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-fuchsia-700 dark:group-hover:text-red-400 transition-colors tracking-tight">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-violet-700 dark:group-hover:text-red-400 transition-colors tracking-tight">
                   {locale === "cs"
                     ? "AI × Human: Protocol Audit"
                     : "AI × Human: Protocol Audit"}
@@ -158,13 +158,13 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
             <div className="flex items-center gap-4 text-sm font-medium text-slate-600 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors relative">
               {!isExpanded && (
                 <div className="hidden md:block absolute -left-12 top-1/2 -translate-y-1/2">
-                  <ChevronRight className="w-5 h-5 text-fuchsia-600 dark:text-red-500 animate-[slide-right_2s_ease-in-out_infinite]" />
+                  <ChevronRight className="w-5 h-5 text-violet-600 dark:text-red-500 animate-[slide-right_2s_ease-in-out_infinite]" />
                 </div>
               )}
               <span
                 className={`hidden md:inline tracking-wide text-xs uppercase ${
                   !isExpanded
-                    ? "text-fuchsia-600 dark:text-red-400 font-bold"
+                    ? "text-violet-600 dark:text-red-400 font-bold"
                     : ""
                 }`}
               >
@@ -185,7 +185,7 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
                 {isExpanded ? (
                   <ChevronUp className="w-4 h-4" />
                 ) : (
-                  <Play className="w-4 h-4 fill-current text-fuchsia-600 dark:text-red-500" />
+                  <Play className="w-4 h-4 fill-current text-violet-600 dark:text-red-500" />
                 )}
               </div>
             </div>
@@ -207,7 +207,7 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
                   onClick={() => handleManualChange(index)}
                   className={`flex items-center gap-2 cursor-pointer transition-all duration-300 whitespace-nowrap px-3 py-1.5 rounded-full ${
                     currentPhase === index
-                      ? "bg-fuchsia-100 dark:bg-red-500/20 text-fuchsia-700 dark:text-red-300 border border-fuchsia-200 dark:border-red-500/30"
+                      ? "bg-violet-100 dark:bg-red-500/20 text-violet-700 dark:text-red-300 border border-violet-200 dark:border-red-500/30"
                       : currentPhase > index
                       ? "text-emerald-600 dark:text-emerald-400 opacity-80"
                       : "text-slate-500 dark:text-slate-600 opacity-60 hover:opacity-100"
@@ -216,7 +216,7 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
                   <div
                     className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
                       currentPhase === index
-                        ? "bg-fuchsia-600 dark:bg-red-600 text-white dark:shadow-[0_0_10px_rgba(220,38,38,0.5)]"
+                        ? "bg-violet-600 dark:bg-red-600 text-white dark:shadow-[0_0_10px_rgba(220,38,38,0.5)]"
                         : currentPhase > index
                         ? "bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400"
                         : "bg-slate-200 dark:bg-slate-800 text-slate-500"
@@ -362,7 +362,7 @@ export default function ABTestShowcase({ locale }: ABTestShowcaseProps) {
                 <Button
                   onClick={handleResume}
                   disabled={isResuming}
-                  className={`bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 dark:from-red-700 dark:via-red-600 dark:to-red-800 hover:opacity-90 dark:shadow-[0_0_15px_rgba(220,38,38,0.4)] text-white gap-2 px-4 transition-all duration-300 ${
+                  className={`bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-700 dark:from-red-700 dark:via-red-600 dark:to-red-800 hover:opacity-90 dark:shadow-[0_0_15px_rgba(220,38,38,0.4)] text-white gap-2 px-4 transition-all duration-300 ${
                     isResuming ? "opacity-50 cursor-wait" : ""
                   }`}
                   size="sm"

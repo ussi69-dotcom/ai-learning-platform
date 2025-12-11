@@ -52,7 +52,7 @@ export default function NavBar() {
             {/* Logo */}
             <Link
               href="/"
-              className="text-lg sm:text-xl font-black bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 dark:from-red-600 dark:via-red-500 dark:to-red-800 bg-clip-text text-transparent hover:opacity-80 transition-opacity whitespace-nowrap"
+              className="text-lg sm:text-xl font-black bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-700 dark:from-red-600 dark:via-red-500 dark:to-red-800 bg-clip-text text-transparent hover:opacity-80 transition-opacity whitespace-nowrap"
             >
               AI Edutainment
             </Link>
@@ -60,7 +60,7 @@ export default function NavBar() {
             {/* About Link */}
             <Link
               href="/about"
-              className="flex items-center gap-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-fuchsia-600 dark:hover:text-red-400 transition-colors"
+              className="flex items-center gap-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-violet-600 dark:hover:text-red-400 transition-colors"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
                 <circle
@@ -95,7 +95,7 @@ export default function NavBar() {
                 {/* Profile Button - horizontal layout */}
                 <Link
                   href="/profile"
-                  className="flex items-center gap-2 px-2 sm:px-3 py-1.5 rounded-xl border border-transparent hover:border-fuchsia-400/50 dark:hover:border-red-600/50 hover:bg-fuchsia-50/50 dark:hover:bg-red-950/40 transition-all duration-300"
+                  className="flex items-center gap-2 px-2 sm:px-3 py-1.5 rounded-xl border border-transparent hover:border-violet-400/50 dark:hover:border-red-600/50 hover:bg-violet-50/50 dark:hover:bg-red-950/40 transition-all duration-300"
                 >
                   {/* Avatar */}
                   <XPAvatarBadge
@@ -108,7 +108,7 @@ export default function NavBar() {
 
                   {/* Profile label + XP Bar */}
                   <div className="flex flex-col min-w-[60px] sm:min-w-[80px]">
-                    <span className="text-[10px] sm:text-xs font-bold text-fuchsia-700 dark:text-red-500 uppercase tracking-wide">
+                    <span className="text-[10px] sm:text-xs font-bold text-violet-700 dark:text-red-500 uppercase tracking-wide">
                       {t("profile") || "Profil"}
                     </span>
                     <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-0.5">
@@ -153,7 +153,7 @@ export default function NavBar() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="text-xs sm:text-sm px-2 sm:px-3 h-8 font-semibold text-slate-700 dark:text-slate-300 hover:text-fuchsia-600 dark:hover:text-red-400"
+                    className="text-xs sm:text-sm px-2 sm:px-3 h-8 font-semibold text-slate-700 dark:text-slate-300 hover:text-violet-600 dark:hover:text-red-400"
                   >
                     {t("login") || "Sign In"}
                   </Button>
@@ -161,7 +161,7 @@ export default function NavBar() {
                 <Link href="/register">
                   <Button
                     size="sm"
-                    className="text-xs sm:text-sm px-2 sm:px-4 h-8 font-semibold bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 dark:from-red-700 dark:to-red-900 dark:border-red-600/30 hover:opacity-90 text-white border-none shadow-md dark:shadow-red-900/20"
+                    className="text-xs sm:text-sm px-2 sm:px-4 h-8 font-semibold bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-700 dark:from-red-700 dark:to-red-900 dark:border-red-600/30 hover:opacity-90 text-white border-none shadow-md dark:shadow-red-900/20"
                   >
                     {t("register") || "Sign Up"}
                   </Button>

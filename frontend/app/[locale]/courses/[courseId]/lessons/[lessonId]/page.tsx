@@ -348,7 +348,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
         <div className="fixed inset-0 -z-10 pointer-events-none">
           <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-[150px] animate-pulse" style={{ animationDuration: '8s' }} />
           <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '10s' }} />
-          <div className="absolute top-[40%] right-[20%] w-[30%] h-[30%] bg-fuchsia-500/3 dark:bg-fuchsia-500/5 rounded-full blur-[100px]" />
+          <div className="absolute top-[40%] right-[20%] w-[30%] h-[30%] bg-violet-500/3 dark:bg-violet-500/5 rounded-full blur-[100px]" />
         </div>
 
         <ProgressDots />
@@ -407,7 +407,7 @@ export default function LessonPage({ params }: { params: Promise<{ courseId: str
                 </Link>
               )}
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent tracking-tight drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)] pb-1">{lesson.title}</h1>
+            <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-br from-violet-700 via-indigo-500 via-violet-400 to-violet-800 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent tracking-tight drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)] pb-1">{lesson.title}</h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">{lesson.description}</p>
           </div>
 

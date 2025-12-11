@@ -176,7 +176,7 @@ export default function CoursePage({ params }: { params: Promise<{ courseId: str
           <div className="flex justify-center gap-4">
             {/* Button 1: Start Learning */}
             <Link href={`/courses/${courseId}/lessons/${lessons[0]?.id || 1}`}>
-              <Button size="lg" className="bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 flex items-center gap-2 border-none">
+              <Button size="lg" className="bg-gradient-to-br from-violet-700 via-indigo-500 via-violet-400 to-violet-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 flex items-center gap-2 border-none">
                 {locale === 'cs' ? 'Začít s učením' : 'Start Learning'} <Rocket size={18} className="text-white" />
               </Button>
             </Link>

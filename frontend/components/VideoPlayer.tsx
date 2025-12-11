@@ -325,7 +325,7 @@ function VideoCard({
             className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
               video.isMain
                 ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
-                : "bg-fuchsia-500/20 text-fuchsia-400 border border-fuchsia-500/30"
+                : "bg-violet-500/20 text-violet-400 border border-violet-500/30"
             }`}
           >
             {video.isMain ? "⭐ Main" : "💡 Doporučeno"}

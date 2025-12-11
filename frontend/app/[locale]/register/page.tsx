@@ -156,7 +156,7 @@ export default function RegisterPage() {
 
             <Button 
               type="submit" 
-              className="w-full bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700" 
+              className="w-full bg-gradient-to-br from-violet-700 via-indigo-500 via-violet-400 to-violet-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700" 
               disabled={isLoading}
             >
               {isLoading ? tCommon('loading') : t('submit_register')}

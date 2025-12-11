@@ -56,9 +56,9 @@
 
 **Jedi Violet Mode:**
 
-- Replaced generic `purple` with **Jedi Lightsaber Violet** (`fuchsia-600` / `violet`).
-- Applied to Text, Buttons, Toggles, and Avatars in Light Mode.
-- Extended to **About Page** standardizing all gradients and badges.
+- Replaced generic `purple`/`fuchsia` with **Shiny Violet-Indigo** (`violet-600` / `indigo-600`).
+- Unified Text, Gradients, and Borders to match the "Resume Learning" button style.
+- Applied to **All Pages** (Home, About, Nav, Footer, Avatars).
 
 **Build Fix:**
 
