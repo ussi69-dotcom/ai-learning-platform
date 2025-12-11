@@ -17,7 +17,21 @@ import ABTestShowcase from "@/components/ABTestShowcase";
 import AIGlossary from "@/components/AIGlossary";
 import { getBadgeLevel, BADGE_TIERS } from "@/components/XPAvatarBadge";
 import { useLocale, useTranslations } from "next-intl";
-import { Rocket, Info, Code2, Zap, Users, GitBranch, Play, Video, Clipboard, Bot, Star, Construction, Trophy } from "lucide-react";
+import {
+  Rocket,
+  Info,
+  Code2,
+  Zap,
+  Users,
+  GitBranch,
+  Play,
+  Video,
+  Clipboard,
+  Bot,
+  Star,
+  Construction,
+  Trophy,
+} from "lucide-react";
 
 type FeedbackMode = "idle" | "placing" | "viewing";
 
@@ -272,7 +286,7 @@ export default function HomePage() {
             <span>{tAbout("hero_subtitle")}</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent drop-shadow-sm">
             {tAbout("hero_title")}
           </h1>
 
@@ -283,7 +297,7 @@ export default function HomePage() {
           {user && (
             <p className="text-sm text-muted-foreground mb-8 bg-card/50 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border">
               {locale === "cs" ? "Tvoje hodnost: " : "Your rank: "}
-              <span className="font-semibold text-purple-600 dark:text-red-500 flex items-center gap-1">
+              <span className="font-semibold text-fuchsia-600 dark:text-red-500 flex items-center gap-1">
                 <Trophy size={16} />
                 {getUserBadgeName(user.xp || 0, locale)}
               </span>
@@ -297,7 +311,7 @@ export default function HomePage() {
                 <Link href="/login">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-primary dark:text-primary-foreground border-none"
+                    className="w-full sm:w-auto bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-primary dark:text-primary-foreground border-none"
                   >
                     {tAuth("submit_login")}
                   </Button>
@@ -305,7 +319,7 @@ export default function HomePage() {
                 <Link href="/register">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-transparent dark:border dark:border-input dark:hover:bg-accent dark:hover:text-accent-foreground"
+                    className="w-full sm:w-auto bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 hover:opacity-90 transition-opacity text-white dark:bg-none dark:bg-transparent dark:border dark:border-input dark:hover:bg-accent dark:hover:text-accent-foreground"
                   >
                     {tAuth("submit_register")}
                   </Button>
@@ -317,7 +331,7 @@ export default function HomePage() {
               >
                 <Button
                   size="lg"
-                  className="gap-2 w-full sm:w-auto shadow-lg shadow-purple-500/20 bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none"
+                  className="gap-2 w-full sm:w-auto shadow-lg shadow-purple-500/20 bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none"
                 >
                   {locale === "cs" ? "Pokračovat v učení" : "Resume Learning"}{" "}
                   <Rocket size={18} className="text-white" />
@@ -327,7 +341,7 @@ export default function HomePage() {
               <Link href={`/courses/${courses[0].id}`}>
                 <Button
                   size="lg"
-                  className="gap-2 w-full sm:w-auto shadow-lg shadow-purple-500/20 bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none"
+                  className="gap-2 w-full sm:w-auto shadow-lg shadow-purple-500/20 bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none"
                 >
                   {locale === "cs" ? "Začít s učením" : "Start Learning"}{" "}
                   <Rocket size={18} className="text-white" />
@@ -370,7 +384,7 @@ export default function HomePage() {
         {user && (
           <p className="text-muted-foreground mb-8 flex items-center gap-2">
             {locale === "cs" ? "Tvoje hodnost: " : "Your rank: "}
-            <span className="inline-flex items-center gap-1 text-purple-600 dark:text-red-500 font-medium">
+            <span className="inline-flex items-center gap-1 text-fuchsia-600 dark:text-red-500 font-medium">
               <Trophy size={18} />
               {getUserBadgeName(user.xp || 0, locale)}
             </span>
@@ -400,13 +414,18 @@ export default function HomePage() {
         ) : courses.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => {
-              const isRecommended = course.difficulty_level === user.calculated_level;
-              const isUnderConstruction = course.id === 3 || course.id === 4;
+              const isRecommended =
+                course.difficulty_level === user.calculated_level;
+              const isUnderConstruction =
+                course.slug === "advanced-ai-techniques" ||
+                course.slug === "ai-engineering-deep-dive";
               return (
                 <Card
                   key={course.id}
                   className={`hover:border-primary/50 transition-all duration-300 group overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm relative ${
-                    isRecommended ? "ring-2 ring-yellow-500/50 dark:ring-yellow-400/50" : ""
+                    isRecommended
+                      ? "ring-2 ring-yellow-500/50 dark:ring-yellow-400/50"
+                      : ""
                   } ${isUnderConstruction ? "opacity-75" : ""}`}
                 >
                   {/* Under Construction Overlay */}
@@ -416,7 +435,9 @@ export default function HomePage() {
                       <div className="flex items-center gap-2 mb-2">
                         <Construction className="w-6 h-6" />
                         <span className="text-xl font-bold">
-                          {locale === "cs" ? "Ve výstavbě" : "Under Construction"}
+                          {locale === "cs"
+                            ? "Ve výstavbě"
+                            : "Under Construction"}
                         </span>
                         <Construction className="w-6 h-6" />
                       </div>
@@ -477,11 +498,9 @@ export default function HomePage() {
                       <Link href={`/courses/${course.id}`}>
                         <Button
                           size="sm"
-                          className="bg-gradient-to-br from-purple-700 via-fuchsia-500 via-purple-400 to-purple-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none"
+                          className="bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none"
                         >
-                          {locale === "cs"
-                            ? "Začít kurz →"
-                            : "Start Course →"}
+                          {locale === "cs" ? "Začít kurz →" : "Start Course →"}
                         </Button>
                       </Link>
                     </div>
@@ -498,9 +517,7 @@ export default function HomePage() {
                 : "No courses available yet."}
             </p>
             <p className="text-sm mt-2">
-              {locale === "cs"
-                ? "Zkuste to brzy znovu!"
-                : "Check back soon!"}
+              {locale === "cs" ? "Zkuste to brzy znovu!" : "Check back soon!"}
             </p>
           </div>
         )}
@@ -518,7 +535,9 @@ export default function HomePage() {
               <span>Edutainment v3.0</span>
             </div>
             <h2 className="text-3xl font-bold mb-3">{t("benefits_title")}</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">{t("benefits_subtitle")}</p>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              {t("benefits_subtitle")}
+            </p>
           </div>
 
           {/* Primary Edutainment Features - Horizontal Cards */}
@@ -553,14 +572,20 @@ export default function HomePage() {
                 key={index}
                 className="group relative overflow-hidden border-border/50 bg-card/60 backdrop-blur-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               >
-                <div className={`absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r ${benefit.gradient} opacity-0 group-hover:opacity-100 transition-opacity`} />
+                <div
+                  className={`absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r ${benefit.gradient} opacity-0 group-hover:opacity-100 transition-opacity`}
+                />
                 <CardContent className="p-5">
                   <div className="flex items-start gap-4">
-                    <div className={`p-2.5 rounded-xl bg-gradient-to-br ${benefit.gradient} text-white shadow-lg flex-shrink-0`}>
+                    <div
+                      className={`p-2.5 rounded-xl bg-gradient-to-br ${benefit.gradient} text-white shadow-lg flex-shrink-0`}
+                    >
                       {benefit.icon}
                     </div>
                     <div>
-                      <h3 className="font-semibold text-sm mb-1">{benefit.title}</h3>
+                      <h3 className="font-semibold text-sm mb-1">
+                        {benefit.title}
+                      </h3>
                       <p className="text-xs text-muted-foreground leading-relaxed">
                         {benefit.desc}
                       </p>

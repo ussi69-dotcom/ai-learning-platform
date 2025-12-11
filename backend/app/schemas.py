@@ -173,7 +173,7 @@ class UserProgress(UserProgressBase):
     last_accessed: datetime
     completed_labs: List[str] = []
     quiz_score: Optional[int] = None
-    quiz_attempts: int = 0  # Number of passing attempts (for XP bonus tracking)
+    quiz_attempts: Optional[int] = 0  # Number of passing attempts (for XP bonus tracking)
     current_page: int = 0
 
     class Config:

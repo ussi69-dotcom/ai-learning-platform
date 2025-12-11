@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useLocale } from 'next-intl';
@@ -14,7 +15,12 @@ interface LabBadgeProps {
 
 export default function LabBadge({ title, onClose, type = 'lab', xp = 25 }: LabBadgeProps) {
   const locale = useLocale();
-  
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     // Trigger Confetti
     const duration = 3000;
@@ -58,7 +64,10 @@ export default function LabBadge({ title, onClose, type = 'lab', xp = 25 }: LabB
   };
   const badgeTitle = badgeTitles[type];
 
-  return (
+  // Don't render on server side
+  if (!mounted) return null;
+
+  const modalContent = (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
       <div className="relative w-full max-w-md transform glass-panel rounded-3xl shadow-2xl border-2 border-primary animate-in zoom-in-95 duration-300 p-8 text-center overflow-hidden">
 
@@ -97,8 +106,9 @@ export default function LabBadge({ title, onClose, type = 'lab', xp = 25 }: LabB
               : '"Knowledge is the path to mastery."'}
           </div>
         </div>
-        {/* ... effects ... */}
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }

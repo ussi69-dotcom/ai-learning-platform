@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { useLocale } from 'next-intl';
+import React, { useState, useEffect, useRef } from "react";
+import { useLocale } from "next-intl";
 
 interface Video {
   id: string;
   title: string;
   author?: string;
   description?: string;
-  lang?: 'en' | 'cs';
+  lang?: "en" | "cs";
   isMain?: boolean;
 }
 
@@ -34,8 +34,8 @@ declare global {
 }
 
 function getVideoRegistry() {
-  if (typeof window === 'undefined') return null;
-  
+  if (typeof window === "undefined") return null;
+
   if (!window.__videoRegistry) {
     window.__videoRegistry = {
       videos: [],
@@ -47,29 +47,33 @@ function getVideoRegistry() {
           // Clear all videos when lesson changes
           registry.videos = [];
           registry.currentLessonKey = lessonKey;
-          registry.listeners.forEach(listener => listener());
+          registry.listeners.forEach((listener) => listener());
         }
       },
       addVideos: (newVideos: Video[]) => {
         const registry = window.__videoRegistry!;
-        newVideos.forEach(v => {
-          if (!registry.videos.some(existing => existing.id === v.id)) {
+        newVideos.forEach((v) => {
+          if (!registry.videos.some((existing) => existing.id === v.id)) {
             registry.videos.push(v);
           }
         });
-        registry.listeners.forEach(listener => listener());
+        registry.listeners.forEach((listener) => listener());
       },
       subscribe: (listener: () => void) => {
         const registry = window.__videoRegistry!;
         registry.listeners.add(listener);
         return () => registry.listeners.delete(listener);
-      }
+      },
     };
   }
   return window.__videoRegistry;
 }
 
-export const VideoPlayer = ({ fallbackUrl, fallbackTitle, lessonKey }: VideoPlayerProps) => {
+export const VideoPlayer = ({
+  fallbackUrl,
+  fallbackTitle,
+  lessonKey,
+}: VideoPlayerProps) => {
   const locale = useLocale();
   const [isPinned, setIsPinned] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -101,13 +105,13 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle, lessonKey }: VideoPlay
         if (registry) {
           const mainVideo: Video = {
             id,
-            title: fallbackTitle || 'Video',
-            isMain: true
+            title: fallbackTitle || "Video",
+            isMain: true,
           };
           // Add main video only if not already present
-          if (!registry.videos.some(v => v.id === id)) {
+          if (!registry.videos.some((v) => v.id === id)) {
             registry.videos.unshift(mainVideo);
-            registry.listeners.forEach(listener => listener());
+            registry.listeners.forEach((listener) => listener());
           }
         }
         setActiveVideoId(id);
@@ -130,8 +134,8 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle, lessonKey }: VideoPlay
     return unsubscribe;
   }, [lessonKey]);
 
-  const activeVideo = videos.find(v => v.id === activeVideoId) || videos[0];
-  const alternativeVideos = videos.filter(v => v.id !== activeVideo?.id);
+  const activeVideo = videos.find((v) => v.id === activeVideoId) || videos[0];
+  const alternativeVideos = videos.filter((v) => v.id !== activeVideo?.id);
 
   if (!activeVideo) {
     return null;
@@ -140,13 +144,13 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle, lessonKey }: VideoPlay
   const embedUrl = `https://www.youtube.com/embed/${activeVideo.id}?cc_load_policy=1&cc_lang_pref=${locale}&hl=${locale}`;
 
   return (
-    <div 
+    <div
       className={`mb-10 transition-all duration-300 ${
-        isPinned 
-          ? 'sticky top-0 z-50 bg-background/98 backdrop-blur-xl py-4 -mx-4 px-4 shadow-2xl shadow-black/20 border-b border-border/50' 
-          : ''
+        isPinned
+          ? "sticky top-0 z-50 bg-background/98 backdrop-blur-xl py-4 -mx-4 px-4 shadow-2xl shadow-black/20 border-b border-border/50"
+          : ""
       }`}
-      style={isPinned ? { marginTop: '-1rem' } : {}}
+      style={isPinned ? { marginTop: "-1rem" } : {}}
     >
       {/* Video Player */}
       <div className="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-border/50 ring-1 ring-black/5">
@@ -159,28 +163,30 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle, lessonKey }: VideoPlay
           allowFullScreen
         />
       </div>
-      
+
       {/* Current Video Info + Controls */}
       <div className="flex items-center justify-between mt-3 gap-4 px-1">
         <div className="flex-1 min-w-0 flex items-center gap-3">
           {/* Language Badge */}
           {activeVideo.lang && (
-            <span className={`shrink-0 px-2 py-0.5 rounded text-xs font-bold ${
-              activeVideo.lang === 'cs' 
-                ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
-                : 'bg-red-500/20 text-red-400 border border-red-500/30'
-            }`}>
-              {activeVideo.lang === 'cs' ? '🇨🇿 CZ' : '🇬🇧 EN'}
+            <span
+              className={`shrink-0 px-2 py-0.5 rounded text-xs font-bold ${
+                activeVideo.lang === "cs"
+                  ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
+                  : "bg-red-500/20 text-red-400 border border-red-500/30"
+              }`}
+            >
+              {activeVideo.lang === "cs" ? "🇨🇿 CZ" : "🇬🇧 EN"}
             </span>
           )}
-          
+
           {/* Main Badge */}
           {activeVideo.isMain && (
             <span className="shrink-0 px-2 py-0.5 rounded text-xs font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
               ⭐ MAIN
             </span>
           )}
-          
+
           <div className="min-w-0">
             <div className="text-sm font-medium text-foreground truncate">
               {activeVideo.title}
@@ -192,21 +198,24 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle, lessonKey }: VideoPlay
             )}
           </div>
         </div>
-        
+
         {/* Pin Button */}
         <button
           onClick={() => setIsPinned(!isPinned)}
           className={`
             px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200
             flex items-center gap-1.5 shrink-0
-            ${isPinned 
-              ? 'bg-primary text-primary-foreground shadow-lg' 
-              : 'bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-foreground border border-white/10'
+            ${
+              isPinned
+                ? "bg-primary text-primary-foreground shadow-lg"
+                : "bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-foreground border border-white/10"
             }
           `}
         >
-          <span>{isPinned ? '📌' : '📍'}</span>
-          <span className="hidden sm:inline">{isPinned ? 'Odepnout' : 'Připnout'}</span>
+          <span>{isPinned ? "📌" : "📍"}</span>
+          <span className="hidden sm:inline">
+            {isPinned ? "Odepnout" : "Připnout"}
+          </span>
         </button>
       </div>
 
@@ -220,27 +229,33 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle, lessonKey }: VideoPlay
             <div className="flex items-center gap-2">
               <span>🎬</span>
               <span className="text-sm font-medium">
-                {locale === 'cs' ? 'Další doporučená videa' : 'More recommended videos'}
+                {locale === "cs"
+                  ? "Další doporučená videa"
+                  : "More recommended videos"}
               </span>
               <span className="text-xs text-muted-foreground bg-white/10 px-2 py-0.5 rounded-full">
                 {alternativeVideos.length}
               </span>
             </div>
-            <span className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
+            <span
+              className={`transition-transform duration-200 ${
+                isExpanded ? "rotate-180" : ""
+              }`}
+            >
               ▼
             </span>
           </button>
-          
+
           {isExpanded && (
             <div className="mt-3 space-y-3 animate-in slide-in-from-top-2 duration-200">
               {alternativeVideos.map((video) => (
-                <VideoCard 
+                <VideoCard
                   key={video.id}
                   video={video}
                   onSelect={() => {
                     setActiveVideoId(video.id);
                     setIsExpanded(false);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 />
               ))}
@@ -253,9 +268,15 @@ export const VideoPlayer = ({ fallbackUrl, fallbackTitle, lessonKey }: VideoPlay
 };
 
 // Video Card Component with YouTube Thumbnail
-function VideoCard({ video, onSelect }: { video: Video; onSelect: () => void }) {
+function VideoCard({
+  video,
+  onSelect,
+}: {
+  video: Video;
+  onSelect: () => void;
+}) {
   const thumbnailUrl = `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`;
-  
+
   return (
     <button
       onClick={onSelect}
@@ -263,12 +284,12 @@ function VideoCard({ video, onSelect }: { video: Video; onSelect: () => void }) 
     >
       {/* YouTube Thumbnail */}
       <div className="relative shrink-0 w-32 h-20 rounded-lg overflow-hidden bg-black/50 group-hover:scale-105 transition-transform duration-200 shadow-lg">
-        <img 
-          src={thumbnailUrl} 
+        <img
+          src={thumbnailUrl}
           alt={video.title}
           className="w-full h-full object-cover"
           onError={(e) => {
-            (e.target as HTMLImageElement).style.display = 'none';
+            (e.target as HTMLImageElement).style.display = "none";
           }}
         />
         {/* Play overlay */}
@@ -277,41 +298,45 @@ function VideoCard({ video, onSelect }: { video: Video; onSelect: () => void }) 
             <span className="text-white text-sm ml-0.5">▶</span>
           </div>
         </div>
-        
+
         {/* Language flag */}
         <div className="absolute bottom-1 right-1 bg-black/80 text-white text-xs px-1 rounded">
-          {video.lang === 'cs' ? '🇨🇿' : '🇬🇧'}
+          {video.lang === "cs" ? "🇨🇿" : "🇬🇧"}
         </div>
       </div>
-      
+
       {/* Video Info */}
       <div className="flex-1 min-w-0 py-1">
         {/* Badges Row */}
         <div className="flex items-center gap-2 mb-1.5">
           {/* Language Badge */}
-          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
-            video.lang === 'cs' 
-              ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
-              : 'bg-red-500/20 text-red-400 border border-red-500/30'
-          }`}>
-            {video.lang === 'cs' ? 'Čeština' : 'English'}
+          <span
+            className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+              video.lang === "cs"
+                ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
+                : "bg-red-500/20 text-red-400 border border-red-500/30"
+            }`}
+          >
+            {video.lang === "cs" ? "Čeština" : "English"}
           </span>
-          
+
           {/* Main/Recommended Badge */}
-          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
-            video.isMain 
-              ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' 
-              : 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
-          }`}>
-            {video.isMain ? '⭐ Main' : '💡 Doporučeno'}
+          <span
+            className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+              video.isMain
+                ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
+                : "bg-fuchsia-500/20 text-fuchsia-400 border border-fuchsia-500/30"
+            }`}
+          >
+            {video.isMain ? "⭐ Main" : "💡 Doporučeno"}
           </span>
         </div>
-        
+
         {/* Title */}
         <div className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
           {video.title}
         </div>
-        
+
         {/* Author */}
         {video.author && (
           <div className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
@@ -319,7 +344,7 @@ function VideoCard({ video, onSelect }: { video: Video; onSelect: () => void }) 
             <span>{video.author}</span>
           </div>
         )}
-        
+
         {/* Description */}
         {video.description && (
           <div className="text-xs text-muted-foreground/80 mt-1.5 line-clamp-2 leading-relaxed">
@@ -327,7 +352,7 @@ function VideoCard({ video, onSelect }: { video: Video; onSelect: () => void }) 
           </div>
         )}
       </div>
-      
+
       {/* Arrow indicator */}
       <div className="shrink-0 self-center text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all">
         →
@@ -338,15 +363,15 @@ function VideoCard({ video, onSelect }: { video: Video; onSelect: () => void }) 
 
 function extractVideoId(url: string): string | null {
   if (!url) return null;
-  
+
   const embedMatch = url.match(/embed\/([^?]+)/);
   if (embedMatch) return embedMatch[1];
-  
+
   const watchMatch = url.match(/watch\?v=([^&]+)/);
   if (watchMatch) return watchMatch[1];
-  
+
   const shortMatch = url.match(/youtu\.be\/([^?]+)/);
   if (shortMatch) return shortMatch[1];
-  
+
   return null;
 }
