@@ -1,7 +1,7 @@
 # Working Context
 
-**Last Updated:** 2025-12-11 22:55 (Agent: Antigravity)
-**Last Commit:** `65d01e8` feat(ui): implement Jedi Lightsaber Violet color scheme in Light Mode
+**Last Updated:** 2025-12-11 23:00 (Agent: Antigravity)
+**Last Commit:** `96140d2` (Pending) feat(ui): enforce strict Sith Red theme in avatars and toggles
 **Status:** 🟢 READY - Website Audit Complete + Footer Added
 
 ---
@@ -58,6 +58,7 @@
 
 - Replaced generic `purple` with **Jedi Lightsaber Violet** (`fuchsia-600` / `violet`).
 - Applied to Text, Buttons, Toggles, and Avatars in Light Mode.
+- Extended to **About Page** standardizing all gradients and badges.
 
 **Build Fix:**
 
