@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import confetti from "canvas-confetti";
 import { Button } from "@/components/ui/button";
 import DifficultyIcon from "@/components/DifficultyIcon";
@@ -46,6 +47,11 @@ export default function LevelUpModal({
   locale,
 }: LevelUpModalProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -82,11 +88,11 @@ export default function LevelUpModal({
     }
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
   const description = LEVEL_DESCRIPTIONS[newLevel] || LEVEL_DESCRIPTIONS.PIECE_OF_CAKE;
 
-  return (
+  const modalContent = (
     <div
       className={`fixed inset-0 z-[100] flex items-center justify-center transition-opacity duration-300 ${
         isVisible ? "opacity-100" : "opacity-0"
@@ -163,4 +169,6 @@ export default function LevelUpModal({
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
