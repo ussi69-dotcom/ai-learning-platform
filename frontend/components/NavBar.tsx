@@ -7,13 +7,14 @@ import JediSithToggle from './JediSithToggle';
 import XPProgressBar from './XPProgressBar';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useEffect, useState } from 'react';
-import { getAvatar } from '@/components/AvatarSelector';
 import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 
 export default function NavBar() {
-  const { user, logout, token } = useAuth();
+  const { user, logout } = useAuth();
   const [progressStats, setProgressStats] = useState({ level: 1, xp: 0, maxXp: 500 });
   const t = useTranslations('Navigation');
+  const locale = useLocale();
 
   useEffect(() => {
     if (!user) return;
@@ -21,16 +22,12 @@ export default function NavBar() {
     // Calculate Level based on difficulty
     let level = 1;
     let maxXp = 500;
-    if (user.difficulty === 'LETS_ROCK') { level = 2; maxXp = 1000; }
-    if (user.difficulty === 'COME_GET_SOME') { level = 3; maxXp = 2000; }
-    if (user.difficulty === 'DAMN_IM_GOOD') { level = 4; maxXp = 5000; }
+    if (user.difficulty === 'LETS_ROCK') { level = 2; maxXp = 2000; }
+    if (user.difficulty === 'COME_GET_SOME') { level = 3; maxXp = 5000; }
+    if (user.difficulty === 'DAMN_IM_GOOD') { level = 4; maxXp = 10000; }
 
     setProgressStats({ level, xp: user.xp || 0, maxXp });
   }, [user]);
-
-  // Get Avatar Icon
-  const avatarObj = user ? getAvatar(user.avatar) : null;
-  const AvatarIcon = avatarObj?.type === 'ICON' ? avatarObj.icon : null;
 
   return (
     <nav className="border-b bg-white/80 dark:bg-slate-950/90 backdrop-blur-md border-slate-200 dark:border-slate-800 sticky top-0 z-50 transition-colors duration-300">
@@ -54,14 +51,18 @@ export default function NavBar() {
           </Link>
         </div>
         
-        {/* Center: XP Bar (Only when logged in) */}
+        {/* Center: XP Bar with Avatar Badge (Only when logged in) */}
         {user && (
           <div className="hidden md:flex flex-1 justify-center">
-            <XPProgressBar 
-              currentXP={progressStats.xp} 
-              nextLevelXP={progressStats.maxXp} 
+            <XPProgressBar
+              currentXP={progressStats.xp}
+              nextLevelXP={progressStats.maxXp}
               level={progressStats.level}
-              className="w-full max-w-[200px]" // Reduced width significantly
+              avatarId={user.avatar}
+              email={user.email}
+              onLogout={logout}
+              locale={locale}
+              className="w-full max-w-[280px]"
             />
           </div>
         )}
@@ -98,35 +99,7 @@ export default function NavBar() {
           {/* Language Switcher */}
           <LanguageSwitcher />
 
-          {user ? (
-            <>
-              <Link href="/profile">
-                <Button variant="ghost" size="sm" className="gap-2 h-10 rounded-full pl-2 pr-4 border border-transparent hover:border-slate-200 dark:hover:border-slate-700">
-                  {avatarObj && (
-                    avatarObj.type === 'IMAGE' ? (
-                      <img src={avatarObj.src} alt="Avatar" className="w-6 h-6 rounded-full" />
-                    ) : (
-                      AvatarIcon && <AvatarIcon 
-                        className="w-6 h-6" 
-                        stroke={avatarObj.color ? avatarObj.color : "currentColor"}
-                        strokeWidth={2}
-                        fill="none"
-                      />
-                    )
-                  )}
-                  <span className="hidden sm:inline">{t('profile')}</span>
-                </Button>
-              </Link>
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={logout}
-                className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
-              >
-                {t('logout')}
-              </Button>
-            </>
-          ) : (
+          {!user && (
             <div className="flex gap-2">
               <Link href="/login">
                 <Button variant="outline" size="sm" className="dark:bg-slate-900 dark:border-slate-700 dark:text-slate-300">

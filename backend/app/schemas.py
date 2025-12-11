@@ -160,9 +160,11 @@ class UserProgressCreate(UserProgressBase):
 
 class LabCompletion(BaseModel):
     lab_id: str
+    step_count: int = 1  # Number of steps in the lab for XP calculation
 
 class QuizCompletion(BaseModel):
     score: int
+    is_retry: bool = False  # True if user already passed this quiz before
 
 class UserProgress(UserProgressBase):
     id: int
@@ -171,6 +173,7 @@ class UserProgress(UserProgressBase):
     last_accessed: datetime
     completed_labs: List[str] = []
     quiz_score: Optional[int] = None
+    quiz_attempts: int = 0  # Number of passing attempts (for XP bonus tracking)
     current_page: int = 0
 
     class Config:
@@ -219,6 +222,33 @@ class FeedbackItemResponse(FeedbackItemBase):
 
     class Config:
         from_attributes = True
+
+# --- CERTIFICATE SCHEMAS ---
+
+class CertificateBase(BaseModel):
+    course_id: int
+    personalized_name: Optional[str] = None
+
+class CertificateCreate(CertificateBase):
+    pass
+
+class CertificateEmailRequest(BaseModel):
+    personalized_name: Optional[str] = None
+    email: Optional[str] = None  # Override email if different from user's
+
+class Certificate(CertificateBase):
+    id: int
+    certificate_id: str  # UUID for public link
+    user_id: int
+    issued_at: datetime
+    badge_level: int  # 1=Bronze, 2=Silver, 3=Gold, 4=Diamond
+    xp_at_completion: int
+    emailed: bool
+    course_title: Optional[str] = None  # Populated from course relation
+
+    class Config:
+        from_attributes = True
+
 
 # --- SANDBOX SCHEMAS ---
 class SandboxRequest(BaseModel):

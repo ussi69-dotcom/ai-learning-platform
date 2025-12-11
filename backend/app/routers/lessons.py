@@ -238,6 +238,15 @@ def update_lesson_progress(
     db.refresh(progress)
     return progress
 
+def calculate_lab_xp(step_count: int) -> int:
+    """Calculate XP award based on lab complexity (step count)."""
+    if step_count <= 3:
+        return 25  # Simple lab
+    elif step_count <= 6:
+        return 50  # Medium lab
+    else:
+        return 75  # Complex lab
+
 @router.post("/lessons/{lesson_id}/lab/complete", response_model=schemas.UserProgress)
 def complete_lesson_lab(
     lesson_id: int,
@@ -245,19 +254,20 @@ def complete_lesson_lab(
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
-    """Mark a specific lab within a lesson as completed"""
+    """Mark a specific lab within a lesson as completed. XP based on step count."""
     # Check if lesson exists
     lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
     if not lesson:
         raise HTTPException(status_code=404, detail="Lesson not found")
-    
+
     progress = db.query(models.UserProgress).filter(
         models.UserProgress.user_id == current_user.id,
         models.UserProgress.lesson_id == lesson_id
     ).first()
-    
+
     lab_id = completion.lab_id
-    
+    xp_award = calculate_lab_xp(completion.step_count)
+
     if not progress:
         progress = models.UserProgress(
             user_id=current_user.id,
@@ -266,21 +276,19 @@ def complete_lesson_lab(
             completed_labs=[lab_id]
         )
         db.add(progress)
-        current_user.xp += 25
+        current_user.xp += xp_award
     else:
         # Check if lab already completed
-        # Note: SQLAlchemy JSON mutation tracking can be tricky, so we make a copy
         current_labs = list(progress.completed_labs) if progress.completed_labs else []
-        
+
         if lab_id not in current_labs:
             current_labs.append(lab_id)
             progress.completed_labs = current_labs
-            # Explicitly flag as modified for some DBs/Drivers
             from sqlalchemy.orm.attributes import flag_modified
             flag_modified(progress, "completed_labs")
-            
-            current_user.xp += 25
-    
+
+            current_user.xp += xp_award
+
     db.commit()
     db.refresh(progress)
     db.refresh(current_user)
@@ -293,39 +301,56 @@ def complete_lesson_quiz(
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
-    """Save quiz score and award XP if passed (>70%)"""
+    """Save quiz score and award XP if passed (>=70%).
+
+    XP System:
+    - First pass: +50 XP
+    - Second pass (retry): +25 XP bonus
+    - Subsequent: no additional XP
+    """
     lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
     if not lesson:
         raise HTTPException(status_code=404, detail="Lesson not found")
-    
+
     progress = db.query(models.UserProgress).filter(
         models.UserProgress.user_id == current_user.id,
         models.UserProgress.lesson_id == lesson_id
     ).first()
-    
+
     xp_award = 0
-    
+    passed = completion.score >= 70
+
     if not progress:
+        # First attempt
         progress = models.UserProgress(
             user_id=current_user.id,
             lesson_id=lesson_id,
             course_id=lesson.course_id,
-            quiz_score=completion.score
+            quiz_score=completion.score,
+            quiz_attempts=1 if passed else 0  # Track passing attempts
         )
         db.add(progress)
-        if completion.score >= 70:
-            xp_award = 50
+        if passed:
+            xp_award = 50  # First pass bonus
     else:
-        # Only award XP if improving from failing to passing, or first time passing
         previous_score = progress.quiz_score or 0
-        progress.quiz_score = completion.score
-        
-        if completion.score >= 70 and previous_score < 70:
-            xp_award = 50
-            
+        previous_attempts = getattr(progress, 'quiz_attempts', 0) or 0
+        progress.quiz_score = max(completion.score, previous_score)  # Keep best score
+
+        if passed:
+            if previous_attempts == 0:
+                # First time passing
+                xp_award = 50
+                progress.quiz_attempts = 1
+            elif previous_attempts == 1 and completion.is_retry:
+                # Second pass (retry bonus)
+                xp_award = 25
+                progress.quiz_attempts = 2
+            # No XP for 3rd+ attempts
+
     if xp_award > 0:
         current_user.xp += xp_award
-    
+
     db.commit()
     db.refresh(progress)
     db.refresh(current_user)

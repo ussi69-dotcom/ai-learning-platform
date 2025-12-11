@@ -187,3 +187,7 @@
 .animate-bounce-slow {
   animation: bounce-slow 3s ease-in-out infinite;
 }
+
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}

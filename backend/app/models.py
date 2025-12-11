@@ -143,7 +143,10 @@ class UserProgress(Base):
     
     # Quiz score (0-100), null if not attempted
     quiz_score = Column(Integer, nullable=True)
-    
+
+    # Track quiz passing attempts for XP bonuses (1st: 50XP, 2nd: 25XP)
+    quiz_attempts = Column(Integer, default=0)
+
     current_page = Column(Integer, default=0)
 
     user = relationship("User", back_populates="progress")
@@ -179,6 +182,28 @@ class FeedbackItem(Base):
     replies = relationship("FeedbackItem", back_populates="parent_feedback")
     parent_feedback = relationship("FeedbackItem", back_populates="replies", remote_side=[id])
     votes_list = relationship("FeedbackVote", back_populates="feedback_item", cascade="all, delete-orphan")
+
+class Certificate(Base):
+    __tablename__ = "certificates"
+
+    id = Column(Integer, primary_key=True, index=True)
+    certificate_id = Column(String, unique=True, index=True)  # UUID for public sharing
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    course_id = Column(Integer, ForeignKey("courses.id"), nullable=False)
+    issued_at = Column(DateTime(timezone=True), server_default=func.now())
+    badge_level = Column(Integer, default=1)  # 1=Bronze, 2=Silver, 3=Gold, 4=Diamond
+    xp_at_completion = Column(Integer, default=0)
+    personalized_name = Column(String, nullable=True)  # Optional name for certificate
+    emailed = Column(Boolean, default=False)
+    email_sent_at = Column(DateTime(timezone=True), nullable=True)
+
+    user = relationship("User", backref="certificates")
+    course = relationship("Course")
+
+    __table_args__ = (
+        UniqueConstraint('user_id', 'course_id', name='unique_user_course_certificate'),
+    )
+
 
 class FeedbackVote(Base):
     __tablename__ = "feedback_votes"
