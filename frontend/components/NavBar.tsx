@@ -75,10 +75,10 @@ export default function NavBar() {
             {/* User Section */}
             {user ? (
               <div className="flex items-center gap-1 sm:gap-2">
-                {/* Profile Button with Avatar + XP Bar */}
+                {/* Profile Button - horizontal layout */}
                 <Link
                   href="/profile"
-                  className="flex flex-col items-center px-2 sm:px-3 py-1 rounded-xl border border-transparent hover:border-purple-300 dark:hover:border-red-500/50 hover:bg-purple-50/50 dark:hover:bg-red-950/20 transition-all duration-300 group"
+                  className="flex items-center gap-2 px-2 sm:px-3 py-1.5 rounded-xl border border-transparent hover:border-purple-300 dark:hover:border-red-500/50 hover:bg-purple-50/50 dark:hover:bg-red-950/20 transition-all duration-300"
                 >
                   {/* Avatar */}
                   <XPAvatarBadge
@@ -89,17 +89,20 @@ export default function NavBar() {
                     asLink={false}
                   />
 
-                  {/* XP Bar under avatar */}
-                  <div className="w-10 sm:w-12 mt-1">
-                    <div className="h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                  {/* Profile label + XP Bar */}
+                  <div className="flex flex-col min-w-[60px] sm:min-w-[80px]">
+                    <span className="text-[10px] sm:text-xs font-bold text-purple-700 dark:text-red-400 uppercase tracking-wide">
+                      {t('profile') || 'Profil'}
+                    </span>
+                    <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-0.5">
                       <div
                         className={`h-full bg-gradient-to-r ${badge.gradient} transition-all duration-500`}
                         style={{ width: `${getXPProgress(user.xp || 0)}%` }}
                       />
                     </div>
-                    <div className="text-[8px] sm:text-[9px] text-center text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+                    <span className="text-[9px] sm:text-[10px] text-slate-500 dark:text-slate-400 font-semibold">
                       {user.xp || 0} XP
-                    </div>
+                    </span>
                   </div>
                 </Link>
 
