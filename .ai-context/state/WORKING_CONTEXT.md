@@ -1,7 +1,7 @@
 # Working Context
 
-**Last Updated:** 2025-12-11 14:30 (Agent: Claude Code)
-**Last Commit:** `bcbf456` fix: navbar profile - horizontal layout with wider XP bar
+**Last Updated:** 2025-12-11 22:40 (Agent: Antigravity)
+**Last Commit:** `b0416c0` feat(ui): unify purple color scheme to AI Edutainment gradient
 **Status:** 🟢 READY - Website Audit Complete + Footer Added
 
 ---
@@ -100,13 +100,14 @@
 
 ## 📝 Mini Session Log (Last 5)
 
-| Date       | Agent  | What                                                                      |
-| ---------- | ------ | ------------------------------------------------------------------------- |
-| 2025-12-11 | Claude | **Audit + Footer** - SystemStatus hover, naming fix, translations, footer |
-| 2025-12-11 | Claude | **NavBar Redesign** - Horizontal profile, responsive, XP bar              |
-| 2025-12-11 | Claude | **AI Glossary v2** - 120px cubes, scroll reaction, heavy bottom           |
-| 2025-12-10 | Claude | **XP Level System** - Full difficulty refactor, level-up modal            |
-| 2025-12-09 | Claude | **Practical PE L01-L05 ALL DONE** - Full Edutainment upgrade              |
+| Date       | Agent       | What                                                                                       |
+| ---------- | ----------- | ------------------------------------------------------------------------------------------ |
+| 2025-12-11 | Antigravity | **UI Visuals** - Unified purple colors to use AI Edutainment gradient (Hero, Nav, Buttons) |
+| 2025-12-11 | Claude      | **Audit + Footer** - SystemStatus hover, naming fix, translations, footer                  |
+| 2025-12-11 | Claude      | **NavBar Redesign** - Horizontal profile, responsive, XP bar                               |
+| 2025-12-11 | Claude      | **AI Glossary v2** - 120px cubes, scroll reaction, heavy bottom                            |
+| 2025-12-10 | Claude      | **XP Level System** - Full difficulty refactor, level-up modal                             |
+| 2025-12-09 | Claude      | **Practical PE L01-L05 ALL DONE** - Full Edutainment upgrade                               |
 
 ---
 
