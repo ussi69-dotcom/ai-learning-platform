@@ -47,6 +47,12 @@
 - Standardized buttons, gradients, and hover states
 - Applied to: Hero, NavBar, Footer, ABTestShowcase, VideoPlayer
 
+**Sith Dark Mode (Lightsaber Red):**
+
+- Replaced mixed red/orange dark mode with pure **Sith Red** palette.
+- Used `red-600` (base), `red-900` (depth), `red-500` (glow/text).
+- Added `drop-shadow` and `box-shadow` for lightsaber glow effect.
+
 **Build Fix:**
 
 - `package.json`: `"build": "NODE_ENV=production next build"`

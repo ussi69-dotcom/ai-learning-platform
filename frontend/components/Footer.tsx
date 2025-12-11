@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="space-y-3">
             <Link
               href="/"
-              className="text-lg font-black bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 dark:from-red-500 dark:via-orange-400 dark:to-red-600 bg-clip-text text-transparent"
+              className="text-lg font-black bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-700 dark:from-red-600 dark:via-red-500 dark:to-red-800 bg-clip-text text-transparent"
             >
               AI Edutainment
             </Link>
@@ -35,7 +35,7 @@ export default function Footer() {
             <nav className="flex flex-col gap-2">
               <Link
                 href="/about"
-                className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-fuchsia-600 dark:hover:text-red-400 transition-colors"
+                className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-fuchsia-600 dark:hover:text-red-500 transition-colors"
               >
                 <Info size={16} />
                 {locale === "cs" ? "O projektu" : "About"}
@@ -44,14 +44,14 @@ export default function Footer() {
                 href="https://github.com/Zimm01/ai-learning-platform"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-fuchsia-600 dark:hover:text-red-400 transition-colors"
+                className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-fuchsia-600 dark:hover:text-red-500 transition-colors"
               >
                 <Github size={16} />
                 GitHub
               </a>
               <a
                 href="mailto:info@ai-edutainment.com"
-                className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-fuchsia-600 dark:hover:text-red-400 transition-colors"
+                className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-fuchsia-600 dark:hover:text-red-500 transition-colors"
               >
                 <Mail size={16} />
                 {locale === "cs" ? "Kontakt" : "Contact"}
