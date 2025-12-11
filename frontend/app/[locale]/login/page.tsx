@@ -127,7 +127,7 @@ export default function LoginPage() {
 
             <Button
               type="submit"
-              className="w-full bg-gradient-to-br from-violet-700 via-indigo-500 via-violet-400 to-violet-800 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700"
+              className="w-full bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700"
               disabled={isLoading}
             >
               {isLoading ? tCommon("loading") : t("submit_login")}
