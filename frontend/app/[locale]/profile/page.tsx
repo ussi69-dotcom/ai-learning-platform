@@ -2,16 +2,14 @@
 
 import { useState } from 'react';
 import { useRouter } from '@/i18n/routing';
-import { Link } from '@/i18n/routing';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { useTranslations, useLocale } from 'next-intl';
-import { BookOpen, CheckCircle, Trophy, Settings, AlertTriangle, Sparkles, Zap, Shield, Crown } from 'lucide-react';
-import DifficultyIcon from '@/components/DifficultyIcon';
+import { BookOpen, CheckCircle, Trophy, Settings, AlertTriangle, Sparkles, Crown } from 'lucide-react';
 import AvatarSelector, { getAvatar } from '@/components/AvatarSelector';
+import { BADGE_TIERS, getBadgeLevel } from '@/components/XPAvatarBadge';
 import axios from 'axios';
 import { cn } from '@/lib/utils';
 
@@ -23,19 +21,11 @@ export default function ProfilePage() {
   const locale = useLocale();
 
   const [isEditingAvatar, setIsEditingAvatar] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [_isUpdating, setIsUpdating] = useState(false);
 
   // Delete Account State
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  // Ideally move this to messages.json, but for now logic is here
-  const DIFFICULTY_LEVELS = [
-    { value: 'PIECE_OF_CAKE', label: 'Piece of Cake' },
-    { value: 'LETS_ROCK', label: 'Let\'s Rock' },
-    { value: 'COME_GET_SOME', label: 'Come Get Some' },
-    { value: 'DAMN_IM_GOOD', label: 'Damn I\'m Good' },
-  ];
 
   const handleUpdateAvatar = async (avatarId: string) => {
     setIsUpdating(true);
@@ -163,22 +153,33 @@ export default function ProfilePage() {
                 </Badge>
               </div>
 
-              <div className="w-full grid grid-cols-2 gap-4 text-left">
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50">
-                  <div className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold mb-1">Level</div>
-                  <div className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                    <Crown className="w-4 h-4 text-yellow-500" />
-                    1
+              {(() => {
+                const badgeLevel = getBadgeLevel(user.xp || 0);
+                const badge = BADGE_TIERS[badgeLevel];
+                const badgeName = locale === 'cs' ? badge.nameCs : badge.name;
+                return (
+                  <div className="w-full grid grid-cols-2 gap-4 text-left">
+                    <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50">
+                      <div className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold mb-1">
+                        {locale === 'cs' ? 'Úroveň' : 'Level'}
+                      </div>
+                      <div className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <Crown className="w-4 h-4 text-yellow-500" />
+                        {badgeLevel}
+                      </div>
+                    </div>
+                    <div className={`p-3 rounded-xl ${badge.bg}/10 border ${badge.border}/30`}>
+                      <div className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold mb-1">
+                        {locale === 'cs' ? 'Hodnost' : 'Rank'}
+                      </div>
+                      <div className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${badge.gradient}`} />
+                        {badgeName}
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50">
-                  <div className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold mb-1">Rank</div>
-                  <div className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                    <Shield className="w-4 h-4 text-indigo-500 dark:text-red-500" />
-                    Novice
-                  </div>
-                </div>
-              </div>
+                );
+              })()}
 
             </CardContent>
           </Card>
@@ -206,52 +207,65 @@ export default function ProfilePage() {
           )}
 
           {/* Level Display (XP-based, read-only) */}
-          <Card className="dark:bg-slate-900/50 dark:border-slate-800 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Trophy className="w-5 h-5 text-yellow-500" />
-                {locale === 'cs' ? 'Tvoje úroveň' : 'Your Level'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="p-4 bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-xl border border-yellow-200 dark:border-yellow-800/50">
-                <div className="flex items-center gap-3 mb-3">
-                  <DifficultyIcon level={user.calculated_level} size={28} />
-                  <span className="text-xl font-bold">{DIFFICULTY_LEVELS.find(l => l.value === user.calculated_level)?.label}</span>
-                </div>
-                {/* XP Progress to next level */}
-                {user.next_level_xp > 0 ? (
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm text-slate-600 dark:text-slate-400">
-                      <span>{user.xp} XP</span>
-                      <span>{user.next_level_xp} XP</span>
+          {(() => {
+            const badgeLevel = getBadgeLevel(user.xp || 0);
+            const badge = BADGE_TIERS[badgeLevel];
+            const badgeName = locale === 'cs' ? badge.nameCs : badge.name;
+            const nextLevelXP = badgeLevel < 4 ? [500, 2000, 5000][badgeLevel - 1] : -1;
+            const currentLevelXP = [0, 500, 2000, 5000][badgeLevel - 1];
+
+            return (
+              <Card className="dark:bg-slate-900/50 dark:border-slate-800 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <Trophy className="w-5 h-5 text-yellow-500" />
+                    {locale === 'cs' ? 'Tvoje hodnost' : 'Your Rank'}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className={`p-4 bg-gradient-to-br ${badge.bg}/10 rounded-xl border ${badge.border}/50`}>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${badge.gradient} shadow-lg ${badge.glow}`} />
+                      <span className="text-xl font-bold">{badgeName}</span>
+                      <span className="text-sm text-slate-500">({locale === 'cs' ? 'Úroveň' : 'Level'} {badgeLevel})</span>
                     </div>
-                    <Progress
-                      value={((user.xp - user.xp_for_current_level) / (user.next_level_xp - user.xp_for_current_level)) * 100}
-                      className="h-2"
-                    />
-                    <p className="text-xs text-slate-500 text-center">
-                      {locale === 'cs'
-                        ? `${user.next_level_xp - user.xp} XP do další úrovně`
-                        : `${user.next_level_xp - user.xp} XP to next level`}
-                    </p>
+                    {/* XP Progress to next level */}
+                    {nextLevelXP > 0 ? (
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm text-slate-600 dark:text-slate-400">
+                          <span>{user.xp} XP</span>
+                          <span>{nextLevelXP} XP</span>
+                        </div>
+                        <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full bg-gradient-to-r ${badge.gradient} transition-all duration-500`}
+                            style={{ width: `${Math.min(100, ((user.xp - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100)}%` }}
+                          />
+                        </div>
+                        <p className="text-xs text-slate-500 text-center">
+                          {locale === 'cs'
+                            ? `${nextLevelXP - user.xp} XP do další hodnosti`
+                            : `${nextLevelXP - user.xp} XP to next rank`}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400">
+                        <Crown className="w-4 h-4" />
+                        <span className="text-sm font-medium">
+                          {locale === 'cs' ? 'Maximální hodnost dosažena!' : 'Maximum rank achieved!'}
+                        </span>
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <div className="flex items-center gap-2 text-yellow-600 dark:text-yellow-400">
-                    <Crown className="w-4 h-4" />
-                    <span className="text-sm font-medium">
-                      {locale === 'cs' ? 'Maximální úroveň dosažena!' : 'Maximum level reached!'}
-                    </span>
-                  </div>
-                )}
-              </div>
-              <p className="text-xs text-slate-500 px-1">
-                {locale === 'cs'
-                  ? 'Úroveň se automaticky zvyšuje s tvými XP. Dokončuj lekce, laby a kvízy pro získání XP!'
-                  : 'Level increases automatically with your XP. Complete lessons, labs, and quizzes to earn XP!'}
-              </p>
-            </CardContent>
-          </Card>
+                  <p className="text-xs text-slate-500 px-1">
+                    {locale === 'cs'
+                      ? 'Hodnost se automaticky zvyšuje s tvými XP. Dokončuj lekce, laby a kvízy!'
+                      : 'Rank increases automatically with your XP. Complete lessons, labs, and quizzes!'}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })()}
 
           {/* Danger Zone */}
           <Card className="border-red-200 dark:border-red-900/30 bg-red-50/50 dark:bg-red-950/10 mt-6 overflow-hidden">

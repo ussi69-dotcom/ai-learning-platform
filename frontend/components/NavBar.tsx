@@ -5,29 +5,25 @@ import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 import JediSithToggle from './JediSithToggle';
 import XPProgressBar from './XPProgressBar';
+import XPAvatarBadge, { getBadgeLevel } from './XPAvatarBadge';
 import LanguageSwitcher from './LanguageSwitcher';
-import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 
+// XP thresholds for next level
+const XP_THRESHOLDS = [0, 500, 2000, 5000];
+
 export default function NavBar() {
   const { user, logout } = useAuth();
-  const [progressStats, setProgressStats] = useState({ level: 1, xp: 0, maxXp: 500 });
   const t = useTranslations('Navigation');
   const locale = useLocale();
 
-  useEffect(() => {
-    if (!user) return;
-
-    // Calculate Level based on difficulty
-    let level = 1;
-    let maxXp = 500;
-    if (user.difficulty === 'LETS_ROCK') { level = 2; maxXp = 2000; }
-    if (user.difficulty === 'COME_GET_SOME') { level = 3; maxXp = 5000; }
-    if (user.difficulty === 'DAMN_IM_GOOD') { level = 4; maxXp = 10000; }
-
-    setProgressStats({ level, xp: user.xp || 0, maxXp });
-  }, [user]);
+  // Calculate next level XP threshold
+  const getNextLevelXP = (xp: number): number => {
+    const level = getBadgeLevel(xp);
+    if (level >= 4) return XP_THRESHOLDS[3]; // Max level
+    return XP_THRESHOLDS[level];
+  };
 
   return (
     <nav className="border-b bg-white/80 dark:bg-slate-950/90 backdrop-blur-md border-slate-200 dark:border-slate-800 sticky top-0 z-50 transition-colors duration-300">
@@ -51,18 +47,14 @@ export default function NavBar() {
           </Link>
         </div>
         
-        {/* Center: XP Bar with Avatar Badge (Only when logged in) */}
+        {/* Center: XP Bar (Only when logged in) */}
         {user && (
           <div className="hidden md:flex flex-1 justify-center">
             <XPProgressBar
-              currentXP={progressStats.xp}
-              nextLevelXP={progressStats.maxXp}
-              level={progressStats.level}
-              avatarId={user.avatar}
-              email={user.email}
-              onLogout={logout}
+              currentXP={user.xp || 0}
+              nextLevelXP={getNextLevelXP(user.xp || 0)}
               locale={locale}
-              className="w-full max-w-[280px]"
+              className="w-full max-w-[200px]"
             />
           </div>
         )}
@@ -98,6 +90,40 @@ export default function NavBar() {
           
           {/* Language Switcher */}
           <LanguageSwitcher />
+
+          {/* User Section: Avatar + Profil link + Logout */}
+          {user && (
+            <div className="flex items-center gap-2">
+              {/* Avatar + Profil combined link */}
+              <Link
+                href="/profile"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-transparent hover:border-purple-300 dark:hover:border-red-500/50 hover:bg-purple-50 dark:hover:bg-red-950/30 transition-all duration-300"
+              >
+                <XPAvatarBadge
+                  avatarId={user.avatar}
+                  email={user.email}
+                  level={getBadgeLevel(user.xp || 0)}
+                  xp={user.xp || 0}
+                  asLink={false}
+                />
+                <span className="text-sm font-semibold text-purple-700 dark:text-red-400">
+                  {t('profile') || 'Profil'}
+                </span>
+              </Link>
+
+              {/* Logout button */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={logout}
+                className="text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+              </Button>
+            </div>
+          )}
 
           {!user && (
             <div className="flex gap-2">
