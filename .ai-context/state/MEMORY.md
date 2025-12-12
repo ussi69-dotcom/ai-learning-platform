@@ -35,9 +35,29 @@ PHASE 1: Research → PHASE 2: Generation → PHASE 3: Iteration → PHASE 4: Fi
 - **Node.js:** v24.11.1
 - **Stack:** Next.js 16.0.7, React 19.2.1, FastAPI, PostgreSQL 15, Redis 7, Docker Compose.
 - **Agent Mode:** Claude CLI primary, Gemini via MCP (`ask-gemini`)
-- **MCP Tools:** Playwright (visual check), GitHub, Context7, Figma
+- **MCP Tools:** Playwright, GitHub, Context7, Figma, **Perplexity** (Deep Research)
 
 ## 🔑 Standard Operating Protocols (SOPs)
+
+### 0. Research Tool Selection 🔍
+
+**Kdy použít který nástroj:**
+
+| Potřebuji... | Nástroj | Příklad |
+|--------------|---------|---------|
+| Rychlá fakta | `WebSearch` | "Nejnovější verze React?" |
+| Dokumentace knihovny | `Context7 MCP` | "Jak použít useEffect?" |
+| **Deep Research** | `Perplexity MCP` | "Srovnej AI code assistants" |
+| Aktuální trendy | `Perplexity MCP` | "State-of-the-art RAG" |
+| Content research | `Perplexity` → `Gemini` | Research → Content |
+
+**Perplexity MCP nástroje (po restartu Claude):**
+- `mcp__perplexity-search__perplexity_search` - rychlé hledání
+- `mcp__perplexity-search__perplexity_research` - deep research
+
+**Konfigurace:** `~/.claude.json` → `perplexity-search` MCP server
+**API klíč:** Sdílený s Daily Digest cron (`.env` → `PERPLEXITY_API_KEY`)
+**Docs:** `backend/scripts/README.md`
 
 ### 1. Content Engineering (Masterpiece v2) ✍️
 

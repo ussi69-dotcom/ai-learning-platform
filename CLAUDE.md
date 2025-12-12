@@ -4,16 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 🚀 Boot Sequence (v3.0)
 
-**IHNED při startu přečti tyto soubory:**
+### ⚠️ STOP! PŘED JAKOUKOLIV AKCÍ UDĚLEJ TOTO:
 
+**Krok 1:** Použij Read tool na tyto 3 soubory (POVINNÉ!):
 ```
-1. .ai-context/AGENT_PROTOCOL.md          ← 🔥 SPOLEČNÁ PRAVIDLA
-2. .ai-context/state/WORKING_CONTEXT.md   ← KDE JSME, CO DĚLÁME
-3. .ai-context/state/MEMORY.md            ← Protokoly, lessons learned
+Read: .ai-context/AGENT_PROTOCOL.md       ← 🔥 SPOLEČNÁ PRAVIDLA
+Read: .ai-context/state/WORKING_CONTEXT.md ← KDE JSME, CO DĚLÁME
+Read: .ai-context/state/MEMORY.md          ← Protokoly, lessons learned
 ```
 
-**Po načtení OKAMŽITĚ odpověz:**
-> "Pokračujeme od [task]. Stav: [status]. Další: [next step]."
+**Krok 2:** Ověř synchronizaci:
+```bash
+git log -1 --oneline  # Porovnej s WORKING_CONTEXT
+```
+
+**Krok 3:** OKAMŽITĚ odpověz uživateli:
+> "Jsem Claude. Pokračujeme od [task]. Stav: [status]. Další: [next step]."
+
+**⛔ NIKDY nezačínej pracovat bez splnění kroků 1-3!**
+**⛔ Ani continuation sessions nejsou výjimka!**
 
 **Během práce:**
 - Průběžně aktualizuj `WORKING_CONTEXT.md`
