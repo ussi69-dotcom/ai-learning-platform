@@ -1,0 +1,26 @@
+<svg width="400" height="225" viewBox="0 0 400 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradientPaper" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#faf5ff"/>
+      <stop offset="50%" style="stop-color:#f3e8ff"/>
+      <stop offset="100%" style="stop-color:#e9d5ff"/>
+    </linearGradient>
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="225" fill="url(#bgGradientPaper)"/>
+  <circle cx="200" cy="100" r="45" fill="url(#purpleGradient)" opacity="0.15"/>
+  <g transform="translate(172, 68)">
+    <rect x="0" y="0" width="56" height="64" rx="4" fill="white" stroke="#a855f7" stroke-width="2"/>
+    <rect x="8" y="10" width="40" height="3" rx="1.5" fill="url(#purpleGradient)"/>
+    <rect x="8" y="18" width="35" height="2" rx="1" fill="#d8b4fe"/>
+    <rect x="8" y="24" width="38" height="2" rx="1" fill="#d8b4fe"/>
+    <rect x="8" y="30" width="30" height="2" rx="1" fill="#d8b4fe"/>
+    <rect x="8" y="40" width="40" height="2" rx="1" fill="#e9d5ff"/>
+    <rect x="8" y="46" width="36" height="2" rx="1" fill="#e9d5ff"/>
+    <rect x="8" y="52" width="32" height="2" rx="1" fill="#e9d5ff"/>
+  </g>
+  <text x="200" y="175" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#7c3aed" font-weight="500">Research Paper</text>
+</svg>

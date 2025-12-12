@@ -1,7 +1,14 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { RefreshCw, Newspaper, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  RefreshCw,
+  Newspaper,
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import NewsCard, { NewsItem } from "./NewsCard";
 import NewsFilter from "./NewsFilter";
@@ -24,7 +31,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function NewsFeed({ locale }: NewsFeedProps) {
   const [items, setItems] = useState<NewsItem[]>([]);
-  const [filter, setFilter] = useState<string>("hot");  // Default to hot news
+  const [filter, setFilter] = useState<string>("hot"); // Default to hot news
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [stats, setStats] = useState<NewsStats | null>(null);
@@ -34,52 +41,59 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
-  const fetchNews = useCallback(async (source: string, fetchAll: boolean = false) => {
-    setLoading(true);
-    setError(null);
+  const fetchNews = useCallback(
+    async (source: string, fetchAll: boolean = false) => {
+      setLoading(true);
+      setError(null);
 
-    // Determine language filter based on locale
-    // EN locale: show only EN content, CZ locale: show all (or CZ-only when filter active)
-    const langFilter = locale === "en" ? "en" : undefined;
-    const limit = fetchAll ? 50 : 20;  // Show more items, especially when expanded
+      // Determine language filter based on locale
+      // EN locale: show only EN content, CZ locale: show all (or CZ-only when filter active)
+      const langFilter = locale === "en" ? "en" : undefined;
+      const limit = fetchAll ? 100 : 40; // Carousel: 40, Expanded: 100 items
 
-    try {
-      let url: string;
+      try {
+        let url: string;
 
-      if (source === "hot") {
-        // Hot endpoint with language filter for EN locale
-        const params = new URLSearchParams({ limit: String(limit) });
-        if (langFilter) params.set("lang", langFilter);
-        url = `${API_URL}/news/hot/?${params.toString()}`;
-      } else if (source === "cz") {
-        // Czech language filter - show only Czech content
-        url = `${API_URL}/news/?limit=${limit}&lang=cs`;
-      } else {
-        const params = new URLSearchParams({ limit: String(limit) });
-        if (source !== "all") {
-          params.set("source", source);
+        if (source === "hot") {
+          // Hot endpoint with language filter for EN locale
+          const params = new URLSearchParams({ limit: String(limit) });
+          if (langFilter) params.set("lang", langFilter);
+          url = `${API_URL}/news/hot/?${params.toString()}`;
+        } else if (source === "cz") {
+          // Czech language filter - show only Czech content
+          url = `${API_URL}/news/?limit=${limit}&lang=cs`;
+        } else {
+          const params = new URLSearchParams({ limit: String(limit) });
+          if (source !== "all") {
+            params.set("source", source);
+          }
+          // Apply language filter for EN locale
+          if (langFilter) {
+            params.set("lang", langFilter);
+          }
+          url = `${API_URL}/news/?${params.toString()}`;
         }
-        // Apply language filter for EN locale
-        if (langFilter) {
-          params.set("lang", langFilter);
+
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
         }
-        url = `${API_URL}/news/?${params.toString()}`;
-      }
 
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        setItems(data);
+      } catch (err) {
+        console.error("Failed to fetch news:", err);
+        setError(
+          locale === "cs"
+            ? "Nepodařilo se načíst novinky"
+            : "Failed to load news"
+        );
+      } finally {
+        setLoading(false);
       }
-
-      const data = await response.json();
-      setItems(data);
-    } catch (err) {
-      console.error("Failed to fetch news:", err);
-      setError(locale === "cs" ? "Nepodařilo se načíst novinky" : "Failed to load news");
-    } finally {
-      setLoading(false);
-    }
-  }, [locale]);
+    },
+    [locale]
+  );
 
   const fetchStats = useCallback(async () => {
     try {
@@ -110,18 +124,18 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
     checkScrollButtons();
     const scrollEl = scrollRef.current;
     if (scrollEl) {
-      scrollEl.addEventListener('scroll', checkScrollButtons);
-      window.addEventListener('resize', checkScrollButtons);
+      scrollEl.addEventListener("scroll", checkScrollButtons);
+      window.addEventListener("resize", checkScrollButtons);
       return () => {
-        scrollEl.removeEventListener('scroll', checkScrollButtons);
-        window.removeEventListener('resize', checkScrollButtons);
+        scrollEl.removeEventListener("scroll", checkScrollButtons);
+        window.removeEventListener("resize", checkScrollButtons);
       };
     }
   }, [checkScrollButtons, items, expanded]);
 
   const handleFilterChange = (newFilter: string) => {
     setFilter(newFilter);
-    setExpanded(false);  // Reset to carousel when changing filter
+    setExpanded(false); // Reset to carousel when changing filter
   };
 
   const handleRefresh = () => {
@@ -129,24 +143,26 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
     fetchStats();
   };
 
-  const scroll = (direction: 'left' | 'right') => {
+  const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
     const cardWidth = 320; // Approximate card width with gap
-    const scrollAmount = direction === 'left' ? -cardWidth * 2 : cardWidth * 2;
-    scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    const scrollAmount = direction === "left" ? -cardWidth * 2 : cardWidth * 2;
+    scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
-  const title = locale === "cs" ? "🔥 Nejnovější AI novinky" : "🔥 Latest AI News";
-  const subtitle = locale === "cs"
-    ? "Aktualizováno každých 30 minut z YouTube, blogů, Hacker News a arXiv"
-    : "Updated every 30 minutes from YouTube, blogs, Hacker News, and arXiv";
+  const title =
+    locale === "cs" ? "🔥 Nejnovější AI novinky" : "🔥 Latest AI News";
+  const subtitle =
+    locale === "cs"
+      ? "Aktualizováno každých 30 minut z YouTube, blogů, Hacker News a arXiv"
+      : "Updated every 30 minutes from YouTube, blogs, Hacker News, and arXiv";
 
   return (
     <section className="py-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-600 dark:from-red-500 dark:via-orange-500 dark:to-red-500 bg-clip-text text-transparent">
+          <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-700 dark:from-red-600 dark:via-red-500 dark:to-red-800 bg-clip-text text-transparent">
             {title}
           </h2>
           <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>
@@ -156,7 +172,18 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
           <NewsFilter
             value={filter}
             onChange={handleFilterChange}
-            counts={stats ? { total: stats.total, youtube: stats.youtube, rss: stats.rss, hackernews: stats.hackernews, papers: stats.papers, cz: stats.cs_total || 0 } : undefined}
+            counts={
+              stats
+                ? {
+                    total: stats.total,
+                    youtube: stats.youtube,
+                    rss: stats.rss,
+                    hackernews: stats.hackernews,
+                    papers: stats.papers,
+                    cz: stats.cs_total || 0,
+                  }
+                : undefined
+            }
             locale={locale}
           />
           <Button
@@ -211,9 +238,9 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
         <div className="relative group/carousel">
           {/* Left Scroll Button */}
           <button
-            onClick={() => scroll('left')}
+            onClick={() => scroll("left")}
             className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/70 hover:bg-black/90 text-white flex items-center justify-center shadow-lg transition-all ${
-              canScrollLeft ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
             aria-label="Scroll left"
           >
@@ -224,7 +251,7 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
           <div
             ref={scrollRef}
             className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-2"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {items.map((item) => (
               <div
@@ -238,9 +265,9 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
 
           {/* Right Scroll Button */}
           <button
-            onClick={() => scroll('right')}
+            onClick={() => scroll("right")}
             className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/70 hover:bg-black/90 text-white flex items-center justify-center shadow-lg transition-all ${
-              canScrollRight ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
             aria-label="Scroll right"
           >

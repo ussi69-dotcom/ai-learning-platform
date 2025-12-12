@@ -107,12 +107,28 @@ export default function NewsCard({ item, locale }: NewsCardProps) {
   const sourceStyle = getSourceStyle(item.source);
   const SourceIcon = sourceStyle.icon;
 
-  // Generate YouTube thumbnail if not provided
+  // Generate thumbnail URL with fallbacks
+  const getPlaceholderImage = (source: string) => {
+    // Use source-specific placeholder images
+    switch (source) {
+      case "youtube":
+        return "/images/placeholder-video.svg";
+      case "rss":
+        return "/images/placeholder-article.svg";
+      case "hackernews":
+        return "/images/placeholder-hackernews.svg";
+      case "papers":
+        return "/images/placeholder-paper.svg";
+      default:
+        return "/images/placeholder-article.svg";
+    }
+  };
+
   const thumbnailUrl =
     item.thumbnail_url ||
     (item.video_id
       ? `https://img.youtube.com/vi/${item.video_id}/hqdefault.jpg`
-      : null);
+      : getPlaceholderImage(item.source));
 
   const isVideo = item.source === "youtube";
   const ctaLabel = locale === "cs"
@@ -172,9 +188,9 @@ export default function NewsCard({ item, locale }: NewsCardProps) {
       </CardHeader>
 
       <CardContent className="flex-1 flex flex-col">
-        {/* Description */}
+        {/* Description - at least 3 lines for context */}
         {item.description && (
-          <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+          <p className="text-sm text-muted-foreground line-clamp-4 mb-3">
             {item.description}
           </p>
         )}

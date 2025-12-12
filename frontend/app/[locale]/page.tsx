@@ -372,7 +372,7 @@ export default function HomePage() {
       <section className="w-full py-12 md:py-16 container px-4 mx-auto">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-600 dark:from-red-500 dark:via-orange-500 dark:to-red-500 bg-clip-text text-transparent">
+            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-700 dark:from-red-600 dark:via-red-500 dark:to-red-800 bg-clip-text text-transparent">
               {locale === "cs" ? "📚 Všechny kurzy" : "📚 All Courses"}
             </h2>
             {user && (
