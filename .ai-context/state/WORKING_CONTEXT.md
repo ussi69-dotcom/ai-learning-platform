@@ -1,126 +1,100 @@
 # Working Context
 
-**Last Updated:** 2025-12-12 00:30 (Agent: Claude Opus 4.5)
-**Last Commit:** `66855d6` feat(ui): unify Jedi theme to Shiny Violet-Indigo mix
-**Status:** 🟢 READY - Lab Modernization Complete
+**Last Updated:** 2025-12-12 01:00 (Agent: Claude Opus 4.5)
+**Last Commit:** `bc1e0fa` feat(news): add CZ locale filter and Czech RSS sources
+**Status:** 🟢 READY - News CZ Filter Complete
 
 ---
 
 ## 🎯 Current State
 
-### Latest Session (Dec 12, 2025 - Lab Modernization)
+### Latest Session (Dec 12, 2025 - News CZ Filter & UI)
+
+| Task                        | Status  | Notes                                         |
+| --------------------------- | ------- | --------------------------------------------- |
+| Remove ABTestShowcase       | ✅ Done | Kept only on About page                       |
+| Netflix Carousel for News   | ✅ Done | Horizontal scroll, Show All expand            |
+| Netflix Carousel for Courses| ✅ Done | New CourseCarousel component                  |
+| Sith Mode Color Fix         | ✅ Done | Purple/violet → Red in dark mode              |
+| CZ RSS Sources Research     | ✅ Done | AI Novinky, AI Crunch CZ, Kapler o AI         |
+| Add Language Field to DB    | ✅ Done | Migration + language filtering                |
+| CZ Filter Button            | ✅ Done | Shows 🇨🇿 Česky only in CS locale             |
+| DateTime TZ Fix             | ✅ Done | Fixed offset-naive vs aware comparison        |
+
+### Previous Session (Dec 12, 2025 - Lab Modernization)
 
 | Task                          | Status  | Notes                                   |
 | ----------------------------- | ------- | --------------------------------------- |
 | Lab Analysis                  | ✅ Done | 34 labs reviewed, 3 at-risk identified  |
-| Gemini Research               | ✅ Done | 2025 AI limitations researched          |
 | ChatGPT Browser Testing       | ✅ Done | Plenum wrench + sycophancy tested       |
 | lab-rag-reality Fix (EN+CS)   | ✅ Done | FIFA 2026 → Knowledge boundaries        |
 | lab-hallucination-trap Fix    | ✅ Done | Harry Potter → Plenum wrench            |
 | lab-tokenizer-view Fix        | ✅ Done | AI guess → Official tool link           |
 | New Sycophancy Trap Lab       | ✅ Done | Churchill/radar test (EN+CS)            |
-| Backend QA                    | ✅ Done | 4 labs detected in Dark Side lesson     |
-
-### Previous Session (Dec 11, 2025 - UI/UX)
-
-| Task                          | Status  | Notes                         |
-| ----------------------------- | ------- | ----------------------------- |
-| Website Comprehensive Audit   | ✅ Done | All pages reviewed            |
-| SystemStatus Hover Button     | ✅ Done | Discrete button bottom-left   |
-| Difficulty Naming Unification | ✅ Done | Bronze/Silver/Gold/Diamond    |
-| Course ID Hidden              | ✅ Done | Removed debug info from cards |
-| Czech Translations            | ✅ Done | Courses 3 & 4 translated      |
-| NODE_ENV Build Fix            | ✅ Done | Next.js 16 prerender bug      |
-| Footer Component              | ✅ Done | Links, GitHub, Tech Stack     |
 
 ### Key Changes
 
-**Footer (`frontend/components/Footer.tsx`):**
+**News Feed (`frontend/components/NewsFeed.tsx`):**
+- Netflix-style horizontal carousel with scroll buttons
+- "Show All" expand/collapse functionality
+- CZ filter support via `?lang=cs` API parameter
+- Stats include `cs_total` for Czech content count
 
-- Brand + description
-- Links: O projektu, GitHub, Kontakt
-- Tech Stack badges: Next.js 16, FastAPI, Claude Opus, Gemini 3
-- Copyright + "Vytvořeno s ❤️ lidmi & AI"
-- `pb-20` padding to avoid FAB overlap
+**News Filter (`frontend/components/NewsFilter.tsx`):**
+- Added CZ filter (🇨🇿 Česky) visible only in Czech locale
+- Shows count of Czech articles (17 at time of testing)
 
-**SystemStatus (`frontend/components/SystemStatus.tsx`):**
+**Course Carousel (`frontend/components/CourseCarousel.tsx`):**
+- New component with Netflix-style horizontal scroll
+- "Doporučeno" badge for recommended courses
+- "Ve výstavbě" overlay for under-construction courses
 
-- Converted from inline bar to hover button
-- Fixed position `bottom-20 left-4`
-- Green dot (collapsed) → expands on hover showing PostgreSQL, Redis, version
+**Backend News Aggregator:**
+- Added Czech RSS feeds: AI Novinky, AI Crunch CZ, Kapler o AI
+- Language field (`en`/`cs`) in NewsItem model
+- Migration: `28c8f428443e_add_language_column_to_news_items.py`
+- Fixed datetime timezone comparison bug
 
-**Naming Consistency:**
-
-- User rank: "Tvoje hodnost: Bronz/Stříbro/Zlato/Diamant" (XP-based)
-- Course difficulty: Duke Nukem style (Piece of Cake, Let's Rock, etc.)
-
-**Color Scheme Unification:**
-
-- Replaced generic purple with **AI Edutainment Gradeint** (`purple-600` via `fuchsia-500` to `purple-700`)
-- Standardized buttons, gradients, and hover states
-- Applied to: Hero, NavBar, Footer, ABTestShowcase, VideoPlayer
-
-**Sith Dark Mode (Lightsaber Red):**
-
-- Replaced mixed red/orange dark mode with pure **Sith Red** palette.
-- Used `red-600` (base), `red-900` (depth), `red-500` (glow/text).
-- Added `drop-shadow` and `box-shadow` for lightsaber glow effect.
-- **Strict Mode:** Updated `JediSithToggle`, `AvatarSelector`, and Icons to strictly use Red (removed Orange).
-
-**Jedi Violet Mode:**
-
-- Replaced generic `purple`/`fuchsia` with **Shiny Violet-Indigo** (`violet-600` / `indigo-600`).
-- Unified Text, Gradients, and Borders to match the "Resume Learning" button style.
-- Applied to **All Pages** (Home, About, Nav, Footer, Avatars).
-
-**Build Fix:**
-
-- `package.json`: `"build": "NODE_ENV=production next build"`
-- Fixes Next.js 16 + React 19 prerender bug
-- Removed problematic `global-error.tsx`
-
-**Translations Added:**
-
-- `content/courses/advanced-ai-techniques/meta.json` → title_cs, description_cs
-- `content/courses/ai-engineering-deep-dive/meta.json` → title_cs, description_cs
+**Sith Mode Color Fix:**
+- All violet/purple colors in dark mode → red
+- Affected: NewsCard, NewsFeed, NewsFilter, CourseCarousel
 
 ---
 
-## 🎨 UI Components Summary
+## 🎨 Theme Colors
 
-### Physics/Animation
+### Jedi (Light Mode)
+- Primary: `violet-600` / `indigo-600` gradient
+- Text: `text-violet-600`
+- Borders: `border-violet-500/30`
 
-- **AI Glossary Cubes:** `framer-motion` (already installed, no new deps)
-- 12 bouncing ice cubes with physics simulation
-- requestAnimationFrame loop for smooth animations
-
-### Fixed Position Elements
-
-| Element      | Position                 | Z-Index |
-| ------------ | ------------------------ | ------- |
-| NavBar       | `sticky top-0`           | `z-50`  |
-| SystemStatus | `fixed bottom-20 left-4` | `z-40`  |
-| FeedbackFAB  | `fixed bottom-6 right-4` | `z-40`  |
-| ScrollToTop  | `fixed bottom-4 right-4` | varies  |
+### Sith (Dark Mode)
+- Primary: `red-600` / `red-700` gradient
+- Text: `dark:text-red-400`
+- Borders: `dark:border-red-500/30`
 
 ---
 
-## 📋 Course Status
+## 📡 News Sources
 
-| Course                       | ID  | Status          | CS Translation |
-| ---------------------------- | --- | --------------- | -------------- |
-| AI Basics for Beginners      | 1   | ✅ Active       | ✅ Complete    |
-| Practical Prompt Engineering | 2   | ✅ Active       | ✅ Complete    |
-| AI Engineering Deep Dive     | 3   | 🚧 Construction | ✅ Added       |
-| Advanced AI Techniques       | 4   | 🚧 Construction | ✅ Added       |
+### English
+- YouTube: 10 channels (Fireship, 3B1B, Yannic Kilcher, etc.)
+- RSS: OpenAI, HuggingFace, Google AI, TechCrunch, MIT Tech Review
+- Hacker News: AI/GPT/LLM tagged stories
+- Papers: arXiv cs.AI, cs.LG, cs.CL
+
+### Czech (New)
+- AI Novinky (ainovinky.cz)
+- AI Crunch CZ (aicrunch.cz)
+- Kapler o AI (kapler.cz)
 
 ---
 
 ## 📋 Next Actions (Low Priority)
 
-1. **Create content for courses 3 & 4** when ready
-2. **About page navbar icon** - currently just ℹ️, could add text label
-3. **Create missing SVG diagrams** (Optional)
+1. **Add Czech YouTube channels** - Need to verify channel IDs for @tomas-ai-cz, @bartosmarek, @davidstrejc
+2. **News title translation** - Consider auto-translating EN titles to CS via API
+3. **Create content for courses 3 & 4** when ready
 
 ---
 
@@ -128,11 +102,11 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-12 | Claude      | **News CZ Filter** - Added Czech RSS feeds, CZ filter, Sith color fix, Netflix carousels   |
 | 2025-12-12 | Claude      | **Lab Modernization** - Fixed 3 at-risk labs + added Sycophancy Trap lab (EN+CS)            |
 | 2025-12-11 | Antigravity | **Violet-Indigo Mix** - Re-aligned all fuchsia elements to Shiny Violet-Indigo as requested |
 | 2025-12-11 | Antigravity | **Jedi Violet (About)** - Extended Jedi Violet theme to About Page                          |
 | 2025-12-11 | Antigravity | **Sith Strict Mode** - Removed Orange traces from Avatars, Toggles, and Icons               |
-| 2025-12-11 | Claude      | **Audit + Footer** - SystemStatus hover, naming fix, translations, footer                   |
 
 ---
 
@@ -148,4 +122,4 @@
 ---
 
 _This file is the SINGLE SOURCE OF TRUTH for current project state._
-_Updated by: Claude Code (2025-12-11 14:30)_
+_Updated by: Claude Opus 4.5 (2025-12-12 01:00)_
