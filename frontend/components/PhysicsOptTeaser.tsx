@@ -2,11 +2,23 @@
 
 import { TrendingUp, ArrowRight, Zap } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Link } from '@/i18n/routing';
+import { useRouter } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 
 export default function PhysicsOptTeaser() {
   const t = useTranslations('Home');
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push('/about');
+    // Wait for navigation then scroll to element
+    setTimeout(() => {
+      const element = document.getElementById('cycle-49');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 mt-12 mb-12">
@@ -63,11 +75,12 @@ export default function PhysicsOptTeaser() {
             </p>
 
             <div className="pt-2 flex justify-start">
-              <Link href="/about#cycle-49">
-                <Button className="bg-gradient-to-r from-orange-600 to-amber-600 dark:from-amber-700 dark:via-orange-600 dark:to-amber-800 hover:opacity-90 text-white border-0 shadow-lg shadow-orange-500/20 dark:shadow-amber-500/20 transition-all duration-300 group-hover:scale-105">
-                  {t('teaser2_cta')} <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
+              <Button
+                onClick={handleClick}
+                className="bg-gradient-to-r from-orange-600 to-amber-600 dark:from-amber-700 dark:via-orange-600 dark:to-amber-800 hover:opacity-90 text-white border-0 shadow-lg shadow-orange-500/20 dark:shadow-amber-500/20 transition-all duration-300 group-hover:scale-105 cursor-pointer"
+              >
+                {t('teaser2_cta')} <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
             </div>
           </div>
 

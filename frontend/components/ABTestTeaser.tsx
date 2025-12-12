@@ -1,12 +1,24 @@
 "use client";
 
-import { TrendingUp, Clock, ArrowRight, GitMerge } from 'lucide-react';
+import { TrendingUp, ArrowRight, GitMerge } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Link } from '@/i18n/routing';
+import { useRouter } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 
 export default function ABTestTeaser() {
   const t = useTranslations('Home');
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push('/about');
+    // Wait for navigation then scroll to element
+    setTimeout(() => {
+      const element = document.getElementById('cycle-35');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 mt-12 mb-12">
@@ -63,11 +75,12 @@ export default function ABTestTeaser() {
             </p>
             
             <div className="pt-2 flex justify-start">
-              <Link href="/about#cycle-35">
-                <Button className="bg-gradient-to-r from-purple-600 to-blue-600 dark:from-red-700 dark:via-red-600 dark:to-red-800 hover:opacity-90 text-white border-0 shadow-lg shadow-purple-500/20 dark:shadow-red-500/20 transition-all duration-300 group-hover:scale-105">
-                  {t('teaser_cta')} <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
+              <Button
+                onClick={handleClick}
+                className="bg-gradient-to-r from-purple-600 to-blue-600 dark:from-red-700 dark:via-red-600 dark:to-red-800 hover:opacity-90 text-white border-0 shadow-lg shadow-purple-500/20 dark:shadow-red-500/20 transition-all duration-300 group-hover:scale-105 cursor-pointer"
+              >
+                {t('teaser_cta')} <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
             </div>
           </div>
 
