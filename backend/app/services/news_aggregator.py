@@ -47,10 +47,9 @@ YOUTUBE_CHANNELS = {
     "UCZHmQk67mSJgfCCTn7xBfew": "Yannic Kilcher",       # ML paper reviews
     "UC0RhatS1pyxInC00YKjjBqQ": "AI Explained",         # AI deep dives
     "UCbfYPyITQ-7l4upoX8nvctg": "Two Minute Papers",    # Research highlights
-    # Czech AI Content (CZ)
-    # Note: Channel IDs need to be verified - using handles as placeholder
-    # "UC_davidstrejc": "David Strejc",                 # @davidstrejc - Czech AI educator
-    # "UC_marekbartos": "Marek Bartoš",                 # Czech AI content
+    # New additions (2024-2025 rising stars)
+    "UCtYLUTtgS3k1Fg4y5tAhLbw": "StatQuest",            # ML/stats explained with humor
+    "UCLkAepWjdylmXSltofFvsYQ": "Sentdex",              # Python ML deep-dives
 }
 
 # RSS feeds to track (updated URLs as of Dec 2025)
@@ -65,16 +64,18 @@ RSS_FEEDS = {
 
 # Czech RSS feeds (CZ locale)
 RSS_FEEDS_CZ = {
-    "https://www.kapler.cz/feed/": "Kapler o AI",      # Czech AI blog
-    "https://ainovinky.cz/feed/": "AI Novinky",        # Czech AI news
+    "https://www.kapler.cz/feed/": "Kapler o AI",      # Czech AI blog - praktické návody
+    "https://ainovinky.cz/feed/": "AI Novinky",        # Czech AI news - denní novinky
     "https://aicrunch.cz/feed/": "AI Crunch CZ",       # Czech AI startup news
+    "https://www.lupa.cz/n/rss/": "Lupa.cz",           # Czech tech portal - AI sekce
 }
 
-# Czech YouTube channels (to be added when channel IDs are verified)
-# Handles: @tomas-ai-cz, @bartosmarek, @davidstrejc
+# Czech YouTube channels (verified Channel IDs from Perplexity research Dec 2025)
 YOUTUBE_CHANNELS_CZ = {
-    # Channel IDs will be added once verified via YouTube API
-    # For now, using handles which need to be converted to UC... IDs
+    # Verified CZ AI YouTubers
+    "UCxlVFbcqsyd8UsjfW0syEPA": "Tomáš AI",            # @tomas-ai-cz - AI nástroje, automatizace, agenti
+    "UC6NZksFEiFLcs1hW9lmt6LQ": "David Strejc",        # @davidstrejc - LLM internals, expert talks
+    # Note: @bartosmarek Channel ID needs API verification - handle doesn't directly convert
 }
 
 
@@ -87,24 +88,33 @@ class YouTubeFetcher:
         self.api_key = api_key
 
     async def fetch(self) -> List[Dict]:
-        """Fetch latest videos from all tracked channels."""
+        """Fetch latest videos from all tracked channels (EN + CZ)."""
         if not self.api_key:
             logger.warning("YouTube API key not configured, skipping YouTube fetch")
             return []
 
         items = []
         async with httpx.AsyncClient(timeout=30.0) as client:
+            # Fetch English channels
             for channel_id, channel_name in YOUTUBE_CHANNELS.items():
                 try:
-                    videos = await self._fetch_channel_videos(client, channel_id, channel_name)
+                    videos = await self._fetch_channel_videos(client, channel_id, channel_name, language="en")
                     items.extend(videos)
                 except Exception as e:
                     logger.error(f"Failed to fetch YouTube channel {channel_name}: {e}")
 
+            # Fetch Czech channels
+            for channel_id, channel_name in YOUTUBE_CHANNELS_CZ.items():
+                try:
+                    videos = await self._fetch_channel_videos(client, channel_id, channel_name, language="cs")
+                    items.extend(videos)
+                except Exception as e:
+                    logger.error(f"Failed to fetch CZ YouTube channel {channel_name}: {e}")
+
         return items
 
     async def _fetch_channel_videos(
-        self, client: httpx.AsyncClient, channel_id: str, channel_name: str
+        self, client: httpx.AsyncClient, channel_id: str, channel_name: str, language: str = "en"
     ) -> List[Dict]:
         """Fetch latest videos from a single channel."""
         # Get latest videos
@@ -138,7 +148,7 @@ class YouTubeFetcher:
                 "channel_name": channel_name,
                 "published_at": datetime.fromisoformat(snippet["publishedAt"].replace("Z", "+00:00")),
                 "video_id": video_id,
-                "language": "en",  # Currently English channels only
+                "language": language,  # EN or CS based on channel source
             })
 
         return items
