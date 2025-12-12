@@ -34,23 +34,34 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
-  const fetchNews = useCallback(async (source: string) => {
+  const fetchNews = useCallback(async (source: string, fetchAll: boolean = false) => {
     setLoading(true);
     setError(null);
+
+    // Determine language filter based on locale
+    // EN locale: show only EN content, CZ locale: show all (or CZ-only when filter active)
+    const langFilter = locale === "en" ? "en" : undefined;
+    const limit = fetchAll ? 50 : 20;  // Show more items, especially when expanded
 
     try {
       let url: string;
 
       if (source === "hot") {
-        // Use dedicated hot endpoint for curated mix (12 = 3x4 grid)
-        url = `${API_URL}/news/hot/?limit=12`;
+        // Hot endpoint with language filter for EN locale
+        const params = new URLSearchParams({ limit: String(limit) });
+        if (langFilter) params.set("lang", langFilter);
+        url = `${API_URL}/news/hot/?${params.toString()}`;
       } else if (source === "cz") {
         // Czech language filter - show only Czech content
-        url = `${API_URL}/news/?limit=12&lang=cs`;
+        url = `${API_URL}/news/?limit=${limit}&lang=cs`;
       } else {
-        const params = new URLSearchParams({ limit: "12" });
+        const params = new URLSearchParams({ limit: String(limit) });
         if (source !== "all") {
           params.set("source", source);
+        }
+        // Apply language filter for EN locale
+        if (langFilter) {
+          params.set("lang", langFilter);
         }
         url = `${API_URL}/news/?${params.toString()}`;
       }
@@ -83,9 +94,9 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
   }, []);
 
   useEffect(() => {
-    fetchNews(filter);
+    fetchNews(filter, expanded);
     fetchStats();
-  }, [filter, fetchNews, fetchStats]);
+  }, [filter, expanded, fetchNews, fetchStats]);
 
   // Check scroll buttons visibility
   const checkScrollButtons = useCallback(() => {
@@ -114,7 +125,7 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
   };
 
   const handleRefresh = () => {
-    fetchNews(filter);
+    fetchNews(filter, expanded);
     fetchStats();
   };
 

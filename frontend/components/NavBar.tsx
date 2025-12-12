@@ -161,7 +161,7 @@ export default function NavBar() {
                 <Link href="/register">
                   <Button
                     size="sm"
-                    className="text-xs sm:text-sm px-2 sm:px-4 h-8 font-semibold bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-700 dark:from-red-700 dark:to-red-900 dark:border-red-600/30 hover:opacity-90 text-white border-none shadow-md dark:shadow-red-900/20"
+                    className="text-xs sm:text-sm px-2 sm:px-4 h-8 font-semibold bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-600 dark:hover:bg-red-700 border-none shadow-md dark:shadow-[0_0_10px_rgba(220,38,38,0.4)]"
                   >
                     {t("register") || "Sign Up"}
                   </Button>
