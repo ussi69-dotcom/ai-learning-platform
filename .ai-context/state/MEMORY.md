@@ -522,6 +522,66 @@ https.request({
 - `dns.setDefaultResultOrder('ipv4first')` NEFUNGUJE s native `fetch()`
 - Jediné řešení = použít `https` modul s explicitním `family: 4`
 
+### 2025-12-12: Makefile - Build Automation 101 🔧
+
+**Co je `make`?**
+GNU Make je build automation tool z roku 1976. Definuješ "recepty" (targets) v souboru `Makefile` a spouštíš je příkazem `make <target>`.
+
+**Proč ho používáme?**
+```
+BEZ MAKE:
+docker compose -f docker-compose.prod.yml up -d --build
+docker compose -f docker-compose.prod.yml restart nginx
+
+S MAKE:
+make deploy-prod
+```
+
+**Výhody:**
+1. **Zkrácené příkazy** - místo 50 znaků napíšeš 15
+2. **Dokumentace** - `make help` ukáže všechny dostupné příkazy
+3. **Konzistence** - všichni v týmu používají stejné příkazy
+4. **Prevence chyb** - `make reset` má potvrzovací dialog
+
+**Anatomie Makefile:**
+```makefile
+target: ## Popis příkazu (pro make help)
+	příkaz_1
+	příkaz_2
+```
+
+**Naše příkazy (ai-learning-platform):**
+
+| Příkaz | Popis | Kdy použít |
+|--------|-------|------------|
+| `make up` | Spustí DEV stack | Lokální vývoj |
+| `make down` | Zastaví kontejnery | Konec práce |
+| `make restart` | Restartuje vše | Po změně kódu |
+| `make logs` | Sleduje logy | Debugging |
+| `make logs-backend` | Jen backend logy | API problémy |
+| `make logs-frontend` | Jen frontend logy | UI problémy |
+| `make reset` | ☢️ Smaže DB + volumes | Čistý start |
+| `make shell-backend` | Bash do backendu | Ruční příkazy |
+| `make test-backend` | Spustí pytest | Před commitem |
+| **`make deploy-prod`** | 🚀 **Produkční deploy** | Na VPS |
+| `make down-prod` | Zastaví produkci | Maintenance |
+| `make logs-prod` | Produkční logy | Debugging na VPS |
+
+**Deploy flow na VPS:**
+```bash
+git pull origin main
+make deploy-prod      # Automaticky: down → build → up → nginx reload
+make logs-prod        # Ověř že běží
+```
+
+**Rozdíl DEV vs PROD:**
+```
+make up         → docker-compose.yml (dev, hot reload, port 3000/8000)
+make deploy-prod → docker-compose.prod.yml (nginx, SSL, optimized build)
+```
+
+**Tip:** `.PHONY` na začátku Makefile říká, že target není soubor (jinak by make hledal soubor s tím jménem).
+
 ### 2025-12-09: Multi-Agent Workflow v3.0 Architecture 🤖
 
 **Aktuální setup:**
