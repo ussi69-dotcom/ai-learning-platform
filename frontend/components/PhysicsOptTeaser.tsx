@@ -3,15 +3,21 @@
 import { TrendingUp, ArrowRight, Zap } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useRouter } from '@/i18n/routing';
+import { useRouter as useNextRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 export default function PhysicsOptTeaser() {
   const t = useTranslations('Home');
-  const router = useRouter();
+  const intlRouter = useRouter();      // handles locale prefix
+  const nextRouter = useNextRouter();  // handles hash + scroll: false
 
   const handleClick = () => {
-    // Pass hash directly - About page handles scroll via useEffect
-    router.push('/about#cycle-49');
+    // 1. Navigate with next-intl (locale-aware)
+    intlRouter.push('/about');
+    // 2. Update hash with Next.js router (no scroll reset)
+    setTimeout(() => {
+      nextRouter.replace('/about#cycle-49', { scroll: false });
+    }, 0);
   };
 
   return (

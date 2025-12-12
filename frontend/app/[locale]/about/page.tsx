@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useSearchParams, usePathname } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/i18n/routing";
@@ -37,42 +38,37 @@ export default function AboutPage() {
   const { user } = useAuth();
   const t = useTranslations("About");
   const locale = useLocale();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
-  // Robust Hash Scroll Handler - handles SPA navigation with hash fragments
+  // Hash Scroll Handler - triggers on pathname/searchParams change (Perplexity pattern)
   useEffect(() => {
     const hash = window.location.hash;
     if (!hash) return;
 
-    const id = hash.replace('#', '');
-    const scrollToElement = () => {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const scrollToTarget = () => {
+      const target = document.querySelector(hash);
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest'
+        });
         return true;
       }
       return false;
     };
 
-    // Try immediately
-    if (scrollToElement()) return;
-
-    // Fallback: observe DOM for element to appear (handles hydration delay)
-    const observer = new MutationObserver(() => {
-      if (scrollToElement()) {
-        observer.disconnect();
+    // Small delay to ensure DOM is ready after navigation
+    const timeoutId = setTimeout(() => {
+      if (!scrollToTarget()) {
+        // Retry once more after hydration
+        setTimeout(scrollToTarget, 100);
       }
-    });
+    }, 50);
 
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    // Safety: stop observing after 2s
-    const timeout = setTimeout(() => observer.disconnect(), 2000);
-
-    return () => {
-      observer.disconnect();
-      clearTimeout(timeout);
-    };
-  }, []);
+    return () => clearTimeout(timeoutId);
+  }, [pathname, searchParams]);
 
   // Timeline Data - Now using translations
   const timeline = [
