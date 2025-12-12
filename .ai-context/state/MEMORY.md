@@ -485,6 +485,43 @@ Regex: `/(?:videos|alternatives)=\{(\[.*\])\}/`
 
 **Soubor:** `.ai-context/core/CONTENT_GUIDELINES.md` (sekce "🔥 EDUTAINMENT BIBLE")
 
+### 2025-12-12: WSL2 IPv4 Fix for Node.js MCP Servers 🔧
+
+**Problém:** Perplexity MCP server vracel `fetch failed` / `ETIMEDOUT` na WSL2, ale `curl` fungoval.
+
+**Root cause:**
+1. WSL2 má broken IPv6 konektivitu
+2. Node.js native `fetch()` zkouší IPv6 první → čeká na timeout
+3. `curl` funguje protože zkouší IPv4/IPv6 paralelně
+
+**Diagnostika:**
+```bash
+# curl funguje
+curl -X POST "https://api.perplexity.ai/chat/completions" -H "Authorization: Bearer $KEY" ...
+
+# Node.js fetch selhává
+node -e "fetch('https://api.perplexity.ai/...').then(...)"
+# ERROR: ETIMEDOUT 104.18.26.48:443
+```
+
+**Řešení - patch MCP serveru:**
+```javascript
+// Změna z fetch() na https module s family: 4
+import https from 'https';
+https.request({
+  hostname: 'api.perplexity.ai',
+  family: 4,  // Force IPv4
+  ...
+})
+```
+
+**Publikováno:** https://github.com/ussi69-dotcom/server-perplexity-ask-wsl2
+
+**Poučení:**
+- `NODE_OPTIONS="--dns-result-order=ipv4first"` NEFUNGUJE s native `fetch()`
+- `dns.setDefaultResultOrder('ipv4first')` NEFUNGUJE s native `fetch()`
+- Jediné řešení = použít `https` modul s explicitním `family: 4`
+
 ### 2025-12-09: Multi-Agent Workflow v3.0 Architecture 🤖
 
 **Aktuální setup:**

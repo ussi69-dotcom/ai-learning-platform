@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-12 15:30 (Agent: Claude Opus 4.5)
-**Last Commit:** `7e8b164` feat(ui): unify lesson and course pages colors to shiny violet
-**Status:** 🟢 READY - Perplexity Integration Complete
+**Last Updated:** 2025-12-12 16:45 (Agent: Claude Opus 4.5)
+**Last Commit:** `70b26c5` docs: strengthen boot sequence + add Perplexity to MEMORY.md
+**Status:** 🟢 READY - Perplexity MCP Fixed
 
 ---
 
@@ -14,7 +14,7 @@
 | ----------------------------- | ------- | --------------------------------------------- |
 | Daily Digest Cron Script      | ✅ Done | `backend/scripts/daily_digest_cron.py`        |
 | Citation Marker Fix           | ✅ Done | Removed `[1]`, `[2]` from displayed text      |
-| Perplexity MCP Server         | ✅ Done | `@jschuller/perplexity-mcp` configured        |
+| Perplexity MCP Server         | ✅ Fixed | `server-perplexity-ask` (official MCP)        |
 | Deep Research Workflow Docs   | ✅ Done | Added to AGENT_PROTOCOL.md                    |
 | DailySummary Inline Links     | ✅ Done | Simplified component, hover effects           |
 
@@ -27,13 +27,51 @@
 - Posts to webhook → displays on homepage
 
 **2. Deep Research (Interactive):**
-- MCP Server: `perplexity-search` in `~/.claude.json`
-- Tools: `perplexity_search`, `perplexity_research`
+- MCP Server: `perplexity-ask` in `~/.claude.json`
+- Tool: `perplexity_ask` (messages-based API)
+- Uses official `server-perplexity-ask` from modelcontextprotocol
 - **Requires Claude Code restart to activate!**
 
 **3. Shared API Key:**
 - Stored in `.env` as `PERPLEXITY_API_KEY`
 - Same key used by cron script and MCP server
+
+### MCP Fix (Dec 12, 2025)
+
+| Issue | Resolution |
+|-------|------------|
+| `@jschuller/perplexity-mcp` had invalid JSON Schema | Replaced with official `server-perplexity-ask` |
+| Error: `tools.76.custom.input_schema` invalid | New server has valid schema (no `required: false` in properties) |
+| Location | `/home/ussi/agent-orchestration/claude-code-mcp-enhanced/node_modules/server-perplexity-ask/` |
+
+### WSL2 IPv4 Fix (Dec 12, 2025)
+
+| Issue | Resolution |
+|-------|------------|
+| `fetch failed` / `ETIMEDOUT` on WSL2 | Node.js native `fetch()` has IPv6 issues on WSL2 |
+| Root cause | WSL2 has broken IPv6, Node.js tries IPv6 first → timeout |
+| **Fix** | Patched MCP server to use `https` module with `family: 4` |
+| GitHub repo | **https://github.com/ussi69-dotcom/server-perplexity-ask-wsl2** |
+| Local patch | `server-perplexity-ask/dist/index.js` - added `https` + `family: 4` |
+
+⚠️ **Note:** Patch se ztratí při `npm update`. Použij GitHub verzi nebo znovu patchni.
+
+### VPS Deployment Notes
+
+**API klíče potřebné v `.env` na VPS:**
+```bash
+# Perplexity (pro daily digest cron)
+PERPLEXITY_API_KEY=pplx-xxx
+
+# YouTube Data API (pro video metadata)
+YOUTUBE_API_KEY=AIza-xxx
+```
+
+**Kde je použít:**
+- `backend/scripts/daily_digest_cron.py` - volá Perplexity API přímo (curl-style)
+- `backend/app/services/news_aggregator.py` - volá YouTube API pro video info
+
+**WSL2 fix NENÍ potřeba na VPS** - VPS je normální Linux bez IPv6 problémů.
 
 ### Previous Session (Dec 12, 2025 - News Feed Bug Fixes)
 
@@ -142,11 +180,11 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-12 | Claude      | **Perplexity MCP Fix** - Replaced broken `@jschuller/perplexity-mcp` with official server   |
 | 2025-12-12 | Claude      | **News Feed Fixes** - Fixed Sentdex ID, EN lang filter, Show All limit, verified Refresh   |
 | 2025-12-12 | Claude      | **News CZ Filter** - Added Czech RSS feeds, CZ filter, Sith color fix, Netflix carousels   |
 | 2025-12-12 | Claude      | **Lab Modernization** - Fixed 3 at-risk labs + added Sycophancy Trap lab (EN+CS)            |
 | 2025-12-11 | Antigravity | **Violet-Indigo Mix** - Re-aligned all fuchsia elements to Shiny Violet-Indigo as requested |
-| 2025-12-11 | Antigravity | **Jedi Violet (About)** - Extended Jedi Violet theme to About Page                          |
 
 ---
 
@@ -164,4 +202,4 @@
 ---
 
 _This file is the SINGLE SOURCE OF TRUTH for current project state._
-_Updated by: Claude Opus 4.5 (2025-12-12 01:00)_
+_Updated by: Claude Opus 4.5 (2025-12-12 16:45)_
