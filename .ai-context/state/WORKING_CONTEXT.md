@@ -1,14 +1,24 @@
 # Working Context
 
-**Last Updated:** 2025-12-12 16:45 (Agent: Claude Opus 4.5)
-**Last Commit:** `70b26c5` docs: strengthen boot sequence + add Perplexity to MEMORY.md
-**Status:** 🟢 READY - Perplexity MCP Fixed
+**Last Updated:** 2025-12-12 21:50 (Agent: Claude Opus 4.5)
+**Last Commit:** `01326d2` fix(news): trailing slash redirects + YouTube RSS + Perplexity real URLs
+**Status:** 🟢 PROD DEPLOYED - News feed fully working
 
 ---
 
 ## 🎯 Current State
 
-### Latest Session (Dec 12, 2025 - Perplexity Integration)
+### Latest Session (Dec 12, 2025 - PROD Deployment Fixes)
+
+| Task                          | Status  | Notes                                         |
+| ----------------------------- | ------- | --------------------------------------------- |
+| Trailing Slash 307 Fix        | ✅ Done | `news.py`, `digest.py`: `"/"` → `""`          |
+| YouTube RSS Migration         | ✅ Done | No more API quota! 70+ videos via RSS         |
+| Perplexity Hallucination Fix  | ✅ Done | Real URLs from citations (TIME, CNBC, etc.)   |
+| Frontend API Calls Fix        | ✅ Done | Removed trailing slashes from fetch URLs      |
+| CZ Filter Working             | ✅ Done | `/news?lang=cs` returns 29 Czech articles     |
+
+### Previous Session (Dec 12, 2025 - Perplexity Integration)
 
 | Task                          | Status  | Notes                                         |
 | ----------------------------- | ------- | --------------------------------------------- |
