@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-12 22:00 (Agent: Claude Opus 4.5)
-**Last Commit:** `cc4d75c` feat(agents): upgrade to Multi-Agent Workflow v4.0
-**Status:** 🟢 PROD DEPLOYED + Multi-Agent v4.0
+**Last Updated:** 2025-12-13 00:30 (Agent: Claude Opus 4.5)
+**Last Commit:** `12b0898` perf(AIGlossary): optimize physics to 60 FPS with useRef + DOM
+**Status:** 🟢 PROD DEPLOYED + AIGlossary Optimized
 
 ---
 
@@ -127,6 +127,7 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-13 | Claude      | **AIGlossary Perf** - useRef+DOM physics: 51.9→60.1 FPS, 86→1 frames >20ms                 |
 | 2025-12-12 | Claude      | **Multi-Agent v4.0** - Added GPT-5.2 + Gemini Deep Research to workflow                    |
 | 2025-12-12 | Claude      | **PROD Fixes** - Trailing slash, YouTube RSS, Perplexity real URLs                         |
 | 2025-12-12 | Claude      | **Perplexity MCP Fix** - Replaced broken `@jschuller/perplexity-mcp` with official server  |
