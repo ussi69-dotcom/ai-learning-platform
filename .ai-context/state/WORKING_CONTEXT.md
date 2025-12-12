@@ -1,14 +1,51 @@
 # Working Context
 
-**Last Updated:** 2025-12-12 01:00 (Agent: Claude Opus 4.5)
-**Last Commit:** `bc1e0fa` feat(news): add CZ locale filter and Czech RSS sources
-**Status:** 🟢 READY - News CZ Filter Complete
+**Last Updated:** 2025-12-12 15:30 (Agent: Claude Opus 4.5)
+**Last Commit:** `7e8b164` feat(ui): unify lesson and course pages colors to shiny violet
+**Status:** 🟢 READY - Perplexity Integration Complete
 
 ---
 
 ## 🎯 Current State
 
-### Latest Session (Dec 12, 2025 - News CZ Filter & UI)
+### Latest Session (Dec 12, 2025 - Perplexity Integration)
+
+| Task                          | Status  | Notes                                         |
+| ----------------------------- | ------- | --------------------------------------------- |
+| Daily Digest Cron Script      | ✅ Done | `backend/scripts/daily_digest_cron.py`        |
+| Citation Marker Fix           | ✅ Done | Removed `[1]`, `[2]` from displayed text      |
+| Perplexity MCP Server         | ✅ Done | `@jschuller/perplexity-mcp` configured        |
+| Deep Research Workflow Docs   | ✅ Done | Added to AGENT_PROTOCOL.md                    |
+| DailySummary Inline Links     | ✅ Done | Simplified component, hover effects           |
+
+### Perplexity Integration Summary
+
+**1. Daily Digest (Automated):**
+- Script: `backend/scripts/daily_digest_cron.py`
+- Runs via cron at 08:00 CET daily
+- Uses Perplexity `sonar` model for AI news aggregation
+- Posts to webhook → displays on homepage
+
+**2. Deep Research (Interactive):**
+- MCP Server: `perplexity-search` in `~/.claude.json`
+- Tools: `perplexity_search`, `perplexity_research`
+- **Requires Claude Code restart to activate!**
+
+**3. Shared API Key:**
+- Stored in `.env` as `PERPLEXITY_API_KEY`
+- Same key used by cron script and MCP server
+
+### Previous Session (Dec 12, 2025 - News Feed Bug Fixes)
+
+| Task                        | Status  | Notes                                         |
+| --------------------------- | ------- | --------------------------------------------- |
+| Fix Sentdex Channel ID      | ✅ Done | Wrong ID (K-pop) → Correct ML channel         |
+| EN locale language filter   | ✅ Done | EN locale now shows only EN content           |
+| HOT endpoint limit increase | ✅ Done | Default 20 items, expanded 50                 |
+| Show All button fix         | ✅ Done | Now properly shows more items when expanded   |
+| Refresh button verification | ✅ Done | Working correctly, re-fetches news + stats    |
+
+### Previous Session (Dec 12, 2025 - News CZ Filter & UI)
 
 | Task                        | Status  | Notes                                         |
 | --------------------------- | ------- | --------------------------------------------- |
@@ -78,21 +115,24 @@
 ## 📡 News Sources
 
 ### English
-- YouTube: 10 channels (Fireship, 3B1B, Yannic Kilcher, etc.)
+- YouTube: 12 channels (Fireship, 3B1B, Yannic Kilcher, StatQuest, Sentdex, NetworkChuck, etc.)
 - RSS: OpenAI, HuggingFace, Google AI, TechCrunch, MIT Tech Review
 - Hacker News: AI/GPT/LLM tagged stories
 - Papers: arXiv cs.AI, cs.LG, cs.CL
 
-### Czech (New)
-- AI Novinky (ainovinky.cz)
-- AI Crunch CZ (aicrunch.cz)
-- Kapler o AI (kapler.cz)
+### Czech
+- YouTube: Tomáš AI, David Strejc
+- RSS: AI Novinky, AI Crunch CZ, Kapler o AI, Lupa.cz
+
+### Channel ID Verification
+- Sentdex: `UCfzlCWGWYyIQ0aLC5w48gBQ` (Harrison Kinsley - Python ML)
+- StatQuest: `UCtYLUTtgS3k1Fg4y5tAhLbw` (Josh Starmer - ML/stats)
 
 ---
 
 ## 📋 Next Actions (Low Priority)
 
-1. **Add Czech YouTube channels** - Need to verify channel IDs for @tomas-ai-cz, @bartosmarek, @davidstrejc
+1. **YouTube API 403 errors** - API quota exceeded or disabled; need to check Google Cloud Console
 2. **News title translation** - Consider auto-translating EN titles to CS via API
 3. **Create content for courses 3 & 4** when ready
 
@@ -102,11 +142,11 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-12 | Claude      | **News Feed Fixes** - Fixed Sentdex ID, EN lang filter, Show All limit, verified Refresh   |
 | 2025-12-12 | Claude      | **News CZ Filter** - Added Czech RSS feeds, CZ filter, Sith color fix, Netflix carousels   |
 | 2025-12-12 | Claude      | **Lab Modernization** - Fixed 3 at-risk labs + added Sycophancy Trap lab (EN+CS)            |
 | 2025-12-11 | Antigravity | **Violet-Indigo Mix** - Re-aligned all fuchsia elements to Shiny Violet-Indigo as requested |
 | 2025-12-11 | Antigravity | **Jedi Violet (About)** - Extended Jedi Violet theme to About Page                          |
-| 2025-12-11 | Antigravity | **Sith Strict Mode** - Removed Orange traces from Avatars, Toggles, and Icons               |
 
 ---
 
@@ -118,6 +158,8 @@
 | Edutainment vision   | `.ai-context/core/VISION.md`              |
 | Content guidelines   | `.ai-context/core/CONTENT_GUIDELINES.md`  |
 | Video System docs    | `MEMORY.md` → "Video System Architecture" |
+| **Perplexity Setup** | `backend/scripts/README.md`               |
+| **Research Workflow**| `AGENT_PROTOCOL.md` → "Research Tools"    |
 
 ---
 

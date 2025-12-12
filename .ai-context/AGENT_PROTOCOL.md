@@ -75,6 +75,7 @@ Pro KAŽDÝ content/code output:
 ### 4. Stay Current
 - **VŽDY** ověř aktuální datum (dnes: použij systémové datum!)
 - Pro research, verze, trendy → použij **WebSearch** nebo **Context7 MCP**
+- Pro **Deep Research** (komplexní analýzy, srovnání, trendy) → použij **Perplexity MCP**
 - **NIKDY** nepoužívej zastaralé informace z knowledge cutoff
 
 ### 5. No Placeholder Code
@@ -209,6 +210,51 @@ Pro kompletní přehled dokumentace viz:
 | "Jak funguje systém Y?" | `Explore` (thorough) | Najde všechny souvislosti |
 | Plánování velké feature | `Plan` | Architektonické rozhodnutí |
 | 10+ souborů ke změně | `general-purpose` | Autonomní bulk operace |
+
+---
+
+## 🔍 Research Tools Selection (POVINNÉ!)
+
+### Kdy použít který nástroj:
+
+| Potřebuji... | Nástroj | Příklad |
+|--------------|---------|---------|
+| **Rychlá fakta, jednoduché dotazy** | `WebSearch` | "Jaká je nejnovější verze React?" |
+| **Dokumentace knihovny** | `Context7 MCP` | "Jak použít useEffect v React 19?" |
+| **Deep Research, analýzy, srovnání** | `Perplexity MCP` | "Srovnej AI code assistants 2025" |
+| **Aktuální trendy, state-of-the-art** | `Perplexity MCP` | "Nejnovější techniky pro RAG" |
+| **Content research před generací** | `Perplexity MCP` → `Gemini` | Research → Content pipeline |
+
+### 🔬 Perplexity MCP Tools
+
+Po restartu Claude Code session jsou dostupné:
+
+| Tool | Kdy použít |
+|------|------------|
+| `mcp__perplexity-search__perplexity_search` | Rychlé vyhledávání s citacemi |
+| `mcp__perplexity-search__perplexity_research` | Deep Research - komplexní analýzy |
+
+### 📋 Deep Research Workflow
+
+**Kdy MUSÍŠ použít Perplexity Deep Research:**
+1. **Content creation** - Před psaním lekce/článku → zjisti aktuální stav tématu
+2. **Technologická rozhodnutí** - "Jaký framework použít pro X?"
+3. **Competitive analysis** - Srovnání produktů, knihoven, přístupů
+4. **Trend analysis** - "Co je nového v oblasti Y?"
+5. **Fact-checking** - Ověření aktuálnosti informací před publikací
+
+**Příklad workflow:**
+```
+1. Uživatel: "Napiš lekci o RAG"
+2. Claude: Použiju perplexity_research pro aktuální stav RAG technologií
+3. Claude: Předám research Gemini pro generování obsahu
+4. Claude: QA review výsledku
+```
+
+### ⚠️ Důležité poznámky:
+- **API klíč:** Sdílený s Daily Digest cron scriptem
+- **Náklady:** sonar ~$1/1000 req, sonar-pro ~$5/1000 req
+- **MCP restart:** Nové MCP nástroje vyžadují restart Claude Code session
 
 ### NESMÍŠ použít subagenta když:
 | Situace | Použij místo toho |
