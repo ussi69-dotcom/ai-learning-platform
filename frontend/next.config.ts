@@ -46,7 +46,7 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
-      // News Feed - YouTube thumbnails
+      // News Feed - YouTube thumbnails (img, i, i1-i4 subdomains)
       {
         protocol: 'https',
         hostname: 'img.youtube.com',
@@ -56,6 +56,30 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'i.ytimg.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i1.ytimg.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i2.ytimg.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i3.ytimg.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i4.ytimg.com',
         port: '',
         pathname: '/**',
       },

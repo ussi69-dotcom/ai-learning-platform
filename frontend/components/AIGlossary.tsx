@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { motion, useAnimation, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink, Sparkles } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
@@ -151,45 +151,94 @@ interface GlossaryTerm {
   hue: number;
 }
 
-interface CubeState {
+// Physics state stored in ref (no React re-renders!)
+interface PhysicsBody {
   x: number;
   y: number;
   vx: number;
   vy: number;
   rotation: number;
+  sleeping: boolean;
+  sleepCounter: number;
 }
 
 interface AIGlossaryProps {
   locale: string;
 }
 
+// Physics constants
+const GRAVITY = 0.4;
+const FRICTION = 0.985;
+const BOUNCE = 0.5;
+const ROTATION_DAMPING = 0.92;
+const SLEEP_THRESHOLD = 0.15; // Velocity threshold for sleep
+const SLEEP_FRAMES = 30; // Frames below threshold before sleeping
+const FIXED_TIMESTEP = 1000 / 60; // 60 FPS physics
+
 export default function AIGlossary({ locale }: AIGlossaryProps) {
   const [selectedTerm, setSelectedTerm] = useState<GlossaryTerm | null>(null);
-  const [cubeStates, setCubeStates] = useState<CubeState[]>([]);
-  const [containerHeight, setContainerHeight] = useState(360);
-  const [cubeSize, setCubeSize] = useState(120);
+  const [isLowPerf, setIsLowPerf] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [dimensions, setDimensions] = useState({ height: 360, cubeSize: 120 });
+
+  // Refs for physics (no re-renders!)
   const containerRef = useRef<HTMLDivElement>(null);
+  const cubeRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const physicsRef = useRef<PhysicsBody[]>([]);
   const animationRef = useRef<number | null>(null);
+  const lastTimeRef = useRef<number>(0);
+  const accumulatorRef = useRef<number>(0);
   const lastScrollY = useRef<number>(0);
+  const allSleepingRef = useRef<boolean>(false);
+
   const lang = locale === "cs" ? "cs" : "en";
 
-  // Responsive container height and cube size - taller container, smaller cubes on mobile
+  // Detect reduced motion preference and low-end devices
+  useEffect(() => {
+    // Check prefers-reduced-motion
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener("change", handleChange);
+
+    // Performance probe - measure FPS for 1.5 seconds
+    let frameCount = 0;
+    const startTime = performance.now();
+    let probeId: number;
+
+    const probe = () => {
+      frameCount++;
+      if (performance.now() - startTime < 1500) {
+        probeId = requestAnimationFrame(probe);
+      } else {
+        const avgFrameTime = 1500 / frameCount;
+        // If average frame time > 25ms (< 40 FPS), mark as low perf
+        if (avgFrameTime > 25) {
+          setIsLowPerf(true);
+        }
+      }
+    };
+    probeId = requestAnimationFrame(probe);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+      cancelAnimationFrame(probeId);
+    };
+  }, []);
+
+  // Responsive dimensions
   useEffect(() => {
     const updateDimensions = () => {
       const width = window.innerWidth;
-      // Mobile: taller container for more vertical space, smaller cubes
       if (width < 480) {
-        setContainerHeight(650);
-        setCubeSize(85); // Smaller cubes for very small screens
+        setDimensions({ height: 650, cubeSize: 85 });
       } else if (width < 640) {
-        setContainerHeight(550);
-        setCubeSize(95); // Medium small cubes
+        setDimensions({ height: 550, cubeSize: 95 });
       } else if (width < 768) {
-        setContainerHeight(480);
-        setCubeSize(105); // Slightly smaller
+        setDimensions({ height: 480, cubeSize: 105 });
       } else {
-        setContainerHeight(360);
-        setCubeSize(120); // Full size on desktop
+        setDimensions({ height: 360, cubeSize: 120 });
       }
     };
 
@@ -198,22 +247,52 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  // Scroll-based impulse
+  // Initialize physics bodies
   useEffect(() => {
+    const containerWidth = containerRef.current?.offsetWidth || 800;
+
+    physicsRef.current = GLOSSARY_TERMS.map((_, i) => ({
+      x: 30 + (i % 6) * (containerWidth / 7) + Math.random() * 30,
+      y: -120 - Math.random() * 400 - i * 40,
+      vx: (Math.random() - 0.5) * 2,
+      vy: 0,
+      rotation: (Math.random() - 0.5) * 30,
+      sleeping: false,
+      sleepCounter: 0,
+    }));
+  }, []);
+
+  // Wake up cubes (used by scroll and click)
+  const wakeUpCubes = useCallback((indices?: number[]) => {
+    const bodies = physicsRef.current;
+    const toWake = indices || bodies.map((_, i) => i);
+
+    toWake.forEach(i => {
+      if (bodies[i]) {
+        bodies[i].sleeping = false;
+        bodies[i].sleepCounter = 0;
+      }
+    });
+    allSleepingRef.current = false;
+  }, []);
+
+  // Scroll-based impulse (optimized - no setState)
+  useEffect(() => {
+    if (prefersReducedMotion || isLowPerf) return;
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const delta = currentScrollY - lastScrollY.current;
 
-      // Only react to significant scroll
       if (Math.abs(delta) > 5) {
-        setCubeStates((prev) =>
-          prev.map((cube) => ({
-            ...cube,
-            // Scroll down = cubes pushed down, scroll up = cubes jump up (gentle)
-            vy: cube.vy + (delta > 0 ? 0.8 : -1.5),
-            vx: cube.vx + (Math.random() - 0.5) * 0.5,
-          }))
-        );
+        const bodies = physicsRef.current;
+        bodies.forEach(body => {
+          if (!body.sleeping) {
+            body.vy += delta > 0 ? 0.6 : -1.2;
+            body.vx += (Math.random() - 0.5) * 0.3;
+          }
+        });
+        wakeUpCubes();
       }
 
       lastScrollY.current = currentScrollY;
@@ -221,127 +300,190 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [prefersReducedMotion, isLowPerf, wakeUpCubes]);
 
-  // Initialize cube positions
+  // Physics simulation with fixed timestep (direct DOM manipulation)
   useEffect(() => {
-    const initStates = GLOSSARY_TERMS.map((_, i) => ({
-      x: 30 + (i % 6) * 140 + Math.random() * 30,
-      y: -120 - Math.random() * 400 - i * 40,
-      vx: (Math.random() - 0.5) * 2,
-      vy: 0,
-      rotation: (Math.random() - 0.5) * 30, // Start nearly upright
-    }));
-    setCubeStates(initStates);
-  }, []);
+    if (prefersReducedMotion || isLowPerf) {
+      // Static layout for low-perf / reduced motion
+      const containerWidth = containerRef.current?.offsetWidth || 800;
+      const cols = Math.floor(containerWidth / (dimensions.cubeSize + 20));
 
-  // Physics simulation
-  useEffect(() => {
-    if (cubeStates.length === 0) return;
+      GLOSSARY_TERMS.forEach((_, i) => {
+        const el = cubeRefs.current[i];
+        if (el) {
+          const col = i % cols;
+          const row = Math.floor(i / cols);
+          const x = 20 + col * (dimensions.cubeSize + 15);
+          const y = 20 + row * (dimensions.cubeSize + 15);
+          el.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(0deg)`;
+        }
+      });
+      return;
+    }
 
-    const gravity = 0.3;
-    const friction = 0.98;
-    const bounce = 0.6;
-    const groundY = containerHeight - cubeSize - 10; // Floor (dynamic based on container height and cube size)
-    const ceilingY = 5;  // Ceiling
+    const { height: containerHeight, cubeSize } = dimensions;
+    const groundY = containerHeight - cubeSize - 10;
+    const ceilingY = 5;
 
-    const animate = () => {
-      setCubeStates((prev) =>
-        prev.map((cube, i) => {
-          let { x, y, vx, vy, rotation } = cube;
+    const simulate = (now: number) => {
+      // Fixed timestep with accumulator
+      if (lastTimeRef.current === 0) lastTimeRef.current = now;
+      const deltaTime = Math.min(now - lastTimeRef.current, 100); // Cap at 100ms
+      lastTimeRef.current = now;
+      accumulatorRef.current += deltaTime;
+
+      // Skip if all cubes are sleeping
+      if (allSleepingRef.current) {
+        animationRef.current = requestAnimationFrame(simulate);
+        return;
+      }
+
+      const bodies = physicsRef.current;
+      const containerWidth = containerRef.current?.offsetWidth || 800;
+      const minX = 10;
+      const maxX = containerWidth - cubeSize - 10;
+
+      // Process physics in fixed timesteps
+      while (accumulatorRef.current >= FIXED_TIMESTEP) {
+        accumulatorRef.current -= FIXED_TIMESTEP;
+
+        let allSleeping = true;
+
+        for (let i = 0; i < bodies.length; i++) {
+          const body = bodies[i];
+
+          // Skip sleeping bodies
+          if (body.sleeping) continue;
+          allSleeping = false;
 
           // Apply gravity
-          vy += gravity;
+          body.vy += GRAVITY;
 
           // Apply velocity
-          x += vx;
-          y += vy;
+          body.x += body.vx;
+          body.y += body.vy;
 
           // Apply friction
-          vx *= friction;
+          body.vx *= FRICTION;
 
-          // Rotation based on velocity
-          rotation += vx * 1.5;
-
-          // Heavy bottom - stabilize rotation towards 0 (upright)
-          rotation *= 0.95; // Damping towards 0
+          // Rotation based on velocity + damping
+          body.rotation += body.vx * 1.2;
+          body.rotation *= ROTATION_DAMPING;
 
           // Ground collision
-          if (y > groundY) {
-            y = groundY;
-            vy = -vy * bounce;
-            vx *= 0.9;
-
-            // Small random bounce to keep things interesting
-            if (Math.abs(vy) < 2) {
-              vy = -Math.random() * 3 - 1;
-              vx += (Math.random() - 0.5) * 2;
-            }
+          if (body.y > groundY) {
+            body.y = groundY;
+            body.vy = -body.vy * BOUNCE;
+            body.vx *= 0.85;
           }
 
-          // Ceiling collision - don't fly out the top
-          if (y < ceilingY) {
-            y = ceilingY;
-            vy = Math.abs(vy) * bounce; // Bounce down
+          // Ceiling collision
+          if (body.y < ceilingY) {
+            body.y = ceilingY;
+            body.vy = Math.abs(body.vy) * BOUNCE;
           }
 
           // Wall collisions
-          const containerWidth = containerRef.current?.offsetWidth || 800;
-          const minX = 10;
-          const maxX = containerWidth - cubeSize - 10;
-
-          if (x < minX) {
-            x = minX;
-            vx = -vx * bounce;
+          if (body.x < minX) {
+            body.x = minX;
+            body.vx = -body.vx * BOUNCE;
           }
-          if (x > maxX) {
-            x = maxX;
-            vx = -vx * bounce;
+          if (body.x > maxX) {
+            body.x = maxX;
+            body.vx = -body.vx * BOUNCE;
           }
 
-          // Simple cube-to-cube collision
-          prev.forEach((other, j) => {
-            if (i !== j) {
-              const dx = x - other.x;
-              const dy = y - other.y;
-              const dist = Math.sqrt(dx * dx + dy * dy);
-              if (dist < cubeSize * 0.9 && dist > 0) {
-                const overlap = cubeSize * 0.9 - dist;
-                const nx = dx / dist;
-                const ny = dy / dist;
-                x += nx * overlap * 0.5;
-                y += ny * overlap * 0.5;
-                vx += nx * 1.5;
-                vy += ny * 0.5;
-              }
+          // Cube-to-cube collision (optimized - only check nearby)
+          for (let j = i + 1; j < bodies.length; j++) {
+            const other = bodies[j];
+            if (other.sleeping) continue;
+
+            const dx = body.x - other.x;
+            const dy = body.y - other.y;
+            const distSq = dx * dx + dy * dy;
+            const minDist = cubeSize * 0.85;
+
+            if (distSq < minDist * minDist && distSq > 0) {
+              const dist = Math.sqrt(distSq);
+              const overlap = minDist - dist;
+              const nx = dx / dist;
+              const ny = dy / dist;
+
+              // Separate bodies
+              const separation = overlap * 0.5;
+              body.x += nx * separation;
+              body.y += ny * separation;
+              other.x -= nx * separation;
+              other.y -= ny * separation;
+
+              // Exchange velocity (simplified elastic collision)
+              const relVx = body.vx - other.vx;
+              const relVy = body.vy - other.vy;
+              const impulse = (relVx * nx + relVy * ny) * 0.5;
+
+              body.vx -= impulse * nx;
+              body.vy -= impulse * ny;
+              other.vx += impulse * nx;
+              other.vy += impulse * ny;
             }
-          });
+          }
 
-          return { x, y, vx, vy, rotation };
-        })
-      );
+          // Sleep detection with hysteresis
+          const speed = Math.sqrt(body.vx * body.vx + body.vy * body.vy);
+          if (speed < SLEEP_THRESHOLD && body.y >= groundY - 1) {
+            body.sleepCounter++;
+            if (body.sleepCounter > SLEEP_FRAMES) {
+              body.sleeping = true;
+              body.vx = 0;
+              body.vy = 0;
+            }
+          } else {
+            body.sleepCounter = 0;
+          }
+        }
 
-      animationRef.current = requestAnimationFrame(animate);
+        allSleepingRef.current = allSleeping;
+      }
+
+      // Update DOM (batch all writes together)
+      for (let i = 0; i < bodies.length; i++) {
+        const el = cubeRefs.current[i];
+        if (el) {
+          const body = bodies[i];
+          el.style.transform = `translate3d(${body.x}px, ${body.y}px, 0) rotate(${body.rotation}deg)`;
+        }
+      }
+
+      animationRef.current = requestAnimationFrame(simulate);
     };
 
-    animationRef.current = requestAnimationFrame(animate);
+    animationRef.current = requestAnimationFrame(simulate);
 
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [cubeStates.length, containerHeight, cubeSize]);
+  }, [dimensions, prefersReducedMotion, isLowPerf]);
 
-  const handleCubeClick = (term: GlossaryTerm, index: number) => {
+  // Handle cube click - add impulse
+  const handleCubeClick = useCallback((term: GlossaryTerm, index: number) => {
     setSelectedTerm(term);
-    // Add upward impulse when clicked
-    setCubeStates((prev) =>
-      prev.map((cube, i) =>
-        i === index ? { ...cube, vy: -8, vx: (Math.random() - 0.5) * 4 } : cube
-      )
-    );
-  };
+
+    if (!prefersReducedMotion && !isLowPerf) {
+      const body = physicsRef.current[index];
+      if (body) {
+        body.vy = -10;
+        body.vx = (Math.random() - 0.5) * 6;
+        body.sleeping = false;
+        body.sleepCounter = 0;
+        wakeUpCubes([index]);
+      }
+    }
+  }, [prefersReducedMotion, isLowPerf, wakeUpCubes]);
+
+  const { height: containerHeight, cubeSize } = dimensions;
 
   return (
     <section className="w-full py-12 md:py-16 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-y border-white/10 overflow-hidden">
@@ -362,7 +504,7 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
           </p>
         </div>
 
-        {/* Physics Container - responsive height */}
+        {/* Physics Container */}
         <div
           ref={containerRef}
           className="relative w-full overflow-hidden rounded-xl bg-gradient-to-b from-slate-800/30 to-slate-900/50 border border-white/5 transition-[height] duration-300"
@@ -377,92 +519,94 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
             <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-[80px]" />
           </div>
 
-          {/* Ice Cubes */}
-          {GLOSSARY_TERMS.map((term, index) => {
-            const state = cubeStates[index];
-            if (!state) return null;
-
-            return (
-              <motion.button
-                key={term.id}
-                onClick={() => handleCubeClick(term, index)}
-                className="absolute cursor-pointer group"
+          {/* Ice Cubes - using refs for direct DOM updates */}
+          {GLOSSARY_TERMS.map((term, index) => (
+            <button
+              key={term.id}
+              ref={el => { cubeRefs.current[index] = el; }}
+              onClick={() => handleCubeClick(term, index)}
+              className="absolute cursor-pointer group"
+              style={{
+                width: cubeSize,
+                height: cubeSize,
+                willChange: "transform", // GPU hint
+                transform: "translate3d(0, 0, 0)", // Initial position, updated by physics
+              }}
+            >
+              {/* Glass cube effect */}
+              <div
+                className="w-full h-full rounded-xl relative overflow-hidden transition-transform duration-150 group-hover:scale-110 group-active:scale-95"
                 style={{
-                  left: state.x,
-                  top: state.y,
-                  transform: `rotate(${state.rotation}deg)`,
-                  width: cubeSize,
-                  height: cubeSize,
+                  background: `linear-gradient(135deg,
+                    hsla(${term.hue}, 70%, 60%, 0.15) 0%,
+                    hsla(${term.hue}, 70%, 40%, 0.25) 50%,
+                    hsla(${term.hue}, 70%, 30%, 0.3) 100%)`,
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  border: `1px solid hsla(${term.hue}, 70%, 70%, 0.3)`,
+                  boxShadow: `
+                    0 8px 32px hsla(${term.hue}, 70%, 50%, 0.15),
+                    inset 0 1px 1px hsla(${term.hue}, 70%, 90%, 0.2),
+                    inset 0 -1px 1px hsla(${term.hue}, 70%, 20%, 0.1)
+                  `,
                 }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
               >
-                {/* Glass cube effect */}
+                {/* Ice shine effect */}
                 <div
-                  className="w-full h-full rounded-xl relative overflow-hidden"
+                  className="absolute top-0 left-0 right-0 h-1/2 rounded-t-xl pointer-events-none"
                   style={{
-                    background: `linear-gradient(135deg,
-                      hsla(${term.hue}, 70%, 60%, 0.15) 0%,
-                      hsla(${term.hue}, 70%, 40%, 0.25) 50%,
-                      hsla(${term.hue}, 70%, 30%, 0.3) 100%)`,
-                    backdropFilter: "blur(8px)",
-                    WebkitBackdropFilter: "blur(8px)",
-                    border: `1px solid hsla(${term.hue}, 70%, 70%, 0.3)`,
-                    boxShadow: `
-                      0 8px 32px hsla(${term.hue}, 70%, 50%, 0.15),
-                      inset 0 1px 1px hsla(${term.hue}, 70%, 90%, 0.2),
-                      inset 0 -1px 1px hsla(${term.hue}, 70%, 20%, 0.1)
-                    `,
+                    background: `linear-gradient(180deg,
+                      hsla(${term.hue}, 60%, 90%, 0.3) 0%,
+                      transparent 100%)`,
                   }}
-                >
-                  {/* Ice shine effect */}
-                  <div
-                    className="absolute top-0 left-0 right-0 h-1/2 rounded-t-xl"
+                />
+
+                {/* Refraction lines */}
+                <div
+                  className="absolute top-2 left-2 w-6 h-1 rounded-full opacity-40 pointer-events-none"
+                  style={{ background: `hsla(${term.hue}, 70%, 90%, 0.5)` }}
+                />
+                <div
+                  className="absolute top-4 left-3 w-3 h-0.5 rounded-full opacity-30 pointer-events-none"
+                  style={{ background: `hsla(${term.hue}, 70%, 90%, 0.4)` }}
+                />
+
+                {/* Term text */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span
+                    className="text-white font-bold drop-shadow-lg text-center px-1 leading-tight"
                     style={{
-                      background: `linear-gradient(180deg,
-                        hsla(${term.hue}, 60%, 90%, 0.3) 0%,
-                        transparent 100%)`,
+                      fontSize: cubeSize < 100 ? '0.7rem' : cubeSize < 110 ? '0.8rem' : '0.9rem',
+                      textShadow: `0 0 10px hsla(${term.hue}, 70%, 60%, 0.5)`,
                     }}
-                  />
-
-                  {/* Refraction lines */}
-                  <div
-                    className="absolute top-2 left-2 w-6 h-1 rounded-full opacity-40"
-                    style={{ background: `hsla(${term.hue}, 70%, 90%, 0.5)` }}
-                  />
-                  <div
-                    className="absolute top-4 left-3 w-3 h-0.5 rounded-full opacity-30"
-                    style={{ background: `hsla(${term.hue}, 70%, 90%, 0.4)` }}
-                  />
-
-                  {/* Term text - responsive size */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span
-                      className="text-white font-bold drop-shadow-lg text-center px-1 leading-tight"
-                      style={{
-                        fontSize: cubeSize < 100 ? '0.7rem' : cubeSize < 110 ? '0.8rem' : '0.9rem',
-                        textShadow: `0 0 10px hsla(${term.hue}, 70%, 60%, 0.5)`,
-                      }}
-                    >
-                      {term.term[lang]}
-                    </span>
-                  </div>
-
-                  {/* Hover glow */}
-                  <div
-                    className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{
-                      boxShadow: `0 0 20px hsla(${term.hue}, 70%, 60%, 0.4)`,
-                    }}
-                  />
+                  >
+                    {term.term[lang]}
+                  </span>
                 </div>
-              </motion.button>
-            );
-          })}
+
+                {/* Hover glow */}
+                <div
+                  className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{
+                    boxShadow: `0 0 20px hsla(${term.hue}, 70%, 60%, 0.4)`,
+                  }}
+                />
+              </div>
+            </button>
+          ))}
 
           {/* Floor reflection hint */}
-          <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-cyan-500/5 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-cyan-500/5 to-transparent pointer-events-none" />
         </div>
+
+        {/* Performance indicator (dev only) */}
+        {process.env.NODE_ENV === "development" && (
+          <div className="text-xs text-slate-500 mt-2 text-center">
+            {isLowPerf && "⚡ Low-perf mode"}
+            {prefersReducedMotion && "🚫 Reduced motion"}
+            {!isLowPerf && !prefersReducedMotion && "✨ Full physics"}
+          </div>
+        )}
       </div>
 
       {/* Modal */}
