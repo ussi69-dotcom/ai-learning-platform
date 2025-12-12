@@ -10,14 +10,8 @@ export default function PhysicsOptTeaser() {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push('/about');
-    // Wait for navigation then scroll to element
-    setTimeout(() => {
-      const element = document.getElementById('cycle-49');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
+    // Pass hash directly - About page handles scroll via useEffect
+    router.push('/about#cycle-49');
   };
 
   return (

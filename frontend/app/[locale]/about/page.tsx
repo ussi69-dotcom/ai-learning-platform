@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/i18n/routing";
@@ -36,6 +37,42 @@ export default function AboutPage() {
   const { user } = useAuth();
   const t = useTranslations("About");
   const locale = useLocale();
+
+  // Robust Hash Scroll Handler - handles SPA navigation with hash fragments
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash) return;
+
+    const id = hash.replace('#', '');
+    const scrollToElement = () => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return true;
+      }
+      return false;
+    };
+
+    // Try immediately
+    if (scrollToElement()) return;
+
+    // Fallback: observe DOM for element to appear (handles hydration delay)
+    const observer = new MutationObserver(() => {
+      if (scrollToElement()) {
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Safety: stop observing after 2s
+    const timeout = setTimeout(() => observer.disconnect(), 2000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timeout);
+    };
+  }, []);
 
   // Timeline Data - Now using translations
   const timeline = [
