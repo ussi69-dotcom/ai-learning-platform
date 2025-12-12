@@ -30,6 +30,7 @@ import Diagram from "@/components/mdx/Diagram";
 
 import { useAuth } from "@/context/AuthContext";
 import ABTestShowcase from "@/components/ABTestShowcase";
+import PhysicsOptShowcase from "@/components/PhysicsOptShowcase";
 
 export default function AboutPage() {
   const { user } = useAuth();
@@ -306,6 +307,22 @@ export default function AboutPage() {
           </div>
 
           <ABTestShowcase locale={locale} />
+        </div>
+
+        {/* Cycle #49: Physics Optimization Demo */}
+        <div id="cycle-49" className="mb-24 relative scroll-mt-40">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 dark:bg-amber-500/10 border border-orange-500/20 dark:border-amber-500/20 text-sm font-mono text-orange-600 dark:text-amber-400 mb-4">
+              <Zap className="w-4 h-4" />
+              <span>Cycle #49 Demo</span>
+            </div>
+            <h2 className="text-3xl font-bold mb-4">
+              {t("cycle49_title")}
+            </h2>
+            <p className="text-muted-foreground">{t("cycle49_desc")}</p>
+          </div>
+
+          <PhysicsOptShowcase locale={locale} />
         </div>
 
         {/* Multi-Agent CLI Workflow Section - Theme Aware */}

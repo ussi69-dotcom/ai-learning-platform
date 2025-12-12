@@ -14,7 +14,9 @@ import FeedbackDetailModal from "@/components/FeedbackDetailModal";
 import FeedbackMarker from "@/components/FeedbackMarker";
 import DifficultyIcon from "@/components/DifficultyIcon";
 import SystemStatus from "@/components/SystemStatus";
-// ABTestShowcase moved to /about page only
+// Teasers link to /about page showcases
+import ABTestTeaser from "@/components/ABTestTeaser";
+import PhysicsOptTeaser from "@/components/PhysicsOptTeaser";
 import AIGlossary from "@/components/AIGlossary";
 import NewsFeed from "@/components/NewsFeed";
 import DailySummary from "@/components/DailySummary";
@@ -424,6 +426,12 @@ export default function HomePage() {
 
       {/* AI Glossary - Interactive Terms */}
       <AIGlossary locale={locale} />
+
+      {/* Development Showcases - Teasers to About page */}
+      <section className="w-full py-8">
+        <ABTestTeaser />
+        <PhysicsOptTeaser />
+      </section>
 
       {/* Benefits Section - Edutainment Enhanced */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900/50 dark:to-background border-t border-b border-border/50">
