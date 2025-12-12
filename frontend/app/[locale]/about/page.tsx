@@ -126,6 +126,18 @@ export default function AboutPage() {
       desc: t("TechStack.gemini_desc"),
       color: "from-violet-500 to-indigo-500",
     },
+    {
+      name: t("TechStack.gpt_name"),
+      icon: <Brain className="w-6 h-6" />,
+      desc: t("TechStack.gpt_desc"),
+      color: "from-emerald-500 to-teal-500",
+    },
+    {
+      name: t("TechStack.perplexity_name"),
+      icon: <Zap className="w-6 h-6" />,
+      desc: t("TechStack.perplexity_desc"),
+      color: "from-cyan-500 to-blue-500",
+    },
   ];
 
   // Edutainment features

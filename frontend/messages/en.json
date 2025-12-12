@@ -206,7 +206,11 @@
         "claude_name": "Claude Opus 4.5",
         "claude_desc": "Anthropic's most capable model. 80.9% SWE-bench, orchestrates the entire development workflow.",
         "gemini_name": "Gemini 3 Pro",
-        "gemini_desc": "Google's frontier model with 1M context. Deep research, content generation, and brainstorming."
+        "gemini_desc": "Google's frontier model with 2M context. Deep research, content generation, and brainstorming.",
+        "gpt_name": "GPT-5.2 Thinking",
+        "gpt_desc": "OpenAI's reasoning specialist. 93.2% GPQA, called for hard architectural decisions and complex debugging.",
+        "perplexity_name": "Perplexity Sonar",
+        "perplexity_desc": "Real-time web research with citations. Quick fact-checking, trend analysis, always current information."
     }
   }
 }

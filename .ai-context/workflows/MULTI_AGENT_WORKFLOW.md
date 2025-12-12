@@ -1,27 +1,112 @@
-# Multi-Agent Workflow v2.0
+# Multi-Agent Workflow v4.0 (December 2025)
 
 ## ⚡ Quick Reference
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    ROLE ASSIGNMENT                          │
-├─────────────────────────────────────────────────────────────┤
-│  CLAUDE (CLI Primary)         │  GEMINI (via ask-gemini)    │
-│  • ORCHESTRÁTOR               │  • RESEARCHER               │
-│  • QA Gate (Senior Analyst)   │  • Content Generator        │
-│  • Visual Check (Playwright)  │  • Brainstormer             │
-│  • Git Operations             │  • Deep Analysis (1M ctx)   │
-│  • Final Decision Maker       │  • Draft Creator            │
-├─────────────────────────────────────────────────────────────┤
-│  Sporné body → USER (finální arbitr)                        │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      ORCHESTRATION LAYER                                 │
+│                                                                          │
+│                    Claude Opus 4.5 (Orchestrator)                        │
+│                    - Long sessions, CLI, safety, QA gate                 │
+│                    - Token-efficient (65% less than others)              │
+└────────────────────────────────┬────────────────────────────────────────┘
+                                 │
+         ┌───────────────────────┼───────────────────────┐
+         ▼                       ▼                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   GPT-5.2       │    │   Gemini 3 Pro  │    │   Perplexity    │
+│   Thinking      │    │   + Deep Res.   │    │   Sonar         │
+├─────────────────┤    ├─────────────────┤    ├─────────────────┤
+│ Hard reasoning  │    │ Content gen.    │    │ Quick research  │
+│ Architecture    │    │ Research        │    │ Fact-checking   │
+│ Debugging       │    │ 2M context      │    │ Trends          │
+│ $10/1M tokens   │    │ $5/1M tokens    │    │ $1/1k requests  │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
+
+## 🎯 Agent Selection Matrix
+
+| Typ úlohy | Agent | Proč | Jak volat |
+|-----------|-------|------|-----------|
+| **Hard reasoning** | GPT-5.2 | GPQA 93.2% | `codex "question"` nebo chat.openai.com |
+| **Content generation** | Gemini CLI | 2M ctx, levný | `gemini -m gemini-3-pro-preview` |
+| **Deep research (20-60 min)** | Gemini Deep Research | Autonomní | `python scripts/gemini_deep_research.py` |
+| **Quick research (<5 min)** | Perplexity MCP | Rychlé | `mcp__perplexity-ask__perplexity_ask` |
+| **Fact check** | WebSearch | Instant | Built-in tool |
+| **Library docs** | Context7 MCP | Accurate | `mcp__context7__get-library-docs` |
+| **Kódování** | Claude Code | Token-efficient | Já (orchestrátor) |
+| **Codebase exploration** | Explore subagent | Systematické | `Task(subagent_type="Explore")` |
+| **Planning** | Plan subagent | Architektura | `Task(subagent_type="Plan")` |
+| **Bulk operations** | general-purpose | Autonomní | `Task(subagent_type="general-purpose")` |
+
+## 🆕 GPT-5.2 Integration (December 2025)
+
+### Kdy volat GPT-5.2
+```
+✅ Komplexní architektonická rozhodnutí
+✅ Debugging záhadných bugů (>2 hodiny stuck)
+✅ "Second opinion" na kritická PR
+✅ Reasoning tasks s vysokou uncertainty
+```
+
+### Kdy NEVOLAT GPT-5.2
+```
+❌ Běžné kódování (Claude stačí)
+❌ Research (Gemini je levnější a má 2M kontext)
+❌ Bulk operations (drahé, $10/1M input)
+❌ Content generation (Gemini lepší)
+```
+
+### Jak volat
+```bash
+# ChatGPT Plus ($20/měsíc)
+1. Otevři chat.openai.com
+2. Vyber GPT-5.2 Thinking
+3. Paste context + otázku
+
+# Codex CLI
+codex "Analyze this architecture decision: [context]"
+```
+
+## 🆕 Gemini Deep Research (December 2025)
+
+### Co to je
+Autonomní výzkumný agent (Gemini 3 Pro) který:
+- Plánuje výzkumnou strategii
+- Provádí web search (až 60 minut)
+- Čte a syntetizuje zdroje
+- Vrací detailní report s citacemi
+
+### Kdy použít
+```
+✅ Rozsáhlé market research (konkurence, trendy)
+✅ Due diligence / investigative research
+✅ Literature review (akademické zdroje)
+✅ Comparative landscape analysis
+✅ Když potřebuješ 20-60 min autonomního výzkumu
+```
+
+### Jak volat
+```bash
+# CLI
+gemini -m deep-research-pro-preview-12-2025 "Your question"
+
+# Python script (doporučeno)
+python backend/scripts/gemini_deep_research.py "Your research question"
+```
+
+### Limity
+- Max runtime: 60 minut (většina hotová za 20)
+- Nelze přidat custom tools/MCP
+- Beta status - API se může měnit
+- Google Search zdarma do 5. ledna 2026
 
 **Proč tento model:**
 - Claude má spolehlivější tool use (98.2% benchmark)
 - Claude má MCP pro visual check (Playwright)
-- Menší context window = větší disciplína a přesnost
-- Gemini má 1M context = perfektní pro research a analýzu materiálů
+- Token-efficient = 65% méně tokenů než GPT-5.2
+- Gemini má 2M context = perfektní pro research a analýzu materiálů
+- GPT-5.2 má nejlepší reasoning (GPQA 93.2%) = specialista na hard problems
 
 ---
 

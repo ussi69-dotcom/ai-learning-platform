@@ -39,21 +39,68 @@ PHASE 1: Research → PHASE 2: Generation → PHASE 3: Iteration → PHASE 4: Fi
 
 ## 🔑 Standard Operating Protocols (SOPs)
 
-### 0. Research Tool Selection 🔍
+### 0. Agent & Tool Selection Matrix 🎯
 
-**Kdy použít který nástroj:**
+**Hlavní rozhodovací strom:**
 
-| Potřebuji... | Nástroj | Příklad |
-|--------------|---------|---------|
-| Rychlá fakta | `WebSearch` | "Nejnovější verze React?" |
-| Dokumentace knihovny | `Context7 MCP` | "Jak použít useEffect?" |
-| **Deep Research** | `Perplexity MCP` | "Srovnej AI code assistants" |
-| Aktuální trendy | `Perplexity MCP` | "State-of-the-art RAG" |
-| Content research | `Perplexity` → `Gemini` | Research → Content |
+```
+Potřebuji help?
+│
+├─ Je to HARD REASONING (architektura, debugging >2h)?
+│  └─ ✅ GPT-5.2 Thinking (ChatGPT/Codex CLI)
+│
+├─ Je to RESEARCH (trendy, srovnání, deep analysis)?
+│  ├─ Rychlé (<5 min) → Perplexity MCP / WebSearch
+│  ├─ Střední (5-20 min) → Gemini CLI
+│  └─ Hluboké (20-60 min) → Gemini Deep Research Agent
+│
+├─ Je to CONTENT GENERATION (lekce, dokumentace)?
+│  └─ ✅ Gemini CLI (gemini-3-pro-preview)
+│
+├─ Je to KÓDOVÁNÍ?
+│  ├─ Běžné → Claude Code (já)
+│  ├─ Bulk changes (10+ souborů) → Subagent (general-purpose)
+│  └─ Záhadný bug → GPT-5.2 pro analýzu, pak Claude pro fix
+│
+├─ Je to EXPLORATION codebase?
+│  └─ ✅ Subagent (Explore) - VŽDY!
+│
+└─ Je to PLÁNOVÁNÍ velké feature?
+   └─ ✅ Subagent (Plan)
+```
+
+**Tool Selection Matrix:**
+
+| Potřebuji... | Nástroj | Cena | Rychlost |
+|--------------|---------|------|----------|
+| Rychlá fakta | `WebSearch` | Zdarma | ⚡ Instant |
+| Dokumentace knihovny | `Context7 MCP` | Zdarma | ⚡ Instant |
+| Quick research | `Perplexity MCP` | ~$1/1k req | ⚡ 10s |
+| Deep research (short) | `Gemini CLI` | ~$5/1M tok | ⏱️ 2-5 min |
+| **Deep research (long)** | `Gemini Deep Research` | TBD | ⏱️ 20-60 min |
+| Content generation | `Gemini CLI` | ~$5/1M tok | ⏱️ 1-3 min |
+| Hard reasoning | `GPT-5.2` | ~$10/1M tok | ⏱️ 30s-2min |
+| Codebase exploration | `Explore subagent` | Claude tokens | ⏱️ 1-3 min |
+| Architecture planning | `Plan subagent` | Claude tokens | ⏱️ 2-5 min |
+| Bulk code changes | `general-purpose subagent` | Claude tokens | ⏱️ 5-15 min |
 
 **Perplexity MCP nástroje (po restartu Claude):**
 - `mcp__perplexity-search__perplexity_search` - rychlé hledání
 - `mcp__perplexity-search__perplexity_research` - deep research
+
+**Gemini Deep Research (nové Dec 2025):**
+```bash
+# CLI volání
+gemini -m deep-research-pro-preview-12-2025 "Research question"
+
+# Nebo Python script
+python backend/scripts/gemini_deep_research.py "Question"
+```
+
+**GPT-5.2 (nové Dec 2025):**
+- ChatGPT Plus ($20/měsíc) → chat.openai.com
+- Codex CLI: `codex "Your question"`
+- Role: Reasoning specialist, NE orchestrátor
 
 **Konfigurace:** `~/.claude.json` → `perplexity-search` MCP server
 **API klíč:** Sdílený s Daily Digest cron (`.env` → `PERPLEXITY_API_KEY`)

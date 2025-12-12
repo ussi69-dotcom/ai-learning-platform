@@ -6,12 +6,43 @@
 
 ## 🤖 Agent Identification
 
-| Agent | Entry Point | Role |
-|-------|-------------|------|
-| **Claude Code** | `CLAUDE.md` (auto) | Orchestrator, QA Gate, Implementer |
-| **Gemini CLI** | `GEMINI.md` (auto) | Researcher, Content Generator |
-| **Antigravity/IDE** | `.agent/rules/rules.md` | Full-stack Developer |
-| **Subagents** | Via Task tool | Specialized workers |
+| Agent | Entry Point | Role | Best For |
+|-------|-------------|------|----------|
+| **Claude Code** | `CLAUDE.md` (auto) | Orchestrator, QA Gate, Implementer | Long sessions, CLI, safety |
+| **GPT-5.2** | ChatGPT/Codex CLI | Reasoning Specialist | Hard problems, architecture, debugging |
+| **Gemini CLI** | `GEMINI.md` (auto) | Researcher, Content Generator | Deep research, bulk content |
+| **Gemini Deep Research** | Interactions API | Autonomous Research Agent | 60-min deep analysis |
+| **Antigravity/IDE** | `.agent/rules/rules.md` | Full-stack Developer | Rapid prototyping |
+| **Subagents** | Via Task tool | Specialized workers | Explore, Plan, bulk ops |
+
+### 🆕 GPT-5.2 Integration (Dec 2025)
+
+**Kdy volat GPT-5.2:**
+```
+✅ Komplexní architektonická rozhodnutí
+✅ Debugging záhadných bugů (>2 hodiny stuck)
+✅ "Second opinion" na kritická PR
+✅ Reasoning tasks (GPQA 93.2%, lepší než ostatní)
+✅ Multi-step planning s vysokou uncertainty
+```
+
+**Kdy NEVOLAT GPT-5.2:**
+```
+❌ Běžné kódování (Claude stačí)
+❌ Research (Gemini je levnější a má 2M kontext)
+❌ Bulk operations (drahé, $10/1M input)
+❌ Content generation (Gemini lepší)
+```
+
+**Jak volat (ChatGPT Plus):**
+1. Otevři chat.openai.com
+2. Vyber GPT-5.2 Thinking
+3. Paste context + otázku
+
+**Jak volat (Codex CLI):**
+```bash
+codex "Analyze this architecture decision: [context]"
+```
 
 ---
 
@@ -250,6 +281,65 @@ Po restartu Claude Code session jsou dostupné:
 3. Claude: Předám research Gemini pro generování obsahu
 4. Claude: QA review výsledku
 ```
+
+### 🆕 Gemini Deep Research Agent (Dec 2025)
+
+**Co to je:**
+Autonomní výzkumný agent od Google (Gemini 3 Pro), který:
+- Plánuje výzkumnou strategii
+- Provádí web search (až 60 minut)
+- Čte a syntetizuje zdroje
+- Vrací detailní report s citacemi
+
+**Kdy použít Gemini Deep Research:**
+```
+✅ Rozsáhlé market research (konkurence, trendy)
+✅ Due diligence / investigative research
+✅ Literature review (akademické zdroje)
+✅ Comparative landscape analysis
+✅ Když potřebuješ 20-60 min autonomního výzkumu
+```
+
+**Kdy NEPOUŽÍVAT:**
+```
+❌ Rychlé dotazy (použij Perplexity nebo WebSearch)
+❌ Low-latency chatbot interakce
+❌ Jednoduché extrakce faktů
+```
+
+**Jak volat (CLI):**
+```bash
+# Varianta 1: Gemini CLI s deep-research flag (pokud podporuje)
+gemini -m deep-research-pro-preview-12-2025 "Research question"
+
+# Varianta 2: Python script (doporučeno)
+python backend/scripts/gemini_deep_research.py "Your research question"
+```
+
+**API volání (Python):**
+```python
+from google import genai
+
+client = genai.Client()
+interaction = client.interactions.create(
+    input="Your research question here",
+    agent='deep-research-pro-preview-12-2025',
+    background=True  # POVINNÉ - async execution
+)
+
+# Poll for completion
+while interaction.status == 'in_progress':
+    time.sleep(30)
+    interaction = client.interactions.get(interaction.id)
+
+print(interaction.output)  # Detailed research report
+```
+
+**Limity:**
+- Max runtime: 60 minut (většina hotová za 20)
+- Nelze přidat custom tools/MCP
+- Beta status - API se může měnit
+- Google Search zdarma do 5. ledna 2026
 
 ### ⚠️ Důležité poznámky:
 - **API klíč:** Sdílený s Daily Digest cron scriptem

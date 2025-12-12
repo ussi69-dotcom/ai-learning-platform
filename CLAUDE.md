@@ -56,6 +56,35 @@ NIKDY nepiš content sám!
 4. Proveď QA review výsledku
 ```
 
+### Hard Reasoning = KONZULTUJ GPT-5.2 (NOVÉ Dec 2025)
+```
+Kdy volat GPT-5.2:
+✅ Komplexní architektonická rozhodnutí
+✅ Debugging záhadných bugů (>2 hodiny stuck)
+✅ "Second opinion" na kritická PR
+✅ Multi-step planning s vysokou uncertainty
+
+Jak volat:
+1. ChatGPT Plus (chat.openai.com) → GPT-5.2 Thinking
+2. Codex CLI: codex "Your question"
+
+Kdy NEVOLAT:
+❌ Běžné kódování (ty to zvládneš)
+❌ Research (Gemini je levnější)
+❌ Content generation (Gemini lepší)
+```
+
+### Research Selection Matrix
+```
+| Potřebuji...           | Nástroj              | Rychlost |
+|------------------------|----------------------|----------|
+| Rychlá fakta           | WebSearch            | ⚡ 5s    |
+| Dokumentace knihovny   | Context7 MCP         | ⚡ 5s    |
+| Quick research         | Perplexity MCP       | ⚡ 10s   |
+| Deep research (short)  | Gemini CLI           | ⏱️ 2-5m  |
+| Deep research (long)   | Gemini Deep Research | ⏱️ 20-60m|
+```
+
 ### Gemini OAuth Fix (když nefunguje)
 ```bash
 # MCP token konflikt - smaž tento soubor:

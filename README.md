@@ -331,83 +331,81 @@ Vytvořeno při prvním seedování (`backend/seed.py`).
 
 ---
 
-## 🤖 Multi-Agent Workflow (v3.0)
+## 🤖 Multi-Agent Workflow (v4.0) - December 2025
 
-Projekt využívá **více AI agentů** kteří spolupracují:
+Projekt využívá **4 specializované AI modely** + subagenty pro optimální výkon:
 
 ### Architektura
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                         ENTRY POINTS                                     │
-├─────────────────────────────────────────────────────────────────────────┤
+│                      ORCHESTRATION LAYER                                 │
 │                                                                          │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────────────┐   │
-│  │ Claude Code  │    │ Gemini CLI   │    │ Antigravity/IDE          │   │
-│  │ (CLAUDE.md)  │    │ (GEMINI.md)  │    │ (.agent/rules/rules.md)  │   │
-│  └──────┬───────┘    └──────┬───────┘    └────────────┬─────────────┘   │
-│         │                   │                         │                  │
-│         └───────────────────┴─────────────────────────┘                  │
-│                             │                                            │
-│                             ▼                                            │
-│              ┌──────────────────────────────┐                           │
-│              │     AGENT_PROTOCOL.md        │ ← Společná pravidla       │
-│              └──────────────┬───────────────┘                           │
-│                             │                                            │
-│                             ▼                                            │
-│              ┌──────────────────────────────┐                           │
-│              │  WORKING_CONTEXT.md          │ ← Kde jsme, co děláme     │
-│              │  + MEMORY.md                 │ ← Dlouhodobá paměť        │
-│              └──────────────┬───────────────┘                           │
-│                             │                                            │
-│                             ▼                                            │
-│              ┌──────────────────────────────┐                           │
-│              │   Role-Based Loading         │                           │
-│              │   (dle typu úkolu)           │                           │
-│              └──────────────────────────────┘                           │
-│                                                                          │
-└─────────────────────────────────────────────────────────────────────────┘
+│                    Claude Opus 4.5 (Orchestrator)                        │
+│                    - Long sessions, CLI, safety, QA gate                 │
+│                    - Token-efficient (65% less than others)              │
+└────────────────────────────────┬────────────────────────────────────────┘
+                                 │
+         ┌───────────────────────┼───────────────────────┐
+         ▼                       ▼                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   GPT-5.2       │    │   Gemini 3 Pro  │    │   Perplexity    │
+│   Thinking      │    │   + Deep Res.   │    │   Sonar         │
+├─────────────────┤    ├─────────────────┤    ├─────────────────┤
+│ Hard reasoning  │    │ Content gen.    │    │ Quick research  │
+│ Architecture    │    │ Research        │    │ Fact-checking   │
+│ Debugging       │    │ 2M context      │    │ Trends          │
+│ $10/1M tokens   │    │ $5/1M tokens    │    │ $1/1k requests  │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-### Role agentů
+### Kdy volat kterého agenta
 
-| Agent | Role | Kdy se používá |
-|-------|------|----------------|
-| **Claude Code** | Orchestrator, QA Gate, Implementer | Hlavní vývojový agent |
-| **Gemini CLI** | Researcher, Content Generator | Deep research, content creation |
-| **Antigravity/IDE** | Full-stack Developer | IDE-based vývoj |
-| **Subagenti** | Explore, Plan, General | Specializované úkoly |
+| Typ úlohy | Agent | Proč |
+|-----------|-------|------|
+| **Hard reasoning** (architektura, debugging >2h) | GPT-5.2 | GPQA 93.2%, nejlepší reasoning |
+| **Content generation** | Gemini CLI | 2M kontext, levný, kvalitní |
+| **Deep research** (20-60 min) | Gemini Deep Research | Autonomní agent |
+| **Quick research** (<5 min) | Perplexity MCP | Rychlé, s citacemi |
+| **Kódování** | Claude Code | Token-efficient, bezpečný |
+| **Codebase exploration** | Explore subagent | Systematické prohledání |
+| **Plánování features** | Plan subagent | Architektonické rozhodnutí |
 
-### Memory systém (3-tier)
+### Memory systém (2-tier)
 
 ```
-WORKING_CONTEXT.md (Short-term)
+WORKING_CONTEXT.md (Working memory)
        │
        │ lessons learned
        ▼
 MEMORY.md (Long-term)
-       │
-       │ end of session
-       ▼
-SESSION_LOG.md (Archive)
 ```
 
 ### Klíčové soubory
 
 | Soubor | Účel |
 |--------|------|
-| `.ai-context/AGENT_PROTOCOL.md` | Společná pravidla všech agentů |
+| `.ai-context/AGENT_PROTOCOL.md` | Společná pravidla + routing matrix |
 | `.ai-context/state/WORKING_CONTEXT.md` | Aktuální task a stav |
 | `.ai-context/state/MEMORY.md` | Dlouhodobá paměť, protokoly |
-| `.ai-context/INDEX.md` | Navigační mapa dokumentace |
 | `GEMINI.md` | Konfigurace pro Gemini CLI |
+| `AGENTS.md` | Pravidla pro Codex CLI (GPT-5.2) |
+
+### Scripts
+
+```bash
+# Gemini Deep Research (20-60 min autonomní research)
+python backend/scripts/gemini_deep_research.py "Your research question"
+
+# Daily Digest (Perplexity AI news aggregation)
+python backend/scripts/daily_digest_cron.py
+```
 
 ### Pro vývojáře
 
-Pokud chceš pracovat s AI agenty:
 1. Přečti `.ai-context/INDEX.md` pro navigaci
-2. Aktuální stav je v `.ai-context/state/WORKING_CONTEXT.md`
-3. Pravidla spolupráce: `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`
+2. Aktuální stav: `.ai-context/state/WORKING_CONTEXT.md`
+3. Workflow: `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`
 
 ---
 
