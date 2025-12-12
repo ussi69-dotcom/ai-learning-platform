@@ -166,10 +166,37 @@ interface AIGlossaryProps {
 export default function AIGlossary({ locale }: AIGlossaryProps) {
   const [selectedTerm, setSelectedTerm] = useState<GlossaryTerm | null>(null);
   const [cubeStates, setCubeStates] = useState<CubeState[]>([]);
+  const [containerHeight, setContainerHeight] = useState(360);
+  const [cubeSize, setCubeSize] = useState(120);
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
   const lastScrollY = useRef<number>(0);
   const lang = locale === "cs" ? "cs" : "en";
+
+  // Responsive container height and cube size - taller container, smaller cubes on mobile
+  useEffect(() => {
+    const updateDimensions = () => {
+      const width = window.innerWidth;
+      // Mobile: taller container for more vertical space, smaller cubes
+      if (width < 480) {
+        setContainerHeight(650);
+        setCubeSize(85); // Smaller cubes for very small screens
+      } else if (width < 640) {
+        setContainerHeight(550);
+        setCubeSize(95); // Medium small cubes
+      } else if (width < 768) {
+        setContainerHeight(480);
+        setCubeSize(105); // Slightly smaller
+      } else {
+        setContainerHeight(360);
+        setCubeSize(120); // Full size on desktop
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
 
   // Scroll-based impulse
   useEffect(() => {
@@ -215,9 +242,8 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
     const gravity = 0.3;
     const friction = 0.98;
     const bounce = 0.6;
-    const groundY = 230; // Floor (container height - cube size - padding)
+    const groundY = containerHeight - cubeSize - 10; // Floor (dynamic based on container height and cube size)
     const ceilingY = 5;  // Ceiling
-    const cubeSize = 120; // 50% bigger
 
     const animate = () => {
       setCubeStates((prev) =>
@@ -305,7 +331,7 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [cubeStates.length]);
+  }, [cubeStates.length, containerHeight, cubeSize]);
 
   const handleCubeClick = (term: GlossaryTerm, index: number) => {
     setSelectedTerm(term);
@@ -336,11 +362,12 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
           </p>
         </div>
 
-        {/* Physics Container */}
+        {/* Physics Container - responsive height */}
         <div
           ref={containerRef}
-          className="relative h-[360px] w-full overflow-hidden rounded-xl bg-gradient-to-b from-slate-800/30 to-slate-900/50 border border-white/5"
+          className="relative w-full overflow-hidden rounded-xl bg-gradient-to-b from-slate-800/30 to-slate-900/50 border border-white/5 transition-[height] duration-300"
           style={{
+            height: containerHeight,
             background: "linear-gradient(180deg, rgba(15,23,42,0.3) 0%, rgba(15,23,42,0.6) 100%)",
           }}
         >
@@ -364,8 +391,8 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
                   left: state.x,
                   top: state.y,
                   transform: `rotate(${state.rotation}deg)`,
-                  width: 120,
-                  height: 120,
+                  width: cubeSize,
+                  height: cubeSize,
                 }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -408,11 +435,12 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
                     style={{ background: `hsla(${term.hue}, 70%, 90%, 0.4)` }}
                   />
 
-                  {/* Term text */}
+                  {/* Term text - responsive size */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span
-                      className="text-white font-bold text-sm md:text-base drop-shadow-lg text-center px-2 leading-tight"
+                      className="text-white font-bold drop-shadow-lg text-center px-1 leading-tight"
                       style={{
+                        fontSize: cubeSize < 100 ? '0.7rem' : cubeSize < 110 ? '0.8rem' : '0.9rem',
                         textShadow: `0 0 10px hsla(${term.hue}, 70%, 60%, 0.5)`,
                       }}
                     >
