@@ -33,14 +33,24 @@ YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY", "")
 NEWS_REFRESH_INTERVAL_MINUTES = int(os.getenv("NEWS_REFRESH_INTERVAL_MINUTES", "30"))
 
 # YouTube channels to track (channel ID -> display name)
+# These channels are also referenced in CONTENT_GUIDELINES.md for lesson content
 YOUTUBE_CHANNELS = {
-    "UCLXo7UDZvByw2ixzpQCufnA": "Anthropic",
-    "UCXZCJLdBC09xxGZ6gcdrc6A": "OpenAI",
-    "UCWN3xxRkmTPmbKwht9FuE5A": "Fireship",
-    "UCYO_jab_esuFRV4b17AJtAw": "3Blue1Brown",
-    "UCZHmQk67mSJgfCCTn7xBfew": "Yannic Kilcher",
-    "UC0RhatS1pyxInC00YKjjBqQ": "AI Explained",
-    "UCbfYPyITQ-7l4upoX8nvctg": "Two Minute Papers",
+    # AI Education & News (EN)
+    "UC8S5nEDXDD7Njb7tSGFio6A": "David Ondrej AI",      # AI tutorials, tools
+    "UC9x0AN7BWHpCDHSm9NiJFJQ": "NetworkChuck",         # Tech & AI tutorials
+    "UC5l7RouTQ60oUjLjt1Nh-UQ": "AI Revolution",        # AI news & trends
+    "UCajiMK_CY9icRhLepS8_3ug": "Alex Ziskind",         # AI coding tutorials
+    "UC_RovKmk0OCbuZjA8f08opw": "Futurepedia",          # AI tools & tutorials
+    # Core Tech Educators
+    "UCWN3xxRkmTPmbKwht9FuE5A": "Fireship",             # Fast tech explainers
+    "UCYO_jab_esuFRV4b17AJtAw": "3Blue1Brown",          # Math & ML visualized
+    "UCZHmQk67mSJgfCCTn7xBfew": "Yannic Kilcher",       # ML paper reviews
+    "UC0RhatS1pyxInC00YKjjBqQ": "AI Explained",         # AI deep dives
+    "UCbfYPyITQ-7l4upoX8nvctg": "Two Minute Papers",    # Research highlights
+    # Czech AI Content (CZ)
+    # Note: Channel IDs need to be verified - using handles as placeholder
+    # "UC_davidstrejc": "David Strejc",                 # @davidstrejc - Czech AI educator
+    # "UC_marekbartos": "Marek Bartoš",                 # Czech AI content
 }
 
 # RSS feeds to track (updated URLs as of Dec 2025)

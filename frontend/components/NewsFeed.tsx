@@ -35,8 +35,8 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
       let url: string;
 
       if (source === "hot") {
-        // Use dedicated hot endpoint for curated mix
-        url = `${API_URL}/news/hot/?limit=10`;
+        // Use dedicated hot endpoint for curated mix (12 = 3x4 grid)
+        url = `${API_URL}/news/hot/?limit=12`;
       } else {
         const params = new URLSearchParams({ limit: "12" });
         if (source !== "all") {

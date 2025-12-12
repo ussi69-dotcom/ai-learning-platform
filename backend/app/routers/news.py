@@ -51,7 +51,7 @@ async def get_news(
 
 @router.get("/hot", response_model=List[schemas.NewsItemResponse])
 async def get_hot_news(
-    limit: int = Query(default=10, ge=1, le=20),
+    limit: int = Query(default=12, ge=1, le=24),
     db: Session = Depends(database.get_db)
 ):
     """
@@ -59,6 +59,7 @@ async def get_hot_news(
 
     Returns a diverse mix of sources (YouTube, RSS, HN, Papers),
     prioritizing recent items with good engagement.
+    Default: 12 items for 3x4 grid layout.
     """
     week_ago = datetime.utcnow() - timedelta(days=7)
 
@@ -66,13 +67,21 @@ async def get_hot_news(
     items = []
 
     # Get top items from each source (ensure mix)
-    for source in models.NewsSource:
+    # YouTube: 4, RSS: 4, HN: 2, Papers: 2 = 12 items
+    source_limits = {
+        models.NewsSource.YOUTUBE: 4,
+        models.NewsSource.RSS: 4,
+        models.NewsSource.HACKERNEWS: 2,
+        models.NewsSource.PAPERS: 2,
+    }
+
+    for source, max_items in source_limits.items():
         source_items = db.query(models.NewsItem).filter(
             models.NewsItem.source == source,
             models.NewsItem.published_at >= week_ago
         ).order_by(
             models.NewsItem.published_at.desc()
-        ).limit(4).all()  # Max 4 per source
+        ).limit(max_items).all()
         items.extend(source_items)
 
     # Sort all by published_at and return top N

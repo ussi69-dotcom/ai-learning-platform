@@ -79,7 +79,26 @@ Then came the moment that changed everything.
 | 1st | Cinematic documentary | ColdFusion, Veritasium |
 | 2nd | High-energy tutorial | NetworkChuck, Fireship |
 | 3rd | Visual explanation | 3Blue1Brown, Computerphile |
-| 4th | Czech alternative | AI s rozumem, board_room.io |
+| 4th | Czech alternative | David Strejc, Marek Bartoš |
+
+**Doporučené YouTube kanály pro embedování:**
+
+| Kanál | Channel ID | Zaměření |
+|-------|------------|----------|
+| **David Ondrej AI** | `UC8S5nEDXDD7Njb7tSGFio6A` | AI tutorials, tools, prompting |
+| **NetworkChuck** | `UC9x0AN7BWHpCDHSm9NiJFJQ` | Tech & AI tutorials, high energy |
+| **AI Revolution** | `UC5l7RouTQ60oUjLjt1Nh-UQ` | AI news & trends |
+| **Alex Ziskind** | `UCajiMK_CY9icRhLepS8_3ug` | AI coding, NativeScript |
+| **Futurepedia** | `UC_RovKmk0OCbuZjA8f08opw` | AI tools & tutorials |
+| **Fireship** | `UCWN3xxRkmTPmbKwht9FuE5A` | Fast tech explainers, 100 seconds |
+| **3Blue1Brown** | `UCYO_jab_esuFRV4b17AJtAw` | Math & ML visualized |
+| **Yannic Kilcher** | `UCZHmQk67mSJgfCCTn7xBfew` | ML paper reviews |
+| **AI Explained** | `UC0RhatS1pyxInC00YKjjBqQ` | AI deep dives |
+| **Two Minute Papers** | `UCbfYPyITQ-7l4upoX8nvctg` | Research highlights |
+| **David Strejc** | `@davidstrejc` | 🇨🇿 Czech AI educator |
+| **Marek Bartoš** | TBD | 🇨🇿 Czech AI content |
+
+> **Poznámka:** Tyto kanály jsou automaticky agregovány v News Feedu (`/news/hot/`).
 
 ### 🎨 VISUAL DENSITY REQUIREMENTS
 
