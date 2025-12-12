@@ -20,7 +20,7 @@ router = APIRouter(prefix="/news", tags=["news"])
 logger = logging.getLogger(__name__)
 
 
-@router.get("/", response_model=List[schemas.NewsItemResponse])
+@router.get("", response_model=List[schemas.NewsItemResponse])
 async def get_news(
     limit: int = Query(default=12, ge=1, le=50),
     source: Optional[str] = Query(default=None, description="Filter by source: youtube, rss, hackernews, papers"),

@@ -58,10 +58,10 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
           // Hot endpoint with language filter for EN locale
           const params = new URLSearchParams({ limit: String(limit) });
           if (langFilter) params.set("lang", langFilter);
-          url = `${API_URL}/news/hot/?${params.toString()}`;
+          url = `${API_URL}/news/hot?${params.toString()}`;
         } else if (source === "cz") {
           // Czech language filter - show only Czech content
-          url = `${API_URL}/news/?limit=${limit}&lang=cs`;
+          url = `${API_URL}/news?limit=${limit}&lang=cs`;
         } else {
           const params = new URLSearchParams({ limit: String(limit) });
           if (source !== "all") {
@@ -71,7 +71,7 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
           if (langFilter) {
             params.set("lang", langFilter);
           }
-          url = `${API_URL}/news/?${params.toString()}`;
+          url = `${API_URL}/news?${params.toString()}`;
         }
 
         const response = await fetch(url);
@@ -97,7 +97,7 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
 
   const fetchStats = useCallback(async () => {
     try {
-      const response = await fetch(`${API_URL}/news/stats/`);
+      const response = await fetch(`${API_URL}/news/stats`);
       if (response.ok) {
         const data = await response.json();
         setStats(data);

@@ -80,76 +80,113 @@ YOUTUBE_CHANNELS_CZ = {
 
 
 class YouTubeFetcher:
-    """Fetches latest videos from AI-focused YouTube channels."""
+    """Fetches latest videos from AI-focused YouTube channels via RSS (no API quota!)."""
 
-    BASE_URL = "https://www.googleapis.com/youtube/v3"
+    RSS_URL = "https://www.youtube.com/feeds/videos.xml"
 
-    def __init__(self, api_key: str):
-        self.api_key = api_key
+    def __init__(self, api_key: str = ""):
+        # API key no longer needed - using RSS feeds
+        pass
 
     async def fetch(self) -> List[Dict]:
-        """Fetch latest videos from all tracked channels (EN + CZ)."""
-        if not self.api_key:
-            logger.warning("YouTube API key not configured, skipping YouTube fetch")
-            return []
-
+        """Fetch latest videos from all tracked channels (EN + CZ) via RSS."""
         items = []
-        async with httpx.AsyncClient(timeout=30.0) as client:
+        async with httpx.AsyncClient(timeout=30.0, follow_redirects=True) as client:
             # Fetch English channels
             for channel_id, channel_name in YOUTUBE_CHANNELS.items():
                 try:
-                    videos = await self._fetch_channel_videos(client, channel_id, channel_name, language="en")
+                    videos = await self._fetch_channel_rss(client, channel_id, channel_name, language="en")
                     items.extend(videos)
                 except Exception as e:
-                    logger.error(f"Failed to fetch YouTube channel {channel_name}: {e}")
+                    logger.error(f"Failed to fetch YouTube RSS for {channel_name}: {e}")
 
             # Fetch Czech channels
             for channel_id, channel_name in YOUTUBE_CHANNELS_CZ.items():
                 try:
-                    videos = await self._fetch_channel_videos(client, channel_id, channel_name, language="cs")
+                    videos = await self._fetch_channel_rss(client, channel_id, channel_name, language="cs")
                     items.extend(videos)
                 except Exception as e:
-                    logger.error(f"Failed to fetch CZ YouTube channel {channel_name}: {e}")
+                    logger.error(f"Failed to fetch CZ YouTube RSS for {channel_name}: {e}")
 
         return items
 
-    async def _fetch_channel_videos(
+    async def _fetch_channel_rss(
         self, client: httpx.AsyncClient, channel_id: str, channel_name: str, language: str = "en"
     ) -> List[Dict]:
-        """Fetch latest videos from a single channel."""
-        # Get latest videos
-        params = {
-            "key": self.api_key,
-            "channelId": channel_id,
-            "part": "snippet",
-            "order": "date",
-            "maxResults": 5,
-            "type": "video",
-        }
+        """Fetch latest videos from a single channel via RSS feed."""
+        url = f"{self.RSS_URL}?channel_id={channel_id}"
 
-        response = await client.get(f"{self.BASE_URL}/search", params=params)
-        response.raise_for_status()
-        data = response.json()
+        try:
+            response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPError as e:
+            logger.warning(f"YouTube RSS for {channel_name} returned error: {e}")
+            return []
 
+        return self._parse_youtube_rss(response.text, channel_name, language)
+
+    def _parse_youtube_rss(self, xml_text: str, channel_name: str, language: str) -> List[Dict]:
+        """Parse YouTube RSS/Atom feed."""
         items = []
-        for item in data.get("items", []):
-            video_id = item["id"].get("videoId")
-            if not video_id:
-                continue
 
-            snippet = item["snippet"]
-            items.append({
-                "external_id": f"yt_{video_id}",
-                "title": snippet["title"],
-                "description": snippet.get("description", "")[:800],
-                "source": models.NewsSource.YOUTUBE,
-                "source_url": f"https://www.youtube.com/watch?v={video_id}",
-                "thumbnail_url": snippet.get("thumbnails", {}).get("high", {}).get("url"),
-                "channel_name": channel_name,
-                "published_at": datetime.fromisoformat(snippet["publishedAt"].replace("Z", "+00:00")),
-                "video_id": video_id,
-                "language": language,  # EN or CS based on channel source
-            })
+        try:
+            root = ElementTree.fromstring(xml_text)
+            ns = {
+                "atom": "http://www.w3.org/2005/Atom",
+                "yt": "http://www.youtube.com/xml/schemas/2015",
+                "media": "http://search.yahoo.com/mrss/"
+            }
+
+            for entry in root.findall("atom:entry", ns)[:5]:  # Last 5 videos
+                # Get video ID
+                video_id_elem = entry.find("yt:videoId", ns)
+                if video_id_elem is None:
+                    continue
+                video_id = video_id_elem.text
+
+                # Get title
+                title_elem = entry.find("atom:title", ns)
+                title = title_elem.text if title_elem is not None else "Untitled"
+
+                # Get description from media:group/media:description
+                description = ""
+                media_group = entry.find("media:group", ns)
+                if media_group is not None:
+                    desc_elem = media_group.find("media:description", ns)
+                    if desc_elem is not None and desc_elem.text:
+                        description = desc_elem.text[:800]
+
+                # Get thumbnail
+                thumbnail_url = None
+                if media_group is not None:
+                    thumb_elem = media_group.find("media:thumbnail", ns)
+                    if thumb_elem is not None:
+                        thumbnail_url = thumb_elem.get("url")
+
+                # Get published date
+                published_elem = entry.find("atom:published", ns)
+                published = None
+                if published_elem is not None:
+                    try:
+                        published = datetime.fromisoformat(published_elem.text.replace("Z", "+00:00"))
+                    except:
+                        pass
+
+                items.append({
+                    "external_id": f"yt_{video_id}",
+                    "title": title,
+                    "description": description,
+                    "source": models.NewsSource.YOUTUBE,
+                    "source_url": f"https://www.youtube.com/watch?v={video_id}",
+                    "thumbnail_url": thumbnail_url,
+                    "channel_name": channel_name,
+                    "published_at": published,
+                    "video_id": video_id,
+                    "language": language,
+                })
+
+        except Exception as e:
+            logger.error(f"Failed to parse YouTube RSS for {channel_name}: {e}")
 
         return items
 

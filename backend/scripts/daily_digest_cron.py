@@ -39,65 +39,28 @@ PERPLEXITY_API_URL = "https://api.perplexity.ai/chat/completions"
 # Use sonar model for web search capabilities
 PERPLEXITY_MODEL = "sonar"  # or "sonar-pro" for better quality
 
-# The prompt that generates our 4-section digest
-DIGEST_PROMPT = """You are an AI news curator. Generate a daily AI news digest with EXACTLY 4 sections.
+# Simple prompt for Perplexity - it returns real URLs in citations
+DIGEST_PROMPT = """Search for AI news from today ({date}) and list 7 important stories.
 
-Today's date: {date}
+For each story provide:
+1. **Title** - the headline
+2. **Summary** - 2 sentences about what happened
+3. **URL** - link to the source
 
-Search for the latest AI news from the past 24 hours and create:
-
-## SECTION 1: SUMMARY_EN (English bullet points)
-Write 5-8 concise bullet points summarizing the most important AI news today.
-Each bullet should be ONE sentence, max 150 characters.
-Focus on: major announcements, product launches, research breakthroughs, industry moves.
-
-## SECTION 2: SUMMARY_CS (Czech bullet points)
-Translate SECTION 1 into Czech. Keep the same format and order.
-
-## SECTION 3: FEED_EN (English detailed items)
-For each bullet in SECTION 1, provide a JSON object with:
-- "title": News headline (max 100 chars)
-- "description": 2-3 sentence summary
-- "source_url": Direct URL to the source article
-
-Format as JSON array.
-
-## SECTION 4: FEED_CS (Czech detailed items)
-Translate SECTION 3 titles and descriptions into Czech. Keep the same source_urls.
-Format as JSON array.
-
-CRITICAL: Output MUST follow this EXACT format with these markers:
-
-===SUMMARY_EN===
-• bullet point 1
-• bullet point 2
-...
-
-===SUMMARY_CS===
-• bullet point 1
-• bullet point 2
-...
-
-===FEED_EN===
-[
-  {{"title": "...", "description": "...", "source_url": "..."}},
-  ...
-]
-
-===FEED_CS===
-[
-  {{"title": "...", "description": "...", "source_url": "..."}},
-  ...
-]
-===END===
+Focus on: AI product launches, funding, research breakthroughs, major announcements.
+Sources: TechCrunch, The Verge, Reuters, company blogs, tech news sites.
 """
 
 
-def call_perplexity_api(prompt: str) -> Optional[str]:
-    """Call Perplexity Search API with the given prompt."""
+def call_perplexity_api(prompt: str) -> tuple[Optional[str], list[str]]:
+    """Call Perplexity Search API with the given prompt.
+
+    Returns:
+        Tuple of (content, citations) where citations are real URLs from search.
+    """
     if not PERPLEXITY_API_KEY:
         logger.error("PERPLEXITY_API_KEY not set!")
-        return None
+        return None, []
 
     headers = {
         "Authorization": f"Bearer {PERPLEXITY_API_KEY}",
@@ -109,17 +72,17 @@ def call_perplexity_api(prompt: str) -> Optional[str]:
         "messages": [
             {
                 "role": "system",
-                "content": "You are an AI news curator that searches the web for the latest AI news and formats it precisely as requested."
+                "content": "You are an AI news researcher. Search the web and report only real, verified news."
             },
             {
                 "role": "user",
                 "content": prompt
             }
         ],
-        "temperature": 0.2,  # Lower for more consistent formatting
+        "temperature": 0.2,
         "max_tokens": 4000,
-        "return_citations": True,  # Get source URLs
-        "search_recency_filter": "day"  # Focus on last 24 hours
+        "return_citations": True,
+        "search_recency_filter": "day"
     }
 
     try:
@@ -130,136 +93,103 @@ def call_perplexity_api(prompt: str) -> Optional[str]:
 
             data = response.json()
             content = data["choices"][0]["message"]["content"]
-            logger.info(f"Received response: {len(content)} characters")
-            return content
+            citations = data.get("citations", [])
+
+            logger.info(f"Received response: {len(content)} chars, {len(citations)} citations")
+            return content, citations
 
     except httpx.HTTPStatusError as e:
         logger.error(f"HTTP error from Perplexity API: {e.response.status_code} - {e.response.text}")
-        return None
+        return None, []
     except Exception as e:
         logger.error(f"Error calling Perplexity API: {e}")
-        return None
+        return None, []
 
 
-def parse_bullets(text: str) -> list[str]:
-    """Parse bullet points from text section."""
-    bullets = []
-    for line in text.strip().split('\n'):
-        line = line.strip()
-        # Remove bullet markers
-        if line.startswith('•') or line.startswith('-') or line.startswith('*'):
-            line = line[1:].strip()
-        # Remove citation markers like [1], [2], [3] etc.
-        line = re.sub(r'\[\d+\]', '', line).strip()
-        if line and len(line) > 10:  # Skip empty or too short lines
-            bullets.append(line)
-    return bullets
+def parse_perplexity_response(content: str, citations: list[str]) -> Optional[dict]:
+    """Parse Perplexity response into webhook format.
 
+    Expected format from Perplexity:
+    1. **Title**: Headline here
+       **Summary**: Summary text here.[1]
+       **URL**: https://example.com/article
 
-def parse_json_array(text: str) -> list[dict]:
-    """Parse JSON array from text, handling potential formatting issues."""
-    # Try to find JSON array in the text
-    text = text.strip()
+    Args:
+        content: The markdown content from Perplexity
+        citations: List of real URLs from Perplexity's search
+    """
+    items = []
 
-    # Find the array bounds
-    start = text.find('[')
-    end = text.rfind(']') + 1
+    # Clean citation markers [1], [2], etc.
+    clean_content = re.sub(r'\[\d+\]', '', content)
 
-    if start == -1 or end == 0:
-        logger.warning("No JSON array found in text")
-        return []
+    # Split by numbered items (1., 2., etc.)
+    item_blocks = re.split(r'\n(?=\d+\.\s)', clean_content)
 
-    json_str = text[start:end]
-
-    try:
-        items = json.loads(json_str)
-        # Validate structure
-        valid_items = []
-        for item in items:
-            if isinstance(item, dict) and 'title' in item and 'source_url' in item:
-                # Remove citation markers from title and description
-                title = re.sub(r'\[\d+\]', '', str(item.get('title', ''))).strip()[:200]
-                description = re.sub(r'\[\d+\]', '', str(item.get('description', ''))).strip()[:500]
-                valid_items.append({
-                    'title': title,
-                    'description': description,
-                    'source_url': str(item.get('source_url', ''))
-                })
-        return valid_items
-    except json.JSONDecodeError as e:
-        logger.error(f"JSON parse error: {e}")
-        # Try to fix common issues
-        try:
-            # Replace single quotes with double quotes
-            fixed = json_str.replace("'", '"')
-            items = json.loads(fixed)
-            return [
-                {
-                    'title': re.sub(r'\[\d+\]', '', str(item.get('title', ''))).strip()[:200],
-                    'description': re.sub(r'\[\d+\]', '', str(item.get('description', ''))).strip()[:500],
-                    'source_url': str(item.get('source_url', ''))
-                }
-                for item in items if isinstance(item, dict)
-            ]
-        except:
-            return []
-
-
-def parse_perplexity_response(response: str) -> Optional[dict]:
-    """Parse the structured response from Perplexity into our webhook format."""
-
-    # Extract sections using markers
-    sections = {}
-    markers = ['===SUMMARY_EN===', '===SUMMARY_CS===', '===FEED_EN===', '===FEED_CS===', '===END===']
-
-    for i, marker in enumerate(markers[:-1]):
-        start = response.find(marker)
-        if start == -1:
-            logger.warning(f"Marker not found: {marker}")
+    for block in item_blocks:
+        if not block.strip():
             continue
 
-        start += len(marker)
-        next_marker = markers[i + 1]
-        end = response.find(next_marker)
+        # Extract title
+        title_match = re.search(r'\*\*Title\*\*:\s*(.+?)(?:\n|$)', block)
+        if not title_match:
+            # Try alternative: bold text at start
+            title_match = re.search(r'^\d+\.\s*\*\*(.+?)\*\*', block)
 
-        if end == -1:
-            end = len(response)
+        # Extract summary
+        summary_match = re.search(r'\*\*Summary\*\*:\s*(.+?)(?:\n\s*\*\*|$)', block, re.DOTALL)
 
-        section_key = marker.replace('===', '').lower()
-        sections[section_key] = response[start:end].strip()
+        # Extract URL from content
+        url_match = re.search(r'\*\*URL\*\*:\s*(https?://[^\s]+)', block)
 
-    # Parse each section
-    result = {
-        'summary_en': [],
-        'summary_cs': [],
-        'feed_en': [],
-        'feed_cs': [],
-        'digest_date': datetime.now(timezone.utc).isoformat(),
-        'raw_response': response
-    }
+        if title_match:
+            title = title_match.group(1).strip()[:200]
+            summary = summary_match.group(1).strip()[:500] if summary_match else ""
+            url = url_match.group(1).strip() if url_match else ""
 
-    if 'summary_en' in sections:
-        result['summary_en'] = parse_bullets(sections['summary_en'])
-        logger.info(f"Parsed {len(result['summary_en'])} EN bullets")
+            items.append({
+                'title': title,
+                'summary': summary,
+                'url': url
+            })
 
-    if 'summary_cs' in sections:
-        result['summary_cs'] = parse_bullets(sections['summary_cs'])
-        logger.info(f"Parsed {len(result['summary_cs'])} CS bullets")
+    logger.info(f"Parsed {len(items)} news items from Perplexity response")
 
-    if 'feed_en' in sections:
-        result['feed_en'] = parse_json_array(sections['feed_en'])
-        logger.info(f"Parsed {len(result['feed_en'])} EN feed items")
-
-    if 'feed_cs' in sections:
-        result['feed_cs'] = parse_json_array(sections['feed_cs'])
-        logger.info(f"Parsed {len(result['feed_cs'])} CS feed items")
-
-    # Validate we got enough content
-    if len(result['summary_en']) < 3 or len(result['feed_en']) < 3:
-        logger.error("Insufficient content parsed from response")
+    if len(items) < 3:
+        logger.error(f"Insufficient content: only {len(items)} items parsed")
         return None
 
-    return result
+    # Build summaries (short one-line versions)
+    summaries_en = [item['title'][:150] for item in items]
+    summaries_cs = summaries_en.copy()  # English for now (would need translation)
+
+    # Build feed items
+    feed_en = [
+        {
+            'title': item['title'],
+            'description': item['summary'],
+            'source_url': item['url']
+        }
+        for item in items
+    ]
+
+    feed_cs = [
+        {
+            'title': item['title'],  # English for now
+            'description': item['summary'],
+            'source_url': item['url']
+        }
+        for item in items
+    ]
+
+    return {
+        'summary_en': summaries_en,
+        'summary_cs': summaries_cs,
+        'feed_en': feed_en,
+        'feed_cs': feed_cs,
+        'digest_date': datetime.now(timezone.utc).isoformat(),
+        'raw_response': content
+    }
 
 
 def post_to_webhook(payload: dict) -> bool:
@@ -306,20 +236,20 @@ def main():
 
     # Call Perplexity API
     logger.info("Step 1: Calling Perplexity Search API...")
-    response = call_perplexity_api(prompt)
+    content, citations = call_perplexity_api(prompt)
 
-    if not response:
+    if not content:
         logger.error("Failed to get response from Perplexity API")
         sys.exit(1)
 
     # Parse the response
     logger.info("Step 2: Parsing response...")
-    payload = parse_perplexity_response(response)
+    payload = parse_perplexity_response(content, citations)
 
     if not payload:
         logger.error("Failed to parse Perplexity response")
         # Log the raw response for debugging
-        logger.debug(f"Raw response:\n{response}")
+        logger.error(f"Raw content:\n{content}")
         sys.exit(1)
 
     # Post to webhook

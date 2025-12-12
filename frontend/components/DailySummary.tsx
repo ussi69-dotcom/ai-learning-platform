@@ -33,7 +33,7 @@ export default function DailySummary({ locale }: DailySummaryProps) {
   useEffect(() => {
     const fetchDigest = async () => {
       try {
-        const response = await fetch(`${API_URL}/digest/`);
+        const response = await fetch(`${API_URL}/digest`);
         if (response.ok) {
           const data = await response.json();
           setDigest(data);

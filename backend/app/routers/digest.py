@@ -86,7 +86,7 @@ async def receive_digest_webhook(
     return new_digest
 
 
-@router.get("/", response_model=Optional[schemas.DailyDigestResponse])
+@router.get("", response_model=Optional[schemas.DailyDigestResponse])
 async def get_latest_digest(
     lang: Optional[str] = Query(default=None, description="Filter response to specific language: en, cs"),
     db: Session = Depends(database.get_db)
