@@ -2506,13 +2506,13 @@ export default function DiagramConcepts({ type }: DiagramProps) {
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
         <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl">
           <svg
-            viewBox="0 0 700 500"
+            viewBox="0 0 700 520"
             className="w-full h-auto"
             role="img"
             aria-label={
               isCs
-                ? "Multi-Agent Workflow: Claude, Gemini, Antigravity"
-                : "Multi-Agent Workflow: Claude, Gemini, Antigravity"
+                ? "Multi-Agent Workflow v4.0: Claude orchestruje GPT-5.2, Gemini, Perplexity"
+                : "Multi-Agent Workflow v4.0: Claude orchestrates GPT-5.2, Gemini, Perplexity"
             }
           >
             <defs>
@@ -2529,26 +2529,8 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                   className="fill-slate-400 dark:fill-slate-500"
                 />
               </marker>
-              <linearGradient
-                id="antigravity-grad"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="100%"
-              >
-                <stop offset="0%" stopColor="#6366f1" />
-                <stop offset="50%" stopColor="#a855f7" />
-                <stop offset="100%" stopColor="#ec4899" />
-              </linearGradient>
               {/* Glow filters */}
               <filter id="glow-claude" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-              <filter id="glow-gemini" x="-50%" y="-50%" width="200%" height="200%">
                 <feGaussianBlur stdDeviation="3" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
@@ -2564,332 +2546,387 @@ export default function DiagramConcepts({ type }: DiagramProps) {
               textAnchor="middle"
               className="text-lg font-bold fill-slate-700 dark:fill-slate-200"
             >
-              {isCs ? "🤖 Multi-Agent Workflow v3.0" : "🤖 Multi-Agent Workflow v3.0"}
+              {isCs ? "🤖 Multi-Agent Workflow v4.0" : "🤖 Multi-Agent Workflow v4.0"}
             </text>
 
-            {/* ═══ ENTRY POINTS (Top Row) ═══ */}
+            {/* ═══ ORCHESTRATOR (Top Center) ═══ */}
             <text
               x="350"
-              y="60"
+              y="55"
               textAnchor="middle"
               className="text-[10px] font-mono fill-slate-500 dark:fill-slate-400"
             >
-              ENTRY POINTS
+              ORCHESTRATION LAYER
             </text>
 
-            {/* Claude Code - Primary color (theme aware) */}
-            <g transform="translate(80, 80)" filter="url(#glow-claude)">
+            {/* Claude Opus 4.5 - Orchestrator (larger, centered) */}
+            <g transform="translate(225, 65)" filter="url(#glow-claude)">
               <rect
                 x="0"
                 y="0"
-                width="150"
-                height="90"
+                width="250"
+                height="85"
                 rx="12"
-                className="fill-blue-500/10 dark:fill-red-500/10 stroke-blue-500 dark:stroke-red-500"
-                strokeWidth="2"
+                className="fill-orange-500/10 dark:fill-orange-500/15 stroke-orange-500"
+                strokeWidth="3"
               />
-              <text x="75" y="35" textAnchor="middle" className="text-2xl">
+              <text x="125" y="30" textAnchor="middle" className="text-2xl">
                 🤖
               </text>
               <text
-                x="75"
-                y="55"
+                x="125"
+                y="50"
                 textAnchor="middle"
-                className="text-sm font-bold fill-blue-600 dark:fill-red-400"
+                className="text-sm font-bold fill-orange-600 dark:fill-orange-400"
               >
-                Claude Code
+                Claude Opus 4.5
               </text>
               <text
-                x="75"
-                y="72"
+                x="125"
+                y="70"
                 textAnchor="middle"
-                className="text-[9px] font-mono fill-slate-500 dark:fill-slate-400"
+                className="text-[10px] fill-orange-500 dark:fill-orange-300"
               >
-                CLAUDE.md
-              </text>
-              <text
-                x="75"
-                y="110"
-                textAnchor="middle"
-                className="text-[10px] fill-blue-600 dark:fill-red-400"
-              >
-                {isCs ? "Orchestrator, QA Gate" : "Orchestrator, QA Gate"}
+                {isCs ? "Orchestrátor • CLI • QA Gate • Safety" : "Orchestrator • CLI • QA Gate • Safety"}
               </text>
             </g>
 
-            {/* Gemini CLI - Blue/Cyan */}
-            <g transform="translate(275, 80)" filter="url(#glow-gemini)">
+            {/* ═══ SPECIALIST AGENTS (Row below) ═══ */}
+            <text
+              x="350"
+              y="175"
+              textAnchor="middle"
+              className="text-[10px] font-mono fill-slate-500 dark:fill-slate-400"
+            >
+              SPECIALIST AGENTS
+            </text>
+
+            {/* Arrows from Orchestrator to Specialists */}
+            <line x1="290" y1="150" x2="155" y2="190" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="2" markerEnd="url(#arrowhead-maw)" />
+            <line x1="350" y1="150" x2="350" y2="190" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="2" markerEnd="url(#arrowhead-maw)" />
+            <line x1="410" y1="150" x2="545" y2="190" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="2" markerEnd="url(#arrowhead-maw)" />
+
+            {/* GPT-5.2 Thinking - Reasoning specialist */}
+            <g transform="translate(30, 195)">
               <rect
                 x="0"
                 y="0"
                 width="150"
-                height="90"
-                rx="12"
-                fill="#3b82f6"
+                height="85"
+                rx="10"
+                fill="#10b981"
+                fillOpacity="0.1"
+                stroke="#10b981"
+                strokeWidth="2"
+              />
+              <text x="75" y="28" textAnchor="middle" className="text-xl">
+                🧠
+              </text>
+              <text
+                x="75"
+                y="48"
+                textAnchor="middle"
+                className="text-[11px] font-bold fill-emerald-600 dark:fill-emerald-400"
+              >
+                GPT-5.2 Thinking
+              </text>
+              <text
+                x="75"
+                y="65"
+                textAnchor="middle"
+                className="text-[9px] fill-slate-500 dark:fill-slate-400"
+              >
+                {isCs ? "Reasoning, Architektura" : "Reasoning, Architecture"}
+              </text>
+              <text
+                x="75"
+                y="78"
+                textAnchor="middle"
+                className="text-[8px] fill-emerald-500/70"
+              >
+                GPQA 93.2%
+              </text>
+            </g>
+
+            {/* Gemini CLI - Research & Content */}
+            <g transform="translate(210, 195)">
+              <rect
+                x="0"
+                y="0"
+                width="150"
+                height="85"
+                rx="10"
+                fill="#06b6d4"
                 fillOpacity="0.1"
                 stroke="#06b6d4"
                 strokeWidth="2"
               />
-              <text x="75" y="35" textAnchor="middle" className="text-2xl">
+              <text x="75" y="28" textAnchor="middle" className="text-xl">
                 ✨
               </text>
               <text
                 x="75"
-                y="55"
+                y="48"
                 textAnchor="middle"
-                className="text-sm font-bold fill-cyan-600 dark:fill-cyan-400"
+                className="text-[11px] font-bold fill-cyan-600 dark:fill-cyan-400"
               >
-                Gemini CLI
+                Gemini 3 Pro
               </text>
               <text
                 x="75"
-                y="72"
+                y="65"
                 textAnchor="middle"
-                className="text-[9px] font-mono fill-slate-500 dark:fill-slate-400"
+                className="text-[9px] fill-slate-500 dark:fill-slate-400"
               >
-                GEMINI.md
+                {isCs ? "Research, Content Gen" : "Research, Content Gen"}
               </text>
               <text
                 x="75"
-                y="110"
+                y="78"
                 textAnchor="middle"
-                className="text-[10px] fill-cyan-600 dark:fill-cyan-400"
+                className="text-[8px] fill-cyan-500/70"
               >
-                {isCs ? "Research, Content" : "Research, Content"}
+                2M context
               </text>
             </g>
 
-            {/* Antigravity - Gradient */}
-            <g transform="translate(470, 80)">
+            {/* Perplexity Sonar - Quick Research */}
+            <g transform="translate(390, 195)">
               <rect
                 x="0"
                 y="0"
                 width="150"
-                height="90"
-                rx="12"
-                fill="url(#antigravity-grad)"
-                fillOpacity="0.15"
-                stroke="url(#antigravity-grad)"
+                height="85"
+                rx="10"
+                fill="#3b82f6"
+                fillOpacity="0.1"
+                stroke="#3b82f6"
                 strokeWidth="2"
               />
-              <text x="75" y="35" textAnchor="middle" className="text-2xl">
-                🚀
+              <text x="75" y="28" textAnchor="middle" className="text-xl">
+                ⚡
               </text>
               <text
                 x="75"
-                y="55"
+                y="48"
                 textAnchor="middle"
-                className="text-sm font-bold fill-indigo-600 dark:fill-indigo-400"
+                className="text-[11px] font-bold fill-blue-600 dark:fill-blue-400"
               >
-                Antigravity
+                Perplexity Sonar
               </text>
               <text
                 x="75"
-                y="72"
+                y="65"
                 textAnchor="middle"
-                className="text-[9px] font-mono fill-slate-500 dark:fill-slate-400"
+                className="text-[9px] fill-slate-500 dark:fill-slate-400"
               >
-                rules.md
+                {isCs ? "Quick Research, Fakta" : "Quick Research, Facts"}
               </text>
               <text
                 x="75"
-                y="110"
+                y="78"
                 textAnchor="middle"
-                className="text-[10px] fill-indigo-600 dark:fill-indigo-400"
+                className="text-[8px] fill-blue-500/70"
               >
-                {isCs ? "Full-Stack Dev" : "Full-Stack Dev"}
+                {isCs ? "Real-time citace" : "Real-time citations"}
               </text>
             </g>
 
-            {/* ═══ ARROWS TO PROTOCOL ═══ */}
-            <line
-              x1="155"
-              y1="190"
-              x2="280"
-              y2="240"
-              className="stroke-slate-400 dark:stroke-slate-500"
-              strokeWidth="2"
-              markerEnd="url(#arrowhead-maw)"
-            />
-            <line
-              x1="350"
-              y1="190"
-              x2="350"
-              y2="235"
-              className="stroke-slate-400 dark:stroke-slate-500"
-              strokeWidth="2"
-              markerEnd="url(#arrowhead-maw)"
-            />
-            <line
-              x1="545"
-              y1="190"
-              x2="420"
-              y2="240"
-              className="stroke-slate-400 dark:stroke-slate-500"
-              strokeWidth="2"
-              markerEnd="url(#arrowhead-maw)"
-            />
-
-            {/* ═══ SHARED PROTOCOL (Center) ═══ */}
-            <g transform="translate(200, 245)">
+            {/* Gemini Deep Research - optional */}
+            <g transform="translate(570, 195)">
               <rect
                 x="0"
                 y="0"
-                width="300"
-                height="60"
+                width="110"
+                height="85"
+                rx="10"
+                fill="#a855f7"
+                fillOpacity="0.1"
+                stroke="#a855f7"
+                strokeWidth="1.5"
+                strokeDasharray="4,2"
+              />
+              <text x="55" y="28" textAnchor="middle" className="text-lg">
+                🔬
+              </text>
+              <text
+                x="55"
+                y="46"
+                textAnchor="middle"
+                className="text-[9px] font-bold fill-purple-600 dark:fill-purple-400"
+              >
+                Deep Research
+              </text>
+              <text
+                x="55"
+                y="60"
+                textAnchor="middle"
+                className="text-[8px] fill-slate-500 dark:fill-slate-400"
+              >
+                {isCs ? "Autonomní" : "Autonomous"}
+              </text>
+              <text
+                x="55"
+                y="73"
+                textAnchor="middle"
+                className="text-[7px] fill-purple-500/70"
+              >
+                20-60 min
+              </text>
+            </g>
+
+            {/* Arrow to Deep Research */}
+            <line x1="540" y1="237" x2="568" y2="237" className="stroke-purple-400/50 dark:stroke-purple-500/50" strokeWidth="1.5" strokeDasharray="3,2" markerEnd="url(#arrowhead-maw)" />
+
+            {/* ═══ SHARED PROTOCOL (Center) ═══ */}
+            <g transform="translate(175, 310)">
+              <rect
+                x="0"
+                y="0"
+                width="350"
+                height="55"
                 rx="8"
                 className="fill-amber-500/10 dark:fill-amber-500/20 stroke-amber-500"
                 strokeWidth="2"
                 strokeDasharray="5,3"
               />
-              <text x="150" y="25" textAnchor="middle" className="text-xl">
+              <text x="175" y="22" textAnchor="middle" className="text-lg">
                 📜
               </text>
               <text
-                x="150"
-                y="45"
+                x="175"
+                y="42"
                 textAnchor="middle"
                 className="text-sm font-bold fill-amber-600 dark:fill-amber-400"
               >
                 AGENT_PROTOCOL.md
               </text>
-              <text
-                x="150"
-                y="70"
-                textAnchor="middle"
-                className="text-[10px] fill-slate-500 dark:fill-slate-400"
-              >
-                {isCs ? "Společná pravidla všech agentů" : "Shared rules for all agents"}
-              </text>
             </g>
 
-            {/* ═══ ARROW TO MEMORY ═══ */}
-            <line
-              x1="350"
-              y1="315"
-              x2="350"
-              y2="345"
-              className="stroke-slate-400 dark:stroke-slate-500"
-              strokeWidth="2"
-              markerEnd="url(#arrowhead-maw)"
-            />
+            {/* Arrows to Protocol */}
+            <line x1="105" y1="280" x2="240" y2="305" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="1.5" markerEnd="url(#arrowhead-maw)" />
+            <line x1="285" y1="280" x2="310" y2="305" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="1.5" markerEnd="url(#arrowhead-maw)" />
+            <line x1="465" y1="280" x2="440" y2="305" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="1.5" markerEnd="url(#arrowhead-maw)" />
 
             {/* ═══ MEMORY SYSTEM (Bottom Row) ═══ */}
             <text
               x="350"
-              y="365"
+              y="395"
               textAnchor="middle"
               className="text-[10px] font-mono fill-slate-500 dark:fill-slate-400"
             >
               {isCs ? "PAMĚŤOVÝ SYSTÉM" : "MEMORY SYSTEM"}
             </text>
 
+            {/* Arrow to Memory */}
+            <line x1="350" y1="365" x2="350" y2="385" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="1.5" markerEnd="url(#arrowhead-maw)" />
+
             {/* Working Context - Short-term */}
-            <g transform="translate(80, 380)">
+            <g transform="translate(80, 405)">
               <rect
                 x="0"
                 y="0"
                 width="160"
-                height="70"
+                height="65"
                 rx="8"
                 className="fill-emerald-500/10 dark:fill-emerald-500/20 stroke-emerald-500"
                 strokeWidth="1.5"
               />
-              <text x="80" y="25" textAnchor="middle" className="text-lg">
+              <text x="80" y="22" textAnchor="middle" className="text-lg">
                 💾
               </text>
               <text
                 x="80"
-                y="45"
+                y="40"
                 textAnchor="middle"
-                className="text-[11px] font-bold fill-emerald-600 dark:fill-emerald-400"
+                className="text-[10px] font-bold fill-emerald-600 dark:fill-emerald-400"
               >
                 WORKING_CONTEXT.md
               </text>
               <text
                 x="80"
-                y="60"
+                y="55"
                 textAnchor="middle"
-                className="text-[9px] fill-slate-500 dark:fill-slate-400"
+                className="text-[8px] fill-slate-500 dark:fill-slate-400"
               >
                 {isCs ? "Krátkodobá paměť" : "Short-term memory"}
               </text>
             </g>
 
             {/* Memory - Long-term */}
-            <g transform="translate(270, 380)">
+            <g transform="translate(270, 405)">
               <rect
                 x="0"
                 y="0"
                 width="160"
-                height="70"
+                height="65"
                 rx="8"
                 className="fill-purple-500/10 dark:fill-purple-500/20 stroke-purple-500"
                 strokeWidth="1.5"
               />
-              <text x="80" y="25" textAnchor="middle" className="text-lg">
+              <text x="80" y="22" textAnchor="middle" className="text-lg">
                 🧠
               </text>
               <text
                 x="80"
-                y="45"
+                y="40"
                 textAnchor="middle"
-                className="text-[11px] font-bold fill-purple-600 dark:fill-purple-400"
+                className="text-[10px] font-bold fill-purple-600 dark:fill-purple-400"
               >
                 MEMORY.md
               </text>
               <text
                 x="80"
-                y="60"
+                y="55"
                 textAnchor="middle"
-                className="text-[9px] fill-slate-500 dark:fill-slate-400"
+                className="text-[8px] fill-slate-500 dark:fill-slate-400"
               >
                 {isCs ? "Dlouhodobá paměť" : "Long-term memory"}
               </text>
             </g>
 
             {/* Instructions */}
-            <g transform="translate(460, 380)">
+            <g transform="translate(460, 405)">
               <rect
                 x="0"
                 y="0"
                 width="160"
-                height="70"
+                height="65"
                 rx="8"
                 className="fill-blue-500/10 dark:fill-blue-500/20 stroke-blue-500"
                 strokeWidth="1.5"
               />
-              <text x="80" y="25" textAnchor="middle" className="text-lg">
+              <text x="80" y="22" textAnchor="middle" className="text-lg">
                 📋
               </text>
               <text
                 x="80"
-                y="45"
+                y="40"
                 textAnchor="middle"
-                className="text-[11px] font-bold fill-blue-600 dark:fill-blue-400"
+                className="text-[10px] font-bold fill-blue-600 dark:fill-blue-400"
               >
-                {isCs ? "Instrukce" : "Instructions"}
+                {isCs ? "Agent Instrukce" : "Agent Instructions"}
               </text>
               <text
                 x="80"
-                y="60"
+                y="55"
                 textAnchor="middle"
-                className="text-[9px] fill-slate-500 dark:fill-slate-400"
+                className="text-[8px] fill-slate-500 dark:fill-slate-400"
               >
                 CLAUDE.md / GEMINI.md
               </text>
             </g>
 
-            {/* ═══ BOOT SEQUENCE indicator ═══ */}
-            <g transform="translate(50, 480)">
+            {/* ═══ ROUTING HINT ═══ */}
+            <g transform="translate(50, 495)">
               <text
                 x="0"
                 y="0"
-                className="text-[9px] font-mono fill-slate-400 dark:fill-slate-500"
+                className="text-[8px] font-mono fill-slate-400 dark:fill-slate-500"
               >
                 {isCs
-                  ? "🚀 Boot: 1. AGENT_PROTOCOL → 2. WORKING_CONTEXT → 3. MEMORY → 4. Role-based docs"
-                  : "🚀 Boot: 1. AGENT_PROTOCOL → 2. WORKING_CONTEXT → 3. MEMORY → 4. Role-based docs"}
+                  ? "🎯 Routing: Reasoning→GPT-5.2 | Content→Gemini | Quick facts→Perplexity | Deep research→Gemini DR"
+                  : "🎯 Routing: Reasoning→GPT-5.2 | Content→Gemini | Quick facts→Perplexity | Deep research→Gemini DR"}
               </text>
             </g>
           </svg>

@@ -186,7 +186,9 @@
         "weapon_title": "The Weapon",
         "weapon_desc": "Gemini 3.0 CLI přístup udělen. Zero-day integrace. Stack se stává sebeuvědomělým.",
         "vanguard_title": "The Vanguard",
-        "vanguard_desc": "Claude Opus 4.5 + Gemini 3 Pro dual-agent workflow. Edutainment v3.0 spuštěn. Stavíme zítřejšími nástroji už dnes."
+        "vanguard_desc": "Claude Opus 4.5 + Gemini 3 Pro dual-agent workflow. Edutainment v3.0 spuštěn.",
+        "multiagent_v4_title": "Multi-Agent v4.0",
+        "multiagent_v4_desc": "GPT-5.2 + Perplexity se přidávají do týmu. 4 AI modely, jeden orchestrátor. Zero-day integrace: GPT-5.2 vyšel 11.12., nasazeno 12.12."
     },
     "TechStack": {
         "nextjs_name": "Next.js 16",

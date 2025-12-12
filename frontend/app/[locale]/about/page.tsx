@@ -63,10 +63,16 @@ export default function AboutPage() {
       icon: <Terminal className="w-5 h-5" />,
     },
     {
-      year: "Now",
+      year: "Dec 2025",
       title: t("Timeline.vanguard_title"),
       desc: t("Timeline.vanguard_desc"),
       icon: <Users className="w-5 h-5" />,
+    },
+    {
+      year: "Now",
+      title: t("Timeline.multiagent_v4_title"),
+      desc: t("Timeline.multiagent_v4_desc"),
+      icon: <Sparkles className="w-5 h-5" />,
     },
   ];
 

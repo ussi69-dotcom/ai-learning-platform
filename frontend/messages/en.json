@@ -186,7 +186,9 @@
         "weapon_title": "The Weapon",
         "weapon_desc": "Gemini 3.0 CLI access granted. Zero-day integration. The stack becomes self-aware.",
         "vanguard_title": "The Vanguard",
-        "vanguard_desc": "Claude Opus 4.5 + Gemini 3 Pro dual-agent workflow. Edutainment v3.0 launched. Building with tomorrow's tools today."
+        "vanguard_desc": "Claude Opus 4.5 + Gemini 3 Pro dual-agent workflow. Edutainment v3.0 launched.",
+        "multiagent_v4_title": "Multi-Agent v4.0",
+        "multiagent_v4_desc": "GPT-5.2 + Perplexity join the team. 4 AI models, one orchestrator. Zero-day integration: GPT-5.2 dropped Dec 11, deployed Dec 12."
     },
     "TechStack": {
         "nextjs_name": "Next.js 16",
