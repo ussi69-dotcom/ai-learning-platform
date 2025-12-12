@@ -1,6 +1,6 @@
 "use client";
 
-import { Play, Newspaper, TrendingUp, FileText, Grid3X3 } from "lucide-react";
+import { Play, Newspaper, TrendingUp, FileText, Grid3X3, Flag } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NewsFilterProps {
@@ -49,10 +49,23 @@ const filters = [
   },
 ];
 
+// CZ filter only shown in Czech locale
+const czFilter = {
+  id: "cz",
+  labelEn: "🇨🇿 CZ",
+  labelCs: "🇨🇿 Česky",
+  icon: Flag,
+};
+
 export default function NewsFilter({ value, onChange, counts, locale }: NewsFilterProps) {
+  // Add CZ filter in Czech locale (after "hot" and "all")
+  const allFilters = locale === "cs"
+    ? [filters[0], filters[1], czFilter, ...filters.slice(2)]
+    : filters;
+
   return (
     <div className="flex flex-wrap gap-2">
-      {filters.map((filter) => {
+      {allFilters.map((filter) => {
         const Icon = filter.icon;
         const isActive = value === filter.id;
         const count = filter.id === "all" ? counts?.total : counts?.[filter.id];
@@ -66,7 +79,7 @@ export default function NewsFilter({ value, onChange, counts, locale }: NewsFilt
               "flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all",
               "border border-border hover:border-primary/50",
               isActive
-                ? "bg-gradient-to-r from-violet-600/20 via-indigo-600/20 to-violet-600/20 border-primary text-primary dark:text-violet-300"
+                ? "bg-gradient-to-r from-violet-600/20 via-indigo-600/20 to-violet-600/20 border-primary text-primary dark:from-red-600/20 dark:via-red-600/20 dark:to-red-600/20 dark:border-red-500 dark:text-red-400"
                 : "bg-background/50 text-muted-foreground hover:text-foreground"
             )}
           >
@@ -77,7 +90,7 @@ export default function NewsFilter({ value, onChange, counts, locale }: NewsFilt
                 className={cn(
                   "text-xs px-1.5 py-0.5 rounded-full",
                   isActive
-                    ? "bg-primary/20 text-primary dark:text-violet-300"
+                    ? "bg-primary/20 text-primary dark:bg-red-500/20 dark:text-red-400"
                     : "bg-muted text-muted-foreground"
                 )}
               >

@@ -122,7 +122,7 @@ export default function NewsCard({ item, locale }: NewsCardProps) {
   return (
     <Card className="group overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-lg dark:hover:shadow-primary/10 flex flex-col h-full">
       {/* Thumbnail */}
-      <div className="relative h-40 bg-slate-200 dark:bg-slate-800 overflow-hidden">
+      <div className="relative h-40 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300 dark:from-slate-800 dark:via-slate-750 dark:to-slate-900 overflow-hidden">
         {thumbnailUrl ? (
           <Image
             src={thumbnailUrl}
@@ -132,8 +132,12 @@ export default function NewsCard({ item, locale }: NewsCardProps) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <SourceIcon className="w-12 h-12 text-slate-400" />
+          // Enhanced fallback for missing thumbnails
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-violet-500/10 via-indigo-500/10 to-purple-500/10 dark:from-red-600/20 dark:via-orange-600/10 dark:to-red-600/20">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-violet-500/20 to-indigo-500/20 dark:from-red-500/30 dark:to-orange-500/20 flex items-center justify-center mb-2">
+              <SourceIcon className="w-8 h-8 text-violet-600 dark:text-red-400" />
+            </div>
+            <span className="text-xs text-muted-foreground/70 font-medium">{sourceStyle.label}</span>
           </div>
         )}
 
@@ -187,7 +191,7 @@ export default function NewsCard({ item, locale }: NewsCardProps) {
         <a href={item.source_url} target="_blank" rel="noopener noreferrer" className="block">
           <Button
             size="sm"
-            className="w-full bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:from-violet-700 hover:via-indigo-700 hover:to-violet-700"
+            className="w-full bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:from-violet-700 hover:via-indigo-700 hover:to-violet-700 dark:from-red-600 dark:via-red-600 dark:to-red-600 dark:hover:from-red-700 dark:hover:via-red-700 dark:hover:to-red-700"
           >
             {isVideo ? <Play className="w-4 h-4 mr-2" /> : <ExternalLink className="w-4 h-4 mr-2" />}
             {ctaLabel}

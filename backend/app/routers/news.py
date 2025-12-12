@@ -24,6 +24,7 @@ logger = logging.getLogger(__name__)
 async def get_news(
     limit: int = Query(default=12, ge=1, le=50),
     source: Optional[str] = Query(default=None, description="Filter by source: youtube, rss, hackernews, papers"),
+    lang: Optional[str] = Query(default=None, description="Filter by language: en, cs"),
     db: Session = Depends(database.get_db)
 ):
     """
@@ -31,6 +32,7 @@ async def get_news(
 
     No authentication required - news is public.
     Results are cached and refreshed every 30 minutes.
+    Supports filtering by language (en=English, cs=Czech).
     """
     query = db.query(models.NewsItem).order_by(models.NewsItem.published_at.desc())
 
@@ -44,6 +46,15 @@ async def get_news(
                 status_code=400,
                 detail=f"Invalid source. Must be one of: youtube, rss, hackernews, papers"
             )
+
+    # Filter by language if specified
+    if lang:
+        if lang.lower() not in ["en", "cs"]:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Invalid language. Must be one of: en, cs"
+            )
+        query = query.filter(models.NewsItem.language == lang.lower())
 
     items = query.limit(limit).all()
     return items
@@ -91,17 +102,30 @@ async def get_hot_news(
 
 
 @router.get("/stats")
-async def get_news_stats(db: Session = Depends(database.get_db)):
+async def get_news_stats(
+    lang: Optional[str] = Query(default=None, description="Filter by language: en, cs"),
+    db: Session = Depends(database.get_db)
+):
     """
     Get news statistics by source.
+    Optionally filter by language.
     """
     stats = {}
+
+    base_query = db.query(models.NewsItem)
+    if lang and lang.lower() in ["en", "cs"]:
+        base_query = base_query.filter(models.NewsItem.language == lang.lower())
+
     for source in models.NewsSource:
-        count = db.query(models.NewsItem).filter(models.NewsItem.source == source).count()
+        count = base_query.filter(models.NewsItem.source == source).count()
         stats[source.value] = count
 
-    total = db.query(models.NewsItem).count()
+    total = base_query.count()
     stats["total"] = total
+
+    # Add language-specific counts
+    stats["cs_total"] = db.query(models.NewsItem).filter(models.NewsItem.language == "cs").count()
+    stats["en_total"] = db.query(models.NewsItem).filter(models.NewsItem.language == "en").count()
 
     return stats
 

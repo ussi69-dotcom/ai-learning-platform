@@ -55,11 +55,26 @@ YOUTUBE_CHANNELS = {
 
 # RSS feeds to track (updated URLs as of Dec 2025)
 RSS_FEEDS = {
+    # English sources
     "https://openai.com/news/rss.xml": "OpenAI Blog",  # Redirected from /blog/
     "https://huggingface.co/blog/feed.xml": "HuggingFace",
     "https://blog.google/technology/ai/rss/": "Google AI Blog",
     "https://techcrunch.com/category/artificial-intelligence/feed/": "TechCrunch AI",
     "https://www.technologyreview.com/topic/artificial-intelligence/feed": "MIT Tech Review",
+}
+
+# Czech RSS feeds (CZ locale)
+RSS_FEEDS_CZ = {
+    "https://www.kapler.cz/feed/": "Kapler o AI",      # Czech AI blog
+    "https://ainovinky.cz/feed/": "AI Novinky",        # Czech AI news
+    "https://aicrunch.cz/feed/": "AI Crunch CZ",       # Czech AI startup news
+}
+
+# Czech YouTube channels (to be added when channel IDs are verified)
+# Handles: @tomas-ai-cz, @bartosmarek, @davidstrejc
+YOUTUBE_CHANNELS_CZ = {
+    # Channel IDs will be added once verified via YouTube API
+    # For now, using handles which need to be converted to UC... IDs
 }
 
 
@@ -123,6 +138,7 @@ class YouTubeFetcher:
                 "channel_name": channel_name,
                 "published_at": datetime.fromisoformat(snippet["publishedAt"].replace("Z", "+00:00")),
                 "video_id": video_id,
+                "language": "en",  # Currently English channels only
             })
 
         return items
@@ -131,20 +147,30 @@ class YouTubeFetcher:
 class RSSFetcher:
     """Fetches articles from AI/ML RSS feeds."""
 
-    async def fetch(self) -> List[Dict]:
+    async def fetch(self, include_czech: bool = True) -> List[Dict]:
         """Fetch latest articles from all tracked RSS feeds."""
         items = []
 
+        # Fetch English feeds
         for feed_url, feed_name in RSS_FEEDS.items():
             try:
-                articles = await self._fetch_feed(feed_url, feed_name)
+                articles = await self._fetch_feed(feed_url, feed_name, language="en")
                 items.extend(articles)
             except Exception as e:
                 logger.error(f"Failed to fetch RSS feed {feed_name}: {e}")
 
+        # Fetch Czech feeds
+        if include_czech:
+            for feed_url, feed_name in RSS_FEEDS_CZ.items():
+                try:
+                    articles = await self._fetch_feed(feed_url, feed_name, language="cs")
+                    items.extend(articles)
+                except Exception as e:
+                    logger.error(f"Failed to fetch CZ RSS feed {feed_name}: {e}")
+
         return items
 
-    async def _fetch_feed(self, feed_url: str, feed_name: str) -> List[Dict]:
+    async def _fetch_feed(self, feed_url: str, feed_name: str, language: str = "en") -> List[Dict]:
         """Fetch and parse a single RSS feed."""
         async with httpx.AsyncClient(timeout=30.0, follow_redirects=True) as client:
             try:
@@ -187,6 +213,7 @@ class RSSFetcher:
                 "thumbnail_url": thumbnail,
                 "channel_name": feed_name,
                 "published_at": published,
+                "language": language,
             })
 
         return items
@@ -240,6 +267,7 @@ class HackerNewsFetcher:
                 "channel_name": "Hacker News",
                 "published_at": created_at,
                 "score": hit.get("points", 0),
+                "language": "en",
             })
 
         return items
@@ -320,6 +348,7 @@ class PapersFetcher:
                     "source_url": f"https://arxiv.org/abs/{arxiv_id}",
                     "channel_name": author_str or "arXiv",
                     "published_at": published,
+                    "language": "en",
                 })
 
         except Exception as e:
@@ -395,7 +424,15 @@ class NewsAggregator:
                 if existing:
                     # Update existing (keep newer published_at if available)
                     if item.get("published_at") and existing.published_at:
-                        if item["published_at"] > existing.published_at:
+                        # Normalize both datetimes to naive UTC for comparison
+                        new_dt = item["published_at"]
+                        old_dt = existing.published_at
+                        # Remove timezone info if present for safe comparison
+                        if hasattr(new_dt, 'replace') and new_dt.tzinfo is not None:
+                            new_dt = new_dt.replace(tzinfo=None)
+                        if hasattr(old_dt, 'replace') and old_dt.tzinfo is not None:
+                            old_dt = old_dt.replace(tzinfo=None)
+                        if new_dt > old_dt:
                             for key, value in item.items():
                                 if key != "external_id" and value is not None:
                                     setattr(existing, key, value)

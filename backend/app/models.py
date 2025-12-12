@@ -246,5 +246,6 @@ class NewsItem(Base):
     video_id = Column(String, nullable=True)  # YouTube video ID for embedding
     duration_seconds = Column(Integer, nullable=True)  # Video duration
     score = Column(Integer, nullable=True)  # HN score, YouTube views
+    language = Column(String(5), nullable=True, default="en", index=True)  # Language code: "en", "cs"
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())

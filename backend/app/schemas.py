@@ -285,6 +285,7 @@ class NewsItemBase(BaseModel):
     video_id: Optional[str] = None
     duration_seconds: Optional[int] = None
     score: Optional[int] = None
+    language: Optional[str] = "en"  # Language code: "en", "cs"
 
 
 class NewsItemCreate(NewsItemBase):
