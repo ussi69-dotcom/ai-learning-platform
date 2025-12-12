@@ -17,6 +17,7 @@ import SystemStatus from "@/components/SystemStatus";
 // ABTestShowcase moved to /about page only
 import AIGlossary from "@/components/AIGlossary";
 import NewsFeed from "@/components/NewsFeed";
+import DailySummary from "@/components/DailySummary";
 import { getBadgeLevel, BADGE_TIERS } from "@/components/XPAvatarBadge";
 import { useLocale, useTranslations } from "next-intl";
 import {
@@ -361,9 +362,13 @@ export default function HomePage() {
       {/* System Status Monitor */}
       <SystemStatus />
 
-      {/* AI News Feed - Aggregated from YouTube, RSS, HN, arXiv */}
+      {/* Daily AI Digest from Perplexity + News Feed */}
       <section className="w-full py-12 md:py-16 bg-slate-50/30 dark:bg-slate-900/20 border-y border-border/30">
         <div className="container px-4 mx-auto">
+          {/* Daily Summary - Curated by Perplexity AI */}
+          <DailySummary locale={locale} />
+
+          {/* AI News Feed - Aggregated from YouTube, RSS, HN, arXiv */}
           <NewsFeed locale={locale} />
         </div>
       </section>

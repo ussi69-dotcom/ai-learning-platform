@@ -305,3 +305,40 @@ class NewsRefreshResponse(BaseModel):
     status: str
     items_fetched: int
     sources_status: dict  # {"youtube": "ok", "rss": "error", ...}
+
+
+# --- DAILY DIGEST SCHEMAS (Perplexity Integration) ---
+
+class DigestFeedItem(BaseModel):
+    """Single item in the detailed feed section."""
+    title: str
+    description: str
+    source_url: str
+
+
+class DailyDigestWebhook(BaseModel):
+    """
+    Webhook payload from Perplexity scheduled task.
+    Expects 4 sections as defined in the task prompt.
+    """
+    summary_en: List[str]  # 5-8 bullet points
+    summary_cs: List[str]  # 5-8 bullet points
+    feed_en: List[DigestFeedItem]  # 8-15 detailed items
+    feed_cs: List[DigestFeedItem]  # 8-15 detailed items
+    digest_date: Optional[datetime] = None  # Defaults to today if not provided
+    raw_response: Optional[str] = None  # For debugging
+
+
+class DailyDigestResponse(BaseModel):
+    """Response schema for digest API."""
+    id: int
+    digest_date: datetime
+    summary_en: Optional[List[str]] = None
+    summary_cs: Optional[List[str]] = None
+    feed_en: Optional[List[dict]] = None
+    feed_cs: Optional[List[dict]] = None
+    source: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True

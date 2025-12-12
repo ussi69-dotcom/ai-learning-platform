@@ -49,7 +49,7 @@ YOUTUBE_CHANNELS = {
     "UCbfYPyITQ-7l4upoX8nvctg": "Two Minute Papers",    # Research highlights
     # New additions (2024-2025 rising stars)
     "UCtYLUTtgS3k1Fg4y5tAhLbw": "StatQuest",            # ML/stats explained with humor
-    "UCLkAepWjdylmXSltofFvsYQ": "Sentdex",              # Python ML deep-dives
+    "UCfzlCWGWYyIQ0aLC5w48gBQ": "Sentdex",              # Python ML deep-dives (Harrison Kinsley)
 }
 
 # RSS feeds to track (updated URLs as of Dec 2025)
@@ -141,7 +141,7 @@ class YouTubeFetcher:
             items.append({
                 "external_id": f"yt_{video_id}",
                 "title": snippet["title"],
-                "description": snippet.get("description", "")[:500],
+                "description": snippet.get("description", "")[:800],
                 "source": models.NewsSource.YOUTUBE,
                 "source_url": f"https://www.youtube.com/watch?v={video_id}",
                 "thumbnail_url": snippet.get("thumbnails", {}).get("high", {}).get("url"),
@@ -217,7 +217,7 @@ class RSSFetcher:
             items.append({
                 "external_id": external_id,
                 "title": entry.get("title", "Untitled"),
-                "description": entry.get("summary", "")[:500],
+                "description": entry.get("summary", "")[:800],
                 "source": models.NewsSource.RSS,
                 "source_url": link,
                 "thumbnail_url": thumbnail,
@@ -271,7 +271,7 @@ class HackerNewsFetcher:
             items.append({
                 "external_id": f"hn_{story_id}",
                 "title": hit.get("title", "Untitled"),
-                "description": hit.get("story_text", "")[:500] if hit.get("story_text") else None,
+                "description": hit.get("story_text", "")[:800] if hit.get("story_text") else None,
                 "source": models.NewsSource.HACKERNEWS,
                 "source_url": hit.get("url") or f"https://news.ycombinator.com/item?id={story_id}",
                 "channel_name": "Hacker News",
@@ -329,7 +329,7 @@ class PapersFetcher:
 
                 # Get summary
                 summary_elem = entry.find("atom:summary", ns)
-                summary = summary_elem.text.strip()[:500] if summary_elem is not None else None
+                summary = summary_elem.text.strip()[:800] if summary_elem is not None else None
 
                 # Get published date
                 published_elem = entry.find("atom:published", ns)

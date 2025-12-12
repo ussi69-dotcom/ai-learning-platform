@@ -249,3 +249,33 @@ class NewsItem(Base):
     language = Column(String(5), nullable=True, default="en", index=True)  # Language code: "en", "cs"
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+
+
+# --- DAILY DIGEST MODEL (Perplexity Integration) ---
+
+class DailyDigest(Base):
+    """
+    Daily AI/Tech digest from Perplexity scheduled task.
+    One record per day with 4 sections: EN/CZ short summaries and detailed feeds.
+    """
+    __tablename__ = "daily_digests"
+
+    id = Column(Integer, primary_key=True, index=True)
+    digest_date = Column(DateTime(timezone=True), nullable=False, unique=True, index=True)
+
+    # Short summaries (5-8 bullet points each)
+    summary_en = Column(JSON, nullable=True)  # ["bullet1", "bullet2", ...]
+    summary_cs = Column(JSON, nullable=True)  # ["bullet1", "bullet2", ...]
+
+    # Detailed feeds (8-15 items each)
+    # Each item: {"title": "...", "description": "...", "source_url": "..."}
+    feed_en = Column(JSON, nullable=True)
+    feed_cs = Column(JSON, nullable=True)
+
+    # Metadata
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+
+    # Source tracking
+    source = Column(String, default="perplexity")  # For future: could be other AI sources
+    raw_response = Column(Text, nullable=True)  # Store original response for debugging

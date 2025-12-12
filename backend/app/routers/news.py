@@ -48,13 +48,22 @@ async def get_news(
             )
 
     # Filter by language if specified
+    # For EN: exclude Czech content (show EN + NULL language, which is mostly English)
+    # For CS: show only Czech content
     if lang:
         if lang.lower() not in ["en", "cs"]:
             raise HTTPException(
                 status_code=400,
                 detail=f"Invalid language. Must be one of: en, cs"
             )
-        query = query.filter(models.NewsItem.language == lang.lower())
+        if lang.lower() == "en":
+            # Exclude Czech content - show everything else (EN + untagged)
+            query = query.filter(
+                (models.NewsItem.language != "cs") | (models.NewsItem.language.is_(None))
+            )
+        elif lang.lower() == "cs":
+            # Show only Czech content
+            query = query.filter(models.NewsItem.language == "cs")
 
     items = query.limit(limit).all()
     return items
@@ -62,43 +71,87 @@ async def get_news(
 
 @router.get("/hot", response_model=List[schemas.NewsItemResponse])
 async def get_hot_news(
-    limit: int = Query(default=12, ge=1, le=24),
+    limit: int = Query(default=40, ge=1, le=100),
+    lang: Optional[str] = Query(default=None, description="Filter by language: en, cs"),
     db: Session = Depends(database.get_db)
 ):
     """
-    Get hot/trending AI news from the last 7 days.
+    Get hot/trending AI news from the last 14 days.
 
-    Returns a diverse mix of sources (YouTube, RSS, HN, Papers),
-    prioritizing recent items with good engagement.
-    Default: 12 items for 3x4 grid layout.
+    Returns engaging content for AI enthusiasts (YouTube, RSS blogs, HN).
+    EXCLUDES academic papers - those are too technical for casual readers.
+    Uses flexible source allocation - if one source has fewer items, others fill the gap.
+    Supports language filtering (en=English only, cs=Czech only).
+    Default: 40 items for rich content display.
     """
-    week_ago = datetime.utcnow() - timedelta(days=7)
+    two_weeks_ago = datetime.utcnow() - timedelta(days=14)
 
-    # Get recent items from each source for diversity
-    items = []
+    # Build query - EXCLUDE Papers (too academic for casual readers)
+    # Focus on engaging content: YouTube videos, blog articles, HN discussions
+    engaging_sources = [
+        models.NewsSource.YOUTUBE,
+        models.NewsSource.RSS,
+        models.NewsSource.HACKERNEWS,
+    ]
 
-    # Get top items from each source (ensure mix)
-    # YouTube: 4, RSS: 4, HN: 2, Papers: 2 = 12 items
-    source_limits = {
-        models.NewsSource.YOUTUBE: 4,
-        models.NewsSource.RSS: 4,
-        models.NewsSource.HACKERNEWS: 2,
-        models.NewsSource.PAPERS: 2,
+    query = db.query(models.NewsItem).filter(
+        models.NewsItem.published_at >= two_weeks_ago,
+        models.NewsItem.source.in_(engaging_sources)
+    )
+
+    # Apply language filter if specified
+    # For EN: exclude Czech content (show EN + NULL language, which is mostly English)
+    # For CS: show only Czech content
+    if lang:
+        if lang.lower() == "en":
+            # Exclude Czech content - show everything else (EN + untagged)
+            query = query.filter(
+                (models.NewsItem.language != "cs") | (models.NewsItem.language.is_(None))
+            )
+        elif lang.lower() == "cs":
+            # Show only Czech content
+            query = query.filter(models.NewsItem.language == "cs")
+
+    # Get all recent items sorted by date
+    all_items = query.order_by(
+        models.NewsItem.published_at.desc()
+    ).limit(limit * 2).all()  # Fetch extra for diversity balancing
+
+    # Balance sources - YouTube videos, RSS articles, HN discussions
+    # Target ratios: YouTube 30%, RSS 55%, HN 15%
+    source_targets = {
+        models.NewsSource.YOUTUBE: int(limit * 0.30),
+        models.NewsSource.RSS: int(limit * 0.55),
+        models.NewsSource.HACKERNEWS: int(limit * 0.15),
     }
 
-    for source, max_items in source_limits.items():
-        source_items = db.query(models.NewsItem).filter(
-            models.NewsItem.source == source,
-            models.NewsItem.published_at >= week_ago
-        ).order_by(
-            models.NewsItem.published_at.desc()
-        ).limit(max_items).all()
-        items.extend(source_items)
+    # Group items by source
+    by_source = {source: [] for source in engaging_sources}
+    for item in all_items:
+        by_source[item.source].append(item)
 
-    # Sort all by published_at and return top N
-    items.sort(key=lambda x: x.published_at or datetime.min, reverse=True)
+    # First pass: take up to target from each source
+    result = []
+    remaining_slots = limit
 
-    return items[:limit]
+    for source, target in source_targets.items():
+        take = min(target, len(by_source[source]), remaining_slots)
+        result.extend(by_source[source][:take])
+        by_source[source] = by_source[source][take:]  # Remove taken items
+        remaining_slots -= take
+
+    # Second pass: fill remaining slots with whatever is left (sorted by date)
+    if remaining_slots > 0:
+        leftover = []
+        for items_list in by_source.values():
+            leftover.extend(items_list)
+        leftover.sort(key=lambda x: x.published_at or datetime.min, reverse=True)
+        result.extend(leftover[:remaining_slots])
+
+    # Final sort by date
+    result.sort(key=lambda x: x.published_at or datetime.min, reverse=True)
+
+    return result[:limit]
 
 
 @router.get("/stats")
