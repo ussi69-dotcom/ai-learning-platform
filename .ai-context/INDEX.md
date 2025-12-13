@@ -6,11 +6,12 @@
 
 ## 🚀 Quick Start: Which Agent Are You?
 
-| Agent | Entry Point | Then Read |
-|-------|-------------|-----------|
-| **Claude Code** | `CLAUDE.md` (auto) | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` |
-| **Gemini CLI** | `GEMINI.md` (auto) | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` |
-| **Antigravity/IDE** | `.agent/rules/rules.md` | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` |
+| Agent | Entry Point | Then Read | Role |
+|-------|-------------|-----------|------|
+| **GPT-5.2 / Codex** | `CODEX.md` | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` | **Situational Orchestrator** |
+| **Claude Code** | `CLAUDE.md` (auto) | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` | Primary Implementer |
+| **Gemini CLI** | `GEMINI.md` (auto) | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` | Visual QA + Content |
+| **Antigravity/IDE** | `.agent/rules/rules.md` | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` | Full-stack Dev |
 
 **Po načtení odpověz:**
 > "Jsem [agent]. Pokračujeme od [task]. Stav: [status]. Další: [next step]."
@@ -51,7 +52,7 @@
 
 | Soubor | Kdy načíst |
 |--------|------------|
-| **MULTI_AGENT_WORKFLOW.md** | Spolupráce Claude/Gemini |
+| **MULTI_AGENT_WORKFLOW.md** | Spolupráce v5.1 (Claude/GPT‑5.2/Gemini) |
 | **SUBAGENT_STRATEGY.md** | Použití Task tool (Explore, Plan, etc.) |
 | **MCP_SETUP.md** | MCP konfigurace |
 | **VISUAL_INSPECTION.md** | Playwright visual testing |

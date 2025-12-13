@@ -1,31 +1,52 @@
 # 🧠 Unified Agent Memory
 
-**This file is the Single Source of Truth for all agents (Claude CLI primary, Gemini via ask-gemini).**
+**This file is the Single Source of Truth for all agents (Claude Code primary implementer, Gemini via CLI, GPT‑5.2 via Codex).**
 Read this first to understand the environment, preferences, and active protocols.
 
 ---
 
-## 🚨 WORKFLOW v2.0 (Active since 2025-12-05)
+## 🚨 WORKFLOW v5.1 (Active since 2025-12-13)
 
-### Role Assignment
-
-```
-CLAUDE = ORCHESTRÁTOR (Primary CLI agent)
-- Řídí workflow, QA gate, visual check, git operations
-- Rozhoduje, iteruje, eskaluje sporné body k User
-
-GEMINI = RESEARCHER/WORKER (via ask-gemini)
-- Deep research (1M context), content generation, brainstorming
-- VŽDY dostává Task Brief s Persona + DoD
-```
-
-### The Excellence Loop (Content Creation)
+### "Asymmetric Context Segregation" Model
 
 ```
-PHASE 1: Research → PHASE 2: Generation → PHASE 3: Iteration → PHASE 4: Finalization
+┌─────────────────────────────────────────────────────────────────┐
+│  GPT-5.2 (Orchestrátor) ←→ Claude (Implementer)                 │
+│         ↓                         ↓                             │
+│  Gemini 3 Pro (Visual QA)    Playwright (local files)           │
+│  Perplexity (Quick Research)  Gemini Deep (60min Research)      │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-**Full protocol:** See `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`
+### Role Assignment v5.1
+
+| Agent | Primární Role | Context | Kdy použít |
+|-------|---------------|---------|------------|
+| **GPT-5.2** | Orchestrátor + Hard Reasoning | ~128k | Debugging, architecture, root cause |
+| **Claude Code** | Implementer + Git + Daily Ops | ~200k | Coding, QA, file ops |
+| **Gemini 3 Pro** | Visual QA + Content | **2M** | Screenshots (100+!), content gen |
+| **Perplexity** | Quick Research | N/A | Facts <5 min |
+| **Gemini Deep Research** | Autonomous Research | N/A | 20-60 min deep analysis |
+
+### Escalation Rules
+
+```
+ESKALUJ na GPT-5.2 když:
+□ 2+ failed attempts na bug
+□ Pattern-based řešení nefungují
+□ >30 min stuck bez root cause
+□ Architektura s trade-offs
+```
+
+### Economic Model (~$40/měsíc fixed)
+
+| Service | Náklad | Typ |
+|---------|--------|-----|
+| Claude Code | ~$20 | Fixed (unlimited) |
+| OpenAI Pro | ~$20 | Fixed (GPT-5.2) |
+| Google AI Plus | Included | Fixed (Gemini 3 + Deep Research) |
+
+**Full protocol:** See `.ai-context/AGENT_PROTOCOL.md`
 
 ---
 
@@ -34,73 +55,90 @@ PHASE 1: Research → PHASE 2: Generation → PHASE 3: Iteration → PHASE 4: Fi
 - **OS:** Linux (WSL2)
 - **Node.js:** v24.11.1
 - **Stack:** Next.js 16.0.7, React 19.2.1, FastAPI, PostgreSQL 15, Redis 7, Docker Compose.
-- **Agent Mode:** Claude CLI primary, Gemini via MCP (`ask-gemini`)
+- **Agent Mode:** Claude Code primary, Gemini CLI for content/visual QA, GPT‑5.2 via Codex CLI for hard reasoning
 - **MCP Tools:** Playwright, GitHub, Context7, Figma, **Perplexity** (Deep Research)
 
 ## 🔑 Standard Operating Protocols (SOPs)
 
-### 0. Agent & Tool Selection Matrix 🎯
+### 0. Agent & Tool Selection Matrix 🎯 (v5.1)
 
 **Hlavní rozhodovací strom:**
 
 ```
 Potřebuji help?
 │
-├─ Je to HARD REASONING (architektura, debugging >2h)?
-│  └─ ✅ GPT-5.2 Thinking (ChatGPT/Codex CLI)
+├─ Je to HARD REASONING / ZÁHADNÝ BUG?
+│  └─ ✅ GPT-5.2 (Codex CLI) = ORCHESTRÁTOR
+│     └─ Claude implementuje fix
 │
-├─ Je to RESEARCH (trendy, srovnání, deep analysis)?
-│  ├─ Rychlé (<5 min) → Perplexity MCP / WebSearch
-│  ├─ Střední (5-20 min) → Gemini CLI
-│  └─ Hluboké (20-60 min) → Gemini Deep Research Agent
+├─ Je to VISUAL QA (screenshots, UI check)?
+│  └─ ✅ Gemini 3 Pro (2M context!)
+│     └─ Posílej jen cesty k souborům, NE snapshoty do chatu!
 │
-├─ Je to CONTENT GENERATION (lekce, dokumentace)?
-│  └─ ✅ Gemini CLI (gemini-3-pro-preview)
+├─ Je to RESEARCH?
+│  ├─ Rychlé (<5 min) → Perplexity MCP
+│  ├─ Střední (5-20 min) → Gemini 3 Pro CLI
+│  └─ Hluboké (20-60 min) → Gemini Deep Research
+│
+├─ Je to CONTENT GENERATION?
+│  └─ ✅ Gemini 3 Pro (gemini-3-pro-preview)
 │
 ├─ Je to KÓDOVÁNÍ?
-│  ├─ Běžné → Claude Code (já)
-│  ├─ Bulk changes (10+ souborů) → Subagent (general-purpose)
-│  └─ Záhadný bug → GPT-5.2 pro analýzu, pak Claude pro fix
+│  └─ ✅ Claude Code (já)
+│     └─ Při 2+ failed attempts → eskaluj na GPT-5.2
 │
 ├─ Je to EXPLORATION codebase?
-│  └─ ✅ Subagent (Explore) - VŽDY!
+│  └─ ✅ Subagent (Explore)
 │
-└─ Je to PLÁNOVÁNÍ velké feature?
-   └─ ✅ Subagent (Plan)
+└─ Je to PLÁNOVÁNÍ?
+   └─ ✅ GPT-5.2 (architecture) nebo Subagent (Plan)
 ```
 
-**Tool Selection Matrix:**
+**Tool Selection Matrix (v5.1):**
 
-| Potřebuji... | Nástroj | Cena | Rychlost |
-|--------------|---------|------|----------|
-| Rychlá fakta | `WebSearch` | Zdarma | ⚡ Instant |
-| Dokumentace knihovny | `Context7 MCP` | Zdarma | ⚡ Instant |
-| Quick research | `Perplexity MCP` | ~$1/1k req | ⚡ 10s |
-| Deep research (short) | `Gemini CLI` | ~$5/1M tok | ⏱️ 2-5 min |
-| **Deep research (long)** | `Gemini Deep Research` | TBD | ⏱️ 20-60 min |
-| Content generation | `Gemini CLI` | ~$5/1M tok | ⏱️ 1-3 min |
-| Hard reasoning | `GPT-5.2` | ~$10/1M tok | ⏱️ 30s-2min |
-| Codebase exploration | `Explore subagent` | Claude tokens | ⏱️ 1-3 min |
-| Architecture planning | `Plan subagent` | Claude tokens | ⏱️ 2-5 min |
-| Bulk code changes | `general-purpose subagent` | Claude tokens | ⏱️ 5-15 min |
+| Potřebuji... | Nástroj | Subscription | Rychlost |
+|--------------|---------|--------------|----------|
+| Rychlá fakta | `WebSearch` | Free | ⚡ Instant |
+| Dokumentace | `Context7 MCP` | Free | ⚡ Instant |
+| Quick research | `Perplexity MCP` | MCP | ⚡ 10s |
+| Deep research | `Gemini Deep Research` | Google AI Plus | ⏱️ 20-60 min |
+| Content generation | `Gemini 3 Pro CLI` | Google AI Plus | ⏱️ 1-3 min |
+| **Visual QA** | `Gemini 3 Pro CLI` | Google AI Plus | ⏱️ 30s |
+| Hard reasoning | `GPT-5.2 (Codex)` | OpenAI Pro | ⏱️ 30s-2min |
+| Implementation | `Claude Code` | Claude Code | ⚡ Instant |
 
-**Perplexity MCP nástroje (po restartu Claude):**
-- `mcp__perplexity-search__perplexity_search` - rychlé hledání
-- `mcp__perplexity-search__perplexity_research` - deep research
+**⚠️ Context Segregation (KRITICKÉ!):**
+```
+NIKDY neposílej do chatu:
+❌ Playwright browser_snapshot (14k+ tokenů!)
+❌ Dlouhé logy (>50 řádků)
+❌ Full DOM/AX snapshoty
 
-**Gemini Deep Research (nové Dec 2025):**
+VŽDY posílej:
+✅ Cesty k souborům (.playwright-mcp/screenshot.png)
+✅ Pass/fail + stručné summary (10-30 řádků)
+```
+
+**Gemini 3 Pro (Google AI Plus):**
 ```bash
-# CLI volání
-gemini -m deep-research-pro-preview-12-2025 "Research question"
+# Content generation / Research
+cat << 'EOF' | gemini -m gemini-3-pro-preview 2>&1
+[prompt]
+EOF
 
-# Nebo Python script
-python backend/scripts/gemini_deep_research.py "Question"
+# Visual QA s obrázkem
+gemini -m gemini-3-pro-preview --file /path/to/screenshot.png "Analyze UI"
 ```
 
-**GPT-5.2 (nové Dec 2025):**
+**Gemini Deep Research (Google AI Plus):**
+```bash
+python backend/scripts/gemini_deep_research.py "Research question"
+```
+
+**GPT-5.2 (OpenAI Pro via Codex CLI):**
 - ChatGPT Plus ($20/měsíc) → chat.openai.com
 - Codex CLI: `codex "Your question"`
-- Role: Reasoning specialist, NE orchestrátor
+- Role: **Situational Orchestrator** (debugging, architecture, root cause)
 
 **Konfigurace:** `~/.claude.json` → `perplexity-search` MCP server
 **API klíč:** Sdílený s Daily Digest cron (`.env` → `PERPLEXITY_API_KEY`)
@@ -195,6 +233,83 @@ docker compose build --no-cache frontend
 ---
 
 ## 📝 Lessons Learned
+
+### 2025-12-13: Multi-Agent Consensus Protocol (MACP) v1.0 🗳️
+
+**Co:** Formalizace "blind ballot" protokolu pro důležitá rozhodnutí - Claude konzultuje GPT-5.2 a Gemini nezávisle.
+
+**Multi-Agent Consultation:**
+- GPT-5.2: "Resolution ladder + domain-weighted tie-breaks. Structured template s confidence 0-1."
+- Gemini: "Blind Ballot to avoid echo chamber. Weighted Domain Authority - GPT=logic, Gemini=codebase."
+
+**Klíčové principy:**
+1. **Trigger-based** - NE vždy, jen pro security/migrations/architecture/content strategy
+2. **Blind Ballot** - nezávislé dotazy bez sdílení odpovědi druhého (anti echo-chamber)
+3. **Weighted Authority** - domain expert má přednost před hlasováním
+4. **Resolution Ladder** - identify facts → experiment → escalate
+5. **Time-boxed** - max 10 min, jinak consensus theater
+
+**Domain Weights:**
+| Domain | GPT-5.2 | Gemini | Claude |
+|--------|---------|--------|--------|
+| Security/Logic | 70% | 20% | 10% |
+| Codebase/Visual | 20% | 70% | 10% |
+| Content | 30% | 60% | 10% |
+| Integration | 30% | 30% | 40% |
+
+**Dokumentace:** `AGENT_PROTOCOL.md` → sekce "Multi-Agent Consensus Protocol (MACP) v1.0"
+
+### 2025-12-13: Multi-Agent Workflow v5.1 - "Asymmetric Context Segregation" 🧠
+
+**Důvod změny:** Playwright MCP snapshoty sežraly 14.3k tokenů za jeden `wait`, způsobily context compacting a ztrátu kontextu.
+
+**Multi-Agent Consultation:**
+- GPT-5.2: "Problém není model, ale co MCP vrací. Použij thin protocol."
+- Gemini: "S 2M kontextem pojmu 100+ screenshotů. Dej mi Visual QA."
+
+**Klíčové změny:**
+1. **GPT-5.2 = Situational Orchestrator** (pro debugging, architecture)
+2. **Claude = Primary Implementer** (coding, git, daily ops)
+3. **Gemini 3 Pro = Visual QA** (2M context!)
+4. **Context Segregation** - NIKDY neposílat snapshoty do chatu
+
+**Economic Model:**
+- Claude Code: ~$20/měsíc (unlimited)
+- OpenAI Pro: ~$20/měsíc (GPT-5.2)
+- Google AI Plus: Included (Gemini 3 + Deep Research)
+- **Total: ~$40/měsíc fixed**
+
+**Lesson:** Nepřesouvej roli orchestrátora kvůli jednomu úspěchu. Místo toho optimalizuj nástroje (thin protocol) a využij silné stránky každého modelu (Gemini 2M context pro visual data).
+
+### 2025-12-13: Hash Navigation Race Condition Fix 🔗
+
+**Problém:** Teasery na homepage (`/about#cycle-35`, `/about#cycle-49`) navigovaly na About page, ale nescrollovaly k sekci.
+
+**Root Cause (GPT-5.2):** `ScrollToTop.tsx` component běžel synchronně při změně `pathname` a volal `window.scrollTo(0,0)` PŘED tím, než se nastavil hash v URL.
+
+**Race Condition:**
+```
+1. User clicks teaser
+2. intlRouter.push('/about') → pathname changes
+3. ScrollToTop.tsx fires: scrollTo(0,0) ← TOO EARLY!
+4. setTimeout(0) sets hash: /about#cycle-49
+5. Hash is ignored, page at top
+```
+
+**Řešení:** 50ms delay v ScrollToTop.tsx:
+```typescript
+const scrollTimeout = setTimeout(() => {
+    if (window.location.hash) return; // Skip if hash exists
+    window.scrollTo(0, 0);
+}, 50);
+```
+
+**Multi-Agent Debugging Pattern:**
+1. Gemini suggested MutationObserver → FAILED (too complex)
+2. Perplexity suggested dual router → FAILED (still race condition)
+3. GPT-5.2 identified root cause: ScrollToTop.tsx → SUCCESS
+
+**Lesson:** For mysterious navigation bugs, consult GPT-5.2 (superior reasoning) instead of trying multiple iterations with research-focused models.
 
 ### 2025-12-10: XP-Based Level System (Difficulty Refactor) 🎮
 

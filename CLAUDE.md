@@ -42,6 +42,13 @@ git log -1 --oneline  # Porovnej s WORKING_CONTEXT
 
 ---
 
+## 🎯 Tvoje Role (v5.1)
+
+- **Primary Implementer + QA gate:** změny v repo, integrace, ověření (`npm run verify`, backend testy).
+- **Deleguj:** content + visual QA → Gemini CLI; quick research → Perplexity.
+- **Eskaluj:** hard reasoning / záhadné bugy → GPT‑5.2 přes Codex (posílej Debug Packet z `CODEX.md`).
+- **Thin protocol:** do chatu jen shrnutí + cesty k artefaktům (žádné DOM snapshoty / dlouhé logy).
+
 ## ⛔ KRITICKÁ PRAVIDLA (NEIGNORUJ!)
 
 ### Content Creation = DELEGUJ NA GEMINI
@@ -58,21 +65,58 @@ NIKDY nepiš content sám!
 
 ### Hard Reasoning = KONZULTUJ GPT-5.2 (NOVÉ Dec 2025)
 ```
-Kdy volat GPT-5.2:
+Kdy volat GPT-5.2 (Situational Orchestrator):
+✅ Debugging záhadných bugů (>30 min stuck, 2+ failed attempts)
 ✅ Komplexní architektonická rozhodnutí
-✅ Debugging záhadných bugů (>2 hodiny stuck)
 ✅ "Second opinion" na kritická PR
-✅ Multi-step planning s vysokou uncertainty
+✅ Root cause analysis
 
 Jak volat:
-1. ChatGPT Plus (chat.openai.com) → GPT-5.2 Thinking
-2. Codex CLI: codex "Your question"
+1. Codex CLI: codex "Your question" (preferováno)
+2. ChatGPT Plus (chat.openai.com) → GPT-5.2 Thinking
+
+⚠️ VŽDY posílej Debug Packet (viz CODEX.md)!
 
 Kdy NEVOLAT:
 ❌ Běžné kódování (ty to zvládneš)
-❌ Research (Gemini je levnější)
+❌ Visual QA (Gemini má 2M context)
 ❌ Content generation (Gemini lepší)
+❌ Quick research (Perplexity)
 ```
+
+### Codex “profily” (rychlé vs deep)
+
+Předpoklad: v `~/.codex/config.toml` existují profily:
+- `fast` (nižší `model_reasoning_effort`)
+- `orchestrator` (vyšší `model_reasoning_effort`)
+
+**Rychlá triage:**
+```bash
+codex -p fast -C /home/ussi/ai-learning-platform "Triage: [context + otázka]"
+```
+
+**Deep analýza (Debug Packet):**
+```bash
+cat << 'EOF' | codex exec -p orchestrator -C /home/ussi/ai-learning-platform 2>&1
+## Debug Packet
+## Context: ...
+## Expected vs Observed:
+- Expected: ...
+- Observed: ...
+## Repro (deterministic):
+1. ...
+2. ...
+## What tried (max 5):
+- ...
+## Artifacts (paths only!):
+- logs: ...
+- screenshots: ...
+## Question:
+- ...
+EOF
+```
+
+**Thin protocol reminder:** do promptu dávej jen krátké shrnutí + cesty k artefaktům (žádné dumpy logů/DOM).
 
 ### Research Selection Matrix
 ```
@@ -103,6 +147,30 @@ NIKDY: gemini-2.5-pro, gemini-pro, nebo jiné
 □ Content? → Gemini (gemini-3-pro-preview)
 □ Commit? → npm run verify MUSÍ projít
 □ Velká změna? → Zeptej se uživatele
+□ MACP trigger? → Aktivuj consensus (viz níže)
+```
+
+### 🗳️ Multi-Agent Consensus Protocol (MACP) Triggers
+```
+AKTIVUJ MACP (konzultuj GPT-5.2 + Gemini) když:
+□ Security/auth/permissions changes
+□ DB schema/migrations
+□ Architecture/multi-module refactors
+□ Breaking API changes
+□ Content strategy decisions
+□ User řekne "get second opinion"
+□ >30 min stuck + 2+ failed attempts
+
+MACP workflow:
+1. Pošli STEJNÝ prompt NEZÁVISLE oběma (Blind Ballot)
+2. Čekej na strukturované odpovědi s confidence %
+3. Aplikuj domain weights (viz AGENT_PROTOCOL.md)
+4. Rozhodní nebo eskaluj k uživateli
+
+⚠️ Anti-patterns:
+- NIKDY nesdílej odpověď jednoho agenta druhému (echo chamber)
+- Max 10 min time-box (jinak consensus theater)
+- NE pro trivial fixes s testy
 ```
 
 ---
@@ -293,7 +361,7 @@ ai-learning-platform/
 │       └── images/                # Lesson images
 └── .ai-context/                   # AI agent documentation
     ├── core/                      # ARCHITECTURE.md, VISION.md, CONTENT_GUIDELINES.md
-    └── state/                     # SESSION_LOG.md, CURRENT_TASK.md
+    └── state/                     # WORKING_CONTEXT.md, MEMORY.md
 ```
 
 ## Database Schema (Key Models)
@@ -562,7 +630,7 @@ Update `NEXT_PUBLIC_API_URL` in `.env` if changing backend port.
 - slowapi (rate limiting)
 - redis (caching)
 
-## Agent Coordination Protocol (v3.0)
+## Agent Coordination Protocol (v5.1)
 
 ### Memory Architecture (v3.1)
 | Typ | Soubor | Účel |
@@ -578,11 +646,12 @@ Kompletní pravidla: `.ai-context/AGENT_PROTOCOL.md`
 3. **Stay Current** - Použij systémové datum, pro verze/trendy → WebSearch
 4. **Verify Before Commit** - `npm run verify` + `pytest` MUSÍ projít
 
-### Multi-Agent Strategy (v3.0)
+### Multi-Agent Strategy (v5.1)
 | Agent | Entry Point | Role |
 |-------|-------------|------|
-| Claude Code | `CLAUDE.md` | Orchestrator, QA, Implementer |
-| Gemini CLI | `GEMINI.md` | Researcher, Content Generator |
+| Claude Code | `CLAUDE.md` | Primary Implementer + QA gate |
+| GPT‑5.2 (Codex CLI) | `CODEX.md` | Situational Orchestrator (hard reasoning) |
+| Gemini CLI | `GEMINI.md` | Content + Visual QA |
 | Antigravity | `rules.md` | Full-stack Developer |
 
 Všichni sdílí: `AGENT_PROTOCOL.md`, `WORKING_CONTEXT.md`, `MEMORY.md`
@@ -592,7 +661,7 @@ Všichni sdílí: `AGENT_PROTOCOL.md`, `WORKING_CONTEXT.md`, `MEMORY.md`
 ### Code Quality Checklist (Before Commit)
 ```bash
 cd frontend && npm run verify   # TypeScript + ESLint + Build
-docker compose exec backend pytest  # Backend tests
+make test-backend  # Backend tests (pytest)
 ```
 
 ### Technical Debt Tracking

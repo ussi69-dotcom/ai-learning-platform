@@ -1,14 +1,52 @@
 # Working Context
 
-**Last Updated:** 2025-12-13 02:00 (Agent: Claude Opus 4.5)
-**Last Commit:** `d24cff0` feat(about): add PhysicsOptShowcase demonstrating Multi-Agent v4.0
-**Status:** 🟢 PhysicsOptShowcase Complete
+**Last Updated:** 2025-12-13 (Agent: Claude)
+**Last Commit:** `cf0d646` fix(nav): hash navigation now works with ScrollToTop
+**Status:** 🟢 MACP v1.0 Formalized + Workflow v5.2
 
 ---
 
 ## 🎯 Current State
 
-### Latest Session (Dec 13, 2025 - PhysicsOptShowcase)
+### Latest Session (Dec 13, 2025 - MACP v1.0)
+
+| Task                              | Status  | Notes                                         |
+| --------------------------------- | ------- | --------------------------------------------- |
+| **Multi-Agent Consensus Protocol**|         |                                               |
+| Consult GPT-5.2 on MACP design    | ✅ Done | Resolution ladder, domain-weighted, 0-1 conf  |
+| Consult Gemini on MACP design     | ✅ Done | Blind Ballot, Weighted Authority, echo-chamber|
+| Synthesize into final protocol    | ✅ Done | Combined best of both approaches              |
+| Update AGENT_PROTOCOL.md          | ✅ Done | New "MACP v1.0" section with full spec        |
+| Update MEMORY.md                  | ✅ Done | Lessons learned + domain weights table        |
+| Update CLAUDE.md                  | ✅ Done | MACP triggers checklist for orchestrator      |
+
+### Previous Session (Dec 13, 2025 - Multi-Agent Workflow v5.1)
+
+| Task                              | Status  | Notes                                         |
+| --------------------------------- | ------- | --------------------------------------------- |
+| **Workflow v5.1 Documentation**   |         |                                               |
+| Multi-agent consultation          | ✅ Done | GPT-5.2 + Gemini provided economic analysis   |
+| Update AGENT_PROTOCOL.md          | ✅ Done | New v5.1 "Asymmetric Context Segregation"     |
+| Update MEMORY.md                  | ✅ Done | Tool matrix, lessons learned                  |
+| Update WORKING_CONTEXT.md         | ✅ Done | Current session status                        |
+| **GPT-5.2 Onboarding**            |         |                                               |
+| Boot Codex with new role          | ✅ Done | GPT-5.2 reviewed workflow, gave feedback      |
+| Create CODEX.md                   | ✅ Done | Entry point + Debug Packet templates          |
+| Fix inconsistencies               | ✅ Done | >30 min (not >2h), removed "NE orchestrátor"  |
+| Update INDEX.md                   | ✅ Done | Added GPT-5.2/Codex row                       |
+| Configure Codex profiles + MCP    | ✅ Done | `~/.codex/config.toml`: profiles `fast`/`orchestrator`, MCP: filesystem/git/context7 |
+
+### Previous Session (Dec 13, 2025 - Hash Navigation Fix)
+
+| Task                              | Status  | Notes                                         |
+| --------------------------------- | ------- | --------------------------------------------- |
+| **Hash Navigation Fix**           |         |                                               |
+| Debug teaser → about#cycle-XX     | ✅ Done | GPT-5.2 identified ScrollToTop as culprit     |
+| Fix ScrollToTop.tsx race condition| ✅ Done | 50ms delay allows hash to be set first        |
+| Verify #cycle-35 navigation       | ✅ Done | ABTestTeaser → About page works               |
+| Verify #cycle-49 navigation       | ✅ Done | PhysicsOptTeaser → About page works           |
+
+### Previous Session (Dec 13, 2025 - PhysicsOptShowcase)
 
 | Task                              | Status  | Notes                                         |
 | --------------------------------- | ------- | --------------------------------------------- |
@@ -36,37 +74,32 @@
 | Agent Routing Matrix Updated      | ✅ Done | Decision tree v MEMORY.md                     |
 | gemini_deep_research.py Created   | ✅ Done | `backend/scripts/gemini_deep_research.py`     |
 
-### Multi-Agent Workflow v4.0 (Dec 2025)
+### Multi-Agent Workflow v5.1 (Dec 2025) - "Asymmetric Context Segregation"
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    ORCHESTRATION LAYER                      │
-│                                                             │
-│  Claude Opus 4.5 (Orchestrator)                             │
-│  - Long sessions, CLI, safety, QA gate                      │
-│  - Token-efficient (65% less than others)                   │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-        ┌─────────────┼─────────────┬─────────────┐
-        ▼             ▼             ▼             ▼
-┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐
-│ GPT-5.2   │  │ Gemini    │  │ Gemini    │  │ Perplexity│
-│ Thinking  │  │ CLI       │  │ Deep Res. │  │ MCP       │
-├───────────┤  ├───────────┤  ├───────────┤  ├───────────┤
-│ Hard      │  │ Content   │  │ 60-min    │  │ Quick     │
-│ reasoning │  │ generation│  │ research  │  │ research  │
-│ Arch.     │  │ Research  │  │ Market    │  │ Facts     │
-│ decisions │  │ 2M ctx    │  │ analysis  │  │ Trends    │
-└───────────┘  └───────────┘  └───────────┘  └───────────┘
-    $10/1M        $5/1M         TBD           $1/1k req
+┌─────────────────────────────────────────────────────────────────┐
+│  GPT-5.2 (Situational Orchestrátor) ←→ Claude (Implementer)     │
+│  OpenAI Pro (~$20/mo)                   Claude Code (~$20/mo)   │
+│         ↓                                      ↓                │
+│  Gemini 3 Pro (Visual QA + Content)    Playwright (local files) │
+│  Google AI Plus (2M context!)          Thin output only!        │
+│         ↓                                                       │
+│  Perplexity MCP        Gemini Deep Research                     │
+│  (Quick <5min)         (60-min autonomous)                      │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-**Kdy volat koho:**
-- **GPT-5.2**: Architektura, debugging >2h, "second opinion"
-- **Gemini CLI**: Content generation, research 5-20 min
-- **Gemini Deep Research**: Market research, due diligence 20-60 min
-- **Perplexity**: Quick facts, trend check <5 min
-- **Claude (já)**: Orchestrace, kódování, QA
+**Situational Orchestration:**
+| Situace | Orchestrátor | Implementer |
+|---------|--------------|-------------|
+| Záhadný bug (>30 min) | **GPT-5.2** | Claude |
+| Clear implementation | Claude | Claude |
+| Visual QA | Claude | **Gemini** (2M ctx!) |
+| Architecture decision | **GPT-5.2** | Claude |
+
+**Context Segregation (KRITICKÉ!):**
+- ❌ NIKDY: Playwright snapshoty do chatu (14k+ tokenů!)
+- ✅ VŽDY: Cesty k souborům + stručné summary
 
 ### Previous Session (Dec 12, 2025 - Perplexity Integration)
 
@@ -138,13 +171,11 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-13 | All 3       | **GPT-5.2 Onboarding** - CODEX.md created, Debug Packet templates, inconsistencies fixed   |
+| 2025-12-13 | All 3       | **Workflow v5.1** - "Asymmetric Context Segregation", Gemini=Visual QA, thin protocol      |
+| 2025-12-13 | Claude+GPT  | **Hash Nav Fix** - ScrollToTop race condition fixed, teasers→#cycle-XX now work            |
 | 2025-12-13 | Claude      | **PhysicsOptShowcase** - Created showcase for About page + Teaser for Homepage              |
 | 2025-12-13 | Claude      | **AIGlossary Perf** - useRef+DOM physics: 51.9→60.1 FPS, 86→1 frames >20ms                 |
-| 2025-12-12 | Claude      | **Multi-Agent v4.0** - Added GPT-5.2 + Gemini Deep Research to workflow                    |
-| 2025-12-12 | Claude      | **PROD Fixes** - Trailing slash, YouTube RSS, Perplexity real URLs                         |
-| 2025-12-12 | Claude      | **Perplexity MCP Fix** - Replaced broken `@jschuller/perplexity-mcp` with official server  |
-| 2025-12-12 | Claude      | **News Feed Fixes** - Fixed Sentdex ID, EN lang filter, Show All limit, verified Refresh   |
-| 2025-12-12 | Claude      | **News CZ Filter** - Added Czech RSS feeds, CZ filter, Sith color fix, Netflix carousels   |
 
 ---
 

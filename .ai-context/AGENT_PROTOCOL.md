@@ -1,48 +1,309 @@
-# Agent Protocol v3.0
+# Agent Protocol v5.1
 
 **Single Source of Truth for all AI agents working on this project.**
 
 ---
 
-## 🤖 Agent Identification
+## 🤖 Multi-Agent Workflow v5.1 (Dec 2025)
 
-| Agent | Entry Point | Role | Best For |
-|-------|-------------|------|----------|
-| **Claude Code** | `CLAUDE.md` (auto) | Orchestrator, QA Gate, Implementer | Long sessions, CLI, safety |
-| **GPT-5.2** | ChatGPT/Codex CLI | Reasoning Specialist | Hard problems, architecture, debugging |
-| **Gemini CLI** | `GEMINI.md` (auto) | Researcher, Content Generator | Deep research, bulk content |
-| **Gemini Deep Research** | Interactions API | Autonomous Research Agent | 60-min deep analysis |
-| **Antigravity/IDE** | `.agent/rules/rules.md` | Full-stack Developer | Rapid prototyping |
-| **Subagents** | Via Task tool | Specialized workers | Explore, Plan, bulk ops |
+### "Asymmetric Context Segregation" Model
 
-### 🆕 GPT-5.2 Integration (Dec 2025)
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     WORKFLOW v5.1                                │
+│                "Asymmetric Context Segregation"                  │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌───────────────┐     Short specs      ┌───────────────┐       │
+│  │   GPT-5.2     │ ──────────────────→  │    Claude     │       │
+│  │ (Orchestrátor)│ ←────────────────── │ (Implementer) │       │
+│  │  Codex CLI    │   Diff + summary     │  Claude Code  │       │
+│  └───────┬───────┘                      └───────┬───────┘       │
+│          │                                      │                │
+│          │ QA report                            │ Screenshots    │
+│          │ (text only)                          │ (files only)   │
+│          │                                      ▼                │
+│  ┌───────┴───────┐                      ┌───────────────┐       │
+│  │    Gemini     │ ←─────────────────── │  Playwright   │       │
+│  │  (Visual QA)  │   before.png         │   (local)     │       │
+│  │  2M context   │   after.png          │   Thin output │       │
+│  └───────────────┘   (file paths)       └───────────────┘       │
+│                                                                  │
+│  ┌───────────────┐  ┌───────────────┐                           │
+│  │  Perplexity   │  │ Gemini Deep   │                           │
+│  │  (Quick Res.) │  │ (60min Res.)  │                           │
+│  └───────────────┘  └───────────────┘                           │
+└─────────────────────────────────────────────────────────────────┘
+```
 
-**Kdy volat GPT-5.2:**
+### 📊 Role Assignment Matrix
+
+| Agent | Primární Role | Context | Subscription |
+|-------|---------------|---------|--------------|
+| **GPT-5.2** | Orchestrátor + Reasoning | ~128k | OpenAI Pro |
+| **Claude Code** | Implementer + Git + Daily Ops | ~200k | Claude Code |
+| **Gemini 3 Pro** | Visual QA + Content + Research | **2M** | Google AI Plus |
+| **Perplexity** | Quick Research + Facts | N/A | MCP |
+| **Gemini Deep Research** | 60-min Autonomous Research | N/A | Google AI Plus |
+
+### 🎯 Situational Orchestration
+
+| Situace | Orchestrátor | Implementer | QA |
+|---------|--------------|-------------|-----|
+| **Záhadný bug** (>30 min stuck) | GPT-5.2 | Claude | Claude |
+| **Clear implementation** | Claude | Claude | GPT-5.2 (review) |
+| **Content creation** | Claude | Gemini 3 | Claude |
+| **Architecture decision** | GPT-5.2 | Claude | Gemini (alternatives) |
+| **Visual QA** | Claude | Claude | **Gemini** (2M ctx!) |
+| **Quick research** | Claude | Perplexity | Claude |
+| **Deep research** | Claude | Gemini Deep / Perplexity | Claude |
+
+### ⚡ Escalation Triggers (→ GPT-5.2)
+
+```
+ESKALUJ na GPT-5.2 orchestraci když:
+□ 2+ failed attempts na stejný bug
+□ Pattern-based solutions nefungují
+□ Nejasná root cause po 30 min
+□ Architektonické rozhodnutí s trade-offs
+□ "Second opinion" na kritické změny
+```
+
+### 💰 Economic Model
+
+| Service | Měsíční náklad | Typ | Poznámka |
+|---------|----------------|-----|----------|
+| Claude Code | ~$20 | Fixed | Unlimited coding |
+| OpenAI Pro | ~$20 | Fixed | GPT-5.2 orchestration |
+| Google AI Plus | Included | Fixed | Gemini 3 + Deep Research |
+| **Total** | **~$40/měsíc** | | |
+
+---
+
+## 📡 Context Segregation Protocol (KRITICKÉ!)
+
+### ⚠️ Problém (co se stalo):
+- Playwright MCP `browser_snapshot` = **14,300 tokenů** za jeden `wait`
+- 3-4 akce = context compacting = ztráta důležitého kontextu
+
+### ✅ Řešení: "Thin Protocol"
+
+**NIKDY neposílej do chatu:**
+- Full DOM/AX snapshoty
+- Dlouhé logy (>50 řádků)
+- Celé soubory (>200 řádků)
+
+**VŽDY posílej:**
+- Cesty k artefaktům (`.playwright-mcp/screenshot.png`)
+- Stručné summary (10-30 řádků)
+- Pass/fail + seznam chyb
+
+### 📋 Communication Templates
+
+**Task Brief (Orchestrátor → Implementer):**
+```markdown
+## Goal: [1 věta]
+## Acceptance criteria: [3-5 bodů]
+## Files to modify: [seznam]
+## Expected outcome: [jak poznat success]
+```
+
+**Task Result (Implementer → Orchestrátor):**
+```markdown
+## Status: [done/blocked/needs-review]
+## Changes: [git diff summary - 5 řádků max]
+## Test results: [pass/fail + failures only]
+## Artifacts: [cesty k souborům]
+```
+
+**Visual QA Request (→ Gemini):**
+```markdown
+## Task: [co ověřit]
+## Screenshots: [cesty k before/after.png]
+## Focus areas: [na co se zaměřit]
+```
+
+---
+
+## 🗳️ Multi-Agent Consensus Protocol (MACP) v1.0
+
+**Purpose:** For high-stakes decisions, Claude consults GPT-5.2 and Gemini for diverse perspectives before deciding.
+
+### ⚡ Consensus Triggers (Kdy aktivovat)
+
+```
+AKTIVUJ MACP když:
+□ Security/auth/permissions changes
+□ DB schema/migrations (hard to reverse)
+□ Architecture/multi-module refactors
+□ Breaking API changes
+□ Content strategy decisions
+□ User explicitly asks "get second opinion"
+□ >30 min stuck + 2+ failed attempts (escalation)
+
+NEAKTIVUJ pro:
+□ Small, local, reversible fixes
+□ Routine coding tasks
+□ Clear implementation with tests
+```
+
+### 🎯 Blind Ballot Protocol
+
+**Step 1:** Claude sends SAME prompt to both agents INDEPENDENTLY (no sharing of other's response)
+
+**Step 2:** Each agent responds in structured format:
+```markdown
+## Agent: [GPT-5.2/Gemini]
+**Recommendation:** GO / NO-GO / MODIFY
+**Confidence:** 0-100%
+**Why:** [3 bullets max]
+**Risks:** [3 bullets max]
+**Validation:** [specific tests/checks to run]
+**Assumptions:** [what must be true]
+```
+
+**Step 3:** Claude synthesizes, applies domain weights, decides (or escalates to user if high-stakes + disagreement)
+
+### ⚖️ Weighted Domain Authority
+
+| Conflict Domain | GPT-5.2 | Gemini | Claude |
+|-----------------|---------|--------|--------|
+| **Security/Logic/Algorithm** | **70%** | 20% | 10% |
+| **Codebase Impact/Visuals** | 20% | **70%** | 10% |
+| **Content/Pedagogy** | 30% | **60%** | 10% |
+| **Integration/Shipping** | 30% | 30% | **40%** |
+
+### 🪜 Resolution Ladder (při disagreement)
+
+```
+1. Identify missing facts/assumptions
+   ↓
+2. Propose smallest experiment/test to settle
+   ↓
+3. If still ambiguous + high stakes → ESCALATE to user
+   (present 2-3 options + trade-offs)
+```
+
+### ⚠️ Anti-Patterns to Avoid
+
+| Anti-Pattern | Risk | Mitigation |
+|--------------|------|------------|
+| **Echo Chamber** | Anchoring bias | Independent "blind ballot" queries |
+| **Consensus Theater** | Latency without value | Strict triggers + 10 min time-box |
+| **Analysis Paralysis** | Stuck on trivial decisions | Clear trigger criteria |
+| **Decision Churn** | Re-litigating closed decisions | Decision log, reopen only with new evidence |
+
+### 📝 Decision Record Template
+
+After MACP, record outcome:
+```markdown
+## Decision: [Topic]
+**Date:** YYYY-MM-DD
+**Agents consulted:** GPT-5.2, Gemini
+**GPT-5.2:** [GO/NO-GO] @ [X]% confidence
+**Gemini:** [GO/NO-GO] @ [X]% confidence
+**Final decision:** [What was decided]
+**Rationale:** [Why, including domain weights applied]
+```
+
+---
+
+## 🤖 Agent-Specific Instructions
+
+### GPT-5.2 (Codex CLI)
+
+**Kdy volat:**
 ```
 ✅ Komplexní architektonická rozhodnutí
-✅ Debugging záhadných bugů (>2 hodiny stuck)
+✅ Debugging záhadných bugů (>30 min stuck)
 ✅ "Second opinion" na kritická PR
-✅ Reasoning tasks (GPQA 93.2%, lepší než ostatní)
-✅ Multi-step planning s vysokou uncertainty
+✅ Reasoning tasks (nejlepší benchmark skóre)
+✅ Root cause analysis
 ```
 
-**Kdy NEVOLAT GPT-5.2:**
+**Kdy NEVOLAT:**
 ```
 ❌ Běžné kódování (Claude stačí)
-❌ Research (Gemini je levnější a má 2M kontext)
-❌ Bulk operations (drahé, $10/1M input)
 ❌ Content generation (Gemini lepší)
+❌ Visual QA (Gemini má 2M context)
+❌ Quick research (Perplexity rychlejší)
 ```
 
-**Jak volat (ChatGPT Plus):**
-1. Otevři chat.openai.com
-2. Vyber GPT-5.2 Thinking
-3. Paste context + otázku
-
-**Jak volat (Codex CLI):**
+**Jak volat:**
 ```bash
-codex "Analyze this architecture decision: [context]"
+# Přes Codex CLI
+codex "Analyze: [context + otázka]"
+
+# Rychlá triage (nižší reasoning effort)
+codex -c 'model_reasoning_effort="medium"' "Triage: [context + otázka]"
+
+# Doporučeno: profily (fast vs orchestrator)
+codex -p fast "Triage: [context + otázka]"
+codex -p orchestrator "Analyze: [context + otázka]"
+
+# Jednorázově přepnout model
+codex -m gpt-5.2 "Analyze: [context + otázka]"
+
+# Nebo cat + pipe pro delší prompty
+cat << 'EOF' | codex exec 2>&1
+[dlouhý prompt]
+EOF
 ```
+
+### Gemini 3 Pro (Google AI Plus)
+
+**Model:** `gemini-3-pro-preview` (NIKDY 2.5!)
+
+**Kdy volat:**
+```
+✅ Content generation (lekce, dokumentace)
+✅ Visual QA (2M context = 100+ screenshots!)
+✅ Research (5-20 min)
+✅ Code review / alternatives
+```
+
+**Jak volat:**
+```bash
+# Přes Gemini CLI
+cat << 'EOF' | gemini -m gemini-3-pro-preview 2>&1
+[prompt]
+EOF
+
+# Pro Visual QA s obrázky
+gemini -m gemini-3-pro-preview --file /path/to/screenshot.png "Analyze this UI"
+```
+
+### Gemini Deep Research (Google AI Plus)
+
+**Kdy volat:**
+```
+✅ Rozsáhlé market research (20-60 min)
+✅ Due diligence / investigative research
+✅ Literature review
+✅ Comparative landscape analysis
+```
+
+**Jak volat:**
+```bash
+# Python script
+python backend/scripts/gemini_deep_research.py "Research question"
+
+# Nebo přímé API
+gemini -m deep-research-pro-preview-12-2025 "Research question"
+```
+
+### Perplexity (MCP)
+
+**Kdy volat:**
+```
+✅ Quick facts (<5 min)
+✅ Dokumentace ověření
+✅ Aktuální trendy
+✅ Citace potřeba
+```
+
+**MCP Tools:**
+- `mcp__perplexity-ask__perplexity_ask` - Conversational research
 
 ---
 
