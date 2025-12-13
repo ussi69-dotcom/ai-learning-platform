@@ -2,198 +2,108 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 🚀 Boot Sequence (v3.0)
+## 🚀 Boot Checklist v4.0 (POVINNÉ - VŽDY!)
 
-### ⚠️ STOP! PŘED JAKOUKOLIV AKCÍ UDĚLEJ TOTO:
+⚠️ **PŘED JAKOUKOLIV AKCÍ projdi tyto kroky:**
 
-**Krok 1:** Použij Read tool na tyto 3 soubory (POVINNÉ!):
 ```
-Read: .ai-context/AGENT_PROTOCOL.md       ← 🔥 SPOLEČNÁ PRAVIDLA
-Read: .ai-context/state/WORKING_CONTEXT.md ← KDE JSME, CO DĚLÁME
-Read: .ai-context/state/MEMORY.md          ← Protokoly, lessons learned
+1. □ PŘEČTI WORKING_CONTEXT.md     → Kde jsme? Co děláme?
+     Read: .ai-context/state/WORKING_CONTEXT.md
+
+2. □ URČI TYP ÚKOLU               → Content? Debug? Implementation?
+
+3. □ ZKONTROLUJ CRITICAL_RULES    → Delegace? Thin protocol? (sekce níže)
+
+4. □ PODMÍNĚNÉ LOADING            → Viz tabulka, přečti relevantní soubor
+
+5. □ ODPOVĚZ UŽIVATELI            → "Pokračujeme od [X]. Další: [Y]."
 ```
 
-**Krok 2:** Ověř synchronizaci:
-```bash
-git log -1 --oneline  # Porovnej s WORKING_CONTEXT
-```
+**Sebe-verifikace:** Po přečtení souboru CITUJ jedno pravidlo které aplikuješ.
 
-**Krok 3:** OKAMŽITĚ odpověz uživateli:
-> "Jsem Claude. Pokračujeme od [task]. Stav: [status]. Další: [next step]."
-
-**⛔ NIKDY nezačínej pracovat bez splnění kroků 1-3!**
-**⛔ Ani continuation sessions nejsou výjimka!**
-
-**Během práce:**
-- Průběžně aktualizuj `WORKING_CONTEXT.md`
-
-**Před context compactem (80%):**
-- POVINNĚ aktualizuj `WORKING_CONTEXT.md`!
-
-**Na konci session:**
-- Aktualizuj `WORKING_CONTEXT.md` (stav pro příště)
-
-**Role-based loading (dle typu úkolu):**
-- Content → `core/CONTENT_GUIDELINES.md`
-- Multi-agent → `workflows/MULTI_AGENT_WORKFLOW.md`
-- Codebase exploration → `workflows/SUBAGENT_STRATEGY.md`
-
-**NEČTI při startu:** `SESSION_LOG.md`, `history/*` (archiv)
+**Průběžně:** Aktualizuj `WORKING_CONTEXT.md` (před context compactem POVINNĚ!)
 
 ---
 
-## 🎯 Tvoje Role (v5.1)
+## ⛔ CRITICAL_RULES (vždy viditelné - NEIGNORUJ!)
 
-- **Primary Implementer + QA gate:** změny v repo, integrace, ověření (`npm run verify`, backend testy).
-- **Deleguj:** content + visual QA → Gemini CLI; quick research → Perplexity.
-- **Eskaluj:** hard reasoning / záhadné bugy → GPT‑5.2 přes Codex (posílej Debug Packet z `CODEX.md`).
-- **Thin protocol:** do chatu jen shrnutí + cesty k artefaktům (žádné DOM snapshoty / dlouhé logy).
+### 🎯 Delegace (bezpodmínečná)
 
-## ⛔ KRITICKÁ PRAVIDLA (NEIGNORUJ!)
+| Úkol | Deleguj na | Důvod | Jak |
+|------|------------|-------|-----|
+| **Visual QA** (jak vypadá UI) | Gemini | 2M context | Screenshot → soubor → `gemini -m gemini-2.5-pro` |
+| **Content/lekce** | Gemini | Kreativní | Task Brief → `gemini -m gemini-2.5-pro` |
+| **Web scraping** | curl/wget | <100 tokenů | `curl -s URL \| grep pattern` |
+| **Hard reasoning** (>30min) | GPT-5.2 | Chain-of-thought | Debug Packet → Codex CLI |
 
-### 🚦 Playwright/Browser Tools = ACTION CHECKPOINT (NOVÉ!)
+### 🔇 Thin Protocol (VŽDY!)
+
 ```
-⚠️ STOP! Před KAŽDÝM voláním mcp__playwright__* se zeptej:
-
-□ Je to Visual QA (jak něco vypadá)?
-  → DELEGUJ na Gemini! Screenshot → soubor → Gemini CLI
-
-□ Je to scraping (získat data z webu)?
-  → Použij curl/wget! (např. curl -s URL | grep pattern)
-  → Nebo Gemini s thin protocol
-
-□ Opravdu potřebuji DOM interakci?
-  → Použij browser_evaluate pro targeted extraction
-  → NE browser_snapshot do chatu!
-
-🔥 NIKDY: browser_snapshot → dump 14k+ tokenů do kontextu
-✅ VŽDY: browser_take_screenshot → .playwright-mcp/file.png → Gemini
-
-Příklad (YouTube channel ID):
-❌ ŠPATNĚ: browser_navigate → browser_snapshot (14k tokenů!)
-✅ SPRÁVNĚ: curl -s "https://youtube.com/@handle" | grep -o 'channel/UC[^"]*'
+❌ NIKDY: DOM snapshoty do chatu (14k+ tokenů!)
+❌ NIKDY: Dlouhé logy do chatu
+✅ VŽDY: Cesty k souborům + 2-3 věty summary
+✅ VŽDY: Screenshot → .playwright-mcp/file.png → Gemini
 ```
 
-### Content Creation = DELEGUJ NA GEMINI
+### 🗳️ MACP Triggery (konzultuj GPT-5.2 + Gemini)
+
+Aktivuj když: Security změny | DB migrace | Breaking API | >30min stuck + 2 failed attempts
+
+### ✅ Před KAŽDOU major akcí
+
 ```
-NIKDY nepiš content sám!
-1. Vytvoř Task Brief s Persona + DoD
-2. Zavolej Gemini přes BASH CLI (ne MCP tool!):
-   cat << 'EOF' | gemini -m gemini-3-pro-preview 2>&1
-   [prompt]
-   EOF
-3. Model: gemini-3-pro-preview (NE 2.5!)
-4. Proveď QA review výsledku
-```
-
-### Hard Reasoning = KONZULTUJ GPT-5.2 (NOVÉ Dec 2025)
-```
-Kdy volat GPT-5.2 (Situational Orchestrator):
-✅ Debugging záhadných bugů (>30 min stuck, 2+ failed attempts)
-✅ Komplexní architektonická rozhodnutí
-✅ "Second opinion" na kritická PR
-✅ Root cause analysis
-
-Jak volat:
-1. Codex CLI: codex "Your question" (preferováno)
-2. ChatGPT Plus (chat.openai.com) → GPT-5.2 Thinking
-
-⚠️ VŽDY posílej Debug Packet (viz CODEX.md)!
-
-Kdy NEVOLAT:
-❌ Běžné kódování (ty to zvládneš)
-❌ Visual QA (Gemini má 2M context)
-❌ Content generation (Gemini lepší)
-❌ Quick research (Perplexity)
-```
-
-### Codex “profily” (rychlé vs deep)
-
-Předpoklad: v `~/.codex/config.toml` existují profily:
-- `fast` (nižší `model_reasoning_effort`)
-- `orchestrator` (vyšší `model_reasoning_effort`)
-
-**Rychlá triage:**
-```bash
-codex -p fast -C /home/ussi/ai-learning-platform "Triage: [context + otázka]"
-```
-
-**Deep analýza (Debug Packet):**
-```bash
-cat << 'EOF' | codex exec -p orchestrator -C /home/ussi/ai-learning-platform 2>&1
-## Debug Packet
-## Context: ...
-## Expected vs Observed:
-- Expected: ...
-- Observed: ...
-## Repro (deterministic):
-1. ...
-2. ...
-## What tried (max 5):
-- ...
-## Artifacts (paths only!):
-- logs: ...
-- screenshots: ...
-## Question:
-- ...
-EOF
-```
-
-**Thin protocol reminder:** do promptu dávej jen krátké shrnutí + cesty k artefaktům (žádné dumpy logů/DOM).
-
-### Research Selection Matrix
-```
-| Potřebuji...           | Nástroj              | Rychlost |
-|------------------------|----------------------|----------|
-| Rychlá fakta           | WebSearch            | ⚡ 5s    |
-| Dokumentace knihovny   | Context7 MCP         | ⚡ 5s    |
-| Quick research         | Perplexity MCP       | ⚡ 10s   |
-| Deep research (short)  | Gemini CLI           | ⏱️ 2-5m  |
-| Deep research (long)   | Gemini Deep Research | ⏱️ 20-60m|
-```
-
-### Gemini OAuth Fix (když nefunguje)
-```bash
-# MCP token konflikt - smaž tento soubor:
-rm -f ~/.gemini/mcp-oauth-tokens-v2.json
-# Pak normální volání přes Bash CLI funguje
-```
-
-### Gemini Model
-```
-VŽDY: gemini-3-pro-preview
-NIKDY: gemini-2.5-pro, gemini-pro, nebo jiné
-```
-
-### Před KAŽDOU major akcí
-```
-□ Content? → Gemini (gemini-3-pro-preview)
+□ Content? → Gemini (gemini-2.5-pro)
 □ Commit? → npm run verify MUSÍ projít
 □ Velká změna? → Zeptej se uživatele
-□ MACP trigger? → Aktivuj consensus (viz níže)
+□ MACP trigger? → Blind Ballot oběma agentům
 ```
 
-### 🗳️ Multi-Agent Consensus Protocol (MACP) Triggers
+---
+
+## 📚 Podmíněné Loading
+
+| Když děláš... | Přečti PŘED akcí | Proč |
+|---------------|------------------|------|
+| Content/lekce | `.ai-context/core/CONTENT_GUIDELINES.md` | Formát, persona, QA checklist |
+| Multi-agent/MACP | `.ai-context/AGENT_PROTOCOL.md` | Domain weights, handoff |
+| Debug >30min | `.ai-context/state/MEMORY.md` → Lessons | Neopakuj stejné chyby |
+| Architektura | `.ai-context/core/ARCHITECTURE.md` | Struktura systému |
+| GPT-5.2 volání | `.ai-context/CODEX.md` | Debug Packet template |
+
+---
+
+## 🎯 Tvoje Role (v5.2)
+
+- **Primary Implementer + QA gate:** změny v repo, integrace, ověření (`npm run verify`, backend testy)
+- **Deleguj:** content + visual QA → Gemini CLI; quick research → Perplexity
+- **Eskaluj:** hard reasoning / záhadné bugy → GPT‑5.2 přes Codex
+- **Thin protocol:** do chatu jen shrnutí + cesty k artefaktům
+
+---
+
+## 🔧 Nástroje & Konfigurace
+
+### Research Selection Matrix
+| Potřebuji... | Nástroj | Rychlost |
+|--------------|---------|----------|
+| Rychlá fakta | WebSearch | ⚡ 5s |
+| Dokumentace knihovny | Context7 MCP | ⚡ 5s |
+| Quick research | Perplexity MCP | ⚡ 10s |
+| Deep research (short) | Gemini CLI | ⏱️ 2-5m |
+| Deep research (long) | Gemini Deep Research | ⏱️ 20-60m |
+
+### Codex profily (GPT-5.2)
+```bash
+# Rychlá triage:
+codex -p fast "Triage: [context + otázka]"
+
+# Deep analýza (Debug Packet):
+codex -p orchestrator "## Debug Packet\n## Context: ...\n## Question: ..."
 ```
-AKTIVUJ MACP (konzultuj GPT-5.2 + Gemini) když:
-□ Security/auth/permissions changes
-□ DB schema/migrations
-□ Architecture/multi-module refactors
-□ Breaking API changes
-□ Content strategy decisions
-□ User řekne "get second opinion"
-□ >30 min stuck + 2+ failed attempts
 
-MACP workflow:
-1. Pošli STEJNÝ prompt NEZÁVISLE oběma (Blind Ballot)
-2. Čekej na strukturované odpovědi s confidence %
-3. Aplikuj domain weights (viz AGENT_PROTOCOL.md)
-4. Rozhodní nebo eskaluj k uživateli
-
-⚠️ Anti-patterns:
-- NIKDY nesdílej odpověď jednoho agenta druhému (echo chamber)
-- Max 10 min time-box (jinak consensus theater)
-- NE pro trivial fixes s testy
+### Gemini OAuth Fix
+```bash
+rm -f ~/.gemini/mcp-oauth-tokens-v2.json  # Pak CLI funguje
 ```
 
 ---
