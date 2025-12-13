@@ -50,6 +50,8 @@ services:
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - EMAILS_FROM_EMAIL=${EMAILS_FROM_EMAIL}
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - PERPLEXITY_API_KEY=${PERPLEXITY_API_KEY}
+      - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
       - FRONTEND_URL=${FRONTEND_URL:-https://ai-teaching.eu}
       - DOMAIN_NAME=${DOMAIN_NAME:-ai-teaching.eu}
     volumes:

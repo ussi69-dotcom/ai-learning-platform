@@ -180,10 +180,9 @@ Return ONLY the translations in the same numbered format, nothing else.
 def parse_perplexity_response(content: str, citations: list[str]) -> Optional[dict]:
     """Parse Perplexity response into webhook format.
 
-    Expected format from Perplexity:
-    1. **Title**: Headline here
-       **Summary**: Summary text here.[1]
-       **URL**: https://example.com/article
+    Handles multiple formats from Perplexity:
+    Format A: 1. **Title**: Headline here
+    Format B: 1) Title: Headline here
 
     Args:
         content: The markdown content from Perplexity
@@ -194,24 +193,33 @@ def parse_perplexity_response(content: str, citations: list[str]) -> Optional[di
     # Clean citation markers [1], [2], etc.
     clean_content = re.sub(r'\[\d+\]', '', content)
 
-    # Split by numbered items (1., 2., etc.)
-    item_blocks = re.split(r'\n(?=\d+\.\s)', clean_content)
+    # Split by numbered items (1. or 1) format)
+    item_blocks = re.split(r'\n(?=\d+[\.\)]\s)', clean_content)
 
     for block in item_blocks:
         if not block.strip():
             continue
 
-        # Extract title
+        # Extract title - try multiple formats
         title_match = re.search(r'\*\*Title\*\*:\s*(.+?)(?:\n|$)', block)
         if not title_match:
+            # Format B: "Title: ..." without bold
+            title_match = re.search(r'^\d+[\.\)]\s*Title:\s*(.+?)(?:\n|$)', block)
+        if not title_match:
             # Try alternative: bold text at start
-            title_match = re.search(r'^\d+\.\s*\*\*(.+?)\*\*', block)
+            title_match = re.search(r'^\d+[\.\)]\s*\*\*(.+?)\*\*', block)
 
-        # Extract summary
+        # Extract summary - try multiple formats
         summary_match = re.search(r'\*\*Summary\*\*:\s*(.+?)(?:\n\s*\*\*|$)', block, re.DOTALL)
+        if not summary_match:
+            # Format B: "Summary: ..." without bold
+            summary_match = re.search(r'Summary:\s*(.+?)(?:\n\s*URL:|$)', block, re.DOTALL)
 
-        # Extract URL from content
-        url_match = re.search(r'\*\*URL\*\*:\s*(https?://[^\s]+)', block)
+        # Extract URL from content - try multiple formats
+        url_match = re.search(r'\*\*URL\*\*:\s*(https?://[^\s\)]+)', block)
+        if not url_match:
+            # Format B: "URL: ..." without bold
+            url_match = re.search(r'URL:\s*(https?://[^\s\)]+)', block)
 
         if title_match:
             title = title_match.group(1).strip()[:200]
