@@ -1,5 +1,17 @@
 {
-  "title": "Few-Shot Learning",
-  "description": "Teach AI by example.",
-  "order": 2
+  "title": "Few-Shot Learning: Teach AI by Example",
+  "title_cs": "Few-Shot Learning: Naučte AI příklady",
+  "description": "Master the art of teaching AI through examples - learn to craft prompts that show, don't tell.",
+  "description_cs": "Ovládněte umění učit AI pomocí příkladů - naučte se vytvářet prompty, které ukazují místo vysvětlování.",
+  "order": 2,
+  "video_url": "https://www.youtube.com/embed/aPzbKso1jYM",
+  "tags": ["few-shot", "prompting", "examples", "classification", "style-transfer"],
+  "prerequisites": ["01-chain-of-thought"],
+  "learning_objectives": [
+    "Understand the difference between zero-shot, one-shot, and few-shot learning",
+    "Structure effective few-shot prompts with clear formatting",
+    "Apply few-shot learning to classification, format conversion, and style transfer",
+    "Know when few-shot helps and when it fails",
+    "Combine few-shot with Chain-of-Thought for complex tasks"
+  ]
 }

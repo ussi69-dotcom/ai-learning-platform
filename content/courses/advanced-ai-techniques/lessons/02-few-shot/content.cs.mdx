@@ -1,0 +1,267 @@
+# Few-Shot Learning: Naučte AI příklady 📚
+
+<Callout type="info">
+**Mise:** Ovládněte umění učit AI pomocí příkladů - naučte se vytvářet prompty, které ukazují místo vysvětlování.
+
+⏳ **Čas čtení:** 20 min | 🧪 **[2] Laby součástí**
+</Callout>
+
+<VideoSwitcher alternatives={[
+  {"id":"aPzbKso1jYM","title":"Few-Shot Prompting Explained (AssemblyAI)"},
+  {"id":"v2gD8BHOaX4","title":"Master Few-Shot Learning for AI"}
+]} />
+
+**Nejlepší učitel nevysvětluje - předvádí.**
+
+Když jste se učili jezdit na kole, nikdo vám nedával přednášku z fyziky o rovnováze a momentu. Někdo vám ukázal. Jel na kole, pak jste to zkusili vy. To je podstata **Few-Shot Learningu** - učení AI pomocí příkladů místo instrukcí.
+
+Proč na tom záleží? Protože někdy **ukázat vydá za tisíc slov instrukcí**.
+
+---
+
+## Síla příkladů
+
+<ConceptCard title="Definice Few-Shot Learningu" icon="📚">
+
+Few-Shot Learning je promptovací technika, kde AI poskytnete malý počet příkladů vstup-výstup před tím, než ji požádáte o provedení podobného úkolu. Model se naučí vzorec z vašich příkladů a aplikuje ho na nové vstupy.
+
+**Klíčový vhled:** Netrénujete model - *ukazujete* mu, co chcete přímo v promptu.
+
+</ConceptCard>
+
+Zvažte toto srovnání:
+
+| Přístup | Prompt | Kvalita výsledku |
+|---------|--------|------------------|
+| **Zero-shot** | "Klasifikuj tento sentiment" | Náhoda |
+| **One-shot** | 1 příklad + "Klasifikuj" | Lepší |
+| **Few-shot** | 3-5 příkladů + "Klasifikuj" | Mnohem lepší |
+
+Magické číslo je obvykle **3-5 příkladů** - dost na vytvoření vzorce, ne tolik, abyste plýtvali tokeny nebo zmátli model.
+
+---
+
+## Zero vs One vs Few
+
+<Diagram type="few-shot-learning" />
+
+### Zero-Shot (žádné příklady)
+
+```text
+Klasifikuj sentiment: "Tento film byl hrozný!"
+```
+
+Model se spoléhá zcela na svůj trénink. Funguje pro běžné úkoly, selhává u nuancovaných nebo vlastních.
+
+### One-Shot (jeden příklad)
+
+```text
+Klasifikuj sentiment:
+"Miloval jsem tuto knihu!" → Pozitivní
+
+"Tento film byl hrozný!" →
+```
+
+Jeden příklad pomáhá, ale model může přefit na tento specifický vzorec.
+
+### Few-Shot (více příkladů)
+
+```text
+Klasifikuj sentiment:
+"Miloval jsem tuto knihu!" → Pozitivní
+"Obsluha byla příšerná" → Negativní
+"Bylo to v pohodě, nic speciálního" → Neutrální
+
+"Tento film byl hrozný!" →
+```
+
+Více různorodých příkladů vytvoří robustní vzorec.
+
+<Callout type="tip">
+**Pro tip:** Vaše příklady by měly pokrývat **různorodost** očekávaných vstupů. Pokud ukážete pouze pozitivní příklady, model nebude vědět, jak zvládnout negativní!
+</Callout>
+
+---
+
+## Anatomie skvělého Few-Shot promptu
+
+Struktura je stejně důležitá jako obsah:
+
+```text
+[Volitelně: Popis úkolu]
+
+[Příklad 1 Vstup] → [Příklad 1 Výstup]
+[Příklad 2 Vstup] → [Příklad 2 Výstup]
+[Příklad 3 Vstup] → [Příklad 3 Výstup]
+
+[Váš skutečný vstup] →
+```
+
+### Osvědčené postupy
+
+| Dělej ✅ | Nedělej ❌ |
+|---------|-----------|
+| Používej různorodé, reprezentativní příklady | Používej pouze podobné příklady |
+| Udržuj konzistentní formátování | Mixuj různé výstupní formáty |
+| Zahrň edge cases | Ukazuj pouze "snadné" případy |
+| Používej jasné oddělovače (→, :, nové řádky) | Nejednoznačná oddělení |
+| Obvykle 3-5 příkladů | 10+ příkladů (klesající výnosy) |
+
+<Callout type="warning">
+**Upozornění na kontextové okno:** Few-shot prompty spotřebovávají tokeny! S omezeným kontextem vyvažuj důkladnost vůči délce. Někdy 3 skvělé příklady porazí 7 průměrných.
+</Callout>
+
+---
+
+## 🔬 Lab 1: Klasifikace s Few-Shot
+
+Postavme vlastní klasifikátor sentimentu, který rozumí VAŠIM kategoriím.
+
+**Cíl:** Vytvoř few-shot prompt pro 5-hvězdičkový systém hodnocení (ne jen pozitivní/negativní).
+
+**Prompt:**
+Zkopíruj toto do ChatGPT nebo Claude:
+
+```text
+Ohodnoť sentiment na škále 1-5 hvězdiček:
+
+"Nejlepší nákup, co jsem kdy udělal! Změnil mi život!" → ⭐⭐⭐⭐⭐
+"Docela dobrý, drobné problémy, ale celkově spokojen" → ⭐⭐⭐⭐
+"Je to v pohodě. Dělá to svou práci, nic víc" → ⭐⭐⭐
+"Zklamaný. Čekal jsem lepší kvalitu" → ⭐⭐
+"Úplné vyhazování peněz. Rozbitý při dodání" → ⭐
+
+"Produkt funguje, ale výdrž baterie by mohla být lepší. Přesto ho používám denně." →
+```
+
+**Očekávaný výstup:**
+```
+⭐⭐⭐⭐
+```
+(Smíšené pocity, ale celkově pozitivní - příklady naučily tuto nuanci!)
+
+**Teď zkus tyto variace:**
+- "Úžasný zákaznický servis, rychlé doručení!" →
+- "Meh. Tak nějak ujde" →
+- "NEKUPOVAT. Podvodná firma!" →
+
+**💡 Aha moment:** "Bez příkladů by AI mohla použít binární pozitivní/negativní. S few-shot se naučila VAŠI specifickou 5-hvězdičkovou škálu a nuance mezi jednotlivými úrovněmi!"
+
+<LabComplete labId="lab-fewshot-1" />
+
+---
+
+## Běžné Few-Shot aplikace
+
+Few-shot exceluje v těchto scénářích:
+
+### 1. Konverze formátu
+
+```text
+Převeď do JSON:
+Jméno: Jan, Věk: 30 → {"jmeno": "Jan", "vek": 30}
+Jméno: Sarah, Věk: 25 → {"jmeno": "Sarah", "vek": 25}
+
+Jméno: Michal, Věk: 45 →
+```
+
+### 2. Přenos stylu
+
+```text
+Napiš to jako pirát:
+"Ahoj, jak se máš?" → "Ahoj na palubě! Jak se ti daří, námořníku?"
+"Jdu do obchodu" → "Pluju ke kupčíkům pro zásoby!"
+
+"Můžeš mi pomoct?" →
+```
+
+### 3. Extrakce entit
+
+```text
+Extrahuj firmu a produkt:
+"Apple dnes vydal iPhone 15" → Firma: Apple, Produkt: iPhone 15
+"Microsoft oznámil Windows 12" → Firma: Microsoft, Produkt: Windows 12
+
+"Tesla představila Cybertruck 2.0" →
+```
+
+---
+
+## 🔬 Lab 2: Magie přenosu stylu
+
+Naučme AI úplně vlastní styl psaní!
+
+**Cíl:** Přimějte AI psát jako specifická postava nebo tón pomocí few-shot příkladů.
+
+**Prompt:**
+Zkopíruj toto (učíme AI odpovídat jako dramatický vypravěč filmových trailerů):
+
+```text
+Přepiš jako dramatickou filmovou naraci:
+
+"Šel jsem pro kafe" → "Ve světě, kde kofein byl jedinou nadějí... JEDEN MUŽ... podnikne ultimátní cestu... KE KÁVOVARU."
+
+"Porada byla nudná" → "Mysleli si, že to bude jen další porada... MÝLILI SE. NUDA... jakou ještě nezažili... TOTO LÉTO."
+
+"Potřebuju vyprat prádlo" → "Oblečení... bylo špinavé. Koš... přetékající. A JEDEN HRDINA musí povstat... čelit... PRÁDLU."
+
+"Mám hlad a chci pizzu" →
+```
+
+**Očekávaný výstup:**
+Něco jako:
+```
+"Ve městě sužovaném hladem... JEDNA TOUHA změnila všechno... PIZZA. Tento podzim... PŘIPRAVTE SE... na VYSVOBOZENÍ."
+```
+
+**Zkus vlastní:**
+- "Mobil mi má 5% baterie"
+- "Zase jsem zapomněl heslo"
+- "WiFi nefunguje"
+
+**💡 Aha moment:** "Právě jste naučili AI úplně vlastní styl, který neexistuje v žádném manuálu! Few-shot learning vám umožňuje VYTVÁŘET nové chování, ne jen vyvolávat existující."
+
+<LabComplete labId="lab-fewshot-2" />
+
+---
+
+## Few-Shot vs Chain-of-Thought
+
+<Callout type="info">
+**Spojení s předchozí lekcí:**
+Few-shot a Chain-of-Thought lze kombinovat! Můžete ukázat příklady, které obsahují kroky uvažování, učit AI JAK výstup vytvořit A JAK přemýšlet.
+</Callout>
+
+| Technika | Nejlepší pro | Příklady obsahují |
+|----------|--------------|-------------------|
+| **Few-shot** | Výstupní formát, klasifikace, styl | Vstup → Výstup |
+| **CoT** | Složité uvažování, matematika, logika | Kroky přemýšlení |
+| **Few-shot + CoT** | Složité úkoly se specifickým formátem | Vstup → Uvažování → Výstup |
+
+---
+
+## Kdy Few-Shot selhává
+
+Few-shot není magie. Potýká se, když:
+
+| Scénář | Proč selhává | Alternativa |
+|--------|--------------|-------------|
+| Úkol je příliš složitý | Příklady nemohou zachytit všechny nuance | Použij CoT nebo fine-tuning |
+| Nedostatek různorodosti | Model přefituje na příklady | Přidej více různorodých příkladů |
+| Kontext je příliš dlouhý | Příklady vyčerpají tokenový rozpočet | Snižte příklady, buďte stručnější |
+| Úkol vyžaduje real-time data | Model se nemůže učit z příkladů | Použij tools/RAG |
+
+---
+
+<ConceptCard title="Holokron: Few-Shot Learning" icon="💎">
+
+### 🔑 Klíčové poznatky
+
+* **Co to je:** Učení AI pomocí příkladů vstup→výstup v promptu
+* **Magické číslo:** 3-5 různorodých příkladů je obvykle optimální
+* **Nejlepší pro:** Klasifikace, konverze formátu, přenos stylu, vlastní chování
+* **Struktura:** Příklady + konzistentní formátování + jasné oddělovače
+* **Power combo:** Few-shot + Chain-of-Thought pro složité uvažování se specifickými výstupy
+* **Omezení:** Hladové na tokeny; nefunguje pro úkoly vyžadující real-time znalosti
+
+</ConceptCard>

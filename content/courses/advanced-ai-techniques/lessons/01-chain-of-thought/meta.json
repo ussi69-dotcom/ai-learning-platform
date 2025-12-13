@@ -1,5 +1,17 @@
 {
-  "title": "Chain-of-Thought Prompting",
-  "description": "Make AI show its reasoning step-by-step.",
-  "order": 1
+  "title": "Chain-of-Thought: Make AI Show Its Work",
+  "title_cs": "Chain-of-Thought: Přimějte AI ukázat svou práci",
+  "description": "Master the art of explicit reasoning - learn to make AI explain its thinking process step by step.",
+  "description_cs": "Ovládněte umění explicitního uvažování - naučte se přimět AI vysvětlit svůj myšlenkový proces krok za krokem.",
+  "order": 1,
+  "video_url": "https://www.youtube.com/embed/_nSmkyDNulk",
+  "tags": ["chain-of-thought", "cot", "prompting", "reasoning", "zero-shot", "few-shot"],
+  "prerequisites": [],
+  "learning_objectives": [
+    "Understand what Chain-of-Thought prompting is and why it works",
+    "Use Zero-shot CoT with 'Let's think step by step'",
+    "Create Few-shot CoT prompts with example reasoning",
+    "Know when CoT helps and when it fails",
+    "Preview advanced CoT variants"
+  ]
 }

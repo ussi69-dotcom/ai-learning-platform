@@ -1,3 +1,205 @@
-# Chain-of-Thought
+# Chain-of-Thought: Make AI Show Its Work 💭
 
-Make AI show its work!
+<Callout type="info">
+**Mission:** Master the art of explicit reasoning - learn to make AI explain its thinking process step by step.
+
+⏳ **Reading Time:** 20 min | 🧪 **[2] Labs Included**
+</Callout>
+
+<VideoSwitcher alternatives={[
+  {"id":"_nSmkyDNulk","title":"Chain-of-Thought Prompting Explained (Learn Prompting)"},
+  {"id":"jL9y7gQ_0Ew","title":"CoT Prompting Deep Dive"}
+]} />
+
+Have you ever asked an AI a complex question, only for it to confidently deliver a **wrong answer** without a hint of its internal process? It's like a student who gets the math problem wrong but can't explain *how* they arrived at their conclusion.
+
+This opacity makes debugging, understanding, and trusting AI outputs incredibly difficult. But what if you could peek into the AI's "mind"? What if you could compel it to *show its work*?
+
+That's precisely what **Chain-of-Thought (CoT) prompting** allows us to do.
+
+---
+
+## What is Chain-of-Thought (CoT) Prompting?
+
+<ConceptCard title="Chain-of-Thought Defined" icon="💭">
+
+CoT prompting is a technique that encourages LLMs to **articulate their reasoning process step-by-step** before providing a final answer. Instead of simply asking for a solution, you prompt the model to "think aloud."
+
+This mimics human problem-solving, where breaking down a complex task into manageable sub-steps leads to more accurate solutions.
+
+</ConceptCard>
+
+**Why does this work?** LLMs are powerful pattern matchers, but complex reasoning requires sequential logical progression. By forcing the model to generate intermediate steps, we:
+
+| Benefit | Explanation |
+|---------|-------------|
+| **Reduce hallucinations** | Errors are caught or avoided in earlier stages |
+| **Improve accuracy** | More "surface area" to apply knowledge and consistency checks |
+| **Enhance interpretability** | You can see *how* the AI arrived at its conclusion |
+| **Handle complexity** | Multi-step problems (math, logic, coding) become tractable |
+
+---
+
+## Zero-shot CoT: The Magic Phrase
+
+The simplest form of CoT prompting is **Zero-shot CoT**. This technique involves adding a single phrase to your prompt:
+
+<Callout type="tip">
+**The Magic Phrases:**
+- "Let's think step by step."
+- "Think step by step."
+- "Take a deep breath and think step by step."
+</Callout>
+
+This subtle instruction cues the LLM to generate intermediate reasoning steps. It requires *no examples* of CoT reasoning in the prompt itself, hence "zero-shot."
+
+### When Zero-shot CoT Helps
+
+| ✅ Works Well | ❌ May Fail |
+|--------------|-------------|
+| Simple arithmetic word problems | Very domain-specific tasks |
+| Common sense reasoning | Highly complex multi-step logic |
+| Basic logical deductions | Ambiguous open-ended problems |
+| Explaining concepts | Tasks requiring specific formats |
+
+---
+
+## 🔬 Lab 1: Zero-shot CoT in Action
+
+Let's see Zero-shot CoT improve a simple math problem.
+
+**Objective:** Compare AI responses with and without "Let's think step by step."
+
+**Step 1 - Without CoT:**
+Copy this into ChatGPT or Claude:
+
+```text
+There are 10 apples in the basket. I ate 3 apples. Then I put 5 more apples in the basket. How many apples are in the basket now?
+```
+
+**Step 2 - With CoT:**
+Now add the magic phrase:
+
+```text
+There are 10 apples in the basket. I ate 3 apples. Then I put 5 more apples in the basket. How many apples are in the basket now? Let's think step by step.
+```
+
+**Expected Output (with CoT):**
+```
+1. Start with 10 apples.
+2. Eat 3 apples: 10 - 3 = 7 apples.
+3. Add 5 more apples: 7 + 5 = 12 apples.
+Final Answer: 12 apples.
+```
+
+**💡 Aha Moment:** "The explicit steps make the answer traceable. If there's an error, you can see exactly WHERE the reasoning went wrong!"
+
+<LabComplete labId="lab-cot-1" />
+
+---
+
+## Few-shot CoT: Learning from Examples
+
+When a problem is too complex for Zero-shot CoT, **Few-shot CoT** provides the LLM with example reasoning patterns to follow.
+
+<Diagram type="few-shot-learning" />
+
+### Structure of Few-shot CoT
+
+```text
+Q: [Question 1]
+A: [Step-by-step reasoning]
+   [Final Answer]
+
+Q: [Question 2]
+A: [Step-by-step reasoning]
+   [Final Answer]
+
+Q: [Your New Question]
+A: [Model generates reasoning + answer]
+```
+
+<Callout type="warning">
+**Common Mistakes:**
+- Too many examples (exceeds context window)
+- Poorly chosen or inconsistent examples
+- Examples too different from actual task
+</Callout>
+
+---
+
+## 🔬 Lab 2: Few-shot CoT for Logic
+
+Let's use Few-shot CoT to teach the AI a specific conditional reasoning pattern.
+
+**Objective:** Make AI learn a packing decision logic from examples.
+
+**The Prompt:**
+Copy this entire prompt into your AI:
+
+```text
+Q: Item: Sweater, Temperature: 10°C, Duration: 3 days
+A: Temperature is 10°C, which is cold (below 15°C).
+   Duration is 3 days, which is short (under 7 days).
+   Rule: If cold and short duration, pack warm layers.
+   Decision: PACK
+
+Q: Item: T-Shirt, Temperature: 25°C, Duration: 10 days
+A: Temperature is 25°C, which is warm (above 20°C).
+   Duration is 10 days, which is long (over 7 days).
+   Rule: If warm and long duration, pack light clothes.
+   Decision: PACK
+
+Q: Item: Heavy Jacket, Temperature: 22°C, Duration: 2 days
+A: Temperature is 22°C, which is warm (above 20°C).
+   Duration is 2 days, which is short (under 7 days).
+   Rule: If warm and short duration, skip heavy items.
+   Decision: SKIP
+
+Q: Item: Umbrella, Temperature: 18°C, Duration: 5 days
+A:
+```
+
+**Expected Output:**
+The model should apply the learned reasoning pattern:
+```
+Temperature is 18°C, which is mild (between 15-20°C).
+Duration is 5 days, which is short (under 7 days).
+Rule: If mild temperature, weather is unpredictable - pack umbrella.
+Decision: PACK
+```
+
+**💡 Aha Moment:** "The AI learned the LOGIC of decision-making from examples, not just pattern matching keywords. It can generalize to new situations!"
+
+<LabComplete labId="lab-cot-2" />
+
+---
+
+## CoT Variants (Advanced Preview)
+
+Chain-of-Thought has evolved. Here's a quick preview of advanced variants you'll encounter:
+
+| Variant | Description |
+|---------|-------------|
+| **Self-Consistency** | Generate multiple CoT paths, vote on final answer |
+| **Tree of Thought** | Explore multiple reasoning branches in parallel |
+| **ReAct** | Combine reasoning with actions (tool use) |
+| **Extended Thinking** | Native CoT in reasoning models (see next lesson!) |
+
+<Callout type="info">
+**Next Lesson Preview:** In the Reasoning Models lesson, you'll learn about **Extended Thinking** - where CoT becomes a native architectural feature, not just a prompting trick!
+</Callout>
+
+---
+
+<ConceptCard title="Holocron: Chain-of-Thought" icon="💎">
+
+### 🔑 Key Takeaways
+
+* **What it is:** A prompting technique that makes AI show its reasoning step-by-step
+* **Zero-shot CoT:** Add "Let's think step by step" - no examples needed
+* **Few-shot CoT:** Provide example reasoning patterns for AI to follow
+* **When to use:** Complex math, logic puzzles, multi-step problems, debugging AI outputs
+* **Limitation:** It's a prompting TRICK, not native reasoning (that's what Reasoning Models add!)
+
+</ConceptCard>

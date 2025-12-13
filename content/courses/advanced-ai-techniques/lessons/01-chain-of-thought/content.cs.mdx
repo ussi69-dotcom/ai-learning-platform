@@ -1,0 +1,205 @@
+# Chain-of-Thought: Přimějte AI ukázat svou práci 💭
+
+<Callout type="info">
+**Mise:** Ovládněte umění explicitního uvažování - naučte se přimět AI vysvětlit svůj myšlenkový proces krok za krokem.
+
+⏳ **Čas čtení:** 20 min | 🧪 **[2] Laby součástí**
+</Callout>
+
+<VideoSwitcher alternatives={[
+  {"id":"_nSmkyDNulk","title":"Chain-of-Thought Prompting Explained (Learn Prompting)"},
+  {"id":"jL9y7gQ_0Ew","title":"CoT Prompting Deep Dive"}
+]} />
+
+Zeptali jste se někdy AI na složitou otázku, jen aby vám sebevědomě doručila **špatnou odpověď** bez jakékoliv stopy svého vnitřního procesu? Je to jako student, který špatně vyřeší matematický příklad, ale nedokáže vysvětlit *jak* k závěru dospěl.
+
+Tato neprůhlednost činí ladění, pochopení a důvěřování AI výstupům neuvěřitelně obtížným. Co kdybyste ale mohli nahlédnout do „mysli" AI? Co kdybyste ji mohli přimět *ukázat svou práci*?
+
+Přesně to nám umožňuje **Chain-of-Thought (CoT) prompting**.
+
+---
+
+## Co je Chain-of-Thought (CoT) Prompting?
+
+<ConceptCard title="Definice Chain-of-Thought" icon="💭">
+
+CoT prompting je technika, která povzbuzuje LLM k **artikulaci svého procesu uvažování krok za krokem** před poskytnutím finální odpovědi. Místo prostého požadavku na řešení přimějete model „přemýšlet nahlas".
+
+To napodobuje lidské řešení problémů, kde rozložení složitého úkolu na zvládnutelné dílčí kroky vede k přesnějším řešením.
+
+</ConceptCard>
+
+**Proč to funguje?** LLM jsou mocné rozpoznávače vzorců, ale složité uvažování vyžaduje sekvenční logickou progresi. Tím, že model donutíme generovat mezikroky:
+
+| Benefit | Vysvětlení |
+|---------|------------|
+| **Snížení halucinací** | Chyby jsou zachyceny nebo vynechány v dřívějších fázích |
+| **Zlepšení přesnosti** | Více „povrchu" pro aplikaci znalostí a kontrol konzistence |
+| **Zlepšení interpretovatelnosti** | Vidíte *jak* AI dospěla k závěru |
+| **Zvládání komplexity** | Vícekrokové problémy (matematika, logika, kódování) se stávají zvládnutelnými |
+
+---
+
+## Zero-shot CoT: Kouzelná fráze
+
+Nejjednodušší forma CoT promptingu je **Zero-shot CoT**. Tato technika spočívá v přidání jediné fráze k vašemu promptu:
+
+<Callout type="tip">
+**Kouzelné fráze:**
+- "Let's think step by step." (Pojďme přemýšlet krok za krokem.)
+- "Think step by step." (Přemýšlej krok za krokem.)
+- "Take a deep breath and think step by step." (Zhluboka se nadechni a přemýšlej krok za krokem.)
+</Callout>
+
+Tato jemná instrukce napoví LLM, aby generoval mezikroky uvažování. Nevyžaduje *žádné příklady* CoT uvažování v promptu samotném, odtud „zero-shot".
+
+### Kdy Zero-shot CoT pomáhá
+
+| ✅ Funguje dobře | ❌ Může selhat |
+|-----------------|----------------|
+| Jednoduché aritmetické slovní úlohy | Velmi doménově specifické úkoly |
+| Uvažování na základě zdravého rozumu | Vysoce složitá vícekroková logika |
+| Základní logické dedukce | Nejednoznačné otevřené problémy |
+| Vysvětlování konceptů | Úkoly vyžadující specifické formáty |
+
+---
+
+## 🔬 Lab 1: Zero-shot CoT v akci
+
+Podívejme se, jak Zero-shot CoT zlepší jednoduchý matematický problém.
+
+**Cíl:** Porovnejte odpovědi AI s a bez "Let's think step by step."
+
+**Krok 1 - Bez CoT:**
+Zkopírujte toto do ChatGPT nebo Claude:
+
+```text
+V košíku je 10 jablek. Snědl jsem 3 jablka. Pak jsem do košíku dal dalších 5 jablek. Kolik jablek je nyní v košíku?
+```
+
+**Krok 2 - S CoT:**
+Nyní přidejte kouzelnou frázi:
+
+```text
+V košíku je 10 jablek. Snědl jsem 3 jablka. Pak jsem do košíku dal dalších 5 jablek. Kolik jablek je nyní v košíku? Let's think step by step.
+```
+
+**Očekávaný výstup (s CoT):**
+```
+1. Začínáme s 10 jablky.
+2. Sníme 3 jablka: 10 - 3 = 7 jablek.
+3. Přidáme 5 dalších jablek: 7 + 5 = 12 jablek.
+Finální odpověď: 12 jablek.
+```
+
+**💡 Aha moment:** "Explicitní kroky činí odpověď sledovatelnou. Pokud je chyba, vidíte přesně KDE se uvažování pokazilo!"
+
+<LabComplete labId="lab-cot-1" />
+
+---
+
+## Few-shot CoT: Učení z příkladů
+
+Když je problém příliš složitý pro Zero-shot CoT, **Few-shot CoT** poskytne LLM příklady vzorců uvažování, které má následovat.
+
+<Diagram type="few-shot-learning" />
+
+### Struktura Few-shot CoT
+
+```text
+Q: [Otázka 1]
+A: [Krok-za-krokem uvažování]
+   [Finální odpověď]
+
+Q: [Otázka 2]
+A: [Krok-za-krokem uvažování]
+   [Finální odpověď]
+
+Q: [Vaše nová otázka]
+A: [Model generuje uvažování + odpověď]
+```
+
+<Callout type="warning">
+**Časté chyby:**
+- Příliš mnoho příkladů (přesahuje kontextové okno)
+- Špatně zvolené nebo nekonzistentní příklady
+- Příklady příliš odlišné od skutečného úkolu
+</Callout>
+
+---
+
+## 🔬 Lab 2: Few-shot CoT pro logiku
+
+Použijme Few-shot CoT k naučení AI specifického vzorce podmíněného uvažování.
+
+**Cíl:** Přimějte AI naučit se logiku rozhodování o balení z příkladů.
+
+**Prompt:**
+Zkopírujte celý tento prompt do vaší AI:
+
+```text
+Q: Item: Svetr, Teplota: 10°C, Délka: 3 dny
+A: Teplota je 10°C, což je chladno (pod 15°C).
+   Délka je 3 dny, což je krátká (pod 7 dní).
+   Pravidlo: Pokud chladno a krátká délka, sbal teplé vrstvy.
+   Rozhodnutí: SBALIT
+
+Q: Item: Tričko, Teplota: 25°C, Délka: 10 dní
+A: Teplota je 25°C, což je teplo (nad 20°C).
+   Délka je 10 dní, což je dlouhá (nad 7 dní).
+   Pravidlo: Pokud teplo a dlouhá délka, sbal lehké oblečení.
+   Rozhodnutí: SBALIT
+
+Q: Item: Těžká bunda, Teplota: 22°C, Délka: 2 dny
+A: Teplota je 22°C, což je teplo (nad 20°C).
+   Délka je 2 dny, což je krátká (pod 7 dní).
+   Pravidlo: Pokud teplo a krátká délka, vynech těžké věci.
+   Rozhodnutí: VYNECHAT
+
+Q: Item: Deštník, Teplota: 18°C, Délka: 5 dní
+A:
+```
+
+**Očekávaný výstup:**
+Model by měl aplikovat naučený vzorec uvažování:
+```
+Teplota je 18°C, což je mírné (mezi 15-20°C).
+Délka je 5 dní, což je krátká (pod 7 dní).
+Pravidlo: Pokud mírná teplota, počasí je nepředvídatelné - sbal deštník.
+Rozhodnutí: SBALIT
+```
+
+**💡 Aha moment:** "AI se naučila LOGIKU rozhodování z příkladů, ne jen pattern matching klíčových slov. Dokáže generalizovat na nové situace!"
+
+<LabComplete labId="lab-cot-2" />
+
+---
+
+## Varianty CoT (pokročilý náhled)
+
+Chain-of-Thought se vyvinul. Zde je rychlý náhled pokročilých variant, se kterými se setkáte:
+
+| Varianta | Popis |
+|----------|-------|
+| **Self-Consistency** | Generuj více CoT cest, hlasuj o finální odpovědi |
+| **Tree of Thought** | Prozkoumej více větví uvažování paralelně |
+| **ReAct** | Kombinuj uvažování s akcemi (použití nástrojů) |
+| **Extended Thinking** | Nativní CoT v reasoning modelech (viz další lekce!) |
+
+<Callout type="info">
+**Náhled další lekce:** V lekci Reasoning Modely se dozvíte o **Extended Thinking** - kde se CoT stává nativní architektonickou vlastností, ne jen promptovacím trikem!
+</Callout>
+
+---
+
+<ConceptCard title="Holokron: Chain-of-Thought" icon="💎">
+
+### 🔑 Klíčové poznatky
+
+* **Co to je:** Promptovací technika, která přiměje AI ukázat své uvažování krok za krokem
+* **Zero-shot CoT:** Přidejte "Let's think step by step" - žádné příklady nejsou potřeba
+* **Few-shot CoT:** Poskytněte příklady vzorců uvažování, které AI následuje
+* **Kdy použít:** Složitá matematika, logické hádanky, vícekrokové problémy, ladění AI výstupů
+* **Omezení:** Je to promptovací TRIK, ne nativní uvažování (to přidávají Reasoning Modely!)
+
+</ConceptCard>

@@ -1,0 +1,206 @@
+# Reasoning Models: When AI Actually Thinks 🧠
+
+<Callout type="info">
+**Mission:** Master the art of 'System 2' AI, learning when and how to deploy models that don't just predict, but reason.
+
+⏳ **Reading Time:** 35 min | 🧪 **[2] Labs Included**
+</Callout>
+
+<VideoSwitcher alternatives={[
+  {"id":"QB3l9sFV2Kk","title":"GPT 5.2 - First AI I'd Give My Work To"},
+  {"id":"g52sAfxjX4k","title":"How OpenAI's 'Thinking' Model Actually Works"}
+]} />
+
+What if I told you that 99% of the AI you interact with is a brilliant imposter? A dazzlingly fast parrot with a photographic memory, capable of predicting the next word with superhuman accuracy, but fundamentally incapable of *thinking*. It's a gut-reaction machine.
+
+Today, that changes. We're stepping into the next evolution of artificial intelligence. We're going beyond prediction and into the realm of deliberation. Welcome to the world of Reasoning Models.
+
+---
+
+## The Two Brains of AI: System 1 vs. System 2
+
+In his groundbreaking book "Thinking, Fast and Slow," psychologist Daniel Kahneman described two modes of human thought. This framework is the single best analogy for understanding the seismic shift happening in AI right now.
+
+*   **System 1 (The Intuitive Pilot):** This is your gut reaction. It's fast, automatic, and effortless. It's how you know 2+2=4, recognize a friend's face, or get a "vibe" from a conversation. Most LLMs, from GPT-3.5 to Claude Sonnet, operate primarily as System 1 engines. They are masters of pattern recognition and immediate response.
+
+*   **System 2 (The Deliberate Thinker):** This is your conscious, reasoning self. It's slow, effortful, and analytical. It's the part of your brain that solves a complex math problem, plans a multi-step project, or weighs the pros and cons of a major life decision. This is the domain of true Reasoning Models.
+
+<Diagram type="system1-vs-system2" />
+
+This isn't just a metaphor; it's an architectural reality. Models like OpenAI's `o1` and `o3` series, and likely the upcoming GPT-5.2, are built differently. They don't just spit out the most probable next token. They are given a "cognitive budget"—time and computational resources—to *think* before answering.
+
+| Feature | Conventional LLM (System 1) | Reasoning Model (System 2) |
+| :--- | :--- | :--- |
+| **Primary Goal** | Predict the next most likely word | Arrive at a correct, reasoned conclusion |
+| **Response Time** | Milliseconds to seconds | Seconds to minutes |
+| **Process** | Single-pass, intuitive generation | Multi-step, iterative deliberation |
+| **Best For** | Creative writing, summarization, chat | Logic puzzles, scientific problems, code generation |
+| **Analogy** | A brilliant improviser | A grandmaster chess player |
+
+---
+
+## Prompting vs. Pondering: CoT vs. Extended Thinking
+
+For years, we've used a clever trick to make System 1 models *act* like they can reason: **Chain-of-Thought (CoT) prompting**. By telling a model to "think step-by-step," we force it to externalize its process, turning a complex problem into a sequence of simpler next-word predictions. It's a brilliant hack.
+
+But it's still a hack.
+
+**Extended Thinking**, the native ability of a reasoning model, is different. You don't need to hold its hand. The model *itself* decides when to slow down and think.
+
+<Diagram type="cot-vs-extended-thinking" />
+
+<ConceptCard title="Chain-of-Thought: The Prompting Trick" icon="🪄">
+
+CoT is a **prompt engineering technique** that coaxes a System 1 model to simulate a reasoning process. It's effective but brittle. If the model makes a mistake in step 1, the entire "chain" is compromised. It's like forcing a sprinter to run a marathon—they might finish, but it's not what they were built for.
+
+</ConceptCard>
+
+<Callout type="warning">
+**The Cost of Cognition**
+
+Reasoning Models are not a replacement for standard LLMs. They are specialists. Expect them to be **10-100x slower** and significantly more expensive. Deploying them is like calling in a Jedi Master—you only do it when the stakes are high and simple blaster fire won't suffice.
+</Callout>
+
+---
+
+## 🔬 Lab 1: The Logic Puzzle Gauntlet
+
+A classic System 1 model will often fail this kind of logic puzzle because it gets confused by the relationships and negative constraints. It predicts plausible-sounding connections rather than logically deducing the single correct answer.
+
+**Objective:** Use a logic puzzle to expose the difference between a model that predicts and a model that reasons.
+
+**The Prompt:**
+Copy this into a standard model (like ChatGPT-4) and a top-tier reasoning model if you have access (like the latest Claude Opus or a future GPT-5):
+
+```text
+There are five people in a room: Alice, Bob, Charlie, David, and Eve.
+Each person has a unique favorite color: Red, Green, Blue, Yellow, or Purple.
+They are standing in a line.
+
+1. The person who likes Yellow is two places to the left of Bob.
+2. Alice is at one of the ends of the line.
+3. The person who likes Green is immediately to the right of the person who likes Red.
+4. Charlie, who doesn't like Yellow, is somewhere to the right of Alice.
+5. The person at the third position loves Purple.
+6. David is directly between the person who likes Blue and the person who likes Yellow.
+
+Based *only* on these facts, who likes which color, and what is the final order of the people in the line? Provide only the final answer as a list of names and their colors from left to right.
+```
+
+**Expected Output:**
+A reasoning model will correctly integrate all constraints. A standard model may make an error, often with rule #4 or #6.
+
+**Correct Answer:** `Alice (Blue), David (Yellow), Eve (Purple), Bob (Red), Charlie (Green)`
+
+**💡 Aha Moment:** "A standard model makes a 'good guess' that violates a rule. A reasoning model builds a mental model of the constraints and finds the *only* solution that fits."
+
+<LabComplete labId="lab-reasoning-1" />
+
+---
+
+## The New Titans: A Glimpse at the Top Tier
+
+The frontier of AI is now a battle of reasoning power. While specs are fluid and marketing is rampant, a new class of "thinking" models is emerging.
+
+| Model | Strength | Weakness | Jedi Analogy |
+| :--- | :--- | :--- | :--- |
+| **GPT-5.2** | Unmatched logical consistency & complex code | Slowest; Highest cost; "Overthinks" simple problems | Mace Windu (Precise, powerful, and uncompromising) |
+| **Claude Opus 4.5** | Nuanced ethical & creative reasoning | Can be verbose; struggles with highly abstract math | Obi-Wan Kenobi (Wise, reliable, a master of defense) |
+| **OpenAI o3** | Extreme speed for a reasoning model | Less powerful than flagship models; a "lite" thinker | Qui-Gon Jinn (Unconventional, fast, follows the Living Force) |
+| **DeepSeek R1** | Open-source; excels at multi-step code | Less general knowledge; requires more fine-tuning | A custom-built Jedi Starfighter (Powerful but needs a skilled pilot) |
+
+<Diagram type="reasoning-models-radar" />
+
+---
+
+<ConceptCard title="Extended Thinking: The Native Ability" icon="⚙️">
+
+This is an **architectural feature**, not a prompt. The model is given a complex task and internally breaks it down, runs simulations, evaluates outcomes, and refines its answer *before* showing you a single word. It has a "scratchpad" or "inner monologue" where it does its work. This is true System 2 cognition.
+
+</ConceptCard>
+
+## 🔬 Lab 2: The Self-Correcting Code Challenge
+
+Here's a task that requires not just generating code, but planning an architecture, anticipating dependencies, and correcting its own mistakes—hallmarks of a reasoning model.
+
+**Objective:** Task a model with creating a multi-file script that requires inter-file dependencies, forcing it to reason about the project structure.
+
+**The Prompt:**
+Copy this into your most powerful available model:
+
+```text
+Create a simple Python project with two files: `main.py` and `utils.py`.
+
+In `utils.py`, create a function called `calculate_complexity` that takes a string as input. The function should return a score based on the following rules: 1 point for every character, 5 points for every digit, and 10 points for every punctuation mark (e.g., ., !, ?).
+
+In `main.py`, import the `calculate_complexity` function from `utils.py`. The script should then:
+1. Define a list of three sentences of varying complexity.
+2. Loop through the list.
+3. For each sentence, print the sentence itself and its calculated complexity score using the imported function.
+4. Include a `if __name__ == "__main__":` block to run the main logic.
+
+Provide the complete contents for both `utils.py` and `main.py`.
+```
+
+**Expected Output:**
+The model should produce two distinct, correct code blocks. A lesser model might try to put everything in one file, forget the import, or incorrectly implement the scoring logic.
+
+**`utils.py`:**
+```python
+import string
+
+def calculate_complexity(text: str) -> int:
+    score = 0
+    for char in text:
+        score += 1 # 1 point per character
+        if char.isdigit():
+            score += 5 # 5 points for a digit
+        elif char in string.punctuation:
+            score += 10 # 10 points for punctuation
+    return score
+```
+
+**`main.py`:**
+```python
+from utils import calculate_complexity
+
+def run_analysis():
+    sentences = [
+        "This is a simple sentence.",
+        "This one is a bit more complex, with the number 1!",
+        "Wow! Is this the most complex sentence yet, with 2 numbers and multiple marks!?"
+    ]
+
+    for sentence in sentences:
+        score = calculate_complexity(sentence)
+        print(f"Sentence: '{sentence}'")
+        print(f"Complexity Score: {score}\n")
+
+if __name__ == "__main__":
+    run_analysis()
+```
+
+**💡 Aha Moment:** "The AI didn't just write code; it understood the *structure* of a project. It planned ahead, separating concerns and correctly linking the two files. It was acting like a software architect, not just a code monkey."
+
+<LabComplete labId="lab-reasoning-2" />
+
+---
+
+<Callout type="success">
+**The Jedi Council: Your Reasoning Team**
+
+Think of your AI toolset like the Jedi Council. You have your quick, agile Jedi Knights (GPT-4, Claude Sonnet) for everyday tasks. But for the galaxy-threatening problems—the complex financial models, the multi-layered legal analysis, the 'bet-the-company' code refactor—you summon the Masters: the reasoning models. Using the right Jedi for the right mission is the path to wisdom.
+</Callout>
+
+This is just the beginning. The gap between System 1 and System 2 AI will define the next decade of technology. Learning to bridge that gap, to know when to ask for a fast answer versus a considered judgment, is the new essential skill.
+
+---
+
+<ConceptCard title="Holocron: Reasoning Models" icon="💎">
+
+### 🔑 Key Takeaways
+*   **System 1 vs. System 2:** Most AI is fast/intuitive (System 1); Reasoning Models are slow/deliberate (System 2), allowing them to solve problems rather than just predict text.
+*   **CoT vs. Extended Thinking:** Chain-of-Thought is a *prompting trick* to simulate reasoning, while Extended Thinking is a *native architectural ability* of true reasoning models.
+*   **Use With Purpose:** Reasoning models are slow, expensive specialists. Use them for complex, multi-step tasks where correctness is non-negotiable, like logic puzzles, complex code, and deep analysis.
+
+</ConceptCard>

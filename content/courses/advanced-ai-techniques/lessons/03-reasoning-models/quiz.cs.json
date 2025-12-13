@@ -1,0 +1,71 @@
+{
+  "title": "Kvíz: Reasoning modely",
+  "description": "Otestujte své znalosti o AI Systému 2 a reasoning modelech",
+  "questions": [
+    {
+      "id": "rm-q1",
+      "type": "multiple_choice",
+      "question": "Jaký je hlavní rozdíl mezi AI Systému 1 a Systému 2?",
+      "options": [
+        "Systém 1 je starší, Systém 2 je novější",
+        "Systém 1 je rychlý/intuitivní, Systém 2 je pomalý/uvážlivý",
+        "Systém 1 je open-source, Systém 2 je proprietární",
+        "Systém 1 používá GPU, Systém 2 používá TPU"
+      ],
+      "correct": 1,
+      "explanation": "AI Systému 1 (jako většina LLM) funguje prostřednictvím rychlého, intuitivního rozpoznávání vzorců. AI Systému 2 (reasoning modely) si dává čas na uvážlivé krokové řešení problémů."
+    },
+    {
+      "id": "rm-q2",
+      "type": "multiple_choice",
+      "question": "Co je Chain-of-Thought (CoT) prompting?",
+      "options": [
+        "Nativní architektonická vlastnost reasoning modelů",
+        "Technika prompt engineeringu k simulaci uvažování ve standardních LLM",
+        "Způsob propojení více AI modelů dohromady",
+        "Metoda ke snížení spotřeby tokenů"
+      ],
+      "correct": 1,
+      "explanation": "Chain-of-Thought je promptovací TRIK, který nutí standardní modely externalizovat svůj proces uvažování. Není to nativní schopnost – je to hack, jak přimět modely Systému 1, aby se chovaly, jako by uměly uvažovat."
+    },
+    {
+      "id": "rm-q3",
+      "type": "multiple_choice",
+      "question": "Kdy byste měli použít reasoning model místo standardního LLM?",
+      "options": [
+        "Pro všechny úkoly, aby byla zajištěna nejvyšší kvalita",
+        "Pouze pro úkoly kreativního psaní",
+        "Pro složité, vícekrokové úkoly, kde je kritická správnost",
+        "Když potřebujete co nejrychlejší odpověď"
+      ],
+      "correct": 2,
+      "explanation": "Reasoning modely jsou pomalí a drazí specialisté. Používejte je pro složitou logiku, vícekrokové problémy a úkoly, kde je správnost nezbytná – ne pro jednoduchý chat nebo kreativní úkoly."
+    },
+    {
+      "id": "rm-q4",
+      "type": "multiple_choice",
+      "question": "Co je 'Extended Thinking' u reasoning modelů?",
+      "options": [
+        "Prompt, který žádá model, aby přemýšlel déle",
+        "Architektonická vlastnost, kde model interně uvažuje před odpovědí",
+        "Způsob rozšíření kontextového okna",
+        "Technika ke snížení halucinací"
+      ],
+      "correct": 1,
+      "explanation": "Extended Thinking je NATIVNÍ architektonická schopnost. Model má interní 'poznámkový blok', kde rozkládá problémy, vyhodnocuje možnosti a zpřesňuje odpovědi PŘEDTÍM, než vám cokoliv ukáže."
+    },
+    {
+      "id": "rm-q5",
+      "type": "multiple_choice",
+      "question": "Které tvrzení o reasoning modelech je PRAVDIVÉ?",
+      "options": [
+        "Jsou vždy rychlejší než standardní LLM",
+        "Měly by nahradit všechny standardní LLM",
+        "Mohou být 10-100x pomalejší a dražší než standardní modely",
+        "Jsou dostupné pouze jako open-source"
+      ],
+      "correct": 2,
+      "explanation": "Reasoning modely obětují rychlost za přesnost. Mohou být 10-100x pomalejší a výrazně dražší. Jsou to specialisté, ne náhrada za každodenní AI úkoly."
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+# Reasoning modely: Když AI skutečně přemýšlí 🧠
+
+<Callout type="info">
+**Mise:** Osvojte si umění AI „Systému 2". Naučte se, kdy a jak nasadit modely, které nejen předpovídají, ale skutečně uvažují.
+
+⏳ **Čas čtení:** 35 min | 🧪 **[2] Laby součástí**
+</Callout>
+
+<VideoSwitcher alternatives={[
+  {"id":"QB3l9sFV2Kk","title":"GPT 5.2 - First AI I'd Give My Work To"},
+  {"id":"g52sAfxjX4k","title":"How OpenAI's 'Thinking' Model Actually Works"}
+]} />
+
+Co kdybych vám řekl, že 99 % AI, se kterou interagujete, je geniální podvodník? Oslnivě rychlý papoušek s fotografickou pamětí, schopný předpovídat další slovo s nadlidskou přesností, ale zásadně neschopný *přemýšlet*. Je to stroj na instinktivní reakce.
+
+Dnes se to mění. Vstupujeme do další evoluce umělé inteligence. Jdeme za hranice predikce do sféry uvažování. Vítejte ve světě Reasoning modelů.
+
+---
+
+## Dva mozky AI: Systém 1 vs. Systém 2
+
+Psycholog Daniel Kahneman ve své průlomové knize „Myšlení, rychlé a pomalé" popsal dva způsoby lidského myšlení. Tento rámec je tou nejlepší analogií pro pochopení seismického posunu, který se právě teď v AI děje.
+
+*   **Systém 1 (Intuitivní pilot):** To je vaše instinktivní reakce. Je rychlá, automatická a bez námahy. Díky ní víte, že 2+2=4, poznáte tvář přítele nebo získáte „pocit" z konverzace. Většina LLM, od GPT-3.5 po Claude Sonnet, funguje primárně jako motory Systému 1. Jsou mistry v rozpoznávání vzorců a okamžité reakci.
+
+*   **Systém 2 (Uvažující myslitel):** To je vaše vědomé, uvažující já. Je pomalé, náročné a analytické. Je to část vašeho mozku, která řeší složitý matematický problém, plánuje vícekrokový projekt nebo zvažuje pro a proti zásadního životního rozhodnutí. Toto je doména skutečných Reasoning modelů.
+
+<Diagram type="system1-vs-system2" />
+
+Toto není jen metafora; je to architektonická realita. Modely jako `o1` a `o3` série od OpenAI, a pravděpodobně i nadcházející GPT-5.2, jsou postaveny jinak. Nejenže „vyplivnou" nejpravděpodobnější další token. Dostanou „kognitivní rozpočet" – čas a výpočetní zdroje – na *přemýšlení* před odpovědí.
+
+| Vlastnost | Konvenční LLM (Systém 1) | Reasoning Model (Systém 2) |
+| :--- | :--- | :--- |
+| **Primární cíl** | Předpovědět další nejpravděpodobnější slovo | Dojít ke správnému, odůvodněnému závěru |
+| **Doba odezvy** | Milisekundy až sekundy | Sekundy až minuty |
+| **Proces** | Jednoprůchodová, intuitivní generace | Vícekrokové, iterativní uvažování |
+| **Nejlepší pro** | Kreativní psaní, shrnutí, chat | Logické hádanky, vědecké problémy, generování kódu |
+| **Analogie** | Geniální improvizátor | Velmistr v šachu |
+
+---
+
+## Prompting vs. Pondering: CoT vs. Extended Thinking
+
+Léta jsme používali chytrý trik, jak přimět modely Systému 1, aby se *chovaly*, jako by uměly uvažovat: **Chain-of-Thought (CoT) prompting**. Tím, že modelu řekneme, aby „přemýšlel krok za krokem", nutíme ho externalizovat svůj proces a měníme složitý problém v sérii jednodušších predikcí dalšího slova. Je to geniální hack.
+
+Ale pořád je to jen hack.
+
+**Extended Thinking**, nativní schopnost reasoning modelu, je jiná. Nemusíte ho držet za ruku. Model se *sám* rozhodne, kdy zpomalit a přemýšlet.
+
+<Diagram type="cot-vs-extended-thinking" />
+
+<ConceptCard title="Chain-of-Thought: Promptovací trik" icon="🪄">
+
+CoT je **technika prompt engineeringu**, která přiměje model Systému 1 simulovat proces uvažování. Je efektivní, ale křehká. Pokud model udělá chybu v kroku 1, celý „řetězec" je narušen. Je to jako nutit sprintera běžet maraton – možná doběhne, ale není na to stavěný.
+
+</ConceptCard>
+
+<Callout type="warning">
+**Cena za poznání**
+
+Reasoning modely nejsou náhradou za standardní LLM. Jsou to specialisté. Očekávejte, že budou **10-100x pomalejší** a výrazně dražší. Jejich nasazení je jako povolat mistra Jedi – uděláte to jen tehdy, když je v sázce hodně a jednoduchá střelba z blasteru nestačí.
+</Callout>
+
+---
+
+## 🔬 Lab 1: Rukavice logických hádanek
+
+Klasický model Systému 1 často u tohoto typu logické hádanky selže, protože se zmate ve vztazích a negativních omezeních. Předpovídá věrohodně znějící spojení, místo aby logicky odvodil jedinou správnou odpověď.
+
+**Cíl:** Použijte logickou hádanku k odhalení rozdílu mezi modelem, který předpovídá, a modelem, který uvažuje.
+
+**Prompt:**
+Zkopírujte toto do standardního modelu (jako ChatGPT-4) a do špičkového reasoning modelu, pokud k němu máte přístup (jako nejnovější Claude Opus nebo budoucí GPT-5):
+
+```text
+V místnosti je pět lidí: Alice, Bob, Charlie, David a Eve.
+Každá osoba má jedinečnou oblíbenou barvu: červenou, zelenou, modrou, žlutou nebo fialovou.
+Stojí v řadě.
+
+1. Osoba, která má ráda žlutou, je o dvě místa nalevo od Boba.
+2. Alice je na jednom z konců řady.
+3. Osoba, která má ráda zelenou, je hned napravo od osoby, která má ráda červenou.
+4. Charlie, který nemá rád žlutou, je někde napravo od Alice.
+5. Osoba na třetí pozici miluje fialovou.
+6. David je přímo mezi osobou, která má ráda modrou, a osobou, která má ráda žlutou.
+
+Na základě *pouze* těchto faktů, kdo má rád jakou barvu a jaké je konečné pořadí lidí v řadě? Uveďte pouze konečnou odpověď jako seznam jmen a jejich barev zleva doprava.
+```
+
+**Očekávaný výstup:**
+Reasoning model správně integruje všechna omezení. Standardní model může udělat chybu, často u pravidla č. 4 nebo č. 6.
+
+**Správná odpověď:** `Alice (modrá), David (žlutá), Eve (fialová), Bob (červená), Charlie (zelená)`
+
+**💡 Aha moment:** „Standardní model udělá ‚dobrý odhad', který porušuje pravidlo. Reasoning model si vytvoří mentální model omezení a najde *jediné* řešení, které vyhovuje."
+
+<LabComplete labId="lab-reasoning-1" />
+
+---
+
+## Noví titáni: Pohled na špičku
+
+Hranice AI je nyní bitvou o sílu uvažování. Zatímco specifikace jsou proměnlivé a marketing bují, objevuje se nová třída „přemýšlejících" modelů.
+
+| Model | Síla | Slabina | Jedi analogie |
+| :--- | :--- | :--- | :--- |
+| **GPT-5.2** | Nepřekonatelná logická konzistence a komplexní kód | Nejpomalejší; Nejvyšší náklady; „Přemýšlí příliš" o jednoduchých problémech | Mace Windu (Přesný, mocný a nekompromisní) |
+| **Claude Opus 4.5** | Nuancované etické a kreativní uvažování | Může být rozvláčný; potýká se s vysoce abstraktní matematikou | Obi-Wan Kenobi (Moudrý, spolehlivý, mistr obrany) |
+| **OpenAI o3** | Extrémní rychlost na reasoning model | Méně výkonný než vlajkové modely; „lehčí" myslitel | Qui-Gon Jinn (Nekonvenční, rychlý, následuje Živoucí Sílu) |
+| **DeepSeek R1** | Open-source; vyniká ve vícekrokovém kódu | Méně obecných znalostí; vyžaduje více fine-tuningu | Zakázkově postavený Jedi Starfighter (Výkonný, ale potřebuje zručného pilota) |
+
+<Diagram type="reasoning-models-radar" />
+
+---
+
+<ConceptCard title="Extended Thinking: Nativní schopnost" icon="⚙️">
+
+Toto je **architektonická vlastnost**, ne prompt. Model dostane složitý úkol a interně ho rozloží, spustí simulace, vyhodnotí výsledky a zpřesní svou odpověď *předtím*, než vám ukáže jediné slovo. Má „poznámkový blok" nebo „vnitřní monolog", kde provádí svou práci. To je skutečná kognice Systému 2.
+
+</ConceptCard>
+
+## 🔬 Lab 2: Výzva se samoopravným kódem
+
+Zde je úkol, který vyžaduje nejen generování kódu, ale plánování architektury, předvídání závislostí a opravování vlastních chyb – charakteristické znaky reasoning modelu.
+
+**Cíl:** Zadat modelu vytvoření vícesouborového skriptu, který vyžaduje mezisouborové závislosti, což ho nutí uvažovat o struktuře projektu.
+
+**Prompt:**
+Zkopírujte toto do svého nejvýkonnějšího dostupného modelu:
+
+```text
+Vytvořte jednoduchý Python projekt se dvěma soubory: `main.py` a `utils.py`.
+
+V `utils.py` vytvořte funkci s názvem `calculate_complexity`, která jako vstup bere řetězec. Funkce by měla vracet skóre na základě následujících pravidel: 1 bod za každý znak, 5 bodů za každou číslici a 10 bodů za každé interpunkční znaménko (např. ., !, ?).
+
+V `main.py` importujte funkci `calculate_complexity` z `utils.py`. Skript by měl poté:
+1. Definovat seznam tří vět různé složitosti.
+2. Projít seznam v cyklu.
+3. Pro každou větu vytisknout větu samotnou a její vypočítané skóre složitosti pomocí importované funkce.
+4. Zahrnout blok `if __name__ == "__main__":` pro spuštění hlavní logiky.
+
+Poskytněte kompletní obsah pro `utils.py` i `main.py`.
+```
+
+**Očekávaný výstup:**
+Model by měl vyprodukovat dva odlišné, správné bloky kódu. Méně schopný model by se mohl pokusit dát vše do jednoho souboru, zapomenout na import nebo nesprávně implementovat logiku skórování.
+
+**`utils.py`:**
+```python
+import string
+
+def calculate_complexity(text: str) -> int:
+    score = 0
+    for char in text:
+        score += 1 # 1 bod za znak
+        if char.isdigit():
+            score += 5 # 5 bodů za číslici
+        elif char in string.punctuation:
+            score += 10 # 10 bodů za interpunkci
+    return score
+```
+
+**`main.py`:**
+```python
+from utils import calculate_complexity
+
+def run_analysis():
+    sentences = [
+        "Toto je jednoduchá věta.",
+        "Tato je trochu složitější, s číslem 1!",
+        "Páni! Je toto dosud nejsložitější věta, se 2 čísly a více znaménky!?"
+    ]
+
+    for sentence in sentences:
+        score = calculate_complexity(sentence)
+        print(f"Věta: '{sentence}'")
+        print(f"Skóre složitosti: {score}\n")
+
+if __name__ == "__main__":
+    run_analysis()
+```
+
+**💡 Aha moment:** „AI nejenže napsala kód; pochopila *strukturu* projektu. Plánovala dopředu, oddělila zodpovědnosti a správně propojila oba soubory. Chovala se jako softwarový architekt, nejen jako kodér."
+
+<LabComplete labId="lab-reasoning-2" />
+
+---
+
+<Callout type="success">
+**Rada Jedi: Váš tým pro uvažování**
+
+Představte si svou sadu nástrojů AI jako Radu Jedi. Máte své rychlé, agilní rytíře Jedi (GPT-4, Claude Sonnet) pro každodenní úkoly. Ale pro problémy ohrožující galaxii – složité finanční modely, vícevrstvou právní analýzu, refaktorování kódu, na kterém závisí osud firmy – povoláte Mistry: reasoning modely. Použití správného Jedi pro správnou misi je cestou k moudrosti.
+</Callout>
+
+Toto je jen začátek. Propast mezi AI Systému 1 a Systému 2 bude definovat příští desetiletí technologie. Naučit se tuto propast překlenout, vědět, kdy požádat o rychlou odpověď versus uvážený úsudek, je novou základní dovedností.
+
+---
+
+<ConceptCard title="Holokron: Reasoning Modely" icon="💎">
+
+### 🔑 Klíčové poznatky
+*   **Systém 1 vs. Systém 2:** Většina AI je rychlá/intuitivní (Systém 1); Reasoning modely jsou pomalé/uvážlivé (Systém 2), což jim umožňuje řešit problémy, nejen předpovídat text.
+*   **CoT vs. Extended Thinking:** Chain-of-Thought je *promptovací trik* k simulaci uvažování, zatímco Extended Thinking je *nativní architektonická schopnost* skutečných reasoning modelů.
+*   **Používejte s rozmyslem:** Reasoning modely jsou pomalí, drazí specialisté. Používejte je pro složité, vícekrokové úkoly, kde je správnost nezbytná, jako jsou logické hádanky, komplexní kód a hluboká analýza.
+
+</ConceptCard>

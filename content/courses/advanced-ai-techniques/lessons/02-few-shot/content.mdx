@@ -1,3 +1,278 @@
-# Few-Shot Learning
+# Few-Shot Learning: Teach AI by Example 📚
 
-Show AI examples of what you want.
+<Callout type="info">
+**Mission:** Master the art of teaching AI through examples - learn to craft prompts that show, don't tell.
+
+⏳ **Reading Time:** 20 min | 🧪 **[2] Labs Included**
+</Callout>
+
+<VideoSwitcher alternatives={[
+  {"id":"aPzbKso1jYM","title":"Few-Shot Prompting Explained (AssemblyAI)"},
+  {"id":"v2gD8BHOaX4","title":"Master Few-Shot Learning for AI"}
+]} />
+
+**The best teacher doesn't explain - they demonstrate.**
+
+When you learned to ride a bike, nobody gave you a physics lecture about balance and momentum. Someone showed you. They rode the bike, then you tried. That's the essence of **Few-Shot Learning** - teaching AI through examples rather than instructions.
+
+Why does this matter? Because sometimes **showing is worth a thousand words of instructions**.
+
+---
+
+## The Power of Examples
+
+<ConceptCard title="Few-Shot Learning Defined" icon="📚">
+
+Few-Shot Learning is a prompting technique where you provide the AI with a small number of input-output examples before asking it to perform a similar task. The model learns the pattern from your examples and applies it to new inputs.
+
+**Key insight:** You're not training the model - you're *showing* it what you want within the prompt itself.
+
+</ConceptCard>
+
+Consider this comparison:
+
+| Approach | Prompt | Result Quality |
+|----------|--------|----------------|
+| **Zero-shot** | "Classify this sentiment" | Hit or miss |
+| **One-shot** | 1 example + "Classify this" | Better |
+| **Few-shot** | 3-5 examples + "Classify this" | Much better |
+
+The magic number is usually **3-5 examples** - enough to establish a pattern, not so many that you waste tokens or confuse the model.
+
+---
+
+## Zero vs One vs Few
+
+<Diagram type="few-shot-learning" />
+
+### Zero-Shot (No Examples)
+
+```text
+Classify the sentiment: "This movie was terrible!"
+```
+
+The model relies entirely on its training. Works for common tasks, fails for nuanced or custom ones.
+
+### One-Shot (Single Example)
+
+```text
+Classify the sentiment:
+"I loved this book!" → Positive
+
+"This movie was terrible!" →
+```
+
+One example helps, but the model might overfit to that specific pattern.
+
+### Few-Shot (Multiple Examples)
+
+```text
+Classify the sentiment:
+"I loved this book!" → Positive
+"The service was awful" → Negative
+"It was okay, nothing special" → Neutral
+
+"This movie was terrible!" →
+```
+
+Multiple diverse examples establish a robust pattern.
+
+<Callout type="tip">
+**Pro tip:** Your examples should cover the **diversity** of expected inputs. If you only show positive examples, the model won't know how to handle negative ones!
+</Callout>
+
+---
+
+## Anatomy of a Great Few-Shot Prompt
+
+The structure matters as much as the content:
+
+```text
+[Optional: Task description]
+
+[Example 1 Input] → [Example 1 Output]
+[Example 2 Input] → [Example 2 Output]
+[Example 3 Input] → [Example 3 Output]
+
+[Your actual input] →
+```
+
+### Best Practices
+
+| Do ✅ | Don't ❌ |
+|-------|---------|
+| Use diverse, representative examples | Use only similar examples |
+| Keep consistent formatting | Mix different output formats |
+| Include edge cases | Only show "easy" cases |
+| Use clear delimiters (→, :, newlines) | Ambiguous separations |
+| 3-5 examples typically | 10+ examples (diminishing returns) |
+
+<Callout type="warning">
+**Context Window Alert:** Few-shot prompts consume tokens! With limited context, balance thoroughness against length. Sometimes 3 great examples beat 7 mediocre ones.
+</Callout>
+
+---
+
+## 🔬 Lab 1: Classification with Few-Shot
+
+Let's build a custom sentiment classifier that understands YOUR categories.
+
+**Objective:** Create a few-shot prompt for a 5-star rating system (not just positive/negative).
+
+**The Prompt:**
+Copy this into ChatGPT or Claude:
+
+```text
+Rate the sentiment on a scale of 1-5 stars:
+
+"Best purchase I've ever made! Life-changing!" → ⭐⭐⭐⭐⭐
+"Pretty good, minor issues but overall satisfied" → ⭐⭐⭐⭐
+"It's fine. Does the job, nothing more" → ⭐⭐⭐
+"Disappointed. Expected better quality" → ⭐⭐
+"Complete waste of money. Broken on arrival" → ⭐
+
+"The product works but the battery life could be better. Still, I use it daily." →
+```
+
+**Expected Output:**
+```
+⭐⭐⭐⭐
+```
+(Mixed feelings but overall positive - the examples taught this nuance!)
+
+**Now try these variations:**
+- "Amazing customer service, quick shipping!" →
+- "Meh. It's okay I guess" →
+- "DO NOT BUY. Scam company!" →
+
+**💡 Aha Moment:** "Without examples, the AI might use binary positive/negative. With few-shot, it learned YOUR specific 5-star scale and the nuances between each level!"
+
+<LabComplete labId="lab-fewshot-1" />
+
+---
+
+## Common Few-Shot Applications
+
+Few-shot shines in these scenarios:
+
+### 1. Format Conversion
+
+```text
+Convert to JSON:
+Name: John, Age: 30 → {"name": "John", "age": 30}
+Name: Sarah, Age: 25 → {"name": "Sarah", "age": 25}
+
+Name: Mike, Age: 45 →
+```
+
+### 2. Style Transfer
+
+```text
+Make it sound like a pirate:
+"Hello, how are you?" → "Ahoy there! How be ye sailin' today?"
+"I'm going to the store" → "I be headin' to the merchant's quarters!"
+
+"Can you help me?" →
+```
+
+### 3. Entity Extraction
+
+```text
+Extract the company and product:
+"Apple released the iPhone 15 today" → Company: Apple, Product: iPhone 15
+"Microsoft announced Windows 12" → Company: Microsoft, Product: Windows 12
+
+"Tesla unveiled the Cybertruck 2.0" →
+```
+
+### 4. Custom Classification
+
+```text
+Classify the programming question difficulty:
+"How do I print hello world?" → Beginner
+"Implement a binary search tree" → Intermediate
+"Optimize a distributed consensus algorithm" → Advanced
+
+"Write a recursive fibonacci function" →
+```
+
+---
+
+## 🔬 Lab 2: Style Transfer Magic
+
+Let's teach AI a completely custom writing style!
+
+**Objective:** Make AI write like a specific character or tone using few-shot examples.
+
+**The Prompt:**
+Copy this (teaching AI to respond like a dramatic movie trailer narrator):
+
+```text
+Rewrite as a dramatic movie trailer narration:
+
+"I went to get coffee" → "In a world where caffeine was the only hope... ONE MAN... would make the ultimate journey... TO THE COFFEE MACHINE."
+
+"The meeting was boring" → "They thought it would be just another meeting... They were WRONG. BOREDOM... like they've never experienced... THIS SUMMER."
+
+"I need to do laundry" → "The clothes... were dirty. The hamper... overflowing. And ONE HERO must rise... to face... THE LAUNDRY."
+
+"I'm hungry and want pizza" →
+```
+
+**Expected Output:**
+Something like:
+```
+"In a city consumed by hunger... ONE CRAVING would change everything... PIZZA. This fall... PREPARE... for DELIVERANCE."
+```
+
+**Try your own:**
+- "My phone battery is at 5%"
+- "I forgot my password again"
+- "The WiFi is down"
+
+**💡 Aha Moment:** "You just taught AI a completely custom style that doesn't exist in any manual! Few-shot learning lets you CREATE new behaviors, not just invoke existing ones."
+
+<LabComplete labId="lab-fewshot-2" />
+
+---
+
+## Few-Shot vs Chain-of-Thought
+
+<Callout type="info">
+**Connection to Previous Lesson:**
+Few-shot and Chain-of-Thought can be combined! You can show examples that include reasoning steps, teaching the AI both WHAT to output and HOW to think.
+</Callout>
+
+| Technique | Best For | Examples Contain |
+|-----------|----------|------------------|
+| **Few-shot** | Output format, classification, style | Input → Output |
+| **CoT** | Complex reasoning, math, logic | Thinking steps |
+| **Few-shot + CoT** | Complex tasks with specific format | Input → Reasoning → Output |
+
+---
+
+## When Few-Shot Fails
+
+Few-shot isn't magic. It struggles when:
+
+| Scenario | Why It Fails | Alternative |
+|----------|--------------|-------------|
+| Task is too complex | Examples can't capture all nuances | Use CoT or fine-tuning |
+| Not enough diversity | Model overfits to examples | Add more varied examples |
+| Context is too long | Examples eat up token budget | Reduce examples, be concise |
+| Task requires real-time data | Model can't learn from examples | Use tools/RAG |
+
+---
+
+<ConceptCard title="Holocron: Few-Shot Learning" icon="💎">
+
+### 🔑 Key Takeaways
+
+* **What it is:** Teaching AI through input→output examples in the prompt
+* **Magic number:** 3-5 diverse examples usually optimal
+* **Best for:** Classification, format conversion, style transfer, custom behaviors
+* **Structure:** Examples + consistent formatting + clear delimiters
+* **Power combo:** Few-shot + Chain-of-Thought for complex reasoning with specific outputs
+* **Limitation:** Token-hungry; won't work for tasks requiring real-time knowledge
+
+</ConceptCard>

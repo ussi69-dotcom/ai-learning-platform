@@ -1,0 +1,71 @@
+{
+  "title": "Chain-of-Thought Quiz",
+  "description": "Test your understanding of CoT prompting techniques",
+  "questions": [
+    {
+      "id": "cot-q1",
+      "type": "multiple_choice",
+      "question": "What is Chain-of-Thought (CoT) prompting?",
+      "options": [
+        "A technique that makes AI respond faster",
+        "A technique that makes AI show its reasoning step-by-step",
+        "A way to reduce the cost of API calls",
+        "A method to train AI models"
+      ],
+      "correct": 1,
+      "explanation": "CoT prompting encourages AI to articulate its reasoning process step-by-step before providing a final answer, improving accuracy and interpretability."
+    },
+    {
+      "id": "cot-q2",
+      "type": "multiple_choice",
+      "question": "What makes Zero-shot CoT special?",
+      "options": [
+        "It requires many examples to work",
+        "It only works with GPT-4",
+        "It works by just adding 'Let's think step by step' - no examples needed",
+        "It's faster than other methods"
+      ],
+      "correct": 2,
+      "explanation": "Zero-shot CoT requires no examples in the prompt. Simply adding phrases like 'Let's think step by step' triggers the AI to show its reasoning."
+    },
+    {
+      "id": "cot-q3",
+      "type": "multiple_choice",
+      "question": "When should you use Few-shot CoT instead of Zero-shot CoT?",
+      "options": [
+        "When you want faster responses",
+        "When the task requires a specific reasoning pattern the AI might not infer",
+        "When working with simple math problems",
+        "When you don't have time to write examples"
+      ],
+      "correct": 1,
+      "explanation": "Few-shot CoT is useful when the task requires domain-specific reasoning or a particular pattern that the AI needs to learn from examples."
+    },
+    {
+      "id": "cot-q4",
+      "type": "multiple_choice",
+      "question": "Which is NOT a benefit of Chain-of-Thought prompting?",
+      "options": [
+        "Reduces hallucinations",
+        "Improves interpretability",
+        "Makes responses faster",
+        "Handles complex multi-step problems better"
+      ],
+      "correct": 2,
+      "explanation": "CoT actually makes responses SLOWER because the AI generates more tokens (the reasoning steps). The tradeoff is better accuracy and interpretability."
+    },
+    {
+      "id": "cot-q5",
+      "type": "multiple_choice",
+      "question": "What is the key limitation of CoT prompting?",
+      "options": [
+        "It only works in English",
+        "It's a prompting TRICK, not native reasoning ability",
+        "It can't handle math problems",
+        "It requires expensive API plans"
+      ],
+      "correct": 1,
+      "explanation": "CoT is a prompting technique that simulates reasoning, but it's not native to the model architecture. True reasoning models (like o1, o3) have Extended Thinking built-in."
+    }
+  ]
+}

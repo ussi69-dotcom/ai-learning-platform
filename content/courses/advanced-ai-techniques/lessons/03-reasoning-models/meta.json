@@ -1,0 +1,18 @@
+{
+  "title": "Reasoning Models: When AI Actually Thinks",
+  "title_cs": "Reasoning Modely: Když AI skutečně přemýšlí",
+  "description": "Master System 2 AI - learn when and how to deploy models that don't just predict, but reason through complex problems.",
+  "description_cs": "Ovládněte System 2 AI - naučte se kdy a jak nasadit modely, které nepredikují, ale skutečně uvažují nad složitými problémy.",
+  "order": 3,
+  "video_url": "https://www.youtube.com/embed/QB3l9sFV2Kk",
+  "tags": ["reasoning", "system-2", "o1", "o3", "gpt-5", "deepseek-r1", "chain-of-thought", "extended-thinking"],
+  "prerequisites": ["01-chain-of-thought", "02-few-shot"],
+  "learning_objectives": [
+    "Understand the difference between System 1 and System 2 AI",
+    "Compare Chain-of-Thought prompting vs Extended Thinking",
+    "Know when to use reasoning models vs standard LLMs",
+    "Compare GPT-5.2, Claude Opus 4.5, o3, and DeepSeek R1",
+    "Solve complex logic puzzles using reasoning models",
+    "Build multi-file code projects with AI assistance"
+  ]
+}

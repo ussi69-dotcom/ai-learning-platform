@@ -1,0 +1,71 @@
+{
+  "title": "Kvíz: Few-Shot Learning",
+  "description": "Otestujte své znalosti few-shot promptovacích technik",
+  "questions": [
+    {
+      "id": "fs-q1",
+      "type": "multiple_choice",
+      "question": "Jaký je hlavní rozdíl mezi zero-shot a few-shot learningem?",
+      "options": [
+        "Zero-shot je rychlejší",
+        "Few-shot poskytuje příklady v promptu, zero-shot ne",
+        "Zero-shot vyžaduje trénink, few-shot ne",
+        "Few-shot funguje pouze s GPT-4"
+      ],
+      "correct": 1,
+      "explanation": "Klíčový rozdíl je, že few-shot learning zahrnuje příklady vstup-výstup v promptu, zatímco zero-shot se spoléhá výhradně na předexistující znalosti modelu."
+    },
+    {
+      "id": "fs-q2",
+      "type": "multiple_choice",
+      "question": "Jaký je doporučený počet příkladů pro few-shot prompting?",
+      "options": [
+        "1-2 příklady",
+        "3-5 příkladů",
+        "10-15 příkladů",
+        "Co nejvíce"
+      ],
+      "correct": 1,
+      "explanation": "3-5 příkladů je obvykle optimální - dost na vytvoření vzorce bez plýtvání tokeny nebo přetížení modelu příliš mnoha informacemi."
+    },
+    {
+      "id": "fs-q3",
+      "type": "multiple_choice",
+      "question": "Co z následujícího je osvědčený postup pro few-shot prompty?",
+      "options": [
+        "Používat pouze podobné příklady k posílení vzorce",
+        "Zahrnout různorodé, reprezentativní příklady pokrývající různé případy",
+        "Použít tolik příkladů, kolik se vejde do kontextového okna",
+        "Vždy zahrnout alespoň 10 příkladů"
+      ],
+      "correct": 1,
+      "explanation": "Různorodé příklady pomáhají modelu lépe generalizovat. Pokud jsou všechny příklady podobné, model může přefit na tento specifický vzorec."
+    },
+    {
+      "id": "fs-q4",
+      "type": "multiple_choice",
+      "question": "Na co je few-shot learning NEJLÉPE vhodný?",
+      "options": [
+        "Získávání dat v reálném čase",
+        "Složité matematické důkazy",
+        "Konverze formátu, klasifikace a přenos stylu",
+        "Trénování nových AI modelů"
+      ],
+      "correct": 2,
+      "explanation": "Few-shot exceluje v učení specifických výstupních formátů, klasifikačních schémat a stylových vzorců pomocí příkladů."
+    },
+    {
+      "id": "fs-q5",
+      "type": "multiple_choice",
+      "question": "Jak lze kombinovat Few-Shot a Chain-of-Thought?",
+      "options": [
+        "Nelze je kombinovat",
+        "Ukázáním příkladů, které obsahují kroky uvažování",
+        "Použitím jednoho před druhým v oddělených promptech",
+        "Pouze v Python kódu"
+      ],
+      "correct": 1,
+      "explanation": "Můžete je kombinovat poskytnutím příkladů, které ukazují vstup, proces uvažování A výstup - učíte model JAK vytvářet i JAK přemýšlet."
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "title": "Kvíz: Chain-of-Thought",
+  "description": "Otestujte své znalosti CoT promptovacích technik",
+  "questions": [
+    {
+      "id": "cot-q1",
+      "type": "multiple_choice",
+      "question": "Co je Chain-of-Thought (CoT) prompting?",
+      "options": [
+        "Technika, která zrychluje odpovědi AI",
+        "Technika, která přiměje AI ukázat své uvažování krok za krokem",
+        "Způsob snížení nákladů na API volání",
+        "Metoda pro trénování AI modelů"
+      ],
+      "correct": 1,
+      "explanation": "CoT prompting povzbuzuje AI k artikulaci svého procesu uvažování krok za krokem před poskytnutím finální odpovědi, což zlepšuje přesnost a interpretovatelnost."
+    },
+    {
+      "id": "cot-q2",
+      "type": "multiple_choice",
+      "question": "Co dělá Zero-shot CoT speciálním?",
+      "options": [
+        "Vyžaduje mnoho příkladů k fungování",
+        "Funguje pouze s GPT-4",
+        "Funguje pouhým přidáním 'Let's think step by step' - žádné příklady nejsou potřeba",
+        "Je rychlejší než jiné metody"
+      ],
+      "correct": 2,
+      "explanation": "Zero-shot CoT nevyžaduje žádné příklady v promptu. Pouhé přidání frází jako 'Let's think step by step' spustí AI k ukázání svého uvažování."
+    },
+    {
+      "id": "cot-q3",
+      "type": "multiple_choice",
+      "question": "Kdy byste měli použít Few-shot CoT místo Zero-shot CoT?",
+      "options": [
+        "Když chcete rychlejší odpovědi",
+        "Když úkol vyžaduje specifický vzorec uvažování, který AI nemusí odvodit",
+        "Při práci s jednoduchými matematickými problémy",
+        "Když nemáte čas psát příklady"
+      ],
+      "correct": 1,
+      "explanation": "Few-shot CoT je užitečné, když úkol vyžaduje doménově specifické uvažování nebo konkrétní vzorec, který se AI potřebuje naučit z příkladů."
+    },
+    {
+      "id": "cot-q4",
+      "type": "multiple_choice",
+      "question": "Co NENÍ výhodou Chain-of-Thought promptingu?",
+      "options": [
+        "Snižuje halucinace",
+        "Zlepšuje interpretovatelnost",
+        "Zrychluje odpovědi",
+        "Lépe zvládá složité vícekrokové problémy"
+      ],
+      "correct": 2,
+      "explanation": "CoT ve skutečnosti ZPOMALUJE odpovědi, protože AI generuje více tokenů (kroky uvažování). Kompromisem je lepší přesnost a interpretovatelnost."
+    },
+    {
+      "id": "cot-q5",
+      "type": "multiple_choice",
+      "question": "Jaké je klíčové omezení CoT promptingu?",
+      "options": [
+        "Funguje pouze v angličtině",
+        "Je to promptovací TRIK, ne nativní schopnost uvažování",
+        "Nedokáže řešit matematické problémy",
+        "Vyžaduje drahé API plány"
+      ],
+      "correct": 1,
+      "explanation": "CoT je promptovací technika, která simuluje uvažování, ale není nativní architektuře modelu. Skutečné reasoning modely (jako o1, o3) mají Extended Thinking vestavěné."
+    }
+  ]
+}
