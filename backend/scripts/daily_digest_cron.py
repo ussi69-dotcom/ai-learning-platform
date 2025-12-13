@@ -106,6 +106,77 @@ def call_perplexity_api(prompt: str) -> tuple[Optional[str], list[str]]:
         return None, []
 
 
+def translate_to_czech(texts: list[str]) -> list[str]:
+    """Translate a list of texts to Czech using Perplexity.
+
+    Args:
+        texts: List of English texts to translate
+
+    Returns:
+        List of Czech translations (same length as input)
+    """
+    if not texts or not PERPLEXITY_API_KEY:
+        return texts  # Return original if no API key or empty
+
+    # Build prompt with all texts to translate
+    numbered_texts = "\n".join(f"{i+1}. {text}" for i, text in enumerate(texts))
+
+    prompt = f"""Translate these AI news headlines to Czech. Keep them concise and natural.
+Return ONLY the translations in the same numbered format, nothing else.
+
+{numbered_texts}"""
+
+    headers = {
+        "Authorization": f"Bearer {PERPLEXITY_API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "model": PERPLEXITY_MODEL,
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are a professional translator. Translate to Czech accurately and naturally."
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        "temperature": 0.1,
+        "max_tokens": 2000
+    }
+
+    try:
+        logger.info(f"Translating {len(texts)} items to Czech...")
+        with httpx.Client(timeout=60.0) as client:
+            response = client.post(PERPLEXITY_API_URL, headers=headers, json=payload)
+            response.raise_for_status()
+
+            data = response.json()
+            content = data["choices"][0]["message"]["content"]
+
+            # Parse numbered translations
+            translations = []
+            for line in content.strip().split('\n'):
+                # Remove number prefix (1., 2., etc.)
+                match = re.match(r'^\d+\.\s*(.+)$', line.strip())
+                if match:
+                    translations.append(match.group(1).strip())
+
+            # Verify we got all translations
+            if len(translations) == len(texts):
+                logger.info(f"Successfully translated {len(translations)} items to Czech")
+                return translations
+            else:
+                logger.warning(f"Translation count mismatch: expected {len(texts)}, got {len(translations)}")
+                return texts  # Return original on mismatch
+
+    except Exception as e:
+        logger.error(f"Translation error: {e}")
+        return texts  # Return original on error
+
+
 def parse_perplexity_response(content: str, citations: list[str]) -> Optional[dict]:
     """Parse Perplexity response into webhook format.
 
@@ -159,11 +230,13 @@ def parse_perplexity_response(content: str, citations: list[str]) -> Optional[di
         logger.error(f"Insufficient content: only {len(items)} items parsed")
         return None
 
-    # Build summaries (short one-line versions)
+    # Build English summaries
     summaries_en = [item['title'][:150] for item in items]
-    summaries_cs = summaries_en.copy()  # English for now (would need translation)
 
-    # Build feed items
+    # Translate to Czech
+    summaries_cs = translate_to_czech(summaries_en)
+
+    # Build feed items (English)
     feed_en = [
         {
             'title': item['title'],
@@ -173,14 +246,24 @@ def parse_perplexity_response(content: str, citations: list[str]) -> Optional[di
         for item in items
     ]
 
-    feed_cs = [
-        {
-            'title': item['title'],  # English for now
-            'description': item['summary'],
+    # Translate titles and descriptions for Czech feed
+    titles_cs = translate_to_czech([item['title'] for item in items])
+    descriptions_cs = translate_to_czech([item['summary'] for item in items if item['summary']])
+
+    # Build Czech feed with translated content
+    feed_cs = []
+    desc_idx = 0
+    for i, item in enumerate(items):
+        cs_title = titles_cs[i] if i < len(titles_cs) else item['title']
+        cs_desc = ""
+        if item['summary']:
+            cs_desc = descriptions_cs[desc_idx] if desc_idx < len(descriptions_cs) else item['summary']
+            desc_idx += 1
+        feed_cs.append({
+            'title': cs_title,
+            'description': cs_desc,
             'source_url': item['url']
-        }
-        for item in items
-    ]
+        })
 
     return {
         'summary_en': summaries_en,

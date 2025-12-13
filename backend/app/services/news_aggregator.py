@@ -41,11 +41,14 @@ YOUTUBE_CHANNELS = {
     "UC5l7RouTQ60oUjLjt1Nh-UQ": "AI Revolution",        # AI news & trends
     "UCajiMK_CY9icRhLepS8_3ug": "Alex Ziskind",         # AI coding tutorials
     "UC_RovKmk0OCbuZjA8f08opw": "Futurepedia",          # AI tools & tutorials
+    "UChpleBmo18P08aKCIgti38g": "Matt Wolfe",           # AI tools & news (@mreflow, 871K subs) - VERIFIED Dec 2025
+    "UCqcbQf6yw5KzRoDDcZ_wBSw": "Wes Roth",             # AI news & analysis (@WesRoth, 303K subs) - VERIFIED Dec 2025
+    "UCbY9xX3_jW5c2fjlZVBI4cg": "TheAIGRID",            # AI news & tutorials (@TheAiGrid, 378K subs) - VERIFIED Dec 2025
     # Core Tech Educators
     "UCWN3xxRkmTPmbKwht9FuE5A": "Fireship",             # Fast tech explainers
     "UCYO_jab_esuFRV4b17AJtAw": "3Blue1Brown",          # Math & ML visualized
     "UCZHmQk67mSJgfCCTn7xBfew": "Yannic Kilcher",       # ML paper reviews
-    "UC0RhatS1pyxInC00YKjjBqQ": "AI Explained",         # AI deep dives
+    "UCNJ1Ymd5yFuUPtn21xtRbbw": "AI Explained",         # Philip's AI news (@aiexplained-official) - VERIFIED via Playwright Dec 2025
     "UCbfYPyITQ-7l4upoX8nvctg": "Two Minute Papers",    # Research highlights
     # New additions (2024-2025 rising stars)
     "UCtYLUTtgS3k1Fg4y5tAhLbw": "StatQuest",            # ML/stats explained with humor
