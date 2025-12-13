@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What are the two main problems RAG solves?",
+    "option_a": "Speed and cost of API calls",
+    "option_b": "Knowledge cutoff and hallucinations",
+    "option_c": "Model size and training time",
+    "option_d": "Security and privacy concerns",
+    "correct_answer": "B",
+    "explanation": "RAG solves the knowledge cutoff problem (LLMs are frozen in time) and hallucination problem (making up facts) by grounding responses in external, retrieved data.",
+    "order": 1
+  },
+  {
+    "question": "What is the correct order of the RAG pipeline stages?",
+    "option_a": "Generate → Retrieve → Index",
+    "option_b": "Retrieve → Index → Generate",
+    "option_c": "Index → Retrieve → Generate",
+    "option_d": "Index → Generate → Retrieve",
+    "correct_answer": "C",
+    "explanation": "The RAG pipeline is: 1) Index (prepare documents: chunk and embed), 2) Retrieve (find relevant chunks via similarity search), 3) Generate (produce answer with context).",
+    "order": 2
+  },
+  {
+    "question": "What is the 'sweet spot' for chunk size in RAG systems?",
+    "option_a": "50-100 tokens",
+    "option_b": "200-500 tokens with 10-20% overlap",
+    "option_c": "1000-2000 tokens",
+    "option_d": "As large as possible",
+    "correct_answer": "B",
+    "explanation": "200-500 tokens with overlap is typically optimal. Too small loses context; too large wastes the context window and dilutes relevant information.",
+    "order": 3
+  },
+  {
+    "question": "What does an embedding model do in RAG?",
+    "option_a": "Compresses documents to save storage",
+    "option_b": "Transforms text into vectors that capture semantic meaning",
+    "option_c": "Encrypts documents for security",
+    "option_d": "Translates documents to different languages",
+    "correct_answer": "B",
+    "explanation": "Embedding models convert text into numerical vectors where similar meanings result in vectors that are close together in the vector space, enabling semantic similarity search.",
+    "order": 4
+  },
+  {
+    "question": "Why is 'grounding' important in RAG prompts?",
+    "option_a": "It makes the model respond faster",
+    "option_b": "It prevents the model from mixing facts with hallucinations",
+    "option_c": "It reduces API costs",
+    "option_d": "It improves the embedding quality",
+    "correct_answer": "B",
+    "explanation": "Grounding instructions (e.g., 'ONLY use the provided context') ensure the LLM bases its answers on retrieved facts rather than mixing them with potentially hallucinated information.",
+    "order": 5
+  }
+]

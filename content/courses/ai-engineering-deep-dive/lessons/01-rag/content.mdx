@@ -1,3 +1,466 @@
-# RAG
+# Retrieval-Augmented Generation (RAG) 🔍
 
-Build AI systems that know YOUR data!
+<Callout type="info">
+**Mission:** Build AI systems that know YOUR data - learn to overcome knowledge cutoffs and hallucinations by grounding AI in external knowledge.
+
+⏳ **Reading Time:** 40 min | 🧪 **[3] Labs Included**
+</Callout>
+
+**The problem with LLMs: They're frozen in time.**
+
+ChatGPT doesn't know what happened yesterday. Claude can't read your company's internal documents. Every LLM has a **knowledge cutoff** - a point in time where their training data ends. After that? They're guessing.
+
+And when they guess, they **hallucinate** - confidently making up facts that sound plausible but are completely wrong.
+
+**RAG solves both problems.** Instead of relying solely on what the model "remembers," we give it access to external knowledge *at query time*.
+
+---
+
+## Why RAG Matters
+
+<ConceptCard title="The Knowledge Problem" icon="🧠">
+
+LLMs have two fundamental limitations:
+
+1. **Knowledge Cutoff**: Training stops at a specific date (e.g., April 2024)
+2. **No Access to Private Data**: They can't read your documents, databases, or internal systems
+
+**RAG (Retrieval-Augmented Generation)** solves this by:
+- Retrieving relevant documents from your knowledge base
+- Injecting them into the prompt as context
+- Having the LLM generate answers grounded in real data
+
+</ConceptCard>
+
+### The RAG Promise
+
+| Problem | Without RAG | With RAG |
+|---------|-------------|----------|
+| "What's our Q4 revenue?" | Hallucinated number | Accurate from your reports |
+| "What happened yesterday?" | "I don't have that information" | Real-time news retrieval |
+| "Company policy on X?" | Generic guess | Your actual policy document |
+
+---
+
+## The RAG Pipeline
+
+Every RAG system follows the same three-stage pipeline:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    RAG PIPELINE                          │
+├─────────────────────────────────────────────────────────┤
+│                                                          │
+│  1. INDEX (Offline - One Time)                          │
+│     ┌──────────┐    ┌──────────┐    ┌──────────────┐   │
+│     │ Documents│ -> │ Chunk    │ -> │ Embed &      │   │
+│     │          │    │          │    │ Store in DB  │   │
+│     └──────────┘    └──────────┘    └──────────────┘   │
+│                                                          │
+│  2. RETRIEVE (Online - Per Query)                       │
+│     ┌──────────┐    ┌──────────┐    ┌──────────────┐   │
+│     │ User     │ -> │ Embed    │ -> │ Vector       │   │
+│     │ Query    │    │ Query    │    │ Similarity   │   │
+│     └──────────┘    └──────────┘    └──────────────┘   │
+│                                                          │
+│  3. GENERATE (Online - Per Query)                       │
+│     ┌──────────┐    ┌──────────┐    ┌──────────────┐   │
+│     │ Retrieved│ -> │ Build    │ -> │ LLM          │   │
+│     │ Chunks   │    │ Prompt   │    │ Response     │   │
+│     └──────────┘    └──────────┘    └──────────────┘   │
+│                                                          │
+└─────────────────────────────────────────────────────────┘
+```
+
+Let's break down each stage:
+
+---
+
+## Stage 1: Indexing
+
+Before RAG can work, you need to prepare your knowledge base.
+
+### Step 1: Document Loading
+
+Load your documents from various sources:
+- PDFs, Word docs, text files
+- Web pages, APIs
+- Databases, spreadsheets
+- Slack messages, emails
+
+### Step 2: Chunking
+
+**Critical decision:** LLMs have context limits. You can't stuff entire books into a prompt. You need to split documents into smaller **chunks**.
+
+| Chunking Strategy | Best For | Typical Size |
+|-------------------|----------|--------------|
+| **Fixed Size** | Simple documents | 500-1000 tokens |
+| **Semantic** | Technical docs | Varies by meaning |
+| **Sentence-based** | Q&A datasets | 1-5 sentences |
+| **Paragraph-based** | Articles, blogs | Natural breaks |
+
+<Callout type="warning">
+**Chunk Size Trade-off:**
+- **Too small:** Loses context, retrieves irrelevant fragments
+- **Too large:** Wastes context window, dilutes relevant info
+- **Sweet spot:** 200-500 tokens with 10-20% overlap
+</Callout>
+
+### Step 3: Embedding
+
+Transform text chunks into **vectors** (arrays of numbers) that capture semantic meaning.
+
+```python
+# Example: Creating embeddings
+from openai import OpenAI
+
+client = OpenAI()
+
+text = "RAG combines retrieval with generation"
+response = client.embeddings.create(
+    model="text-embedding-3-small",
+    input=text
+)
+
+# Result: [0.0023, -0.0152, 0.0341, ...] (1536 dimensions)
+embedding = response.data[0].embedding
+```
+
+**Popular Embedding Models:**
+
+| Model | Dimensions | Provider | Best For |
+|-------|------------|----------|----------|
+| text-embedding-3-small | 1536 | OpenAI | Cost-effective |
+| text-embedding-3-large | 3072 | OpenAI | Highest quality |
+| all-MiniLM-L6-v2 | 384 | HuggingFace | Free, fast |
+| voyage-2 | 1024 | Voyage AI | Code & legal |
+
+### Step 4: Store in Vector Database
+
+Store embeddings in a specialized database that supports similarity search.
+
+---
+
+## 🔬 Lab 1: Create Your First Embeddings
+
+Let's experience how embeddings capture semantic meaning!
+
+**Objective:** Understand how similar concepts cluster together in vector space.
+
+**The Prompt:**
+Copy this into ChatGPT or Claude:
+
+```text
+You are an embedding visualization assistant. I'll give you sentences and you'll
+estimate their semantic similarity on a scale of 0-100.
+
+Rate the similarity between each pair:
+
+Sentences:
+A: "The cat sat on the mat"
+B: "A feline rested on the rug"
+C: "Dogs are loyal pets"
+D: "The stock market crashed yesterday"
+
+Compare:
+1. A vs B: ?
+2. A vs C: ?
+3. A vs D: ?
+4. B vs C: ?
+```
+
+**Expected Output:**
+```
+1. A vs B: 95 (nearly identical meaning, different words)
+2. A vs C: 40 (both about pets, but different animals/actions)
+3. A vs D: 5 (completely unrelated topics)
+4. B vs C: 35 (both about animals, but different context)
+```
+
+**💡 Aha Moment:** "This is exactly what embedding models do mathematically! They convert sentences into vectors where similar meanings = close vectors."
+
+<LabComplete labId="lab-rag-1" />
+
+---
+
+## Stage 2: Retrieval
+
+When a user asks a question, we need to find the most relevant chunks.
+
+### Vector Similarity Search
+
+1. **Embed the query** using the same model
+2. **Calculate distance** between query vector and all stored vectors
+3. **Return top-K** most similar chunks
+
+```python
+# Conceptual example
+query = "What is our refund policy?"
+query_embedding = embed(query)
+
+# Find similar chunks (simplified)
+results = vector_db.similarity_search(
+    query_embedding,
+    k=5  # Return top 5 most relevant chunks
+)
+```
+
+### Distance Metrics
+
+| Metric | Formula | When to Use |
+|--------|---------|-------------|
+| **Cosine Similarity** | cos(θ) | Most common, normalized |
+| **Euclidean Distance** | √Σ(a-b)² | Raw distance |
+| **Dot Product** | Σ(a×b) | When magnitude matters |
+
+<Callout type="tip">
+**Pro tip:** Cosine similarity is almost always the right choice for text embeddings. It ignores vector magnitude and focuses on direction (meaning).
+</Callout>
+
+---
+
+## Vector Databases Compared
+
+You need a specialized database to store and search millions of vectors efficiently.
+
+| Database | Type | Best For | Pricing |
+|----------|------|----------|---------|
+| **Pinecone** | Managed | Production, enterprise | Pay-per-use |
+| **Chroma** | Open-source | Local dev, prototypes | Free |
+| **Weaviate** | Hybrid | GraphQL fans, hybrid search | Free + managed |
+| **Qdrant** | Open-source | Self-hosted, Rust performance | Free |
+| **pgvector** | PostgreSQL ext | Existing Postgres users | Free |
+
+### Quick Comparison
+
+```
+Pinecone:  🏢 Enterprise   | ⚡ Fastest   | 💰 $$
+Chroma:    🧪 Prototyping  | 🐍 Pythonic  | 💰 Free
+Weaviate:  🔗 Hybrid       | 📊 GraphQL   | 💰 Free/$
+Qdrant:    🦀 Performance  | 🔧 Self-host | 💰 Free
+```
+
+---
+
+## Stage 3: Generation
+
+Now we combine retrieved context with the user's question.
+
+### The RAG Prompt Template
+
+```text
+You are a helpful assistant. Answer the question based ONLY on the
+following context. If the context doesn't contain the answer, say
+"I don't have enough information to answer that."
+
+Context:
+{retrieved_chunks}
+
+Question: {user_question}
+
+Answer:
+```
+
+<Callout type="warning">
+**Grounding is Critical:**
+Always instruct the model to ONLY use the provided context. Otherwise, it might mix retrieved facts with hallucinated ones.
+</Callout>
+
+---
+
+## 🔬 Lab 2: Build a RAG Prompt
+
+Let's construct a proper RAG prompt and see how context changes the response!
+
+**Objective:** Experience how retrieved context transforms AI responses.
+
+**Part 1 - Without Context:**
+```text
+What is the maximum refund period for software purchases at TechCorp?
+```
+(AI will hallucinate or say it doesn't know)
+
+**Part 2 - With RAG Context:**
+```text
+You are a helpful customer service assistant for TechCorp. Answer ONLY
+based on the following policy documents. If you can't find the answer,
+say "I don't have that information in our policy documents."
+
+CONTEXT:
+---
+Document: TechCorp Refund Policy (Updated Jan 2024)
+Section 3.2: Software Purchases
+- Digital software: 14-day refund window from purchase date
+- Enterprise licenses: 30-day evaluation period with full refund
+- Subscription services: Pro-rated refund for annual plans, no refund for monthly
+- Exclusions: Activated license keys cannot be refunded
+---
+
+Question: What is the maximum refund period for software purchases at TechCorp?
+```
+
+**Expected Output:**
+```
+Based on TechCorp's refund policy, the maximum refund period depends on
+the type of software purchase:
+
+- Digital software: 14 days from purchase date
+- Enterprise licenses: 30 days (evaluation period)
+- Subscription services: Pro-rated for annual plans
+
+The longest refund window is 30 days for enterprise licenses.
+
+Note: Activated license keys cannot be refunded regardless of the time period.
+```
+
+**💡 Aha Moment:** "The AI went from guessing to giving precise, sourced answers. That's the power of RAG - grounding AI in real data!"
+
+<LabComplete labId="lab-rag-2" />
+
+---
+
+## Advanced RAG Techniques
+
+Basic RAG is just the beginning. Production systems use advanced techniques:
+
+### 1. Hybrid Search
+
+Combine vector search with keyword search (BM25) for better results.
+
+```
+Query: "ISO 27001 compliance"
+
+Vector alone: Finds "security standards" docs (semantic)
+Keyword alone: Finds docs containing "ISO 27001" (exact)
+Hybrid: Finds both + ranks optimally
+```
+
+### 2. Re-Ranking
+
+After initial retrieval, use a cross-encoder to re-rank results for relevance.
+
+### 3. Query Transformation
+
+Improve retrieval by transforming the user's query:
+- **HyDE:** Generate a hypothetical answer, then search for similar docs
+- **Multi-Query:** Generate multiple variations of the question
+- **Step-Back:** Ask a more general question first
+
+### 4. Contextual Compression
+
+Summarize or filter retrieved chunks before passing to LLM.
+
+---
+
+## Common RAG Pitfalls
+
+| Problem | Symptom | Solution |
+|---------|---------|----------|
+| **Chunking too aggressive** | Retrieved fragments are meaningless | Increase chunk size, add overlap |
+| **Wrong embedding model** | Irrelevant retrieval results | Match model to domain (code, legal, etc.) |
+| **K too low** | Misses relevant context | Increase K, use re-ranking |
+| **K too high** | Dilutes signal with noise | Decrease K, use compression |
+| **No grounding instruction** | LLM mixes facts with hallucinations | Explicit "ONLY use context" prompt |
+
+---
+
+## 🔬 Lab 3: Debug a RAG Failure
+
+Let's diagnose why a RAG system might fail and fix it!
+
+**Objective:** Learn to troubleshoot common RAG issues.
+
+**Scenario:**
+Your RAG system returns wrong answers for technical questions.
+
+**The Debug Prompt:**
+```text
+You are a RAG system debugger. Given this scenario, identify the problem
+and suggest a fix:
+
+SYSTEM CONFIG:
+- Embedding model: text-embedding-3-small
+- Chunk size: 100 tokens (no overlap)
+- Top-K: 2
+- Documents: Technical API documentation (500 pages)
+
+USER QUERY: "How do I authenticate with OAuth 2.0?"
+
+RETRIEVED CHUNKS:
+1. "OAuth is a protocol for..." (general intro, page 1)
+2. "For authentication, use the login endpoint..." (unrelated endpoint)
+
+ACTUAL ANSWER LOCATION: Pages 45-48, "OAuth 2.0 Implementation Guide"
+
+Why did retrieval fail? What would you change?
+```
+
+**Expected Analysis:**
+```
+PROBLEMS IDENTIFIED:
+
+1. Chunk size too small (100 tokens)
+   - Technical docs need larger context
+   - Fix: Increase to 400-500 tokens with 50 token overlap
+
+2. Top-K too low (2)
+   - For 500-page docs, 2 chunks is insufficient
+   - Fix: Increase to 5-10, then use re-ranking
+
+3. No hybrid search
+   - "OAuth 2.0" is a specific term that benefits from keyword matching
+   - Fix: Enable BM25 + vector hybrid search
+
+4. Possible embedding mismatch
+   - General embedding model for technical docs
+   - Consider: Specialized code/technical embedding model
+```
+
+**💡 Aha Moment:** "RAG failures are usually systematic, not random. The debug process: Check chunks → Check retrieval → Check prompt → Check model."
+
+<LabComplete labId="lab-rag-3" />
+
+---
+
+## RAG Implementation Checklist
+
+Before deploying RAG to production:
+
+```
+□ Data Pipeline
+  □ Document loader handles all your file types
+  □ Chunking strategy tested with sample queries
+  □ Embedding model appropriate for domain
+
+□ Retrieval
+  □ Vector database chosen and configured
+  □ Top-K tuned for your use case
+  □ Hybrid search enabled if needed
+
+□ Generation
+  □ Grounding instructions in system prompt
+  □ Source citations in responses
+  □ Fallback for "no relevant context"
+
+□ Evaluation
+  □ Retrieval accuracy measured (Recall@K)
+  □ End-to-end answer quality tested
+  □ Hallucination detection in place
+```
+
+---
+
+<ConceptCard title="Holocron: RAG Fundamentals" icon="💎">
+
+### 🔑 Key Takeaways
+
+* **What it is:** Retrieval-Augmented Generation - giving LLMs access to external knowledge at query time
+* **Why it matters:** Solves knowledge cutoff and hallucination problems
+* **The Pipeline:** Index (chunk + embed) → Retrieve (similarity search) → Generate (grounded response)
+* **Key decisions:** Chunk size, embedding model, vector database, top-K
+* **Advanced techniques:** Hybrid search, re-ranking, query transformation
+* **Production checklist:** Data pipeline + retrieval tuning + grounding prompts + evaluation
+
+**Next steps:** Learn about Agent Frameworks that orchestrate RAG with other tools!
+
+</ConceptCard>

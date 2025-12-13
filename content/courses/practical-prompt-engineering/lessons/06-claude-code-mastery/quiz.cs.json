@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Jaký je klíčový rozdíl mezi agentní AI (jako Claude Code) a tradičními AI asistenty?",
+    "option_a": "Agentní AI je rychlejší",
+    "option_b": "Agentní AI může provádět akce, ne jen navrhovat",
+    "option_c": "Agentní AI je levnější",
+    "option_d": "Agentní AI funguje pouze v Pythonu",
+    "correct_answer": "B",
+    "explanation": "Fundamentální rozdíl je, že agentní AI jako Claude Code může skutečně spouštět příkazy, editovat soubory a ověřovat změny - ne jen navrhovat, co dělat.",
+    "order": 1
+  },
+  {
+    "question": "Co jsou Claude Code 'hooks'?",
+    "option_a": "Způsoby připojení k externím API",
+    "option_b": "Shell příkazy, které se spouštějí v reakci na Claude Code události",
+    "option_c": "Nástroje pro vizuální debugging",
+    "option_d": "Frameworky pro automatizaci testů",
+    "correct_answer": "B",
+    "explanation": "Hooks jsou automatizované triggery, které spouštějí shell příkazy, když nastanou specifické Claude Code události (jako zápisy souborů nebo použití nástrojů).",
+    "order": 2
+  },
+  {
+    "question": "Co znamená MCP a co umožňuje?",
+    "option_a": "Model Control Panel - přizpůsobení UI",
+    "option_b": "Model Context Protocol - rozšířené schopnosti přes servery",
+    "option_c": "Multi-Code Processing - paralelní spouštění",
+    "option_d": "Manual Code Patches - verzování",
+    "correct_answer": "B",
+    "explanation": "MCP (Model Context Protocol) servery rozšiřují schopnosti Claude Code poskytováním přístupu k externím systémům jako Figma, GitHub, databáze a další.",
+    "order": 3
+  },
+  {
+    "question": "Kdy byste měli použít plan mode Claude Code?",
+    "option_a": "Pro jednoduché jednořádkové opravy",
+    "option_b": "Pro komplexní, vícesouborové implementace a architektonické změny",
+    "option_c": "Pouze pro testování",
+    "option_d": "Když chcete rychlejší odpovědi",
+    "correct_answer": "B",
+    "explanation": "Plan mode je navržen pro komplexní úkoly, které vyžadují promyšlení implementace před psaním kódu - jako vícesouborové refaktory, nové funkce nebo architektonické změny.",
+    "order": 4
+  },
+  {
+    "question": "Jaký je doporučený debug workflow s Claude Code?",
+    "option_a": "Popsat chybu slovně → Čekat na řešení",
+    "option_b": "Ukázat chybu → Nechat Clauda vyšetřovat → Opravit → Ověřit",
+    "option_c": "Opravit sami → Požádat Clauda o review",
+    "option_d": "Ignorovat chyby a pokračovat",
+    "correct_answer": "B",
+    "explanation": "Optimální workflow je: ukázat skutečnou chybu (vložit stack trace nebo spustit selhávající příkaz), nechat Clauda vyšetřit codebase, implementovat opravu, pak ověřit, že oprava funguje.",
+    "order": 5
+  }
+]

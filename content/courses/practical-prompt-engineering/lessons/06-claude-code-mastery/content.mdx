@@ -1,0 +1,453 @@
+# Claude Code Mastery: Advanced AI-Assisted Development 🚀
+
+<Callout type="info">
+**Mission:** Go beyond basic AI coding - master Claude Code's advanced features for professional, multi-file, agentic software development.
+
+⏳ **Reading Time:** 35 min | 🧪 **[3] Labs Included**
+</Callout>
+
+<VideoSwitcher alternatives={[{"id":"H5M4LhMwFpw","title":"These New Claude Code Features are HUGE (2.0.67)"},{"id":"9PnUuYN3klA","title":"Claude Code Tutorial - Intro & Setup"},{"id":"D0Rgtgtzlts","title":"CZ SWE AI Program - Frontend Debugging (CZ)"}]} />
+
+**You've used AI for coding. Now it's time to make AI work FOR you.**
+
+Claude Code isn't just another coding assistant - it's an agentic development environment. It can run commands, edit multiple files, delegate to specialized sub-agents, and even orchestrate complex multi-step implementations.
+
+But most developers only scratch the surface. Let's go deep.
+
+---
+
+## Beyond Chat: The Agentic Paradigm
+
+<ConceptCard title="Agentic vs. Assistive AI" icon="🤖">
+
+**Traditional AI Assistants:** You ask → AI responds → You copy/paste → You debug
+
+**Agentic AI (Claude Code):** You describe intent → AI plans → AI executes → AI verifies → You review
+
+The key difference: **Claude Code can take action**, not just suggest it.
+
+</ConceptCard>
+
+### What Makes Claude Code Different
+
+| Feature | Traditional Chat | Claude Code |
+|---------|------------------|-------------|
+| File editing | Copy/paste suggestions | Direct file writes |
+| Command execution | "Try running..." | Actually runs commands |
+| Multi-file changes | One file at a time | Coordinated refactors |
+| Error handling | "You should check..." | Reads logs, fixes issues |
+| Context | Limited to conversation | Full codebase awareness |
+
+---
+
+## The Power Features
+
+Let's explore the advanced features that make Claude Code powerful:
+
+### 1. Hooks: Automated Workflows
+
+Hooks execute shell commands in response to Claude Code events. Think of them as triggers.
+
+```json
+// ~/.claude/settings.json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "command": "echo 'File about to be modified: $TOOL_INPUT'"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "command": "npm run lint --fix $TOOL_INPUT"
+      }
+    ]
+  }
+}
+```
+
+**Common Hook Use Cases:**
+- Auto-format code after writes
+- Run tests after file changes
+- Notify Slack on commits
+- Validate changes against rules
+- Update documentation automatically
+
+<Callout type="warning">
+**Security Note:** Hooks execute shell commands! Review carefully before enabling. Malicious hooks could harm your system.
+</Callout>
+
+### 2. MCP Servers: Extended Capabilities
+
+MCP (Model Context Protocol) servers give Claude Code new abilities - like reading Figma files, querying databases, or fetching documentation.
+
+**Popular MCP Servers:**
+
+| Server | Capability |
+|--------|------------|
+| `playwright` | Browser automation, visual testing |
+| `github` | PR management, issue tracking |
+| `context7` | Library documentation lookup |
+| `figma` | Design file access |
+| `postgres` | Database queries |
+
+**Adding an MCP Server:**
+```bash
+# Add a server
+claude mcp add github
+
+# List active servers
+claude mcp list
+
+# Remove a server
+claude mcp remove github
+```
+
+### 3. Plan Mode: Think Before Acting
+
+For complex tasks, plan mode helps Claude Code think through the implementation before writing code.
+
+```bash
+# Enter plan mode
+/plan
+
+# Claude analyzes codebase, proposes implementation
+# You review and approve
+# Then execute with full context
+```
+
+**When to Use Plan Mode:**
+- Multi-file refactors
+- New feature implementations
+- Architectural changes
+- When you're unsure of the approach
+
+### 4. Sub-Agents: Delegation at Scale
+
+Claude Code can spawn specialized sub-agents for different tasks:
+
+```
+Main Agent (You're talking to this)
+├── Explore Agent (codebase search)
+├── Plan Agent (architecture design)
+├── Code Reviewer Agent (quality checks)
+└── Test Runner Agent (verification)
+```
+
+**Trigger delegation with:**
+- `@explore` - Find files and patterns
+- `@plan` - Design implementation approach
+- Complex multi-step tasks automatically delegate
+
+---
+
+## 🔬 Lab 1: Configure Your First Hook
+
+Let's set up a hook that auto-formats code after every file write!
+
+**Objective:** Create a hook that runs Prettier after Claude Code writes files.
+
+**Step 1: Create the settings file**
+```bash
+mkdir -p ~/.claude
+cat > ~/.claude/settings.json << 'EOF'
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "command": "npx prettier --write \"$TOOL_INPUT\" 2>/dev/null || true"
+      }
+    ]
+  }
+}
+EOF
+```
+
+**Step 2: Test it**
+Ask Claude Code to create a messy JavaScript file:
+
+```text
+Create a file called test-hook.js with some messy formatting:
+const x={a:1,b:2,c:3};function foo(x){return x+1}
+```
+
+**Expected Result:**
+After Claude writes the file, Prettier automatically formats it:
+```javascript
+const x = { a: 1, b: 2, c: 3 };
+function foo(x) {
+  return x + 1;
+}
+```
+
+**💡 Aha Moment:** "I never have to think about formatting again. The hook handles it automatically, every single time!"
+
+<LabComplete labId="lab-cc-1" />
+
+---
+
+## The Debug Workflow
+
+Claude Code excels at debugging. Here's the optimal workflow:
+
+### Step 1: Share the Error
+
+Don't describe the error - SHOW it:
+
+```text
+❌ Bad: "I'm getting an error when I run the tests"
+
+✅ Good: [paste full error stack trace]
+
+✅ Better: Run npm test and the error will appear in your context
+```
+
+### Step 2: Let Claude Investigate
+
+Claude Code will:
+1. Read relevant source files
+2. Check related tests
+3. Examine configuration
+4. Trace the error path
+
+### Step 3: Verify the Fix
+
+Always ask for verification:
+
+```text
+"After fixing, run the tests again to confirm it passes"
+```
+
+<Callout type="tip">
+**Pro tip:** Don't interrupt Claude Code during investigation. Let it explore fully before suggesting solutions. More context = better fixes.
+</Callout>
+
+---
+
+## Multi-File Implementation Patterns
+
+For large features, use these patterns:
+
+### Pattern 1: Top-Down Decomposition
+
+```text
+"Implement user authentication. Start by:
+1. Planning the file structure
+2. Creating interfaces/types first
+3. Implementing the service layer
+4. Adding the API routes
+5. Writing tests for each layer"
+```
+
+### Pattern 2: Test-First Development
+
+```text
+"I need a function to parse CSV files.
+1. First, write the test file with expected behavior
+2. Then implement the function to pass the tests
+3. Run tests after each change"
+```
+
+### Pattern 3: Incremental Refactoring
+
+```text
+"Refactor the UserService class:
+1. First, add tests for current behavior (don't change code yet)
+2. Make one small change
+3. Run tests to verify
+4. Repeat until complete"
+```
+
+---
+
+## 🔬 Lab 2: Multi-File Feature Implementation
+
+Let's implement a feature across multiple files using plan mode!
+
+**Objective:** Experience how Claude Code coordinates multi-file changes.
+
+**The Prompt:**
+```text
+I want to add a "last active" timestamp feature for users.
+
+Requirements:
+- Store lastActiveAt in the User model
+- Update it on every API request
+- Display it on the profile page
+- Add a test for the middleware
+
+Use plan mode to think through this, then implement.
+```
+
+**What Claude Code Should Do:**
+
+1. **Plan Phase:**
+   - Identify files to modify (model, middleware, component, test)
+   - Propose the implementation order
+   - Ask for approval
+
+2. **Implementation Phase:**
+   - Modify User model/schema
+   - Create or update middleware
+   - Update profile component
+   - Write test file
+
+3. **Verification Phase:**
+   - Run existing tests
+   - Run new tests
+   - Check for regressions
+
+**💡 Aha Moment:** "One prompt triggered coordinated changes across 4+ files, with proper ordering and verification. This would take me 30 minutes manually!"
+
+<LabComplete labId="lab-cc-2" />
+
+---
+
+## Integrating with Other Tools
+
+Claude Code isn't alone. It integrates with your dev ecosystem:
+
+### Cursor Integration
+
+Use Claude Code alongside Cursor:
+- Cursor for quick inline edits
+- Claude Code for complex multi-file changes
+- Both share context via Git
+
+### Windsurf/Codeium
+
+Similar pattern:
+- IDE extension for autocompletion
+- Claude Code CLI for agentic tasks
+- Complimentary, not competing
+
+### Git Workflow
+
+Claude Code understands Git:
+
+```text
+"Create a new branch for this feature,
+implement it, commit with a good message,
+and show me the PR diff"
+```
+
+It will:
+1. `git checkout -b feature/xyz`
+2. Make changes
+3. `git add` relevant files
+4. `git commit -m "Descriptive message"`
+5. Show the diff for review
+
+---
+
+## 🔬 Lab 3: Debug a Complex Error
+
+Let's practice the debug workflow with a realistic scenario!
+
+**Objective:** Use Claude Code's debugging capabilities to fix a tricky issue.
+
+**The Scenario:**
+You have a test that's failing intermittently. Sometimes it passes, sometimes it fails.
+
+**The Prompt:**
+```text
+I have a flaky test in my codebase. Here's what I know:
+- Test file: tests/api/user.test.js
+- It fails about 30% of the time
+- Error: "Expected 200, received 500"
+- The actual API endpoint works fine in production
+
+Help me debug this. First, read the test file and the endpoint
+it's testing. Look for race conditions, timing issues, or
+test isolation problems.
+```
+
+**What to Observe:**
+
+Claude Code will:
+1. Read the test file
+2. Read the API endpoint
+3. Check for async issues
+4. Look at test setup/teardown
+5. Identify the root cause (likely: missing await, shared state, or timing)
+6. Propose and implement a fix
+7. Run the test multiple times to verify
+
+**Common Flaky Test Causes:**
+- Missing `await` on async operations
+- Shared mutable state between tests
+- Database not properly reset
+- Race conditions in setup
+- Timeout too short for CI environment
+
+**💡 Aha Moment:** "Claude Code didn't just suggest a fix - it systematically investigated, identified the root cause, and verified the solution. That's agentic debugging!"
+
+<LabComplete labId="lab-cc-3" />
+
+---
+
+## Configuration Best Practices
+
+```bash
+# Essential settings for productive Claude Code usage
+
+# 1. Set your preferred model (if you have access)
+export ANTHROPIC_MODEL=claude-opus-4-5-20251101
+
+# 2. Configure hooks directory
+mkdir -p ~/.claude/hooks
+
+# 3. Add useful MCP servers
+claude mcp add context7  # Library docs
+claude mcp add github    # PR management
+claude mcp add playwright # Visual testing
+
+# 4. Set up project-specific rules
+echo "Always run tests after changes" > .claude/rules/project.md
+```
+
+### Project-Level Configuration
+
+Create `.claude/` in your project root:
+
+```
+.claude/
+├── rules/
+│   └── project.md    # Project-specific instructions
+├── commands/
+│   └── deploy.md     # Custom slash commands
+└── settings.json     # Project settings override
+```
+
+---
+
+## Common Pitfalls & Solutions
+
+| Pitfall | Symptom | Solution |
+|---------|---------|----------|
+| Context overflow | Claude forgets earlier context | Use `/compact` or start fresh |
+| Over-delegating | Simple tasks spawn unnecessary agents | Be specific about scope |
+| Not reviewing changes | Bugs in generated code | Always verify before commit |
+| Ignoring errors | Broken state | Let Claude fix before continuing |
+| Vague prompts | Unexpected results | Be specific about requirements |
+
+---
+
+<ConceptCard title="Holocron: Claude Code Mastery" icon="💎">
+
+### 🔑 Key Takeaways
+
+* **Agentic, not assistive:** Claude Code takes action, not just suggestions
+* **Hooks:** Automate workflows triggered by Claude Code events
+* **MCP Servers:** Extend capabilities (Figma, GitHub, databases, etc.)
+* **Plan Mode:** Think through complex implementations before coding
+* **Sub-Agents:** Automatic delegation for specialized tasks
+* **Debug workflow:** Show error → Investigate → Fix → Verify
+* **Multi-file patterns:** Top-down, test-first, incremental refactoring
+
+**Pro workflow:** Plan → Implement → Test → Review → Commit
+
+</ConceptCard>

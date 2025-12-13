@@ -1,0 +1,419 @@
+# Nástroje AI automatizace: n8n a NotebookLM 🔄
+
+<Callout type="info">
+**Mise:** Budujte inteligentní automatizační workflow a superchargujte svůj výzkum - není potřeba kód. Naučte se propojit AI s reálnými akcemi.
+
+⏳ **Čas čtení:** 30 min | 🧪 **[2] Laby součástí**
+</Callout>
+
+**AI revoluce není jen o chatbotech. Je o automatizaci.**
+
+Co kdyby vaše AI mohla automaticky:
+- Sumarizovat každý email a vytvořit akční položky?
+- Monitorovat sociální sítě a generovat reporty?
+- Zpracovávat dokumenty a aktualizovat databáze?
+- Zkoumat témata a produkovat podcasty?
+
+Vítejte v AI automatizaci - kde se LLM potkávají s workflow.
+
+---
+
+## Proč AI automatizace?
+
+<ConceptCard title="Imperativ automatizace" icon="⚡">
+
+AI chat je silný, ale je **reaktivní**. Ptáte se, odpovídá. AI automatizace je **proaktivní** - pracuje, zatímco spíte.
+
+**Posun:**
+- **Chat AI:** Člověk ve smyčce, jedna otázka za čas
+- **Automatizovaná AI:** Event-driven, průběžné zpracování, škálované akce
+
+</ConceptCard>
+
+### Dopad v reálném světě
+
+| Manuální proces | S AI automatizací |
+|-----------------|-------------------|
+| Kontrolovat emaily → Sumarizovat → Vytvořit úkoly | Automaticky: Email → AI souhrn → Úkol v Notion |
+| Monitorovat zprávy → Analyzovat → Napsat report | Automaticky: RSS → AI analýza → Slack alert |
+| Zkoumat dokumenty → Extrahovat data → Aktualizovat DB | Automaticky: Upload → AI parse → Aktualizace databáze |
+
+---
+
+## Část 1: n8n - AI Workflow Engine
+
+n8n je platforma pro automatizaci workflow, která se stala go-to nástrojem pro budování AI-powered automatizací.
+
+### Proč n8n pro AI?
+
+| Funkce | Benefit |
+|--------|---------|
+| **Vizuální builder** | Drag-and-drop návrh workflow |
+| **LLM integrace** | Nativní OpenAI, Anthropic, Ollama nodes |
+| **AI Agent Node** | Stavba autonomních agentů ve workflow |
+| **400+ integrací** | Připojení prakticky k jakékoliv službě |
+| **Self-hostovatelné** | Zachování soukromí dat, žádný vendor lock-in |
+
+### Typy n8n AI nodes
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                   n8n AI NODES                           │
+├─────────────────────────────────────────────────────────┤
+│                                                          │
+│  🤖 AI Agent Node                                        │
+│     - Autonomní rozhodování                              │
+│     - Používání nástrojů (search, databáze, HTTP)       │
+│     - Paměť napříč interakcemi                          │
+│                                                          │
+│  💬 Chat Node                                            │
+│     - Jednoduchá LLM konverzace                         │
+│     - System prompty                                     │
+│     - Výběr modelu                                       │
+│                                                          │
+│  📄 Summarizer Node                                      │
+│     - Sumarizace dokumentů                               │
+│     - Extrakce textu                                     │
+│     - Identifikace klíčových bodů                        │
+│                                                          │
+│  🔍 Vector Store Nodes                                   │
+│     - RAG implementace                                   │
+│     - Ukládání embeddingů                                │
+│     - Sémantické vyhledávání                             │
+│                                                          │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Stavba vašeho prvního AI workflow
+
+### Příklad: Email Summary Pipeline
+
+```
+┌──────────┐    ┌─────────┐    ┌──────────┐    ┌─────────┐
+│ Gmail    │ -> │ Filter  │ -> │ AI       │ -> │ Notion  │
+│ Trigger  │    │ Node    │    │ Summary  │    │ Task    │
+└──────────┘    └─────────┘    └──────────┘    └─────────┘
+```
+
+**Jak to funguje:**
+1. **Gmail Trigger** - Aktivuje se při novém emailu
+2. **Filter Node** - Zpracuje pouze emaily od specifických odesílatelů
+3. **AI Summary** - Claude/GPT sumarizuje obsah emailu
+4. **Notion Task** - Vytvoří úkol se souhrnem a akčními položkami
+
+### Pattern AI agenta
+
+Pro komplexní úkoly použijte AI Agent node:
+
+```
+┌──────────────────────────────────────────────────────────┐
+│                    AI AGENT WORKFLOW                      │
+├──────────────────────────────────────────────────────────┤
+│                                                           │
+│  Trigger (Webhook/Schedule/Event)                         │
+│           │                                               │
+│           ▼                                               │
+│  ┌─────────────────────────────────────┐                 │
+│  │         AI AGENT NODE               │                 │
+│  │  ┌───────────────────────────────┐  │                 │
+│  │  │ System Prompt: "Jsi..."       │  │                 │
+│  │  │ Dostupné nástroje:            │  │                 │
+│  │  │   - HTTP Request              │  │                 │
+│  │  │   - Database Query            │  │                 │
+│  │  │   - Code Execution            │  │                 │
+│  │  │   - Web Search                │  │                 │
+│  │  └───────────────────────────────┘  │                 │
+│  │         │                           │                 │
+│  │         ▼                           │                 │
+│  │    Agent rozhoduje & jedná          │                 │
+│  └─────────────────────────────────────┘                 │
+│           │                                               │
+│           ▼                                               │
+│  Output (Slack/Email/Databáze/API)                        │
+│                                                           │
+└──────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🔬 Lab 1: Navrhněte AI automatizační workflow
+
+Pojďme navrhnout workflow s použitím konceptů n8n!
+
+**Cíl:** Naplánujte AI automatizační workflow pro reálný use case.
+
+**Prompt:**
+Zkopírujte do ChatGPT nebo Claude pro pomoc s návrhem workflow:
+
+```text
+Jsi n8n workflow designer. Pomoz mi vytvořit workflow pro tento use case:
+
+USE CASE: Denní souhrn zpráv
+- Každé ráno v 8:00
+- Načti top 10 článků z RSS feedů (tech + business)
+- Použij AI pro sumarizaci každého článku ve 2 větách
+- Identifikuj 3 nejdůležitější příběhy
+- Vygeneruj email ve stylu newsletteru
+- Pošli na mou emailovou adresu
+
+Navrhni workflow:
+1. Jaký trigger bychom měli použít?
+2. Jaké nodes jsou potřeba?
+3. Jaký by měl být AI prompt pro sumarizaci?
+4. Jaký by měl být AI prompt pro hodnocení důležitosti?
+5. Jak bychom měli řešit chyby?
+
+Výstup jako diagram workflow a seznam konfigurací nodes.
+```
+
+**Očekávaná struktura výstupu:**
+```
+WORKFLOW: Denní souhrn zpráv
+
+1. TRIGGER: Schedule Trigger
+   - Cron: 0 8 * * * (8:00 denně)
+
+2. NODE: RSS Feed Read
+   - Tech feed: https://...
+   - Business feed: https://...
+
+3. NODE: Loop Over Items
+   - Zpracuj každý článek
+
+4. NODE: AI Chat (Sumarizace)
+   - Model: claude-3-haiku
+   - Prompt: "Sumarizuj tento článek ve 2 větách..."
+
+5. NODE: AI Chat (Hodnocení)
+   - Model: claude-3-opus
+   - Prompt: "Na základě těchto souhrů vyber top 3..."
+
+6. NODE: Generate Email
+   - Šablona s ohodnocenými souhrny
+
+7. NODE: Send Email
+   - Přes SMTP/Gmail
+
+8. ERROR HANDLING:
+   - Pokud RSS selže → Použij cached články
+   - Pokud AI selže → Zkus 3x, pak přeskoč
+```
+
+**💡 Aha moment:** "Právě jsem navrhl automatizaci, která by manuálně trvala hodiny - a běží automaticky každý den, nulová námaha!"
+
+<LabComplete labId="lab-automation-1" />
+
+---
+
+## Část 2: NotebookLM - AI výzkumný asistent
+
+NotebookLM (od Google) má jiný přístup: místo automatizace workflow transformuje způsob, jak zkoumáte a syntetizujete informace.
+
+### Co je NotebookLM?
+
+<ConceptCard title="Hlavní koncept NotebookLM" icon="📚">
+
+NotebookLM je AI výzkumný asistent, který:
+1. Zpracuje vaše dokumenty (PDF, doc, URL)
+2. Vytvoří privátní AI, která zná POUZE vaše zdroje
+3. Generuje souhrny, Q&A a dokonce **audio podcasty**
+4. Nikdy nehalucinuje mimo váš uploadovaný obsah
+
+Představte si to jako RAG-as-a-Service s krásným rozhraním.
+
+</ConceptCard>
+
+### Klíčové funkce
+
+| Funkce | Co dělá |
+|--------|---------|
+| **Source Grounding** | AI odpovídá pouze z vašich dokumentů |
+| **Audio Overview** | Generuje diskuze ve stylu podcastu |
+| **Citation Links** | Každá odpověď odkazuje na zdroj |
+| **Notebook Guides** | Auto-generované studijní materiály |
+| **Multi-Source** | Kombinace PDF, YouTube, webových stránek |
+
+### NotebookLM vs. ChatGPT/Claude
+
+| Aspekt | NotebookLM | ChatGPT/Claude |
+|--------|------------|----------------|
+| Znalosti | POUZE vaše dokumenty | Všechna tréninková data |
+| Riziko halucinací | Velmi nízké | Vyšší |
+| Citace | Vždy s odkazem | Manuální |
+| Audio výstup | Vestavěné podcasty | Ne |
+| Nejlepší pro | Výzkum, studium | Obecný chat |
+
+---
+
+## Use cases pro NotebookLM
+
+### 1. Akademický výzkum
+
+```
+Upload: 20 výzkumných prací o kvantovém počítání
+Otázka: "Jaké jsou hlavní konkurenční přístupy k opravě chyb?"
+Výstup: Syntéza s citacemi na konkrétní práce
+```
+
+### 2. Business Intelligence
+
+```
+Upload: Q1-Q4 finanční reporty, analytická volání, průzkum trhu
+Otázka: "Jaká jsou nově vznikající rizika zmíněná napříč čtvrtletími?"
+Výstup: Analýza rizik s konkrétními zdroji
+```
+
+### 3. Tvorba obsahu
+
+```
+Upload: Přepisy rozhovorů, výzkumné poznámky, osnova
+Otázka: "Vygeneruj podcast scénář diskutující hlavní témata"
+Výstup: Audio overview, který můžete publikovat
+```
+
+### 4. Učení a studium
+
+```
+Upload: Kapitoly z učebnice, přednáškové slajdy, poznámky
+Otázka: "Vytvoř studijní průvodce pro zkoušku"
+Výstup: Strukturovaný průvodce s klíčovými koncepty a otázkami
+```
+
+---
+
+## 🔬 Lab 2: Syntéza výzkumu s NotebookLM
+
+Pojďme zažít AI-powered syntézu výzkumu!
+
+**Cíl:** Použijte AI k syntéze více zdrojů do akčních insights.
+
+**Prompt:**
+Jelikož možná nemáte přístup k NotebookLM, simulujte to s Claude/ChatGPT:
+
+```text
+Simuluješ source-grounded AI NotebookLM. Poskytnu zdrojové výňatky
+a ty MUSÍŠ odpovídat POUZE z těchto zdrojů, explicitně je citovat.
+Pokud odpověď není ve zdrojích, řekni to.
+
+ZDROJ 1 (Market Report 2024):
+"Trh AI automatizace rostl 45% YoY. n8n se stal vedoucí
+open-source platformou s 50,000+ aktivními nasazeními. Hlavní hybatelé:
+enterprise adopce a schopnosti integrace LLM."
+
+ZDROJ 2 (Analýza Gartner):
+"Do roku 2027 bude 60% organizací používat AI-augmentovanou automatizaci.
+Hlavní bariéry: obavy o soukromí dat (67%) a mezery v dovednostech (54%).
+Lídři doporučují začít s vysokoobjemovými, rule-based procesy."
+
+ZDROJ 3 (Case Study - TechCorp):
+"TechCorp snížil manuální zpracování o 80% pomocí n8n + Claude.
+ROI dosaženo za 4 měsíce. Klíčové faktory úspěchu: podpora vedení,
+dedikovaný automatizační tým, iterativní přístup."
+
+OTÁZKY:
+1. Jaká je míra růstu trhu pro AI automatizaci?
+2. Jaké jsou hlavní bariéry adopce?
+3. Co doporučuje case study TechCorp?
+4. Co se stane s AI automatizací do roku 2030?
+```
+
+**Očekávaný výstup:**
+```
+1. Růst trhu: 45% YoY [Zdroj 1: Market Report 2024]
+
+2. Bariéry adopce:
+   - Obavy o soukromí dat (67%) [Zdroj 2: Gartner]
+   - Mezery v dovednostech (54%) [Zdroj 2: Gartner]
+
+3. Doporučení TechCorp:
+   - Podpora vedení
+   - Dedikovaný automatizační tým
+   - Iterativní přístup
+   [Zdroj 3: TechCorp Case Study]
+
+4. Do roku 2030: Nemohu odpovědět na tuto otázku, protože
+   není pokryta v poskytnutých zdrojích. Zdroj 2 zmiňuje
+   pouze projekce do roku 2027 (60% adopce).
+```
+
+**💡 Aha moment:** "AI odmítla hádat o roku 2030, protože to nebylo ve zdrojích. To je síla source grounding - žádné halucinace!"
+
+<LabComplete labId="lab-automation-2" />
+
+---
+
+## Kombinace n8n + NotebookLM
+
+Skutečná síla přichází z kombinace těchto nástrojů:
+
+### Příklad: Automatizovaný výzkumný pipeline
+
+```
+1. n8n: Naplánuj týdenní sběr
+   └─> Načti nové výzkumné práce z arXiv
+   └─> Stáhni PDF do Google Drive
+
+2. NotebookLM: Analyzuj & syntetizuj
+   └─> Auto-přidej nové PDF do notebooku
+   └─> Vygeneruj týdenní souhrn
+
+3. n8n: Distribuce
+   └─> Pošli souhrn emailem týmu
+   └─> Postni na Slack kanál
+   └─> Aktualizuj Notion databázi
+```
+
+---
+
+## Best practices automatizace
+
+### Dělej ✅
+
+| Praxe | Proč |
+|-------|------|
+| Začni malým | Dokaž hodnotu před škálováním |
+| Přidej error handling | Workflow selhávají; plánuj pro to |
+| Používej specifické prompty | Vágní = nepředvídatelné |
+| Loguj vše | Debug později |
+| Nastav rate limits | Vyhni se explozi nákladů na API |
+
+### Nedělej ❌
+
+| Vyhni se | Proč |
+|----------|------|
+| Plně autonomní rozhodnutí | AI by měla asistovat, ne nahrazovat úsudek |
+| Citlivá data v cloudu | Rizika soukromí/compliance |
+| Složité workflow nejdřív | Těžké na debugging |
+| Ignorování selhání | Malé chyby se sčítají |
+
+---
+
+## Porovnání nástrojů
+
+| Nástroj | Nejlepší pro | Cena | Self-hostovatelný |
+|---------|--------------|------|-------------------|
+| **n8n** | Komplexní workflow, AI agenti | Zdarma (self) / $20+ (cloud) | ✅ Ano |
+| **NotebookLM** | Výzkum, syntéza zdrojů | Zdarma | ❌ Ne |
+| **Zapier** | Jednoduché integrace | $20+ | ❌ Ne |
+| **Make** | Vizuální workflow | $9+ | ❌ Ne |
+| **LangFlow** | LLM pipeline | Zdarma | ✅ Ano |
+
+---
+
+<ConceptCard title="Holokron: AI automatizace" icon="💎">
+
+### 🔑 Klíčové poznatky
+
+* **n8n:** Vizuální workflow builder s mocnými AI nodes (agenti, chat, RAG)
+* **NotebookLM:** Source-grounded AI výzkumný asistent, bez halucinací
+* **AI Agent pattern:** Trigger → Agent s nástroji → Akce
+* **Nejlepší pro n8n:** Automatizované workflow, data pipeline, integrace
+* **Nejlepší pro NotebookLM:** Syntéza výzkumu, studium, source-based Q&A
+* **Kombinovaná síla:** n8n sbírá → NotebookLM syntetizuje → n8n distribuuje
+* **Zlaté pravidlo:** Začni jednoduše, přidávej komplexitu podle potřeby
+
+**Další kroky:** Aplikujte tyto nástroje na vaše vlastní use cases!
+
+</ConceptCard>

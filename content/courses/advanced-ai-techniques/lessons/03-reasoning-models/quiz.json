@@ -1,71 +1,52 @@
-{
-  "title": "Reasoning Models Quiz",
-  "description": "Test your understanding of System 2 AI and reasoning models",
-  "questions": [
-    {
-      "id": "rm-q1",
-      "type": "multiple_choice",
-      "question": "What is the primary difference between System 1 and System 2 AI?",
-      "options": [
-        "System 1 is older, System 2 is newer",
-        "System 1 is fast/intuitive, System 2 is slow/deliberate",
-        "System 1 is open-source, System 2 is proprietary",
-        "System 1 uses GPUs, System 2 uses TPUs"
-      ],
-      "correct": 1,
-      "explanation": "System 1 AI (like most LLMs) operates through fast, intuitive pattern recognition. System 2 AI (reasoning models) takes time to deliberately work through problems step-by-step."
-    },
-    {
-      "id": "rm-q2",
-      "type": "multiple_choice",
-      "question": "What is Chain-of-Thought (CoT) prompting?",
-      "options": [
-        "A native architectural feature of reasoning models",
-        "A prompt engineering technique to simulate reasoning in standard LLMs",
-        "A way to connect multiple AI models together",
-        "A method to reduce token usage"
-      ],
-      "correct": 1,
-      "explanation": "Chain-of-Thought is a prompting TRICK that forces standard models to externalize their reasoning process. It's not a native ability - it's a hack to make System 1 models act like they can reason."
-    },
-    {
-      "id": "rm-q3",
-      "type": "multiple_choice",
-      "question": "When should you use a reasoning model instead of a standard LLM?",
-      "options": [
-        "For all tasks to ensure highest quality",
-        "Only for creative writing tasks",
-        "For complex, multi-step tasks where correctness is critical",
-        "When you need the fastest possible response"
-      ],
-      "correct": 2,
-      "explanation": "Reasoning models are slow and expensive specialists. Use them for complex logic, multi-step problems, and tasks where correctness is non-negotiable - not for simple chat or creative tasks."
-    },
-    {
-      "id": "rm-q4",
-      "type": "multiple_choice",
-      "question": "What is 'Extended Thinking' in reasoning models?",
-      "options": [
-        "A prompt that asks the model to think longer",
-        "An architectural feature where the model internally deliberates before answering",
-        "A way to extend the context window",
-        "A technique to reduce hallucinations"
-      ],
-      "correct": 1,
-      "explanation": "Extended Thinking is a NATIVE architectural ability. The model has an internal 'scratchpad' where it breaks down problems, evaluates options, and refines answers BEFORE showing you anything."
-    },
-    {
-      "id": "rm-q5",
-      "type": "multiple_choice",
-      "question": "Which statement about reasoning models is TRUE?",
-      "options": [
-        "They are always faster than standard LLMs",
-        "They should replace all standard LLMs",
-        "They can be 10-100x slower and more expensive than standard models",
-        "They are only available as open-source"
-      ],
-      "correct": 2,
-      "explanation": "Reasoning models trade speed for accuracy. They can be 10-100x slower and significantly more expensive. They're specialists, not replacements for everyday AI tasks."
-    }
-  ]
-}
+[
+  {
+    "question": "What is the primary difference between System 1 and System 2 AI?",
+    "option_a": "System 1 is older, System 2 is newer",
+    "option_b": "System 1 is fast/intuitive, System 2 is slow/deliberate",
+    "option_c": "System 1 is open-source, System 2 is proprietary",
+    "option_d": "System 1 uses GPUs, System 2 uses TPUs",
+    "correct_answer": "B",
+    "explanation": "System 1 AI (like most LLMs) operates through fast, intuitive pattern recognition. System 2 AI (reasoning models) takes time to deliberately work through problems step-by-step.",
+    "order": 1
+  },
+  {
+    "question": "What is Chain-of-Thought (CoT) prompting?",
+    "option_a": "A native architectural feature of reasoning models",
+    "option_b": "A prompt engineering technique to simulate reasoning in standard LLMs",
+    "option_c": "A way to connect multiple AI models together",
+    "option_d": "A method to reduce token usage",
+    "correct_answer": "B",
+    "explanation": "Chain-of-Thought is a prompting TRICK that forces standard models to externalize their reasoning process. It's not a native ability - it's a hack to make System 1 models act like they can reason.",
+    "order": 2
+  },
+  {
+    "question": "When should you use a reasoning model instead of a standard LLM?",
+    "option_a": "For all tasks to ensure highest quality",
+    "option_b": "Only for creative writing tasks",
+    "option_c": "For complex, multi-step tasks where correctness is critical",
+    "option_d": "When you need the fastest possible response",
+    "correct_answer": "C",
+    "explanation": "Reasoning models are slow and expensive specialists. Use them for complex logic, multi-step problems, and tasks where correctness is non-negotiable - not for simple chat or creative tasks.",
+    "order": 3
+  },
+  {
+    "question": "What is 'Extended Thinking' in reasoning models?",
+    "option_a": "A prompt that asks the model to think longer",
+    "option_b": "An architectural feature where the model internally deliberates before answering",
+    "option_c": "A way to extend the context window",
+    "option_d": "A technique to reduce hallucinations",
+    "correct_answer": "B",
+    "explanation": "Extended Thinking is a NATIVE architectural ability. The model has an internal 'scratchpad' where it breaks down problems, evaluates options, and refines answers BEFORE showing you anything.",
+    "order": 4
+  },
+  {
+    "question": "Which statement about reasoning models is TRUE?",
+    "option_a": "They are always faster than standard LLMs",
+    "option_b": "They should replace all standard LLMs",
+    "option_c": "They can be 10-100x slower and more expensive than standard models",
+    "option_d": "They are only available as open-source",
+    "correct_answer": "C",
+    "explanation": "Reasoning models trade speed for accuracy. They can be 10-100x slower and significantly more expensive. They're specialists, not replacements for everyday AI tasks.",
+    "order": 5
+  }
+]

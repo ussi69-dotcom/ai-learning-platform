@@ -1,0 +1,466 @@
+# Retrieval-Augmented Generation (RAG) 🔍
+
+<Callout type="info">
+**Mise:** Budujte AI systémy, které znají VAŠE data - naučte se překonat knowledge cutoff a halucinace ukotvením AI v externích znalostech.
+
+⏳ **Čas čtení:** 40 min | 🧪 **[3] Laby součástí**
+</Callout>
+
+**Problém s LLM: Jsou zamrzlé v čase.**
+
+ChatGPT neví, co se stalo včera. Claude neumí číst interní dokumenty vaší firmy. Každý LLM má **knowledge cutoff** - časový bod, kde jeho tréninková data končí. Po tom? Hádá.
+
+A když hádá, **halucinuje** - sebevědomě vymýšlí fakta, která znějí věrohodně, ale jsou úplně špatně.
+
+**RAG řeší oba problémy.** Místo spoléhání výhradně na to, co si model "pamatuje", mu dáme přístup k externím znalostem *v době dotazu*.
+
+---
+
+## Proč na RAG záleží
+
+<ConceptCard title="Problém znalostí" icon="🧠">
+
+LLM mají dvě fundamentální omezení:
+
+1. **Knowledge Cutoff**: Trénink skončil v určitém datu (např. duben 2024)
+2. **Žádný přístup k privátním datům**: Neumí číst vaše dokumenty, databáze nebo interní systémy
+
+**RAG (Retrieval-Augmented Generation)** to řeší tím, že:
+- Získá relevantní dokumenty z vaší znalostní báze
+- Vloží je do promptu jako kontext
+- Nechá LLM generovat odpovědi založené na reálných datech
+
+</ConceptCard>
+
+### Slib RAG
+
+| Problém | Bez RAG | S RAG |
+|---------|---------|-------|
+| "Jaké jsou naše Q4 tržby?" | Vymyšlené číslo | Přesné z vašich reportů |
+| "Co se stalo včera?" | "Nemám tu informaci" | Real-time načtení novinek |
+| "Firemní politika ohledně X?" | Obecný odhad | Váš skutečný dokument |
+
+---
+
+## RAG Pipeline
+
+Každý RAG systém následuje stejný třífázový pipeline:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    RAG PIPELINE                          │
+├─────────────────────────────────────────────────────────┤
+│                                                          │
+│  1. INDEX (Offline - Jednorázově)                       │
+│     ┌──────────┐    ┌──────────┐    ┌──────────────┐   │
+│     │ Dokumenty│ -> │ Rozděl   │ -> │ Embeduj &    │   │
+│     │          │    │ (Chunk)  │    │ Ulož do DB   │   │
+│     └──────────┘    └──────────┘    └──────────────┘   │
+│                                                          │
+│  2. RETRIEVE (Online - Při dotazu)                      │
+│     ┌──────────┐    ┌──────────┐    ┌──────────────┐   │
+│     │ Dotaz    │ -> │ Embeduj  │ -> │ Vektorová    │   │
+│     │ uživatele│    │ dotaz    │    │ podobnost    │   │
+│     └──────────┘    └──────────┘    └──────────────┘   │
+│                                                          │
+│  3. GENERATE (Online - Při dotazu)                      │
+│     ┌──────────┐    ┌──────────┐    ┌──────────────┐   │
+│     │ Získané  │ -> │ Sestav   │ -> │ LLM          │   │
+│     │ chunky   │    │ prompt   │    │ odpověď      │   │
+│     └──────────┘    └──────────┘    └──────────────┘   │
+│                                                          │
+└─────────────────────────────────────────────────────────┘
+```
+
+Pojďme si rozebrat každou fázi:
+
+---
+
+## Fáze 1: Indexování
+
+Než RAG může fungovat, musíte připravit svou znalostní bázi.
+
+### Krok 1: Načtení dokumentů
+
+Načtěte dokumenty z různých zdrojů:
+- PDF, Word dokumenty, textové soubory
+- Web stránky, API
+- Databáze, tabulky
+- Slack zprávy, emaily
+
+### Krok 2: Chunking (Dělení)
+
+**Kritické rozhodnutí:** LLM mají limity kontextu. Nemůžete nacpat celé knihy do promptu. Musíte rozdělit dokumenty na menší **chunky**.
+
+| Strategie chunkingu | Nejlepší pro | Typická velikost |
+|---------------------|--------------|------------------|
+| **Fixní velikost** | Jednoduché dokumenty | 500-1000 tokenů |
+| **Sémantický** | Technické dokumenty | Variuje dle významu |
+| **Po větách** | Q&A datasety | 1-5 vět |
+| **Po odstavcích** | Články, blogy | Přirozené zlomy |
+
+<Callout type="warning">
+**Trade-off velikosti chunku:**
+- **Příliš malé:** Ztrácí kontext, získává irelevantní fragmenty
+- **Příliš velké:** Plýtvá kontextovým oknem, ředí relevantní info
+- **Sweet spot:** 200-500 tokenů s 10-20% překryvem
+</Callout>
+
+### Krok 3: Embedding
+
+Transformujte textové chunky na **vektory** (pole čísel), které zachycují sémantický význam.
+
+```python
+# Příklad: Vytvoření embeddingů
+from openai import OpenAI
+
+client = OpenAI()
+
+text = "RAG kombinuje retrieval s generováním"
+response = client.embeddings.create(
+    model="text-embedding-3-small",
+    input=text
+)
+
+# Výsledek: [0.0023, -0.0152, 0.0341, ...] (1536 dimenzí)
+embedding = response.data[0].embedding
+```
+
+**Populární Embedding modely:**
+
+| Model | Dimenze | Poskytovatel | Nejlepší pro |
+|-------|---------|--------------|--------------|
+| text-embedding-3-small | 1536 | OpenAI | Nákladově efektivní |
+| text-embedding-3-large | 3072 | OpenAI | Nejvyšší kvalita |
+| all-MiniLM-L6-v2 | 384 | HuggingFace | Zdarma, rychlý |
+| voyage-2 | 1024 | Voyage AI | Kód & právo |
+
+### Krok 4: Uložení do vektorové databáze
+
+Uložte embeddingy do specializované databáze podporující vyhledávání podobnosti.
+
+---
+
+## 🔬 Lab 1: Vytvořte své první embeddingy
+
+Pojďme si vyzkoušet, jak embeddingy zachycují sémantický význam!
+
+**Cíl:** Pochopte, jak se podobné koncepty shlukují ve vektorovém prostoru.
+
+**Prompt:**
+Zkopírujte do ChatGPT nebo Claude:
+
+```text
+Jsi asistent pro vizualizaci embeddingů. Dám ti věty a ty odhadneš
+jejich sémantickou podobnost na škále 0-100.
+
+Ohodnoť podobnost mezi každým párem:
+
+Věty:
+A: "Kočka seděla na rohožce"
+B: "Kočkovitá šelma odpočívala na koberci"
+C: "Psi jsou věrní mazlíčci"
+D: "Akciový trh včera zkolaboval"
+
+Porovnej:
+1. A vs B: ?
+2. A vs C: ?
+3. A vs D: ?
+4. B vs C: ?
+```
+
+**Očekávaný výstup:**
+```
+1. A vs B: 95 (téměř identický význam, jiná slova)
+2. A vs C: 40 (oboje o mazlíčcích, ale jiná zvířata/akce)
+3. A vs D: 5 (úplně nesouvisející témata)
+4. B vs C: 35 (oboje o zvířatech, ale jiný kontext)
+```
+
+**💡 Aha moment:** "Přesně tohle embedding modely dělají matematicky! Převádějí věty na vektory, kde podobný význam = blízké vektory."
+
+<LabComplete labId="lab-rag-1" />
+
+---
+
+## Fáze 2: Retrieval (Získávání)
+
+Když uživatel položí otázku, potřebujeme najít nejrelevantnější chunky.
+
+### Vektorové vyhledávání podobnosti
+
+1. **Embeduj dotaz** pomocí stejného modelu
+2. **Vypočítej vzdálenost** mezi vektorem dotazu a všemi uloženými vektory
+3. **Vrať top-K** nejpodobnějších chunků
+
+```python
+# Konceptuální příklad
+dotaz = "Jaká je naše politika vrácení peněz?"
+dotaz_embedding = embed(dotaz)
+
+# Najdi podobné chunky (zjednodušeno)
+vysledky = vector_db.similarity_search(
+    dotaz_embedding,
+    k=5  # Vrať 5 nejrelevantnějších chunků
+)
+```
+
+### Metriky vzdálenosti
+
+| Metrika | Vzorec | Kdy použít |
+|---------|--------|------------|
+| **Kosinová podobnost** | cos(θ) | Nejběžnější, normalizovaná |
+| **Euklidovská vzdálenost** | √Σ(a-b)² | Surová vzdálenost |
+| **Skalární součin** | Σ(a×b) | Když záleží na magnitudě |
+
+<Callout type="tip">
+**Pro tip:** Kosinová podobnost je téměř vždy správná volba pro textové embeddingy. Ignoruje magnitudu vektoru a zaměřuje se na směr (význam).
+</Callout>
+
+---
+
+## Porovnání vektorových databází
+
+Potřebujete specializovanou databázi pro efektivní ukládání a vyhledávání milionů vektorů.
+
+| Databáze | Typ | Nejlepší pro | Cena |
+|----------|-----|--------------|------|
+| **Pinecone** | Managed | Produkce, enterprise | Pay-per-use |
+| **Chroma** | Open-source | Lokální vývoj, prototypy | Zdarma |
+| **Weaviate** | Hybrid | GraphQL fanoušci, hybridní search | Zdarma + managed |
+| **Qdrant** | Open-source | Self-hosted, Rust výkon | Zdarma |
+| **pgvector** | PostgreSQL ext | Existující Postgres uživatelé | Zdarma |
+
+### Rychlé porovnání
+
+```
+Pinecone:  🏢 Enterprise   | ⚡ Nejrychlejší | 💰 $$
+Chroma:    🧪 Prototypování| 🐍 Pythonic    | 💰 Zdarma
+Weaviate:  🔗 Hybrid       | 📊 GraphQL     | 💰 Zdarma/$
+Qdrant:    🦀 Výkon        | 🔧 Self-host   | 💰 Zdarma
+```
+
+---
+
+## Fáze 3: Generování
+
+Nyní zkombinujeme získaný kontext s otázkou uživatele.
+
+### RAG Prompt šablona
+
+```text
+Jsi nápomocný asistent. Odpověz na otázku POUZE na základě
+následujícího kontextu. Pokud kontext neobsahuje odpověď, řekni
+"Nemám dostatek informací pro odpověď na tuto otázku."
+
+Kontext:
+{ziskane_chunky}
+
+Otázka: {uzivatelska_otazka}
+
+Odpověď:
+```
+
+<Callout type="warning">
+**Ukotvení je kritické:**
+Vždy instrukuj model, aby používal POUZE poskytnutý kontext. Jinak může míchat získaná fakta s halucinovanými.
+</Callout>
+
+---
+
+## 🔬 Lab 2: Sestavte RAG prompt
+
+Pojďme zkonstruovat správný RAG prompt a podívat se, jak kontext mění odpověď!
+
+**Cíl:** Zažijte, jak získaný kontext transformuje odpovědi AI.
+
+**Část 1 - Bez kontextu:**
+```text
+Jaká je maximální lhůta pro vrácení peněz za software u TechCorp?
+```
+(AI bude halucinovat nebo řekne, že neví)
+
+**Část 2 - S RAG kontextem:**
+```text
+Jsi nápomocný zákaznický asistent pro TechCorp. Odpovídej POUZE
+na základě následujících dokumentů. Pokud odpověď nenajdeš,
+řekni "Tuto informaci nemám v našich dokumentech."
+
+KONTEXT:
+---
+Dokument: TechCorp Refund Policy (Aktualizováno Leden 2024)
+Sekce 3.2: Nákupy softwaru
+- Digitální software: 14denní lhůta pro vrácení od data nákupu
+- Enterprise licence: 30denní zkušební období s plným vrácením
+- Předplatné: Poměrné vrácení pro roční plány, bez vrácení u měsíčních
+- Výjimky: Aktivované licenční klíče nelze vrátit
+---
+
+Otázka: Jaká je maximální lhůta pro vrácení peněz za software u TechCorp?
+```
+
+**Očekávaný výstup:**
+```
+Na základě refund policy TechCorp závisí maximální lhůta pro vrácení
+na typu nákupu softwaru:
+
+- Digitální software: 14 dní od data nákupu
+- Enterprise licence: 30 dní (zkušební období)
+- Předplatné: Poměrné pro roční plány
+
+Nejdelší lhůta pro vrácení je 30 dní pro enterprise licence.
+
+Poznámka: Aktivované licenční klíče nelze vrátit bez ohledu na časové období.
+```
+
+**💡 Aha moment:** "AI přešla od hádání k přesným, zdrojovaným odpovědím. To je síla RAG - ukotvení AI v reálných datech!"
+
+<LabComplete labId="lab-rag-2" />
+
+---
+
+## Pokročilé RAG techniky
+
+Základní RAG je jen začátek. Produkční systémy používají pokročilé techniky:
+
+### 1. Hybridní vyhledávání
+
+Kombinujte vektorové vyhledávání s keyword searchem (BM25) pro lepší výsledky.
+
+```
+Dotaz: "ISO 27001 compliance"
+
+Pouze vektor: Najde dokumenty o "bezpečnostních standardech" (sémantické)
+Pouze keyword: Najde dokumenty obsahující "ISO 27001" (přesné)
+Hybrid: Najde oboje + optimálně seřadí
+```
+
+### 2. Re-Ranking
+
+Po počátečním retrievalu použijte cross-encoder pro přehodnocení relevance výsledků.
+
+### 3. Transformace dotazu
+
+Zlepšete retrieval transformací uživatelského dotazu:
+- **HyDE:** Vygenerujte hypotetickou odpověď, pak hledejte podobné dokumenty
+- **Multi-Query:** Vygenerujte více variant otázky
+- **Step-Back:** Zeptejte se nejdřív obecnější otázky
+
+### 4. Kontextová komprese
+
+Sumarizujte nebo filtrujte získané chunky před předáním LLM.
+
+---
+
+## Běžné RAG problémy
+
+| Problém | Symptom | Řešení |
+|---------|---------|--------|
+| **Příliš agresivní chunking** | Získané fragmenty jsou bezvýznamné | Zvětšit chunk size, přidat overlap |
+| **Špatný embedding model** | Irelevantní výsledky retrievalu | Sladit model s doménou (kód, právo, atd.) |
+| **K příliš nízké** | Chybí relevantní kontext | Zvýšit K, použít re-ranking |
+| **K příliš vysoké** | Ředí signál šumem | Snížit K, použít kompresi |
+| **Chybí grounding instrukce** | LLM míchá fakta s halucinacemi | Explicitní "POUZE použij kontext" prompt |
+
+---
+
+## 🔬 Lab 3: Debugujte RAG selhání
+
+Pojďme diagnostikovat, proč RAG systém může selhávat, a opravit to!
+
+**Cíl:** Naučte se troubleshootovat běžné RAG problémy.
+
+**Scénář:**
+Váš RAG systém vrací špatné odpovědi na technické otázky.
+
+**Debug prompt:**
+```text
+Jsi RAG system debugger. Na základě tohoto scénáře identifikuj problém
+a navrhni opravu:
+
+KONFIGURACE SYSTÉMU:
+- Embedding model: text-embedding-3-small
+- Chunk size: 100 tokenů (bez overlapu)
+- Top-K: 2
+- Dokumenty: Technická API dokumentace (500 stran)
+
+DOTAZ UŽIVATELE: "Jak se autentifikuji pomocí OAuth 2.0?"
+
+ZÍSKANÉ CHUNKY:
+1. "OAuth je protokol pro..." (obecný úvod, strana 1)
+2. "Pro autentifikaci použijte login endpoint..." (nesouvisející endpoint)
+
+SKUTEČNÁ LOKACE ODPOVĚDI: Strany 45-48, "OAuth 2.0 Implementation Guide"
+
+Proč retrieval selhal? Co bys změnil?
+```
+
+**Očekávaná analýza:**
+```
+IDENTIFIKOVANÉ PROBLÉMY:
+
+1. Chunk size příliš malý (100 tokenů)
+   - Technické dokumenty potřebují větší kontext
+   - Oprava: Zvýšit na 400-500 tokenů s 50 token overlapem
+
+2. Top-K příliš nízké (2)
+   - Pro 500stránkový dokument jsou 2 chunky nedostatečné
+   - Oprava: Zvýšit na 5-10, pak použít re-ranking
+
+3. Chybí hybridní vyhledávání
+   - "OAuth 2.0" je specifický termín, který benefituje z keyword matchingu
+   - Oprava: Povolit BM25 + vector hybrid search
+
+4. Možný embedding mismatch
+   - Obecný embedding model pro technické dokumenty
+   - Zvážit: Specializovaný code/technický embedding model
+```
+
+**💡 Aha moment:** "RAG selhání jsou obvykle systematická, ne náhodná. Debug proces: Zkontroluj chunky → Zkontroluj retrieval → Zkontroluj prompt → Zkontroluj model."
+
+<LabComplete labId="lab-rag-3" />
+
+---
+
+## RAG implementační checklist
+
+Před nasazením RAG do produkce:
+
+```
+□ Data Pipeline
+  □ Document loader zvládá všechny vaše typy souborů
+  □ Chunking strategie otestována se vzorovými dotazy
+  □ Embedding model vhodný pro doménu
+
+□ Retrieval
+  □ Vektorová databáze vybrána a nakonfigurována
+  □ Top-K vyladěno pro váš use case
+  □ Hybridní search povoleno pokud potřeba
+
+□ Generování
+  □ Grounding instrukce v system promptu
+  □ Citace zdrojů v odpovědích
+  □ Fallback pro "žádný relevantní kontext"
+
+□ Evaluace
+  □ Přesnost retrievalu měřena (Recall@K)
+  □ End-to-end kvalita odpovědí testována
+  □ Detekce halucinací zavedena
+```
+
+---
+
+<ConceptCard title="Holokron: RAG Základy" icon="💎">
+
+### 🔑 Klíčové poznatky
+
+* **Co to je:** Retrieval-Augmented Generation - dávání LLM přístupu k externím znalostem v době dotazu
+* **Proč záleží:** Řeší problémy knowledge cutoff a halucinací
+* **Pipeline:** Index (chunk + embed) → Retrieve (similarity search) → Generate (ukotvená odpověď)
+* **Klíčová rozhodnutí:** Chunk size, embedding model, vektorová databáze, top-K
+* **Pokročilé techniky:** Hybridní search, re-ranking, transformace dotazu
+* **Produkční checklist:** Data pipeline + tuning retrievalu + grounding prompty + evaluace
+
+**Další kroky:** Naučte se o Agent Frameworks, které orchestrují RAG s dalšími nástroji!
+
+</ConceptCard>

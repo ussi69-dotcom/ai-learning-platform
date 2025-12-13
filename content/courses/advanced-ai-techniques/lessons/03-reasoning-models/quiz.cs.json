@@ -1,71 +1,52 @@
-{
-  "title": "Kvíz: Reasoning modely",
-  "description": "Otestujte své znalosti o AI Systému 2 a reasoning modelech",
-  "questions": [
-    {
-      "id": "rm-q1",
-      "type": "multiple_choice",
-      "question": "Jaký je hlavní rozdíl mezi AI Systému 1 a Systému 2?",
-      "options": [
-        "Systém 1 je starší, Systém 2 je novější",
-        "Systém 1 je rychlý/intuitivní, Systém 2 je pomalý/uvážlivý",
-        "Systém 1 je open-source, Systém 2 je proprietární",
-        "Systém 1 používá GPU, Systém 2 používá TPU"
-      ],
-      "correct": 1,
-      "explanation": "AI Systému 1 (jako většina LLM) funguje prostřednictvím rychlého, intuitivního rozpoznávání vzorců. AI Systému 2 (reasoning modely) si dává čas na uvážlivé krokové řešení problémů."
-    },
-    {
-      "id": "rm-q2",
-      "type": "multiple_choice",
-      "question": "Co je Chain-of-Thought (CoT) prompting?",
-      "options": [
-        "Nativní architektonická vlastnost reasoning modelů",
-        "Technika prompt engineeringu k simulaci uvažování ve standardních LLM",
-        "Způsob propojení více AI modelů dohromady",
-        "Metoda ke snížení spotřeby tokenů"
-      ],
-      "correct": 1,
-      "explanation": "Chain-of-Thought je promptovací TRIK, který nutí standardní modely externalizovat svůj proces uvažování. Není to nativní schopnost – je to hack, jak přimět modely Systému 1, aby se chovaly, jako by uměly uvažovat."
-    },
-    {
-      "id": "rm-q3",
-      "type": "multiple_choice",
-      "question": "Kdy byste měli použít reasoning model místo standardního LLM?",
-      "options": [
-        "Pro všechny úkoly, aby byla zajištěna nejvyšší kvalita",
-        "Pouze pro úkoly kreativního psaní",
-        "Pro složité, vícekrokové úkoly, kde je kritická správnost",
-        "Když potřebujete co nejrychlejší odpověď"
-      ],
-      "correct": 2,
-      "explanation": "Reasoning modely jsou pomalí a drazí specialisté. Používejte je pro složitou logiku, vícekrokové problémy a úkoly, kde je správnost nezbytná – ne pro jednoduchý chat nebo kreativní úkoly."
-    },
-    {
-      "id": "rm-q4",
-      "type": "multiple_choice",
-      "question": "Co je 'Extended Thinking' u reasoning modelů?",
-      "options": [
-        "Prompt, který žádá model, aby přemýšlel déle",
-        "Architektonická vlastnost, kde model interně uvažuje před odpovědí",
-        "Způsob rozšíření kontextového okna",
-        "Technika ke snížení halucinací"
-      ],
-      "correct": 1,
-      "explanation": "Extended Thinking je NATIVNÍ architektonická schopnost. Model má interní 'poznámkový blok', kde rozkládá problémy, vyhodnocuje možnosti a zpřesňuje odpovědi PŘEDTÍM, než vám cokoliv ukáže."
-    },
-    {
-      "id": "rm-q5",
-      "type": "multiple_choice",
-      "question": "Které tvrzení o reasoning modelech je PRAVDIVÉ?",
-      "options": [
-        "Jsou vždy rychlejší než standardní LLM",
-        "Měly by nahradit všechny standardní LLM",
-        "Mohou být 10-100x pomalejší a dražší než standardní modely",
-        "Jsou dostupné pouze jako open-source"
-      ],
-      "correct": 2,
-      "explanation": "Reasoning modely obětují rychlost za přesnost. Mohou být 10-100x pomalejší a výrazně dražší. Jsou to specialisté, ne náhrada za každodenní AI úkoly."
-    }
-  ]
-}
+[
+  {
+    "question": "Jaký je hlavní rozdíl mezi System 1 a System 2 AI?",
+    "option_a": "System 1 je starší, System 2 je novější",
+    "option_b": "System 1 je rychlá/intuitivní, System 2 je pomalá/záměrná",
+    "option_c": "System 1 je open-source, System 2 je proprietární",
+    "option_d": "System 1 používá GPU, System 2 používá TPU",
+    "correct_answer": "B",
+    "explanation": "System 1 AI (jako většina LLM) funguje skrze rychlé, intuitivní rozpoznávání vzorců. System 2 AI (reasoning modely) si dává čas na záměrné propracování problémů krok za krokem.",
+    "order": 1
+  },
+  {
+    "question": "Co je Chain-of-Thought (CoT) prompting?",
+    "option_a": "Nativní architektonická vlastnost reasoning modelů",
+    "option_b": "Technika prompt engineeringu pro simulaci uvažování ve standardních LLM",
+    "option_c": "Způsob propojení více AI modelů dohromady",
+    "option_d": "Metoda pro snížení spotřeby tokenů",
+    "correct_answer": "B",
+    "explanation": "Chain-of-Thought je promptovací TRIK, který nutí standardní modely externalizovat svůj proces uvažování. Není to nativní schopnost - je to hack, aby se System 1 modely tvářily, že umí uvažovat.",
+    "order": 2
+  },
+  {
+    "question": "Kdy byste měli použít reasoning model místo standardního LLM?",
+    "option_a": "Pro všechny úkoly pro zajištění nejvyšší kvality",
+    "option_b": "Pouze pro kreativní psaní",
+    "option_c": "Pro komplexní, vícekrokové úkoly, kde je kritická správnost",
+    "option_d": "Když potřebujete nejrychlejší možnou odpověď",
+    "correct_answer": "C",
+    "explanation": "Reasoning modely jsou pomalí a drazí specialisté. Používejte je pro komplexní logiku, vícekrokové problémy a úkoly, kde je správnost nekompromisní - ne pro jednoduchý chat nebo kreativní úkoly.",
+    "order": 3
+  },
+  {
+    "question": "Co je 'Extended Thinking' u reasoning modelů?",
+    "option_a": "Prompt, který žádá model, aby přemýšlel déle",
+    "option_b": "Architektonická vlastnost, kde model interně uvažuje před odpovědí",
+    "option_c": "Způsob rozšíření kontextového okna",
+    "option_d": "Technika pro snížení halucinací",
+    "correct_answer": "B",
+    "explanation": "Extended Thinking je NATIVNÍ architektonická schopnost. Model má interní 'zápisník', kde rozkládá problémy, hodnotí možnosti a zdokonaluje odpovědi PŘEDTÍM, než vám cokoli ukáže.",
+    "order": 4
+  },
+  {
+    "question": "Které tvrzení o reasoning modelech je PRAVDIVÉ?",
+    "option_a": "Jsou vždy rychlejší než standardní LLM",
+    "option_b": "Měly by nahradit všechny standardní LLM",
+    "option_c": "Mohou být 10-100x pomalejší a dražší než standardní modely",
+    "option_d": "Jsou dostupné pouze jako open-source",
+    "correct_answer": "C",
+    "explanation": "Reasoning modely vyměňují rychlost za přesnost. Mohou být 10-100x pomalejší a výrazně dražší. Jsou to specialisté, ne náhrady pro každodenní AI úkoly.",
+    "order": 5
+  }
+]

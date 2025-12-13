@@ -1,0 +1,18 @@
+{
+  "title": "AI Automation Tools: n8n and NotebookLM",
+  "title_cs": "Nástroje AI automatizace: n8n a NotebookLM",
+  "description": "Build intelligent workflows with n8n AI agents and transform research with NotebookLM. Learn to automate complex tasks without code.",
+  "description_cs": "Budujte inteligentní workflow s n8n AI agenty a transformujte výzkum s NotebookLM. Naučte se automatizovat komplexní úkoly bez kódu.",
+  "order": 3,
+  "video_url": "https://www.youtube.com/embed/PSLCtgdHe-E",
+  "tags": ["n8n", "notebooklm", "automation", "no-code", "ai-agents", "workflows", "research"],
+  "prerequisites": ["01-rag"],
+  "learning_objectives": [
+    "Build AI-powered workflows in n8n without code",
+    "Connect LLMs to real-world triggers and actions",
+    "Use NotebookLM for AI-powered research synthesis",
+    "Create automated content pipelines",
+    "Implement AI agents that take actions based on triggers",
+    "Design error-handling and fallback strategies"
+  ]
+}

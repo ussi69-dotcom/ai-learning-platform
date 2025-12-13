@@ -1,0 +1,419 @@
+# AI Automation Tools: n8n and NotebookLM 🔄
+
+<Callout type="info">
+**Mission:** Build intelligent automation workflows and supercharge your research - no code required. Learn to connect AI to real-world actions.
+
+⏳ **Reading Time:** 30 min | 🧪 **[2] Labs Included**
+</Callout>
+
+**The AI revolution isn't just about chatbots. It's about automation.**
+
+What if your AI could automatically:
+- Summarize every email and create action items?
+- Monitor social media and generate reports?
+- Process documents and update databases?
+- Research topics and produce podcasts?
+
+Welcome to AI automation - where LLMs meet workflows.
+
+---
+
+## Why AI Automation?
+
+<ConceptCard title="The Automation Imperative" icon="⚡">
+
+AI chat is powerful, but it's **reactive**. You ask, it answers. AI automation is **proactive** - it works while you sleep.
+
+**The Shift:**
+- **Chat AI:** Human-in-the-loop, one question at a time
+- **Automated AI:** Event-driven, continuous processing, scaled actions
+
+</ConceptCard>
+
+### Real-World Impact
+
+| Manual Process | With AI Automation |
+|----------------|-------------------|
+| Check emails → Summarize → Create tasks | Automatic: Email → AI Summary → Task in Notion |
+| Monitor news → Analyze → Write report | Automatic: RSS → AI Analysis → Slack alert |
+| Review documents → Extract data → Update DB | Automatic: Upload → AI Parse → Database update |
+
+---
+
+## Part 1: n8n - The AI Workflow Engine
+
+n8n is a workflow automation platform that's become the go-to tool for building AI-powered automations.
+
+### Why n8n for AI?
+
+| Feature | Benefit |
+|---------|---------|
+| **Visual Builder** | Drag-and-drop workflow design |
+| **LLM Integrations** | Native OpenAI, Anthropic, Ollama nodes |
+| **AI Agent Node** | Build autonomous agents in workflows |
+| **400+ Integrations** | Connect to virtually any service |
+| **Self-Hostable** | Keep data private, no vendor lock-in |
+
+### The n8n AI Node Types
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                   n8n AI NODES                           │
+├─────────────────────────────────────────────────────────┤
+│                                                          │
+│  🤖 AI Agent Node                                        │
+│     - Autonomous decision-making                         │
+│     - Tool usage (search, database, HTTP)               │
+│     - Memory across interactions                         │
+│                                                          │
+│  💬 Chat Node                                            │
+│     - Simple LLM conversation                            │
+│     - System prompts                                     │
+│     - Model selection                                    │
+│                                                          │
+│  📄 Summarizer Node                                      │
+│     - Document summarization                             │
+│     - Text extraction                                    │
+│     - Key point identification                           │
+│                                                          │
+│  🔍 Vector Store Nodes                                   │
+│     - RAG implementation                                 │
+│     - Embedding storage                                  │
+│     - Semantic search                                    │
+│                                                          │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Building Your First AI Workflow
+
+### Example: Email Summary Pipeline
+
+```
+┌──────────┐    ┌─────────┐    ┌──────────┐    ┌─────────┐
+│ Gmail    │ -> │ Filter  │ -> │ AI       │ -> │ Notion  │
+│ Trigger  │    │ Node    │    │ Summary  │    │ Task    │
+└──────────┘    └─────────┘    └──────────┘    └─────────┘
+```
+
+**How it works:**
+1. **Gmail Trigger** - Activates when new email arrives
+2. **Filter Node** - Only process emails from specific senders
+3. **AI Summary** - Claude/GPT summarizes email content
+4. **Notion Task** - Creates task with summary and action items
+
+### The AI Agent Pattern
+
+For complex tasks, use the AI Agent node:
+
+```
+┌──────────────────────────────────────────────────────────┐
+│                    AI AGENT WORKFLOW                      │
+├──────────────────────────────────────────────────────────┤
+│                                                           │
+│  Trigger (Webhook/Schedule/Event)                         │
+│           │                                               │
+│           ▼                                               │
+│  ┌─────────────────────────────────────┐                 │
+│  │         AI AGENT NODE               │                 │
+│  │  ┌───────────────────────────────┐  │                 │
+│  │  │ System Prompt: "You are..."   │  │                 │
+│  │  │ Tools Available:              │  │                 │
+│  │  │   - HTTP Request              │  │                 │
+│  │  │   - Database Query            │  │                 │
+│  │  │   - Code Execution            │  │                 │
+│  │  │   - Web Search                │  │                 │
+│  │  └───────────────────────────────┘  │                 │
+│  │         │                           │                 │
+│  │         ▼                           │                 │
+│  │    Agent Decides & Acts             │                 │
+│  └─────────────────────────────────────┘                 │
+│           │                                               │
+│           ▼                                               │
+│  Output (Slack/Email/Database/API)                        │
+│                                                           │
+└──────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🔬 Lab 1: Design an AI Automation Workflow
+
+Let's design a workflow using n8n's concepts!
+
+**Objective:** Plan an AI automation workflow for a real use case.
+
+**The Prompt:**
+Copy this into ChatGPT or Claude to help design your workflow:
+
+```text
+You are an n8n workflow designer. Help me create a workflow for this use case:
+
+USE CASE: Daily News Digest
+- Every morning at 8 AM
+- Fetch top 10 news articles from RSS feeds (tech + business)
+- Use AI to summarize each article in 2 sentences
+- Identify the 3 most important stories
+- Generate a newsletter-style email
+- Send to my email address
+
+Design the workflow:
+1. What trigger should we use?
+2. What nodes are needed?
+3. What should the AI prompt be for summarization?
+4. What should the AI prompt be for ranking importance?
+5. How should we handle errors?
+
+Output as a workflow diagram and list of node configurations.
+```
+
+**Expected Output Structure:**
+```
+WORKFLOW: Daily News Digest
+
+1. TRIGGER: Schedule Trigger
+   - Cron: 0 8 * * * (8 AM daily)
+
+2. NODE: RSS Feed Read
+   - Tech feed: https://...
+   - Business feed: https://...
+
+3. NODE: Loop Over Items
+   - Process each article
+
+4. NODE: AI Chat (Summarize)
+   - Model: claude-3-haiku
+   - Prompt: "Summarize this article in 2 sentences..."
+
+5. NODE: AI Chat (Rank)
+   - Model: claude-3-opus
+   - Prompt: "Given these summaries, pick top 3..."
+
+6. NODE: Generate Email
+   - Template with ranked summaries
+
+7. NODE: Send Email
+   - Via SMTP/Gmail
+
+8. ERROR HANDLING:
+   - If RSS fails → Use cached articles
+   - If AI fails → Retry 3x, then skip
+```
+
+**💡 Aha Moment:** "I just designed an automation that would have taken hours manually - and it runs automatically every day, zero effort!"
+
+<LabComplete labId="lab-automation-1" />
+
+---
+
+## Part 2: NotebookLM - AI Research Assistant
+
+NotebookLM (by Google) takes a different approach: instead of automating workflows, it transforms how you research and synthesize information.
+
+### What is NotebookLM?
+
+<ConceptCard title="NotebookLM Core Concept" icon="📚">
+
+NotebookLM is an AI research assistant that:
+1. Ingests your documents (PDFs, docs, URLs)
+2. Creates a private AI that ONLY knows your sources
+3. Generates summaries, Q&A, and even **audio podcasts**
+4. Never hallucinates beyond your uploaded content
+
+Think of it as RAG-as-a-Service with a beautiful interface.
+
+</ConceptCard>
+
+### Key Features
+
+| Feature | What It Does |
+|---------|--------------|
+| **Source Grounding** | AI only answers from your documents |
+| **Audio Overview** | Generates podcast-style discussions |
+| **Citation Links** | Every answer links to source |
+| **Notebook Guides** | Auto-generated study materials |
+| **Multi-Source** | Combine PDFs, YouTube, websites |
+
+### NotebookLM vs. ChatGPT/Claude
+
+| Aspect | NotebookLM | ChatGPT/Claude |
+|--------|------------|----------------|
+| Knowledge | YOUR documents only | All training data |
+| Hallucination risk | Very low | Higher |
+| Citations | Always linked | Manual |
+| Audio output | Built-in podcasts | No |
+| Best for | Research, study | General chat |
+
+---
+
+## Use Cases for NotebookLM
+
+### 1. Academic Research
+
+```
+Upload: 20 research papers on quantum computing
+Ask: "What are the main competing approaches to error correction?"
+Get: Synthesis with citations to specific papers
+```
+
+### 2. Business Intelligence
+
+```
+Upload: Q1-Q4 financial reports, analyst calls, market research
+Ask: "What are the emerging risks mentioned across all quarters?"
+Get: Risk analysis with specific sources
+```
+
+### 3. Content Creation
+
+```
+Upload: Interview transcripts, research notes, outline
+Ask: "Generate a podcast script discussing the main themes"
+Get: Audio overview you can publish
+```
+
+### 4. Learning & Study
+
+```
+Upload: Textbook chapters, lecture slides, notes
+Ask: "Create a study guide for the exam"
+Get: Structured guide with key concepts and questions
+```
+
+---
+
+## 🔬 Lab 2: Research Synthesis with NotebookLM
+
+Let's experience AI-powered research synthesis!
+
+**Objective:** Use AI to synthesize multiple sources into actionable insights.
+
+**The Prompt:**
+Since you may not have NotebookLM access, simulate it with Claude/ChatGPT:
+
+```text
+You are simulating NotebookLM's source-grounded AI. I'll provide
+source excerpts, and you must ONLY answer from these sources,
+citing them explicitly. If the answer isn't in the sources, say so.
+
+SOURCE 1 (Market Report 2024):
+"AI automation market grew 45% YoY. n8n emerged as the leading
+open-source platform with 50,000+ active deployments. Key drivers:
+enterprise adoption and LLM integration capabilities."
+
+SOURCE 2 (Gartner Analysis):
+"By 2027, 60% of organizations will use AI-augmented automation.
+Main barriers: data privacy concerns (67%) and skill gaps (54%).
+Leaders recommend starting with high-volume, rule-based processes."
+
+SOURCE 3 (Case Study - TechCorp):
+"TechCorp reduced manual processing by 80% using n8n + Claude.
+ROI achieved in 4 months. Key success factors: executive buy-in,
+dedicated automation team, iterative approach."
+
+QUESTIONS:
+1. What's the market growth rate for AI automation?
+2. What are the main barriers to adoption?
+3. What does the TechCorp case study recommend?
+4. What will happen to AI automation by 2030?
+```
+
+**Expected Output:**
+```
+1. Market Growth: 45% YoY [Source 1: Market Report 2024]
+
+2. Barriers to Adoption:
+   - Data privacy concerns (67%) [Source 2: Gartner]
+   - Skill gaps (54%) [Source 2: Gartner]
+
+3. TechCorp Recommendations:
+   - Executive buy-in
+   - Dedicated automation team
+   - Iterative approach
+   [Source 3: TechCorp Case Study]
+
+4. By 2030: I cannot answer this question as it's not covered
+   in the provided sources. Source 2 only mentions projections
+   through 2027 (60% adoption).
+```
+
+**💡 Aha Moment:** "The AI refused to guess about 2030 because it wasn't in the sources. That's the power of source grounding - no hallucinations!"
+
+<LabComplete labId="lab-automation-2" />
+
+---
+
+## Combining n8n + NotebookLM
+
+The real power comes from combining these tools:
+
+### Example: Automated Research Pipeline
+
+```
+1. n8n: Schedule weekly collection
+   └─> Fetch new research papers from arXiv
+   └─> Download PDFs to Google Drive
+
+2. NotebookLM: Analyze & Synthesize
+   └─> Auto-add new PDFs to notebook
+   └─> Generate weekly summary
+
+3. n8n: Distribute
+   └─> Email summary to team
+   └─> Post to Slack channel
+   └─> Update Notion database
+```
+
+---
+
+## Automation Best Practices
+
+### Do's ✅
+
+| Practice | Why |
+|----------|-----|
+| Start small | Prove value before scaling |
+| Add error handling | Workflows fail; plan for it |
+| Use specific prompts | Vague = unpredictable |
+| Log everything | Debug later |
+| Set rate limits | Avoid API cost explosions |
+
+### Don'ts ❌
+
+| Avoid | Why |
+|-------|-----|
+| Fully autonomous decisions | AI should assist, not replace judgment |
+| Sensitive data in cloud | Privacy/compliance risks |
+| Complex workflows first | Hard to debug |
+| Ignoring failures | Small errors compound |
+
+---
+
+## Tools Comparison
+
+| Tool | Best For | Pricing | Self-Hostable |
+|------|----------|---------|---------------|
+| **n8n** | Complex workflows, AI agents | Free (self) / $20+ (cloud) | ✅ Yes |
+| **NotebookLM** | Research, source synthesis | Free | ❌ No |
+| **Zapier** | Simple integrations | $20+ | ❌ No |
+| **Make** | Visual workflows | $9+ | ❌ No |
+| **LangFlow** | LLM pipelines | Free | ✅ Yes |
+
+---
+
+<ConceptCard title="Holocron: AI Automation" icon="💎">
+
+### 🔑 Key Takeaways
+
+* **n8n:** Visual workflow builder with powerful AI nodes (agents, chat, RAG)
+* **NotebookLM:** Source-grounded AI research assistant, no hallucinations
+* **AI Agent pattern:** Trigger → Agent with tools → Action
+* **Best for n8n:** Automated workflows, data pipelines, integrations
+* **Best for NotebookLM:** Research synthesis, study, source-based Q&A
+* **Combined power:** n8n collects → NotebookLM synthesizes → n8n distributes
+* **Golden rule:** Start simple, add complexity as needed
+
+**Next steps:** Apply these tools to your own use cases!
+
+</ConceptCard>

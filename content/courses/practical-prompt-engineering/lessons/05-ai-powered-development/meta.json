@@ -4,10 +4,7 @@
   "description": "Master the AI-native development ecosystem with MCP, Antigravity, context management, and AI coding tools.",
   "description_cs": "Ovládněte ekosystém AI-nativního vývoje s MCP, Antigravity, správou kontextu a AI nástroji pro kódování.",
   "order": 5,
-  "video_url": {
-    "en": "https://www.youtube.com/embed/mbxq88TOxp4",
-    "cs": "https://www.youtube.com/embed/mbxq88TOxp4"
-  },
+  "video_url": "https://www.youtube.com/embed/mbxq88TOxp4",
   "tags": ["mcp", "cursor", "windsurf", "claude-code", "antigravity", "ai-ide", "context-management"],
   "prerequisites": ["01-prompt-architecture", "04-local-intelligence"],
   "learning_objectives": [

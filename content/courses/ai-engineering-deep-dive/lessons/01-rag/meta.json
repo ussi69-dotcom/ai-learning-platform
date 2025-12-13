@@ -1,5 +1,18 @@
 {
   "title": "Retrieval-Augmented Generation (RAG)",
-  "description": "Build AI systems that access external knowledge.",
-  "order": 1
+  "title_cs": "Retrieval-Augmented Generation (RAG)",
+  "description": "Build AI systems that access external knowledge. Learn how to overcome knowledge cutoffs and hallucinations by grounding AI in your own data.",
+  "description_cs": "Budujte AI systémy s přístupem k externím znalostem. Naučte se překonat knowledge cutoff a halucinace ukotvením AI ve vašich vlastních datech.",
+  "order": 1,
+  "video_url": "https://www.youtube.com/embed/T-D1OfcDW1M",
+  "tags": ["rag", "retrieval", "vector-databases", "embeddings", "pinecone", "langchain", "llm-applications"],
+  "prerequisites": [],
+  "learning_objectives": [
+    "Understand why RAG solves knowledge cutoff and hallucination problems",
+    "Learn the RAG pipeline: Index → Retrieve → Generate",
+    "Master embedding models and vector similarity search",
+    "Compare vector databases: Pinecone, Chroma, Weaviate, Qdrant",
+    "Implement effective chunking strategies for documents",
+    "Build a working RAG system with practical labs"
+  ]
 }

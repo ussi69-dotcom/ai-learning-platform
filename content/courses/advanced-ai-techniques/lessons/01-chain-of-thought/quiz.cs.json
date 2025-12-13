@@ -1,71 +1,52 @@
-{
-  "title": "Kvíz: Chain-of-Thought",
-  "description": "Otestujte své znalosti CoT promptovacích technik",
-  "questions": [
-    {
-      "id": "cot-q1",
-      "type": "multiple_choice",
-      "question": "Co je Chain-of-Thought (CoT) prompting?",
-      "options": [
-        "Technika, která zrychluje odpovědi AI",
-        "Technika, která přiměje AI ukázat své uvažování krok za krokem",
-        "Způsob snížení nákladů na API volání",
-        "Metoda pro trénování AI modelů"
-      ],
-      "correct": 1,
-      "explanation": "CoT prompting povzbuzuje AI k artikulaci svého procesu uvažování krok za krokem před poskytnutím finální odpovědi, což zlepšuje přesnost a interpretovatelnost."
-    },
-    {
-      "id": "cot-q2",
-      "type": "multiple_choice",
-      "question": "Co dělá Zero-shot CoT speciálním?",
-      "options": [
-        "Vyžaduje mnoho příkladů k fungování",
-        "Funguje pouze s GPT-4",
-        "Funguje pouhým přidáním 'Let's think step by step' - žádné příklady nejsou potřeba",
-        "Je rychlejší než jiné metody"
-      ],
-      "correct": 2,
-      "explanation": "Zero-shot CoT nevyžaduje žádné příklady v promptu. Pouhé přidání frází jako 'Let's think step by step' spustí AI k ukázání svého uvažování."
-    },
-    {
-      "id": "cot-q3",
-      "type": "multiple_choice",
-      "question": "Kdy byste měli použít Few-shot CoT místo Zero-shot CoT?",
-      "options": [
-        "Když chcete rychlejší odpovědi",
-        "Když úkol vyžaduje specifický vzorec uvažování, který AI nemusí odvodit",
-        "Při práci s jednoduchými matematickými problémy",
-        "Když nemáte čas psát příklady"
-      ],
-      "correct": 1,
-      "explanation": "Few-shot CoT je užitečné, když úkol vyžaduje doménově specifické uvažování nebo konkrétní vzorec, který se AI potřebuje naučit z příkladů."
-    },
-    {
-      "id": "cot-q4",
-      "type": "multiple_choice",
-      "question": "Co NENÍ výhodou Chain-of-Thought promptingu?",
-      "options": [
-        "Snižuje halucinace",
-        "Zlepšuje interpretovatelnost",
-        "Zrychluje odpovědi",
-        "Lépe zvládá složité vícekrokové problémy"
-      ],
-      "correct": 2,
-      "explanation": "CoT ve skutečnosti ZPOMALUJE odpovědi, protože AI generuje více tokenů (kroky uvažování). Kompromisem je lepší přesnost a interpretovatelnost."
-    },
-    {
-      "id": "cot-q5",
-      "type": "multiple_choice",
-      "question": "Jaké je klíčové omezení CoT promptingu?",
-      "options": [
-        "Funguje pouze v angličtině",
-        "Je to promptovací TRIK, ne nativní schopnost uvažování",
-        "Nedokáže řešit matematické problémy",
-        "Vyžaduje drahé API plány"
-      ],
-      "correct": 1,
-      "explanation": "CoT je promptovací technika, která simuluje uvažování, ale není nativní architektuře modelu. Skutečné reasoning modely (jako o1, o3) mají Extended Thinking vestavěné."
-    }
-  ]
-}
+[
+  {
+    "question": "Co primárně dělá Chain-of-Thought (CoT) prompting?",
+    "option_a": "Zkracuje odpovědi AI",
+    "option_b": "Nutí AI ukázat uvažování krok za krokem",
+    "option_c": "Propojuje více AI modelů",
+    "option_d": "Snižuje náklady na API",
+    "correct_answer": "B",
+    "explanation": "Chain-of-Thought prompting nutí model externalizovat proces myšlení, ukazovat každý krok uvažování před dosažením finální odpovědi.",
+    "order": 1
+  },
+  {
+    "question": "Jaká je magická fráze pro Zero-Shot CoT?",
+    "option_a": "Prosím buď opatrný",
+    "option_b": "Pojďme přemýšlet krok za krokem",
+    "option_c": "Ukaž svou práci",
+    "option_d": "Dej si na čas",
+    "correct_answer": "B",
+    "explanation": "Fráze 'Pojďme přemýšlet krok za krokem' (nebo variace jako 'Promysli si to pečlivě') spustí chain-of-thought uvažování bez potřeby příkladů.",
+    "order": 2
+  },
+  {
+    "question": "Kdy je CoT NEJMÉNĚ užitečné?",
+    "option_a": "Složité matematické problémy",
+    "option_b": "Vícekrokové logické hádanky",
+    "option_c": "Jednoduché faktické otázky",
+    "option_d": "Debugování kódu",
+    "correct_answer": "C",
+    "explanation": "CoT přidává overhead. Pro jednoduché otázky jako 'Jaké je hlavní město Francie?' je krokové uvažování zbytečné a plýtvá tokeny.",
+    "order": 3
+  },
+  {
+    "question": "Co je Few-Shot CoT?",
+    "option_a": "Použití méně tokenů",
+    "option_b": "Poskytnutí příkladů, které zahrnují kroky uvažování",
+    "option_c": "Spuštění více API volání",
+    "option_d": "Typ fine-tuningu",
+    "correct_answer": "B",
+    "explanation": "Few-Shot CoT kombinuje few-shot learning s chain-of-thought tím, že ukazuje příklady demonstrující vstup-výstup A proces uvažování.",
+    "order": 4
+  },
+  {
+    "question": "Jaké je klíčové omezení CoT promptingu?",
+    "option_a": "Nefunguje s žádným modelem",
+    "option_b": "Používá více tokenů a může být pomalejší",
+    "option_c": "Funguje pouze v angličtině",
+    "option_d": "Vyžaduje speciální API přístup",
+    "correct_answer": "B",
+    "explanation": "CoT zvyšuje délku odpovědi (více tokenů = vyšší náklady) a dobu zpracování. Je to kompromis mezi kvalitou a efektivitou - používejte strategicky.",
+    "order": 5
+  }
+]

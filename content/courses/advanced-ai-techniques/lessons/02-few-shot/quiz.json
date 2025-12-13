@@ -1,71 +1,52 @@
-{
-  "title": "Few-Shot Learning Quiz",
-  "description": "Test your understanding of few-shot prompting techniques",
-  "questions": [
-    {
-      "id": "fs-q1",
-      "type": "multiple_choice",
-      "question": "What is the main difference between zero-shot and few-shot learning?",
-      "options": [
-        "Zero-shot is faster",
-        "Few-shot provides examples in the prompt, zero-shot doesn't",
-        "Zero-shot requires training, few-shot doesn't",
-        "Few-shot only works with GPT-4"
-      ],
-      "correct": 1,
-      "explanation": "The key difference is that few-shot learning includes input-output examples in the prompt, while zero-shot relies entirely on the model's pre-existing knowledge."
-    },
-    {
-      "id": "fs-q2",
-      "type": "multiple_choice",
-      "question": "What is the recommended number of examples for few-shot prompting?",
-      "options": [
-        "1-2 examples",
-        "3-5 examples",
-        "10-15 examples",
-        "As many as possible"
-      ],
-      "correct": 1,
-      "explanation": "3-5 examples is typically optimal - enough to establish a pattern without wasting tokens or overwhelming the model with too much information."
-    },
-    {
-      "id": "fs-q3",
-      "type": "multiple_choice",
-      "question": "Which of these is a best practice for few-shot prompts?",
-      "options": [
-        "Use only similar examples to reinforce the pattern",
-        "Include diverse, representative examples covering different cases",
-        "Use as many examples as fit in the context window",
-        "Always include at least 10 examples"
-      ],
-      "correct": 1,
-      "explanation": "Diverse examples help the model generalize better. If all examples are similar, the model might overfit to that specific pattern."
-    },
-    {
-      "id": "fs-q4",
-      "type": "multiple_choice",
-      "question": "What is few-shot learning BEST suited for?",
-      "options": [
-        "Real-time data retrieval",
-        "Complex mathematical proofs",
-        "Format conversion, classification, and style transfer",
-        "Training new AI models"
-      ],
-      "correct": 2,
-      "explanation": "Few-shot excels at teaching specific output formats, classification schemes, and style patterns through examples."
-    },
-    {
-      "id": "fs-q5",
-      "type": "multiple_choice",
-      "question": "How can Few-Shot and Chain-of-Thought be combined?",
-      "options": [
-        "They cannot be combined",
-        "By showing examples that include reasoning steps",
-        "By using one before the other in separate prompts",
-        "Only in Python code"
-      ],
-      "correct": 1,
-      "explanation": "You can combine them by providing examples that show both the input, the reasoning process, AND the output - teaching the model both WHAT to produce and HOW to think."
-    }
-  ]
-}
+[
+  {
+    "question": "What is the main difference between zero-shot and few-shot learning?",
+    "option_a": "Zero-shot is faster",
+    "option_b": "Few-shot provides examples in the prompt, zero-shot doesn't",
+    "option_c": "Zero-shot requires training, few-shot doesn't",
+    "option_d": "Few-shot only works with GPT-4",
+    "correct_answer": "B",
+    "explanation": "The key difference is that few-shot learning includes input-output examples in the prompt, while zero-shot relies entirely on the model's pre-existing knowledge.",
+    "order": 1
+  },
+  {
+    "question": "What is the recommended number of examples for few-shot prompting?",
+    "option_a": "1-2 examples",
+    "option_b": "3-5 examples",
+    "option_c": "10-15 examples",
+    "option_d": "As many as possible",
+    "correct_answer": "B",
+    "explanation": "3-5 examples is typically optimal - enough to establish a pattern without wasting tokens or overwhelming the model with too much information.",
+    "order": 2
+  },
+  {
+    "question": "Which of these is a best practice for few-shot prompts?",
+    "option_a": "Use only similar examples to reinforce the pattern",
+    "option_b": "Include diverse, representative examples covering different cases",
+    "option_c": "Use as many examples as fit in the context window",
+    "option_d": "Always include at least 10 examples",
+    "correct_answer": "B",
+    "explanation": "Diverse examples help the model generalize better. If all examples are similar, the model might overfit to that specific pattern.",
+    "order": 3
+  },
+  {
+    "question": "What is few-shot learning BEST suited for?",
+    "option_a": "Real-time data retrieval",
+    "option_b": "Complex mathematical proofs",
+    "option_c": "Format conversion, classification, and style transfer",
+    "option_d": "Training new AI models",
+    "correct_answer": "C",
+    "explanation": "Few-shot excels at teaching specific output formats, classification schemes, and style patterns through examples.",
+    "order": 4
+  },
+  {
+    "question": "How can Few-Shot and Chain-of-Thought be combined?",
+    "option_a": "They cannot be combined",
+    "option_b": "By showing examples that include reasoning steps",
+    "option_c": "By using one before the other in separate prompts",
+    "option_d": "Only in Python code",
+    "correct_answer": "B",
+    "explanation": "You can combine them by providing examples that show both the input, the reasoning process, AND the output - teaching the model both WHAT to produce and HOW to think.",
+    "order": 5
+  }
+]

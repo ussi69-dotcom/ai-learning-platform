@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What is the key difference between chat AI and automated AI?",
+    "option_a": "Chat AI is faster",
+    "option_b": "Chat AI is reactive, automated AI is proactive and event-driven",
+    "option_c": "Automated AI only works with text",
+    "option_d": "There is no significant difference",
+    "correct_answer": "B",
+    "explanation": "Chat AI requires human input for each interaction (reactive), while automated AI works continuously based on triggers and events (proactive), processing data even while you sleep.",
+    "order": 1
+  },
+  {
+    "question": "What makes n8n particularly suitable for AI automation?",
+    "option_a": "It only works with OpenAI",
+    "option_b": "It has native AI nodes, 400+ integrations, and can be self-hosted",
+    "option_c": "It's the cheapest option",
+    "option_d": "It requires no internet connection",
+    "correct_answer": "B",
+    "explanation": "n8n stands out for AI automation because it offers native LLM nodes (AI Agent, Chat, Summarizer), integrates with virtually any service, and can be self-hosted for data privacy.",
+    "order": 2
+  },
+  {
+    "question": "What is 'source grounding' in NotebookLM?",
+    "option_a": "Saving documents to disk",
+    "option_b": "The AI only answers from your uploaded documents, reducing hallucinations",
+    "option_c": "Downloading files from the internet",
+    "option_d": "Training a new model on your data",
+    "correct_answer": "B",
+    "explanation": "Source grounding means NotebookLM's AI only uses information from your uploaded documents to answer questions. It won't make up facts because it's limited to your sources.",
+    "order": 3
+  },
+  {
+    "question": "What unique feature does NotebookLM offer for content creation?",
+    "option_a": "Code generation",
+    "option_b": "Auto-generated podcast-style audio discussions",
+    "option_c": "Video editing",
+    "option_d": "Image creation",
+    "correct_answer": "B",
+    "explanation": "NotebookLM can generate Audio Overviews - podcast-style discussions about your uploaded content, which is unique among AI research tools.",
+    "order": 4
+  },
+  {
+    "question": "What is a recommended best practice when starting with AI automation?",
+    "option_a": "Build the most complex workflow first",
+    "option_b": "Start small, prove value before scaling",
+    "option_c": "Avoid error handling to keep workflows simple",
+    "option_d": "Use vague prompts for flexibility",
+    "correct_answer": "B",
+    "explanation": "Starting with small, simple automations lets you prove value quickly and learn the platform. Complex workflows are harder to debug and maintain.",
+    "order": 5
+  }
+]

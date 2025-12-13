@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What is the key difference between agentic AI (like Claude Code) and traditional AI assistants?",
+    "option_a": "Agentic AI is faster",
+    "option_b": "Agentic AI can take actions, not just suggest them",
+    "option_c": "Agentic AI is cheaper",
+    "option_d": "Agentic AI only works in Python",
+    "correct_answer": "B",
+    "explanation": "The fundamental difference is that agentic AI like Claude Code can actually execute commands, edit files, and verify changes - not just suggest what to do.",
+    "order": 1
+  },
+  {
+    "question": "What are Claude Code 'hooks'?",
+    "option_a": "Ways to connect to external APIs",
+    "option_b": "Shell commands that execute in response to Claude Code events",
+    "option_c": "Visual debugging tools",
+    "option_d": "Test automation frameworks",
+    "correct_answer": "B",
+    "explanation": "Hooks are automated triggers that execute shell commands when specific Claude Code events occur (like file writes or tool usage).",
+    "order": 2
+  },
+  {
+    "question": "What does MCP stand for and what does it enable?",
+    "option_a": "Model Control Panel - UI customization",
+    "option_b": "Model Context Protocol - extended capabilities via servers",
+    "option_c": "Multi-Code Processing - parallel execution",
+    "option_d": "Manual Code Patches - version control",
+    "correct_answer": "B",
+    "explanation": "MCP (Model Context Protocol) servers extend Claude Code's capabilities by providing access to external systems like Figma, GitHub, databases, and more.",
+    "order": 3
+  },
+  {
+    "question": "When should you use Claude Code's plan mode?",
+    "option_a": "For simple one-line fixes",
+    "option_b": "For complex, multi-file implementations and architectural changes",
+    "option_c": "Only for testing",
+    "option_d": "When you want faster responses",
+    "correct_answer": "B",
+    "explanation": "Plan mode is designed for complex tasks that require thinking through the implementation before writing code - like multi-file refactors, new features, or architectural changes.",
+    "order": 4
+  },
+  {
+    "question": "What is the recommended debug workflow with Claude Code?",
+    "option_a": "Describe the error verbally → Wait for solution",
+    "option_b": "Show the error → Let Claude investigate → Fix → Verify",
+    "option_c": "Fix it yourself → Ask Claude to review",
+    "option_d": "Ignore errors and continue",
+    "correct_answer": "B",
+    "explanation": "The optimal workflow is: show the actual error (paste stack trace or run the failing command), let Claude investigate the codebase, implement a fix, then verify the fix works.",
+    "order": 5
+  }
+]

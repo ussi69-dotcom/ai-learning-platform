@@ -156,13 +156,24 @@ Tito tvůrci definují náš Edutainment standard:
 - [ ] Model comparison tables (moved to Phase 3)
 - [ ] MCP Deep Dive lab (moved to Phase 3)
 
-### Fáze 3: Advanced Track (Next Priority)
-- [ ] L06: RAG & Vector Databases
-- [ ] L07: MCP Deep Dive
-- [ ] L08: Agent Frameworks (LangGraph)
-- [ ] L09: Reasoning Models (DeepSeek R1, o3)
-- [ ] L10: Multimodal AI
-- [ ] L11: Agentic DevOps
+### Fáze 3: Advanced Track 🚧 IN PROGRESS (Dec 14, 2025)
+
+**Course 3: Advanced AI Techniques** (expanded from stubs)
+- [x] L01: Chain-of-Thought Prompting (20 min, 2 labs)
+- [x] L02: Few-Shot Learning (20 min, 2 labs)
+- [x] L03: Reasoning Models - GPT-5.2, o3, DeepSeek R1 (35 min, 2 labs)
+
+**Course 4: AI Engineering Deep Dive** (expanded)
+- [x] L01: RAG & Vector Databases (40 min, 3 labs)
+- [ ] L02: Fine-Tuning Fundamentals (stub)
+- [x] L03: AI Automation - n8n & NotebookLM (30 min, 2 labs)
+
+**Course 2: Practical Prompt Engineering** (new lesson)
+- [x] L06: Claude Code Mastery (35 min, 3 labs)
+
+**Remaining Phase 3:**
+- [ ] Agent Frameworks (LangGraph, OpenRouter)
+- [ ] Multimodal AI
 - [ ] Model comparison tables
 
 ### Fáze 4: Viral Content (Ongoing)
@@ -172,5 +183,5 @@ Tito tvůrci definují náš Edutainment standard:
 ---
 
 *Originally generated: 27.11.2025*
-*Last major update: 09.12.2025 (Edutainment Revolution v3.0)*
-*Next review: After Phase 1 completion*
+*Last major update: 14.12.2025 (Phase 3 Content Expansion)*
+*Next review: After Phase 3 completion*

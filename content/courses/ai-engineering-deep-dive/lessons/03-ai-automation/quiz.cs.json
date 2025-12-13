@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Jaký je klíčový rozdíl mezi chat AI a automatizovanou AI?",
+    "option_a": "Chat AI je rychlejší",
+    "option_b": "Chat AI je reaktivní, automatizovaná AI je proaktivní a event-driven",
+    "option_c": "Automatizovaná AI funguje pouze s textem",
+    "option_d": "Není žádný významný rozdíl",
+    "correct_answer": "B",
+    "explanation": "Chat AI vyžaduje lidský vstup pro každou interakci (reaktivní), zatímco automatizovaná AI pracuje průběžně na základě triggerů a událostí (proaktivní), zpracovává data i když spíte.",
+    "order": 1
+  },
+  {
+    "question": "Co dělá n8n zvláště vhodným pro AI automatizaci?",
+    "option_a": "Funguje pouze s OpenAI",
+    "option_b": "Má nativní AI nodes, 400+ integrací a lze ho self-hostovat",
+    "option_c": "Je nejlevnější možností",
+    "option_d": "Nevyžaduje internetové připojení",
+    "correct_answer": "B",
+    "explanation": "n8n vyniká pro AI automatizaci, protože nabízí nativní LLM nodes (AI Agent, Chat, Summarizer), integruje se prakticky s jakoukoliv službou a lze ho self-hostovat pro soukromí dat.",
+    "order": 2
+  },
+  {
+    "question": "Co je 'source grounding' v NotebookLM?",
+    "option_a": "Ukládání dokumentů na disk",
+    "option_b": "AI odpovídá pouze z vašich uploadovaných dokumentů, snižuje halucinace",
+    "option_c": "Stahování souborů z internetu",
+    "option_d": "Trénování nového modelu na vašich datech",
+    "correct_answer": "B",
+    "explanation": "Source grounding znamená, že AI NotebookLM používá pouze informace z vašich uploadovaných dokumentů k odpovídání na otázky. Nevymýšlí fakta, protože je omezena na vaše zdroje.",
+    "order": 3
+  },
+  {
+    "question": "Jakou unikátní funkci nabízí NotebookLM pro tvorbu obsahu?",
+    "option_a": "Generování kódu",
+    "option_b": "Auto-generované audio diskuze ve stylu podcastu",
+    "option_c": "Editace videa",
+    "option_d": "Tvorba obrázků",
+    "correct_answer": "B",
+    "explanation": "NotebookLM může generovat Audio Overviews - diskuze ve stylu podcastu o vašem uploadovaném obsahu, což je unikátní mezi AI výzkumnými nástroji.",
+    "order": 4
+  },
+  {
+    "question": "Jaká je doporučená best practice při začátku s AI automatizací?",
+    "option_a": "Postavit nejsložitější workflow nejdřív",
+    "option_b": "Začít malým, dokázat hodnotu před škálováním",
+    "option_c": "Vyhnout se error handlingu pro zachování jednoduchosti workflow",
+    "option_d": "Používat vágní prompty pro flexibilitu",
+    "correct_answer": "B",
+    "explanation": "Začínání s malými, jednoduchými automatizacemi vám umožní rychle dokázat hodnotu a naučit se platformu. Složité workflow jsou těžší na debugging a údržbu.",
+    "order": 5
+  }
+]

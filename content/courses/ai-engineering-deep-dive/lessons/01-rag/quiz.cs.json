@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Jaké dva hlavní problémy RAG řeší?",
+    "option_a": "Rychlost a náklady na API volání",
+    "option_b": "Knowledge cutoff a halucinace",
+    "option_c": "Velikost modelu a čas tréninku",
+    "option_d": "Bezpečnost a soukromí",
+    "correct_answer": "B",
+    "explanation": "RAG řeší problém knowledge cutoff (LLM jsou zamrzlé v čase) a problém halucinací (vymýšlení faktů) tím, že ukotví odpovědi v externích, získaných datech.",
+    "order": 1
+  },
+  {
+    "question": "Jaké je správné pořadí fází RAG pipeline?",
+    "option_a": "Generate → Retrieve → Index",
+    "option_b": "Retrieve → Index → Generate",
+    "option_c": "Index → Retrieve → Generate",
+    "option_d": "Index → Generate → Retrieve",
+    "correct_answer": "C",
+    "explanation": "RAG pipeline je: 1) Index (připrav dokumenty: rozděl a embeduj), 2) Retrieve (najdi relevantní chunky přes similarity search), 3) Generate (vytvoř odpověď s kontextem).",
+    "order": 2
+  },
+  {
+    "question": "Jaký je 'sweet spot' pro velikost chunku v RAG systémech?",
+    "option_a": "50-100 tokenů",
+    "option_b": "200-500 tokenů s 10-20% překryvem",
+    "option_c": "1000-2000 tokenů",
+    "option_d": "Co největší",
+    "correct_answer": "B",
+    "explanation": "200-500 tokenů s překryvem je obvykle optimální. Příliš malé ztrácí kontext; příliš velké plýtvá kontextovým oknem a ředí relevantní informace.",
+    "order": 3
+  },
+  {
+    "question": "Co dělá embedding model v RAG?",
+    "option_a": "Komprimuje dokumenty pro úsporu úložiště",
+    "option_b": "Transformuje text na vektory zachycující sémantický význam",
+    "option_c": "Šifruje dokumenty pro bezpečnost",
+    "option_d": "Překládá dokumenty do různých jazyků",
+    "correct_answer": "B",
+    "explanation": "Embedding modely převádějí text na numerické vektory, kde podobné významy vedou k vektorům, které jsou blízko sebe ve vektorovém prostoru, což umožňuje sémantické vyhledávání podobnosti.",
+    "order": 4
+  },
+  {
+    "question": "Proč je 'grounding' důležitý v RAG promptech?",
+    "option_a": "Zrychluje odpovědi modelu",
+    "option_b": "Zabraňuje modelu míchat fakta s halucinacemi",
+    "option_c": "Snižuje náklady na API",
+    "option_d": "Zlepšuje kvalitu embeddingů",
+    "correct_answer": "B",
+    "explanation": "Grounding instrukce (např. 'POUZE použij poskytnutý kontext') zajistí, že LLM zakládá své odpovědi na získaných faktech místo jejich míchání s potenciálně halucinovanými informacemi.",
+    "order": 5
+  }
+]
