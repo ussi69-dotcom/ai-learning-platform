@@ -3,21 +3,17 @@
 import { TrendingUp, ArrowRight, Zap } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useRouter } from '@/i18n/routing';
-import { useRouter as useNextRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 export default function PhysicsOptTeaser() {
   const t = useTranslations('Home');
-  const intlRouter = useRouter();      // handles locale prefix
-  const nextRouter = useNextRouter();  // handles hash + scroll: false
+  const router = useRouter();
 
   const handleClick = () => {
-    // 1. Navigate with next-intl (locale-aware)
-    intlRouter.push('/about');
-    // 2. Update hash with Next.js router (no scroll reset)
-    setTimeout(() => {
-      nextRouter.replace('/about#cycle-49', { scroll: false });
-    }, 0);
+    // IMPORTANT: Use next-intl router so the locale prefix is included.
+    // Navigating to an unprefixed pathname (e.g. `/about#...`) triggers a redirect
+    // that cannot preserve the hash (fragments are never sent to the server).
+    router.push('/about#cycle-49', { scroll: false });
   };
 
   return (

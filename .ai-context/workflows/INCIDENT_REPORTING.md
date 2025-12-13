@@ -40,4 +40,4 @@ How was it fixed?
 1.  **Fix the Issue:** Prioritize restoring service.
 2.  **Write the Report:** Be honest and blameless.
 3.  **Update Workflows:** If a document was wrong, fix it immediately.
-4.  **Log in Session:** Mention the incident in `SESSION_LOG.md`.
+4.  **Log in Session:** Mention the incident in `.ai-context/state/WORKING_CONTEXT.md` (a pokud je to systémové, i v `.ai-context/state/MEMORY.md`).

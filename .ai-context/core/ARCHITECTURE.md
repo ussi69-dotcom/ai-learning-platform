@@ -43,4 +43,4 @@
 ---
 
 **Status:** Aktualizováno prosinec 2025
-**Agent Architecture:** Gemini CLI + Antigravity IDE (Shared Memory via `.ai-context`)
+**Agent Architecture:** Multi-Agent Workflow v5.1 (GPT‑5.2/Codex = orchestrator, Claude Code = implementer, Gemini CLI = content/visual QA) with shared memory via `.ai-context`

@@ -264,9 +264,57 @@ Před voláním `mcp__playwright__*`:
 ✅ VŽDY: browser_take_screenshot → soubor → Gemini
 ```
 
-**Chrome DevTools MCP:** Zvážit nahrazení Playwright za lightweight Chrome DevTools Protocol MCP - méně verbose output.
+**Chrome DevTools MCP:** ~~Zvážit nahrazení Playwright~~ → TESTOVÁNO, nefunguje v WSL (viz níže).
 
 **Meta-lesson:** Orchestrátor MUSÍ aktivně checkovat pravidla před akcí, ne jen pasivně číst při bootu. Pokud pravidla nedávají smysl → diskutuj s uživatelem, NE ignoruj.
+
+---
+
+### 2025-12-13: Chrome DevTools MCP vs Playwright v WSL 🔧
+
+**Co se stalo:** Testovali jsme Chrome DevTools MCP jako náhradu za Playwright (sliboval lightweight output).
+
+**Výsledek:** ❌ Nefunguje v WSL
+- Error: `Protocol error (Target.setDiscoverTargets): Target closed`
+- Puppeteer (který Chrome DevTools MCP používá) nemůže správně spustit Chrome v WSL
+- Ani `--headless` + `PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome` nepomohlo
+
+**Playwright funguje v WSL:** ✅
+- Automatický headless mode
+- Správná detekce Chrome binárky
+- **Kompaktní output** když se používá správně:
+  - `browser_navigate` → ~10 řádků YAML
+  - `browser_take_screenshot` → soubor pro Gemini
+  - ❌ `browser_snapshot` → 14k+ tokenů (NIKDY do chatu!)
+
+**Rozhodnutí:** Zůstáváme u Playwright, Chrome DevTools MCP odstraněn.
+
+**Správné použití Playwright:**
+```
+✅ browser_navigate → kompaktní YAML snapshot
+✅ browser_take_screenshot → .playwright-mcp/file.png → Gemini
+✅ browser_click, browser_fill → interakce
+❌ browser_snapshot → NIKDY přímo do chatu
+```
+
+---
+
+### 2025-12-13: CLAUDE.md Boot Checklist v4.0 📋
+
+**Co:** Redesign boot sequence po konzultaci s GPT-5.2 a Gemini (MACP).
+
+**Problém:** Boot sequence říkala "přečti 3 soubory" ale při continuation sessions se to přeskakovalo. Pravidla byla napsaná ale ne aplikovaná.
+
+**Řešení - Inline Critical Rules:**
+- Kritická pravidla (delegace, thin protocol) přímo v CLAUDE.md
+- Podmíněné loading tabulka (kdy co číst)
+- Sebe-verifikace: po přečtení souboru CITUJ pravidlo
+
+**Konzultace (MACP Blind Ballot):**
+- Gemini: Sebe-verifikace, Boot Checklist, WORKING_CONTEXT téměř bezpodmínečný
+- GPT-5.2: Instrukční kolize, robustní struktura, citované reference
+
+**Výsledek:** -90 řádků z CLAUDE.md, kompaktnější ale efektivnější boot sequence.
 
 ---
 

@@ -12,8 +12,8 @@ export default function ScrollToTop() {
             window.history.scrollRestoration = 'manual';
         }
 
-        // Delay check to allow hash to be set by async navigation (e.g., setTimeout in teasers)
-        // This fixes race condition where hash is set AFTER pathname change
+        // Delay check to allow hash to be set by client navigation
+        // (fragments can update slightly after pathname changes)
         const scrollTimeout = setTimeout(() => {
             // Skip scroll-to-top if there's a hash in the URL (e.g., /about#cycle-49)
             if (typeof window !== 'undefined' && window.location.hash) {

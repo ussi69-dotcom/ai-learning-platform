@@ -272,12 +272,13 @@ Our primary audience is technically curious and motivated, but not necessarily a
 The full QA workflow is defined in `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`.
 
 **Key Points:**
-1. **Claude = Orchestrator & QA Gate** - Reviews all content before publish
-2. **Gemini = Researcher & Draft Creator** - Deep research, content generation
-3. **Excellence Loop** - Iterate until 99% quality
-4. **Verification Checklist** - See WORKFLOW.md Section 3
+1. **Claude Code = QA Gate & Integrator** - Reviews all content before publish and integrates changes
+2. **Gemini 3 Pro = Researcher & Draft Creator** - Deep research, content generation, visual QA
+3. **GPT‑5.2 (Codex) = Situational Orchestrator (when stuck)** - Hard reasoning / second opinion
+4. **Excellence Loop** - Iterate until 99% quality
+5. **Verification Checklist** - Follow `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md` + `CLAUDE.md`
 
-> ⚠️ **Never publish without passing the QA Checklist in WORKFLOW.md**
+> ⚠️ **Never publish without passing the QA checklist in `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`.**
 
 ---
 

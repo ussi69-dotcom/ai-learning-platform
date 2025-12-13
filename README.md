@@ -9,14 +9,14 @@ Gamifikovaná platforma pro výuku AI konceptů s českou lokalizací.
 
 > **Poznámka:** Nepotřebuješ Node.js ani Python lokálně - vše běží v Dockeru!
 >
-> 🤖 **Pro AI Agenty:** Viz [.ai-context/workflows/MULTI_AGENT_WORKFLOW.md](.ai-context/workflows/MULTI_AGENT_WORKFLOW.md) pro workflow spolupráce (Claude = Orchestrator, Gemini = Researcher).
+> 🤖 **Pro AI agenty (SSOT):** Začni v `.ai-context/AGENT_PROTOCOL.md` + `.ai-context/state/WORKING_CONTEXT.md`. Workflow v5.1: Claude Code = implementace/QA, GPT‑5.2 (Codex) = situational orchestrator (hard reasoning), Gemini 3 Pro = content + visual QA, Perplexity = quick research.
 > 🌟 **Vize Projektu:** Viz [.ai-context/core/VISION.md](.ai-context/core/VISION.md).
 
 ---
 
 ## 🌟 Klíčové Funkce
 
-- **AI-Native Workflow:** Platforma je spoluvytvářena agenty Claude (Orchestrace/QA) a Gemini (Research/Content).
+- **AI-Native Workflow:** Platforma je spoluvytvářena agenty Claude Code (implementace/QA), GPT‑5.2 (hard reasoning/orchestrace), Gemini 3 Pro (content + visual QA) a Perplexity (quick research).
 - **Interactive AI Showcase:** Reálná demonstrace spolupráce Claude (Red Team) a Gemini (Blue Team) při řešení problémů.
 - **Live System Status:** Transparentní monitoring infrastruktury (PostgreSQL + Redis) přímo na webu.
 - **Gamifikace:** XP systém, úrovně obtížnosti (Piece of Cake až Damn I'm Good), vizuální progress.
@@ -331,45 +331,41 @@ Vytvořeno při prvním seedování (`backend/seed.py`).
 
 ---
 
-## 🤖 Multi-Agent Workflow (v4.0) - December 2025
+## 🤖 Multi-Agent Workflow (v5.1) - December 2025
 
-Projekt využívá **4 specializované AI modely** + subagenty pro optimální výkon:
+Projekt využívá **4 specializované AI modely** (a volitelně subagenty) pro optimální výkon:
 
 ### Architektura
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                      ORCHESTRATION LAYER                                 │
-│                                                                          │
-│                    Claude Opus 4.5 (Orchestrator)                        │
-│                    - Long sessions, CLI, safety, QA gate                 │
-│                    - Token-efficient (65% less than others)              │
-└────────────────────────────────┬────────────────────────────────────────┘
-                                 │
-         ┌───────────────────────┼───────────────────────┐
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   GPT-5.2       │    │   Gemini 3 Pro  │    │   Perplexity    │
-│   Thinking      │    │   + Deep Res.   │    │   Sonar         │
-├─────────────────┤    ├─────────────────┤    ├─────────────────┤
-│ Hard reasoning  │    │ Content gen.    │    │ Quick research  │
-│ Architecture    │    │ Research        │    │ Fact-checking   │
-│ Debugging       │    │ 2M context      │    │ Trends          │
-│ $10/1M tokens   │    │ $5/1M tokens    │    │ $1/1k requests  │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│  GPT‑5.2 (Codex) = Situational Orchestrator                      │
+│  - hard reasoning, root cause, arch trade-offs                   │
+└───────────────────────┬─────────────────────────────────────────┘
+                        │
+                        ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  Claude Code = Primary Implementer + QA gate                     │
+│  - coding, git, integration, test/verify                         │
+└───────────────────┬───────────────────────────────┬─────────────┘
+                    │                               │
+                    ▼                               ▼
+   Gemini 3 Pro (CLI)                         Perplexity
+   - content + visual QA                      - quick research (<5 min)
+   - 2M context                               Gemini Deep Research (20–60 min)
 ```
 
 ### Kdy volat kterého agenta
 
 | Typ úlohy | Agent | Proč |
 |-----------|-------|------|
-| **Hard reasoning** (architektura, debugging >2h) | GPT-5.2 | GPQA 93.2%, nejlepší reasoning |
-| **Content generation** | Gemini CLI | 2M kontext, levný, kvalitní |
-| **Deep research** (20-60 min) | Gemini Deep Research | Autonomní agent |
-| **Quick research** (<5 min) | Perplexity MCP | Rychlé, s citacemi |
-| **Kódování** | Claude Code | Token-efficient, bezpečný |
-| **Codebase exploration** | Explore subagent | Systematické prohledání |
-| **Plánování features** | Plan subagent | Architektonické rozhodnutí |
+| **Hard reasoning** (architektura, debugging >30 min / 2+ failed) | GPT‑5.2 (Codex) | Nejlepší reasoning, root cause |
+| **Kódování** (implementace, refactor, QA gate) | Claude Code | Nejrychlejší pro každodenní práci v repo |
+| **Visual QA** (screenshoty, UI regressions) | Gemini 3 Pro (CLI) | 2M kontext, rychlá vizuální analýza |
+| **Content generation** | Gemini 3 Pro (CLI) | Kvalitní drafty, levné iterace |
+| **Quick research** (<5 min) | Perplexity | Rychlé, s citacemi |
+| **Deep research** (20-60 min) | Gemini Deep Research | Autonomní dlouhý výzkum |
+| **Exploration/Planning** | Subagenti (volitelně) | Systematické prohledání / plánování |
 
 ### Memory systém (2-tier)
 
@@ -388,8 +384,10 @@ MEMORY.md (Long-term)
 | `.ai-context/AGENT_PROTOCOL.md` | Společná pravidla + routing matrix |
 | `.ai-context/state/WORKING_CONTEXT.md` | Aktuální task a stav |
 | `.ai-context/state/MEMORY.md` | Dlouhodobá paměť, protokoly |
+| `CLAUDE.md` | Entry point pro Claude Code |
+| `CODEX.md` | Entry point pro Codex CLI (GPT‑5.2 orchestrator) |
 | `GEMINI.md` | Konfigurace pro Gemini CLI |
-| `AGENTS.md` | Pravidla pro Codex CLI (GPT-5.2) |
+| `AGENTS.md` | Repo guidelines pro všechny agenty |
 
 ### Scripts
 
@@ -405,7 +403,7 @@ python backend/scripts/daily_digest_cron.py
 
 1. Přečti `.ai-context/INDEX.md` pro navigaci
 2. Aktuální stav: `.ai-context/state/WORKING_CONTEXT.md`
-3. Workflow: `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`
+3. Pravidla/workflow: `.ai-context/AGENT_PROTOCOL.md` (+ doplňky v `.ai-context/workflows/`)
 
 ---
 
@@ -419,5 +417,4 @@ Mrkni do `.ai-context/` pro:
 - `state/WORKING_CONTEXT.md` - aktuální stav projektu
 
 ---
-
 

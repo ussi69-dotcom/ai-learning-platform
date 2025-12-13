@@ -1,14 +1,39 @@
 # Working Context
 
 **Last Updated:** 2025-12-13 (Agent: Claude)
-**Last Commit:** `cf0d646` fix(nav): hash navigation now works with ScrollToTop
-**Status:** 🟢 MACP v1.0 Formalized + Workflow v5.2
+**Last Commit:** `78af17a` refactor: CLAUDE.md Boot Checklist v4.0 - inline critical rules
+**Status:** 🟢 Boot Checklist v4.0 done | Chrome DevTools ❌ (WSL) → Playwright ✅
 
 ---
 
 ## 🎯 Current State
 
-### Latest Session (Dec 13, 2025 - MACP v1.0)
+### Latest Session (Dec 13, 2025 - Boot Checklist v4.0)
+
+| Task                              | Status  | Notes                                         |
+| --------------------------------- | ------- | --------------------------------------------- |
+| **CLAUDE.md Redesign**            |         |                                               |
+| Consult Gemini on design          | ✅ Done | Sebe-verifikace, Boot Checklist               |
+| Consult GPT-5.2 on design         | ✅ Done | Instrukční kolize, robustní struktura         |
+| Implement Boot Checklist v4.0     | ✅ Done | 5-step checklist, inline CRITICAL_RULES       |
+| Podmíněné Loading table           | ✅ Done | Context-specific file loading                 |
+| **Chrome DevTools MCP**           |         |                                               |
+| Add chrome-devtools MCP           | ✅ Done | `claude mcp add chrome-devtools`              |
+| Test Chrome DevTools              | ❌ Fail | `Target closed` error v WSL                   |
+| Remove Chrome DevTools            | ✅ Done | Puppeteer nemůže spustit Chrome v WSL         |
+| Keep Playwright                   | ✅ Done | Funguje, kompaktní output když správně použit |
+| **Commits**                       |         |                                               |
+| `78af17a` Boot Checklist v4.0     | ✅ Push | -90 lines, inline critical rules              |
+
+### Previous Session (Dec 13, 2025 - YouTube & Digest Fixes)
+
+| Task                              | Status  | Notes                                         |
+| --------------------------------- | ------- | --------------------------------------------- |
+| YouTube channels fix              | ✅ Done | Matt Wolfe, Wes Roth, TheAIGRID added         |
+| CZ translation fix                | ✅ Done | translate_to_czech() in daily_digest_cron.py  |
+| ACTION CHECKPOINT docs            | ✅ Done | CLAUDE.md + MEMORY.md                         |
+
+### Previous Session (Dec 13, 2025 - MACP v1.0)
 
 | Task                              | Status  | Notes                                         |
 | --------------------------------- | ------- | --------------------------------------------- |
@@ -148,7 +173,7 @@
 ## 📡 News Sources
 
 ### English
-- YouTube: 12 channels (Fireship, 3B1B, Yannic Kilcher, StatQuest, Sentdex, NetworkChuck, etc.)
+- YouTube: 15 channels (Fireship, 3B1B, Yannic Kilcher, Matt Wolfe, Wes Roth, TheAIGRID, etc.)
 - RSS: OpenAI, HuggingFace, Google AI, TechCrunch, MIT Tech Review
 - Hacker News: AI/GPT/LLM tagged stories
 - Papers: arXiv cs.AI, cs.LG, cs.CL
@@ -171,11 +196,11 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-13 | Claude      | **Boot Checklist v4.0** - inline rules, Chrome DevTools ❌ WSL, Playwright ✅               |
+| 2025-12-13 | Claude      | **YouTube + CZ Fix** - 3 channels added, translate_to_czech(), ACTION CHECKPOINT docs      |
+| 2025-12-13 | All 3       | **MACP v1.0** - Multi-Agent Consensus Protocol formalized                                  |
 | 2025-12-13 | All 3       | **GPT-5.2 Onboarding** - CODEX.md created, Debug Packet templates, inconsistencies fixed   |
 | 2025-12-13 | All 3       | **Workflow v5.1** - "Asymmetric Context Segregation", Gemini=Visual QA, thin protocol      |
-| 2025-12-13 | Claude+GPT  | **Hash Nav Fix** - ScrollToTop race condition fixed, teasers→#cycle-XX now work            |
-| 2025-12-13 | Claude      | **PhysicsOptShowcase** - Created showcase for About page + Teaser for Homepage              |
-| 2025-12-13 | Claude      | **AIGlossary Perf** - useRef+DOM physics: 51.9→60.1 FPS, 86→1 frames >20ms                 |
 
 ---
 

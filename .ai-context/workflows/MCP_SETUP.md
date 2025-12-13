@@ -1,12 +1,12 @@
-# 🔌 MCP Server Setup Guide
+# 🔌 MCP Server Setup Guide (Claude Code + Codex CLI)
 
-**Purpose:** Konfigurace Model Context Protocol (MCP) serverů pro optimální workflow s Claude Code.
+**Purpose:** Konfigurace Model Context Protocol (MCP) serverů pro optimální workflow v tomto projektu.
 
 ---
 
 ## 🎯 Co Je MCP?
 
-Model Context Protocol umožňuje Claude Code přístup k:
+Model Context Protocol umožňuje AI agentům přístup k:
 - Filesystému (rychlejší file operations)
 - Git repository (advanced git operations)
 - Databázím (direct DB inspection)
@@ -19,11 +19,20 @@ Model Context Protocol umožňuje Claude Code přístup k:
 
 ## 📦 Doporučené MCP Servery
 
+## 🔁 Poznámka: Claude vs Codex
+
+- **Claude Code:** správa přes `claude mcp ...` (Claude config).
+- **Codex CLI:** správa přes `codex mcp ...` (globální config); list: `codex mcp list`.
+
 ### Priority 1: Must-Have (Instaluj HNED)
 
 #### 1. **Filesystem MCP**
 ```bash
+# Claude Code
 claude mcp add filesystem /home/ussi/ai-learning-platform
+
+# Codex CLI
+codex mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /home/ussi/ai-learning-platform
 ```
 
 **Co to dělá:**
@@ -40,7 +49,11 @@ claude mcp add filesystem /home/ussi/ai-learning-platform
 
 #### 2. **Git MCP**
 ```bash
+# Claude Code
 claude mcp add git /home/ussi/ai-learning-platform
+
+# Codex CLI
+codex mcp add git -- npx -y @modelcontextprotocol/server-git /home/ussi/ai-learning-platform
 ```
 
 **Co to dělá:**
@@ -59,7 +72,11 @@ claude mcp add git /home/ussi/ai-learning-platform
 
 #### 3. **Context7 MCP** (Dokumentace)
 ```bash
+# Claude Code
 claude mcp add context7
+
+# Codex CLI
+codex mcp add context7 -- npx -y @context7/mcp-server
 ```
 
 **Co to dělá:**
@@ -86,7 +103,12 @@ Po instalaci přidej relevantní doc sources:
 
 #### 4. **PostgreSQL MCP**
 ```bash
+# Claude Code
 claude mcp add postgres
+
+# Codex CLI (příklad)
+codex mcp add postgres --env DATABASE_URL="postgresql://ai_user:password@localhost:5432/learning_platform" -- \
+  npx -y @modelcontextprotocol/server-postgres
 ```
 
 **Konfigurace:**
@@ -120,7 +142,11 @@ claude mcp add postgres
 
 #### 5. **Docker MCP**
 ```bash
+# Claude Code
 claude mcp add docker
+
+# Codex CLI
+codex mcp add docker -- npx -y @modelcontextprotocol/server-docker
 ```
 
 **Co to dělá:**
@@ -224,6 +250,25 @@ claude mcp add github
 
 ---
 
+## 🧠 Codex CLI: model + “submodel” (reasoning effort)
+
+Codex umí rychle přepínat “hloubku” uvažování bez změny configu:
+
+```bash
+# Default (podle ~/.codex/config.toml)
+codex "Analyze: ..."
+
+# Rychleji (nižší reasoning effort)
+codex -c 'model_reasoning_effort="medium"' "Triage: ..."
+
+# Jednorázově jiný model
+codex -m gpt-5.2 "..."  # nebo jiný dostupný model
+```
+
+Pro trvalé profily použij `codex --profile` a nastav je v `~/.codex/config.toml`.
+
+---
+
 ## 🚀 Setup Checklist
 
 ### Krok 1: Instalace (15 minut)
@@ -240,6 +285,13 @@ claude mcp add docker
 # Nice to have (later)
 claude mcp add browser  # Pokud existuje
 claude mcp add github   # Pokud plánuješ open-source
+```
+
+**Codex CLI ekvivalent (volitelné):**
+```bash
+codex mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /home/ussi/ai-learning-platform
+codex mcp add git -- npx -y @modelcontextprotocol/server-git /home/ussi/ai-learning-platform
+codex mcp add context7 -- npx -y @context7/mcp-server
 ```
 
 ### Krok 2: Ověření
@@ -358,7 +410,7 @@ Po instalaci MCP serverů:
 
 2. **Update workflow docs:**
    - Aktualizuj DEV_AND_DEPLOYMENT_GUIDE.md s MCP usage
-   - Přidej MCP examples do SESSION_LOG.md
+   - Přidej MCP lessons learned do `MEMORY.md`
 
 3. **Train yourself:**
    - Zkus použít MCP místo Bash kde je to možné

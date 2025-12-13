@@ -39,3 +39,9 @@ GEMINI.md
 # Local files
 CLAUDE.md.local
 *.deb
+
+# Playwright MCP Screenshots (QA artifacts)
+.playwright-mcp/
+
+# Perplexity assist images (local reference)
+.ai-context/Perplexity_assist/

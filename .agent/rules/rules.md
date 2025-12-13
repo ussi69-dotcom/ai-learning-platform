@@ -16,6 +16,7 @@ Identifikuj se podle svého interface a načti odpovídající konfiguraci:
 | Pokud jsi... | Tvůj entry point | Pak načti... |
 |--------------|------------------|--------------|
 | **Claude Code** | `CLAUDE.md` (auto-loaded) | → `AGENT_PROTOCOL.md` |
+| **GPT‑5.2 / Codex CLI** | `CODEX.md` | → `AGENT_PROTOCOL.md` |
 | **Gemini CLI** | `GEMINI.md` (auto-loaded) | → `AGENT_PROTOCOL.md` |
 | **Antigravity/IDE** | Tento soubor | → `AGENT_PROTOCOL.md` |
 | **Subagent** | Task prompt | → Role-specific docs |
@@ -45,7 +46,7 @@ Kompletní pravidla jsou v `AGENT_PROTOCOL.md`. Zde jen to nejdůležitější:
 ### 1. Verify Before Commit
 ```bash
 cd frontend && npm run verify  # MUSÍ projít!
-docker compose exec backend pytest  # MUSÍ projít!
+make test-backend  # MUSÍ projít! (pytest)
 ```
 
 ### 2. GENERATE → WRITE → VERIFY
@@ -82,7 +83,7 @@ Pokud můžeš vybrat model:
 
 | Typ úkolu | Doporučený model |
 |-----------|------------------|
-| Complex analysis, planning | Nejsilnější dostupný |
+| Complex analysis, planning | Nejsilnější dostupný (hard reasoning) |
 | Bulk operations | Nejrychlejší |
 | Content generation | Kreativní model |
 | Quick questions | Levnější/rychlejší |
