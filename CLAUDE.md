@@ -51,6 +51,29 @@ git log -1 --oneline  # Porovnej s WORKING_CONTEXT
 
 ## ⛔ KRITICKÁ PRAVIDLA (NEIGNORUJ!)
 
+### 🚦 Playwright/Browser Tools = ACTION CHECKPOINT (NOVÉ!)
+```
+⚠️ STOP! Před KAŽDÝM voláním mcp__playwright__* se zeptej:
+
+□ Je to Visual QA (jak něco vypadá)?
+  → DELEGUJ na Gemini! Screenshot → soubor → Gemini CLI
+
+□ Je to scraping (získat data z webu)?
+  → Použij curl/wget! (např. curl -s URL | grep pattern)
+  → Nebo Gemini s thin protocol
+
+□ Opravdu potřebuji DOM interakci?
+  → Použij browser_evaluate pro targeted extraction
+  → NE browser_snapshot do chatu!
+
+🔥 NIKDY: browser_snapshot → dump 14k+ tokenů do kontextu
+✅ VŽDY: browser_take_screenshot → .playwright-mcp/file.png → Gemini
+
+Příklad (YouTube channel ID):
+❌ ŠPATNĚ: browser_navigate → browser_snapshot (14k tokenů!)
+✅ SPRÁVNĚ: curl -s "https://youtube.com/@handle" | grep -o 'channel/UC[^"]*'
+```
+
 ### Content Creation = DELEGUJ NA GEMINI
 ```
 NIKDY nepiš content sám!

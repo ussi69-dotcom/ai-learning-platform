@@ -234,6 +234,42 @@ docker compose build --no-cache frontend
 
 ## 📝 Lessons Learned
 
+### 2025-12-13: Playwright Snapshot Context Burn - OPAKOVANÝ FAIL 🔥
+
+**Co se stalo:** Při hledání YouTube channel IDs jsem použil Playwright MCP a dumpnul 4× snapshots (~56k tokenů) do kontextu. Přitom jsem měl pravidla jasně napsaná!
+
+**Root Cause:** Autopilot mode - pravidla přečtena ale neaplikována. Boot sequence je "read only", chybí **action checkpoint**.
+
+**Správné řešení bylo:**
+```bash
+# Možnost A: curl (nejrychlejší, <100 tokenů)
+curl -s "https://www.youtube.com/@WesRoth" | grep -o 'channel/UC[^"]*' | head -1
+
+# Možnost B: Gemini s thin protocol
+# 1. Ulož screenshot: mcp__playwright__browser_take_screenshot → file.png
+# 2. Gemini: "Najdi channel ID na screenshotu .playwright-mcp/file.png"
+```
+
+**Oprava - Boot Sequence Enhancement:**
+
+```markdown
+## 🚦 ACTION CHECKPOINT (před MCP tools!)
+
+Před voláním `mcp__playwright__*`:
+□ Je to Visual QA? → DELEGUJ na Gemini
+□ Je to scraping? → Použij curl/wget nebo Gemini thin protocol
+□ Opravdu potřebuji DOM snapshot? → Pokud ANO, použij browser_evaluate pro targeted extraction
+
+⚠️ NIKDY: browser_snapshot → dump do chatu
+✅ VŽDY: browser_take_screenshot → soubor → Gemini
+```
+
+**Chrome DevTools MCP:** Zvážit nahrazení Playwright za lightweight Chrome DevTools Protocol MCP - méně verbose output.
+
+**Meta-lesson:** Orchestrátor MUSÍ aktivně checkovat pravidla před akcí, ne jen pasivně číst při bootu. Pokud pravidla nedávají smysl → diskutuj s uživatelem, NE ignoruj.
+
+---
+
 ### 2025-12-13: Multi-Agent Consensus Protocol (MACP) v1.0 🗳️
 
 **Co:** Formalizace "blind ballot" protokolu pro důležitá rozhodnutí - Claude konzultuje GPT-5.2 a Gemini nezávisle.
