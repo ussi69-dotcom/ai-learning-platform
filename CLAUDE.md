@@ -92,14 +92,23 @@ Aktivuj když: Security změny | DB migrace | Breaking API | >30min stuck + 2 fa
 | Deep research (short) | Gemini CLI | ⏱️ 2-5m |
 | Deep research (long) | Gemini Deep Research | ⏱️ 20-60m |
 
-### Codex profily (GPT-5.2)
-```bash
-# Rychlá triage:
-codex -p fast "Triage: [context + otázka]"
+### Codex CLI (GPT-5.2) ⚠️ KRITICKÉ
 
-# Deep analýza (Debug Packet):
-codex -p orchestrator "## Debug Packet\n## Context: ...\n## Question: ..."
+```bash
+# ❌ NEFUNGUJE z Claude Code (potřebuje TTY terminál)
+codex "prompt"
+codex -p fast "prompt"
+
+# ✅ VŽDY POUŽÍVEJ `codex exec` pro non-interactive mód
+codex exec "Your question or analysis request"
+
+# S profilem (optional):
+codex exec -p fast "Quick triage question"
+codex exec -p orchestrator "Deep analysis with Debug Packet"
 ```
+
+**Výstup obsahuje:** Model info, full reasoning, token usage.
+**Tip:** Pro dlouhé prompty použij heredoc nebo soubor.
 
 ### Gemini OAuth Fix
 ```bash
