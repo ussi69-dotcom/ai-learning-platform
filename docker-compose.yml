@@ -37,6 +37,10 @@ services:
     volumes:
       - ./backend:/app
       - ./content:/app/content
+      # ⚠️ SECURITY: Docker socket is mounted for sandbox service (code execution).
+      # This is DEV ONLY - production (docker-compose.prod.yml) does NOT have this.
+      # Risk: Container escape could lead to host takeover.
+      # TODO: Consider gVisor or Firecracker for production sandboxing.
       - /var/run/docker.sock:/var/run/docker.sock
     command: ["./entrypoint.sh"]
     depends_on:

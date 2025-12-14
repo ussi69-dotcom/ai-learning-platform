@@ -1,16 +1,46 @@
 import os
+import logging
 from typing import List, Union
 from pydantic import AnyHttpUrl, EmailStr, field_validator
 from pydantic_settings import BaseSettings
 
+logger = logging.getLogger(__name__)
+
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     PROJECT_NAME: str = "AI Learning Platform"
-    
+
     # SECURITY
     SECRET_KEY: str = os.getenv("SECRET_KEY", "changeme")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+
+    @field_validator("SECRET_KEY", mode="after")
+    def validate_secret_key(cls, v: str) -> str:
+        """
+        Validate SECRET_KEY is not the default in production.
+        ⚠️ SECURITY: 'changeme' allows anyone to forge JWT tokens!
+        """
+        is_production = os.getenv("NODE_ENV") == "production" or os.getenv("ENVIRONMENT") == "production"
+
+        if v == "changeme":
+            if is_production:
+                raise ValueError(
+                    "🚨 CRITICAL SECURITY ERROR: SECRET_KEY is set to 'changeme' in production! "
+                    "Generate a secure key with: openssl rand -hex 32"
+                )
+            else:
+                logger.warning(
+                    "⚠️ SECURITY WARNING: Using default SECRET_KEY='changeme'. "
+                    "This is fine for development, but MUST be changed for production!"
+                )
+        elif len(v) < 32:
+            logger.warning(
+                f"⚠️ SECURITY WARNING: SECRET_KEY is only {len(v)} characters. "
+                "Recommended minimum is 32 characters (256 bits)."
+            )
+
+        return v
     
     # DATABASE
     # Defaulting to localhost for local dev convenience, but should be set via env
