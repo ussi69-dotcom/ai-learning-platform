@@ -223,6 +223,16 @@ vysledky = vector_db.similarity_search(
 
 ---
 
+<Callout type="info">
+**💰 Nákladové úvahy:** RAG systémy mají několik nákladových složek:
+- **Embedding API volání:** ~$0.02-0.13 za milion tokenů (indexování + dotazy)
+- **Vektorová databáze:** Zdarma (self-hosted) až $70+/měsíc (managed cloud)
+- **LLM generování:** $1-15 za milion tokenů podle modelu
+- **Úložiště:** Vektorové databáze potřebují ~4KB na chunk (1536 dimenzí × float32)
+
+Začněte s free tiery (lokální Chroma, OpenAI small model) pro prototypování!
+</Callout>
+
 ## Porovnání vektorových databází
 
 Potřebujete specializovanou databázi pro efektivní ukládání a vyhledávání milionů vektorů.

@@ -223,6 +223,16 @@ results = vector_db.similarity_search(
 
 ---
 
+<Callout type="info">
+**💰 Cost Considerations:** RAG systems have multiple cost components:
+- **Embedding API calls:** ~$0.02-0.13 per million tokens (indexing + queries)
+- **Vector database:** Free (self-hosted) to $70+/month (managed cloud)
+- **LLM generation:** $1-15 per million tokens depending on model
+- **Storage:** Vector databases need ~4KB per chunk (1536 dimensions × float32)
+
+Start with free tiers (Chroma local, OpenAI's small model) for prototyping!
+</Callout>
+
 ## Vector Databases Compared
 
 You need a specialized database to store and search millions of vectors efficiently.
