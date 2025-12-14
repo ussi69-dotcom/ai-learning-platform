@@ -10,7 +10,6 @@ import {
   ChevronDown,
   ChevronUp,
   Star,
-  Construction,
   Trophy,
 } from "lucide-react";
 import CourseIcon from "./CourseIcon";
@@ -83,9 +82,6 @@ export default function CourseCarousel({
   const CourseCard = ({ course }: { course: Course }) => {
     const isRecommended =
       showRecommended && course.difficulty_level === userLevel;
-    const isUnderConstruction =
-      course.slug === "advanced-ai-techniques" ||
-      course.slug === "ai-engineering-deep-dive";
 
     return (
       <Card
@@ -93,28 +89,8 @@ export default function CourseCarousel({
           isRecommended
             ? "ring-2 ring-yellow-500/50 dark:ring-yellow-400/50"
             : ""
-        } ${isUnderConstruction ? "opacity-75" : ""}`}
+        }`}
       >
-        {/* Under Construction Overlay */}
-        {isUnderConstruction && (
-          <div className="absolute inset-0 z-20 bg-gradient-to-br from-amber-500/90 to-orange-600/90 dark:from-amber-600/90 dark:to-orange-700/90 flex flex-col items-center justify-center text-white backdrop-blur-sm">
-            <div className="text-5xl mb-3 animate-bounce">🤖</div>
-            <div className="flex items-center gap-2 mb-2">
-              <Construction className="w-5 h-5" />
-              <span className="text-lg font-bold">
-                {locale === "cs" ? "Ve výstavbě" : "Under Construction"}
-              </span>
-              <Construction className="w-5 h-5" />
-            </div>
-            <p className="text-xs text-white/80 text-center px-4">
-              {locale === "cs"
-                ? "Náš robot pilně pracuje na tomto kurzu!"
-                : "Our robot is working hard on this course!"}
-            </p>
-            <div className="mt-2 text-xl">🔧⚙️🛠️</div>
-          </div>
-        )}
-
         {/* Course Image / Icon Area */}
         <div className="h-36 w-full bg-transparent relative p-3 flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity">
