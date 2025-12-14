@@ -731,6 +731,33 @@ Regex: `/(?:videos|alternatives)=\{(\[.*\])\}/`
 
 **Soubor:** `.ai-context/core/CONTENT_GUIDELINES.md` (sekce "🔥 EDUTAINMENT BIBLE")
 
+### 2025-12-14: Codex CLI - Interactive vs Non-Interactive Mode 🤖
+
+**Problém:** `codex "prompt"` vrací "stdin is not a terminal" z Claude Code.
+
+**Root cause:** Codex má dva módy:
+1. **Interactive** (default) - potřebuje TTY/terminál
+2. **Non-interactive** (`codex exec`) - funguje z automatizace
+
+**Řešení:**
+```bash
+# ❌ ŠPATNĚ - nefunguje z Claude Code
+codex "Your question"
+codex -p fast "Your question"
+
+# ✅ SPRÁVNĚ - funguje z Claude Code
+codex exec "Your question"
+```
+
+**Výstup `codex exec`:**
+- Model info (workdir, model, sandbox mode)
+- Full reasoning output
+- Token usage
+
+**Poučení:** Když včera "fungovalo" interaktivní codex, bylo to pravděpodobně z terminálu. Z Claude Code VŽDY používej `codex exec`.
+
+---
+
 ### 2025-12-12: WSL2 IPv4 Fix for Node.js MCP Servers 🔧
 
 **Problém:** Perplexity MCP server vracel `fetch failed` / `ETIMEDOUT` na WSL2, ale `curl` fungoval.
