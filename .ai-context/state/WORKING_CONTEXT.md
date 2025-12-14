@@ -1,14 +1,78 @@
 # Working Context
 
-**Last Updated:** 2025-12-13 (Agent: Claude)
-**Last Commit:** `78af17a` refactor: CLAUDE.md Boot Checklist v4.0 - inline critical rules
-**Status:** 🟢 Boot Checklist v4.0 done | Chrome DevTools ❌ (WSL) → Playwright ✅
+**Last Updated:** 2025-12-14 21:30 (Agent: Claude)
+**Last Commit:** `27677d9` security: add JWT secret validation + Docker socket warning
+**Status:** 🟢 Sith Ship Images deployed | Theme-aware course covers
 
 ---
 
 ## 🎯 Current State
 
-### Latest Session (Dec 13, 2025 - Boot Checklist v4.0)
+### Latest Session (Dec 14, 2025 - Star Wars Ship Images)
+
+| Task                              | Status  | Notes                                         |
+| --------------------------------- | ------- | --------------------------------------------- |
+| **Sith (Dark) Theme Ships**       |         |                                               |
+| AI Basics → TIE Fighter           | ✅ Done | `ai-basics-course-cover_dark.png`             |
+| Prompt Eng → Slave I              | ✅ Done | `practical-prompt-engineering_dark.png`       |
+| Advanced AI → Star Destroyer      | ✅ Done | `advanced-ai-techniques_dark.png`             |
+| AI Engineering → Death Star       | ✅ Done | `ai-engineering-deep-dive_dark.png`           |
+| **Jedi (Light) Theme Ships**      |         |                                               |
+| AI Basics → X-Wing                | ✅ Done | `ai-basics-course-cover_light.png`            |
+| Prompt Eng → Y-Wing               | ✅ Done | `practical-prompt-engineering_light.png`      |
+| Advanced AI → Falcon              | ✅ Done | `advanced-ai-techniques_light.png`            |
+| AI Engineering → Venator          | ✅ Done | `ai-engineering-deep-dive_light.png`          |
+| **Technical**                     |         |                                               |
+| CourseIcon.tsx theme switching    | ✅ Done | `_dark.png` / `_light.png` suffix logic       |
+| Source ships preserved            | ✅ Done | `frontend/public/images/ships/` folder        |
+| Visual QA via Playwright          | ✅ Done | Screenshot verified correct mapping           |
+
+### Ship → Difficulty Mapping (by visual order)
+
+| Position | Course             | Difficulty     | Jedi Ship   | Sith Ship      |
+|----------|--------------------|----------------|-------------|----------------|
+| 1st      | AI Basics          | Piece of Cake  | X-Wing      | TIE Fighter    |
+| 2nd      | Prompt Engineering | Let's Rock     | Y-Wing      | Slave I        |
+| 3rd      | Advanced AI        | Come Get Some  | Falcon      | Star Destroyer |
+| 4th      | AI Engineering     | Damn I'm Good  | Venator     | Death Star     |
+
+### Previous Session (Dec 14, 2025 - Security Hardening + GPT-5.2 Review)
+
+| Task                              | Status  | Notes                                         |
+| --------------------------------- | ------- | --------------------------------------------- |
+| **GPT-5.2 Platform Review**       |         |                                               |
+| Codex CLI debugging               | ✅ Done | `codex exec` for non-interactive mode         |
+| Fine-Tuning Coming Soon banner    | ✅ Done | EN + CS content with preview                  |
+| Comprehensive platform review     | ✅ Done | Architecture, content, security, debt         |
+| All lessons review                | ✅ Done | 18 lessons scored, hooks + labs + quizzes     |
+| Save findings to reports          | ✅ Done | `.ai-context/reports/GPT5.2_PLATFORM_REVIEW_2025_12_14.md` |
+| **Security Hardening**            |         |                                               |
+| Docker socket warning             | ✅ Done | Comment explaining dev-only risk              |
+| JWT SECRET_KEY validation         | ✅ Done | Rejects 'changeme' in production              |
+| .env.prod.example update          | ✅ Done | Added ENVIRONMENT=production                  |
+| **Commits**                       |         |                                               |
+| `c114ac7` Fine-Tuning banner      | ✅ Push | + Codex lesson learned                        |
+| `2d2931b` CLAUDE.md Codex update  | ✅ Push | `codex exec` instructions                     |
+| `27677d9` Security hardening      | ✅ Push | JWT validation + Docker warning               |
+
+### GPT-5.2 Key Findings (Dec 14, 2025)
+
+**Security Red Flags Fixed:**
+- ✅ Docker socket → Added warning comment (prod doesn't have it)
+- ✅ JWT secret → Added validation (rejects 'changeme' in prod)
+- ⏳ localStorage tokens → Future (move to httpOnly cookies)
+
+**Content Gaps Identified:**
+- Fine-Tuning lesson (stub) - needs full content
+- No capstone projects
+- No evaluation track
+
+**2025 Feature Ideas:**
+- Agent Flight Simulator
+- Adaptive Learning Path
+- Autograded Labs
+
+### Previous Session (Dec 13, 2025 - Boot Checklist v4.0)
 
 | Task                              | Status  | Notes                                         |
 | --------------------------------- | ------- | --------------------------------------------- |
@@ -196,11 +260,11 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-14 | Claude      | **Star Wars Ships** - Sith/Jedi theme images, difficulty-based mapping, visual QA          |
+| 2025-12-14 | Claude+GPT  | **Security Hardening** - JWT validation, Docker socket warning, platform review saved      |
 | 2025-12-13 | Claude      | **Boot Checklist v4.0** - inline rules, Chrome DevTools ❌ WSL, Playwright ✅               |
 | 2025-12-13 | Claude      | **YouTube + CZ Fix** - 3 channels added, translate_to_czech(), ACTION CHECKPOINT docs      |
 | 2025-12-13 | All 3       | **MACP v1.0** - Multi-Agent Consensus Protocol formalized                                  |
-| 2025-12-13 | All 3       | **GPT-5.2 Onboarding** - CODEX.md created, Debug Packet templates, inconsistencies fixed   |
-| 2025-12-13 | All 3       | **Workflow v5.1** - "Asymmetric Context Segregation", Gemini=Visual QA, thin protocol      |
 
 ---
 
