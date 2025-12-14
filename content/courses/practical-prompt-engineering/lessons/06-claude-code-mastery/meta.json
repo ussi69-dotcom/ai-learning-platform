@@ -4,7 +4,7 @@
   "description": "Master Claude Code's advanced features - hooks, MCP servers, plan mode, and multi-agent delegation for professional software development.",
   "description_cs": "Ovládněte pokročilé funkce Claude Code - hooks, MCP servery, plan mode a multi-agent delegaci pro profesionální vývoj softwaru.",
   "order": 6,
-  "video_url": "https://www.youtube.com/embed/H5M4LhMwFpw",
+  "video_url": "https://www.youtube.com/embed/SUysp3sJHbA",
   "tags": ["claude-code", "ai-coding", "mcp", "hooks", "agentic-development", "cursor", "windsurf"],
   "prerequisites": ["05-ai-powered-development"],
   "learning_objectives": [
