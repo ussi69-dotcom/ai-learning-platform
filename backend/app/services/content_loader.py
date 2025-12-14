@@ -153,6 +153,7 @@ class ContentLoader:
                 content=content,
                 content_cs=content_cs,
                 video_url=video_url,
+                thumbnail=meta.get("thumbnail"),
                 order=meta["order"],
                 course_id=course_id,
                 duration=duration,
@@ -168,7 +169,9 @@ class ContentLoader:
             lesson.description_cs = description_cs
             lesson.content = content
             lesson.content_cs = content_cs
+            lesson.content_cs = content_cs
             lesson.video_url = video_url
+            lesson.thumbnail = meta.get("thumbnail")
             lesson.order = meta["order"]
             lesson.duration = duration
             lesson.lab_count = lab_count

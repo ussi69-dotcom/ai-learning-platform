@@ -1,47 +1,301 @@
-# Fine-Tuning: Naučte AI mluvit VAŠÍM jazykem 🎯
+# Fine-Tuning: Naučte AI mluvit VAŠÍM jazykem
 
-<Callout type="warning">
-**🚧 Již brzy!** Tato lekce je momentálně ve vývoji. Vraťte se brzy pro kompletní pokrytí technik fine-tuningu.
+> **OpenAI účtuje $25 za fine-tuning GPT-4o-mini na 1 milion tokenů. Ale tady je tajemství: většina projektů to nepotřebuje.**
 
-**Očekávaný obsah:**
-- Kdy fine-tunovat vs. prompt engineering vs. RAG
-- Příprava a formátování datasetu
-- Fine-tuning OpenAI modelů (GPT-4o, GPT-4o-mini)
-- Analýza nákladů a best practices
-- Hands-on lab s reálným fine-tuning workflow
+<Callout type="info">
+**Vaše mise:** Ovládněte umění fine-tuningu. Naučte se kdy ho použít, kdy se mu vyhnout, a jak připravit dataset pro naučení AI modelu novým dovednostem bez rozbití rozpočtu.
+
+⏳ **Čas čtení:** 35 min | 🧪 **[2] Laby součástí**
+</Callout>
+
+<VideoSwitcher alternatives={[
+  {"id":"_2p0BR4xc5E","title":"Fine-Tuning GPT Models (OpenAI)"},
+  {"id":"gyGNQrwU1Kg","title":"When NOT to Fine-Tune (AI Explained)"}
+]} />
+
+---
+
+## Velká debata: Fine-Tuning vs. svět
+
+Nepoužili byste kladivo na rozbíjení ořechů, že? Stejné platí pro AI. Fine-tuning je silný, ale není to vaše jediná možnost. Pojďme si rozebrat hlavní hráče ve hře přizpůsobení modelů.
+
+| Vlastnost | Prompt Engineering | RAG | Fine-Tuning |
+|-----------|-------------------|-----|-------------|
+| **Co to je** | Tvorba detailních instrukcí | Poskytnutí AI přístupu k externím znalostem | Aktualizace vnitřních vah modelu |
+| **Nejlepší pro** | Jednoduché úkoly, stylové pokyny | Znalostně náročné úkoly | Učení nových dovedností nebo stylů |
+| **Náklady** | Nízké (jen tokeny) | Střední (tokeny + vektorová DB) | Vysoké (trénink + prémiové použití) |
+| **Složitost** | Nízká | Střední | Vysoká |
+| **Analogie** | Povídání přes terminál | USB disk s daty | Pájení nového čipu |
+
+<Callout type="tip">
+**Pro Tip:** Vždy začněte s Prompt Engineeringem. Když to selže, zkuste RAG. Pouze když obojí nestačí, zvažte těžké dělostřelectvo: Fine-Tuning.
 </Callout>
 
 ---
 
-## Co se naučíte (Náhled)
+## Kdy je Fine-Tuning váš Jedi Mistr
 
-<ConceptCard title="Přehled Fine-Tuningu" icon="🎓">
+Fine-tuning není o vkládání nových faktů. Jde o učení **dovednosti**. Představte si to jako poslání Padawana do Jediského chrámu. Neučí se nové informace o galaxii; učí se jak *používat* Sílu.
 
-**Fine-tuning** je proces, kdy vezmete předtrénovaný model a dále ho trénujete na vašich specifických datech, abyste:
+<ConceptCard title="5 perfektních případů pro Fine-Tuning" icon="🎯">
 
-- **Přizpůsobili doméně** - Medicínská, právní, technická terminologie
-- **Sladili styl** - Tón, formát, vzorce odpovědí
-- **Zlepšili konzistenci** - Spolehlivé výstupy pro specifické úkoly
-- **Zkrátili prompty** - Zapečete instrukce přímo do modelu
+**1. Zvládnutí specifického stylu nebo hlasu** 🎨
+Vaše firma má jedinečný komunikační styl. Fine-tuning perfektně trefí hlas značky.
 
-**V této lekci:** Krok-za-krokem průvodce od přípravy dat po deployment!
+**2. Dodržení specifického formátu** 📝
+Komplexní YAML, vlastní úryvky kódu, strukturované lékařské zprávy - když záleží na formátu.
+
+**3. Zlepšení spolehlivosti na úzkých úkolech** 🎯
+Doménový expert pro finanční sentiment, právní analýzu, technickou podporu.
+
+**4. Zvládání hraničních případů** ⚙️
+Záludné situace, kde váš základní model selhává? Vytvořte dataset a trénujte!
+
+**5. Řetězení komplexních kroků** 🔗
+Sumarizuj → Extrahuj entity → Formátuj jako JSON - vše jako jedna dovednost.
+
+</ConceptCard>
+
+<Callout type="warning">
+**Varování:** Nikdy nepoužívejte fine-tuning pro přidání nových znalostí. Pokud váš model neví o novém produktovém launchi, použijte RAG. Fine-tuning pro znalosti je drahý, neefektivní a náchylný k selhání.
+</Callout>
+
+---
+
+## JSONL evangelium: Příprava vašich posvátných textů
+
+Váš fine-tuning je pouze tak dobrý jako vaše data. **Odpad dovnitř, odpad ven.** Standardní formát je **JSONL (JSON Lines)** - textový soubor, kde každý řádek je platný JSON objekt.
+
+```json
+{"messages": [{"role": "system", "content": "Jsi pomocný asistent, který generuje pirátský slang."}, {"role": "user", "content": "Přelož: Ahoj, příteli. Jak se máš?"}, {"role": "assistant", "content": "Ahoj, námořníku! Jak se ti daří?"}]}
+{"messages": [{"role": "system", "content": "Jsi pomocný asistent, který generuje pirátský slang."}, {"role": "user", "content": "Přelož: Moje auto je rychlé."}, {"role": "assistant", "content": "Má loď je bystrá plavidlo!"}]}
+```
+
+### Požadavky na dataset
+
+| Aspekt | Minimum | Doporučeno | Poznámky |
+|--------|---------|-------------|----------|
+| **Příkladů** | 10 | 50-100 | Více je lepší pro komplexní úkoly |
+| **Kvalita** | Čistá | Ověřeno člověkem | Ideálně více recenzentů |
+| **Rozmanitost** | Nějaká variace | Široké pokrytí | Vyhnout se overfittingu |
+| **Formát** | Konzistentní | Identická struktura | Stejný system prompt |
+
+---
+
+## 🔬 Lab 1: Vytvořte svůj trénovací dataset
+
+Váš první úkol, mladý Padawane. Vytvořte soubor `dataset.jsonl` pro naučení AI být "sumarizátorem kódu", který vysvětluje Python kód jednoduchými slovy.
+
+**Cíl:** Vytvořit platný JSONL soubor s 10 trénovacími příklady.
+
+<Steps>
+
+### Krok 1: Vytvořte soubor
+Vytvořte nový soubor `dataset.jsonl` ve vašem oblíbeném textovém editoru.
+
+### Krok 2: Definujte System Message
+Vaše systémová zpráva by měla být stejná pro všechny příklady:
+```text
+Jsi expert Python programátor, který vysvětluje kód jednoduchými, snadno pochopitelnými slovy.
+```
+
+### Krok 3: Přidejte 10 trénovacích příkladů
+Každý řádek je jeden příklad. Uživatel poskytne kód, asistent ho vysvětlí.
+
+**Příklad:**
+```json
+{"messages": [{"role": "system", "content": "Jsi expert Python programátor, který vysvětluje kód jednoduchými, snadno pochopitelnými slovy."}, {"role": "user", "content": "def add(a, b):\n  return a + b"}, {"role": "assistant", "content": "Toto je jednoduchá funkce, která vezme dvě čísla, `a` a `b`, a vrátí jejich součet."}]}
+```
+
+### Krok 4: Validujte váš JSONL
+Použijte online JSON validátor nebo spusťte:
+```bash
+python -c "import json; [json.loads(line) for line in open('dataset.jsonl')]"
+```
+
+</Steps>
+
+**💡 Aha Moment:** "Jedna špatně umístěná čárka může zničit celý dataset. Validace JSONL je povinná!"
+
+<LabComplete labId="fine-tuning-dataset" />
+
+---
+
+## OpenAI Fine-Tuning API: Posvátný rituál
+
+Jakmile jsou vaše data připravena, můžete začít fine-tuning rituál. Je to vícekrokový proces, ale překvapivě přímočarý.
+
+<Steps>
+
+### Krok 1: Nainstalujte OpenAI knihovnu
+```bash
+pip install --upgrade openai
+```
+
+### Krok 2: Nahrajte váš dataset
+```python
+from openai import OpenAI
+client = OpenAI()  # OPENAI_API_KEY musí být nastavena
+
+file_upload = client.files.create(
+    file=open("dataset.jsonl", "rb"),
+    purpose="fine-tune"
+)
+print(f"Soubor nahrán s ID: {file_upload.id}")
+```
+
+### Krok 3: Vytvořte Fine-Tuning job
+```python
+job = client.fine_tuning.jobs.create(
+    training_file=file_upload.id,
+    model="gpt-4o-mini",  # Nebo "gpt-3.5-turbo"
+    hyperparameters={"n_epochs": 3}
+)
+print(f"Job vytvořen s ID: {job.id}")
+```
+
+### Krok 4: Sledujte job
+```python
+status = client.fine_tuning.jobs.retrieve(job.id)
+print(f"Status: {status.status}")
+
+# Seznam událostí
+events = client.fine_tuning.jobs.list_events(
+    fine_tuning_job_id=job.id,
+    limit=10
+)
+for event in events:
+    print(event.message)
+```
+
+### Krok 5: Použijte váš nový model!
+```python
+completion = client.chat.completions.create(
+    model="ft:gpt-4o-mini:your-org:custom:abc123",  # Název vašeho modelu
+    messages=[
+        {"role": "system", "content": "Jsi expert Python programátor..."},
+        {"role": "user", "content": "def hello():\n  print('Hello, World!')"}
+    ]
+)
+print(completion.choices[0].message.content)
+```
+
+</Steps>
+
+---
+
+## Ekonomika: Stojí to za kredity?
+
+Fine-tuning není zadarmo. Platíte za trénink **A** prémiové sazby za použití. Pojďme si to rozebrat:
+
+### Ceník GPT-4o-mini (k roku 2025)
+
+| Typ nákladu | Cena za 1M tokenů |
+|-------------|-------------------|
+| **Trénink** | $25.00 |
+| **Input (fine-tuned)** | $0.30 |
+| **Output (fine-tuned)** | $1.20 |
+
+Srovnání se základním modelem: $0.15 input, $0.60 output. **Platíte ~2x za specializaci.**
+
+---
+
+## 🔬 Lab 2: Výzva kalkulačky nákladů
+
+Firma chce vybudovat chatbota pro 5 000 zákaznických dotazů denně. RAG nestačí - potřebují fine-tuning.
+
+**Zadání:**
+- Průměrný dotaz: 150 tokenů input, 300 tokenů output
+- Trénovací data: 2 000 příkladů × 500 tokenů každý
+- Epochy: 3
+
+**Váš úkol:** Vypočítejte celkové náklady prvního měsíce.
+
+<Steps>
+
+### Krok 1: Vypočítejte trénovací tokeny
+```
+Tokeny datasetu = 2 000 × 500 = 1 000 000 tokenů
+Trénovací tokeny = 1 000 000 × 3 epochy = 3 000 000 tokenů
+```
+
+### Krok 2: Vypočítejte náklady na trénink
+```
+Náklady na trénink = (3 000 000 / 1 000 000) × $25 = $75.00
+```
+
+### Krok 3: Vypočítejte denní použití
+```
+Denní Input = 5 000 × 150 = 750 000 tokenů
+Denní Output = 5 000 × 300 = 1 500 000 tokenů
+
+Denní Input náklady = (0.75M / 1M) × $0.30 = $0.225
+Denní Output náklady = (1.5M / 1M) × $1.20 = $1.80
+Denní celkem = $2.025
+```
+
+### Krok 4: Vypočítejte měsíční celkem
+```
+Měsíční použití = $2.025 × 30 = $60.75
+Celkem první měsíc = $75 + $60.75 = $135.75
+```
+
+</Steps>
+
+**💡 Aha Moment:** "$135.75/měsíc za specializovaného, spolehlivého chatbota, který potěší zákazníky? Pro mnoho firem je to jasná návratnost investice!"
+
+<LabComplete labId="fine-tuning-cost" />
+
+---
+
+## Časté pasti: Temná strana Síly
+
+<Callout type="warning">
+
+### 🚨 4 smrtelné hříchy Fine-Tuningu
+
+1. **Overfitting** - Model se stane jednoúčelovým. Držte `n_epochs` nízko (1-3).
+
+2. **Problémy s kvalitou dat** - Chyby v trénovacích datech = chyby v modelu. Pečlivě kontrolujte!
+
+3. **Špatný use case** - Nepoužívejte fine-tuning pro znalosti. Na to je RAG.
+
+4. **Zapomenutí System Promptů** - Fine-tuned modely stále těží z jasných instrukcí při inference.
+
+</Callout>
+
+---
+
+## Holocron shrnutí
+
+<ConceptCard title="Mistrovství Fine-Tuningu" icon="💎">
+
+### 🔑 Klíčové poznatky
+
+* **Co to je:** Aktualizace vah modelu pro naučení nových dovedností, stylů nebo formátů
+* **Kdy použít:** Pouze po selhání Prompt Engineeringu A RAG
+* **Základní požadavek:** Kvalitní, čistá data ve formátu JSONL
+* **Proces:** Nahrát soubor → Vytvořit Job → Sledovat → Použít nový model
+* **Náklady:** Trénink + prémiové použití = investice do specializace
+
+### 🧠 Rozhodovací rámec
+
+```
+Potřebuji nové znalosti? → RAG
+Potřebuji konzistentní styl? → Fine-Tuning
+Potřebuji rychlý experiment? → Prompt Engineering
+```
+
+### 🛡️ Bezpečnostní varování
+
+* **Overfitting:** Použijte rozmanitá data, málo epoch
+* **Kvalita dat:** Více lidských recenzentů
+* **Růst nákladů:** Sledujte použití, nastavte upozornění
 
 </ConceptCard>
 
 ---
 
-## Rychlé srovnání (Ochutnávka)
-
-| Přístup | Nejlepší pro | Náklady | Čas setupu |
-|---------|--------------|---------|------------|
-| **Prompt Engineering** | Rychlé experimenty | Nízké | Minuty |
-| **RAG** | Dynamické znalosti | Střední | Hodiny |
-| **Fine-Tuning** | Konzistentní chování | Vysoké | Dny |
-
-**Kompletní analýza již brzy!**
-
----
-
-<Callout type="info">
-**Chcete být informováni?** Tato lekce je součástí naší Phase 3 expanze obsahu. Sledujte náš progress a dostávejte updates, když vyjdou nové lekce!
+<Callout type="success">
+**Gratulujeme!** Dokončili jste lekci Fine-Tuningu. Nyní rozumíte kdy použít tuto mocnou techniku - a co je důležitější, kdy NE. Pamatujte: nejlepší fine-tuning job je často ten, který nepotřebujete udělat.
 </Callout>

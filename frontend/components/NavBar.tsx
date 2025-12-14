@@ -92,6 +92,19 @@ export default function NavBar() {
             {/* User Section */}
             {user ? (
               <div className="flex items-center gap-1 sm:gap-2">
+                {/* Streak Badge */}
+                {user.current_streak > 0 && (
+                  <div
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-950/50 dark:to-amber-950/50 border border-orange-300/50 dark:border-orange-700/50"
+                    title={`🏆 ${t("longestStreak") || "Best"}: ${user.longest_streak} ${t("days") || "days"}`}
+                  >
+                    <span className="text-lg animate-pulse">🔥</span>
+                    <span className="text-sm font-bold text-orange-600 dark:text-orange-400">
+                      {user.current_streak}
+                    </span>
+                  </div>
+                )}
+
                 {/* Profile Button - horizontal layout */}
                 <Link
                   href="/profile"

@@ -256,17 +256,25 @@ export default function CoursePage({
                   className="flex items-center p-6"
                 >
                   <div
-                    className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center mr-6 transition-colors duration-300 ${
+                    className={`flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center mr-6 transition-colors duration-300 overflow-hidden ${
                       completedLessonIds.includes(lesson.id)
                         ? "bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400 shadow-[0_0_10px_rgba(34,197,94,0.2)]"
                         : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 group-hover:bg-violet-50 dark:group-hover:bg-slate-700"
                     }`}
                   >
-                    <LessonIcon
-                      title={lesson.title}
-                      completed={completedLessonIds.includes(lesson.id)}
-                      className="w-6 h-6"
-                    />
+                    {lesson.thumbnail ? (
+                      <img
+                        src={`/images/${lesson.thumbnail}`}
+                        alt={lesson.title}
+                        className="w-full h-full object-contain p-1 mix-blend-multiply dark:mix-blend-normal"
+                      />
+                    ) : (
+                      <LessonIcon
+                        title={lesson.title}
+                        completed={completedLessonIds.includes(lesson.id)}
+                        className="w-6 h-6"
+                      />
+                    )}
                   </div>
                   <div className="flex-grow min-w-0 pr-4">
                     <h3 className="text-lg font-semibold group-hover:text-violet-600 dark:group-hover:text-red-500 transition-colors text-slate-900 dark:text-white">

@@ -1,47 +1,301 @@
-# Fine-Tuning: Make AI Speak YOUR Language 🎯
+# Fine-Tuning: Make AI Speak YOUR Language
 
-<Callout type="warning">
-**🚧 Coming Soon!** This lesson is currently being developed. Check back soon for comprehensive coverage of fine-tuning techniques.
+> **OpenAI charges $25 to fine-tune GPT-4o-mini on 1 million tokens. But here's the secret: most projects don't need it.**
 
-**Expected content:**
-- When to fine-tune vs. prompt engineering vs. RAG
-- Dataset preparation and formatting
-- Fine-tuning OpenAI models (GPT-4o, GPT-4o-mini)
-- Cost analysis and best practices
-- Hands-on lab with real fine-tuning workflow
+<Callout type="info">
+**Your Mission:** Master the art of fine-tuning. Learn when to use it, when to avoid it, and how to prepare a dataset to teach an AI model new skills without breaking the bank.
+
+⏳ **Reading Time:** 35 min | 🧪 **[2] Labs Included**
+</Callout>
+
+<VideoSwitcher alternatives={[
+  {"id":"_2p0BR4xc5E","title":"Fine-Tuning GPT Models (OpenAI)"},
+  {"id":"gyGNQrwU1Kg","title":"When NOT to Fine-Tune (AI Explained)"}
+]} />
+
+---
+
+## The Great Debate: Fine-Tuning vs. The World
+
+You wouldn't use a sledgehammer to crack a nut, right? Same goes for AI. Fine-tuning is powerful, but it's not your only option. Let's break down the main players in the game of model customization.
+
+| Feature | Prompt Engineering | RAG | Fine-Tuning |
+|---------|-------------------|-----|-------------|
+| **What it is** | Crafting detailed instructions | Giving AI access to external knowledge | Updating the model's internal weights |
+| **Best For** | Simple tasks, style guidance | Knowledge-intensive tasks | Teaching new skills or styles |
+| **Cost** | Low (just tokens) | Medium (tokens + vector DB) | High (training + premium usage) |
+| **Complexity** | Low | Medium | High |
+| **Analogy** | Talking via terminal | USB drive with data | Soldering a new chip |
+
+<Callout type="tip">
+**Pro Tip:** Always start with Prompt Engineering. If that fails, try RAG. Only when both are insufficient should you consider the heavy artillery: Fine-Tuning.
 </Callout>
 
 ---
 
-## What You'll Learn (Preview)
+## When Fine-Tuning is Your Jedi Master
 
-<ConceptCard title="Fine-Tuning Overview" icon="🎓">
+Fine-tuning isn't about injecting new facts. It's about teaching a **skill**. Think of it as sending a Padawan to the Jedi Temple. They don't learn new information about the galaxy; they learn how to *use* the Force.
 
-**Fine-tuning** is the process of taking a pre-trained model and further training it on your specific data to:
+<ConceptCard title="5 Perfect Use Cases for Fine-Tuning" icon="🎯">
 
-- **Adapt to your domain** - Medical, legal, technical terminology
-- **Match your style** - Tone, format, response patterns
-- **Improve consistency** - Reliable outputs for specific tasks
-- **Reduce prompt length** - Bake instructions into the model
+**1. Mastering a Specific Style or Voice** 🎨
+Your company has a unique communication style. Fine-tuning nails brand voice perfectly.
 
-**Coming in this lesson:** Step-by-step guide from data prep to deployment!
+**2. Nailing a Specific Format** 📝
+Complex YAML, custom code snippets, structured medical reports - when format matters.
+
+**3. Improving Reliability on Narrow Tasks** 🎯
+Domain-specific expert for financial sentiment, legal analysis, technical support.
+
+**4. Handling Edge Cases** ⚙️
+Tricky situations your base model fails on? Create a dataset and train!
+
+**5. Chaining Complex Steps** 🔗
+Summarize → Extract entities → Format as JSON - all as a single skill.
+
+</ConceptCard>
+
+<Callout type="warning">
+**Warning:** Never use fine-tuning to add new knowledge. If your model doesn't know about your new product launch, use RAG. Fine-tuning for knowledge is expensive, inefficient, and prone to failure.
+</Callout>
+
+---
+
+## The JSONL Gospel: Preparing Your Sacred Texts
+
+Your fine-tuning is only as good as your data. **Garbage in, garbage out.** The standard format is **JSONL (JSON Lines)** - a text file where each line is a valid JSON object.
+
+```json
+{"messages": [{"role": "system", "content": "You are a helpful assistant that generates pirate slang."}, {"role": "user", "content": "Translate: Hello, friend. How are you?"}, {"role": "assistant", "content": "Ahoy, matey! How be ye?"}]}
+{"messages": [{"role": "system", "content": "You are a helpful assistant that generates pirate slang."}, {"role": "user", "content": "Translate: My car is fast."}, {"role": "assistant", "content": "Me ship be a swift vessel!"}]}
+```
+
+### Dataset Requirements
+
+| Aspect | Minimum | Recommended | Notes |
+|--------|---------|-------------|-------|
+| **Examples** | 10 | 50-100 | More is better for complex tasks |
+| **Quality** | Clean | Verified by human | Multiple reviewers ideal |
+| **Diversity** | Some variation | Wide coverage | Avoid overfitting |
+| **Format** | Consistent | Identical structure | Same system prompt |
+
+---
+
+## 🔬 Lab 1: Build Your Training Dataset
+
+Your first trial, young Padawan. Create a `dataset.jsonl` file to teach an AI to be a "code summarizer" that explains Python code in simple terms.
+
+**Objective:** Create a valid JSONL file with 10 training examples.
+
+<Steps>
+
+### Step 1: Create the file
+Create a new file named `dataset.jsonl` in your favorite text editor.
+
+### Step 2: Define the System Message
+Your system message should be the same for all examples:
+```text
+You are an expert Python programmer who explains code in simple, easy-to-understand terms.
+```
+
+### Step 3: Add 10 Training Examples
+Each line is one example. The user provides code, the assistant explains it.
+
+**Example:**
+```json
+{"messages": [{"role": "system", "content": "You are an expert Python programmer who explains code in simple, easy-to-understand terms."}, {"role": "user", "content": "def add(a, b):\n  return a + b"}, {"role": "assistant", "content": "This is a simple function that takes two numbers, `a` and `b`, and returns their sum."}]}
+```
+
+### Step 4: Validate Your JSONL
+Use an online JSON validator or run:
+```bash
+python -c "import json; [json.loads(line) for line in open('dataset.jsonl')]"
+```
+
+</Steps>
+
+**💡 Aha Moment:** "A single misplaced comma can corrupt your entire dataset. JSONL validation is non-negotiable!"
+
+<LabComplete labId="fine-tuning-dataset" />
+
+---
+
+## The OpenAI Fine-Tuning API: The Sacred Ritual
+
+Once your data is ready, you can begin the fine-tuning ritual. It's a multi-step process, but surprisingly straightforward.
+
+<Steps>
+
+### Step 1: Install the OpenAI Library
+```bash
+pip install --upgrade openai
+```
+
+### Step 2: Upload Your Dataset
+```python
+from openai import OpenAI
+client = OpenAI()  # OPENAI_API_KEY must be set
+
+file_upload = client.files.create(
+    file=open("dataset.jsonl", "rb"),
+    purpose="fine-tune"
+)
+print(f"File uploaded with ID: {file_upload.id}")
+```
+
+### Step 3: Create the Fine-Tuning Job
+```python
+job = client.fine_tuning.jobs.create(
+    training_file=file_upload.id,
+    model="gpt-4o-mini",  # Or "gpt-3.5-turbo"
+    hyperparameters={"n_epochs": 3}
+)
+print(f"Job created with ID: {job.id}")
+```
+
+### Step 4: Monitor the Job
+```python
+status = client.fine_tuning.jobs.retrieve(job.id)
+print(f"Status: {status.status}")
+
+# List events
+events = client.fine_tuning.jobs.list_events(
+    fine_tuning_job_id=job.id,
+    limit=10
+)
+for event in events:
+    print(event.message)
+```
+
+### Step 5: Use Your New Model!
+```python
+completion = client.chat.completions.create(
+    model="ft:gpt-4o-mini:your-org:custom:abc123",  # Your model name
+    messages=[
+        {"role": "system", "content": "You are an expert Python programmer..."},
+        {"role": "user", "content": "def hello():\n  print('Hello, World!')"}
+    ]
+)
+print(completion.choices[0].message.content)
+```
+
+</Steps>
+
+---
+
+## The Economics: Is It Worth the Credits?
+
+Fine-tuning isn't free. You pay for training **AND** premium usage rates. Let's break it down:
+
+### GPT-4o-mini Pricing (as of 2025)
+
+| Cost Type | Price per 1M tokens |
+|-----------|---------------------|
+| **Training** | $25.00 |
+| **Input (fine-tuned)** | $0.30 |
+| **Output (fine-tuned)** | $1.20 |
+
+Compare to base model: $0.15 input, $0.60 output. **You pay ~2x for specialization.**
+
+---
+
+## 🔬 Lab 2: Cost Calculator Challenge
+
+A company wants to build a chatbot to handle 5,000 customer support queries per day. RAG isn't good enough - they need fine-tuning.
+
+**Given:**
+- Average query: 150 tokens input, 300 tokens output
+- Training data: 2,000 examples × 500 tokens each
+- Epochs: 3
+
+**Your Task:** Calculate total first-month cost.
+
+<Steps>
+
+### Step 1: Calculate Training Tokens
+```
+Dataset tokens = 2,000 × 500 = 1,000,000 tokens
+Training tokens = 1,000,000 × 3 epochs = 3,000,000 tokens
+```
+
+### Step 2: Calculate Training Cost
+```
+Training Cost = (3,000,000 / 1,000,000) × $25 = $75.00
+```
+
+### Step 3: Calculate Daily Usage
+```
+Daily Input = 5,000 × 150 = 750,000 tokens
+Daily Output = 5,000 × 300 = 1,500,000 tokens
+
+Daily Input Cost = (0.75M / 1M) × $0.30 = $0.225
+Daily Output Cost = (1.5M / 1M) × $1.20 = $1.80
+Daily Total = $2.025
+```
+
+### Step 4: Calculate Monthly Total
+```
+Monthly Usage = $2.025 × 30 = $60.75
+Total First Month = $75 + $60.75 = $135.75
+```
+
+</Steps>
+
+**💡 Aha Moment:** "$135.75/month for a specialized, reliable chatbot that delights customers? For many businesses, that's a no-brainer ROI!"
+
+<LabComplete labId="fine-tuning-cost" />
+
+---
+
+## Common Pitfalls: The Dark Side of the Force
+
+<Callout type="warning">
+
+### 🚨 4 Deadly Sins of Fine-Tuning
+
+1. **Overfitting** - Model becomes a one-trick pony. Keep `n_epochs` low (1-3).
+
+2. **Data Quality Issues** - Errors in training data = errors in model. Review meticulously!
+
+3. **Wrong Use Case** - Don't fine-tune for knowledge. That's what RAG is for.
+
+4. **Forgetting System Prompts** - Fine-tuned models still benefit from clear instructions at inference.
+
+</Callout>
+
+---
+
+## Holocron Summary
+
+<ConceptCard title="Fine-Tuning Mastery" icon="💎">
+
+### 🔑 Key Takeaways
+
+* **What it is:** Updating model weights to teach new skills, styles, or formats
+* **When to use:** Only after Prompt Engineering AND RAG have failed
+* **Core requirement:** High-quality, clean data in JSONL format
+* **The process:** Upload File → Create Job → Monitor → Use New Model
+* **The cost:** Training + premium usage = investment in specialization
+
+### 🧠 Decision Framework
+
+```
+Need new knowledge? → RAG
+Need consistent style? → Fine-Tuning
+Need quick experiment? → Prompt Engineering
+```
+
+### 🛡️ Safety Warnings
+
+* **Overfitting:** Use diverse data, low epochs
+* **Data quality:** Multiple human reviewers
+* **Cost creep:** Monitor usage, set alerts
 
 </ConceptCard>
 
 ---
 
-## Quick Comparison (Teaser)
-
-| Approach | Best For | Cost | Setup Time |
-|----------|----------|------|------------|
-| **Prompt Engineering** | Quick experiments | Low | Minutes |
-| **RAG** | Dynamic knowledge | Medium | Hours |
-| **Fine-Tuning** | Consistent behavior | High | Days |
-
-**Full analysis coming soon!**
-
----
-
-<Callout type="info">
-**Want to be notified?** This lesson is part of our Phase 3 content expansion. Follow our progress and get updates when new lessons drop!
+<Callout type="success">
+**Congratulations!** You've completed the Fine-Tuning lesson. You now understand when to use this powerful technique - and more importantly, when NOT to. Remember: the best fine-tuning job is often the one you don't need to do.
 </Callout>

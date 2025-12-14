@@ -20,6 +20,7 @@ export default function CourseIcon({
 }: CourseIconProps) {
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     // Detect dark mode
@@ -43,13 +44,23 @@ export default function CourseIcon({
     return () => observer.disconnect();
   }, []);
 
-  // Use theme-specific image if available
-  if (imageUrl && mounted) {
-    // Replace extension with _dark or _light variant
-    const themeImage = imageUrl.replace(
-      /\.(jpg|jpeg|png|webp)$/i,
-      isDark ? "_dark.$1" : "_light.$1"
-    );
+  // Reset image error when theme changes (try loading the new variant)
+  useEffect(() => {
+    setImageError(false);
+  }, [isDark]);
+
+  // Use theme-specific image if available and no error occurred
+  if (imageUrl && mounted && !imageError) {
+    // Only process local images (starting with /)
+    // External URLs (http/https) are used as-is
+    const isLocalImage = imageUrl.startsWith("/");
+
+    const themeImage = isLocalImage
+      ? imageUrl.replace(
+          /\.(jpg|jpeg|png|webp)$/i,
+          isDark ? "_dark.$1" : "_light.$1"
+        )
+      : imageUrl;
 
     return (
       <div className={className + " relative"}>
@@ -61,6 +72,7 @@ export default function CourseIcon({
           className={`object-${objectFit}`}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority
+          onError={() => setImageError(true)}
         />
       </div>
     );

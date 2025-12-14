@@ -1,0 +1,82 @@
+[
+  {
+    "question": "Kdy byste měli zvážit fine-tuning LLM?",
+    "option_a": "Když potřebujete přidat nové znalosti do modelu",
+    "option_b": "Když potřebujete konzistentní styl, formát nebo chování, které prompting nedokáže zajistit",
+    "option_c": "Když chcete snížit náklady na API",
+    "option_d": "Jako první přístup před zkoušením čehokoli jiného",
+    "correct_answer": "B",
+    "explanation": "Fine-tuning je pro učení dovedností, stylů a formátů - ne pro přidávání znalostí (na to použijte RAG). Je také typicky DRAŽŠÍ než základní modely, ne levnější.",
+    "order": 1
+  },
+  {
+    "question": "Jaký je standardní formát souboru pro trénovací data fine-tuningu?",
+    "option_a": "CSV (Comma Separated Values)",
+    "option_b": "XML (Extensible Markup Language)",
+    "option_c": "JSONL (JSON Lines)",
+    "option_d": "YAML (Yet Another Markup Language)",
+    "correct_answer": "C",
+    "explanation": "JSONL (JSON Lines) je standardní formát, kde každý řádek je platný JSON objekt obsahující pole messages s rolemi system, user a assistant.",
+    "order": 2
+  },
+  {
+    "question": "Co je 'overfitting' v kontextu fine-tuningu?",
+    "option_a": "Když se model stane příliš drahým na provoz",
+    "option_b": "Když model funguje perfektně na trénovacích datech, ale selhává na nových příkladech",
+    "option_c": "Když trénování trvá příliš dlouho",
+    "option_d": "Když model generuje příliš dlouhý text",
+    "correct_answer": "B",
+    "explanation": "Overfitting nastává, když si model příliš zapamatuje trénovací příklady a stane se 'jednoúčelovým' - nedokáže zobecňovat na nová, neviděná data.",
+    "order": 3
+  },
+  {
+    "question": "Jaké je doporučené pořadí přístupů před použitím fine-tuningu?",
+    "option_a": "RAG → Fine-tuning → Prompt Engineering",
+    "option_b": "Fine-tuning → Prompt Engineering → RAG",
+    "option_c": "Prompt Engineering → RAG → Fine-tuning",
+    "option_d": "Fine-tuning je vždy první volba",
+    "correct_answer": "C",
+    "explanation": "Vždy začněte s Prompt Engineeringem (nízké náklady, rychlá iterace), pak zkuste RAG pro znalostně náročné úkoly, a fine-tuning použijte pouze když oba přístupy nestačí.",
+    "order": 4
+  },
+  {
+    "question": "Jak se náklady na použití fine-tuned modelu srovnávají s náklady základního modelu?",
+    "option_a": "Fine-tuned modely jsou vždy levnější",
+    "option_b": "Fine-tuned modely stojí typicky 2x více za token",
+    "option_c": "Náklady jsou úplně stejné",
+    "option_d": "Fine-tuned modely jsou po tréninku zdarma",
+    "correct_answer": "B",
+    "explanation": "Fine-tuned modely účtují prémii za svou specializaci. Například fine-tuned GPT-4o-mini stojí přibližně 2x za token ve srovnání se základním modelem.",
+    "order": 5
+  },
+  {
+    "question": "Který z těchto případů je validní pro fine-tuning?",
+    "option_a": "Naučit model o Q3 2024 výsledcích vaší firmy",
+    "option_b": "Zajistit, aby model konzistentně odpovídal hlasem vaší značky",
+    "option_c": "Dát modelu přístup k vašim soukromým dokumentům",
+    "option_d": "Snížit halucinace přidáním faktických oprav",
+    "correct_answer": "B",
+    "explanation": "Fine-tuning vyniká v učení konzistentních stylů, hlasů a formátů. Znalostní úkoly (výsledky, dokumenty, faktická data) jsou lépe zvládány pomocí RAG.",
+    "order": 6
+  },
+  {
+    "question": "Co kontroluje parametr 'n_epochs' ve fine-tuningu?",
+    "option_a": "Maximální délku odpovědi",
+    "option_b": "Kolikrát model vidí trénovací data",
+    "option_c": "Nastavení teploty pro generování",
+    "option_d": "Počet povolených API volání",
+    "correct_answer": "B",
+    "explanation": "n_epochs kontroluje kolikrát model projde celým vaším trénovacím datasetem. Vyšší hodnoty (>3) zvyšují riziko overfittingu; nižší hodnoty (1-3) jsou obecně doporučeny.",
+    "order": 7
+  },
+  {
+    "question": "Co byste měli dělat PO fine-tuningu při používání vašeho nového modelu?",
+    "option_a": "Nikdy nepoužívat system prompts - jsou zapečené v modelu",
+    "option_b": "Okamžitě smazat původní trénovací data",
+    "option_c": "Stále poskytovat jasné system prompts při inference",
+    "option_d": "Přejít na levnější API plán",
+    "correct_answer": "C",
+    "explanation": "Fine-tuned modely stále těží z jasných instrukcí při inference. System prompt spolupracuje s fine-tuningem pro nejlepší výsledky.",
+    "order": 8
+  }
+]

@@ -1,17 +1,26 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from '@/i18n/routing';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useTranslations, useLocale } from 'next-intl';
-import { BookOpen, CheckCircle, Trophy, Settings, AlertTriangle, Sparkles, Crown } from 'lucide-react';
+import { BookOpen, CheckCircle, Trophy, Settings, AlertTriangle, Sparkles, Crown, Award } from 'lucide-react';
 import AvatarSelector, { getAvatar } from '@/components/AvatarSelector';
 import { BADGE_TIERS, getBadgeLevel } from '@/components/XPAvatarBadge';
 import axios from 'axios';
 import { cn } from '@/lib/utils';
+
+interface Achievement {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  xp_bonus: number;
+  unlocked: boolean;
+}
 
 export default function ProfilePage() {
   const { user, logout, refreshUser, token } = useAuth();
@@ -26,6 +35,29 @@ export default function ProfilePage() {
   // Delete Account State
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Achievements State
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [loadingAchievements, setLoadingAchievements] = useState(true);
+
+  // Fetch achievements
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      if (!token) return;
+      try {
+        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const response = await axios.get(`${API_BASE}/achievements?lang=${locale}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setAchievements(response.data);
+      } catch (error) {
+        console.error('Failed to fetch achievements', error);
+      } finally {
+        setLoadingAchievements(false);
+      }
+    };
+    fetchAchievements();
+  }, [token, locale]);
 
   const handleUpdateAvatar = async (avatarId: string) => {
     setIsUpdating(true);
@@ -325,6 +357,71 @@ export default function ProfilePage() {
               </CardContent>
             </Card>
           </div>
+
+          {/* Achievements Section */}
+          <Card className="dark:bg-slate-900/50 dark:border-slate-800 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Award className="w-5 h-5 text-amber-500" />
+                {locale === 'cs' ? 'Úspěchy' : 'Achievements'}
+                <Badge variant="outline" className="ml-auto bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20">
+                  {achievements.filter(a => a.unlocked).length}/{achievements.length}
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {loadingAchievements ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin h-8 w-8 border-4 border-amber-500 border-t-transparent rounded-full"></div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {achievements.map((achievement) => (
+                    <div
+                      key={achievement.id}
+                      className={cn(
+                        "relative p-4 rounded-xl border transition-all duration-300",
+                        achievement.unlocked
+                          ? "bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/20 border-amber-300/50 dark:border-amber-700/50 shadow-lg shadow-amber-500/10"
+                          : "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-60 grayscale"
+                      )}
+                    >
+                      {/* Unlocked indicator */}
+                      {achievement.unlocked && (
+                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center shadow-lg">
+                          <CheckCircle className="w-4 h-4 text-white" />
+                        </div>
+                      )}
+
+                      {/* Icon */}
+                      <div className="text-3xl mb-2">{achievement.icon}</div>
+
+                      {/* Name */}
+                      <h4 className={cn(
+                        "font-bold text-sm mb-1",
+                        achievement.unlocked ? "text-amber-700 dark:text-amber-400" : "text-slate-500 dark:text-slate-400"
+                      )}>
+                        {achievement.name}
+                      </h4>
+
+                      {/* Description */}
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
+                        {achievement.description}
+                      </p>
+
+                      {/* XP Bonus */}
+                      <div className={cn(
+                        "text-xs font-semibold",
+                        achievement.unlocked ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400"
+                      )}>
+                        +{achievement.xp_bonus} XP
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
           {/* My Learning Section */}
           <Card className="dark:bg-slate-900/50 dark:border-slate-800 min-h-[400px] backdrop-blur-sm flex flex-col">

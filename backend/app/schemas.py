@@ -13,6 +13,7 @@ class LessonBase(BaseModel):
     order: int
     video_url: Optional[str] = None
     duration: Optional[str] = None
+    thumbnail: Optional[str] = None
     lab_count: int = 0
 
 class LessonCreate(LessonBase):
@@ -90,6 +91,14 @@ class User(UserBase):
     xp: int = 0
     avatar: str = "droid_1"
     courses: List[Course] = []
+
+    # Streak System (Phase 1.2)
+    current_streak: int = 0
+    longest_streak: int = 0
+    last_activity_date: Optional[datetime] = None
+
+    # Achievements System (Phase 1.3)
+    achievements: List[str] = []
 
     @computed_field
     @property

@@ -17,6 +17,12 @@ interface User {
   calculated_level: string;  // Level based on XP
   next_level_xp: number;     // XP needed for next level (-1 if max)
   xp_for_current_level: number;  // XP threshold for current level
+  // Streak System (Phase 1.2)
+  current_streak: number;
+  longest_streak: number;
+  last_activity_date: string | null;
+  // Achievements System (Phase 1.3)
+  achievements: string[];
 }
 
 interface AuthContextType {

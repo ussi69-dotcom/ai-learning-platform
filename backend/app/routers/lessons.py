@@ -2,9 +2,196 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
 from typing import List, Optional
+from datetime import datetime, timedelta, timezone
 from app import models, schemas, database, auth
 
 router = APIRouter()
+
+
+def update_user_streak(user: models.User, db: Session) -> None:
+    """
+    Update user's streak based on activity.
+
+    Logic:
+    - If no previous activity: start streak at 1
+    - If last activity was yesterday: increment streak
+    - If last activity was today: no change
+    - If last activity was >1 day ago: reset streak to 1
+
+    Also updates longest_streak if current_streak exceeds it.
+    """
+    now = datetime.now(timezone.utc)
+    today = now.date()
+
+    if user.last_activity_date is None:
+        # First ever activity
+        user.current_streak = 1
+        user.longest_streak = 1
+        user.last_activity_date = now
+    else:
+        last_date = user.last_activity_date.date()
+
+        if last_date == today:
+            # Already active today, no change to streak
+            pass
+        elif last_date == today - timedelta(days=1):
+            # Active yesterday, increment streak!
+            user.current_streak += 1
+            if user.current_streak > user.longest_streak:
+                user.longest_streak = user.current_streak
+            user.last_activity_date = now
+        else:
+            # Gap of >1 day, reset streak
+            user.current_streak = 1
+            user.last_activity_date = now
+
+
+# --- ACHIEVEMENTS SYSTEM (Phase 1.3) ---
+
+ACHIEVEMENTS = {
+    "first_blood": {
+        "name": "First Blood",
+        "name_cs": "První krev",
+        "description": "Complete your first lesson",
+        "description_cs": "Dokončete svou první lekci",
+        "icon": "🩸",
+        "xp_bonus": 25
+    },
+    "lab_rat": {
+        "name": "Lab Rat",
+        "name_cs": "Laboratorní krysa",
+        "description": "Complete 5 labs",
+        "description_cs": "Dokončete 5 laboratorních cvičení",
+        "icon": "🐀",
+        "xp_bonus": 50
+    },
+    "quiz_master": {
+        "name": "Quiz Master",
+        "name_cs": "Mistr kvízů",
+        "description": "Score 100% on any quiz",
+        "description_cs": "Získejte 100% v jakémkoli kvízu",
+        "icon": "🎓",
+        "xp_bonus": 50
+    },
+    "course_conqueror": {
+        "name": "Course Conqueror",
+        "name_cs": "Dobyvatel kurzu",
+        "description": "Complete a full course",
+        "description_cs": "Dokončete celý kurz",
+        "icon": "👑",
+        "xp_bonus": 100
+    },
+    "week_warrior": {
+        "name": "Week Warrior",
+        "name_cs": "Týdenní válečník",
+        "description": "Maintain a 7-day learning streak",
+        "description_cs": "Udržujte 7denní sérii učení",
+        "icon": "⚔️",
+        "xp_bonus": 100
+    }
+}
+
+
+def check_and_award_achievements(user: models.User, db: Session, trigger: str = None) -> List[str]:
+    """
+    Check if user has earned any new achievements and award them.
+    Returns list of newly unlocked achievement IDs.
+    """
+    from sqlalchemy.orm.attributes import flag_modified
+
+    current_achievements = list(user.achievements) if user.achievements else []
+    newly_unlocked = []
+
+    # Helper to award achievement
+    def award(achievement_id: str):
+        if achievement_id not in current_achievements:
+            current_achievements.append(achievement_id)
+            user.xp += ACHIEVEMENTS[achievement_id]["xp_bonus"]
+            newly_unlocked.append(achievement_id)
+
+    # First Blood: Complete first lesson
+    if "first_blood" not in current_achievements:
+        completed_lessons = db.query(models.UserProgress).filter(
+            models.UserProgress.user_id == user.id,
+            models.UserProgress.completed_at.isnot(None)
+        ).count()
+        if completed_lessons >= 1:
+            award("first_blood")
+
+    # Lab Rat: Complete 5 labs
+    if "lab_rat" not in current_achievements:
+        total_labs = 0
+        progresses = db.query(models.UserProgress).filter(
+            models.UserProgress.user_id == user.id
+        ).all()
+        for p in progresses:
+            if p.completed_labs:
+                total_labs += len(p.completed_labs)
+        if total_labs >= 5:
+            award("lab_rat")
+
+    # Quiz Master: Score 100% on any quiz
+    if "quiz_master" not in current_achievements:
+        perfect_quiz = db.query(models.UserProgress).filter(
+            models.UserProgress.user_id == user.id,
+            models.UserProgress.quiz_score == 100
+        ).first()
+        if perfect_quiz:
+            award("quiz_master")
+
+    # Course Conqueror: Complete full course
+    if "course_conqueror" not in current_achievements:
+        courses = db.query(models.Course).all()
+        for course in courses:
+            total_lessons = db.query(models.Lesson).filter(
+                models.Lesson.course_id == course.id
+            ).count()
+            if total_lessons > 0:
+                completed = db.query(models.UserProgress).filter(
+                    models.UserProgress.user_id == user.id,
+                    models.UserProgress.course_id == course.id,
+                    models.UserProgress.completed_at.isnot(None)
+                ).count()
+                if completed >= total_lessons:
+                    award("course_conqueror")
+                    break
+
+    # Week Warrior: 7-day streak
+    if "week_warrior" not in current_achievements:
+        if user.current_streak >= 7 or user.longest_streak >= 7:
+            award("week_warrior")
+
+    # Update user achievements if changed
+    if newly_unlocked:
+        user.achievements = current_achievements
+        flag_modified(user, "achievements")
+
+    return newly_unlocked
+
+
+# --- ACHIEVEMENTS ENDPOINT ---
+
+@router.get("/achievements")
+def get_achievements(
+    lang: str = "en",
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Get all available achievements with user's unlock status."""
+    user_achievements = current_user.achievements if current_user.achievements else []
+
+    result = []
+    for achievement_id, data in ACHIEVEMENTS.items():
+        result.append({
+            "id": achievement_id,
+            "name": data["name_cs"] if lang == "cs" else data["name"],
+            "description": data["description_cs"] if lang == "cs" else data["description"],
+            "icon": data["icon"],
+            "xp_bonus": data["xp_bonus"],
+            "unlocked": achievement_id in user_achievements
+        })
+
+    return result
+
 
 # --- COURSES ENDPOINTS ---
 
@@ -176,16 +363,20 @@ def complete_lesson(
     lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
     if not lesson:
         raise HTTPException(status_code=404, detail="Lesson not found")
-    
+
     # Check if already completed
     existing_progress = db.query(models.UserProgress).filter(
         models.UserProgress.user_id == current_user.id,
         models.UserProgress.lesson_id == lesson_id
     ).first()
-    
+
     if existing_progress:
+        # Still update streak even if lesson already completed
+        update_user_streak(current_user, db)
+        check_and_award_achievements(current_user, db)
+        db.commit()
         return existing_progress
-    
+
     # Create new progress entry
     new_progress = models.UserProgress(
         user_id=current_user.id,
@@ -194,10 +385,14 @@ def complete_lesson(
         completed_at=func.now()
     )
     db.add(new_progress)
-    
+
     # Award XP for lesson completion
     current_user.xp += 50
-    
+
+    # Update streak and check achievements
+    update_user_streak(current_user, db)
+    check_and_award_achievements(current_user, db)
+
     db.commit()
     db.refresh(new_progress)
     db.refresh(current_user)
@@ -289,6 +484,10 @@ def complete_lesson_lab(
 
             current_user.xp += xp_award
 
+    # Update streak and check achievements on any lab activity
+    update_user_streak(current_user, db)
+    check_and_award_achievements(current_user, db)
+
     db.commit()
     db.refresh(progress)
     db.refresh(current_user)
@@ -350,6 +549,10 @@ def complete_lesson_quiz(
 
     if xp_award > 0:
         current_user.xp += xp_award
+
+    # Update streak and check achievements on quiz activity
+    update_user_streak(current_user, db)
+    check_and_award_achievements(current_user, db)
 
     db.commit()
     db.refresh(progress)

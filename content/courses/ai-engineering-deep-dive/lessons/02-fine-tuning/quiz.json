@@ -1,0 +1,82 @@
+[
+  {
+    "question": "When should you consider fine-tuning an LLM?",
+    "option_a": "When you need to add new knowledge to the model",
+    "option_b": "When you need consistent style, format, or behavior that prompting can't achieve",
+    "option_c": "When you want to reduce API costs",
+    "option_d": "As the first approach before trying anything else",
+    "correct_answer": "B",
+    "explanation": "Fine-tuning is for teaching skills, styles, and formats - not for adding knowledge (use RAG for that). It's also typically MORE expensive than base models, not cheaper.",
+    "order": 1
+  },
+  {
+    "question": "What is the standard file format for fine-tuning training data?",
+    "option_a": "CSV (Comma Separated Values)",
+    "option_b": "XML (Extensible Markup Language)",
+    "option_c": "JSONL (JSON Lines)",
+    "option_d": "YAML (Yet Another Markup Language)",
+    "correct_answer": "C",
+    "explanation": "JSONL (JSON Lines) is the standard format where each line is a valid JSON object containing a messages array with system, user, and assistant roles.",
+    "order": 2
+  },
+  {
+    "question": "What is 'overfitting' in the context of fine-tuning?",
+    "option_a": "When the model becomes too expensive to run",
+    "option_b": "When the model works perfectly on training data but fails on new examples",
+    "option_c": "When the training takes too long",
+    "option_d": "When the model outputs text that's too long",
+    "correct_answer": "B",
+    "explanation": "Overfitting occurs when a model memorizes training examples too well, becoming a 'one-trick pony' that fails to generalize to new, unseen data.",
+    "order": 3
+  },
+  {
+    "question": "What is the recommended order of approaches before resorting to fine-tuning?",
+    "option_a": "RAG → Fine-tuning → Prompt Engineering",
+    "option_b": "Fine-tuning → Prompt Engineering → RAG",
+    "option_c": "Prompt Engineering → RAG → Fine-tuning",
+    "option_d": "Fine-tuning is always the first choice",
+    "correct_answer": "C",
+    "explanation": "Always start with Prompt Engineering (low cost, quick iteration), then try RAG for knowledge-intensive tasks, and only use fine-tuning when both approaches are insufficient.",
+    "order": 4
+  },
+  {
+    "question": "How do fine-tuned model usage costs compare to base model costs?",
+    "option_a": "Fine-tuned models are always cheaper",
+    "option_b": "Fine-tuned models typically cost 2x more per token",
+    "option_c": "Costs are exactly the same",
+    "option_d": "Fine-tuned models are free to use after training",
+    "correct_answer": "B",
+    "explanation": "Fine-tuned models charge a premium for their specialization. For example, fine-tuned GPT-4o-mini costs about 2x per token compared to the base model.",
+    "order": 5
+  },
+  {
+    "question": "Which of these is a valid use case for fine-tuning?",
+    "option_a": "Teaching the model about your company's Q3 2024 earnings",
+    "option_b": "Making the model respond in a specific brand voice consistently",
+    "option_c": "Giving the model access to your private documents",
+    "option_d": "Reducing hallucinations by adding factual corrections",
+    "correct_answer": "B",
+    "explanation": "Fine-tuning excels at teaching consistent styles, voices, and formats. Knowledge-based tasks (earnings, documents, factual data) are better handled by RAG.",
+    "order": 6
+  },
+  {
+    "question": "What does 'n_epochs' control in fine-tuning?",
+    "option_a": "The maximum response length",
+    "option_b": "How many times the model sees the training data",
+    "option_c": "The temperature setting for generation",
+    "option_d": "The number of API calls allowed",
+    "correct_answer": "B",
+    "explanation": "n_epochs controls how many times the model passes through your entire training dataset. Higher values (>3) increase overfitting risk; lower values (1-3) are generally recommended.",
+    "order": 7
+  },
+  {
+    "question": "What should you do AFTER fine-tuning when using your new model?",
+    "option_a": "Never use system prompts - they're baked in",
+    "option_b": "Delete the original training data immediately",
+    "option_c": "Still provide clear system prompts at inference time",
+    "option_d": "Switch to a cheaper API plan",
+    "correct_answer": "C",
+    "explanation": "Fine-tuned models still benefit from clear instructions at inference time. The system prompt works together with fine-tuning for best results.",
+    "order": 8
+  }
+]

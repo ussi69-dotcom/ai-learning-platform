@@ -1,5 +1,19 @@
 {
   "title": "Fine-Tuning Fundamentals",
-  "description": "Customize LLMs for your specific use case.",
-  "order": 2
+  "title_cs": "Základy Fine-Tuningu",
+  "description": "Master the art of customizing LLMs for your specific use case. Learn when to fine-tune, how to prepare datasets, and calculate if it's worth the investment.",
+  "description_cs": "Ovládněte umění přizpůsobení LLM pro váš specifický případ použití. Naučte se kdy fine-tunovat, jak připravit datasety a spočítat jestli se to vyplatí.",
+  "order": 2,
+  "video_url": "https://www.youtube.com/embed/_2p0BR4xc5E",
+  "duration_minutes": 35,
+  "difficulty": "advanced",
+  "prerequisites": ["rag", "prompt-engineering"],
+  "learning_objectives": [
+    "Understand when to use fine-tuning vs RAG vs prompt engineering",
+    "Create properly formatted JSONL training datasets",
+    "Use the OpenAI fine-tuning API step by step",
+    "Calculate and analyze fine-tuning costs",
+    "Avoid common pitfalls like overfitting"
+  ],
+  "tags": ["fine-tuning", "openai", "customization", "jsonl", "training"]
 }

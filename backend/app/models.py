@@ -50,6 +50,14 @@ class User(Base):
     xp = Column(Integer, default=0)
     avatar = Column(String, default="droid_1") # Default avatar identifier
 
+    # Streak System (Phase 1.2)
+    current_streak = Column(Integer, default=0)  # Current consecutive days
+    longest_streak = Column(Integer, default=0)  # Personal best streak
+    last_activity_date = Column(DateTime(timezone=True), nullable=True)  # Last learning activity
+
+    # Achievements System (Phase 1.3)
+    achievements = Column(JSON, default=list)  # ["first_blood", "lab_rat", "quiz_master", ...]
+
     courses = relationship("Course", back_populates="owner")
     progress = relationship("UserProgress", back_populates="user")
     feedback_items = relationship("FeedbackItem", back_populates="author")
@@ -86,6 +94,7 @@ class Lesson(Base):
     content_cs = Column(Text, nullable=True) # CS Localization
     order = Column(Integer)
     video_url = Column(String, nullable=True)
+    thumbnail = Column(String, nullable=True)
     duration = Column(String, nullable=True) # e.g. "15 min"
     duration_cs = Column(String, nullable=True) # CS Localization
     lab_count = Column(Integer, default=0)

@@ -6,7 +6,9 @@
     "profile": "Profil",
     "login": "Přihlásit",
     "logout": "Odhlásit",
-    "register": "Registrace"
+    "register": "Registrace",
+    "longestStreak": "Rekord",
+    "days": "dní"
   },
   "Auth": {
     "login_title": "Přihlášení k účtu",

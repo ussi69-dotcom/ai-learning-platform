@@ -6,7 +6,9 @@
     "profile": "Profile",
     "login": "Login",
     "logout": "Logout",
-    "register": "Register"
+    "register": "Register",
+    "longestStreak": "Best",
+    "days": "days"
   },
   "Auth": {
     "login_title": "Login to your account",

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink, Sparkles } from "lucide-react";
+import { X, ExternalLink, Sparkles, Zap, ZapOff } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 
@@ -180,6 +180,8 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
   const [isLowPerf, setIsLowPerf] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [dimensions, setDimensions] = useState({ height: 360, cubeSize: 120 });
+  // Physics toggle - default OFF for weak machines, user can enable
+  const [physicsEnabled, setPhysicsEnabled] = useState(false);
 
   // Refs for physics (no re-renders!)
   const containerRef = useRef<HTMLDivElement>(null);
@@ -278,7 +280,8 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
 
   // Scroll-based impulse (optimized - no setState)
   useEffect(() => {
-    if (prefersReducedMotion || isLowPerf) return;
+    // Physics must be enabled AND not blocked by reduced motion
+    if (!physicsEnabled || prefersReducedMotion) return;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -300,12 +303,13 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [prefersReducedMotion, isLowPerf, wakeUpCubes]);
+  }, [physicsEnabled, prefersReducedMotion, wakeUpCubes]);
 
   // Physics simulation with fixed timestep (direct DOM manipulation)
   useEffect(() => {
-    if (prefersReducedMotion || isLowPerf) {
-      // Static layout for low-perf / reduced motion
+    // Static layout when physics disabled OR reduced motion preference
+    if (!physicsEnabled || prefersReducedMotion) {
+      // Static layout - nice grid arrangement
       const containerWidth = containerRef.current?.offsetWidth || 800;
       const cols = Math.floor(containerWidth / (dimensions.cubeSize + 20));
 
@@ -465,13 +469,13 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [dimensions, prefersReducedMotion, isLowPerf]);
+  }, [dimensions, prefersReducedMotion, physicsEnabled]);
 
   // Handle cube click - add impulse
   const handleCubeClick = useCallback((term: GlossaryTerm, index: number) => {
     setSelectedTerm(term);
 
-    if (!prefersReducedMotion && !isLowPerf) {
+    if (physicsEnabled && !prefersReducedMotion) {
       const body = physicsRef.current[index];
       if (body) {
         body.vy = -10;
@@ -481,7 +485,7 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
         wakeUpCubes([index]);
       }
     }
-  }, [prefersReducedMotion, isLowPerf, wakeUpCubes]);
+  }, [physicsEnabled, prefersReducedMotion, wakeUpCubes]);
 
   const { height: containerHeight, cubeSize } = dimensions;
 
@@ -497,11 +501,62 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
             {locale === "cs" ? "AI Pojmy" : "AI Terms"}
           </h2>
-          <p className="text-slate-400 text-sm max-w-md mx-auto">
+          <p className="text-slate-400 text-sm max-w-md mx-auto mb-4">
             {locale === "cs"
               ? "Klikni na ledovou kostku a zjisti více"
               : "Click an ice cube to learn more"}
           </p>
+
+          {/* Physics Toggle Button */}
+          {!prefersReducedMotion && (
+            <button
+              onClick={() => {
+                setPhysicsEnabled(!physicsEnabled);
+                // Reset physics when enabling
+                if (!physicsEnabled) {
+                  wakeUpCubes();
+                  // Re-initialize positions for drop animation
+                  const containerWidth = containerRef.current?.offsetWidth || 800;
+                  physicsRef.current = GLOSSARY_TERMS.map((_, i) => ({
+                    x: 30 + (i % 6) * (containerWidth / 7) + Math.random() * 30,
+                    y: -120 - Math.random() * 400 - i * 40,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: 0,
+                    rotation: (Math.random() - 0.5) * 30,
+                    sleeping: false,
+                    sleepCounter: 0,
+                  }));
+                }
+              }}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                physicsEnabled
+                  ? "bg-cyan-500/20 border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/30"
+                  : "bg-slate-700/50 border-slate-600/50 text-slate-400 hover:bg-slate-700/70 hover:text-slate-300"
+              } border`}
+              title={
+                isLowPerf
+                  ? locale === "cs"
+                    ? "Slabší zařízení detekováno - fyzika může způsobit zpomalení"
+                    : "Weaker device detected - physics may cause slowdown"
+                  : ""
+              }
+            >
+              {physicsEnabled ? (
+                <>
+                  <Zap className="w-4 h-4" />
+                  {locale === "cs" ? "Fyzika ZAPNUTA" : "Physics ON"}
+                </>
+              ) : (
+                <>
+                  <ZapOff className="w-4 h-4" />
+                  {locale === "cs" ? "Fyzika VYPNUTA" : "Physics OFF"}
+                </>
+              )}
+              {isLowPerf && (
+                <span className="text-xs text-amber-400 ml-1">⚠️</span>
+              )}
+            </button>
+          )}
         </div>
 
         {/* Physics Container */}
@@ -602,9 +657,10 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
         {/* Performance indicator (dev only) */}
         {process.env.NODE_ENV === "development" && (
           <div className="text-xs text-slate-500 mt-2 text-center">
-            {isLowPerf && "⚡ Low-perf mode"}
-            {prefersReducedMotion && "🚫 Reduced motion"}
-            {!isLowPerf && !prefersReducedMotion && "✨ Full physics"}
+            {prefersReducedMotion && "🚫 Reduced motion (no physics)"}
+            {!prefersReducedMotion && physicsEnabled && "✨ Physics enabled"}
+            {!prefersReducedMotion && !physicsEnabled && "📦 Static layout (physics off)"}
+            {isLowPerf && " | ⚠️ Low-perf device detected"}
           </div>
         )}
       </div>
