@@ -93,9 +93,11 @@ def run_deep_research(question: str, timeout_minutes: int = 60) -> dict:
         if status == 'completed':
             duration = time.time() - start_time
             print(f"\n✅ Research completed in {duration:.1f} seconds ({duration/60:.1f} min)")
+            # Extract text from outputs array
+            output_text = interaction.outputs[-1].text if interaction.outputs else "No output"
             return {
                 'status': 'completed',
-                'output': interaction.output,
+                'output': output_text,
                 'duration_seconds': duration,
                 'interaction_id': interaction_id
             }
