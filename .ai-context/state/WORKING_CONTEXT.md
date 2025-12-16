@@ -1,14 +1,67 @@
 # Working Context
 
-**Last Updated:** 2025-12-14 21:30 (Agent: Claude)
-**Last Commit:** `27677d9` security: add JWT secret validation + Docker socket warning
-**Status:** 🟢 Sith Ship Images deployed | Theme-aware course covers
+**Last Updated:** 2025-12-15 07:00 (Agent: Claude)
+**Last Commit:** `81159ca` feat: Introduce 'Fine-tuning' lesson, add user streak display, and implement lesson thumbnails
+**Status:** 🟢 Migrated to Hetzner Dedicated Server | Full toolchain installed
+
+---
+
+## 🖥️ Environment: Hetzner Dedicated Server (NEW!)
+
+| Property | Value |
+|----------|-------|
+| **Hardware** | AMD EPYC 7401P (24 Cores), NVMe Storage |
+| **OS** | Ubuntu 24.04 LTS (bare metal) |
+| **User** | `deploy` |
+| **Working Dir** | `/home/deploy/ai-learning-platform` |
+| **Network** | Zero Trust (UFW + Cloudflare Tunnel) |
+
+### Installed Toolchain
+
+| Tool | Version | Status |
+|------|---------|--------|
+| Node.js | v20.19.6 (via NVM) | ✅ |
+| npm | 10.8.2 | ✅ |
+| Docker | 29.1.3 | ✅ |
+| Python | 3.12.3 | ✅ |
+| Gemini CLI | 0.20.2 | ✅ |
+| Codex CLI | 0.72.0 | ✅ |
+
+### MCP Servers
+
+| Server | Package | Status |
+|--------|---------|--------|
+| Playwright | `@playwright/mcp` | ✅ Connected |
+| Context7 | `@upstash/context7-mcp` | ✅ Connected |
+| Perplexity | `@modelcontextprotocol/server-perplexity-ask` | ✅ (API key set) |
+
+### Docker Services
+
+| Container | Port | Status |
+|-----------|------|--------|
+| ai-frontend | 3000 | ✅ Running |
+| ai-backend | 8000 | ✅ Running |
+| ai-db | 5432 | ✅ Running |
+| ai-redis | 6379 | ✅ Running |
+| ai-n8n | 5678 | ✅ Running |
 
 ---
 
 ## 🎯 Current State
 
-### Latest Session (Dec 14, 2025 - Star Wars Ship Images)
+### Latest Session (Dec 15, 2025 - Hetzner Migration)
+
+| Task | Status | Notes |
+|------|--------|-------|
+| **Environment Setup** | | |
+| Node.js upgrade (v18→v20) | ✅ Done | Via NVM |
+| Gemini CLI install | ✅ Done | `@google/gemini-cli` v0.20.2 |
+| Codex CLI install | ✅ Done | `@openai/codex` v0.72.0 |
+| MCP servers config | ✅ Done | Playwright, Context7, Perplexity |
+| Docker stack start | ✅ Done | All 5 containers healthy |
+| .env creation | ✅ Done | Secure keys generated |
+
+### Previous Session (Dec 14, 2025 - Star Wars Ship Images)
 
 | Task                              | Status  | Notes                                         |
 | --------------------------------- | ------- | --------------------------------------------- |

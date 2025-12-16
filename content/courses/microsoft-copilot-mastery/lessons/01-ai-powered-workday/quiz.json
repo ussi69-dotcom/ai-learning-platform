@@ -1,0 +1,102 @@
+[
+  {
+    "question": "What is the primary difference between standard Copilot in Excel and the 'Agent Mode' feature?",
+    "option_a": "Agent Mode is proactive and creates tables, charts, and pivot analyses directly in your workbook",
+    "option_b": "Agent Mode only works with text responses while standard mode creates charts",
+    "option_c": "Standard mode is faster but Agent Mode has more features",
+    "option_d": "Agent Mode requires a separate license while standard mode is included",
+    "correct_answer": "A",
+    "explanation": "Agent Mode is proactive—you give it a goal, and it creates tables, charts, and pivot analyses directly in your workbook, while normal Copilot is reactive and responds with text.",
+    "order": 1
+  },
+  {
+    "question": "What is the purpose of the 'Custom Instructions' setting in M365 Copilot chat?",
+    "option_a": "To temporarily override Copilot's responses for a single conversation",
+    "option_b": "To provide global preferences about your role and response style that apply to all interactions",
+    "option_c": "To create automated email rules",
+    "option_d": "To schedule recurring Copilot tasks",
+    "correct_answer": "B",
+    "explanation": "Custom Instructions serve as the system prompt for your entire work life—you tell Copilot once about your role, preferences, and desired response format, and it applies that context to every interaction.",
+    "order": 2
+  },
+  {
+    "question": "What security consideration is highlighted when using the Researcher agent with Anthropic's Claude model?",
+    "option_a": "Claude requires additional authentication steps",
+    "option_b": "Microsoft's enterprise data protection is disabled and queries are sent to Anthropic's servers",
+    "option_c": "Claude can only access public documents",
+    "option_d": "Claude integration is only available to E5 license holders",
+    "correct_answer": "B",
+    "explanation": "When you enable Claude in Researcher mode, Microsoft's enterprise data protection is disabled. Your queries and data are sent to Anthropic's servers, not kept within Microsoft's compliance boundary.",
+    "order": 3
+  },
+  {
+    "question": "How can an M365 E5 user utilize Endpoint Privilege Management (EPM)?",
+    "option_a": "To remotely access employee devices for troubleshooting",
+    "option_b": "To create automated backup schedules",
+    "option_c": "To control fine-grained admin rights on managed devices",
+    "option_d": "To monitor email attachment security",
+    "correct_answer": "C",
+    "explanation": "Endpoint Privilege Management in E5 provides fine-grained control over admin rights on managed devices, enhancing security governance.",
+    "order": 4
+  },
+  {
+    "question": "What is Copilot Lab, and how can it be used?",
+    "option_a": "A testing environment for experimental Copilot features",
+    "option_b": "A searchable gallery of pre-written, production-tested prompts for every M365 app",
+    "option_c": "An AI training platform for developers",
+    "option_d": "A community forum for Copilot users",
+    "correct_answer": "B",
+    "explanation": "Copilot Lab is a prompt marketplace—a searchable gallery of pre-written, production-tested prompts for every M365 app, filterable by context, app, task, and job role.",
+    "order": 5
+  },
+  {
+    "question": "How does the video creation feature in M365 Copilot work?",
+    "option_a": "It converts PowerPoint slides into animated videos",
+    "option_b": "It uses Sora 2 integration in Clipchamp to generate videos from text prompts",
+    "option_c": "It automatically records screen activity from Word documents",
+    "option_d": "It extracts images from PDFs and creates slideshows",
+    "correct_answer": "B",
+    "explanation": "Copilot integrated OpenAI's Sora 2 video generation model into Clipchamp, allowing users to create product demos, training videos, and social media clips from text prompts.",
+    "order": 6
+  },
+  {
+    "question": "What is the process for sharing prompts with colleagues in Copilot?",
+    "option_a": "Export prompts as PDF files and email them",
+    "option_b": "Use the Share icon to post prompts directly to a Teams channel",
+    "option_c": "Copy and paste prompts into a shared OneDrive document",
+    "option_d": "Submit prompts to IT for company-wide distribution",
+    "correct_answer": "B",
+    "explanation": "In Copilot chat, you can hover over a prompt, click the Share icon, select 'Share to Teams', choose the channel, and Copilot posts the prompt as a message that teammates can click to copy.",
+    "order": 7
+  },
+  {
+    "question": "Which two features does Copilot offer within Microsoft Outlook to improve email management?",
+    "option_a": "Automatic email deletion and spam filtering",
+    "option_b": "AI Prioritization Rules and Thread Summarization",
+    "option_c": "Voice dictation and translation services",
+    "option_d": "Calendar synchronization and task creation",
+    "correct_answer": "B",
+    "explanation": "Copilot in Outlook provides AI Prioritization Rules (natural language rules for email importance) and Thread Summarization (condensing long email threads into key decisions, questions, and action items).",
+    "order": 8
+  },
+  {
+    "question": "What is the 'Scheduled Prompts' feature, and what license is required?",
+    "option_a": "A feature for setting email reminders, available on all M365 licenses",
+    "option_b": "Automated recurring Copilot tasks, available with M365 CPI license",
+    "option_c": "A calendar integration tool available on E3 and E5 licenses",
+    "option_d": "A prompt template library available to all Copilot users",
+    "correct_answer": "B",
+    "explanation": "Scheduled Prompts (available with M365 CPI license) let you automate recurring Copilot tasks like daily email digests or weekly reports, with results delivered via email, Teams, or saved to OneDrive.",
+    "order": 9
+  },
+  {
+    "question": "What problem does Enterprise App Management (available in E5) solve?",
+    "option_a": "It speeds up application loading times",
+    "option_b": "It provides centralized governance for SaaS app access and permissions",
+    "option_c": "It automatically updates all Microsoft applications",
+    "option_d": "It reduces licensing costs for enterprise software",
+    "correct_answer": "B",
+    "explanation": "Enterprise App Management in E5 provides centralized governance for SaaS app access and permissions, helping IT admins control and audit which apps employees can access.",
+    "order": 10
+  }
+]

@@ -31,10 +31,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 | Úkol | Deleguj na | Důvod | Jak |
 |------|------------|-------|-----|
-| **Visual QA** (jak vypadá UI) | Gemini | 2M context | Screenshot → soubor → `gemini -m gemini-2.5-pro` |
-| **Content/lekce** | Gemini | Kreativní | Task Brief → `gemini -m gemini-2.5-pro` |
+| **Visual QA** (jak vypadá UI) | Gemini | 2M context | Screenshot → soubor → `gemini` (auto) |
+| **Content/lekce** | Gemini | Kreativní | Task Brief → `gemini` (auto) |
 | **Web scraping** | curl/wget | <100 tokenů | `curl -s URL \| grep pattern` |
 | **Hard reasoning** (>30min) | GPT-5.2 | Chain-of-thought | Debug Packet → Codex CLI |
+
+> ⚠️ **GEMINI MODEL RULE:** Volej `gemini` BEZ `-m` flagu (má auto-select) nebo explicitně `-m gemini-3-pro-preview`. **NIKDY 2.5!**
 
 ### 🔇 Thin Protocol (VŽDY!)
 

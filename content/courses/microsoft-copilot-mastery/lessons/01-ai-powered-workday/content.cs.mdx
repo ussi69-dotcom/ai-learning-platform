@@ -1,0 +1,984 @@
+# Váš pracovní den s AI: Mistrovství v Microsoft 365 Copilot
+
+<Callout type="info">
+**Cíl mise:** Transformujte svou každodenní pracovní rutinu z manuální dřiny na produktivitu zesílenou AI pomocí zvládnutí paměti Copilota, automatizace a inteligence napříč aplikacemi.
+
+⏳ **Čas čtení:** 35 min | 🧪 **[3] Laby součástí**
+</Callout>
+
+<VideoSwitcher alternatives={[
+  {"id":"9sFA-dWNUlc","title":"Copilot Master Tips (Microsoft Engineer)"},
+  {"id":"0T39n8uAqOk","title":"Outlook, Excel & Chat Tips"},
+  {"id":"GeeK0GoFlkE","title":"5 Hidden Copilot Tips"}
+]} />
+
+## ⚡ Dnes ráno jste měli v inbox 147 nepřečtených emailů
+
+**Zastavte všechno. Podívejte se na svou schránku právě teď.**
+
+147 nepřečtených. 89 z včerejška. 12 označených jako "urgentní", ale víte, že 9 z nich není. Strávili jste dnes ráno 47 minut jen *tříděním* emailů. Ne psaním. Ne strategií. Jen... řazením.
+
+Teď se podívejte na svůj Excel soubor. Ten s 847 řádky zákaznických dat. Potřebujete najít vzorce. Odlehlé hodnoty. Nárůst tržeb ve 3. čtvrtletí, na který se ptá váš šéf. Zíráte na buňky, píšete vzorce, které příští týden zapomenete, a doufáte, že vám nic zásadního neuteče.
+
+**Tato éra skončila.**
+
+V listopadu 2025 Microsoft změnil pravidla hry. Copilot už není jen automatické doplňování. Je to perzistentní vrstva paměti napříč celým vaším pracovním dnem. Pamatuje si vaše preference, vaše projekty, váš styl psaní. Nereaguje jen na příkazy—*předvídá* vaše potřeby.
+
+Nejste tady kvůli dalšímu chatbotovi. Jste tady proto, abyste vybudovali **digitální dvojče**, které zvládne mechanickou práci, zatímco vy se soustředíte na to, co skutečně záleží.
+
+---
+
+## 🧠 1. Paměťový implantát: Custom Instructions & Copilot Memory
+
+Tady je to, co většina lidí o Copilotu přehlíží: **Mezi relacemi všechno zapomíná.** Každá konverzace začíná od nuly. Každý koncept emailu ignoruje 40 emailů, které jste včera napsali se stejným podpisem, stejným tónem, stejnou strukturou.
+
+Až doteď.
+
+### Custom Instructions: Vaše globální preference
+
+Custom Instructions si představte jako **systémový prompt pro celý váš pracovní život**. Řeknete Copilotovi jednou—"Jsem produktový manažer v SaaS startupu, preferuji stručné emaily, vždy uvádím akční body"—a tenhle kontext se aplikuje na *každou jednotlivou interakci*.
+
+**Jak to nastavit:**
+
+1. Otevřete Microsoft 365 Copilot (copilot.microsoft.com nebo aplikaci)
+2. Přejděte do **Settings** (ikona ozubeného kola, vpravo nahoře)
+3. Vyberte **Personalization** → **Custom Instructions**
+4. Napište své instrukce ve dvou sekcích:
+   - **What would you like Copilot to know about you?** (Vaše role, firma, preference)
+   - **How would you like Copilot to respond?** (Tón, formát, omezení)
+
+**Příklad Custom Instructions:**
+
+```text
+ABOUT ME:
+- Role: Engineering Manager at a fintech company
+- Team: 8 developers, distributed across 3 time zones
+- Primary tools: Jira, Slack, GitHub, Excel
+- Communication style: Direct, data-driven, avoid corporate jargon
+
+HOW TO RESPOND:
+- Keep emails under 5 sentences unless I ask for detailed analysis
+- Always structure responses with clear headings and bullet points
+- When drafting messages, include a TL;DR at the top
+- For data analysis, lead with the insight, then show the numbers
+- Never use phrases like "I hope this email finds you well"
+```
+
+<ConceptCard title="Proč na tom záleží" icon="💡">
+
+**Custom Instructions = Komprese kontextu.**
+
+Bez nich každý příkaz potřebuje 50 extra slov kontextu. "Jsem technický manažer, můj tým používá Jira, potřebuji stručný update pro svého VP..."
+
+S nimi? Prostě řeknete: **"Napiš týdenní update."**
+
+Copilot už zná zbytek.
+
+</ConceptCard>
+
+### Copilot Memory: Živý kontext
+
+Tohle mění hru. **Copilot Memory** je perzistentní databáze znalostí, kterou Copilot využívá napříč *všemi* vašimi konverzacemi a aplikacemi.
+
+**Klíčové rozdíly:**
+
+| Funkce | Custom Instructions | Copilot Memory |
+|---------|---------------------|----------------|
+| **Rozsah** | Globální preference (tón, role, formát) | Konkrétní fakta, detaily projektů, vztahy |
+| **Životnost** | Permanentní, dokud to nezměníte | Vyvíjí se, jak mu říkáte zapamatovat si věci |
+| **Příklad** | "Preferuji odrážky" | "Projekt Phoenix startuje 15. března" |
+
+**Jak používat Copilot Memory:**
+
+1. Během jakékoliv konverzace řekněte: **"Remember that Project Phoenix launches on March 15th, 2026."**
+2. Copilot uloží tento fakt do vaší paměťové banky.
+3. Příští týden se zeptáte: **"What's the status of our upcoming launches?"**—Copilot si Phoenix automaticky vybaví.
+
+**Prohlížení a správa paměti:**
+
+- Jděte do **Settings** → **Personalization** → **Copilot Memory**
+- Uvidíte seznam všech uložených faktů
+- Smažte zastaralé (např. když projekt skončí)
+
+<Callout type="tip">
+
+**Profesionální tah:** Používejte paměť pro opakující se info, které se mění čtvrtletně:
+
+- Data rozpočtových cyklů
+- Aktuální cíle sprintu
+- Jména a role členů týmu
+- Kódová jména klientů (pokud pracujete v poradenství)
+
+Když 4. čtvrtletí skončí, aktualizujte paměť. Copilot se přizpůsobí okamžitě.
+
+</Callout>
+
+---
+
+## 🔬 Lab 1: Paměťový implantát
+
+**Cíl:** Nakonfigurovat Custom Instructions a naučit Copilota 3 fakta o vašem pracovním kontextu, poté otestovat vybavení v cross-app scénáři.
+
+### 📋 Předpoklady
+- Microsoft 365 Copilot licence (M365 CPI nebo E3/E5 s Copilot doplňkem)
+- Přístup na copilot.microsoft.com nebo do aplikace Copilot
+
+### 🛠️ Kroky
+
+#### Fáze 1: Nastavte Custom Instructions
+
+1. Otevřete copilot.microsoft.com ve svém prohlížeči
+2. Klikněte na ikonu **Settings** (⚙️) vpravo nahoře
+3. Přejděte na **Personalization** → **Custom Instructions**
+4. Do pole **"What would you like Copilot to know about you?"** vložte:
+
+```text
+Role: [Váš skutečný titul]
+Industry: [Vaše odvětví]
+Primary tools: [Vypište 3-5 nástrojů, které používáte denně]
+Communication preference: [Concise/Detailed/Visual]
+```
+
+5. Do pole **"How would you like Copilot to respond?"** vložte:
+
+```text
+- Always start responses with a one-sentence summary
+- Use bullet points for lists longer than 3 items
+- Avoid phrases like "I hope this helps" or "Let me know if you need anything"
+- For data questions, show the insight first, then the supporting numbers
+```
+
+6. Klikněte na **Save**
+
+#### Fáze 2: Vybudujte svou paměťovou banku
+
+7. Začněte nový chat v Copilotu
+8. Pošlete tyto tři zprávy (přizpůsobte s reálnými info):
+
+```text
+Remember that my current priority project is [Název projektu] with a deadline of [Datum].
+
+Remember that my manager is [Jméno] and they prefer updates every [Frekvence].
+
+Remember that I'm currently working on [Konkrétní skill/technologie] to improve [Cíl].
+```
+
+9. Copilot potvrdí každé přidání do paměti (např. "Got it, I'll remember that.")
+
+#### Fáze 3: Verifikace
+
+10. Zavřete Copilot chat úplně (zavřete záložku prohlížeče nebo aplikaci)
+11. Otevřete čerstvou Copilot relaci (nová záložka na copilot.microsoft.com)
+12. Zeptejte se: **"What are my current priorities?"**
+
+**Očekávaný výstup:**
+
+Copilot by měl zmínit váš uložený projekt, deadline a vzdělávací cíl BEZ toho, abyste znovu vysvětlovali kontext.
+
+Příklad odpovědi:
+> "Your top priority is **[Název projektu]** (deadline: [Datum]). You're also working on improving **[Cíl]** by learning **[Skill/Technologie]**. For updates, your manager **[Jméno]** prefers hearing from you **[Frekvence]**."
+
+**💡 Aha Moment:**
+
+"Do prdele—nemusel jsem vysvětlovat, kdo jsem nebo na čem pracuji. Copilot to prostě... *věděl*. Takhle vypadá opravdový AI asistent."
+
+<LabComplete labId="lab-memory-implant" />
+
+---
+
+## 🎯 2. Knihovna promptů: Nikdy nepište stejný prompt dvakrát
+
+Víte, co je divoký? Microsoft postavil **tržiště s prompty** a skoro nikdo ho nepoužívá.
+
+Jmenuje se to **Copilot Lab** (copilot.microsoft.com → záložka Copilot Lab). Je to prohledávatelná galerie předepsaných, v produkci otestovaných promptů pro každou M365 aplikaci.
+
+### Proč tohle existuje
+
+Většina lidí promrhá 60 % svého času s Copilotem *přemýšlením, jak položit otázku*. Mám říct "summarize" nebo "give me key points"? Funguje to lépe s kontextem první nebo s otázkou první?
+
+Microsoftí odpověď: **"Přestaňte vymýšlet prompty. Používejte ty, co už fungují."**
+
+### Jak používat Copilot Lab
+
+<Steps>
+
+1. **Filtrujte podle kontextu:**
+   - App: Word, Excel, Outlook, Teams, PowerPoint
+   - Task: Summarize, Analyze, Draft, Create
+   - Job Role: Sales, Marketing, Engineering, Finance
+
+2. **Procházejte výsledky:**
+   - Každý prompt ukazuje přesný text + očekávaný use case
+   - Náhled ukazuje ukázkový výstup
+
+3. **Uložte oblíbené:**
+   - Klikněte na ikonu záložky u jakéhokoliv promptu
+   - Přístup ze sekce "My Prompts"
+
+4. **Přizpůsobte a nasaďte:**
+   - Zkopírujte prompt do schránky
+   - Vložte do Copilot chatu nebo app-specifického Copilot panelu
+   - Přizpůsobte s vašimi specifickými daty
+
+</Steps>
+
+**Reálné příklady z Copilot Lab:**
+
+| Use Case | Šablona promptu |
+|----------|-----------------|
+| **Třídění inbox** | "Summarize emails from the last 3 days where I'm directly mentioned, grouped by urgency." |
+| **Příprava meetingu** | "Pull key discussion points from the last 5 emails in this thread and draft 3 questions for tomorrow's call." |
+| **Analýza v Excelu** | "Identify the top 3 products by revenue growth in Q4 and explain what changed compared to Q3." |
+| **Editace ve Wordu** | "Rewrite this section to be 50% shorter while keeping all key data points." |
+
+<Callout type="warning">
+
+**Past k vyhnutí:**
+
+Nekopírujte prompty naslepo. **Vždy přizpůsobte svým konkrétním kontextem.** Prodejní prompt navržený pro B2B SaaS nebude fungovat pro retail bez úprav.
+
+Lab vám dává *strukturu*. Vy přinášíte *kontext*.
+
+</Callout>
+
+### Sdílení promptů s vaším týmem
+
+Našli jste skvělý prompt? **Sdílejte ho do Teams kanálu**, aby ho celý tým mohl znovu použít.
+
+**Jak:**
+
+1. V Copilot chatu najeďte na prompt, který chcete sdílet
+2. Klikněte na ikonu **Share**
+3. Vyberte **Share to Teams**
+4. Vyberte kanál
+5. Copilot pošle prompt jako zprávu—kolegové mohou kliknout pro kopírování
+
+**Profesionální tah:** Vytvořte **"Copilot Playbook"** kanál v Teams. Pokaždé, když někdo objeví užitečný prompt, sdílí ho tam. Za 3 měsíce budete mít kurátorovanou knihovnu týmově specifických klenotů.
+
+---
+
+## 📊 3. Excel upgrady: Agent Mode & =COPILOT() funkce
+
+Tady Copilot přestává být chatbot a stává se **datovým analytikem sedícím ve vašem spreadsheetu**.
+
+### Agent Mode (Excel Labs doplněk)
+
+**Co to dělá:**
+
+Normální Copilot v Excelu je reaktivní—ptáte se, odpovídá textem. **Agent Mode** je *proaktivní*—dáte mu cíl a on vytváří tabulky, grafy a pivotní analýzy *přímo ve vašem sešitu*.
+
+**Nastavení:**
+
+1. Otevřete Excel (webová verze: office.com/launch/excel)
+2. Jděte do **Insert** → **Get Add-ins**
+3. Hledejte **"Excel Labs"**
+4. Nainstalujte doplněk (zdarma, postavený Microsoft Research)
+5. Otevřete Excel Labs panel (objeví se na pravé straně)
+6. Zapněte přepínač **"Copilot Agent Mode"**
+
+**Příklad mise:**
+
+Máte tabulku prodejních dat se sloupci: Date, Product, Region, Revenue, Units Sold.
+
+Místo psaní vzorců řeknete:
+
+```text
+Create a pivot table showing total revenue by Region and Product,
+sorted by highest revenue. Then create a bar chart comparing regions.
+```
+
+Copilot Agent Mode:
+1. Vloží nový list
+2. Sestaví pivotní tabulku
+3. Vygeneruje graf
+4. Vrátí se na původní list a zvýrazní, co vytvořil
+
+**Hra se změnila.** Nedotkli jste se jediného vzorce.
+
+### Funkce =COPILOT()
+
+Tohle je **GPT uvnitř buňky**.
+
+**Syntaxe:**
+
+```excel
+=COPILOT("Your prompt here", [volitelné referenční buňky])
+```
+
+**Příklady z reálného světa:**
+
+| Cíl | Vzorec |
+|------|---------|
+| Kategorizace textu | `=COPILOT("Categorize this email subject as Urgent/Normal/Low: " & A2)` |
+| Extrakce insights | `=COPILOT("What emotion does this customer review express?", B5)` |
+| Referenční data | `=COPILOT("Is the revenue in cell C2 above or below our Q4 target in D10?", C2, D10)` |
+
+<ConceptCard title="Proč je to revoluční" icon="🔥">
+
+**Předtím:** Potřebovali jste vnořené IF příkazy, řetězy VLOOKUP nebo VBA makra pro zpracování textu.
+
+**Teď:** `=COPILOT("Extract the company name from this email signature", A2)` → Hotovo.
+
+Píšete **vzorce v přirozeném jazyce**. Žádné memorování syntaxe. Žádné hledání na Stack Overflow.
+
+</ConceptCard>
+
+**Dotazy v přirozeném jazyce v chatu:**
+
+Místo používání vzorců můžete také prostě *zeptat* Copilota přímo v Excel chat panelu:
+
+- "What was the lowest revenue month in 2025?"
+- "Which product had the steepest sales decline quarter-over-quarter?"
+- "Highlight cells where Units Sold is above 100 and Revenue is below $5000."
+
+Copilot zpracuje otázku, identifikuje relevantní buňky a dá vám odpověď s referencemi.
+
+---
+
+## 🔬 Lab 2: Šeptal Excelu
+
+**Cíl:** Použít funkci =COPILOT() ke kategorizaci zákaznických zpětných vazeb a identifikaci trendů bez psaní tradičních vzorců.
+
+### 📋 Předpoklady
+- Excel webová verze (office.com/launch/excel) nebo desktop s Excel Labs
+- Ukázkový dataset (vytvoříme si ho)
+
+### 🛠️ Kroky
+
+#### Fáze 1: Nastavení testovacích dat
+
+1. Otevřete nový Excel sešit
+2. V **Sheet1** vytvořte tuto tabulku (sloupce A-C, řádky 1-8):
+
+| Customer Name | Feedback Text | Sentiment |
+|---------------|---------------|-----------|
+| Alex Chen | "The new feature is incredible! Saved me hours." | |
+| Jamie Smith | "App crashes every time I try to export data." | |
+| Taylor Park | "Works fine but wish it had dark mode." | |
+| Morgan Lee | "Absolutely love the new UI update!" | |
+| Casey Brown | "Billing error charged me twice last month." | |
+| Jordan Kim | "Pretty good, nothing special." | |
+| Riley Davis | "Customer support was super helpful!" | |
+| Avery Wilson | "Feature X doesn't work on mobile at all." | |
+
+3. Nechte sloupec C (Sentiment) prázdný—použijeme Copilota k vyplnění
+
+#### Fáze 2: Nasazení funkce =COPILOT()
+
+4. Klikněte na buňku **C2** (první prázdná buňka Sentiment)
+5. Zadejte tento vzorec:
+
+```excel
+=COPILOT("Analyze the sentiment of this customer feedback and return only one word: Positive, Negative, or Neutral", B2)
+```
+
+6. Stiskněte **Enter**
+7. Excel bude zpracovávat 2-3 sekundy, pak vrátí: **"Positive"**
+
+8. **Přetáhněte vzorec dolů** z C2 do C8 (klikněte na malý čtvereček vpravo dole u C2, táhněte do C8)
+9. Copilot zpracuje každý řádek individuálně
+
+**Očekávané výsledky:**
+
+| Feedback (B) | Sentiment (C) |
+|--------------|---------------|
+| "...incredible! Saved me hours." | Positive |
+| "App crashes..." | Negative |
+| "Works fine but wish..." | Neutral |
+| "Absolutely love..." | Positive |
+| "Billing error..." | Negative |
+| "Pretty good, nothing special." | Neutral |
+| "Customer support was super helpful!" | Positive |
+| "...doesn't work on mobile at all." | Negative |
+
+#### Fáze 3: Analýza trendů přes chat
+
+10. Otevřete **Copilot chat panel** v Excelu (pravý postranní panel, nebo Ctrl+Shift+.)
+11. Zeptejte se:
+
+```text
+How many positive vs negative vs neutral feedbacks are there?
+What's the most common complaint theme?
+```
+
+**Očekávaný výstup:**
+
+> "You have **3 Positive**, **3 Negative**, and **2 Neutral** feedbacks. The most common negative themes are **technical issues** (crashes, mobile bugs) and **billing problems**."
+
+**💡 Aha Moment:**
+
+"Právě jsem provedl sentimentální analýzu zákaznických zpětných vazeb *bez instalace Pythonu, bez tréninku modelu, bez exportu do BI nástroje*. Trvalo to 90 sekund. Před rokem by to byl 3hodinový projekt."
+
+<LabComplete labId="lab-excel-whisperer" />
+
+---
+
+## 📧 4. Outlook superschopnosti: AI prioritizace & Draft Instructions
+
+Vaše schránka je chaos. Ne proto, že jste neorganizovaní—proto, že **naléhavost všech ostatních se stává vaší prioritou**.
+
+Copilot v Outlooku má tři jaderné funkce, které většina lidí nikdy nenakonfiguruje:
+
+### Funkce 1: AI pravidla prioritizace
+
+Místo manuálního označování emailů naučíte Copilota **pravidla v přirozeném jazyce** pro to, co záleží.
+
+**Jak to nastavit:**
+
+1. Otevřete Outlook (web nebo desktop)
+2. Jděte do **Settings** → **Mail** → **Rules** → **Copilot Priority Rules**
+3. Vytvořte pravidla jako:
+
+```text
+Mark as HIGH priority:
+- Emails from my manager or VP
+- Any email with "URGENT" or "ASAP" in subject from internal senders
+- Calendar invites from C-level executives
+
+Mark as LOW priority:
+- Newsletters or promotional emails
+- Automated notifications from Jira/GitHub unless they mention my name
+- CC-only emails where I'm not directly addressed
+```
+
+4. Copilot aplikuje tato pravidla v reálném čase
+5. Vaše schránka má nyní **High/Medium/Low** vizuální tagy
+
+**Výsledek:** Otevřete Outlook, okamžitě vidíte 5 emailů, které *skutečně* potřebují vaši pozornost, a zbytek zpracujete dávkově později.
+
+<Diagram type="dashboard-ui" />
+
+### Funkce 2: Shrnutí vláken
+
+Už vám se někdy stalo, že otevřete vlákno s 47 emaily a nemáte ponětí, co se děje?
+
+**Řešení:**
+
+1. Otevřete jakékoliv emailové vlákno
+2. Hledejte tlačítko **"Summary by Copilot"** nahoře
+3. Klikněte na něj
+4. Copilot přečte celé vlákno a dá vám:
+   - **Klíčová rozhodnutí učiněná**
+   - **Nevyřízené otázky**
+   - **Akční body přiřazené vám**
+
+**Příklad výstupu:**
+
+> **Thread Summary:**
+> - **Decision:** Launch delayed from March 1 → March 15
+> - **Blocker:** Legal review still pending on Terms of Service
+> - **Action for you:** Send updated timeline to partners by EOD Friday
+
+Místo čtení 47 emailů přečtete 3 věty.
+
+### Funkce 3: Draft Instructions (Tajná zbraň)
+
+Tohle je jako Custom Instructions, ale **jen pro psaní emailů**.
+
+**Jak nakonfigurovat:**
+
+1. Outlook **Settings** → **Copilot** → **Draft Instructions**
+2. Definujte svůj styl psaní emailů:
+
+```text
+TONE:
+- Professional but conversational
+- Avoid corporate buzzwords ("circle back", "touch base", "synergy")
+
+LENGTH:
+- Keep emails under 4 sentences unless I specify otherwise
+- Always include a clear ask or next step
+
+STRUCTURE:
+- Start with context (1 sentence)
+- State the ask (1 sentence)
+- Provide options or deadline (1 sentence)
+- Sign off with first name only, no title
+
+NEVER:
+- Use "I hope this email finds you well"
+- End with "Best regards" (use "Thanks," instead)
+- Write paragraphs longer than 3 lines
+```
+
+3. Uložte Draft Instructions
+
+**Použití:**
+
+Když kliknete **"Draft with Copilot"** v novém emailu, automaticky aplikuje tato pravidla.
+
+**Před Draft Instructions:**
+
+Napíšete: "Draft an email to Sarah asking when the design mockups will be ready"
+
+Copilot napíše:
+> "Hi Sarah, I hope this email finds you well. I wanted to circle back regarding the design mockups we discussed in our last meeting. Could you please provide an update on the timeline? Looking forward to hearing from you. Best regards, [Vaše celé jméno, titul]"
+
+**Po Draft Instructions:**
+
+Stejný prompt. Copilot napíše:
+> "Sarah—Quick check: when will the design mockups be ready? We need them by Friday to stay on schedule for the March 15 launch. Let me know if that's doable. Thanks, [Křestní jméno]"
+
+**Stejný požadavek. Úplně jiný výstup.** Protože Copilot se naučil váš styl.
+
+<Diagram type="human-in-the-loop" />
+
+<Callout type="tip">
+
+**Trik pokročilého uživatele:**
+
+Vytvořte **několik Draft Instruction profilů** pro různé kontexty:
+- **Internal:** Neformální, stručné, akčně orientované
+- **Client-facing:** Vyleštěné, detailní, profesionální
+- **Executive updates:** Data-driven, stručné, zaměřené na rozhodování
+
+Přepínejte profily podle toho, komu píšete.
+
+</Callout>
+
+---
+
+## 🔬 Lab 3: Krotitel schránky
+
+**Cíl:** Nakonfigurovat AI pravidla prioritizace a Draft Instructions, pak použít Copilota ke zvládnutí 3 běžných emailových scénářů pod 5 minut.
+
+### 📋 Předpoklady
+- Outlook (web nebo desktop) s povoleným Copilotem
+- Alespoň 10 emailů ve schránce (reálná nebo testovací data)
+
+### 🛠️ Kroky
+
+#### Fáze 1: Nastavení pravidel prioritizace
+
+1. Otevřete Outlook → **Settings** (⚙️) → **Mail** → **Rules**
+2. Klikněte **"+ New Rule"** → **"Copilot Priority Rule"**
+3. Vytvořte své první pravidlo:
+
+```text
+IF email is from: [Email vašeho manažera NEBO doména hlavního klienta]
+OR subject contains: "URGENT", "CRITICAL", "ACTION REQUIRED"
+THEN mark as: HIGH priority
+```
+
+4. Vytvořte druhé pravidlo:
+
+```text
+IF email is: Newsletter, Promotional, or Automated notification
+AND I am in: CC field (not TO field)
+THEN mark as: LOW priority
+```
+
+5. Uložte obě pravidla
+6. Obnovte schránku—sledujte, jak se automaticky objevují tagy priority
+
+#### Fáze 2: Konfigurace Draft Instructions
+
+7. Jděte do **Settings** → **Copilot** → **Draft Instructions**
+8. Vložte tuto šablonu (přizpůsobte svému stylu):
+
+```text
+TONE: Direct and friendly, no fluff
+LENGTH: Maximum 5 sentences per email
+STRUCTURE: Context → Ask → Deadline/Options → Sign-off
+FORBIDDEN PHRASES: "I hope this email finds you well", "Just checking in", "Per my last email"
+SIGNATURE: First name only, no title
+```
+
+9. Klikněte **Save**
+
+#### Fáze 3: Výzva 3 emailů
+
+**Scénář 1: Žádost o status update**
+
+10. Napište nový email kolegovi
+11. Klikněte **"Draft with Copilot"**
+12. Zadejte prompt:
+
+```text
+Ask Jordan for a status update on the API integration project.
+Deadline is Friday. Offer to jump on a call if they're blocked.
+```
+
+13. Zkontrolujte Copilotův koncept—měl by následovat vaše Draft Instructions (stručné, bez keců, jasný deadline)
+14. Pošlete nebo upravte podle potřeby
+
+**Scénář 2: Shrnutí vlákna**
+
+15. Najděte nejdelší emailové vlákno ve schránce (5+ zpráv)
+16. Klikněte tlačítko **"Summary by Copilot"** nahoře
+17. Přečtěte 3věté shrnutí
+18. Změřte si čas: Jak dlouho by vám trvalo přečíst celé vlákno?
+
+**Scénář 3: Prohlednutí schránky**
+
+19. Otevřete **Copilot Chat** v Outlook postranním panelu
+20. Zeptejte se:
+
+```text
+Summarize all unread emails from the last 2 days.
+Group by priority and tell me which ones need action from me.
+```
+
+21. Copilot prohledá vaši schránku a vrátí:
+
+**Očekávaný výstup:**
+
+> **HIGH Priority (Action Required):**
+> - Email from [Manažer]: Budget approval needed by Thursday
+> - Email from [Klient]: Contract revision feedback requested
+>
+> **MEDIUM Priority (FYI):**
+> - Project update from [Kolega]: Deployment successful, no action needed
+>
+> **LOW Priority (Can Wait):**
+> - 5 newsletters, 3 automated Jira notifications
+
+**💡 Aha Moment:**
+
+"Právě jsem vytřídil 20 emailů za méně než 90 sekund. Copilot nejenže shrnul—*upřednostnil* na základě mých pravidel a identifikoval přesně to, co potřebuje mou pozornost. Takhle vypadá skutečný 'AI asistent'."
+
+<LabComplete labId="lab-inbox-tamer" />
+
+---
+
+## 🤝 5. Cross-App inteligence: Teams Mode & M365 Chat
+
+Tady je ta zabijácká funkce, o které nikdo nemluví: **Copilot nežije v silech.**
+
+Většina AI nástrojů je uvězněná ve své aplikaci. ChatGPT nemůže číst váš kalendář. Gemini nemá přístup k OneDrive. Claude nevidí vaše Teams zprávy.
+
+**M365 Copilot vidí *všechno*.** Vaše emaily, kalendář, soubory, chaty, SharePoint dokumenty—všechno v jednom sjednoceném kontextu.
+
+### Teams Mode: Kolaborativní AI
+
+Jste v Teams chatu se 4 lidmi. Někdo se zeptá na složitou otázku ohledně prodejních dat z minulého čtvrtletí. Místo hledání ve sdílených souborech uděláte toto:
+
+1. Napište **`@Copilot`** v Teams chatu
+2. Zeptejte se: "What were our top 3 revenue drivers in Q4 based on the sales report Sarah shared last week?"
+3. Copilot prohledá historii souborů v Teams, najde report od Sarah, analyzuje ho a odpoví *ve vláknu chatu*, kde to všichni vidí
+
+**Všichni v chatu mohou nyní interagovat se stejným Copilot vláknem.** Už to není "vaše AI"—je to **týmová AI**.
+
+### M365 Copilot Chat (Velitelské centrum)
+
+Tohle je nejpodceňovanější funkce: **copilot.microsoft.com** nebo samostatná Copilot aplikace funguje jako **cross-app vyhledávací a akční engine**.
+
+**Co můžete dělat:**
+
+| Úkol | Příklad promptu |
+|------|----------------|
+| **Synchronizace kalendář + email** | "What meetings do I have this week with [Jméno klienta], and what's the latest email thread about their project?" |
+| **Hledání souborů** | "Find the Excel file with Q4 budget data that I edited last Friday" |
+| **Generování dokumentů** | "Create a Word doc summarizing all action items from this week's meetings" |
+| **Křížové reference** | "Which emails mention the Project Phoenix launch date, and does that match what's on my calendar?" |
+
+**Příklad workflow:**
+
+Představte si, že je pondělní ráno. Otevřete M365 Copilot Chat a zeptáte se:
+
+```text
+What's on my plate this week? Include:
+- High-priority emails from the weekend
+- Upcoming meetings with external clients
+- Any deadlines from my task list
+```
+
+Copilot prohledá:
+- Outlook inbox (emaily)
+- Outlook kalendář (meetingy)
+- Microsoft To Do (úkoly)
+- Teams chaty (zmínky)
+
+Vrátí:
+
+> **This Week Overview:**
+>
+> **High-Priority Emails:**
+> - [Klient] requesting contract amendment (needs response by Wed)
+> - [Manažer] asking for Q1 forecast update
+>
+> **External Meetings:**
+> - Tuesday 2pm: Kickoff call with Acme Corp
+> - Thursday 10am: Design review with Beta Inc.
+>
+> **Deadlines:**
+> - Wednesday: Submit budget proposal
+> - Friday: Finalize hiring plan for new team members
+
+**Získali jste kontext celého týdne za 10 sekund.** Žádné přepínání aplikací. Žádné manuální skanování.
+
+---
+
+## 📝 6. Word & PowerPoint: Akcelerátory obsahu
+
+### Word: Z prázdné stránky k prvnímu konceptu za 3 minuty
+
+Nejstrašidelnější moment v práci se znalostmi: **prázdná stránka**.
+
+Copilot ve Wordu to eliminuje. Ne tím, že píše *za* vás—tím, že vám dá **lešení**, které můžete formovat.
+
+**Běžné use cases:**
+
+| Typ dokumentu | Příklad promptu |
+|---------------|----------------|
+| **Poznámky z meetingu** | "Create a meeting notes template for a product roadmap discussion with sections for Goals, Key Decisions, Action Items, and Next Steps" |
+| **Projektový návrh** | "Draft a 2-page project proposal for migrating our CRM to Salesforce. Include Executive Summary, Timeline, Budget Estimate, and Risk Assessment" |
+| **Přepsání reportu** | "Rewrite Section 3 to be 50% shorter while keeping all data points and conclusions" |
+
+**Automatické shrnutí:**
+
+Otevřete jakýkoliv dlouhý Word dokument (10+ stran). Klikněte **"Summarize"** v Copilot panelu. Získejte 1stránkové executive summary s klíčovými body extrahovanými automaticky.
+
+### PowerPoint: Okamžité slide decky
+
+**Workflow:**
+
+1. Otevřete PowerPoint
+2. Klikněte **Copilot** → **"Create presentation from prompt"**
+3. Zadejte:
+
+```text
+Create a 7-slide deck on Q4 Sales Performance including:
+- Title slide
+- Executive summary (3 key wins)
+- Revenue breakdown by region (use chart)
+- Top 3 challenges
+- Q1 forecast
+- Recommendations
+- Thank you slide
+```
+
+4. Copilot vygeneruje všech 7 slidů s placeholder grafy a textem za 30 sekund
+5. Vy přizpůsobíte data a styling
+
+**Vylepšení designu:**
+
+Zeptejte se Copilota: "Make this deck more visual—add icons to each section header and use a blue/orange color scheme"
+
+Automaticky přestyluje slidy.
+
+---
+
+## 🚀 7. Pokročilé funkce (Plán 2026)
+
+Microsoft jede rychle. Tady je, co je živé nebo přichází brzy:
+
+### Tvorba videa se Sora 2 (listopad 2025)
+
+Copilot integroval **OpenAI Sora 2** model pro generování videa. Nyní můžete vytvářet:
+- Produktová demo videa z textových promptů
+- Školicí videa s AI generovanými voice-overy
+- Klipy pro sociální média
+
+**Jak:** Otevřete Clipchamp (Microsoftí video editor) → Copilot panel → "Generate video"
+
+### Naplánované prompty (M365 CPI licence)
+
+Chcete denní digest nepřečtených emailů v 8 ráno? Týdenní prodejní report každý pátek ve 4 odpoledne?
+
+**Scheduled Prompts** vám umožňují automatizovat opakující se Copilot úkoly:
+
+1. Napište prompt: "Summarize all emails from [Klient] this week"
+2. Nastavte plán: "Every Friday at 4pm"
+3. Vyberte doručení: Email, Teams zpráva, nebo uložení na OneDrive
+
+Copilot to spustí automaticky. Dostanete výsledek bez ptaní.
+
+### Survey Agent (Beta)
+
+Generujte zákaznické dotazníky, formuláře zpětné vazby od zaměstnanců nebo registrace na eventy popsáním, co potřebujete. Copilot vytvoří Microsoft Forms průzkum, napíše otázky a nastaví sběr odpovědí.
+
+### Researcher Agent s Claude opcí
+
+**Researcher** agent nyní může používat **Anthropic Claude** místo GPT pro hluboké výzkumné úkoly.
+
+<Callout type="warning">
+
+**KRITICKÁ BEZPEČNOSTNÍ POZNÁMKA:**
+
+Pokud povolíte Claude v Researcher módu, **Microsoftí podniková ochrana dat je DEAKTIVOVÁNA**. Vaše dotazy a data jsou posílána na servery Anthropic, ne udržována v rámci Microsoftí compliance hranice.
+
+**Používejte pouze pokud:**
+- Zkoumáte veřejná/necitlivá témata
+- Vaše firma povoluje používání AI nástrojů třetích stran
+- Nezpracováváte zákaznická data, vlastnické info nebo regulovaný obsah
+
+Pro podnikovou práci zůstaňte u výchozího GPT-based Researchera.
+
+</Callout>
+
+---
+
+## 🛡️ 8. Licence & Co je nového v E3/E5 (Update 2025)
+
+Pokud jste na **Microsoft 365 E3** nebo **E5**, dostali jste v pozdním roce 2025 velké upgrady:
+
+### Doplňky E3 licence
+
+| Funkce | Co to dělá |
+|---------|--------------|
+| **Remote Help** | IT podpora může vzdáleně přistupovat a řešit problémy vašeho stroje (s vaším svolením) |
+| **Advanced Analytics** | Hlubší přehledy o používání aplikací, kolaboračních vzorech a metrikách produktivity |
+| **Intune Plan 2** | Vylepšená správa mobilních zařízení a politiky ochrany aplikací |
+
+### Doplňky E5 licence
+
+| Funkce | Co to dělá |
+|---------|--------------|
+| **Endpoint Privilege Management** | Jemná kontrola nad admin právy na spravovaných zařízeních |
+| **Cloud PKI** | Certifikátová autentizace pro aplikace a zařízení |
+| **Enterprise App Management** | Centralizovaná správa přístupu a oprávnění SaaS aplikací |
+
+**Co to znamená pro Copilota:**
+
+E5 uživatelé mají nyní **přísnější správu dat** pro Copilot interakce. IT admini mohou:
+- Auditovat Copilot prompty a odpovědi
+- Blokovat určité typy souborů nebo témata z Copilot přístupu
+- Vynucovat compliance politiky (např. žádný Copilot přístup k souborům označeným "Důvěrné")
+
+Pokud jste v regulovaném odvětví (finance, zdravotnictví, vláda), **E5 + Copilot** je jediná kompatibilní volba.
+
+---
+
+## 🎯 9. 5minutová transformace pracovního dne
+
+Takhle vypadá vaše pondělní ráno **po zvládnutí těchto funkcí**:
+
+### 8:00 - Příchod ke stolu
+
+**Starý způsob:**
+- Otevřít Outlook, manuálně skenovat 89 emailů
+- Označit 12 jako důležité
+- Zjistit, že 6 z nich ve skutečnosti není urgentních
+- Strávit 20 minut rozhodováním, na co se vrhnout jako první
+
+**Nový způsob:**
+- Otevřít M365 Copilot Chat
+- Zeptat se: "What's urgent today?"
+- Copilot ukáže 3 vysoce prioritní emaily (na základě vašich pravidel)
+- Odpovíte na všechny 3 za 10 minut pomocí Draft Instructions
+
+**Ušetřený čas: 10 minut**
+
+### 9:00 - Týdenní týmový meeting
+
+**Starý způsob:**
+- Horečně vzpomínat, co se stalo minulý týden
+- Otevřít 5 různých dokumentů pro přípravu talking pointů
+- Improvizovat během meetingu
+
+**Nový způsob:**
+- Zeptat se Copilota: "Summarize my team's progress this week based on Teams chats and task completions"
+- Získat seznam odrážek za 15 sekund
+- Přečíst si to během úvodu meetingu
+
+**Ušetřený čas: 15 minut**
+
+### 10:00 - Žádost o datovou analýzu od šéfa
+
+**Starý způsob:**
+- Otevřít Excel soubor s 847 řádky
+- Psát vzorce, vytvářet pivotní tabulky, lovit vzorce
+- Trvá 45 minut
+
+**Nový způsob:**
+- Zeptat se Copilota v Excelu: "What was the revenue trend by region in Q4, and which product underperformed?"
+- Získat odpověď + automaticky vygenerovaný graf za 90 sekund
+- Přeposlat šéfovi
+
+**Ušetřený čas: 43 minut**
+
+### 11:00 - Termín klientského návrhu
+
+**Starý způsob:**
+- Zírat na prázdný Word dokument 10 minut
+- Copy-paste ze starých návrhů, složit to dohromady jako Frankenstein
+- Strávit 30 minut editací pro konzistenci
+
+**Nový způsob:**
+- Zeptat se Copilota: "Draft a 2-page proposal for [Klient] covering [Služby], Timeline, and Pricing"
+- Získat lešení za 60 sekund
+- Přizpůsobit s klient-specifickými detaily
+- Hotovo za 12 minut
+
+**Ušetřený čas: 28 minut**
+
+### **Celkově ušetřený čas: 96 minut (1 hodina 36 minut)**
+
+**Za JEDNO dopoledne.** Vynásobte 5 dny/týden, 50 týdnů/rok:
+
+**8 000 minut = 133 hodin = 3,3 pracovní týdny za rok.**
+
+Právě jste získali extra **měsíc** produktivity. A ještě jste ani nepoužili pokročilé funkce.
+
+<Diagram type="data-analysis-chart" />
+
+---
+
+## 🏆 Debriefing mise
+
+<ConceptCard title="Holocron: Váš pracovní den s AI" icon="💎">
+
+### 🔑 Klíčové poznatky
+
+* **Vyhrává perzistence paměti:** Custom Instructions + Copilot Memory eliminují 80 % opakujícího se nastavování kontextu. Řekněte Copilotovi jednou—zapamatuje si to navždy.
+
+* **Prompty jsou aktiva:** Copilot Lab knihovna a týmově sdílené prompty mění jednorázová řešení na znovupoužitelné workflowy. Budujte svůj playbook záměrně.
+
+* **Excel = Databáze v přirozeném jazyce:** Funkce =COPILOT() a Agent Mode stírají hranici mezi "položit otázku" a "napsat vzorec". Pokud to umíte popsat, Copilot to spočítá.
+
+* **Prioritizace schránky = Jasnost:** AI-řízená emailová pravidla a shrnutí vláken snižují čas třídění o 70 %. Vidíte, co záleží, ignorujete, co ne, automaticky.
+
+* **Cross-App inteligence = Superschopnost:** M365 Copilotův sjednocený kontext (email + kalendář + soubory + chaty) vytváří workflowy nemožné se silosovými AI nástroji. Jeden prompt, pět datových zdrojů, nulové přepínání aplikací.
+
+### 🧠 Mentální model: Od asistenta k autopilotovi
+
+```
+Úroveň 0: Manuální práce        → Děláte všechno
+Úroveň 1: AI-asistované         → Ptáte se, AI odpovídá
+Úroveň 2: AI-augmentované (VY)  → AI předvídá potřeby, zvládá mechanickou práci
+Úroveň 3: AI-automatizované     → Naplánované prompty, nulový lidský vstup
+```
+
+Váš cíl: **Žít na úrovni 2, experimentovat s úrovní 3.**
+
+### 🛡️ Bezpečnostní varování
+
+* **Riziko úniku dat:** Při používání Claude-powered Researchera nebo sdílení promptů externě pamatujte, že kontext = firemní data. Auditujte, co odhalujete.
+
+* **Past přílišného spoléhání:** Copilot může koncipovat, ale nemůže *strategizovat*. Vždy kontrolujte výstupy na tón, přesnost a vhodnost před odesláním.
+
+* **Hygiena paměti:** Vaše Copilot Memory akumuluje fakta v čase. Čtvrtletní revize: smažte zastaralé názvy projektů, staré členy týmu, expirované deadliny.
+
+</ConceptCard>
+
+---
+
+## 🎓 Co dál?
+
+Zvládli jste vrstvu pracovního dne—email, Excel, Word, Outlook. Ale Copilot jde hlouběji:
+
+**Další lekce v tomto tracku:**
+- **Pokročilé automatizace:** Power Automate + Copilot pro workflowy bez dotyku
+- **Vlastní Copiloty:** Budujte doménově specifické asistenty s Microsoft Copilot Studio
+- **Správa dat:** Compliance, auditování a podniková AI bezpečnost
+
+**Vaše mise (právě teď):**
+
+1. Nastavte své Custom Instructions (5 minut)
+2. Přidejte 3 fakta do Copilot Memory (2 minuty)
+3. Nakonfigurujte Draft Instructions v Outlooku (3 minuty)
+
+**Celková investice: 10 minut.**
+
+**ROI: 1,5 hodiny ušetřené za týden.**
+
+To je **900% návratnost** v prvním týdnu.
+
+Jděte na to.
+
+---
+
+**Konec lekce**
+
+*Čas čtení: 35 minut | Dokončené laby: 3*

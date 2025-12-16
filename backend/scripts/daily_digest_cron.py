@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 # Environment variables
 PERPLEXITY_API_KEY = os.getenv("PERPLEXITY_API_KEY")
-DIGEST_WEBHOOK_URL = os.getenv("DIGEST_WEBHOOK_URL", "http://localhost:8000/digest/webhook")
+DIGEST_WEBHOOK_URL = os.getenv("DIGEST_WEBHOOK_URL", "http://backend:8000/digest/webhook")
 WEBHOOK_SECRET = os.getenv("PERPLEXITY_WEBHOOK_SECRET", "")
 
 # Perplexity API configuration
@@ -39,16 +39,39 @@ PERPLEXITY_API_URL = "https://api.perplexity.ai/chat/completions"
 # Use sonar model for web search capabilities
 PERPLEXITY_MODEL = "sonar"  # or "sonar-pro" for better quality
 
-# Simple prompt for Perplexity - it returns real URLs in citations
-DIGEST_PROMPT = """Search for AI news from today ({date}) and list 7 important stories.
+# Comprehensive 4-section prompt for rich digest content
+# IMPORTANT: Emphasize REAL news only to prevent hallucinations
+DIGEST_PROMPT = """Search the web for REAL AI news published today ({date}).
 
-For each story provide:
-1. **Title** - the headline
-2. **Summary** - 2 sentences about what happened
-3. **URL** - link to the source
+CRITICAL RULES:
+- ONLY include news you actually found via web search with verifiable URLs
+- DO NOT invent or predict future releases (no "GPT-5", "Claude 4", "Llama 4" unless actually announced)
+- Every item MUST have a real, working source URL from today's search results
+- If you cannot find 5+ real news items from today, include recent news from this week
+- Prefer official announcements, press releases, and major tech news sites
 
-Focus on: AI product launches, funding, research breakthroughs, major announcements.
-Sources: TechCrunch, The Verge, Reuters, company blogs, tech news sites.
+**SECTION 1: SHORT ENGLISH SUMMARY**
+5-8 bullet points of REAL news, each exactly 1 sentence. Start each with "- ".
+
+**SECTION 2: SHORT CZECH SUMMARY**
+Same news as Section 1, translated to Czech. Start each with "- ".
+
+**SECTION 3: DETAILED ENGLISH FEED**
+For each REAL news item found, use this EXACT format:
+### [Actual headline from source]
+[1-2 sentence summary of what actually happened]
+**Source:** [Real URL from your search]
+
+**SECTION 4: DETAILED CZECH FEED**
+Same items as Section 3, translated to Czech:
+### [Český překlad titulku]
+[1-2 věty - překlad obsahu]
+**Source:** [Stejná URL]
+
+Topics: AI model updates, research papers, tooling, product launches, AI regulation, quantum computing.
+Trusted sources: TechCrunch, The Verge, Reuters, VentureBeat, Wired, Ars Technica, official company blogs.
+
+REMEMBER: Only report what you actually found. No speculation or fabrication.
 """
 
 
@@ -106,184 +129,150 @@ def call_perplexity_api(prompt: str) -> tuple[Optional[str], list[str]]:
         return None, []
 
 
-def translate_to_czech(texts: list[str]) -> list[str]:
-    """Translate a list of texts to Czech using Perplexity.
-
-    Args:
-        texts: List of English texts to translate
-
-    Returns:
-        List of Czech translations (same length as input)
-    """
-    if not texts or not PERPLEXITY_API_KEY:
-        return texts  # Return original if no API key or empty
-
-    # Build prompt with all texts to translate
-    numbered_texts = "\n".join(f"{i+1}. {text}" for i, text in enumerate(texts))
-
-    prompt = f"""Translate these AI news headlines to Czech. Keep them concise and natural.
-Return ONLY the translations in the same numbered format, nothing else.
-
-{numbered_texts}"""
-
-    headers = {
-        "Authorization": f"Bearer {PERPLEXITY_API_KEY}",
-        "Content-Type": "application/json"
-    }
-
-    payload = {
-        "model": PERPLEXITY_MODEL,
-        "messages": [
-            {
-                "role": "system",
-                "content": "You are a professional translator. Translate to Czech accurately and naturally."
-            },
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        "temperature": 0.1,
-        "max_tokens": 2000
-    }
-
-    try:
-        logger.info(f"Translating {len(texts)} items to Czech...")
-        with httpx.Client(timeout=60.0) as client:
-            response = client.post(PERPLEXITY_API_URL, headers=headers, json=payload)
-            response.raise_for_status()
-
-            data = response.json()
-            content = data["choices"][0]["message"]["content"]
-
-            # Parse numbered translations
-            translations = []
-            for line in content.strip().split('\n'):
-                # Remove number prefix (1., 2., etc.)
-                match = re.match(r'^\d+\.\s*(.+)$', line.strip())
-                if match:
-                    translations.append(match.group(1).strip())
-
-            # Verify we got all translations
-            if len(translations) == len(texts):
-                logger.info(f"Successfully translated {len(translations)} items to Czech")
-                return translations
-            else:
-                logger.warning(f"Translation count mismatch: expected {len(texts)}, got {len(translations)}")
-                return texts  # Return original on mismatch
-
-    except Exception as e:
-        logger.error(f"Translation error: {e}")
-        return texts  # Return original on error
-
-
 def parse_perplexity_response(content: str, citations: list[str]) -> Optional[dict]:
-    """Parse Perplexity response into webhook format.
+    """Parse Perplexity 4-section response into webhook format.
 
-    Handles multiple formats from Perplexity:
-    Format A: 1. **Title**: Headline here
-    Format B: 1) Title: Headline here
-    Format C: ### 1. **Title**: Headline here (markdown heading)
+    Expected sections:
+    - SECTION 1: SHORT ENGLISH SUMMARY (bullet points)
+    - SECTION 2: SHORT CZECH SUMMARY (bullet points)
+    - SECTION 3: DETAILED ENGLISH FEED (### Title, description, **Source:** URL)
+    - SECTION 4: DETAILED CZECH FEED (### Title, description, **Source:** URL)
 
     Args:
         content: The markdown content from Perplexity
         citations: List of real URLs from Perplexity's search
     """
-    items = []
-
     # Clean citation markers [1], [2], etc.
     clean_content = re.sub(r'\[\d+\]', '', content)
 
-    # Split by numbered items (handles: "1.", "1)", "### 1.", "#1." etc.)
-    item_blocks = re.split(r'\n(?=(?:#{1,3}\s*)?\d+[\.\)]\s)', clean_content)
+    # Split into sections
+    sections = re.split(r'\*\*SECTION\s+\d+[:\s]', clean_content, flags=re.IGNORECASE)
+    if len(sections) < 5:
+        # Try alternative section markers
+        sections = re.split(r'(?:^|\n)#+\s*(?:SECTION\s+)?\d+[:\.\s]|(?:^|\n)\d+\.\s+\*\*', clean_content, flags=re.IGNORECASE)
 
-    for block in item_blocks:
-        block = block.strip()  # Remove leading/trailing whitespace
-        if not block:
-            continue
+    logger.info(f"Found {len(sections)} sections in response")
 
-        # Extract title - try multiple formats
-        # Format A: **Title**: Headline (bold label)
-        title_match = re.search(r'\*\*Title\*\*:\s*(.+?)(?:\s*\n|$)', block)
-        if not title_match:
-            # Format B: "1) Title: ..." plain text label
-            title_match = re.search(r'^(?:#{1,3}\s*)?\d+[\.\)]\s*Title:\s*(.+?)(?:\s*\n|$)', block)
-        if not title_match:
-            # Format C: Bold title after number prefix "### 1. **Some Title**"
-            title_match = re.search(r'^(?:#{1,3}\s*)?\d+[\.\)]\s*\*\*(.+?)\*\*', block)
-        if not title_match:
-            # Format D: Just numbered bold "1. **Title here**" without "Title:" label
-            title_match = re.search(r'^\d+[\.\)]\s*\*\*([^*]+)\*\*', block)
+    # Parse bullet points from summary sections
+    def extract_bullets(text: str) -> list[str]:
+        bullets = []
+        for line in text.strip().split('\n'):
+            line = line.strip()
+            # Match lines starting with -, *, •, or numbered
+            match = re.match(r'^[-*•]\s*(.+)$', line)
+            if match:
+                bullet = match.group(1).strip()
+                if bullet and len(bullet) > 10:  # Skip too short items
+                    bullets.append(bullet)
+        return bullets[:8]  # Max 8 bullets
 
-        # Extract summary - try multiple formats
-        summary_match = re.search(r'\*\*Summary\*\*:\s*(.+?)(?:\n\s*\*\*|$)', block, re.DOTALL)
-        if not summary_match:
-            # Format B: "Summary: ..." without bold, ends at URL: or end of block
-            summary_match = re.search(r'Summary:\s*(.+?)(?:\s*\nURL:|$)', block, re.DOTALL)
+    # Parse detailed feed items
+    def extract_feed_items(text: str) -> list[dict]:
+        items = []
+        # Split by ### headers
+        blocks = re.split(r'\n###\s+', text)
 
-        # Extract URL from content - try multiple formats
-        url_match = re.search(r'\*\*URL\*\*:\s*(https?://[^\s\)\]\[]+)', block)
-        if not url_match:
-            # Format B: "URL: ..." without bold (stop at brackets, spaces, newlines)
-            url_match = re.search(r'URL:\s*(https?://[^\s\)\]\[]+)', block)
+        for block in blocks:
+            block = block.strip()
+            if not block or len(block) < 20:
+                continue
 
-        if title_match:
-            title = title_match.group(1).strip()[:200]
-            summary = summary_match.group(1).strip()[:500] if summary_match else ""
-            url = url_match.group(1).strip() if url_match else ""
+            lines = block.split('\n')
+            title = lines[0].strip()
 
-            items.append({
-                'title': title,
-                'summary': summary,
-                'url': url
-            })
+            # Clean title from markdown artifacts
+            title = re.sub(r'^\*\*|\*\*$', '', title)
+            title = re.sub(r'^\d+\.\s*', '', title)
 
-    logger.info(f"Parsed {len(items)} news items from Perplexity response")
+            # Extract description (lines between title and Source:)
+            description_lines = []
+            url = ""
 
-    if len(items) < 3:
-        logger.error(f"Insufficient content: only {len(items)} items parsed")
+            for line in lines[1:]:
+                line = line.strip()
+                # Check for source URL
+                source_match = re.search(r'\*\*Source:?\*\*:?\s*(https?://[^\s\)]+)', line)
+                if not source_match:
+                    source_match = re.search(r'Source:?\s*(https?://[^\s\)]+)', line)
+                if source_match:
+                    url = source_match.group(1).strip()
+                    break
+                elif line and not line.startswith('**'):
+                    description_lines.append(line)
+
+            description = ' '.join(description_lines).strip()
+
+            # Use citation URL as fallback
+            if not url and citations:
+                idx = len(items)
+                if idx < len(citations):
+                    url = citations[idx]
+
+            # Skip section headers captured as titles
+            if title and len(title) > 5 and not re.match(r'^(DETAILED|SHORT)\s+(ENGLISH|CZECH|ČESKÝ)', title, re.IGNORECASE):
+                items.append({
+                    'title': title[:200],
+                    'description': description[:500],
+                    'source_url': url
+                })
+
+        return items[:15]  # Max 15 items
+
+    # Initialize results
+    summary_en = []
+    summary_cs = []
+    feed_en = []
+    feed_cs = []
+
+    # Try to identify sections by content
+    for i, section in enumerate(sections):
+        section_lower = section.lower()[:200]
+
+        if 'english summary' in section_lower or (i == 1 and not summary_en):
+            summary_en = extract_bullets(section)
+            logger.info(f"Extracted {len(summary_en)} EN summary bullets")
+
+        elif 'czech summary' in section_lower or 'český' in section_lower or (i == 2 and not summary_cs):
+            summary_cs = extract_bullets(section)
+            logger.info(f"Extracted {len(summary_cs)} CS summary bullets")
+
+        elif 'english feed' in section_lower or 'detailed english' in section_lower or (i == 3 and not feed_en):
+            feed_en = extract_feed_items(section)
+            logger.info(f"Extracted {len(feed_en)} EN feed items")
+
+        elif 'czech feed' in section_lower or 'český feed' in section_lower or 'detailed czech' in section_lower or (i == 4 and not feed_cs):
+            feed_cs = extract_feed_items(section)
+            logger.info(f"Extracted {len(feed_cs)} CS feed items")
+
+    # Fallback: if we didn't get structured sections, try parsing whole content
+    if len(summary_en) < 3:
+        logger.warning("Fallback: extracting bullets from whole content")
+        summary_en = extract_bullets(clean_content)[:8]
+
+    if len(feed_en) < 3:
+        logger.warning("Fallback: extracting feed items from whole content")
+        feed_en = extract_feed_items(clean_content)[:15]
+
+    # If no Czech content, use English as fallback (better than nothing)
+    if len(summary_cs) < 3:
+        logger.warning("No Czech summary found, using English")
+        summary_cs = summary_en
+
+    if len(feed_cs) < 3:
+        logger.warning("No Czech feed found, using English")
+        feed_cs = feed_en
+
+    # Validate minimum content
+    if len(summary_en) < 3 or len(feed_en) < 3:
+        logger.error(f"Insufficient content: {len(summary_en)} bullets, {len(feed_en)} feed items")
+        logger.error(f"Raw content preview:\n{clean_content[:1000]}")
         return None
 
-    # Build English summaries
-    summaries_en = [item['title'][:150] for item in items]
-
-    # Translate to Czech
-    summaries_cs = translate_to_czech(summaries_en)
-
-    # Build feed items (English)
-    feed_en = [
-        {
-            'title': item['title'],
-            'description': item['summary'],
-            'source_url': item['url']
-        }
-        for item in items
-    ]
-
-    # Translate titles and descriptions for Czech feed
-    titles_cs = translate_to_czech([item['title'] for item in items])
-    descriptions_cs = translate_to_czech([item['summary'] for item in items if item['summary']])
-
-    # Build Czech feed with translated content
-    feed_cs = []
-    desc_idx = 0
-    for i, item in enumerate(items):
-        cs_title = titles_cs[i] if i < len(titles_cs) else item['title']
-        cs_desc = ""
-        if item['summary']:
-            cs_desc = descriptions_cs[desc_idx] if desc_idx < len(descriptions_cs) else item['summary']
-            desc_idx += 1
-        feed_cs.append({
-            'title': cs_title,
-            'description': cs_desc,
-            'source_url': item['url']
-        })
-
     return {
-        'summary_en': summaries_en,
-        'summary_cs': summaries_cs,
-        'feed_en': feed_en,
-        'feed_cs': feed_cs,
+        'summary_en': summary_en,
+        'summary_cs': summary_cs,
+        'feed_en': [{'title': f['title'], 'description': f['description'], 'source_url': f['source_url']} for f in feed_en],
+        'feed_cs': [{'title': f['title'], 'description': f['description'], 'source_url': f['source_url']} for f in feed_cs],
         'digest_date': datetime.now(timezone.utc).isoformat(),
         'raw_response': content
     }

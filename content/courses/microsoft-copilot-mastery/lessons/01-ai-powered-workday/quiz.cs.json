@@ -1,0 +1,102 @@
+[
+  {
+    "question": "Jaký je hlavní rozdíl mezi standardním Copilotem v Excelu a funkcí 'Agent Mode'?",
+    "option_a": "Agent Mode je proaktivní a vytváří tabulky, grafy a pivotní analýzy přímo v sešitu",
+    "option_b": "Agent Mode pracuje pouze s textovými odpověďmi, zatímco standardní mód vytváří grafy",
+    "option_c": "Standardní mód je rychlejší, ale Agent Mode má více funkcí",
+    "option_d": "Agent Mode vyžaduje samostatnou licenci, zatímco standardní mód je zahrnut",
+    "correct_answer": "A",
+    "explanation": "Agent Mode je proaktivní—dáte mu cíl a on vytváří tabulky, grafy a pivotní analýzy přímo v sešitu, zatímco normální Copilot je reaktivní a odpovídá textem.",
+    "order": 1
+  },
+  {
+    "question": "K čemu slouží nastavení 'Custom Instructions' v M365 Copilot chatu?",
+    "option_a": "K dočasnému přepsání odpovědí Copilota pro jednu konverzaci",
+    "option_b": "K poskytnutí globálních preferencí o vaší roli a stylu odpovědí pro všechny interakce",
+    "option_c": "K vytvoření automatických pravidel pro emaily",
+    "option_d": "K naplánování opakujících se úkolů Copilota",
+    "correct_answer": "B",
+    "explanation": "Custom Instructions slouží jako systémový prompt pro celý váš pracovní život—řeknete Copilotovi jednou o své roli, preferencích a požadovaném formátu odpovědí a on to aplikuje na každou interakci.",
+    "order": 2
+  },
+  {
+    "question": "Jaký bezpečnostní aspekt je zdůrazněn při použití agenta Researcher s modelem Claude od Anthropic?",
+    "option_a": "Claude vyžaduje dodatečné autentizační kroky",
+    "option_b": "Enterprise ochrana dat Microsoftu je vypnuta a dotazy jsou odesílány na servery Anthropic",
+    "option_c": "Claude má přístup pouze k veřejným dokumentům",
+    "option_d": "Integrace Claude je dostupná pouze držitelům licence E5",
+    "correct_answer": "B",
+    "explanation": "Když povolíte Claude v režimu Researcher, enterprise ochrana dat Microsoftu je vypnuta. Vaše dotazy a data jsou odesílány na servery Anthropic, nikoli uchovávány v rámci hranice compliance Microsoftu.",
+    "order": 3
+  },
+  {
+    "question": "Jak může uživatel M365 E5 využít Endpoint Privilege Management (EPM)?",
+    "option_a": "K vzdálenému přístupu k zařízením zaměstnanců pro řešení problémů",
+    "option_b": "K vytvoření automatických plánů zálohování",
+    "option_c": "K detailní kontrole administrátorských práv na spravovaných zařízeních",
+    "option_d": "K monitorování bezpečnosti příloh emailů",
+    "correct_answer": "C",
+    "explanation": "Endpoint Privilege Management v E5 poskytuje detailní kontrolu nad administrátorskými právy na spravovaných zařízeních, což zvyšuje bezpečnostní governance.",
+    "order": 4
+  },
+  {
+    "question": "Co je Copilot Lab a jak ho lze použít?",
+    "option_a": "Testovací prostředí pro experimentální funkce Copilota",
+    "option_b": "Prohledávatelná galerie předpřipravených, produkčně testovaných promptů pro každou M365 aplikaci",
+    "option_c": "AI tréninková platforma pro vývojáře",
+    "option_d": "Komunitní fórum pro uživatele Copilota",
+    "correct_answer": "B",
+    "explanation": "Copilot Lab je marketplace promptů—prohledávatelná galerie předpřipravených, produkčně testovaných promptů pro každou M365 aplikaci, filtrovatelná podle kontextu, aplikace, úkolu a pracovní role.",
+    "order": 5
+  },
+  {
+    "question": "Jak funguje funkce vytváření videí v M365 Copilot?",
+    "option_a": "Převádí PowerPoint snímky na animovaná videa",
+    "option_b": "Využívá integraci Sora 2 v Clipchamp k generování videí z textových promptů",
+    "option_c": "Automaticky nahrává aktivitu obrazovky z Word dokumentů",
+    "option_d": "Extrahuje obrázky z PDF a vytváří prezentace",
+    "correct_answer": "B",
+    "explanation": "Copilot integroval model generování videa Sora 2 od OpenAI do Clipchamp, což uživatelům umožňuje vytvářet produktové dema, školicí videa a klipy pro sociální sítě z textových promptů.",
+    "order": 6
+  },
+  {
+    "question": "Jaký je postup pro sdílení promptů s kolegy v Copilotu?",
+    "option_a": "Exportovat prompty jako PDF soubory a poslat je emailem",
+    "option_b": "Použít ikonu Sdílet k publikování promptů přímo do Teams kanálu",
+    "option_c": "Zkopírovat a vložit prompty do sdíleného OneDrive dokumentu",
+    "option_d": "Odeslat prompty na IT pro celofiremní distribuci",
+    "correct_answer": "B",
+    "explanation": "V Copilot chatu můžete najet na prompt, kliknout na ikonu Sdílet, vybrat 'Sdílet do Teams', zvolit kanál a Copilot publikuje prompt jako zprávu, kterou kolegové mohou kliknutím zkopírovat.",
+    "order": 7
+  },
+  {
+    "question": "Které dvě funkce nabízí Copilot v Microsoft Outlook pro zlepšení správy emailů?",
+    "option_a": "Automatické mazání emailů a filtrování spamu",
+    "option_b": "AI pravidla prioritizace a shrnutí vláken",
+    "option_c": "Hlasové diktování a překladatelské služby",
+    "option_d": "Synchronizace kalendáře a vytváření úkolů",
+    "correct_answer": "B",
+    "explanation": "Copilot v Outlook poskytuje AI pravidla prioritizace (pravidla v přirozeném jazyce pro důležitost emailů) a shrnutí vláken (zkondenzování dlouhých emailových vláken na klíčová rozhodnutí, otázky a akční položky).",
+    "order": 8
+  },
+  {
+    "question": "Co je funkce 'Scheduled Prompts' a jaká licence je potřeba?",
+    "option_a": "Funkce pro nastavení emailových připomínek, dostupná na všech M365 licencích",
+    "option_b": "Automatizované opakující se úkoly Copilota, dostupné s licencí M365 CPI",
+    "option_c": "Nástroj pro integraci kalendáře dostupný na licencích E3 a E5",
+    "option_d": "Knihovna šablon promptů dostupná všem uživatelům Copilota",
+    "correct_answer": "B",
+    "explanation": "Scheduled Prompts (dostupné s licencí M365 CPI) umožňují automatizovat opakující se úkoly Copilota jako denní souhrny emailů nebo týdenní reporty, s výsledky doručenými přes email, Teams nebo uloženými na OneDrive.",
+    "order": 9
+  },
+  {
+    "question": "Jaký problém řeší Enterprise App Management (dostupný v E5)?",
+    "option_a": "Zrychluje načítání aplikací",
+    "option_b": "Poskytuje centralizovanou správu přístupu a oprávnění k SaaS aplikacím",
+    "option_c": "Automaticky aktualizuje všechny aplikace Microsoft",
+    "option_d": "Snižuje náklady na licence enterprise softwaru",
+    "correct_answer": "B",
+    "explanation": "Enterprise App Management v E5 poskytuje centralizovanou správu přístupu a oprávnění k SaaS aplikacím, což pomáhá IT administrátorům kontrolovat a auditovat, ke kterým aplikacím mají zaměstnanci přístup.",
+    "order": 10
+  }
+]

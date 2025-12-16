@@ -52,11 +52,12 @@ ESKALUJ na GPT-5.2 když:
 
 ## 🖥️ Environment Context
 
-- **OS:** Linux (WSL2)
-- **Node.js:** v24.11.1
+- **OS:** Ubuntu 24.04 LTS (Hetzner Dedicated - AMD EPYC 24C, NVMe)
+- **Node.js:** v20.19.6 (via NVM)
 - **Stack:** Next.js 16.0.7, React 19.2.1, FastAPI, PostgreSQL 15, Redis 7, Docker Compose.
 - **Agent Mode:** Claude Code primary, Gemini CLI for content/visual QA, GPT‑5.2 via Codex CLI for hard reasoning
-- **MCP Tools:** Playwright, GitHub, Context7, Figma, **Perplexity** (Deep Research)
+- **MCP Tools:** Playwright (`@playwright/mcp`), Context7 (`@upstash/context7-mcp`), Perplexity
+- **Network:** Zero Trust (UFW + Cloudflare Tunnel) - bind ports to `127.0.0.1:PORT`
 
 ## 🔑 Standard Operating Protocols (SOPs)
 
