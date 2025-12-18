@@ -42,6 +42,14 @@ shell-frontend: ## Otevře sh v běžícím frontend kontejneru
 test-backend: ## Spustí testy v backendu
 	docker compose exec backend pytest
 
+check-docs: ## Zkontroluje dokumentaci na drift (stale paths, missing files)
+	./scripts/check-doc-drift.sh
+
+verify: ## Spustí všechny kontroly (frontend + backend + docs)
+	cd frontend && npm run verify
+	docker compose exec backend pytest
+	./scripts/check-doc-drift.sh
+
 security-check: ## Spustí bezpečnostní audit (jen pro VPS)
 	@echo "Toto by se mělo spouštět jen na serveru."
 	./scripts/setup_security.sh

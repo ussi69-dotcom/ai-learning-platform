@@ -124,16 +124,25 @@ sed -E 's/eyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+/[JWT_REDACTED]/g' lo
 
 **Task Brief (Orchestrátor → Implementer):**
 ```markdown
+## Task ID: [YYYY-MM-DD-short-name]
 ## Goal: [1 věta]
-## Acceptance criteria: [3-5 bodů]
+## Acceptance criteria:
+- [ ] [criterion 1]
+- [ ] [criterion 2]
+- [ ] [criterion 3]
 ## Files to modify: [seznam]
 ## Expected outcome: [jak poznat success]
+## Verify: [konkrétní test/command k ověření]
 ```
 
 **Task Result (Implementer → Orchestrátor):**
 ```markdown
+## Task ID: [YYYY-MM-DD-short-name]
 ## Status: [done/blocked/needs-review]
 ## Changes: [git diff summary - 5 řádků max]
+## Acceptance criteria met:
+- [x] [criterion 1] - verified by [how]
+- [x] [criterion 2] - verified by [how]
 ## Test results: [pass/fail + failures only]
 ## Artifacts: [cesty k souborům]
 ```

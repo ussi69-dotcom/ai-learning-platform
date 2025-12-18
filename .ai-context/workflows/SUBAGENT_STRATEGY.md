@@ -165,7 +165,7 @@ Task(
 **1. Specific File Operations**
 ```
 ❌ BAD: Task(subagent_type="Explore", prompt="Read profile page")
-✅ GOOD: Read('/home/ussi/ai-learning-platform/frontend/app/[locale]/profile/page.tsx')
+✅ GOOD: Read('/home/deploy/ai-learning-platform/frontend/app/[locale]/profile/page.tsx')
 ```
 
 **2. Known Class/Function Search**

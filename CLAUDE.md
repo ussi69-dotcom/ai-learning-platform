@@ -104,6 +104,21 @@ Aktivuj když: Security změny | DB migrace | Breaking API | >30min stuck + 2 fa
 | Deep research (short) | Gemini CLI | ⏱️ 2-5m |
 | Deep research (long) | Gemini Deep Research | ⏱️ 20-60m |
 
+### Codex Profile Decision Tree (10-second rule)
+
+| Situace | Profil | Příklad |
+|---------|--------|---------|
+| Quick question, simple task | `fast` | "What does this error mean?" |
+| Code review, CI fix | `review` | "Review this PR diff" |
+| Bug >30min, need root cause | `deep` | "Find why test fails" |
+| Multi-component planning | `orchestrator` | "Plan auth system redesign" |
+| Auth/permissions change | `security` | "Review this JWT change" |
+| Production incident | `hotfix` | "Minimal fix for 500 error" |
+| Writing/improving tests | `tests` | "Add edge case coverage" |
+| Documentation update | `docs` | "Clarify this API endpoint" |
+
+**Default:** `review` (balanced speed/quality)
+
 ### Codex CLI (GPT-5.2)
 
 ```bash

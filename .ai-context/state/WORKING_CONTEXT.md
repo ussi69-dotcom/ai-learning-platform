@@ -23,7 +23,7 @@
 | Node.js | v20.19.6 (via NVM) | ✅ |
 | npm | 10.8.2 | ✅ |
 | Docker | 29.1.3 | ✅ |
-| Python | 3.12.3 | ✅ |
+| Python | 3.11 | ✅ | (Docker + CI aligned)
 | Gemini CLI | 0.20.2 | ✅ |
 | Codex CLI | 0.72.0 | ✅ |
 
