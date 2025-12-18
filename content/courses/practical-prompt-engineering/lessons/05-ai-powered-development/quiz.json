@@ -1,6 +1,6 @@
 {
-  "title": "AI-Powered Development",
-  "description": "Test your understanding of MCP architecture, AI coding tools, and security best practices.",
+  "title": "AI Development Foundations",
+  "description": "Test your understanding of MCP, context management, IDE selection, and security fundamentals.",
   "passing_score": 70,
   "questions": [
     {
@@ -106,6 +106,32 @@
       ],
       "correct": "c",
       "explanation": "High-risk, potentially destructive operations like DELETE, DROP TABLE, and force push should require Human-in-the-Loop (HITL) confirmation. Configure your MCP servers to flag these tools as 'requires_approval'."
+    },
+    {
+      "id": "q9",
+      "type": "single",
+      "question": "What are the three layers of context in AI development, from most permanent to most ephemeral?",
+      "options": [
+        { "id": "a", "text": "System Prompt → User Prompt → Response" },
+        { "id": "b", "text": "Project Constitution → Task Context → Dynamic Context" },
+        { "id": "c", "text": "Global Settings → Local Settings → Runtime Config" },
+        { "id": "d", "text": "Database → Cache → Memory" }
+      ],
+      "correct": "b",
+      "explanation": "The three layers are: 1) Project Constitution (CLAUDE.md, .cursorrules) - permanent project rules, 2) Task Context - session-specific descriptions and comments, 3) Dynamic Context - real-time MCP resources and file reads that change during execution."
+    },
+    {
+      "id": "q10",
+      "type": "single",
+      "question": "According to the IDE Selection Framework, which tool is recommended for validating a new idea before investing significant development time?",
+      "options": [
+        { "id": "a", "text": "Cursor - for its speed and familiar IDE experience" },
+        { "id": "b", "text": "Claude Code - for its superior reasoning capabilities" },
+        { "id": "c", "text": "Antigravity - for the fastest path from idea to deployed prototype" },
+        { "id": "d", "text": "Windsurf - for its deep context understanding" }
+      ],
+      "correct": "c",
+      "explanation": "The multi-tool workflow recommends: Validate quickly in Antigravity (1 hour) → Develop properly in Cursor (1-2 days) → Refactor in Windsurf → Architect in Claude Code. This lets you fail fast on bad ideas while investing properly in good ones."
     }
   ]
 }

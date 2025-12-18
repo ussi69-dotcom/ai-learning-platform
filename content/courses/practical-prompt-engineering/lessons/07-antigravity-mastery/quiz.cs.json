@@ -1,0 +1,79 @@
+{
+  "title": "Mistrovstvi Antigravity Quiz",
+  "description": "Otestujte sve znalosti Antigravity pro rychle prototypovani",
+  "passing_score": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "question": "Jaka je hlavni vyhoda Antigravity oproti tradičnim IDE jako Cursor?",
+      "options": [
+        { "id": "a", "text": "Lepsi doplnovani kodu" },
+        { "id": "b", "text": "Nejrychlejsi cesta od napadu k deployovanemu prototypu" },
+        { "id": "c", "text": "Nizsi mesicni naklady" },
+        { "id": "d", "text": "Lepsi Git integrace" }
+      ],
+      "correct_answer": "b",
+      "explanation": "Unikatni hodnotova propozice Antigravity je rychlost-k-prototypu. I kdyz je taky zdarma (coz dela C castecne spravne), hlavni vyhoda je schopnost prejit od napadu k deployovane aplikaci za minuty bez jakehokoliv setupu nebo konfigurace."
+    },
+    {
+      "id": "q2",
+      "question": "Co umoznuje integrace Firebase MCP v Antigravity?",
+      "options": [
+        { "id": "a", "text": "Pouze pristup k databazi" },
+        { "id": "b", "text": "Plnou kontrolu backendu vcetne auth, databaze a hostingu" },
+        { "id": "c", "text": "Jen autentizaci" },
+        { "id": "d", "text": "Pouze uloziste souboru" }
+      ],
+      "correct_answer": "b",
+      "explanation": "Firebase MCP dava AI agentovi plnou kontrolu nad vasim Firebase backendem, vcetne Autentizace, Cloud Firestore databaze, Firebase Hostingu, Storage a Cloud Functions."
+    },
+    {
+      "id": "q3",
+      "question": "Kdy byste NEMELI pouzivat Antigravity?",
+      "options": [
+        { "id": "a", "text": "Pro rychle prototypy" },
+        { "id": "b", "text": "Pro vizualni projekty jako dashboardy" },
+        { "id": "c", "text": "Pro praci na existujicich velkych codebasech" },
+        { "id": "d", "text": "Pro Python-first projekty" }
+      ],
+      "correct_answer": "c",
+      "explanation": "Antigravity vynika pri vytvareni novych projektu rychle, ale neni navrzeno pro praci s existujicimi velkymi codebases. Pro to byste meli pouzit Cursor, Windsurf nebo Claude Code, ktere jsou postavene pro praci na urovni kodu."
+    },
+    {
+      "id": "q4",
+      "question": "Jaky je doporuceny multi-tool workflow zminery v lekci?",
+      "options": [
+        { "id": "a", "text": "Pouzivat pouze Antigravity na vsechno" },
+        { "id": "b", "text": "Validovat v Antigravity, vyvijet v Cursoru, refaktorovat ve Windsurf, architektovat v Claude Code" },
+        { "id": "c", "text": "Vzdy zacinat s Claude Code" },
+        { "id": "d", "text": "Pouzivat Cursor pro prototypy, Antigravity pro produkci" }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lekce doporucuje: 1) Rychle validovat napady v Antigravity (1 hodina), 2) Radne prestavet v Cursoru (1-2 dny), 3) Pouzit Windsurf pro velke refaktory, 4) Pouzit Claude Code pro komplexni architekturu. Toto vam umozni rychle selhat na spatnych napadech a zaroven spravne investovat do dobrych."
+    },
+    {
+      "id": "q5",
+      "question": "Co se stane kdyz kliknete 'Deploy' v Antigravity s Firebase MCP?",
+      "options": [
+        { "id": "a", "text": "Dostanete stahovatelny ZIP soubor" },
+        { "id": "b", "text": "Aplikace je deployovana na Firebase Hosting s verejnou URL" },
+        { "id": "c", "text": "Musite manualne nakonfigurovat hosting" },
+        { "id": "d", "text": "Funguje to pouze s placenymi Firebase plany" }
+      ],
+      "correct_answer": "b",
+      "explanation": "S Firebase MCP integraci kliknuti na 'Deploy' automaticky deployuje vasi aplikaci na Firebase Hosting a poskytne vam verejnou URL. Toto je soucast one-click deployment workflow ktery dela Antigravity tak rychle pro prototypovani."
+    },
+    {
+      "id": "q6",
+      "question": "Jake je hlavni omezeni Antigravity ktere vyzaduje export projektu?",
+      "options": [
+        { "id": "a", "text": "Muze vytvorit pouze Python projekty" },
+        { "id": "b", "text": "Zadna Git integrace, omezene testovaci nastroje, zadny lokalni vyvoj" },
+        { "id": "c", "text": "Projekty expirují po 24 hodinach" },
+        { "id": "d", "text": "Nemuze pouzit JavaScript" }
+      ],
+      "correct_answer": "b",
+      "explanation": "Antigravity postradi Git integraci, komplexni testovaci nastroje a moznosti lokalniho vyvoje. Kdyz potrebujete version control, CI/CD pipelines, test suites nebo jemnozrnne debuggovani, meli byste projekt exportovat a pokracovat v tradicnim IDE jako Cursor."
+    }
+  ]
+}

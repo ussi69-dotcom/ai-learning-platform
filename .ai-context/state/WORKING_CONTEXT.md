@@ -1,8 +1,36 @@
 # Working Context
 
-**Last Updated:** 2025-12-18 13:20 (Agent: Claude + GPT-5.2)
+**Last Updated:** 2025-12-19 00:15 (Agent: Claude)
 **Last Commit:** `5667335` feat: P2 workflow improvements - MACP runner, metrics, release checklist
-**Status:** 🟢 Workflow v2.0 Complete | All P0/P1/P2 Implemented
+**Status:** 🟢 L05 Restructure Complete | MACP Review + P0 Improvements Done
+
+---
+
+## ⛔ GEMINI CALL CHECKLIST (POVINNÉ PŘED KAŽDÝM VOLÁNÍM!)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  🛑 STOP! Před voláním Gemini MUSÍŠ zkontrolovat:           │
+│                                                             │
+│  1. □ JE TO CONTENT TASK?                                   │
+│      ANO → gemini -m gemini-3-pro-preview                   │
+│      NE  → gemini (bez flagu = Flash)                       │
+│                                                             │
+│  2. □ SPRÁVNÝ PŘÍKAZ:                                       │
+│      Content/Research/QA: gemini -m gemini-3-pro-preview    │
+│      Quick tasks:         gemini                            │
+│                                                             │
+│  3. □ NIKDY NEVOLEJ:                                        │
+│      ❌ gemini-2.5-pro                                      │
+│      ❌ gemini-2.5-flash                                    │
+│      ❌ gemini-exp-*                                        │
+│      ❌ jakýkoliv jiný model než výše                       │
+│                                                             │
+│  POKUD SI NEJSI JISTÝ → ZEPTEJ SE UŽIVATELE                 │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Selhání:** 2025-12-18 - Volán špatný model Gemini místo gemini-3-pro-preview
 
 ---
 
@@ -34,6 +62,9 @@
 | Playwright | `@playwright/mcp` | ✅ Connected |
 | Context7 | `@upstash/context7-mcp` | ✅ Connected |
 | Perplexity | `@modelcontextprotocol/server-perplexity-ask` | ✅ (API key set) |
+| YouTube Data | `dannySubsense/youtube-mcp-server` | ✅ Installed (14 funkcí) |
+
+**YouTube MCP capabilities:** playlist items, video details, search, transcripts, channel videos, engagement analysis
 
 ### Docker Services
 
@@ -313,11 +344,12 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
-| 2025-12-18 | Claude+GPT  | **P0 Workflow Fixes** - GEMINI.md created, MCP paths fixed, secrets rule, pip-audit CI, decision log |
+| 2025-12-19 | Claude+MACP | **L05 Restructure + L07 Creation** - 35min/2labs foundations, L07 Antigravity 25min/2labs, 6 new diagrams, MACP P0 improvements |
+| 2025-12-18 | Claude      | **Claude Code Mastery v2.0** - EN+CS beginner-friendly, WSL+terminal, Lab 0, 60min/4labs, GEMINI CHECKLIST added |
+| 2025-12-18 | Claude      | **YouTube MCP + MACP Cleanup** - Added YouTube transcript MCP, completed rate limit decision |
+| 2025-12-18 | Claude+GPT  | **P0-P2 Workflow Fixes** - GEMINI.md, MCP paths, secrets rule, pip-audit, MACP runner, metrics |
 | 2025-12-18 | All 3 MACP  | **Multi-Agent v2.0** - 9 Codex profiles, routing rules, circuit breaker, proactive delegation |
 | 2025-12-18 | Claude      | **Tooling Fixes** - NVM/npmrc fix, GitHub MCP disabled, Gemini model rules, Codex auth     |
-| 2025-12-14 | Claude      | **Star Wars Ships** - Sith/Jedi theme images, difficulty-based mapping, visual QA          |
-| 2025-12-14 | Claude+GPT  | **Security Hardening** - JWT validation, Docker socket warning, platform review saved      |
 
 ---
 

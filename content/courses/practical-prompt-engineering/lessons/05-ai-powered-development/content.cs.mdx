@@ -1,208 +1,391 @@
-# Vývoj s AI asistencí 🤖
+# Základy AI vývoje 🤖
 
 <Callout type="info">
-**Mise:** Ovládněte AI-native vývojářský ekosystém. Přejděte od doplňování kódu k orchestraci AI agentů přes MCP.
+**Mise:** Ovládněte univerzální základy AI-native vývoje. Pochopte MCP, správu kontextu a bezpečnostní principy které platí pro JAKÝKOLI AI kódovací nástroj.
 
-⏳ **Čas čtení:** 45 min | 🧪 **[3] Laby součástí**
+⏳ **Čas čtení:** 35 min | 🧪 **[2] Laby součástí**
 </Callout>
 
-<VideoSwitcher alternatives={[{"id":"D0Rgtgtzlts","title":"AI AGENTI - AI Programování (CZ)"},{"id":"iO1mwxPNP5A","title":"AI-driven Development Masterclass (Fireship)"},{"id":"KiNyvT02HJM","title":"MCP Setup Tutorial (All About AI)"}]} />
+<VideoSwitcher alternatives={[{"id":"kQmXtrmQ5Zg","title":"MCP Full Workshop - Anthropic (1h44m)"},{"id":"GuTcle5edjk","title":"You NEED to Learn MCP NOW! (NetworkChuck)"},{"id":"MsQACpcuTkU","title":"AI in Terminal - The Right Way (NetworkChuck)"},{"id":"HIp8sFB2GGw","title":"Cursor 2.0 - 5 Things You Didn't Know (Fireship)"}]} />
 
-## ⚡ Konec éry Stack Overflow
+## ⚡ 90% AI iniciativ selže. Zde je důvod.
 
-**V roce 2025 GitHub Copilot píše 46 % veškerého nového kódu ve firmách, které ho používají.**
+**"AI pohltilo internet, a ted se snazime nacpat AI do existujiciho podniku. Problem? Vidime 90%+ selhani AI iniciativ timto stylem."** — IBM Technology
 
-To není překlep. Skoro polovina. A to číslo roste každé čtvrtletí.
+Firmy ktere selhavaji nepouzivaji spatne AI modely. Pouzivaji AI *spatnym zpusobem*.
 
-Éra "vygoogluj svou chybovou hlášku → najdi odpověď na Stack Overflow → zkopíruj → doufej, že to funguje" umírá. Vstupujeme do nového paradigmatu: **AI-native vývoj**, kde tvá práce není *psát* kód — je ho *řídit*.
+V roce 2025 je prechod z "AI-asistovaneho" na "AI-native" vyvoj dokoncen. GitHub Copilot pise 46% noveho kodu ve firmach ktere ho pouzivaji. MCP vyrostlo na **1100+ komunitne vytvorenych serveru** behem pouhych mesicu. Anthropic to nazyva "zakladnim protokolem pro agenty obecne."
 
-Tohle není o tom být nahrazen. Tohle je o tom být 10× produktivnější. Vývojáři, kteří zvládnou tuto změnu, budou stavět za dny to, co dříve trvalo týdny. Ti, kteří ne, budou přemýšlet, proč mají jejich kolegové vždycky víc času.
+Toto neni o uceni dalsiho nastroje. Je to o pochopeni **univerzalnich principu** ktere delaji AI vyvoj funkcnim — principu ktere plati at uz pouzivate Cursor, Claude Code, Windsurf nebo jakykoli nastroj ktery prijde.
 
 ---
 
-## 1. Nový vývojářský stack 🔄
+## 1. Změna paradigmatu: Písař → Režisér 🎬
 
-Éra "Stack Overflow driven development" končí. Vstupujeme do éry **Context-Aware AI Development**.
+Nejúspěšnější AI vývojáři nejsou lepší kodéři. Jsou lepší **režiséři**.
 
-### Evoluce workflow
+<Diagram type="paradigm-shift-pyramid" />
 
-| Rok         | Paradigma            | Nástroj              | Limit                 |
-| ----------- | -------------------- | -------------------- | --------------------- |
-| **2021-22** | Code Completion      | GitHub Copilot       | Pouze aktuální soubor |
-| **2023**    | Chat Integration     | ChatGPT + copy/paste | Manuální kontext      |
-| **2024**    | Context-Aware IDE    | Cursor, Windsurf     | RAG nad codebase      |
-| **2025**    | Agentic Architecture | MCP + lokální LLM    | **Žádný limit** 🚀    |
+### Evoluce role vývojáře
 
-<ConceptCard title="AI-Native vývojář" icon="👨‍💻">
-Vývojář, který se zaměřuje na **systémovou architekturu**, **správu kontextu** a **ověřování výstupů AI**, místo psaní syntaxe.
+| Éra | Role | Primární dovednost | Nástroje |
+|-----|------|-------------------|----------|
+| **Pre-2020** | Písař kódu | Syntaxe, algoritmy | IDE, Stack Overflow |
+| **2021-23** | AI uživatel | Copy-paste prompty | ChatGPT, Copilot |
+| **2024** | Prompt inženýr | Tvorba kontextu | Cursor, Claude |
+| **2025+** | Režisér agentů | Orchestrace, verifikace | MCP, multi-agentní systémy |
 
-Role se posouvá od "pisatele kódu" k **"režisérovi AI agentů"**.
+<ConceptCard title="Režisér agentů" icon="🎬">
+Vývojář který se soustředí na **architekturu**, **správu kontextu** a **verifikaci** místo psaní syntaxe.
 
+Role se posouvá z "jak to nakóduju?" na **"jak nasměruji AI aby to nakódovalo správně?"**
+
+Vaše práce už není psát kód. Je to:
+1. **Poskytnout kontext** aby AI pochopilo cíl
+2. **Ověřit výstup** na správnost a bezpečnost
+3. **Orchestrovat nástroje** pro komplexní workflow
 </ConceptCard>
 
----
+### Režisérův QA checklist
 
-## 2. Deep Dive: Antigravity 🚀
+Před přijetím JAKÉHOKOLIV kódu generovaného AI proveď tyto tři testy:
 
-Antigravity je nová hvězda na scéně AI IDE. Pojďme se podívat, proč.
+| Test | Otázka | Červená vlajka |
+|------|--------|----------------|
+| **Kontrola záměru** | "Řeší to skutečně to co jsem chtěl?" | AI vyřešilo jiný problém |
+| **Bezpečnostní sken** | "Sáhlo to na auth, env nebo externí API?" | Neočekávané změny oprávnění |
+| **Integrační test** | "Rozbije to existující funkcionalitu?" | Chybějící error handling, type mismatche |
 
-<Diagram type="antigravity-workflow" />
-
-### Co dělá Antigravity jinak?
-
-| Aspekt        | Cursor / Windsurf  | **Antigravity**     |
-| ------------- | ------------------ | ------------------- |
-| **Cena**      | $10-20/měsíc       | **ZDARMA** 🎉       |
-| **Instalace** | Desktop app        | **Browser-based**   |
-| **Jazyk**     | Jakýkoli           | **Python-native**   |
-| **Canvas**    | Kód only           | **Vizuální canvas** |
-| **Model**     | OpenAI / Anthropic | **Gemini 3 Pro**  |
-| **Deploy**    | Ruční              | **Jeden klik**      |
-
-### Kdy použít Antigravity?
-
-<Callout type="tip">
-  **Ideální use cases:** - 🚀 Rychlé prototypy (hodiny, ne dny) - 🎨 Vizuální
-  projekty (dashboardy, UI) - 🐍 Python projekty (data science, automation) - 💸
-  Když nechceš platit $20/měsíc za Cursor
-</Callout>
-
-### Workflow: Od nápadu k deploy
-
-1. **💡 Nápad:** "Udělej mi dashboard pro prodeje"
-2. **🎨 Canvas:** Drag & drop komponenty
-3. **🤖 AI Agent:** Gemini generuje kód
-4. **💻 Code:** Hotový Python/JS projekt
-5. **🌐 Deploy:** Jeden klik → produkce
-
----
-
-## 3. Srovnání AI IDE (2025) 🔧
-
-<Diagram type="ide-comparison-radar" />
-
-### Detailní breakdown
-
-| IDE             | Rychlost   | Agent      | Cena | MCP | Lokální LLM | Best For        |
-| --------------- | ---------- | ---------- | ---- | --- | ----------- | --------------- |
-| **Antigravity** | ⭐⭐⭐     | ⭐⭐⭐⭐⭐ | FREE | ✓   | ✓           | Prototypy       |
-| **Cursor**      | ⭐⭐⭐⭐⭐ | ⭐⭐⭐     | $20  | ✓   | ✓           | Daily driver    |
-| **Windsurf**    | ⭐⭐⭐⭐   | ⭐⭐⭐⭐⭐ | $10  | ✓   | ✓           | Velké refactory |
-| **Claude Code** | ⭐⭐⭐     | ⭐⭐⭐⭐   | $20  | ✓   | ✗           | Architektura    |
-| **Zed**         | ⭐⭐⭐⭐⭐ | ⭐⭐       | FREE | ✓   | ✓           | Performance     |
-
-### Doporučení
-
-<Callout type="tip">
-  **Moje strategie:** 1. **Prototyp:** Antigravity (zdarma, rychle) 2. **Denní
-  práce:** Cursor (rychlost, UX) 3. **Velký refactor:** Windsurf Cascade
-  (hluboký kontext) 4. **Architektura:** Claude Code (reasoning)
+<Callout type="warning">
+**První pravidlo režiséra:** AI je brilantní stážista bez paměti. Sebejistě vytvoří špatný kód. Vaše práce je chytit to před produkcí.
 </Callout>
 
 ---
 
-## 4. MCP Architektura 🔌
+## 2. MCP: Univerzální protokol 🔌
 
-**Model Context Protocol (MCP)** je nejkritičtější posun v AI vývoji od transformer modelů. Funguje jako **"USB-C pro AI aplikace"**.
+**Model Context Protocol (MCP)** je pro AI tím čím je USB-C pro zařízení — univerzální standard který propojuje jakéhokoli AI klienta s jakoukoli schopností.
 
 <Diagram type="mcp-architecture" />
 
-### Tři části MCP
+### Proc MCP zmenilo vsechno
 
-| Komponenta        | Role                  | Příklady                            |
-| ----------------- | --------------------- | ----------------------------------- |
-| **Client (Host)** | Kde AI žije           | Claude Desktop, Cursor, Antigravity |
-| **Protocol**      | Standardní komunikace | JSON-RPC přes stdio/HTTP            |
-| **Server**        | Vystavuje schopnosti  | Filesystem, GitHub, Postgres        |
+Pred MCP mel kazdy AI nastroj vlastni integrace. Cursor mel sve indexovani codebase. ChatGPT pluginy byly proprietarni. Kazde IDE znovu vynalezalo kolo.
 
-### Typy schopností
+MCP poskytuje **jeden protokol** ktery funguje vsude:
+- Napis server jednou → funguje s Claude, Cursor, Windsurf, Antigravity
+- Zadny vendor lock-in
+- Komunitou rizeny ekosystem
 
-| Typ           | Popis                  | Příklad                  |
-| ------------- | ---------------------- | ------------------------ |
-| **Resources** | Pasivní data           | Čtení souboru, log       |
-| **Tools**     | Spustitelné funkce     | `git commit`, `query_db` |
-| **Prompts**   | Předdefinované šablony | "Analyzuj tento PR"      |
+### Tri rozhrani MCP
 
-### Klíčové MCP servery (2025)
+<Diagram type="mcp-capability-types" />
 
-| Server            | Vydáno   | Schopnosti               |
-| ----------------- | -------- | ------------------------ |
-| **GitHub MCP**    | Nov 2024 | Issues, PR, file history |
-| **Microsoft 365** | Dec 2024 | Teams, Outlook, OneDrive |
-| **Postgres MCP**  | Dec 2024 | SQL dotazy, schema       |
-| **Filesystem**    | Built-in | Čtení/zápis souborů      |
+| Rozhrani | Ovlada | Ucel | Priklad |
+|----------|--------|------|---------|
+| **Tools** | Model (LLM) | Spustitelne akce | `git_commit`, `query_database` |
+| **Resources** | Aplikace | Pasivni data | Obsah souboru, log soubory |
+| **Prompts** | Uzivatel | Sablony | Slash prikazy jako `/analyze` |
+
+<Callout type="tip">
+**Klicovy poznatek:** Tools jsou to co AI *dela*. Resources jsou to co AI *cte*. Prompts jsou to co uzivatel *spousti*.
+</Callout>
+
+### MCP ekosystem (2025)
+
+<Diagram type="mcp-ecosystem-map" />
+
+| Kategorie | Vyznamne servery | Pouziti |
+|-----------|------------------|---------|
+| **Kod** | GitHub, GitLab | PRy, issues, commity |
+| **Data** | Postgres, Firestore | Databazove dotazy |
+| **Soubory** | Filesystem, Obsidian | Lokalni pristup k souborum |
+| **Web** | Fetch, Brave Search | Webovy obsah |
+| **Cloud** | Cloudflare, Stripe | API integrace |
+| **Bezpecnost** | Kali Linux (Docker) | Pen testing nastroje |
+
+**Cisla mluvi jasne:**
+- 1100+ komunitne vytvorenych serveru (a roste)
+- Oficialni integrace od Cloudflare, Stripe a dalsich
+- LangGraph adaptery pro agentni frameworky
+- Oficialni registr brzy
+
+### Production-Ready MCP
+
+MCP se vyvinulo z localhost dem do produkcni infrastruktury:
+
+| Aspekt | 2024 (brzy) | 2025 (ted) |
+|--------|-------------|------------|
+| **Transport** | pouze stdio | Streamable HTTP, SSE |
+| **Auth** | Zadny | Oficialni podpora OAuth 2.0 |
+| **Deployment** | localhost | Cloudflare Workers, Docker |
+| **Monitoring** | Manualni | Sentry integrace |
+| **Discovery** | Manualni | Registry API (brzy) |
 
 <Callout type="warning">
-  **Bezpečnost:** MCP server může mít přístup k citlivým datům. VŽDY kontroluj
-  oprávnění!
+**Evoluce bezpecnosti:** Produkcni MCP servery ted vyzaduji spravnou autentizaci. Pokud stavite server ktery pristupuje k citlivym datum, implementujte OAuth nebo podobne pred vzdalenym nasazenim.
+</Callout>
+
+### Kdy použít (a nepoužít) MCP
+
+MCP je mocné, ale ne vždy správná volba:
+
+| ✅ **Použijte MCP když** | ❌ **Vyhýbejte se MCP když** |
+|--------------------------|------------------------------|
+| Připojujete databáze, API nebo externí služby | Jednoduché souborové operace (použijte built-in nástroje) |
+| Sdílíte schopnosti mezi více AI klienty | Jednorázové automatizační skripty |
+| Stavíte znovupoužitelné, production-grade integrace | Rychlé prototypy (přímé API volání jsou rychlejší) |
+| Potřebujete audit logging a access control | Služba už má ChatGPT plugin |
+
+<Callout type="info">
+**Uvědomění nákladů:** MCP přidává latenci (~50-200ms na volání nástroje) a komplexitu. Pro jednoduché úlohy je přímá integrace často rychlejší. MCP exceluje když potřebujete **znovupoužitelnost** a **bezpečnostní kontroly**.
 </Callout>
 
 ---
 
-## 5. Správa kontextu 🧠
+## 3. Principy správy kontextu 🧠
 
-Pokud je LLM motor, **kontext** je palivo. Bez správného kontextu AI hádá.
+Pokud je LLM motor, **kontext je palivo**. Kazdy AI nastroj pouziva kontext jinak, ale principy jsou univerzalni.
 
-### Context Files
+<Diagram type="context-hierarchy" />
 
-| IDE         | Soubor           | Umístění        |
-| ----------- | ---------------- | --------------- |
-| Cursor      | `.cursorrules`   | Root repozitáře |
-| Windsurf    | `.windsurfrules` | Root repozitáře |
-| Antigravity | In-memory        | Session-based   |
-| Claude Code | `CLAUDE.md`      | Root repozitáře |
+### Tri vrstvy kontextu
 
-### Příklad `.cursorrules`
+| Vrstva | Rozsah | Perzistence | Priklad |
+|--------|--------|-------------|---------|
+| **Projektova ustava** | Cely projekt | Trvala | CLAUDE.md, .cursorrules |
+| **Kontext ulohy** | Aktualni session | Docasna | Inline komentare, popisy uloh |
+| **Dynamicky kontext** | Real-time | Efemerni | MCP resources, cteni souboru |
+
+### Univerzalni vzor kontextoveho souboru
+
+Kazde AI IDE podporuje nejakou formu projektoveho kontextoveho souboru:
+
+| IDE | Soubor | Umisteni |
+|-----|--------|----------|
+| Claude Code | `CLAUDE.md` | Koren repozitare |
+| Cursor | `.cursorrules` | Koren repozitare |
+| Windsurf | `.windsurfrules` | Koren repozitare |
+| Codex | `agents.md` | Koren repozitare |
+| Gemini CLI | `gemini.md` | Koren repozitare |
+
+**Struktura obsahu je univerzalni:**
 
 ```text
-# Project Context
-Stack: Next.js 15 (App Router), Tailwind CSS, Supabase, TypeScript.
+# Projektova ustava
 
-# Coding Standards
-- Use functional components only.
-- Prefer `const` over `let`.
-- ALL async code must handle errors with try/catch.
+## Tech Stack
+- Framework: Next.js 15 (App Router)
+- Databaze: PostgreSQL + Prisma
+- Styling: Tailwind CSS + shadcn/ui
 
-# DO NOT
-- Never use `any` type in TypeScript.
-- Never commit secrets or API keys.
+## Absolutni pravidla
+- NIKDY necommituj secrets nebo API klice
+- VZDY pouzivej TypeScript strict mode
+- VZDY zpracovavej chyby s try/catch
 
-# Testing
-- Write tests using Playwright for E2E.
-- Mock all external API calls in unit tests.
+## Kodovaci standardy
+- Komponenty: PascalCase
+- Funkce: camelCase
+- Soubory: kebab-case
+
+## Architektura
+[Projektove specificke vzory a rozhodnuti]
 ```
 
 <Callout type="tip">
-  **Pro Tip:** Tvůj `.cursorrules` je stejně důležitý jako tvůj kód. Definuje
-  úroveň inteligence agenta.
+**Pro tip od NetworkChuck:** Udrzujte kontextove soubory synchronizovane mezi nastroji. "Session closer" agent muze aktualizovat vsechny kontextove soubory (claude.md, gemini.md, agents.md) na konci kazde pracovni session, cimz zajisti ze vsechny nastroje sdili stejny stav projektu.
 </Callout>
+
+### Realita tokenového rozpočtu
+
+Kontext není zdarma. Každý token který nakrmíte LLM stojí peníze a snižuje prostor pro uvažování.
+
+| Model | Kontextové okno | Typická cena |
+|-------|----------------|--------------|
+| Claude 3.5 Sonnet | 200k tokenů | ~$3/M vstup |
+| GPT-4o | 128k tokenů | ~$2.50/M vstup |
+| Claude Code | 200k + summary | Session-based |
+
+**Praktické důsledky:**
+- 10 000 řádků codebase = ~40 000 tokenů (20% Claudeho okna)
+- Váš `CLAUDE.md` by měl být **pod 500 řádků** (udržujte soustředěný)
+- Používejte `@file` reference místo vkládání celých souborů
+
+<Callout type="warning">
+**Tokenová past:** Větší kontextová okna neznamenají lepší výsledky. Po ~50k tokenech výkonnost modelu degraduje. Buďte chirurgičtí v tom co zahrnujete.
+</Callout>
+
+### Vzory spravy kontextu
+
+**Vzor 1: Memory soubor**
+
+Pro dlouhodobe projekty udrzujte soubor pouceni:
+
+```text
+# .ai-context/MEMORY.md
+
+## Lessons Learned
+- 2025-01: Prisma migrace musi byt idempotentni
+- 2025-03: Redis cache TTL max 1 hodina pro tento projekt
+- 2025-06: Nikdy nepouzivej `any` v API odpovědích
+```
+
+**Vzor 2: Kontext specificky pro ulohu**
+
+Vlozeni kontextu pro komplexni ulohy:
+
+```text
+# Kontext pro tento refaktor
+Aktualne: JWT v localStorage (bezpecnostni riziko)
+Cil: HttpOnly cookies + refresh token rotace
+Omezeni: Musi zachovat kompatibilitu s mobilni aplikaci
+```
 
 ---
 
-## 🧪 Lab 1: MCP Server s FastMCP
+## 4. Framework pro výběr IDE 🔧
+
+S tolika AI kódovacími nástroji je znalost kdy použít který klíčová dovednost.
+
+<Diagram type="ide-selection-decision-tree" />
+
+### Rozhodovací matice
+
+| Scénář | Nejlepší nástroj | Proč |
+|--------|------------------|------|
+| **Rychlý prototyp** | Antigravity | Nejrychlejší cesta k nasazené app |
+| **Denní kódování** | Cursor 2.0 | Rychlost + známé IDE + multi-agent |
+| **Velký refaktor** | Windsurf | Hluboké porozumění kontextu |
+| **Plánování architektury** | Claude Code | Nadřazené uvažování + Plan Mode |
+| **Výkonově kritické** | Zed | Nativní rychlost, minimální overhead |
+| **Terminálový workflow** | Claude Code CLI | Project-aware, delegace agentů |
+
+### Cursor 2.0 novinky
+
+Nejnovější vydání Cursoru přinášelo game-changing funkce:
+
+| Funkce | Co dělá |
+|--------|---------|
+| **Multi-Agent Parallelism** | Spouštěj Claude, GPT, Composer na stejném tasku přes Git work trees |
+| **Composer Model** | Proprietární model, výrazně rychlejší |
+| **Native Browser** | Integrovaný prohlížeč snižuje přepínání kontextu |
+| **Agent View Mode** | Nové UI pro chat-heavy vývoj |
+
+### Terminálové AI nástroje
+
+**"Pokud stále používáte AI v prohlížeči, děláte to pomalu."** — NetworkChuck
+
+| Nástroj | Síla | Nejlepší pro |
+|---------|------|--------------|
+| **Claude Code CLI** | Delegace agentů, Plan Mode | Hluboká práce, komplexní úlohy |
+| **Gemini CLI** | Štědrý free tier | Obecný vývoj |
+| **Codex (OpenAI)** | High-level analýza | Revize práce, kritiky |
+
+**Multi-tool strategie:**
+1. Použijte Claude a Gemini pro generativní hlubokou práci
+2. Použijte Codex pro high-level review a kritiku
+3. Udržujte kontextové soubory synchronizované mezi všemi nástroji
+
+---
+
+## 5. Bezpečnostní základy 🔒
+
+AI agenti s pristupen k shellu a databazi jsou mocni — a nebezpecni. Bezpecnost musi byt proaktivni, ne reaktivni.
+
+### MCP incident za $50 000
+
+> *"Řekl jsem Claudeovi aby uklidilo staré testovací data. Spustilo `DROP TABLE users` v produkci."*
+
+Toto se skutečně stalo. Vývojář připojil MCP server s databázovým přístupem k produkčnímu prostředí. AI, ve snaze být nápomocné, identifikovalo záznamy s prefixem "test_" a rozhodlo se je uklidit. Tabulka `test_users` byla skutečná.
+
+**Co se pokazilo:**
+1. ❌ MCP server měl plná `DELETE` oprávnění
+2. ❌ Destruktivní operace nevyžadovaly potvrzení
+3. ❌ Produkční credentials ve vývojovém prostředí
+4. ❌ Žádný audit log pro sledování co se děje
+
+**Jak tomu předejít:**
+1. ✅ Read-only oprávnění ve výchozím nastavení
+2. ✅ `requires_approval: true` pro DELETE/DROP/TRUNCATE
+3. ✅ Odděl credentials pro dev/staging/prod
+4. ✅ Audit logging na všechny databázové operace
+
+Proto bezpečnostní principy níže nejsou volitelné — jsou rozdílem mezi užitečným AI a nákladnou katastrofou.
+
+<Diagram type="ai-security-layers" />
+
+### Čtyři bezpečnostní principy
+
+| Princip | Implementace |
+|---------|--------------|
+| **Nejmenší oprávnění** | Přidělte minimální potřebná oprávnění |
+| **Sandboxing** | Spouštějte MCP servery v Docker kontejnerech |
+| **Audit logging** | Logujte všechna volání nástrojů a výstupy |
+| **Human-in-the-Loop** | Kritické operace vyžadují schválení |
+
+### Produkční bezpečnostní checklist
+
+Pro jakýkoli MCP server v produkci:
+
+- [ ] OAuth 2.0 autentizace nakonfigurována
+- [ ] Role-based access control (RBAC) implementován
+- [ ] Validace vstupu a SQL sanitizace
+- [ ] Monitoring aplikace (Sentry, atd.)
+- [ ] Lifecycle management pro resources
+- [ ] Síťová izolace kde je to možné
+
+### Červené vlajky ke sledování
+
+<Callout type="warning">
+**Okamžitě deaktivujte MCP server pokud:**
+- Pokusí se číst `.env` nebo credential soubory
+- Volá neočekávané API endpointy
+- Generuje kód s `eval()` nebo `exec()`
+- Požaduje eskalaci oprávnění
+- Pokusí se modifikovat systémové soubory mimo projekt
+</Callout>
+
+### Příklad: Docker Sandbox
+
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+
+# Security: Žádná síť pokud není explicitně vyžadována
+# Komunikace pouze přes stdio
+USER nobody
+CMD ["python", "server.py"]
+```
+
+---
+
+## 🧪 Lab 1: Sestavte svůj první MCP Server
 
 ### 🎯 Cíl
 
-Vytvoř vlastní MCP server, který Claude/Cursor může používat.
+Vytvořte vlastní MCP server který rozšiřuje schopnosti AI.
 
-### 📋 Prerekvizity
+### 📋 Předpoklady
 
 - Python 3.10+
-- Claude Desktop nebo Cursor
+- Claude Desktop, Cursor nebo jakýkoli MCP klient
 
-<Callout type="warning">
-  **Před začátkem:** Tento lab vyžaduje přístup k MCP-kompatibilnímu klientovi.
+<Callout type="info">
+**Proč na tom záleží:** Pochopení jak stavět MCP servery je základ pro rozšíření schopností jakéhokoli AI nástroje. Tato dovednost se přenáší na každého MCP-kompatibilního klienta.
 </Callout>
 
 ### 🛠️ Kroky
 
-**Krok 1: Instalace**
+**Krok 1: Instalace závislostí**
 
 ```bash
 pip install mcp[cli] psutil
 ```
 
-**Krok 2: Server kód**
+**Krok 2: Vytvoření serveru**
 
 Vytvořte `monitor_server.py`:
 
@@ -226,18 +409,20 @@ def get_disk_usage() -> str:
     partitions = psutil.disk_partitions()
     result = []
     for p in partitions:
-        usage = psutil.disk_usage(p.mountpoint)
-        result.append(f"{p.mountpoint}: {usage.percent}%")
+        try:
+            usage = psutil.disk_usage(p.mountpoint)
+            result.append(f"{p.mountpoint}: {usage.percent}%")
+        except:
+            pass
     return "\n".join(result)
 
 if __name__ == "__main__":
     mcp.run()
 ```
 
-**Krok 3: Konfigurace Claude Desktop**
+**Krok 3: Konfigurace klienta**
 
-Upravte `claude_desktop_config.json`:
-
+Pro Claude Desktop, upravte `claude_desktop_config.json`:
 - **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
@@ -254,271 +439,134 @@ Upravte `claude_desktop_config.json`:
 
 **Krok 4: Test**
 
-1. Restartujte Claude Desktop
-2. Hledejte ikonu 🔌 (připojené servery)
-3. Zeptejte se: "Jak si vede můj systém?"
+1. Restartujte MCP klienta
+2. Hledejte 🔌 ikonu ukazující připojené servery
+3. Zeptejte se: "Jak se daří mému systému?" nebo "Zkontroluj místo na disku"
 
 ### ✅ Kritéria úspěchu
 
-- [x] Server běží bez chyb
-- [x] Claude rozpozná server
-- [x] Tool vrací živá data
+- [x] Server startuje bez chyb
+- [x] Klient rozpozná server
+- [x] Tools vrací live systémová data
+
+**💡 Aha Moment:** "Právě jsem rozšířil schopnosti mého AI vlastními nástroji. Tento vzor funguje pro připojení AI k databázím, API nebo jakémukoli systému který potřebuji."
 
 <LabComplete labId="lab-mcp-server" />
 
 ---
 
-## 🧪 Lab 2: Antigravity Prototyp
+## 🧪 Lab 2: Vytvořte svou projektovou ústavu
 
 ### 🎯 Cíl
 
-Vytvořte funkční prototyp pomocí Antigravity za 15 minut.
+Vytvořte univerzální kontextový soubor který funguje s jakýmkoli AI IDE.
 
-### 📋 Prerekvizity
+### 📋 Předpoklady
 
-- Moderní browser (Chrome, Firefox)
-- Google účet
-
-### 🛠️ Kroky
-
-**Krok 1: Otevřete Antigravity**
-
-Jděte na [antigravity.google.com](https://antigravity.google.com) a přihlaste se.
-
-**Krok 2: Nový projekt**
-
-Klikněte "New Project" a popište svůj záměr:
-
-```text
-Vytvoř dashboard pro sledování kryptoměn.
-Zobraz aktuální ceny BTC, ETH, SOL.
-Použij tmavý design s grafy.
-Aktualizuj každých 30 sekund.
-```
-
-**Krok 3: Sledujte AI**
-
-Pozorujte, jak Antigravity:
-
-1. Generuje strukturu projektu
-2. Vytváří komponenty
-3. Přidává API volání
-4. Styluje UI
-
-**Krok 4: Iterace**
-
-Přidejte požadavky:
-
-- "Přidej alert když BTC překročí $100k"
-- "Zobraz historický graf za 24h"
-
-**Krok 5: Deploy**
-
-Klikněte "Deploy" → získáte veřejnou URL.
-
-### ✅ Kritéria úspěchu
-
-- [x] Projekt vytvořen
-- [x] Dashboard zobrazuje data
-- [x] Deploy na veřejnou URL
-
-<LabComplete labId="lab-antigravity-prototype" />
-
----
-
-## 🧪 Lab 3: Propojení s lokálním LLM
-
-### 🎯 Cíl
-
-Připojte Cursor/Windsurf k vašemu lokálnímu Ollama z Lekce 04.
-
-### 📋 Prerekvizity
-
-- Dokončená Lekce 04 (Ollama běží)
-- Cursor nebo Windsurf nainstalovaný
-
-<Callout type="tip">
-  **Proč to děláme:** Kombinace lokálního modelu (soukromí, rychlost) s
-  profesionálním IDE (UX).
-</Callout>
+- Jakýkoli AI kódovací nástroj (Claude Code, Cursor, atd.)
+- Projekt na kterém pracovat (nebo vytvořte nový)
 
 ### 🛠️ Kroky
 
-**Krok 1: Ověřte Ollama**
+**Krok 1: Generování šablony**
 
-```bash
-ollama list
-# Měli byste vidět llama4:scout
+Použijte tento prompt s jakýmkoli AI nástrojem:
+
+```text
+You are a project context specialist. Create a universal context file
+for a [VAS TYP PROJEKTU - napr. "Next.js SaaS application"] that includes:
+
+1. Tech Stack section (list all technologies)
+2. Coding Standards section (naming, patterns)
+3. Absolute Rules section (NEVER/ALWAYS statements)
+4. Architecture section (key patterns and decisions)
+5. Security section (sensitive areas, auth patterns)
+
+Format it to work for CLAUDE.md, .cursorrules, or .windsurfrules.
+Make rules specific and actionable, not generic.
 ```
 
-**Krok 2: Cursor konfigurace**
+**Krok 2: Uložení jako ústava**
 
-1. Otevřete Cursor Settings (`Cmd+,` / `Ctrl+,`)
-2. Jděte do `Models` → `Add Model`
-3. Vyberte "Ollama"
-4. URL: `http://localhost:11434`
-5. Model: `llama4:scout`
+Uložte výstup jako primární kontextový soubor:
+- `CLAUDE.md` pro Claude Code
+- `.cursorrules` pro Cursor
+- `.windsurfrules` pro Windsurf
 
-**Krok 3: Test**
+**Krok 3: Test načtení kontextu**
 
-1. Otevřete libovolný projekt
-2. Vyberte lokální model v Cursor Composer
-3. Požádejte o change: "Refaktoruj tuto funkci"
+Začněte novou session a zeptejte se: "Jaké jsou kódovací standardy pro tento projekt?"
 
-**Krok 4: Porovnejte**
+AI by mělo odkazovat na vaši ústavu aniž byste poskytovali další kontext.
 
-Zkuste stejný prompt s:
+**Krok 4: Synchronizace mezi nástroji (volitelné)**
 
-- Lokálním modelem (Llama)
-- Cloud modelem (GPT-5.1)
+Pokud používáte více nástrojů, zkopírujte jádro obsahu do všech kontextových souborů. Přidejte komentářovou hlavičku:
 
-Všimněte si rozdílů v rychlosti a kvalitě.
+```text
+# Last synced: 2025-01-15
+# Source of truth: CLAUDE.md
+```
 
 ### ✅ Kritéria úspěchu
 
-- [x] Cursor rozpozná Ollama
-- [x] Lokální model generuje odpovědi
-- [x] Porovnání s cloud modelem
+- [x] Kontextový soubor obsahuje všech 5 sekcí
+- [x] Pravidla jsou specifická, ne generická
+- [x] AI správně odkazuje pravidla bez vyžádání
+- [x] (Bonus) Synchronizováno mezi více nástroji
 
-<LabComplete labId="lab-local-ide" />
+**💡 Aha Moment:** "Moje AI teď zná standardy mého projektu automaticky. Trávím méně času vysvětlováním kontextu a více času stavěním funkcí."
 
----
-
-## 6. Bezpečnostní best practices 🔒
-
-Dát AI přístup k shellu a databázi je riskantní. Bezpečnost musí být proaktivní.
-
-### Principy
-
-| Princip               | Implementace                        |
-| --------------------- | ----------------------------------- |
-| **Least Privilege**   | Uděluj minimální oprávnění          |
-| **Sandboxing**        | MCP servery v Docker kontejnerech   |
-| **Audit Logging**     | Loguj všechna volání tools          |
-| **Human-in-the-Loop** | Kritické operace vyžadují potvrzení |
-
-### Příklad: Docker sandbox
-
-```dockerfile
-FROM python:3.11-slim
-WORKDIR /app
-COPY . .
-RUN pip install -r requirements.txt
-
-# Žádná síť pokud není vyžadována
-# Pouze stdio komunikace
-CMD ["python", "server.py"]
-```
-
-### Red flags
-
-<Callout type="warning">
-  **Okamžitě vypněte MCP server, pokud:** - Pokouší se číst `.env` soubory -
-  Volá neočekávané API endpointy - Generuje kód s `eval()` nebo `exec()` - Žádá
-  o rozšíření oprávnění
-</Callout>
+<LabComplete labId="lab-project-constitution" />
 
 ---
 
-## 7. Context Management Patterns 📋
+## 🏆 Holocron: Základy AI vývoje
 
-### Pattern 1: Projekt Ústava
+<ConceptCard title="Holocron: Základy AI vývoje" icon="💎">
 
-Definuj pravidla v root souboru:
+### 🔑 Klíčové poznatky
 
-```text
-# CLAUDE.md / .cursorrules
+1. 🎬 **Teď jste režisér.** Přestaň psát kód; začni režírovat AI aby psalo kód správně.
+2. 🔌 **MCP je univerzální standard.** 1100+ serverů, production-ready, žádný vendor lock-in.
+3. 🧠 **Kontext je všechno.** Projektová ústava + memory soubory = inteligentní AI.
+4. 🔒 **Bezpečnost na prvním místě.** Nejmenší oprávnění, sandboxing, audit logy, human-in-the-loop.
 
-## Absolutní pravidla
-- NIKDY necommituj secrets
-- VžDY používej TypeScript strict mode
-- VŽDY piš testy před implementací
-
-## Stack
-- Next.js 15, App Router
-- Prisma + PostgreSQL
-- Tailwind + shadcn/ui
-
-## Konvence
-- Komponenty: PascalCase
-- Funkce: camelCase
-- Konstanty: SCREAMING_SNAKE_CASE
-```
-
-### Pattern 2: Task-specific Context
-
-Pro komplexní úkoly přidej inline kontext:
+### 🛠️ Váš základní stack
 
 ```text
-# Kontext pro tento task
-Refaktoruji autentikační modul.
-Současný stav: JWT v localStorage (bezpečnostní riziko).
-Cíl: HttpOnly cookies + refresh token rotace.
-Omezení: Zpětná kompatibilita s mobilní app.
+Protokol:   MCP (univerzální, 1100+ serverů)
+Kontext:    Projektová ústava + Memory soubory
+Bezpečnost: Docker sandbox + OAuth + Audit
+Nástroje:   Vybírejte dle úlohy (Cursor denně, Claude Code pro hloubku)
+Workflow:   Synchronizovaný kontext mezi všemi nástroji
 ```
 
-### Pattern 3: Memory Files
+### 📋 Rychlá reference
 
-Pro dlouhodobé projekty:
+| Koncept | Implementace |
+|---------|--------------|
+| MCP Server | FastMCP + tool dekorátory |
+| Kontextový soubor | CLAUDE.md / .cursorrules |
+| Bezpečnost | Docker + nejmenší oprávnění |
+| Multi-tool | Synchronizované kontextové soubory |
 
-```text
-# .ai-context/MEMORY.md
-## Lessons Learned
-- 2024-01: Prisma migrace musí být idempotentní
-- 2024-03: Redis cache TTL max 1 hodina
-- 2024-06: Nikdy nepoužívat any v API responses
-```
+### 🚀 Co dál?
 
----
-
-## 🏆 Holocron: Klíčové poznatky
-
-<ConceptCard title="Holocron: AI-Powered Development" icon="💎">
-
-### 🔑 Key Takeaways
-
-1. 🔌 **MCP je nový standard.** Jeden protokol, všechny nástroje. Žádný vendor lock-in.
-2. 🚀 **Antigravity pro prototypy.** ZDARMA, browser-based, vizuální canvas.
-3. 🧠 **Kontext je král.** Tvůj `.cursorrules` definuje inteligenci agenta.
-4. 🔒 **Bezpečnost first.** Treat AI agents jako junior devs: omezte, auditujte, ověřujte.
-
-### 🛠️ Tvůj 2025 Dev Stack
-
-```text
-IDE:        Antigravity (prototype) → Cursor (daily)
-Local LLM:  Ollama + Llama 4 8B
-Protocol:   MCP (JSON-RPC)
-Context:    .cursorrules + MEMORY.md
-Security:   Docker sandbox + audit logs
-```
-
-### 📝 MCP Quick Start
-
-```python
-from mcp.server.fastmcp import FastMCP
-
-mcp = FastMCP("MyServer")
-
-@mcp.tool()
-def my_tool() -> str:
-    """Tool description."""
-    return "result"
-
-if __name__ == "__main__":
-    mcp.run()
-```
+Tato lekce vám dala **základy**. Další lekce jdou do hloubky specifických nástrojů:
+- **Lekce 06:** Claude Code Mastery
+- **Lekce 07:** Antigravity Mastery
+- **Budoucnost:** Cursor Mastery, Windsurf Mastery
 
 </ConceptCard>
 
 ---
 
 <Callout type="success">
-  🎉 **Gratulace!** Teď jste AI-native vývojář. Umíte orchestrovat agenty,
-  spravovat kontext a stavět bezpečné systémy.
+🎉 **Gratulujeme!** Ovládli jste univerzální základy AI-native vývoje. Tyto principy fungují s jakýmkoli nástrojem, dnes i v budoucnu.
 </Callout>
 
 **Další kroky:**
-
-- Zkuste propojit více MCP serverů (GitHub + Postgres + Filesystem)
-- Vytvořte vlastní Antigravity projekt
-- Sdílejte své `.cursorrules` s týmem
+- Dokončete Lekci 06: Claude Code Mastery pro deep-dive do terminálového AI
+- Zkuste Lekci 07: Antigravity Mastery pro rychlé prototypování
+- Sestavte 2-3 vlastní MCP servery pro svůj workflow

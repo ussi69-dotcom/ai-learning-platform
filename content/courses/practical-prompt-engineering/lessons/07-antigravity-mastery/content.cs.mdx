@@ -1,0 +1,361 @@
+# Mistrovstvi Antigravity: Od napadu k deploymentu za minuty 🚀
+
+<Callout type="info">
+**Mise:** Ovladnete vizualni AI IDE od Google pro ultra-rychle prototypovani. Prejdete od napadu k deployovane aplikaci rychleji nez kdy drive.
+
+⏳ **Cas cteni:** 25 min | 🧪 **[2] Laby soucasti**
+</Callout>
+
+<VideoSwitcher alternatives={[{"id":"nTOVIGsqCuY","title":"Zaklady Google Antigravity (Oficialni)"},{"id":"DUw5xbxui6U","title":"Antigravity + Firebase MCP je SILENE! (Julian Goldie)"},{"id":"SxqG3L7x0tI","title":"Firebase Studio Deep Dive (Google)"}]} />
+
+## ⚡ Aplikace co trvaly tydny ted trvaji hodiny
+
+**"Aplikace, ktere drive trvaly tydny, ted trvaji hodiny. Aplikace, ktere trvaly dny, ted trvaji minuty."**
+
+To neni marketingovy hype — je to realita AI-pohaneneho vizualniho vyvoje s Antigravity a Firebase MCP integraci.
+
+Zatimco tradicni IDE jako Cursor a Claude Code vynikaji v hlubokych koderských ulohach, Antigravity zaujima jedinecnou pozici: **nejrychlejsi cesta od napadu k deployovanemu prototypu**. Zadna instalace, zadny setup, zadna konfigurace — staci popsat co chcete a sledovat jak to vzniká.
+
+V teto lekci si osvojite kdy a jak pouzivat Antigravity naplno.
+
+---
+
+## 1. Cim je Antigravity jine? 🎯
+
+Antigravity se nesnazi nahradit vase denni IDE. Resi zcela jiny problem.
+
+<Diagram type="antigravity-workflow" />
+
+### Filosofie Antigravity
+
+| Aspekt | Tradicni IDE (Cursor, VS Code) | **Antigravity** |
+| ------ | ------------------------------ | --------------- |
+| **Cil** | Psat a udrzovat kod | Generovat a deployovat aplikace |
+| **Abstrakce** | Uroven kodu | Uroven napadu |
+| **Kontrola** | Radek po radku | Rizene prompty |
+| **Setup** | Instalace + konfigurace + zavislosti | Otevrit prohlizec + prihlasit se |
+| **Cena** | $10-20/mesic | **ZDARMA** |
+| **Model** | OpenAI / Anthropic | **Gemini 3 Pro** |
+
+### Kdy zvolit Antigravity
+
+<Callout type="tip">
+**Pouzijte Antigravity kdyz:**
+- 🚀 Potrebujete funkcni prototyp za < 1 hodinu
+- 🎨 Stavite vizualni projekty (dashboardy, landing pages)
+- 🐍 Python-first projekty (data science, automatizace)
+- 💸 Chcete validovat napad pred placenim za nastroje
+- 🧪 Rychle experimentujete s novymi koncepty
+
+**NEPOUZIVEJTE Antigravity kdyz:**
+- 📁 Pracujete na existujicim velkem codebase
+- 🔧 Potrebujete jemnozrnnou kontrolu kodu
+- 🔒 Mate enterprise bezpecnostni pozadavky
+- 🧩 Komplexni multi-service architektura
+</Callout>
+
+---
+
+## 2. Firebase MCP Integrace 🔥
+
+Skutecna sila Antigravity se odemkne s **Firebase MCP**. Tato integrace dava AI agentovi plnou kontrolu nad vasim backendem.
+
+### Co Firebase MCP umoznuje
+
+| Schopnost | Co AI muze delat |
+| --------- | ---------------- |
+| **Autentizace** | Nastavit email/heslo, Google OAuth, magic links |
+| **Firestore** | Vytvaret kolekce, definovat schemata, psat pravidla |
+| **Hosting** | Deployovat do produkce jednim klikem |
+| **Storage** | Konfigurovat upload souboru a pristupova pravidla |
+| **Functions** | Vytvorit serverless backend logiku |
+
+### Nastaveni Firebase MCP
+
+1. Otevrte okno agenta v Antigravity
+2. Kliknete na "MCP Servers" v toolbaru
+3. Vyberte "Firebase" ze seznamu
+4. Kliknete "Install"
+
+<Callout type="warning">
+**Bezpecnostni poznamka:** Firebase MCP ma plny pristup k backendu. Pouzivejte pouze pro projekty kde duverujete akcim AI. Pro produkcni aplikace vzdy zkontrolujte vygenerovana bezpecnostni pravidla.
+</Callout>
+
+### Priklad: Full-Stack aplikace jednim promptem
+
+```text
+Vytvor produktivitni aplikaci s:
+- Prihlaseni pres email a heslo
+- Cloud Firestore databaze pro uzivatele tasky
+- Real-time synchronizace mezi zarizeni
+- Dark mode UI s tailwind styly
+- Deploy na Firebase hosting
+```
+
+AI udela:
+1. Inicializuje Firebase projekt
+2. Nakonfiguruje autentizaci
+3. Vytvori Firestore kolekce se spravnymi pravidly
+4. Vygeneruje kompletni frontend
+5. Deployuje na verejnou URL
+
+**Cas od promptu k deployovane aplikaci: ~10 minut.**
+
+---
+
+## 3. Workflow vizualniho platna 🎨
+
+Na rozdil od code-first IDE, vizualni platno Antigravity vam umoznuje videt a interagovat s aplikaci behem jejiho staveni.
+
+### Faze workflow
+
+1. **💡 Popis:** Prompt v prirozene reci popisujici vas cil
+2. **📋 Plan:** AI vygeneruje implementacni plan ke schvaleni
+3. **🎨 Stavba:** Sledujte jak komponenty vznikaji na platne
+4. **🔄 Iterace:** Pridavejte pozadavky pres konverzaci
+5. **🚀 Deploy:** Jeden klik do produkce
+
+### Funkce platna
+
+| Funkce | Popis |
+| ------ | ----- |
+| **Live Preview** | Vidite zmeny v realnem case jak AI kodi |
+| **Component Inspector** | Kliknete na elementy pro zobrazeni/upravu kodu |
+| **Responsive Testing** | Prepinani mezi velikostmi zarizeni |
+| **Version History** | Navrat k libovolnemu predchozimu stavu |
+| **Export** | Stazeni kompletniho zdrojoveho kodu kdykoliv |
+
+---
+
+## 🧪 Lab 1: Crypto Dashboard za 15 minut
+
+### 🎯 Cil
+
+Vytvorte live dashboard pro sledovani kryptomen od nuly.
+
+### 📋 Predpoklady
+
+- Moderni prohlizec (Chrome, Firefox)
+- Google ucet
+
+### 🛠️ Kroky
+
+**Krok 1: Otevrte Antigravity**
+
+Jdete na [antigravity.google.com](https://antigravity.google.com) a prihlas se svym Google uctem.
+
+**Krok 2: Novy projekt**
+
+Kliknete "New Project" a zadejte tento prompt:
+
+```text
+Create a cryptocurrency tracking dashboard.
+Show current prices for BTC, ETH, SOL with live updates.
+Use a dark design with gradient accents.
+Include sparkline charts for 24h price history.
+Update prices every 30 seconds.
+Make it responsive for mobile.
+```
+
+**Krok 3: Sledujte a ucte se**
+
+Pozorujte proces AI:
+1. Vytvori strukturu projektu
+2. Vygeneruje React komponenty
+3. Prida CoinGecko API integraci
+4. Nastyluje s Tailwind CSS
+5. Nastavi logiku auto-refresh
+
+**Krok 4: Iterujte**
+
+Pridejte features pres konverzaci:
+- "Add an alert when BTC exceeds $100k"
+- "Show percentage change with color coding"
+- "Add a portfolio tracker section"
+
+**Krok 5: Deploy**
+
+Kliknete "Deploy" → Dostanete verejnou URL.
+
+### ✅ Kriteria uspechu
+
+- [x] Dashboard ukazuje live ceny krypta
+- [x] Auto-update kazdych 30 sekund
+- [x] Deployovano na verejnou URL
+- [x] Funguje na mobilu
+
+**💡 Aha Moment:** "Prave jsem sestavil a deployoval full-stack aplikaci aniz bych rucne napsal jediny radek kodu. Toto meni jak premyslim o prototypovani."
+
+<LabComplete labId="lab-antigravity-crypto" />
+
+---
+
+## 🧪 Lab 2: Firebase Full-Stack Aplikace
+
+### 🎯 Cil
+
+Sestavte kompletni aplikaci s autentizaci a databazi pomoci Firebase MCP.
+
+### 📋 Predpoklady
+
+- Dokonceny Lab 1
+- Firebase ucet (staci free tier)
+
+### 🛠️ Kroky
+
+**Krok 1: Povolte Firebase MCP**
+
+1. Otevrte panel MCP Servers
+2. Instalujte "Firebase" server
+3. Pripojte se k vasemu Firebase projektu
+
+**Krok 2: Vytvorte aplikaci s auth**
+
+```text
+Build a personal notes app with:
+- Email/password authentication
+- Cloud Firestore for storing notes
+- Real-time sync across devices
+- Markdown support for note content
+- Categories and tags for organization
+- Dark/light mode toggle
+```
+
+**Krok 3: Zkontrolujte plan AI**
+
+Pred spustenim AI ukaze:
+- Firebase sluzby k nakonfigurovani
+- Firestore bezpecnostni pravidla
+- Poskytovatele autentizace
+- Konfiguraci hostingu
+
+**Schvalte plan** nebo pozadejte zmeny.
+
+**Krok 4: Otestujte autentizaci**
+
+1. Registrujte se testovacim emailem
+2. Vytvorte par poznamek
+3. Odhlaste se a prihlaste zpet
+4. Overte perzistenci dat
+
+**Krok 5: Deploy do produkce**
+
+Kliknete "Deploy" → Aplikace je ziva na Firebase Hosting.
+
+### ✅ Kriteria uspechu
+
+- [x] Uzivatel se muze registrovat a prihlasit
+- [x] Poznamky se ukladaji do Firestore
+- [x] Real-time sync funguje
+- [x] Deployovano na Firebase Hosting
+
+**💡 Aha Moment:** "AI zvladlo nastaveni Firebase projektu, konfiguraci auth, pravidla databaze a deployment — ulohy ktere by mi normalne zabraly cely den rucni konfigurace."
+
+<LabComplete labId="lab-antigravity-firebase" />
+
+---
+
+## 4. Antigravity vs ostatni nastroje 🔧
+
+Pochopeni kdy pouzit ktery nastroj je klicove pro efektivitu.
+
+<Diagram type="ide-comparison-radar" />
+
+### Rozhodovaci framework
+
+| Scenar | Nejlepsi nastroj | Proc |
+| ------ | ---------------- | ---- |
+| Rychly prototyp | **Antigravity** | Nejrychlejsi cesta k deployovane app |
+| Denni kodovani | **Cursor** | Rychlost + znamy IDE experience |
+| Velky refaktor | **Windsurf** | Hluboke porozumeni kontextu |
+| Planovani architektury | **Claude Code** | Nadrazene uvazovani |
+| Vykonove kriticke | **Zed** | Nativni rychlost |
+
+### Multi-tool workflow
+
+<Callout type="tip">
+**Pro strategie:**
+1. **Validujte:** Pouzijte Antigravity k otestovani zda napad funguje (1 hodina)
+2. **Vyvijejte:** Pokud validovano, prestavte poradne v Cursoru (1-2 dny)
+3. **Refaktorujte:** Pouzijte Windsurf pro velke strukturalni zmeny
+4. **Architektujte:** Pouzijte Claude Code pro komplexni system design
+
+Tento workflow vam umozni rychle selhat na spatnych napadech a zaroven spravne investovat do dobrych.
+</Callout>
+
+---
+
+## 5. Omezeni a workaroundy ⚠️
+
+Antigravity je silne ale neni dokonale. Znejte jeho limity.
+
+### Soucasna omezeni
+
+| Omezeni | Workaround |
+| ------- | ---------- |
+| Zadna Git integrace | Export kodu → import do GitHubu |
+| Omezene testovaci nastroje | Export → pridani testu v Cursoru |
+| Python-centricke | Funguje pro web, mene idealni pro systemove programovani |
+| Google ekosystem | Export je cisty, zadny vendor lock-in pro kod |
+| Zadny lokalni vyvoj | Export kodu pro lokalni vyvoj |
+
+### Kdy exportovat a pokracovat jinde
+
+Exportujte projekt kdyz potrebujete:
+- Version control a kolaboraci
+- CI/CD pipelines
+- Komplexni test suites
+- Jemnozrnne debuggovani
+- Dlouhodobou udrzbu
+
+Export je cisty a standardni — React/Next.js projekty ktere funguji v libovolnem IDE.
+
+---
+
+## 🏆 Holocron: Mistrovstvi Antigravity
+
+<ConceptCard title="Holocron: Mistrovstvi Antigravity" icon="🚀">
+
+### 🔑 Klicove poznatky
+
+1. **Rychlost je superschopnost.** Hodnota Antigravity je cas-do-prototypu, ne kontrola kodu.
+2. **Firebase MCP odemyka full-stack.** Auth + databaze + hosting za minuty.
+3. **Vedzte kdy exportovat.** Prototypujte v Antigravity, produktizujte v Cursoru.
+4. **Vizualni platno = rychla iterace.** Vidite zmeny jak vznikaji.
+
+### 🛠️ Antigravity Workflow
+
+```text
+NAPAD → PROMPT → SLEDOVANI → ITERACE → DEPLOY
+  |                                       |
+  +--- ~15 minut celkem ------------------+
+```
+
+### 📋 Rychla reference
+
+| Uloha | Cas | Obtiznost |
+| ----- | --- | --------- |
+| Dashboard | 15 min | Snadne |
+| Full-stack s auth | 30 min | Stredni |
+| Vicestranková app | 45 min | Stredni |
+| Komplexni SaaS prototyp | 1-2 hodiny | Pokrocile |
+
+### 🚫 Nepouzivejte Antigravity pro
+
+- Existujici codebases
+- Enterprise pozadavky
+- Komplexni backend logiku
+- Vykonove kriticke systemy
+
+</ConceptCard>
+
+---
+
+<Callout type="success">
+🎉 **Gratulujeme!** Ovladli jste Antigravity pro rychle prototypovani. Ted muzete validovat napady za minuty misto dnu.
+</Callout>
+
+**Dalsi kroky:**
+- Sestavte 3 ruzne prototypy pro nacviceni workflow
+- Zkuste zkombinovat Firebase MCP s jinymi MCP servery
+- Naucte se kdy prejit z Antigravity na Cursor/Claude Code

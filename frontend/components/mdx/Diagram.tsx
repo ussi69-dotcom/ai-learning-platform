@@ -10,7 +10,7 @@ import DiagramEvaluation from './diagrams/DiagramEvaluation';
 import DiagramArchitecture from './diagrams/DiagramArchitecture';
 
 interface DiagramProps {
-  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop' | 'prompt-cheat-sheet' | 'traditional-vs-ml' | 'system-prompt-flow' | 'regression-matrix' | 'tradeoff-radar' | 'aim-framework' | 'map-framework' | 'prompt-stack' | 'defense-shield' | 'local-llm-architecture' | 'mcp-architecture' | 'model-benchmark-chart' | 'vram-stack' | 'latency-comparison' | 'antigravity-workflow' | 'ide-comparison-radar' | 'ollama-ecosystem' | 'ai-ml-dl-circles' | 'multi-agent-workflow';
+  type: 'neural-network' | 'training-loop' | 'black-box' | 'learning-types-overview' | 'supervised-learning-flow' | 'clustering-visualization' | 'reinforcement-learning-loop' | 'llm-next-token' | 'context-window' | 'tokenization-viz' | 'temperature-scale' | 'training-pipeline' | 'bias-in-data' | 'rag-architecture' | 'meeting-timeline' | 'ai-timeline' | 'few-shot-learning' | 'chain-of-thought' | 'dashboard-ui' | 'data-analysis-chart' | 'ai-history-timeline' | 'transformer-architecture-simplified' | 'prompt-structure-pyramid' | 'alignment-misalignment' | 'human-in-the-loop' | 'prompt-cheat-sheet' | 'traditional-vs-ml' | 'system-prompt-flow' | 'regression-matrix' | 'tradeoff-radar' | 'aim-framework' | 'map-framework' | 'prompt-stack' | 'defense-shield' | 'local-llm-architecture' | 'mcp-architecture' | 'model-benchmark-chart' | 'vram-stack' | 'latency-comparison' | 'antigravity-workflow' | 'ide-comparison-radar' | 'ollama-ecosystem' | 'ai-ml-dl-circles' | 'multi-agent-workflow' | 'claude-approval-loop' | 'context-bucket' | 'claude-md-anatomy' | 'paradigm-shift-pyramid' | 'mcp-capability-types' | 'mcp-ecosystem-map' | 'context-hierarchy' | 'ide-selection-decision-tree' | 'ai-security-layers';
 }
 
 export default function Diagram({ type }: DiagramProps) {
@@ -44,8 +44,8 @@ export default function Diagram({ type }: DiagramProps) {
     return <DiagramEvaluation type={type} />;
   }
 
-  // System & Architecture (local LLM, MCP, workflows, comparisons)
-  if (['local-llm-architecture', 'mcp-architecture', 'model-benchmark-chart', 'vram-stack', 'latency-comparison', 'antigravity-workflow', 'ide-comparison-radar', 'ollama-ecosystem'].includes(type)) {
+  // System & Architecture (local LLM, MCP, workflows, comparisons, Claude Code)
+  if (['local-llm-architecture', 'mcp-architecture', 'model-benchmark-chart', 'vram-stack', 'latency-comparison', 'antigravity-workflow', 'ide-comparison-radar', 'ollama-ecosystem', 'claude-approval-loop', 'context-bucket', 'claude-md-anatomy', 'paradigm-shift-pyramid', 'mcp-capability-types', 'mcp-ecosystem-map', 'context-hierarchy', 'ide-selection-decision-tree', 'ai-security-layers'].includes(type)) {
     return <DiagramArchitecture type={type} />;
   }
 

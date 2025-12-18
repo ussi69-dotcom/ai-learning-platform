@@ -1,0 +1,79 @@
+{
+  "title": "Antigravity Mastery Quiz",
+  "description": "Test your understanding of Antigravity for rapid prototyping",
+  "passing_score": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is Antigravity's primary advantage over traditional IDEs like Cursor?",
+      "options": [
+        { "id": "a", "text": "Better code completion" },
+        { "id": "b", "text": "Fastest path from idea to deployed prototype" },
+        { "id": "c", "text": "Lower monthly cost" },
+        { "id": "d", "text": "Better Git integration" }
+      ],
+      "correct_answer": "b",
+      "explanation": "Antigravity's unique value proposition is speed-to-prototype. While it's also free (making C partially correct), the primary advantage is the ability to go from idea to deployed app in minutes without any setup or configuration."
+    },
+    {
+      "id": "q2",
+      "question": "What does Firebase MCP integration enable in Antigravity?",
+      "options": [
+        { "id": "a", "text": "Only database access" },
+        { "id": "b", "text": "Full backend control including auth, database, and hosting" },
+        { "id": "c", "text": "Just authentication" },
+        { "id": "d", "text": "File storage only" }
+      ],
+      "correct_answer": "b",
+      "explanation": "Firebase MCP gives the AI agent full control over your Firebase backend, including Authentication, Cloud Firestore database, Firebase Hosting, Storage, and Cloud Functions."
+    },
+    {
+      "id": "q3",
+      "question": "When should you NOT use Antigravity?",
+      "options": [
+        { "id": "a", "text": "For quick prototypes" },
+        { "id": "b", "text": "For visual projects like dashboards" },
+        { "id": "c", "text": "For working on existing large codebases" },
+        { "id": "d", "text": "For Python-first projects" }
+      ],
+      "correct_answer": "c",
+      "explanation": "Antigravity excels at creating new projects quickly, but it's not designed for working with existing large codebases. For that, you should use Cursor, Windsurf, or Claude Code which are built for code-level work."
+    },
+    {
+      "id": "q4",
+      "question": "What is the recommended multi-tool workflow mentioned in the lesson?",
+      "options": [
+        { "id": "a", "text": "Use only Antigravity for everything" },
+        { "id": "b", "text": "Validate in Antigravity, develop in Cursor, refactor in Windsurf, architect in Claude Code" },
+        { "id": "c", "text": "Always start with Claude Code" },
+        { "id": "d", "text": "Use Cursor for prototypes, Antigravity for production" }
+      ],
+      "correct_answer": "b",
+      "explanation": "The lesson recommends: 1) Validate ideas quickly in Antigravity (1 hour), 2) Rebuild properly in Cursor (1-2 days), 3) Use Windsurf for major refactors, 4) Use Claude Code for complex architecture. This lets you fail fast on bad ideas while investing properly in good ones."
+    },
+    {
+      "id": "q5",
+      "question": "What happens when you click 'Deploy' in Antigravity with Firebase MCP?",
+      "options": [
+        { "id": "a", "text": "You get a downloadable ZIP file" },
+        { "id": "b", "text": "The app is deployed to Firebase Hosting with a public URL" },
+        { "id": "c", "text": "You need to manually configure hosting" },
+        { "id": "d", "text": "It only works with paid Firebase plans" }
+      ],
+      "correct_answer": "b",
+      "explanation": "With Firebase MCP integration, clicking 'Deploy' automatically deploys your application to Firebase Hosting and provides you with a public URL. This is part of the one-click deployment workflow that makes Antigravity so fast for prototyping."
+    },
+    {
+      "id": "q6",
+      "question": "What is the primary limitation of Antigravity that requires exporting your project?",
+      "options": [
+        { "id": "a", "text": "It can only create Python projects" },
+        { "id": "b", "text": "No Git integration, limited testing tools, no local development" },
+        { "id": "c", "text": "Projects expire after 24 hours" },
+        { "id": "d", "text": "You can't use JavaScript" }
+      ],
+      "correct_answer": "b",
+      "explanation": "Antigravity lacks Git integration, comprehensive testing tools, and local development capabilities. When you need version control, CI/CD pipelines, test suites, or fine-grained debugging, you should export your project and continue in a traditional IDE like Cursor."
+    }
+  ]
+}

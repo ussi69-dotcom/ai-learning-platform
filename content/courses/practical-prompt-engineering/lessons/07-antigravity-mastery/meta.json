@@ -1,0 +1,17 @@
+{
+  "title": "Antigravity Mastery: From Idea to Deploy in Minutes",
+  "title_cs": "Mistrovství Antigravity: Od nápadu k deploymentu za minuty",
+  "description": "Master Google's visual AI IDE for rapid prototyping. Build full-stack apps with Firebase MCP integration, deploy with one click, and learn when Antigravity is the right tool for the job.",
+  "description_cs": "Ovládněte vizuální AI IDE od Google pro rychlé prototypování. Sestavte full-stack aplikace s Firebase MCP integrací, deployujte jedním klikem a naučte se, kdy je Antigravity správná volba.",
+  "order": 7,
+  "video_url": "https://www.youtube.com/embed/nTOVIGsqCuY",
+  "tags": ["antigravity", "firebase", "mcp", "prototyping", "google", "gemini", "visual-ide", "rapid-development"],
+  "prerequisites": ["05-ai-powered-development"],
+  "learning_objectives": [
+    "Understand when Antigravity is the right tool vs Cursor/Claude Code",
+    "Master the visual canvas workflow for rapid prototyping",
+    "Integrate Firebase MCP for full backend control",
+    "Deploy applications with one-click to production",
+    "Build a complete project from idea to public URL in 15 minutes"
+  ]
+}

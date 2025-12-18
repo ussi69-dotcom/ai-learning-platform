@@ -1,6 +1,6 @@
 {
-  "title": "Vývoj s AI asistencí",
-  "description": "Otestujte své znalosti architektury MCP, AI nástrojů pro kódování a bezpečnostních best practices.",
+  "title": "Zaklady AI vyvoje",
+  "description": "Otestujte sve znalosti MCP, spravy kontextu, vyberu IDE a bezpecnostnich zakladu.",
   "passing_score": 70,
   "questions": [
     {
@@ -106,6 +106,32 @@
       ],
       "correct": "c",
       "explanation": "Vysoce rizikové, potenciálně destruktivní operace jako DELETE, DROP TABLE a force push by měly vyžadovat Human-in-the-Loop (HITL) potvrzení. Nakonfigurujte vaše MCP servery, aby označovaly tyto nástroje jako 'requires_approval'."
+    },
+    {
+      "id": "q9",
+      "type": "single",
+      "question": "Jake jsou tri vrstvy kontextu v AI vyvoji, od nejtrvaleji po nejefemernější?",
+      "options": [
+        { "id": "a", "text": "System Prompt → User Prompt → Odpoved" },
+        { "id": "b", "text": "Projektova ustava → Kontext ulohy → Dynamicky kontext" },
+        { "id": "c", "text": "Globalni nastaveni → Lokalni nastaveni → Runtime konfigurace" },
+        { "id": "d", "text": "Databaze → Cache → Pamet" }
+      ],
+      "correct": "b",
+      "explanation": "Tri vrstvy jsou: 1) Projektova ustava (CLAUDE.md, .cursorrules) - trvala pravidla projektu, 2) Kontext ulohy - popisy a komentare specificke pro session, 3) Dynamicky kontext - real-time MCP resources a cteni souboru ktere se meni behem provadeni."
+    },
+    {
+      "id": "q10",
+      "type": "single",
+      "question": "Podle frameworku pro vyber IDE, ktery nastroj je doporucen pro validaci noveho napadu pred investici vyrazneho casu do vyvoje?",
+      "options": [
+        { "id": "a", "text": "Cursor - pro jeho rychlost a zname IDE prostredi" },
+        { "id": "b", "text": "Claude Code - pro jeho nadrazene schopnosti uvazovani" },
+        { "id": "c", "text": "Antigravity - pro nejrychlejsi cestu od napadu k nasazenemu prototypu" },
+        { "id": "d", "text": "Windsurf - pro jeho hluboke pochopeni kontextu" }
+      ],
+      "correct": "c",
+      "explanation": "Multi-tool workflow doporucuje: Validuj rychle v Antigravity (1 hodina) → Vyvijej poradne v Cursoru (1-2 dny) → Refaktoruj ve Windsurf → Architektuj v Claude Code. To vam umozni rychle selhat na spatnych napadech a zaroven spravne investovat do dobrych."
     }
   ]
 }

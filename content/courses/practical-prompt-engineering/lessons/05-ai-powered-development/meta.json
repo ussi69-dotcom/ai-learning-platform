@@ -1,18 +1,18 @@
 {
-  "title": "AI-Powered Development",
-  "title_cs": "Vývoj s AI asistencí",
-  "description": "Master the AI-native development ecosystem with MCP, Antigravity, context management, and AI coding tools.",
-  "description_cs": "Ovládněte ekosystém AI-nativního vývoje s MCP, Antigravity, správou kontextu a AI nástroji pro kódování.",
+  "title": "AI Development Foundations",
+  "title_cs": "Základy AI vývoje",
+  "description": "Master the universal foundations of AI-native development. Understand MCP, context management, and security principles that apply to ANY AI coding tool.",
+  "description_cs": "Ovládněte univerzální základy AI-native vývoje. Pochopte MCP, správu kontextu a bezpečnostní principy které platí pro JAKÝKOLI AI kódovací nástroj.",
   "order": 5,
-  "video_url": "https://www.youtube.com/embed/mbxq88TOxp4",
-  "tags": ["mcp", "cursor", "windsurf", "claude-code", "antigravity", "ai-ide", "context-management"],
+  "video_url": "https://www.youtube.com/embed/kQmXtrmQ5Zg",
+  "tags": ["mcp", "context-management", "security", "ai-ide", "cursor", "windsurf", "claude-code"],
   "prerequisites": ["01-prompt-architecture", "04-local-intelligence"],
   "learning_objectives": [
-    "Understand MCP (Model Context Protocol) architecture",
-    "Master Antigravity for rapid prototyping",
-    "Compare AI coding tools (Cursor, Windsurf, Claude Code, Antigravity)",
-    "Build a custom MCP server with FastMCP",
-    "Connect IDE to local Ollama model",
-    "Implement security best practices for AI agents"
+    "Understand the AI-native development paradigm (shift from code writer to agent director)",
+    "Master MCP as the universal protocol for AI tool integration",
+    "Apply context management principles that work across ANY AI IDE",
+    "Use the IDE selection framework to choose the right tool for each task",
+    "Build a custom MCP server that extends AI capabilities",
+    "Implement security fundamentals for AI agents (least privilege, sandboxing, HITL)"
   ]
 }
