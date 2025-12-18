@@ -235,6 +235,137 @@ docker compose build --no-cache frontend
 
 ## 📝 Lessons Learned
 
+### 2025-12-19: MACP Content Workflow - Critical Reviewer ≠ Better Writer 🎭
+
+**Kontext:** MACP review L05 - Gemini dal 9/10, GPT-5.2 dal 7/10. Otázka: Neměl by psát lekce ten kritičtější?
+
+**Insight:** Ne nutně. Kritičtější agent je lepší jako *reviewer*, ne jako *writer*.
+
+**Optimální workflow:**
+| Role | Agent | Proč |
+|------|-------|------|
+| Content creation | Gemini 3 Pro | 2M context, kreativní, edutainment focus |
+| Critical review | GPT-5.2 | Přísný, technicky přesný, varuje před over-engineering |
+| Implementation | Claude | Kód, integrace, Git |
+
+**Proč funguje "tension" mezi agenty:**
+1. **Blind spot prevention** - Kdyby stejný agent psal i reviewoval, měl by vlastní slepá místa
+2. **Optimist vs Pessimist** - Gemini píše optimisticky, GPT strhává → výsledek je vyvážený
+3. **Different strengths** - Gemini exceluje v engagement, GPT v technické rigoróznosti
+
+**Rozhodnutí:** Zachovat současný workflow. Případný experiment (GPT jako writer) odložen.
+
+---
+
+### 2025-12-18: Claude Code Mastery Lesson - Diagram & DB Pitfalls 🎨
+
+**Kontext:** Vytváření lekce 06-claude-code-mastery s 3 novými SVG diagramy.
+
+**Problém 1: Diagramy se nerendrovaly**
+- Přidal jsem `claude-approval-loop`, `context-bucket`, `claude-md-anatomy` do `DiagramArchitecture.tsx`
+- Ale ZAPOMNĚL jsem je přidat do routeru `Diagram.tsx`
+- Výsledek: `<Diagram type="claude-approval-loop" />` vrátil `null`
+
+**Root cause:** `Diagram.tsx` má 2 místa která je třeba aktualizovat:
+1. TypeScript interface (řádek ~13) - pro type checking
+2. Routing podmínka (řádek ~48) - pro skutečné routování
+
+**Řešení:** Přidán "DIAGRAM REGISTRATION CHECKLIST" do CONTENT_GUIDELINES.md
+
+---
+
+**Problém 2: Duplicitní lekce v DB**
+- Změnil jsem title z "From User to Orchestrator" na "From Beginner to Orchestrator"
+- ContentLoader vytvořil NOVÝ záznam místo update
+- Výsledek: 2× lekce 6 v seznamu
+
+**Root cause:** ContentLoader používá `title` jako identifikátor, ne `slug` nebo `order`.
+
+**Řešení:**
+1. Dokumentováno v CONTENT_GUIDELINES.md (sekce F)
+2. SQL příkaz pro cleanup duplicit
+
+---
+
+**Problém 3: Přeskočená visual verifikace**
+- User musel připomenout: "vubec nedelas uz visual check"
+- Diagramy byly přidány ale nikdo neověřil že se renderují
+
+**Řešení:** Visual QA MUSÍ být součást workflow, ne volitelný krok.
+
+**Best Practice pro nové diagramy:**
+```
+1. □ Implementuj v DiagramXxx.tsx
+2. □ Registruj v Diagram.tsx (interface + routing)
+3. □ Restart frontend
+4. □ Visual check v prohlížeči
+5. □ Screenshot pro důkaz
+```
+
+---
+
+### 2025-12-18: YouTube Video Metadata Extraction 📺
+
+**Problém:** Potřeboval jsem zjistit názvy videí z YouTube playlist. YouTube.com je blokovaný pro WebFetch.
+
+**Co NEFUNGUJE:**
+```bash
+# ❌ WebFetch na youtube.com - blokováno
+WebFetch("https://www.youtube.com/watch?v=VIDEO_ID") → ERROR
+
+# ❌ Web Search na video ID - neindexováno
+WebSearch("youtube VIDEO_ID title") → generic results only
+
+# ❌ YouTube API key v .env - nemáme funkční MCP server pro metadata
+# YOUTUBE_API_KEY existuje, ale youtube-transcript MCP je jen pro transkripty
+```
+
+**Co FUNGUJE:**
+```bash
+# ✅ Noembed.com - FREE, no auth, vrací JSON s title
+WebFetch("https://noembed.com/embed?url=https://www.youtube.com/watch?v=VIDEO_ID")
+# → {"title": "Video Title Here", "author_name": "Channel", ...}
+
+# ✅ Pro transkripty: youtube-transcript MCP (yt-dlp based)
+# Configured in ~/.claude.json jako "youtube-transcript"
+```
+
+**Best Practice pro YouTube research:**
+
+| Potřebuji | Řešení |
+|-----------|--------|
+| Video title/metadata | `noembed.com/embed?url=YOUTUBE_URL` |
+| Video transcript | YouTube Transcript MCP (po restartu Claude Code) |
+| Playlist obsah | Uživatel → NotebookLM → summary pro mě |
+| Channel info | `curl + grep` nebo Gemini screenshot |
+
+**YouTube API key:** ✅ VYŘEŠENO (2025-12-18)
+
+Nainstalován `dannySubsense/youtube-mcp-server` s 14 funkcemi:
+- `get_video_details` - metadata videa
+- `get_playlist_items` - seznam videí v playlistu
+- `get_playlist_details` - metadata playlistu
+- `search_videos` - vyhledávání
+- `get_video_transcript` - transkripty
+- `get_channel_videos` - videa z kanálu
+- ...a další
+
+**Konfigurace:**
+```bash
+# Repo: /home/deploy/youtube-mcp-server
+# Venv: /home/deploy/youtube-mcp-server/venv
+# Credentials: /home/deploy/youtube-mcp-server/credentials.yml
+# MCP v Claude Code: youtube-data (project-specific)
+```
+
+**Po restartu Claude Code** budou dostupné nástroje:
+- `mcp__youtube-data__get_playlist_items`
+- `mcp__youtube-data__get_video_details`
+- `mcp__youtube-data__search_videos`
+- atd.
+
+---
+
 ### 2025-12-13: Playwright Snapshot Context Burn - OPAKOVANÝ FAIL 🔥
 
 **Co se stalo:** Při hledání YouTube channel IDs jsem použil Playwright MCP a dumpnul 4× snapshots (~56k tokenů) do kontextu. Přitom jsem měl pravidla jasně napsaná!
