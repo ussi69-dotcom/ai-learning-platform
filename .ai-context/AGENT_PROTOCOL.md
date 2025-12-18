@@ -98,6 +98,28 @@ ESKALUJ na GPT-5.2 orchestraci když:
 - Stručné summary (10-30 řádků)
 - Pass/fail + seznam chyb
 
+### 🔐 Secrets & PII Redaction (KRITICKÉ!)
+
+**NIKDY neposílej do promptů:**
+- JWT tokeny, API keys, passwords
+- Email adresy uživatelů
+- Database connection strings s credentials
+- Reset/verification links
+- Cookies, session tokens
+- Osobní údaje (jména, telefony, adresy)
+
+**PŘED sdílením logů/screenshots:**
+1. Maskuj tokeny: `eyJ...` → `[JWT_REDACTED]`
+2. Maskuj emaily: `user@example.com` → `[EMAIL_REDACTED]`
+3. Maskuj URLs s tokeny: `?token=abc123` → `?token=[REDACTED]`
+4. Ověř že screenshot neobsahuje citlivá data
+
+**Příklad sanitizace:**
+```bash
+# Před sdílením logu:
+sed -E 's/eyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+/[JWT_REDACTED]/g' log.txt
+```
+
 ### 📋 Communication Templates
 
 **Task Brief (Orchestrátor → Implementer):**
@@ -125,9 +147,10 @@ ESKALUJ na GPT-5.2 orchestraci když:
 
 ---
 
-## 🗳️ Multi-Agent Consensus Protocol (MACP) v1.0
+## 🗳️ Multi-Agent Consensus Protocol (MACP) v2.0
 
 **Purpose:** For high-stakes decisions, Claude consults GPT-5.2 and Gemini for diverse perspectives before deciding.
+**Updated:** 2025-12-18 (MACP consensus between GPT-5.2 + Gemini)
 
 ### ⚡ Consensus Triggers (Kdy aktivovat)
 
@@ -138,6 +161,8 @@ AKTIVUJ MACP když:
 □ Architecture/multi-module refactors
 □ Breaking API changes
 □ Content strategy decisions
+□ User-facing UI + logic changes
+□ Release-candidate review
 □ User explicitly asks "get second opinion"
 □ >30 min stuck + 2+ failed attempts (escalation)
 
@@ -147,42 +172,82 @@ NEAKTIVUJ pro:
 □ Clear implementation with tests
 ```
 
-### 🎯 Blind Ballot Protocol
+### 🔀 Routing Rules (Codex vs Gemini)
 
-**Step 1:** Claude sends SAME prompt to both agents INDEPENDENTLY (no sharing of other's response)
+| Potřebuji... | Agent | Profile/Model |
+|--------------|-------|---------------|
+| Code correctness, edge cases | **Codex** | `review` / `deep` |
+| Architecture, CI issues | **Codex** | `review` / `orchestrator` |
+| Security audit | **Codex** | `security` |
+| UX/copy/content generation | **Gemini** | `gemini-3-pro-preview` |
+| Visual QA, UI polish | **Gemini** | `gemini-3-pro-preview` + screenshots |
+| Localization, tone | **Gemini** | `gemini-3-pro-preview` |
+| Research, broad summaries | **Gemini** | `gemini-3-pro-preview` |
 
-**Step 2:** Each agent responds in structured format:
-```markdown
-## Agent: [GPT-5.2/Gemini]
-**Recommendation:** GO / NO-GO / MODIFY
-**Confidence:** 0-100%
-**Why:** [3 bullets max]
-**Risks:** [3 bullets max]
-**Validation:** [specific tests/checks to run]
-**Assumptions:** [what must be true]
+**Volej OBA (MACP) když:**
+- User-facing UI + logic: Codex (correctness) + Gemini (UX/visual)
+- Security-sensitive UX: Codex `security` + Gemini (confusing UI check)
+- Release candidate: Codex `review` + Gemini (content/i18n)
+
+### 🎯 Consensus Protocol (při disagreement)
+
+**Stepwise protocol:**
+```
+1. CLASSIFY: correctness/bug | security | UX/product | style
+   ↓
+2. SEEK GROUND TRUTH: run test, reproduce, minimal example
+   ↓
+3. DOMAIN WEIGHT (if still ambiguous):
+   - Security/correctness → weight Codex higher
+   - UX/copy/pedagogy → weight Gemini higher
+   - Product intent → weight User/Claude highest
+   ↓
+4. TIE-BREAKER:
+   - UX/copy disagreement → call Gemini
+   - Architecture disagreement → call Codex orchestrator
+   ↓
+5. ESCALATE TO USER when:
+   - Externally visible behavior change
+   - Breaking API / data semantics
+   - Permissions / billing impact
+   - Neither option clearly dominates
 ```
 
-**Step 3:** Claude synthesizes, applies domain weights, decides (or escalates to user if high-stakes + disagreement)
+### 🛑 Circuit Breaker v2.0 (Evidence-Based)
+
+**PRAVIDLO:** Max 3 delegation hops **BEZ nové evidence** před user escalation.
+
+```
+Claude → Codex → Gemini → STOP (ask user)
+         ↓         ↓
+    [new evidence?] [new evidence?]
+         ↓ YES      ↓ YES
+    Counter reset  Counter reset
+```
+
+**Co je "new evidence":**
+- Failing test s konkrétním output
+- Screenshot ukazující bug
+- Minimal repro steps
+- Traceback/log s root cause
+- Benchmark/metrics data
+
+**Co NENÍ "new evidence":**
+- Další hypotéza bez ověření
+- Parafráze předchozího zjištění
+- "Myslím že problém je v X" bez testu
+
+Prevents: infinite ping-pong, token bloat, analysis paralysis.
 
 ### ⚖️ Weighted Domain Authority
 
 | Conflict Domain | GPT-5.2 | Gemini | Claude |
 |-----------------|---------|--------|--------|
 | **Security/Logic/Algorithm** | **70%** | 20% | 10% |
-| **Codebase Impact/Visuals** | 20% | **70%** | 10% |
+| **Codebase Impact/Architecture** | **60%** | 20% | 20% |
+| **UX/Visuals/Copy** | 20% | **70%** | 10% |
 | **Content/Pedagogy** | 30% | **60%** | 10% |
 | **Integration/Shipping** | 30% | 30% | **40%** |
-
-### 🪜 Resolution Ladder (při disagreement)
-
-```
-1. Identify missing facts/assumptions
-   ↓
-2. Propose smallest experiment/test to settle
-   ↓
-3. If still ambiguous + high stakes → ESCALATE to user
-   (present 2-3 options + trade-offs)
-```
 
 ### ⚠️ Anti-Patterns to Avoid
 
@@ -190,21 +255,31 @@ NEAKTIVUJ pro:
 |--------------|------|------------|
 | **Echo Chamber** | Anchoring bias | Independent "blind ballot" queries |
 | **Consensus Theater** | Latency without value | Strict triggers + 10 min time-box |
-| **Analysis Paralysis** | Stuck on trivial decisions | Clear trigger criteria |
+| **Analysis Paralysis** | Stuck on trivial decisions | Circuit breaker (max 3 hops) |
 | **Decision Churn** | Re-litigating closed decisions | Decision log, reopen only with new evidence |
+| **Ping-Pong Loop** | Agents delegating back and forth | Circuit breaker + user escalation |
 
 ### 📝 Decision Record Template
 
-After MACP, record outcome:
+**POVINNÉ:** Po každém MACP decision, vytvoř záznam.
+
+**Location:** `.ai-context/history/decisions/YYYY-MM-DD-topic.md`
+
+**Naming:** `2025-12-18-circuit-breaker-update.md`
+
 ```markdown
 ## Decision: [Topic]
 **Date:** YYYY-MM-DD
 **Agents consulted:** GPT-5.2, Gemini
-**GPT-5.2:** [GO/NO-GO] @ [X]% confidence
-**Gemini:** [GO/NO-GO] @ [X]% confidence
+**GPT-5.2:** [GO/NO-GO] @ [X]% confidence - [brief reason]
+**Gemini:** [GO/NO-GO] @ [X]% confidence - [brief reason]
+**Domain weights applied:** [which domain, who weighted higher]
 **Final decision:** [What was decided]
-**Rationale:** [Why, including domain weights applied]
+**Rationale:** [Why]
+**Verify:** [How to confirm decision was correct]
 ```
+
+**Index:** Keep running list in `.ai-context/history/decisions/INDEX.md`
 
 ---
 
@@ -212,65 +287,97 @@ After MACP, record outcome:
 
 ### GPT-5.2 (Codex CLI)
 
-**Kdy volat:**
-```
-✅ Komplexní architektonická rozhodnutí
-✅ Debugging záhadných bugů (>30 min stuck)
-✅ "Second opinion" na kritická PR
-✅ Reasoning tasks (nejlepší benchmark skóre)
-✅ Root cause analysis
-```
+**Model:** `gpt-5.2` s reasoning effort levels: `low` → `medium` → `high` → `xhigh`
 
-**Kdy NEVOLAT:**
-```
-❌ Běžné kódování (Claude stačí)
-❌ Content generation (Gemini lepší)
-❌ Visual QA (Gemini má 2M context)
-❌ Quick research (Perplexity rychlejší)
-```
+**Profily (v ~/.codex/config.toml):**
+| Profil | Reasoning | Kdy použít |
+|--------|-----------|------------|
+| `fast` | low | Quick triage, jednoduché dotazy |
+| `default` | medium | Běžné úkoly |
+| `deep` | **xhigh** | Komplexní debugging, bounded problems |
+| `orchestrator` | **xhigh** | Decompose work, delegation plan, multi-component |
+| `review` | high | Code review, CI issues |
+| `security` | **xhigh** | Threat model, authz, IDOR, injection, SSRF |
+| `hotfix` | high | Minimal diff, rollback-safe, prod incident |
+| `tests` | high | Coverage, deterministic, boundary cases |
+| `docs` | medium | Clarity, operability, brief |
+
+**Reasoning Effort Levels:** `none` → `minimal` → `low` → `medium` → `high` → **`xhigh`**
+
+**Deep vs Orchestrator (KRITICKÉ!):**
+| Aspekt | `deep` (solver) | `orchestrator` (manager) |
+|--------|-----------------|--------------------------|
+| **Účel** | Max correctness na bounded problem | Decompose ambiguous work |
+| **Output** | Concrete fix, edge-case analysis | Task breakdown, risk matrix, delegation plan |
+| **Kdy** | Shape je clear ale hard | Shape je unclear |
+| **Příklad** | "Find root cause from traceback" | "Plan course certificates end-to-end" |
 
 **Jak volat:**
 ```bash
-# Přes Codex CLI
-codex "Analyze: [context + otázka]"
+# ⚡ Quick triage
+codex exec -p fast "Quick question"
 
-# Rychlá triage (nižší reasoning effort)
-codex -c 'model_reasoning_effort="medium"' "Triage: [context + otázka]"
+# 🔍 Deep analysis (bounded problem)
+codex exec -p deep "Given this traceback, find root cause..."
 
-# Doporučeno: profily (fast vs orchestrator)
-codex -p fast "Triage: [context + otázka]"
-codex -p orchestrator "Analyze: [context + otázka]"
+# 🎯 Orchestration (multi-component)
+codex exec -p orchestrator "Plan implementation of feature X"
 
-# Jednorázově přepnout model
-codex -m gpt-5.2 "Analyze: [context + otázka]"
+# 🔒 Security review
+codex exec -p security "Review auth changes for IDOR/bypass"
 
-# Nebo cat + pipe pro delší prompty
-cat << 'EOF' | codex exec 2>&1
-[dlouhý prompt]
-EOF
+# 🚨 Hotfix (prod incident)
+codex exec -p hotfix "CI failing with error X, minimal fix"
+
+# 🧪 Test strategy
+codex exec -p tests "Add pytest coverage for /endpoint"
+
+# 📝 Code review
+codex exec -p review "Review this PR diff"
+
+# 📚 Documentation
+codex exec -p docs "Update README for new env var"
+
+# S obrázky
+codex exec -i /path/to/screenshot.png "Analyze this error"
 ```
 
-### Gemini 3 Pro (Google AI Plus)
+**Claude PROAKTIVNĚ deleguje na Codex když:**
+| Trigger | Profile | Příklad |
+|---------|---------|---------|
+| Auth/permissions změna | `security` | "Enumerate authz pitfalls for new endpoint" |
+| SQLAlchemy/DB změna | `deep` | "Check transaction/cascade behavior" |
+| Prod incident | `hotfix` | "Smallest fix + regression test" |
+| >2 modules změna | `orchestrator` | "Plan implementation, identify risks" |
+| 10-15 min bez hypotézy | `deep` | "Root cause from traceback + files" |
+| Nový endpoint | `tests` | "Happy path + failure path tests" |
+| Před implementací | `review` | "Review approach before coding" |
 
-**Model:** `gemini-3-pro-preview` (NIKDY 2.5!)
+### Gemini 3 Pro (Google AI Plus)
 
 **Kdy volat:**
 ```
 ✅ Content generation (lekce, dokumentace)
 ✅ Visual QA (2M context = 100+ screenshots!)
 ✅ Research (5-20 min)
-✅ Code review / alternatives
+✅ Code review / oponentura
 ```
 
 **Jak volat:**
 ```bash
-# Přes Gemini CLI
+# ✅ PRO (content, research, oponentura) - kvalita a hloubka
+gemini -m gemini-3-pro-preview "Your prompt"
 cat << 'EOF' | gemini -m gemini-3-pro-preview 2>&1
 [prompt]
 EOF
 
-# Pro Visual QA s obrázky
+# ✅ PRO s obrázky (Visual QA)
 gemini -m gemini-3-pro-preview --file /path/to/screenshot.png "Analyze this UI"
+
+# ⚡ FLASH (quick tasks) - rychlý, levný
+gemini "Simple question"  # bez -m = Flash
+
+# ❌ NIKDY: gemini-2.5 (zastaralý)
 ```
 
 ### Gemini Deep Research (Google AI Plus)

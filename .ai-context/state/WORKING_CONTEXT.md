@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-15 07:00 (Agent: Claude)
-**Last Commit:** `81159ca` feat: Introduce 'Fine-tuning' lesson, add user streak display, and implement lesson thumbnails
-**Status:** 🟢 Migrated to Hetzner Dedicated Server | Full toolchain installed
+**Last Updated:** 2025-12-18 12:30 (Agent: Claude + GPT-5.2 + Gemini MACP)
+**Last Commit:** `5c05ec4` feat: add Microsoft Copilot course + improve daily digest
+**Status:** 🟢 Multi-Agent Setup Optimized | MACP v2.0 Active
 
 ---
 
@@ -313,11 +313,11 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-18 | Claude+GPT  | **P0 Workflow Fixes** - GEMINI.md created, MCP paths fixed, secrets rule, pip-audit CI, decision log |
+| 2025-12-18 | All 3 MACP  | **Multi-Agent v2.0** - 9 Codex profiles, routing rules, circuit breaker, proactive delegation |
+| 2025-12-18 | Claude      | **Tooling Fixes** - NVM/npmrc fix, GitHub MCP disabled, Gemini model rules, Codex auth     |
 | 2025-12-14 | Claude      | **Star Wars Ships** - Sith/Jedi theme images, difficulty-based mapping, visual QA          |
 | 2025-12-14 | Claude+GPT  | **Security Hardening** - JWT validation, Docker socket warning, platform review saved      |
-| 2025-12-13 | Claude      | **Boot Checklist v4.0** - inline rules, Chrome DevTools ❌ WSL, Playwright ✅               |
-| 2025-12-13 | Claude      | **YouTube + CZ Fix** - 3 channels added, translate_to_czech(), ACTION CHECKPOINT docs      |
-| 2025-12-13 | All 3       | **MACP v1.0** - Multi-Agent Consensus Protocol formalized                                  |
 
 ---
 

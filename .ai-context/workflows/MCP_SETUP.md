@@ -29,10 +29,10 @@ Model Context Protocol umožňuje AI agentům přístup k:
 #### 1. **Filesystem MCP**
 ```bash
 # Claude Code
-claude mcp add filesystem /home/ussi/ai-learning-platform
+claude mcp add filesystem /home/deploy/ai-learning-platform
 
 # Codex CLI
-codex mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /home/ussi/ai-learning-platform
+codex mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /home/deploy/ai-learning-platform
 ```
 
 **Co to dělá:**
@@ -50,10 +50,10 @@ codex mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /home
 #### 2. **Git MCP**
 ```bash
 # Claude Code
-claude mcp add git /home/ussi/ai-learning-platform
+claude mcp add git /home/deploy/ai-learning-platform
 
 # Codex CLI
-codex mcp add git -- npx -y @modelcontextprotocol/server-git /home/ussi/ai-learning-platform
+codex mcp add git -- npx -y @modelcontextprotocol/server-git /home/deploy/ai-learning-platform
 ```
 
 **Co to dělá:**
@@ -218,7 +218,7 @@ claude mcp add github
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "/home/ussi/ai-learning-platform"
+        "/home/deploy/ai-learning-platform"
       ]
     },
     "git": {
@@ -226,7 +226,7 @@ claude mcp add github
       "args": [
         "-y",
         "@modelcontextprotocol/server-git",
-        "/home/ussi/ai-learning-platform"
+        "/home/deploy/ai-learning-platform"
       ]
     },
     "postgres": {
@@ -274,8 +274,8 @@ Pro trvalé profily použij `codex --profile` a nastav je v `~/.codex/config.tom
 ### Krok 1: Instalace (15 minut)
 ```bash
 # Must-have servery
-claude mcp add filesystem /home/ussi/ai-learning-platform
-claude mcp add git /home/ussi/ai-learning-platform
+claude mcp add filesystem /home/deploy/ai-learning-platform
+claude mcp add git /home/deploy/ai-learning-platform
 claude mcp add context7
 
 # Recommended (pokud chceš)
@@ -289,8 +289,8 @@ claude mcp add github   # Pokud plánuješ open-source
 
 **Codex CLI ekvivalent (volitelné):**
 ```bash
-codex mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /home/ussi/ai-learning-platform
-codex mcp add git -- npx -y @modelcontextprotocol/server-git /home/ussi/ai-learning-platform
+codex mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /home/deploy/ai-learning-platform
+codex mcp add git -- npx -y @modelcontextprotocol/server-git /home/deploy/ai-learning-platform
 codex mcp add context7 -- npx -y @context7/mcp-server
 ```
 
@@ -334,7 +334,7 @@ claude
 ```bash
 # Zkontroluj path v konfiguraci
 claude mcp list
-# Ujisti se že path je absolute: /home/ussi/ai-learning-platform
+# Ujisti se že path je absolute: /home/deploy/ai-learning-platform
 ```
 
 ### PostgreSQL MCP nemůže connect

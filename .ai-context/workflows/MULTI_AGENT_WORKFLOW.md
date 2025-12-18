@@ -107,6 +107,7 @@ Použij šablonu v `CODEX.md` (posílej **cesty k logům/screenshotům**, ne dum
 ### 4.4 Visual QA Request (Claude → Gemini)
 
 ```bash
+# ✅ PRO model pro Visual QA (kvalita)
 gemini -m gemini-3-pro-preview --file /path/to/before.png --file /path/to/after.png \
   "Task: Visual QA. Compare before/after. Focus: [navbar/spacing/dark mode]. Output: 10-20 bullets."
 ```

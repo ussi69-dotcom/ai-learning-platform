@@ -27,16 +27,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## ⛔ CRITICAL_RULES (vždy viditelné - NEIGNORUJ!)
 
-### 🎯 Delegace (bezpodmínečná)
+### 🎯 Delegace (PROAKTIVNÍ - nečekej až budeš stuck!)
 
-| Úkol | Deleguj na | Důvod | Jak |
-|------|------------|-------|-----|
-| **Visual QA** (jak vypadá UI) | Gemini | 2M context | Screenshot → soubor → `gemini` (auto) |
-| **Content/lekce** | Gemini | Kreativní | Task Brief → `gemini` (auto) |
-| **Web scraping** | curl/wget | <100 tokenů | `curl -s URL \| grep pattern` |
-| **Hard reasoning** (>30min) | GPT-5.2 | Chain-of-thought | Debug Packet → Codex CLI |
+| Trigger | Agent | Profile | Příklad |
+|---------|-------|---------|---------|
+| **Auth/permissions změna** | GPT-5.2 | `security` | "Enumerate authz pitfalls" |
+| **SQLAlchemy/DB změna** | GPT-5.2 | `deep` | "Check transaction/cascade" |
+| **Prod incident** | GPT-5.2 | `hotfix` | "Smallest fix + test" |
+| **>2 modules změna** | GPT-5.2 | `orchestrator` | "Plan implementation" |
+| **10-15 min bez hypotézy** | GPT-5.2 | `deep` | "Root cause analysis" |
+| **Nový endpoint** | GPT-5.2 | `tests` | "Happy + failure path" |
+| **Před implementací** | GPT-5.2 | `review` | "Review approach first" |
+| **Visual QA** | Gemini | Pro | Screenshot → analyze |
+| **Content/lekce** | Gemini | Pro | Task Brief → generate |
+| **UX/copy review** | Gemini | Pro | "Is this confusing?" |
 
-> ⚠️ **GEMINI MODEL RULE:** Volej `gemini` BEZ `-m` flagu (má auto-select) nebo explicitně `-m gemini-3-pro-preview`. **NIKDY 2.5!**
+> ⚠️ **MODEL RULES:**
+> - **Gemini Content/Research/QA:** `gemini -m gemini-3-pro-preview`
+> - **Gemini Quick tasks:** `gemini` bez flagu = Flash
+> - **Codex:** `codex exec -p [profile]` (NIKDY interaktivní mód!)
+> - **MACP (oba):** User-facing UI+logic, Security UX, Release candidate
 
 ### 🔇 Thin Protocol (VŽDY!)
 
@@ -54,7 +64,7 @@ Aktivuj když: Security změny | DB migrace | Breaking API | >30min stuck + 2 fa
 ### ✅ Před KAŽDOU major akcí
 
 ```
-□ Content? → Gemini (gemini-2.5-pro)
+□ Content? → Gemini (`gemini -m gemini-3-pro-preview`)
 □ Commit? → npm run verify MUSÍ projít
 □ Velká změna? → Zeptej se uživatele
 □ MACP trigger? → Blind Ballot oběma agentům
@@ -94,23 +104,43 @@ Aktivuj když: Security změny | DB migrace | Breaking API | >30min stuck + 2 fa
 | Deep research (short) | Gemini CLI | ⏱️ 2-5m |
 | Deep research (long) | Gemini Deep Research | ⏱️ 20-60m |
 
-### Codex CLI (GPT-5.2) ⚠️ KRITICKÉ
+### Codex CLI (GPT-5.2)
 
 ```bash
-# ❌ NEFUNGUJE z Claude Code (potřebuje TTY terminál)
-codex "prompt"
-codex -p fast "prompt"
+# ✅ VŽDY POUŽÍVEJ `codex exec -p [profile]`
 
-# ✅ VŽDY POUŽÍVEJ `codex exec` pro non-interactive mód
-codex exec "Your question or analysis request"
+# Profily:
+codex exec -p fast "Quick question"           # low - triage
+codex exec -p deep "Root cause analysis"      # high - bounded problem
+codex exec -p orchestrator "Plan feature X"   # high - decompose work
+codex exec -p review "Review this diff"       # medium - code review
+codex exec -p security "Check for IDOR"       # high - threat model
+codex exec -p hotfix "Minimal fix for bug"    # medium - prod incident
+codex exec -p tests "Add coverage for /api"   # medium - test strategy
+codex exec -p docs "Update README"            # low - documentation
 
-# S profilem (optional):
-codex exec -p fast "Quick triage question"
-codex exec -p orchestrator "Deep analysis with Debug Packet"
+# Dlouhé prompty přes heredoc:
+cat << 'EOF' | codex exec -p orchestrator 2>&1
+[Debug Packet]
+## Symptom: ...
+## Tried: ...
+EOF
+
+# S obrázky:
+codex exec -i /path/to/screenshot.png "Analyze this error"
 ```
 
-**Výstup obsahuje:** Model info, full reasoning, token usage.
-**Tip:** Pro dlouhé prompty použij heredoc nebo soubor.
+**Deep vs Orchestrator:**
+- `deep` = bounded problem, concrete fix (shape is clear but hard)
+- `orchestrator` = decompose work, delegation plan (shape is unclear)
+
+**Reasoning Levels:** `low` → `medium` → `high` → **`xhigh`** (max kvalita)
+- `xhigh`: deep, orchestrator, security (nejdůležitější úkoly)
+- `high`: review, hotfix, tests
+- `medium`: default, docs
+- `low`: fast
+
+**PROAKTIVNĚ deleguj** (nečekej až budeš stuck!) - viz tabulka Delegace výše.
 
 ### Gemini OAuth Fix
 ```bash

@@ -27,7 +27,7 @@ _archive/
 CONTEXT_FOR_ARCHITECT.md
 
 # Agent Memory (Local Only - Do Not Commit)
-GEMINI.md
+# Note: GEMINI.md is now an entry point (like CLAUDE.md, CODEX.md) - tracked in git
 # Playwright
 /frontend/playwright-report/
 /frontend/playwright/.cache/
