@@ -45,6 +45,9 @@ test-backend: ## Spustí testy v backendu
 check-docs: ## Zkontroluje dokumentaci na drift (stale paths, missing files)
 	./scripts/check-doc-drift.sh
 
+macp: ## Spustí MACP blind ballot (GPT-5.2 + Gemini paralelně)
+	@read -p "MACP prompt: " prompt && ./scripts/macp.sh "$$prompt"
+
 verify: ## Spustí všechny kontroly (frontend + backend + docs)
 	cd frontend && npm run verify
 	docker compose exec backend pytest
