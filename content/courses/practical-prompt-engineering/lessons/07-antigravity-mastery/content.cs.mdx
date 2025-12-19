@@ -186,14 +186,14 @@ Hledejte `{"result": ...}` ve výstupu.
 
 ## 🧪 Lab 2: Paralelní agenti
 
-Teď vám "zavaříme mozek". Spustíme **dva agenty najednou**—jeden bude zkoumat, druhý kódovat.
+Teď znásobíme váš výstup. Spustíme **dva agenty najednou**—jeden bude zkoumat, druhý kódovat.
 
 ### 🎯 Cíl
 Orchestrovat více agentů k implementaci funkce vyžadující externí znalosti.
 
 ### 📋 Předpoklady
-- Dokončený Lab 1
-- Základní React/Next.js projekt (nebo požádejte Antigravity, ať jeden vytvoří)
+- Dokončený Lab 1 (porozumění Agent workflow)
+- **Krok 0:** Otevřete NOVÝ Antigravity Workspace → Vyberte "Next.js Starter" šablonu (Lab 1 byl Python, tento lab používá React)
 
 ### 🛠️ Kroky
 
@@ -323,14 +323,14 @@ Pozorujte, jak agent upravuje:
 
 ## ⚔️ Aréna: Antigravity vs. Konkurence
 
-Jak si stojí v porovnání s ostatními AI kódovacími titány?
+Jak si stojí v porovnání s ostatními AI kódovacími titány? *(Srovnání k prosinci 2025)*
 
 | Funkce | Antigravity | Cursor | Claude Code |
 |--------|-------------|--------|-------------|
 | **Agent Orchestration** | Multi-agent Manager (paralelní) | Single-agent sidebar | CLI agent (sekvenční) |
 | **Artifacts System** | Plány, diffy, nahrávky, screenshoty | Pouze diffy | Diffy, patche |
 | **Browser Automation** | Vestavěná (self-healing) | Omezená | Přes externí nástroje |
-| **Image Generation** | Nano Banana (vestavěná) | Žádná | Žádná |
+| **Image Generation** | Nano Banana (Gemini image AI) | Žádná | Žádná |
 | **Cena** | **ZDARMA** (Gemini 3 Pro) | $20/měsíc | ~$8/úkol |
 | **Nejlepší pro** | Rychlé prototypování, celé funkce | Denní kódování, precizní úpravy | Refaktoring, skripty |
 
@@ -408,7 +408,7 @@ A obsah se může objevit v cloud-synced chatech logs.
 | **Planning Mode** | Agent generuje plán pro schválení jako první |
 | **Fast Mode** | Agent vykonává okamžitě (rychlé úkoly) |
 | **Browser Subagent** | Autonomní prohlížeč pro testování/ověřování |
-| **Nano Banana** | Vestavěná generace obrázků pro mockupy |
+| **Nano Banana** | Gemini image AI pro generování UI mockupů |
 
 ### 🎯 Kdy co použít
 
