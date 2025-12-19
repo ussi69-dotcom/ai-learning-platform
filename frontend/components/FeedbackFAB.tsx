@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { AlertCircle, X, MousePointer2, Eye } from 'lucide-react';
-import SplitBugEyeIcon from './SplitBugEyeIcon';
+import { Bug, X, MousePointer2, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
@@ -164,11 +163,11 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
         title={t('report_bug')}
       >
         {currentMode === 'placing' ? (
-          <AlertCircle size={24} />
+          <Bug size={20} />
         ) : currentMode === 'viewing' ? (
-          <X size={24} />
+          <X size={20} />
         ) : (
-          <SplitBugEyeIcon size={36} />
+          <Bug size={20} />
         )}
       </Button>
 
@@ -178,7 +177,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
           className="fixed z-50 transform -translate-x-1/2 -translate-y-1/2 bg-primary text-primary-foreground rounded-full p-4 shadow-[0_0_25px_rgba(var(--primary),0.8)] cursor-grabbing pointer-events-none flex items-center justify-center border border-white/20"
           style={{ left: draggedPosition.x, top: draggedPosition.y }}
         >
-          <AlertCircle className="w-8 h-8" />
+          <Bug className="w-6 h-6" />
         </div>
       )}
     </div>
