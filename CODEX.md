@@ -119,6 +119,18 @@ Každá moje odpověď MUSÍ obsahovat:
 ## Expected outcome: [jak poznat success]
 ```
 
+### Claude Opus (CLI Oponentura)
+```bash
+# Non-interactive oponentura přes Claude CLI (Opus)
+cat << 'EOF' | claude -p --model opus 2>&1
+[Oponentura Brief]
+## Context:
+## Proposal:
+## Risks:
+## Questions:
+EOF
+```
+
 ### Gemini 3 Pro (Visual QA / Content)
 ```bash
 # Visual QA
@@ -132,6 +144,12 @@ EOF
 
 ### Perplexity (Quick Research)
 - Primárně přes Claude Code (MCP) nebo přímo přes Perplexity API/script; v Codex lze doplnit přes `codex mcp add` (viz `.ai-context/workflows/MCP_SETUP.md`).
+
+### Poznámka k API klíčům
+Používej klíče z `.env` (neukládej je do configů). Pokud potřebuješ v CLI načíst env:
+```bash
+set -a; source /home/deploy/ai-learning-platform/.env; set +a
+```
 
 ---
 

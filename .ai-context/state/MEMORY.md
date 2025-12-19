@@ -277,6 +277,25 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 ---
 
+### 2025-12-19: VideoSwitcher Parsing Reliability 🧩
+
+**Kontext:** VideoSwitcher občas nezobrazoval alternativní videa bez refresh.
+
+**Root cause:** Nekonzistentní regex + JSON parsing v `MarkdownRenderer` a `video-parsing`, greedy matching a trailing commas v MDX.
+
+**Řešení:**
+- Sdílený parser `parseVideoSwitcherTag` v `frontend/lib/video-parsing.ts`
+- Non-greedy regex: `(\[[\s\S]*?\])`
+- Sanitizace: quoted keys + odstranění trailing commas před `JSON.parse`
+- Jednotné použití v rendereru i extrakci
+
+**Checklist pro budoucí úpravy:**
+- [ ] Parser je sdílený (ne duplikovaný) v obou místech.
+- [ ] Regex je non-greedy a odolný vůči multi-line props.
+- [ ] Trailing commas a unquoted keys jsou ošetřené.
+
+---
+
 ### 2025-12-19: MACP Content Workflow - Critical Reviewer ≠ Better Writer 🎭
 
 **Kontext:** MACP review L05 - Gemini dal 9/10, GPT-5.2 dal 7/10. Otázka: Neměl by psát lekce ten kritičtější?

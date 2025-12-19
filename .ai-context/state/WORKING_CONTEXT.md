@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-19 10:30 (Agent: Claude)
-**Last Commit:** `beb9de8` fix(CourseCarousel): improve MS365 badge + fix left edge
-**Status:** 🟢 UX Polish Session Complete
+**Last Updated:** 2025-12-19 23:44 (Agent: Codex GPT-5.2)
+**Last Commit:** `abf8bd3` fix(VideoSwitcher): unify registration and parsing
+**Status:** 🟢 VideoSwitcher parsing hardened + verify run (lint warnings remain)
 
 ---
 
@@ -94,7 +94,29 @@
 
 ## 🎯 Current State
 
-### Latest Session (Dec 19, 2025 - UX Polish + Security)
+### Latest Session (Dec 19, 2025 - VideoSwitcher Debugging)
+
+| Task | Status | Notes |
+|------|--------|-------|
+| VideoSwitcher intermittent missing | 🔄 Investigating | Sometimes absent until manual refresh |
+| Registry race handling in VideoSwitcher | ✅ Done | `821e137` |
+| Subscription instead of polling | ✅ Done | `8b3363b` |
+| VideoPlayer wait for registry | ✅ Done | `679e6f6` |
+| Memoize MarkdownRenderer parse | ✅ Done | `9d09329` |
+| Harden VideoSwitcher JSON parsing | ✅ Done | Unified parser + non-greedy array capture + trailing comma cleanup |
+| Frontend verify | ✅ Done | `npm run verify` (lint warnings only, no errors) |
+
+### Commits This Session
+
+| Hash | Message |
+|------|---------|
+| `abf8bd3` | fix(VideoSwitcher): unify registration and parsing |
+| `9d09329` | fix(MarkdownRenderer): memoize parsed content to prevent VideoSwitcher remounts |
+| `679e6f6` | fix(VideoPlayer): wait 300ms for VideoSwitcher before giving up |
+| `8b3363b` | fix(VideoSwitcher): use subscription instead of interval |
+| `821e137` | fix(VideoSwitcher): handle race condition with registry reset |
+
+### Previous Session (Dec 19, 2025 - UX Polish + Security)
 
 | Task | Status | Notes |
 |------|--------|-------|
@@ -400,11 +422,11 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-19 | Codex GPT-5.2 | **VideoSwitcher Parsing** - unified parser + non-greedy regex + trailing comma cleanup; verify run |
+| 2025-12-19 | Codex GPT-5.2 | **VideoSwitcher Debugging** - registry race, subscription swap, wait state, memoized MDX parse; issue still intermittent |
 | 2025-12-19 | Claude      | **UX Polish** - FeedbackFAB mobile (auto-hide, bigger icon), Course sections (AI Path + MS365), P0-P3 RECOMMENDATIONS implemented |
 | 2025-12-19 | Claude+MACP | **L05 Restructure + L07 Creation** - 35min/2labs foundations, L07 Antigravity 25min/2labs, 6 new diagrams, MACP P0 improvements |
 | 2025-12-18 | Claude      | **Claude Code Mastery v2.0** - EN+CS beginner-friendly, WSL+terminal, Lab 0, 60min/4labs, GEMINI CHECKLIST added |
-| 2025-12-18 | Claude      | **YouTube MCP + MACP Cleanup** - Added YouTube transcript MCP, completed rate limit decision |
-| 2025-12-18 | Claude+GPT  | **P0-P2 Workflow Fixes** - GEMINI.md, MCP paths, secrets rule, pip-audit, MACP runner, metrics |
 
 ---
 
