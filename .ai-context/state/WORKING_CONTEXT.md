@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-19 00:15 (Agent: Claude)
-**Last Commit:** `5667335` feat: P2 workflow improvements - MACP runner, metrics, release checklist
-**Status:** 🟢 Full Upgrade v6.0 Complete | Archiving Done
+**Last Updated:** 2025-12-19 10:30 (Agent: Claude)
+**Last Commit:** `beb9de8` fix(CourseCarousel): improve MS365 badge + fix left edge
+**Status:** 🟢 UX Polish Session Complete
 
 ---
 
@@ -94,7 +94,49 @@
 
 ## 🎯 Current State
 
-### Latest Session (Dec 15, 2025 - Hetzner Migration)
+### Latest Session (Dec 19, 2025 - UX Polish + Security)
+
+| Task | Status | Notes |
+|------|--------|-------|
+| **P0-P3 RECOMMENDATIONS** | | |
+| Rate limiter IP detection | ✅ Done | `get_real_ip()` for Cloudflare/nginx proxy |
+| Admin password block | ✅ Done | Rejects "admin123" in production |
+| Sandbox security hardening | ✅ Done | read_only, no-new-privileges, cap_drop |
+| Content sync dry-run | ✅ Done | `dry_run=True` parameter |
+| Remove auto-create tables | ✅ Done | Rely on Alembic only |
+| Slug-based identity | ✅ Done | Upsert by slug, not title |
+| i18n hardcoded strings | ✅ Done | AIGlossary, CourseCarousel → next-intl |
+| AIGlossary physics opt | ✅ Done | rAF stops when cubes sleeping |
+| JediSithToggle a11y | ✅ Done | ARIA role/aria-checked/aria-label |
+| Error boundary | ✅ Done | `frontend/app/error.tsx` |
+| TypeScript any types | ✅ Done | `i18n/request.ts` proper interfaces |
+| **FeedbackFAB Mobile UX** | | |
+| Reduce touch target | ✅ Done | pointer-events-none on container |
+| Simple Bug icon | ✅ Done | Replaced SplitBugEyeIcon with lucide Bug |
+| Larger icon on mobile | ✅ Done | 36×36px icon in 44×44px button |
+| Auto-hide after 2s | ✅ Done | Shows on scroll/touch, fades after inactivity |
+| **Course Sections Split** | | |
+| AI Learning Path section | ✅ Done | 4 core difficulty-based courses |
+| MS 365 Productivity section | ✅ Done | Copilot course with special badge |
+| MS365 badge styling | ✅ Done | Orange text, dark bg, works in Sith mode |
+| Remove fade on single course | ✅ Done | No left/right fades for 1-course carousel |
+
+### Commits This Session
+
+| Hash | Message |
+|------|---------|
+| `3c9bbde` | feat: implement P0 + P1 security and architecture improvements |
+| `0e0adcd` | feat: implement P2 + P3 performance and quality improvements |
+| `e8310c6` | fix(FeedbackFAB): reduce touch target on mobile |
+| `9d4d02c` | fix(FeedbackFAB): use simple Bug icon for clarity |
+| `1fb27e3` | fix(FeedbackFAB): larger icon + lower position on mobile |
+| `27fe11d` | fix(FeedbackFAB): much larger button and icon on mobile |
+| `425e2d3` | fix(FeedbackFAB): tighter button around icon on mobile |
+| `3cb86c7` | feat(FeedbackFAB): auto-hide on mobile after 2s inactivity |
+| `3c81620` | feat: separate AI Learning Path from MS 365 Productivity courses |
+| `beb9de8` | fix(CourseCarousel): improve MS365 badge + fix left edge |
+
+### Previous Session (Dec 15, 2025 - Hetzner Migration)
 
 | Task | Status | Notes |
 |------|--------|-------|
@@ -358,12 +400,11 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-19 | Claude      | **UX Polish** - FeedbackFAB mobile (auto-hide, bigger icon), Course sections (AI Path + MS365), P0-P3 RECOMMENDATIONS implemented |
 | 2025-12-19 | Claude+MACP | **L05 Restructure + L07 Creation** - 35min/2labs foundations, L07 Antigravity 25min/2labs, 6 new diagrams, MACP P0 improvements |
 | 2025-12-18 | Claude      | **Claude Code Mastery v2.0** - EN+CS beginner-friendly, WSL+terminal, Lab 0, 60min/4labs, GEMINI CHECKLIST added |
 | 2025-12-18 | Claude      | **YouTube MCP + MACP Cleanup** - Added YouTube transcript MCP, completed rate limit decision |
 | 2025-12-18 | Claude+GPT  | **P0-P2 Workflow Fixes** - GEMINI.md, MCP paths, secrets rule, pip-audit, MACP runner, metrics |
-| 2025-12-18 | All 3 MACP  | **Multi-Agent v2.0** - 9 Codex profiles, routing rules, circuit breaker, proactive delegation |
-| 2025-12-18 | Claude      | **Tooling Fixes** - NVM/npmrc fix, GitHub MCP disabled, Gemini model rules, Codex auth     |
 
 ---
 
