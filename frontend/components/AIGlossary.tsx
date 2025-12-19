@@ -844,12 +844,15 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
                 />
 
                 {/* Term text */}
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute inset-0 flex items-center justify-center p-2">
                   <span
-                    className="text-white font-bold drop-shadow-lg text-center px-1 leading-tight"
+                    className="text-white font-bold drop-shadow-lg text-center leading-tight break-words hyphens-auto"
                     style={{
-                      fontSize: cubeSize < 100 ? '0.7rem' : cubeSize < 110 ? '0.8rem' : '0.9rem',
+                      fontSize: cubeSize < 100 ? '0.65rem' : cubeSize < 110 ? '0.75rem' : '0.85rem',
                       textShadow: `0 0 10px hsla(${term.hue}, 70%, 60%, 0.5)`,
+                      wordBreak: 'break-word',
+                      overflowWrap: 'break-word',
+                      maxWidth: '100%',
                     }}
                   >
                     {term.term[lang]}
