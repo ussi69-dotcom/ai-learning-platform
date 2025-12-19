@@ -145,7 +145,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
         ref={buttonRef}
         variant="ghost"
         className={cn(
-          "!rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center p-0 transition-all duration-300 touch-none border-2 backdrop-blur-md select-none pointer-events-auto",
+          "!rounded-full w-14 h-14 md:w-12 md:h-12 flex items-center justify-center p-0 transition-all duration-300 touch-none border-2 backdrop-blur-md select-none pointer-events-auto",
           currentMode === 'placing'
             ? "bg-primary hover:bg-primary/90 text-primary-foreground border-primary scale-110 cursor-grabbing shadow-[0_0_25px_rgba(var(--primary),0.6)]"
             : currentMode === 'viewing'
@@ -163,11 +163,11 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
         title={t('report_bug')}
       >
         {currentMode === 'placing' ? (
-          <Bug className="w-7 h-7 md:w-6 md:h-6" />
+          <Bug className="w-9 h-9 md:w-6 md:h-6" />
         ) : currentMode === 'viewing' ? (
-          <X className="w-6 h-6 md:w-5 md:h-5" />
+          <X className="w-8 h-8 md:w-5 md:h-5" />
         ) : (
-          <Bug className="w-7 h-7 md:w-6 md:h-6" />
+          <Bug className="w-9 h-9 md:w-6 md:h-6" />
         )}
       </Button>
 
