@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, use, useMemo } from "react";
 import { useRouter } from "@/i18n/routing"; // Updated import for routing
 import { Link } from "@/i18n/routing"; // Updated import for routing
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import { VideoPlayer } from "@/components/VideoPlayer";
+import { extractAlternativeVideos } from "@/lib/video-parsing";
 import Quiz, { QuizQuestion } from "@/components/Quiz";
 import LessonComplete from "@/components/LessonComplete";
 import ProgressDots from "@/components/mdx/ProgressDots";
@@ -96,6 +97,11 @@ export default function LessonPage({
   const slides = lesson ? splitIntoSlides(lesson.content) : [];
   const hasQuiz = quizzes.length > 0;
   const calculatedTotalPages = slides.length + (hasQuiz ? 1 : 0);
+
+  // Extract all alternative videos from the entire lesson content
+  const allAlternativeVideos = useMemo(() => {
+    return lesson ? extractAlternativeVideos(lesson.content) : [];
+  }, [lesson?.content]);
 
   // DEBUG: Check if content has VideoSwitcher
   useEffect(() => {
@@ -466,41 +472,42 @@ export default function LessonPage({
             </p>
           </div>
 
-          {/* Video Section - Now using VideoPlayer with context */}
+          {/* Video Section - VideoPlayer provides context for VideoSwitcher in content */}
+          {/* key={lessonId} ensures state resets when navigating between lessons */}
           <VideoPlayer
+            key={lessonId}
             fallbackUrl={lesson.video_url}
             fallbackTitle={lesson.title}
-            lessonKey={lessonId}
-          />
-
-          {/* Content Card */}
-          <div
-            id="lesson-content-container"
-            className="glass-panel rounded-3xl p-6 md:p-10 mb-8 min-h-[400px] relative animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 border border-border/50 shadow-xl shadow-primary/5 dark:shadow-primary/10 hover:shadow-2xl hover:shadow-primary/10 transition-shadow duration-500"
+            initialVideos={allAlternativeVideos}
           >
-            {/* Page Indicator (Top) */}
-            <div className="flex justify-between items-center mb-6 text-xs font-bold text-muted-foreground uppercase tracking-wider">
-              <span>
-                {locale === "cs" ? "Sekce" : "Section"} {currentPage + 1}{" "}
-                {locale === "cs" ? "z" : "of"} {calculatedTotalPages}
-              </span>
-              {isQuizPage && (
-                <span className="text-primary">
-                  {locale === "cs" ? "Závěrečný test" : "Final Challenge"}
+            {/* Content Card - rendered inside VideoPlayer for context access */}
+            <div
+              id="lesson-content-container"
+              className="glass-panel rounded-3xl p-6 md:p-10 mb-8 min-h-[400px] relative animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 border border-border/50 shadow-xl shadow-primary/5 dark:shadow-primary/10 hover:shadow-2xl hover:shadow-primary/10 transition-shadow duration-500"
+            >
+              {/* Page Indicator (Top) */}
+              <div className="flex justify-between items-center mb-6 text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                <span>
+                  {locale === "cs" ? "Sekce" : "Section"} {currentPage + 1}{" "}
+                  {locale === "cs" ? "z" : "of"} {calculatedTotalPages}
                 </span>
-              )}
-            </div>
-
-            {/* Formatted content */}
-            {!isQuizPage ? (
-              <div className="animate-in fade-in duration-300">
-                <MarkdownRenderer
-                  content={currentContent}
-                  courseSlug={course?.slug}
-                  lessonSlug={lesson?.slug}
-                />
+                {isQuizPage && (
+                  <span className="text-primary">
+                    {locale === "cs" ? "Závěrečný test" : "Final Challenge"}
+                  </span>
+                )}
               </div>
-            ) : (
+
+              {/* Formatted content */}
+              {!isQuizPage ? (
+                <div className="animate-in fade-in duration-300">
+                  <MarkdownRenderer
+                    content={currentContent}
+                    courseSlug={course?.slug}
+                    lessonSlug={lesson?.slug}
+                  />
+                </div>
+              ) : (
               <div className="animate-in zoom-in-95 duration-300">
                 <Quiz quizzes={quizzes} onComplete={() => {}} />
               </div>
@@ -535,7 +542,8 @@ export default function LessonPage({
                 ))}
               </div>
             )}
-          </div>
+            </div>
+          </VideoPlayer>
 
           {/* --- PRIMARY NAVIGATION (Page Control) --- */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-card/30 p-4 rounded-2xl border border-border/50 backdrop-blur-md shadow-lg shadow-black/5 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-300">

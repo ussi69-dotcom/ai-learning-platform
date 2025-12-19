@@ -13,6 +13,7 @@ import Diagram from './mdx/Diagram';
 import KeyTakeaway from './mdx/KeyTakeaway';
 import { YouTube } from './mdx/YouTube';
 import { VideoSwitcher } from './mdx/VideoSwitcher';
+import { parseVideoSwitcherTag } from '@/lib/video-parsing';
 
 interface MarkdownRendererProps {
   content: string;
@@ -84,28 +85,25 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
 
         console.log('[VideoSwitcher] Found tag, content:', tagContent.substring(0, 200));
 
-        // Parse videos/alternatives prop - expects JSON array format
-        // Support both "videos" (legacy) and "alternatives" (new format)
-        const videosMatch = tagContent.match(/(?:videos|alternatives)=\{(\[.*\])\}/);
+        const parsed = parseVideoSwitcherTag(tagContent);
 
-        console.log('[VideoSwitcher] Regex match:', videosMatch ? 'YES' : 'NO');
+        console.log('[VideoSwitcher] Regex match:', parsed.matched ? 'YES' : 'NO');
 
-        if (videosMatch) {
-          try {
-            let videosJson = videosMatch[1];
-            console.log('[VideoSwitcher] Raw JSON:', videosJson.substring(0, 100));
+        if (parsed.matched) {
+          console.log('[VideoSwitcher] Raw JSON:', parsed.rawJson.substring(0, 100));
 
-            // Only add quotes to unquoted keys (not already quoted)
-            videosJson = videosJson.replace(/(\{|,)\s*(\w+)\s*:/g, '$1"$2":');
+          if (parsed.error) {
+            console.error('[VideoSwitcher] Failed to parse videos:', parsed.error, parsed.rawJson);
+          } else {
+            console.log('[VideoSwitcher] Parsed videos:', parsed.videos.length);
 
-            const videos = JSON.parse(videosJson);
-            console.log('[VideoSwitcher] Parsed videos:', videos.length);
+            if (parsed.videos.length === 0) {
+              console.warn('[VideoSwitcher] Parsed 0 videos from:', parsed.rawJson.substring(0, 100));
+            }
 
             elements.push(
-              <VideoSwitcher key={`videoswitcher-${i}`} videos={videos} />
+              <VideoSwitcher key={`videoswitcher-${i}`} videos={parsed.videos} />
             );
-          } catch (e) {
-            console.error('[VideoSwitcher] Failed to parse videos:', e, videosMatch[1]);
           }
         } else {
           console.warn('[VideoSwitcher] No videos prop matched in:', tagContent);

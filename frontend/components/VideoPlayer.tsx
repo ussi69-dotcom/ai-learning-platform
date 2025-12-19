@@ -1,304 +1,243 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useLocale } from "next-intl";
-
-interface Video {
-  id: string;
-  title: string;
-  author?: string;
-  description?: string;
-  lang?: "en" | "cs";
-  isMain?: boolean;
-}
+import { VideoRegistryContext, Video } from "./mdx/VideoSwitcher";
 
 interface VideoPlayerProps {
   fallbackUrl?: string;
   fallbackTitle?: string;
-  /** Unique lesson identifier to reset video registry on navigation */
-  lessonKey?: string;
+  /** Content to render - VideoSwitcher inside will register videos via context */
+  children?: React.ReactNode;
+  /** Pre-extracted alternative videos to avoid race conditions with lazy-loaded slides */
+  initialVideos?: Video[];
 }
 
-// Global video registry for cross-component communication
-declare global {
-  interface Window {
-    __videoRegistry?: {
-      videos: Video[];
-      currentLessonKey: string | null;
-      listeners: Set<() => void>;
-      reset: (lessonKey: string) => void;
-      addVideos: (videos: Video[]) => void;
-      subscribe: (listener: () => void) => () => void;
-    };
-  }
-}
-
-function getVideoRegistry() {
-  if (typeof window === "undefined") return null;
-
-  if (!window.__videoRegistry) {
-    window.__videoRegistry = {
-      videos: [],
-      currentLessonKey: null,
-      listeners: new Set(),
-      reset: (lessonKey: string) => {
-        const registry = window.__videoRegistry!;
-        if (registry.currentLessonKey !== lessonKey) {
-          // Clear all videos when lesson changes
-          registry.videos = [];
-          registry.currentLessonKey = lessonKey;
-          registry.listeners.forEach((listener) => listener());
-        }
-      },
-      addVideos: (newVideos: Video[]) => {
-        const registry = window.__videoRegistry!;
-        newVideos.forEach((v) => {
-          if (!registry.videos.some((existing) => existing.id === v.id)) {
-            registry.videos.push(v);
-          }
-        });
-        registry.listeners.forEach((listener) => listener());
-      },
-      subscribe: (listener: () => void) => {
-        const registry = window.__videoRegistry!;
-        registry.listeners.add(listener);
-        return () => registry.listeners.delete(listener);
-      },
-    };
-  }
-  return window.__videoRegistry;
-}
-
+/**
+ * VideoPlayer wraps content and provides video registry context.
+ * VideoSwitcher components inside children can register videos.
+ *
+ * Key fix: Using React Context instead of global registry avoids
+ * race conditions between effect ordering during navigation.
+ */
 export const VideoPlayer = ({
   fallbackUrl,
   fallbackTitle,
-  lessonKey,
+  children,
+  initialVideos = [],
 }: VideoPlayerProps) => {
   const locale = useLocale();
   const [isPinned, setIsPinned] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const [videos, setVideos] = useState<Video[]>([]);
-  const [isWaitingForVideos, setIsWaitingForVideos] = useState(true);
-  const [, forceUpdate] = useState({});
   const initializedRef = useRef(false);
-  const waitTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Reset registry when lesson changes
+  // Initialize with fallback video and any initial videos
   useEffect(() => {
-    const registry = getVideoRegistry();
-    if (registry && lessonKey) {
-      registry.reset(lessonKey);
-    }
-    // Reset local state
-    setActiveVideoId(null);
-    setVideos([]);
-    setIsPinned(false);
-    setIsExpanded(false);
-    initializedRef.current = false;
-
-    // Start waiting for videos (give VideoSwitcher time to register)
-    setIsWaitingForVideos(true);
-    if (waitTimeoutRef.current) {
-      clearTimeout(waitTimeoutRef.current);
-    }
-    waitTimeoutRef.current = setTimeout(() => {
-      setIsWaitingForVideos(false);
-    }, 300); // Wait 300ms for VideoSwitcher to register videos
-
-    return () => {
-      if (waitTimeoutRef.current) {
-        clearTimeout(waitTimeoutRef.current);
-      }
-    };
-  }, [lessonKey]);
-
-  // Initialize with fallback video
-  useEffect(() => {
+    const baseVideos = [...initialVideos];
+    
     if (fallbackUrl && !initializedRef.current) {
       const id = extractVideoId(fallbackUrl);
       if (id) {
-        const registry = getVideoRegistry();
-        if (registry) {
-          const mainVideo: Video = {
-            id,
-            title: fallbackTitle || "Video",
-            isMain: true,
-          };
-          // Add main video only if not already present
-          if (!registry.videos.some((v) => v.id === id)) {
-            registry.videos.unshift(mainVideo);
-            registry.listeners.forEach((listener) => listener());
-          }
-        }
+        const mainVideo: Video = {
+          id,
+          title: fallbackTitle || "Video",
+          isMain: true,
+        };
+        
+        setVideos((prev) => {
+          // Merge initialVideos, existing videos, and main video
+          const combined = [mainVideo, ...baseVideos, ...prev];
+          const unique = Array.from(new Map(combined.map(v => [v.id, v])).values());
+          return unique;
+        });
+        
         setActiveVideoId(id);
         initializedRef.current = true;
+      } else {
+        // No valid fallback URL, just set initial videos
+        setVideos(prev => {
+          const combined = [...baseVideos, ...prev];
+          const unique = Array.from(new Map(combined.map(v => [v.id, v])).values());
+          return unique;
+        });
       }
+    } else if (initialVideos.length > 0) {
+      setVideos(prev => {
+        const combined = [...baseVideos, ...prev];
+        const unique = Array.from(new Map(combined.map(v => [v.id, v])).values());
+        return unique;
+      });
     }
-  }, [fallbackUrl, fallbackTitle, lessonKey]);
+  }, [fallbackUrl, fallbackTitle, initialVideos]);
 
-  // Subscribe to video registry changes
+  // Set first video as active if none selected
   useEffect(() => {
-    const registry = getVideoRegistry();
-    if (!registry) return;
-
-    const unsubscribe = registry.subscribe(() => {
-      const newVideos = [...registry.videos];
-      setVideos(newVideos);
-      // Stop waiting as soon as we have videos
-      if (newVideos.length > 0) {
-        setIsWaitingForVideos(false);
-        if (waitTimeoutRef.current) {
-          clearTimeout(waitTimeoutRef.current);
-        }
-      }
-      forceUpdate({});
-    });
-
-    const currentVideos = [...registry.videos];
-    setVideos(currentVideos);
-    if (currentVideos.length > 0) {
-      setIsWaitingForVideos(false);
+    if (!activeVideoId && videos.length > 0) {
+      setActiveVideoId(videos[0].id);
     }
-    return unsubscribe;
-  }, [lessonKey]);
+  }, [videos, activeVideoId]);
+
+  // Context callback for VideoSwitcher to add videos
+  const addVideos = useCallback((newVideos: Video[]) => {
+    if (!newVideos || newVideos.length === 0) return;
+
+    setVideos((currentVideos) => {
+      const existingIds = new Set(currentVideos.map((v) => v.id));
+      const videosToAdd = newVideos.filter(
+        (video) => video?.id && !existingIds.has(video.id)
+      );
+
+      if (videosToAdd.length === 0) return currentVideos;
+      return [...currentVideos, ...videosToAdd];
+    });
+  }, []);
 
   const activeVideo = videos.find((v) => v.id === activeVideoId) || videos[0];
   const alternativeVideos = videos.filter((v) => v.id !== activeVideo?.id);
 
-  // Don't render anything if no video and not waiting anymore
-  if (!activeVideo && !isWaitingForVideos) {
-    return null;
-  }
+  // Always render the wrapper with context provider
+  // This ensures VideoSwitcher can register videos even if no video yet
+  const contextValue = { addVideos };
 
-  // Show nothing while waiting (prevents flash of empty state)
-  if (!activeVideo && isWaitingForVideos) {
-    return null;
+  // If no video available, just render children with context
+  if (!activeVideo) {
+    return (
+      <VideoRegistryContext.Provider value={contextValue}>
+        {children}
+      </VideoRegistryContext.Provider>
+    );
   }
 
   const embedUrl = `https://www.youtube.com/embed/${activeVideo.id}?cc_load_policy=1&cc_lang_pref=${locale}&hl=${locale}`;
 
   return (
-    <div
-      className={`mb-10 transition-all duration-300 ${
-        isPinned
-          ? "sticky top-0 z-50 bg-background/98 backdrop-blur-xl py-4 -mx-4 px-4 shadow-2xl shadow-black/20 border-b border-border/50"
-          : ""
-      }`}
-      style={isPinned ? { marginTop: "-1rem" } : {}}
-    >
-      {/* Video Player */}
-      <div className="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-border/50 ring-1 ring-black/5">
-        <iframe
-          key={activeVideo.id}
-          className="w-full h-full"
-          src={embedUrl}
-          title={activeVideo.title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-      </div>
+    <VideoRegistryContext.Provider value={contextValue}>
+      <div
+        className={`mb-10 transition-all duration-300 ${
+          isPinned
+            ? "sticky top-0 z-50 bg-background/98 backdrop-blur-xl py-4 -mx-4 px-4 shadow-2xl shadow-black/20 border-b border-border/50"
+            : ""
+        }`}
+        style={isPinned ? { marginTop: "-1rem" } : {}}
+      >
+        {/* Video Player */}
+        <div className="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-border/50 ring-1 ring-black/5">
+          <iframe
+            key={activeVideo.id}
+            className="w-full h-full"
+            src={embedUrl}
+            title={activeVideo.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
 
-      {/* Current Video Info + Controls */}
-      <div className="flex items-center justify-between mt-3 gap-4 px-1">
-        <div className="flex-1 min-w-0 flex items-center gap-3">
-          {/* Language Badge */}
-          {activeVideo.lang && (
-            <span
-              className={`shrink-0 px-2 py-0.5 rounded text-xs font-bold ${
-                activeVideo.lang === "cs"
-                  ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                  : "bg-red-500/20 text-red-400 border border-red-500/30"
-              }`}
-            >
-              {activeVideo.lang === "cs" ? "🇨🇿 CZ" : "🇬🇧 EN"}
-            </span>
-          )}
+        {/* Current Video Info + Controls */}
+        <div className="flex items-center justify-between mt-3 gap-4 px-1">
+          <div className="flex-1 min-w-0 flex items-center gap-3">
+            {/* Language Badge */}
+            {activeVideo.lang && (
+              <span
+                className={`shrink-0 px-2 py-0.5 rounded text-xs font-bold ${
+                  activeVideo.lang === "cs"
+                    ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
+                    : "bg-red-500/20 text-red-400 border border-red-500/30"
+                }`}
+              >
+                {activeVideo.lang === "cs" ? "🇨🇿 CZ" : "🇬🇧 EN"}
+              </span>
+            )}
 
-          {/* Main Badge */}
-          {activeVideo.isMain && (
-            <span className="shrink-0 px-2 py-0.5 rounded text-xs font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
-              ⭐ MAIN
-            </span>
-          )}
+            {/* Main Badge */}
+            {activeVideo.isMain && (
+              <span className="shrink-0 px-2 py-0.5 rounded text-xs font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
+                ⭐ MAIN
+              </span>
+            )}
 
-          <div className="min-w-0">
-            <div className="text-sm font-medium text-foreground truncate">
-              {activeVideo.title}
+            <div className="min-w-0">
+              <div className="text-sm font-medium text-foreground truncate">
+                {activeVideo.title}
+              </div>
+              {activeVideo.author && (
+                <div className="text-xs text-muted-foreground">
+                  👤 {activeVideo.author}
+                </div>
+              )}
             </div>
-            {activeVideo.author && (
-              <div className="text-xs text-muted-foreground">
-                👤 {activeVideo.author}
+          </div>
+
+          {/* Pin Button */}
+          <button
+            onClick={() => setIsPinned(!isPinned)}
+            className={`
+              px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200
+              flex items-center gap-1.5 shrink-0
+              ${
+                isPinned
+                  ? "bg-primary text-primary-foreground shadow-lg"
+                  : "bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-foreground border border-white/10"
+              }
+            `}
+          >
+            <span>{isPinned ? "📌" : "📍"}</span>
+            <span className="hidden sm:inline">
+              {isPinned ? "Odepnout" : "Připnout"}
+            </span>
+          </button>
+        </div>
+
+        {/* Alternative Videos Dropdown */}
+        {alternativeVideos.length > 0 && (
+          <div className="mt-4">
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="w-full flex items-center justify-between px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-200"
+            >
+              <div className="flex items-center gap-2">
+                <span>🎬</span>
+                <span className="text-sm font-medium">
+                  {locale === "cs"
+                    ? "Další doporučená videa"
+                    : "More recommended videos"}
+                </span>
+                <span className="text-xs text-muted-foreground bg-white/10 px-2 py-0.5 rounded-full">
+                  {alternativeVideos.length}
+                </span>
+              </div>
+              <span
+                className={`transition-transform duration-200 ${
+                  isExpanded ? "rotate-180" : ""
+                }`}
+              >
+                ▼
+              </span>
+            </button>
+
+            {isExpanded && (
+              <div className="mt-3 space-y-3 animate-in slide-in-from-top-2 duration-200">
+                {alternativeVideos.map((video) => (
+                  <VideoCard
+                    key={video.id}
+                    video={video}
+                    onSelect={() => {
+                      setActiveVideoId(video.id);
+                      setIsExpanded(false);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                  />
+                ))}
               </div>
             )}
           </div>
-        </div>
-
-        {/* Pin Button */}
-        <button
-          onClick={() => setIsPinned(!isPinned)}
-          className={`
-            px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200
-            flex items-center gap-1.5 shrink-0
-            ${
-              isPinned
-                ? "bg-primary text-primary-foreground shadow-lg"
-                : "bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-foreground border border-white/10"
-            }
-          `}
-        >
-          <span>{isPinned ? "📌" : "📍"}</span>
-          <span className="hidden sm:inline">
-            {isPinned ? "Odepnout" : "Připnout"}
-          </span>
-        </button>
+        )}
       </div>
 
-      {/* Alternative Videos Dropdown */}
-      {alternativeVideos.length > 0 && (
-        <div className="mt-4">
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="w-full flex items-center justify-between px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-200"
-          >
-            <div className="flex items-center gap-2">
-              <span>🎬</span>
-              <span className="text-sm font-medium">
-                {locale === "cs"
-                  ? "Další doporučená videa"
-                  : "More recommended videos"}
-              </span>
-              <span className="text-xs text-muted-foreground bg-white/10 px-2 py-0.5 rounded-full">
-                {alternativeVideos.length}
-              </span>
-            </div>
-            <span
-              className={`transition-transform duration-200 ${
-                isExpanded ? "rotate-180" : ""
-              }`}
-            >
-              ▼
-            </span>
-          </button>
-
-          {isExpanded && (
-            <div className="mt-3 space-y-3 animate-in slide-in-from-top-2 duration-200">
-              {alternativeVideos.map((video) => (
-                <VideoCard
-                  key={video.id}
-                  video={video}
-                  onSelect={() => {
-                    setActiveVideoId(video.id);
-                    setIsExpanded(false);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+      {/* Render children (MarkdownRenderer) after video player */}
+      {children}
+    </VideoRegistryContext.Provider>
   );
 };
 
@@ -407,6 +346,9 @@ function extractVideoId(url: string): string | null {
 
   const shortMatch = url.match(/youtu\.be\/([^?]+)/);
   if (shortMatch) return shortMatch[1];
+
+  // Last resort: if it looks like a YouTube ID
+  if (/^[a-zA-Z0-9_-]{10,12}$/.test(url)) return url;
 
   return null;
 }
