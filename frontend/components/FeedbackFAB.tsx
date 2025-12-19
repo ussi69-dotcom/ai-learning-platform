@@ -18,8 +18,43 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
   const [isDragging, setIsDragging] = useState(false);
   const [draggedPosition, setDraggedPosition] = useState<{ x: number; y: number } | null>(null);
   const [dragStartPos, setDragStartPos] = useState<{ x: number; y: number } | null>(null);
+  const [isVisibleOnMobile, setIsVisibleOnMobile] = useState(true);
+  const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const t = useTranslations('Feedback');
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Auto-hide on mobile after 2s of inactivity
+  useEffect(() => {
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    if (!isMobile) return;
+
+    const showAndResetTimer = () => {
+      setIsVisibleOnMobile(true);
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+      hideTimeoutRef.current = setTimeout(() => {
+        setIsVisibleOnMobile(false);
+      }, 2000);
+    };
+
+    // Show initially, then start timer
+    showAndResetTimer();
+
+    // Listen to activity events
+    window.addEventListener('scroll', showAndResetTimer, { passive: true });
+    window.addEventListener('touchstart', showAndResetTimer, { passive: true });
+    window.addEventListener('click', showAndResetTimer);
+
+    return () => {
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+      window.removeEventListener('scroll', showAndResetTimer);
+      window.removeEventListener('touchstart', showAndResetTimer);
+      window.removeEventListener('click', showAndResetTimer);
+    };
+  }, []);
 
   // Unified toggle: Idle -> Viewing -> Idle
   // Placing is handled via drag from ANY state
@@ -117,7 +152,10 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
 
 
   return (
-    <div className="fixed bottom-4 md:bottom-20 right-4 md:right-6 z-40 flex flex-col items-end space-y-2 group/fab pointer-events-none">
+    <div className={cn(
+      "fixed bottom-4 md:bottom-20 right-4 md:right-6 z-40 flex flex-col items-end space-y-2 group/fab pointer-events-none transition-opacity duration-300",
+      isVisibleOnMobile ? "opacity-100" : "opacity-0 md:opacity-100"
+    )}>
       {/* Instructions - placing and viewing always visible, idle only on hover */}
       {currentMode === 'placing' && (
         <div className="bg-black/60 backdrop-blur-xl border border-primary/50 text-primary-foreground px-4 py-2 rounded-xl shadow-[0_0_15px_rgba(var(--primary),0.3)] text-sm flex items-center gap-2 animate-in slide-in-from-right fade-in duration-300 mb-2">
