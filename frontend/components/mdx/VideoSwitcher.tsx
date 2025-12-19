@@ -19,67 +19,67 @@ interface VideoSwitcherProps {
  * VideoSwitcher registers videos with the VideoPlayer via global registry.
  * Place this component in MDX content to add alternative videos.
  *
- * Handles race conditions by:
- * 1. Subscribing to registry changes
- * 2. Re-adding videos if they get cleared (e.g., after lesson navigation)
+ * Uses subscription pattern to handle race conditions:
+ * - Subscribes to registry changes
+ * - Re-adds videos when registry is reset (e.g., lesson navigation)
  */
 export const VideoSwitcher = ({ videos: propVideos }: VideoSwitcherProps) => {
-  const registeredRef = useRef(false);
   const videosRef = useRef(propVideos);
+  const mountedRef = useRef(true);
   videosRef.current = propVideos;
 
   useEffect(() => {
+    mountedRef.current = true;
+
     if (!propVideos || propVideos.length === 0 || typeof window === 'undefined') {
       return;
     }
 
-    const registerVideos = () => {
+    let unsubscribe: (() => void) | null = null;
+    let retryTimeout: NodeJS.Timeout | null = null;
+
+    const ensureVideosRegistered = () => {
+      if (!mountedRef.current) return;
+
       const registry = (window as any).__videoRegistry;
-      if (registry && typeof registry.addVideos === 'function') {
-        // Check if our videos are already in the registry
-        const ourVideoIds = videosRef.current.map(v => v.id);
-        const existingIds = registry.videos.map((v: Video) => v.id);
-        const needsRegistration = ourVideoIds.some(id => !existingIds.includes(id));
+      if (!registry || typeof registry.addVideos !== 'function') return;
 
-        if (needsRegistration) {
-          registry.addVideos(videosRef.current);
-          registeredRef.current = true;
-        }
-        return true;
-      }
-      return false;
-    };
+      // Check if our videos are missing from registry
+      const ourVideoIds = videosRef.current.map(v => v.id);
+      const existingIds = registry.videos.map((v: Video) => v.id);
+      const needsRegistration = ourVideoIds.some(id => !existingIds.includes(id));
 
-    // Initial registration with retry
-    const tryRegister = () => {
-      if (!registerVideos()) {
-        // Retry if registry not ready
-        setTimeout(tryRegister, 100);
+      if (needsRegistration) {
+        registry.addVideos(videosRef.current);
       }
     };
 
-    // Wait for VideoPlayer to mount and create registry
-    const initialDelay = setTimeout(tryRegister, 50);
+    const trySubscribe = () => {
+      if (!mountedRef.current) return;
 
-    // Subscribe to registry changes to re-add videos if cleared
-    const checkInterval = setInterval(() => {
       const registry = (window as any).__videoRegistry;
-      if (registry && registeredRef.current) {
-        // Check if our videos got cleared (e.g., by lesson navigation)
-        const ourVideoIds = videosRef.current.map(v => v.id);
-        const existingIds = registry.videos.map((v: Video) => v.id);
-        const videosCleared = ourVideoIds.some(id => !existingIds.includes(id));
+      if (registry && typeof registry.subscribe === 'function') {
+        // Register videos first
+        ensureVideosRegistered();
 
-        if (videosCleared) {
-          registry.addVideos(videosRef.current);
-        }
+        // Subscribe to future changes (e.g., registry reset on lesson change)
+        unsubscribe = registry.subscribe(() => {
+          // Small delay to let reset complete before re-adding
+          setTimeout(ensureVideosRegistered, 10);
+        });
+      } else {
+        // Registry not ready, retry
+        retryTimeout = setTimeout(trySubscribe, 100);
       }
-    }, 200);
+    };
+
+    // Start subscription process after short delay
+    retryTimeout = setTimeout(trySubscribe, 50);
 
     return () => {
-      clearTimeout(initialDelay);
-      clearInterval(checkInterval);
-      registeredRef.current = false;
+      mountedRef.current = false;
+      if (retryTimeout) clearTimeout(retryTimeout);
+      if (unsubscribe) unsubscribe();
     };
   }, [propVideos]);
 
