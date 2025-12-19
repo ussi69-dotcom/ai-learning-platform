@@ -117,7 +117,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
 
 
   return (
-    <div className="fixed bottom-28 md:bottom-20 right-4 md:right-6 z-40 flex flex-col items-end space-y-2 group/fab pointer-events-none">
+    <div className="fixed bottom-4 md:bottom-20 right-4 md:right-6 z-40 flex flex-col items-end space-y-2 group/fab pointer-events-none">
       {/* Instructions - placing and viewing always visible, idle only on hover */}
       {currentMode === 'placing' && (
         <div className="bg-black/60 backdrop-blur-xl border border-primary/50 text-primary-foreground px-4 py-2 rounded-xl shadow-[0_0_15px_rgba(var(--primary),0.3)] text-sm flex items-center gap-2 animate-in slide-in-from-right fade-in duration-300 mb-2">
@@ -163,11 +163,11 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
         title={t('report_bug')}
       >
         {currentMode === 'placing' ? (
-          <Bug size={20} />
+          <Bug className="w-7 h-7 md:w-6 md:h-6" />
         ) : currentMode === 'viewing' ? (
-          <X size={20} />
+          <X className="w-6 h-6 md:w-5 md:h-5" />
         ) : (
-          <Bug size={20} />
+          <Bug className="w-7 h-7 md:w-6 md:h-6" />
         )}
       </Button>
 
