@@ -375,12 +375,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Seznam Kurzů */}
+      {/* AI Learning Path - Core Courses */}
       <section className="w-full py-12 md:py-16 container px-4 mx-auto">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
             <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-700 dark:from-red-600 dark:via-red-500 dark:to-red-800 bg-clip-text text-transparent">
-              {locale === "cs" ? "📚 Všechny kurzy" : "📚 All Courses"}
+              {locale === "cs" ? "🎯 AI Learning Path" : "🎯 AI Learning Path"}
             </h2>
             {user && (
               <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
@@ -416,13 +416,36 @@ export default function HomePage() {
           </div>
         ) : (
           <CourseCarousel
-            courses={courses}
+            courses={courses.filter(c => c.slug !== "microsoft-copilot-mastery")}
             locale={locale}
             userLevel={user.calculated_level}
             showRecommended={true}
           />
         )}
       </section>
+
+      {/* Optional - MS 365 Productivity */}
+      {user && courses.some(c => c.slug === "microsoft-copilot-mastery") && (
+        <section className="w-full py-8 md:py-12 container px-4 mx-auto">
+          <div className="mb-6">
+            <h2 className="text-xl md:text-2xl font-bold text-muted-foreground">
+              {locale === "cs" ? "📎 MS 365 Produktivita" : "📎 MS 365 Productivity"}
+            </h2>
+            <p className="text-sm text-muted-foreground/70 mt-1">
+              {locale === "cs"
+                ? "Volitelný kurz pro uživatele Microsoft ekosystému"
+                : "Optional course for Microsoft ecosystem users"}
+            </p>
+          </div>
+          <CourseCarousel
+            courses={courses.filter(c => c.slug === "microsoft-copilot-mastery")}
+            locale={locale}
+            userLevel={user.calculated_level}
+            showRecommended={false}
+            specialBadge="ms365"
+          />
+        </section>
+      )}
 
       {/* AI Glossary - Interactive Terms */}
       <AIGlossary locale={locale} />

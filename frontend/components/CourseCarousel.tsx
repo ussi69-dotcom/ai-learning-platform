@@ -39,6 +39,7 @@ interface CourseCarouselProps {
   locale: string;
   userLevel?: string;
   showRecommended?: boolean;
+  specialBadge?: "ms365"; // Custom badge instead of difficulty
 }
 
 export default function CourseCarousel({
@@ -46,6 +47,7 @@ export default function CourseCarousel({
   locale,
   userLevel,
   showRecommended = false,
+  specialBadge,
 }: CourseCarouselProps) {
   const t = useTranslations("Course");
   const [expanded, setExpanded] = useState(false);
@@ -113,15 +115,22 @@ export default function CourseCarousel({
               {t("recommended")}
             </span>
           )}
-          {/* Difficulty badge */}
-          <span className="absolute top-2 right-2 text-[9px] font-bold bg-black/50 backdrop-blur-md text-white px-2 py-1 rounded-full border border-white/10 flex items-center gap-1">
-            <DifficultyIcon
-              level={course.difficulty_level}
-              size={10}
-              className="text-white"
-            />
-            {COURSE_DIFFICULTY_LABELS[course.difficulty_level]}
-          </span>
+          {/* Badge - either special or difficulty */}
+          {specialBadge === "ms365" ? (
+            <span className="absolute top-2 right-2 text-[9px] font-bold bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-2 py-1 rounded-full border border-white/20 flex items-center gap-1 shadow-lg">
+              <span className="text-[10px]">📎</span>
+              {locale === "cs" ? "Pro MS 365" : "For MS 365"}
+            </span>
+          ) : (
+            <span className="absolute top-2 right-2 text-[9px] font-bold bg-black/50 backdrop-blur-md text-white px-2 py-1 rounded-full border border-white/10 flex items-center gap-1">
+              <DifficultyIcon
+                level={course.difficulty_level}
+                size={10}
+                className="text-white"
+              />
+              {COURSE_DIFFICULTY_LABELS[course.difficulty_level]}
+            </span>
+          )}
         </div>
 
         <CardHeader className="pb-1 pt-2 px-4">
