@@ -60,6 +60,7 @@
 | **DATABASE_MIGRATIONS.md** | Alembic workflow |
 | **DOMAIN_CHANGE_GUIDE.md** | Změna domény |
 | **INCIDENT_REPORTING.md** | Hlášení incidentů |
+| **RELEASE_CHECKLIST.md** | Pre-release QA checklist |
 
 ### 📚 Learning (`/learning`)
 > *Knowledge Base.*
@@ -77,14 +78,32 @@
 | Soubor | Obsah |
 |--------|-------|
 | **GITHUB_GUIDE.md** | GitHub workflow |
-| **\*_2ndcourse.md** | Research pro Phase 2 kurzy |
+| **LESSON_PRODUCTION_WORKFLOW.md** | Content creation workflow |
 
-### ⚫ Archive (`/history`)
+### 📋 Templates (`/templates`)
+> *Copy & Fill. Šablony pro multi-agent workflow.*
+
+| Soubor | Kdy použít |
+|--------|------------|
+| **DEBUG_PACKET.md** | Před voláním GPT-5.2 pro debugging |
+| **VISUAL_QA_REQUEST.md** | Před voláním Gemini pro visual QA |
+| **TASK_BRIEF.md** | Delegování úkolů agentům |
+| **MACP_PROMPT.md** | Multi-Agent Consensus voting |
+
+### ⚙️ Config Files (root of .ai-context)
+> *System configuration for portable workflow.*
+
+| Soubor | Účel |
+|--------|------|
+| **_bootstrap.sh** | One-command setup pro nový projekt |
+| **_config.yaml** | Project-agnostic konfigurace v6.0 |
+
+### ⚫ Archive (`/history/archive`)
 > *NEČÍST při startu. Historické záznamy.*
 
-- `completed_cycles/` - Staré cykly
-- `incidents/` - Incident reports
-- `archive/` - Archivované dokumenty
+- `completed_cycles/` - Staré vývojové cykly
+- `2025-Q4-cleanup/` - Archivované reports, research, A/B testy
+- `incidents/` - Incident reports (RCA)
 
 ---
 
@@ -120,6 +139,6 @@
 
 ---
 
-*Version: 3.0*
-*Updated: 2025-12-06*
-*Previous: INDEX.md v2.0 (archived)*
+*Version: 3.1*
+*Updated: 2025-12-19*
+*Previous: INDEX.md v3.0*

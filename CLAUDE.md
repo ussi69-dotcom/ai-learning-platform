@@ -25,6 +25,32 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ---
 
+## 🔄 Context Recovery Protocol (Po komprimaci/resumption)
+
+**⚠️ POKUD čteš toto po context compression nebo "conversation continued":**
+
+Toto je seznam pravidel která se NEJČASTĚJI ztrácejí po komprimaci. Zkontroluj je!
+
+### TOP 5 Survival Rules (NIKDY nezapomeň):
+
+1. **📖 WORKING_CONTEXT.md FIRST** - Vždy přečti před akcí
+2. **🔇 THIN PROTOCOL** - Do chatu jen summary + paths, ne dumps
+3. **🎯 DELEGACE** - Content → Gemini, Hard bugs → GPT-5.2 (Codex)
+4. **✅ VERIFY BEFORE COMMIT** - `npm run verify` MUSÍ projít
+5. **❓ BIG CHANGES → ASK** - Velké změny bez souhlasu uživatele = zakázáno
+
+### Self-Check After Resumption:
+```
+□ Vím co je aktuální task? (Pokud ne → Read WORKING_CONTEXT.md)
+□ Pamatuji si pravidla delegace? (Pokud ne → Re-read sekci níže)
+□ Vím jaký model použít pro Gemini? (gemini -m gemini-3-pro-preview)
+□ Mám aktualizovat WORKING_CONTEXT.md? (Pokud brzy compact → ANO!)
+```
+
+**TIP:** Pokud si nejsi jistý, znovu přečti celý tento soubor od začátku.
+
+---
+
 ## ⛔ CRITICAL_RULES (vždy viditelné - NEIGNORUJ!)
 
 ### 🎯 Delegace (PROAKTIVNÍ - nečekej až budeš stuck!)
@@ -42,11 +68,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | **Content/lekce** | Gemini | Pro | Task Brief → generate |
 | **UX/copy review** | Gemini | Pro | "Is this confusing?" |
 
-> ⚠️ **MODEL RULES:**
+> ⚠️ **MODEL RULES (POVINNÉ!):**
 > - **Gemini Content/Research/QA:** `gemini -m gemini-3-pro-preview`
 > - **Gemini Quick tasks:** `gemini` bez flagu = Flash
 > - **Codex:** `codex exec -p [profile]` (NIKDY interaktivní mód!)
 > - **MACP (oba):** User-facing UI+logic, Security UX, Release candidate
+>
+> ❌ **ZAKÁZANÉ MODELY:** `gemini-2.5-pro`, `gemini-2.5-flash`, `gemini-exp-*`
+> ⚠️ **SELHÁNÍ 2025-12-18:** Volán špatný model → přidán GEMINI CHECKLIST do WORKING_CONTEXT.md
 
 ### 🔇 Thin Protocol (VŽDY!)
 
@@ -80,7 +109,7 @@ Aktivuj když: Security změny | DB migrace | Breaking API | >30min stuck + 2 fa
 | Multi-agent/MACP | `.ai-context/AGENT_PROTOCOL.md` | Domain weights, handoff |
 | Debug >30min | `.ai-context/state/MEMORY.md` → Lessons | Neopakuj stejné chyby |
 | Architektura | `.ai-context/core/ARCHITECTURE.md` | Struktura systému |
-| GPT-5.2 volání | `.ai-context/CODEX.md` | Debug Packet template |
+| GPT-5.2 volání | `CODEX.md` | Debug Packet template |
 
 ---
 
@@ -251,7 +280,7 @@ npm install
 cd frontend && npm install && cd ..
 
 # 4. Copy environment file
-cp .env.example .env  # or create from template in CLAUDE.md
+cp .env.prod.example .env  # or create from template in CLAUDE.md
 
 # 5. Start platform
 make up

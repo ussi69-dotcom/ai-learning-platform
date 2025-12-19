@@ -2,7 +2,21 @@
 
 **Last Updated:** 2025-12-19 00:15 (Agent: Claude)
 **Last Commit:** `5667335` feat: P2 workflow improvements - MACP runner, metrics, release checklist
-**Status:** 🟢 L05 Restructure Complete | MACP Review + P0 Improvements Done
+**Status:** 🟢 Full Upgrade v6.0 Complete | Archiving Done
+
+---
+
+## 🚨 SURVIVAL RULES (Po komprimaci kontextu - VŽDY zkontroluj!)
+
+| # | Pravidlo | Kontrola |
+|---|----------|----------|
+| 1 | **THIN PROTOCOL** - žádné dumps do chatu | □ |
+| 2 | **Content → Gemini Pro** (`gemini -m gemini-3-pro-preview`) | □ |
+| 3 | **Hard bugs → GPT-5.2** (`codex exec -p deep`) | □ |
+| 4 | **VERIFY před commit** (`npm run verify`) | □ |
+| 5 | **Velké změny → zeptej se uživatele** | □ |
+
+> ⚠️ Po resumption VŽDY přečti celý CLAUDE.md!
 
 ---
 

@@ -67,6 +67,18 @@ services:
     volumes:
       - redis_data:/data
 
+  nginx:
+    image: nginx:alpine
+    container_name: ai-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+
   # --- NOVÁ SEKCE PRO N8N ---
   n8n:
     image: n8nio/n8n:latest

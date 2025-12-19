@@ -395,6 +395,89 @@ Task(
 
 ---
 
+## 🔄 Fallback Strategy (No Subagents)
+
+**Kdy:** Task tool / subagenti NEJSOU dostupní (některé prostředí, verze CLI).
+
+**Key:** Workflow funguje i bez subagentů, jen pomaleji.
+
+### Fallback Mapping
+
+| Instead of Subagent | Use Direct Tools |
+|---------------------|------------------|
+| `Task(Explore)` | `Grep(pattern="...")` + `Glob(pattern="*.tsx")` + targeted `Read` |
+| `Task(Plan)` | Manual planning v chatu (EnterPlanMode tool) |
+| `Task(general-purpose)` | Sequential tool calls (Read → Edit → Read → Edit) |
+| Parallel subagents | Sequential operations (slower but works) |
+
+### Explore Fallback Example
+
+**With Subagent:**
+```javascript
+Task(subagent_type="Explore", prompt="Find all avatar rendering code")
+```
+
+**Without Subagent (Fallback):**
+```bash
+# Step 1: Find files
+Grep(pattern="avatar", glob="*.tsx")
+Glob(pattern="**/avatar*.tsx")
+
+# Step 2: Read promising files
+Read(file_path="frontend/components/Avatar.tsx")
+Read(file_path="frontend/components/UserAvatar.tsx")
+
+# Step 3: Follow imports/references
+Grep(pattern="import.*Avatar")
+```
+
+### Plan Fallback Example
+
+**With Subagent:**
+```javascript
+Task(subagent_type="Plan", prompt="Design achievements system")
+```
+
+**Without Subagent (Fallback):**
+```markdown
+Use EnterPlanMode tool, then:
+1. Read relevant files (models.py, existing features)
+2. Write plan to plan file
+3. Use AskUserQuestion for architectural decisions
+4. Exit plan mode when ready
+```
+
+### General Purpose Fallback Example
+
+**With Subagent:**
+```javascript
+Task(subagent_type="general-purpose", prompt="Fix all TypeScript errors")
+```
+
+**Without Subagent (Fallback):**
+```bash
+# Step 1: Run build, capture errors
+Bash(command="cd frontend && npm run build 2>&1 | head -100")
+
+# Step 2: Parse errors manually, fix one by one
+Read(file_path="problematic-file.tsx")
+Edit(file_path="problematic-file.tsx", old_string="...", new_string="...")
+
+# Step 3: Repeat until clean
+```
+
+### Efficiency Comparison
+
+| Approach | Time | Effort | Best For |
+|----------|------|--------|----------|
+| **Subagents** | ⚡ Fast | 🤖 Autonomous | Complex exploration, bulk ops |
+| **Direct Tools** | ⏱️ Slower | 👤 Manual | Known targets, simple edits |
+| **Hybrid** | ⚡⚡ Balanced | 🤝 Semi-auto | Most real-world tasks |
+
+**Tip:** Pokud subagenti nejsou dostupní, stále můžeš delegovat na GPT-5.2 (Codex CLI) nebo Gemini CLI - ty fungují vždy!
+
+---
+
 ## 🚀 Best Practices
 
 ### Do:
@@ -428,6 +511,6 @@ Track subagent effectiveness:
 ---
 
 **Maintained by:** Senior Architect (Claude Code)
-**Last Updated:** 2025-12-02
+**Last Updated:** 2025-12-18
 **Status:** Active
 **Next Review:** When new subagent types are released

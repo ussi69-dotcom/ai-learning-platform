@@ -1,18 +1,22 @@
 {
-  "title": "Claude Code Mastery: Advanced AI-Assisted Development",
-  "title_cs": "Mistrovství v Claude Code: Pokročilý AI-asistovaný vývoj",
-  "description": "Master Claude Code's advanced features - hooks, MCP servers, plan mode, and multi-agent delegation for professional software development.",
-  "description_cs": "Ovládněte pokročilé funkce Claude Code - hooks, MCP servery, plan mode a multi-agent delegaci pro profesionální vývoj softwaru.",
+  "title": "Claude Code Mastery: From Beginner to Orchestrator",
+  "title_cs": "Mistrovství v Claude Code: Od začátečníka k orchestrátorovi",
+  "description": "Learn Claude Code from absolute basics (installation, WSL, terminal) to advanced agentic workflows. Master the PSB system, 10 rules for better output, MCP servers, hooks, and sub-agents.",
+  "description_cs": "Naučte se Claude Code od úplných základů (instalace, WSL, terminál) až po pokročilá agentní workflow. Ovládněte systém PSB, 10 pravidel pro lepší výstupy, MCP servery, hooks a sub-agenty.",
   "order": 6,
-  "video_url": "https://www.youtube.com/embed/SUysp3sJHbA",
-  "tags": ["claude-code", "ai-coding", "mcp", "hooks", "agentic-development", "cursor", "windsurf"],
+  "video_url": "https://www.youtube.com/embed/UVJXh57MgI0",
+  "tags": ["claude-code", "psb-system", "mcp", "hooks", "sub-agents", "plan-mode", "agentic-development", "wsl", "terminal", "beginner-friendly"],
   "prerequisites": ["05-ai-powered-development"],
   "learning_objectives": [
-    "Configure Claude Code hooks for automated workflows",
-    "Set up and use MCP servers for extended capabilities",
-    "Master plan mode for complex multi-file implementations",
-    "Delegate tasks effectively using multi-agent patterns",
-    "Debug effectively with AI-assisted error analysis",
-    "Integrate Claude Code with Cursor and Windsurf workflows"
+    "Set up development environment including WSL on Windows and terminal basics",
+    "Install and configure Claude Code CLI with Anthropic API key",
+    "Complete your first project using the prompt → review → approve cycle",
+    "Apply the PSB (Plan, Setup, Build) system for structured AI development",
+    "Create and configure CLAUDE.md project constitution files",
+    "Use the 10 rules for better AI output quality",
+    "Master Plan Mode for complex multi-file implementations",
+    "Set up MCP servers for external tool integration (GitHub, databases)",
+    "Configure hooks for automated workflows",
+    "Leverage sub-agents for specialized tasks"
   ]
 }

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Auto-update WORKING_CONTEXT.md after successful commit
+# This ensures commit hash and timestamp are always current
+
+./scripts/update-working-context.sh || true
+
+# Stage the updated context file for next commit (if changed)
+git add .ai-context/state/WORKING_CONTEXT.md 2>/dev/null || true

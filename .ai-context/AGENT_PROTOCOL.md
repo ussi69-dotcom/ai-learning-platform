@@ -607,11 +607,12 @@ Pro kompletní přehled dokumentace viz:
 
 ---
 
-## 🔧 Subagent Usage (POVINNÉ!)
+## 🔧 Subagent Usage (Doporučeno)
 
 **Před použitím subagenta přečti:** `workflows/SUBAGENT_STRATEGY.md`
+**Fallback když nejsou dostupní:** Viz sekce "Fallback Strategy" ve SUBAGENT_STRATEGY.md
 
-### MUSÍŠ použít subagenta když:
+### PREFERUJ subagenta když (pokud je dostupný):
 | Situace | Agent | Proč |
 |---------|-------|------|
 | "Kde je X v kódu?" | `Explore` | Prozkoumá celý codebase, ne jen první match |
@@ -730,7 +731,7 @@ print(interaction.output)  # Detailed research report
 | Hledám konkrétní třídu/funkci | `Grep` tool |
 | Jednoduchá změna | `Edit` tool |
 
-**Pravidlo:** Pokud nevíš kde něco je → **VŽDY** použij Explore agenta!
+**Pravidlo:** Pokud nevíš kde něco je → **preferuj** Explore agenta (nebo Grep+Read fallback).
 
 ---
 
@@ -775,7 +776,8 @@ print(interaction.output)  # Detailed research report
 
 ---
 
-*Version: 3.0*
+*Version: 5.1*
 *Created: 2025-12-06*
+*Last Updated: 2025-12-18*
 *Maintained by: All agents*
 *Next review: Monthly or at major changes*

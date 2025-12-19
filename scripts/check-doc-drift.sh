@@ -70,7 +70,55 @@ if [ "$DOCKERFILE_PYTHON" != "unknown" ] && [ "$DOC_PYTHON" != "unknown" ]; then
     fi
 fi
 
-# 4. Check decision log exists
+# 4. Check internal markdown links in docs
+echo ""
+echo "🔗 Checking internal markdown links..."
+# Find all markdown links like [text](path) and verify paths exist
+for doc in CLAUDE.md CODEX.md GEMINI.md .ai-context/*.md .ai-context/**/*.md; do
+    if [ -f "$doc" ]; then
+        # Extract paths from markdown links (excluding http/https)
+        grep -oP '\[.*?\]\(\K[^)]+(?=\))' "$doc" 2>/dev/null | grep -v '^http' | while read -r link; do
+            # Skip anchors (#section)
+            if [[ "$link" == \#* ]]; then
+                continue
+            fi
+            # Skip known placeholders (URL, file://, mailto:)
+            if [[ "$link" == "URL" ]] || [[ "$link" == file://* ]] || [[ "$link" == mailto:* ]]; then
+                continue
+            fi
+            # Remove anchor from path
+            path="${link%%#*}"
+            # Check if path exists (relative to repo root)
+            if [ -n "$path" ] && [ ! -e "$path" ]; then
+                echo -e "${RED}✗ Broken link in $doc: $link${NC}"
+                ERRORS=$((ERRORS + 1))
+            fi
+        done
+    fi
+done
+
+# 5. Check for known drift patterns
+echo ""
+echo "🔎 Checking for known drift patterns..."
+KNOWN_DRIFTS=(
+    ".ai-context/CODEX.md:CODEX.md is in root not .ai-context"
+    ".env.example:Should be .env.prod.example"
+    "@context7/mcp-server:Should be @upstash/context7-mcp"
+    "CPX32:Infrastructure changed to Dedicated Server"
+)
+
+for drift in "${KNOWN_DRIFTS[@]}"; do
+    pattern="${drift%%:*}"
+    description="${drift#*:}"
+    matches=$(grep -r "$pattern" --include="*.md" . 2>/dev/null | grep -v "history/" | grep -v "check-doc-drift" || true)
+    if [ -n "$matches" ]; then
+        echo -e "${YELLOW}⚠ Potential drift '$pattern' ($description):${NC}"
+        echo "$matches" | head -3
+        ((WARNINGS++))
+    fi
+done
+
+# 6. Check decision log exists
 echo ""
 echo "📝 Checking decision log structure..."
 if [ -d ".ai-context/history/decisions" ] && [ -f ".ai-context/history/decisions/INDEX.md" ]; then

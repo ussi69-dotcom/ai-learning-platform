@@ -173,6 +173,78 @@ Copy this into ChatGPT/Gemini:
 </ConceptCard>
 ```
 
+### 📏 CONTENT DENSITY RULE (NO EMPTY SLIDES!)
+
+> **⚠️ ABSOLUTNÍ PRAVIDLO:** Slide na pár řádků + jeden obrázek = ZAKÁZÁNO!
+
+**Problém:** Uživatel musí pořád klikat "next, next, next" bez získání hodnoty.
+
+| ❌ ZAKÁZÁNO | ✅ POVINNÉ |
+|-------------|-----------|
+| Slide s 3-5 řádky textu | Min. 10-15 řádků smysluplného obsahu |
+| Jeden diagram bez kontextu | Diagram + vysvětlení + příklady |
+| Izolované "teaser" sekce | Spojené, návazné sekce |
+| "Prázdné" přechodové slidy | Obsah integrovaný do flow |
+
+**Kdy je krátká sekce OK (VÝJIMKY):**
+- Úvodní hook (30-second rule) - krátký, ale impaktní
+- Přechodový callout mezi velkými sekcemi
+- Holocron summary (ale to je na konci!)
+- Lab header před copy-paste prompt
+
+**Minimální délka sekce:**
+
+| Typ sekce | Min. délka | Obsah |
+|-----------|------------|-------|
+| **Concept Deep Dive** | 200+ slov | Vysvětlení + diagram + příklady |
+| **Lab** | 300+ slov | Setup + steps + analysis + aha moment |
+| **Comparison Table** | 100+ slov | Intro + tabulka + doporučení |
+| **Krátká sekce (výjimka)** | 50-100 slov | POUZE s jasným důvodem |
+
+**Content Density Check:**
+```markdown
+□ Každá sekce má min. 2 odstavce textu?
+□ Žádný "orphan" diagram (diagram bez kontextu)?
+□ Uživatel získá hodnotu BEZ scrollování?
+□ Flow je plynulý, ne "slideshow"?
+```
+
+**Anti-pattern příklady:**
+
+```markdown
+# ❌ ŠPATNĚ - Prázdný slide
+## 2. MCP Architecture
+
+<Diagram type="mcp-architecture" />
+
+---
+
+# ✅ SPRÁVNĚ - Vydatný slide
+## 2. MCP Architecture 🔌
+
+**Model Context Protocol (MCP)** is the most critical shift in AI development
+since transformer models. It works as **"USB-C for AI applications"**.
+
+<Diagram type="mcp-architecture" />
+
+### Why MCP Matters
+
+Before MCP, every AI tool needed custom integrations:
+- Cursor had its own codebase indexing
+- ChatGPT plugins were proprietary
+- Every IDE reinvented the wheel
+
+MCP changes this with **three standardized components:**
+
+| Component | Role | Example |
+|-----------|------|---------|
+| **Client** | Where AI lives | Claude Desktop, Cursor |
+| **Protocol** | Communication standard | JSON-RPC over stdio |
+| **Server** | Exposes capabilities | Filesystem, GitHub, Postgres |
+
+This means you write ONE server, and it works with EVERY MCP-compatible client.
+```
+
 ### ✅ PRE-PUBLISH CHECKLIST (BLOCKING)
 
 **Před publikací MUSÍ projít VŠECHNY body:**
@@ -389,6 +461,37 @@ Collapsible hints for stuck users.
 * **Dark Mode:** Always use `fill-slate-600 dark:fill-slate-400` for compatibility.
 * **Registration:** New diagram types must be registered in `frontend/components/mdx/Diagram.tsx`.
 * 🆕 **Gemini Generator:** Pro nové diagramy použij Gemini CLI k generování SVG kódu.
+
+### ⚠️ DIAGRAM REGISTRATION CHECKLIST (POVINNÉ!)
+
+> **Lesson Learned (2025-12-18):** Nové diagramy přidané do `DiagramArchitecture.tsx` se NERENDROVALY protože chyběla registrace v routeru!
+
+**Při přidání nového diagramu MUSÍŠ udělat 3 kroky:**
+
+```
+1. □ DiagramXxx.tsx    → Implementuj diagram komponentu
+2. □ Diagram.tsx       → Přidej typ do TypeScript interface (řádek ~13)
+3. □ Diagram.tsx       → Přidej typ do správného routing pole (řádek ~18-50)
+```
+
+**Příklad pro nový diagram `my-new-diagram`:**
+
+```typescript
+// 1. Diagram.tsx - TypeScript interface (řádek ~13)
+type: '...' | 'my-new-diagram';
+
+// 2. Diagram.tsx - Routing array (např. řádek 48 pro Architecture)
+if (['local-llm-architecture', ..., 'my-new-diagram'].includes(type)) {
+  return <DiagramArchitecture type={type} />;
+}
+```
+
+**Verifikace:**
+```bash
+# Po přidání diagramu:
+docker compose restart frontend
+# Otevři stránku s diagramem a ověř že se renderuje
+```
 
 ### Available Diagram Types
 
@@ -612,8 +715,37 @@ lab_match = re.search(r"🧪 \*\*\[?(\d+)\]? Labs? (?:Included|součástí)\*\*"
 | Lekce se nezobrazuje | Content not loaded | `docker compose restart backend` |
 | Staré lekce zůstávají | ContentLoader je append-only | Nuclear reset: `docker volume rm postgres_data` |
 | "Not authenticated" | JWT session expired po DB reset | Logout + fresh login |
+| **Duplicitní lekce** | Změna `title` v meta.json | Smaž starý záznam z DB (viz níže) |
+| **Diagramy se nerendrují** | Chybí registrace v Diagram.tsx | Viz "DIAGRAM REGISTRATION CHECKLIST" |
+
+### F. Title Change = DB Duplicate Issue ⚠️
+
+> **Lesson Learned (2025-12-18):** Změna `title` v `meta.json` vytvoří NOVÝ DB záznam místo update!
+
+**Příčina:** ContentLoader používá `title` jako identifikátor. Změna title = nová lekce.
+
+**Symptom:** Vidíš 2× stejnou lekci (se starým a novým názvem).
+
+**Řešení:**
+```bash
+# 1. Najdi duplicitní záznamy
+docker compose exec -T db psql -U ai_user -d learning_platform \
+  -c "SELECT id, title, \"order\" FROM lessons WHERE course_id = 2 ORDER BY \"order\";"
+
+# 2. Smaž starý záznam (nahraď ID a lesson_id)
+docker compose exec -T db psql -U ai_user -d learning_platform << 'EOF'
+BEGIN;
+DELETE FROM feedback_items WHERE lesson_id = OLD_ID;
+DELETE FROM quizzes WHERE lesson_id = OLD_ID;
+DELETE FROM user_progress WHERE lesson_id = OLD_ID;
+DELETE FROM lessons WHERE id = OLD_ID;
+COMMIT;
+EOF
+```
+
+**Prevence:** Pokud měníš title, nejdřív smaž starý záznam NEBO použij `slug` jako stabilní identifikátor.
 
 ---
 
-*Last updated: 2025-12-07 (v2.2)*
-*Changes: Added Content QA Workflow (Section 11)*
+*Last updated: 2025-12-18 (v2.3)*
+*Changes: Added DIAGRAM REGISTRATION CHECKLIST, Title Change DB Duplicate Issue (Section F)*

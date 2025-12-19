@@ -2,7 +2,7 @@
 
 ## 🏗️ Tech Stack & Infrastructure
 - **Repo**: `ussi69-dotcom/ai-learning-platform`
-- **Infrastructure**: VPS Hetzner CPX32 (Ubuntu 24.04 LTS).
+- **Infrastructure**: Hetzner Dedicated Server (Ubuntu 24.04 LTS).
 - **Containerization**: Docker, Docker Compose (v2).
 
 ### Components

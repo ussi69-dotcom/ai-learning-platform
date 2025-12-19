@@ -2,6 +2,8 @@
 
 **Purpose:** Konfigurace Model Context Protocol (MCP) serverů pro optimální workflow v tomto projektu.
 
+> **⚠️ Portability Note:** Paths v tomto dokumentu (`/home/deploy/ai-learning-platform`) jsou specifické pro tento server. Pro jiný projekt nahraď cestou k tvému projektu (např. `/mnt/c/projects/my-project` pro WSL).
+
 ---
 
 ## 🎯 Co Je MCP?
@@ -76,7 +78,7 @@ codex mcp add git -- npx -y @modelcontextprotocol/server-git /home/deploy/ai-lea
 claude mcp add context7
 
 # Codex CLI
-codex mcp add context7 -- npx -y @context7/mcp-server
+codex mcp add context7 -- npx -y @upstash/context7-mcp
 ```
 
 **Co to dělá:**
@@ -242,7 +244,7 @@ claude mcp add github
     },
     "context7": {
       "command": "npx",
-      "args": ["-y", "@context7/mcp-server"]
+      "args": ["-y", "@upstash/context7-mcp"]
     }
   }
 }
@@ -291,7 +293,7 @@ claude mcp add github   # Pokud plánuješ open-source
 ```bash
 codex mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /home/deploy/ai-learning-platform
 codex mcp add git -- npx -y @modelcontextprotocol/server-git /home/deploy/ai-learning-platform
-codex mcp add context7 -- npx -y @context7/mcp-server
+codex mcp add context7 -- npx -y @upstash/context7-mcp
 ```
 
 ### Krok 2: Ověření

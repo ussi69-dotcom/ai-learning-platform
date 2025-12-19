@@ -1,0 +1,192 @@
+# .ai-context Configuration
+# Project-agnostic settings for multi-agent workflow
+#
+# Version: 6.0
+# Compatible with: Claude Code, Codex CLI, Gemini CLI
+
+version: "6.0"
+
+# ============================================================
+# AGENT CONFIGURATION
+# ============================================================
+
+agents:
+  # Primary agent - does most implementation work
+  primary:
+    name: claude-code
+    entry_point: CLAUDE.md
+    capabilities:
+      - file_operations
+      - code_execution
+      - git_operations
+      - mcp_tools
+
+  # Orchestrator - hard reasoning, debugging, architecture
+  orchestrator:
+    name: gpt-5.2
+    entry_point: CODEX.md
+    cli_command: "codex exec -p {profile}"
+    profiles:
+      - fast       # Quick questions
+      - deep       # Root cause analysis
+      - orchestrator  # Multi-component planning
+      - review     # Code review
+      - security   # Security analysis
+      - hotfix     # Production incidents
+      - tests      # Test strategy
+      - docs       # Documentation
+
+  # Content & Visual QA
+  content:
+    name: gemini-3-pro
+    entry_point: GEMINI.md
+    cli_command: "gemini -m gemini-3-pro-preview"
+    capabilities:
+      - content_generation
+      - visual_qa
+      - research
+      - translation
+
+# ============================================================
+# DELEGATION TRIGGERS
+# ============================================================
+
+delegation:
+  # Automatic triggers for escalation
+  triggers:
+    security_change:
+      agent: orchestrator
+      profile: security
+      description: "Auth, permissions, secrets"
+
+    database_change:
+      agent: orchestrator
+      profile: deep
+      description: "SQLAlchemy, migrations, transactions"
+
+    stuck_30min:
+      agent: orchestrator
+      profile: deep
+      description: "No progress after 30 minutes"
+
+    multi_module:
+      agent: orchestrator
+      profile: orchestrator
+      description: "Changes spanning >2 modules"
+
+    content_creation:
+      agent: content
+      description: "Lessons, docs, copy"
+
+    visual_qa:
+      agent: content
+      description: "UI screenshots, visual testing"
+
+# ============================================================
+# THIN PROTOCOL
+# ============================================================
+
+thin_protocol:
+  # Never send these to chat
+  never_send:
+    - dom_snapshots
+    - playwright_ax_tree
+    - logs_over_50_lines
+    - files_over_200_lines
+
+  # Always use paths instead
+  always_paths:
+    - screenshots: ".playwright-mcp/"
+    - logs: "/tmp/claude/"
+    - artifacts: ".ai-context/history/agent-runs/"
+
+  # Summary format
+  summary_format: "2-3 sentences + file paths"
+
+# ============================================================
+# MACP (Multi-Agent Consensus Protocol)
+# ============================================================
+
+macp:
+  enabled: true
+
+  triggers:
+    - security_changes
+    - database_migrations
+    - breaking_api_changes
+    - user_facing_ux
+    - stuck_30min_2_attempts
+
+  agents:
+    - orchestrator
+    - content
+
+  voting:
+    method: "blind_ballot"  # Agents don't see each other's votes
+    weights:
+      security: { orchestrator: 0.7, content: 0.2, primary: 0.1 }
+      ux: { orchestrator: 0.2, content: 0.7, primary: 0.1 }
+      integration: { orchestrator: 0.3, content: 0.3, primary: 0.4 }
+
+  artifacts_dir: ".ai-context/history/agent-runs/"
+  decisions_dir: ".ai-context/history/decisions/"
+
+# ============================================================
+# HOOKS
+# ============================================================
+
+hooks:
+  post_commit:
+    script: "scripts/update-working-context.sh"
+    description: "Auto-update WORKING_CONTEXT.md"
+
+  pre_content:
+    script: "scripts/check-guidelines.sh"
+    description: "Validate content format"
+    optional: true
+
+  pre_release:
+    script: "make verify"
+    description: "Full verification before release"
+
+# ============================================================
+# FILE PATHS
+# ============================================================
+
+paths:
+  # State files (project-specific, always edit)
+  state:
+    working_context: ".ai-context/state/WORKING_CONTEXT.md"
+    memory: ".ai-context/state/MEMORY.md"
+
+  # Core docs (read-only reference)
+  core:
+    architecture: ".ai-context/core/ARCHITECTURE.md"
+    guidelines: ".ai-context/core/CONTENT_GUIDELINES.md"
+    vision: ".ai-context/core/VISION.md"
+
+  # Templates (copy and fill)
+  templates:
+    debug_packet: ".ai-context/templates/DEBUG_PACKET.md"
+    visual_qa: ".ai-context/templates/VISUAL_QA_REQUEST.md"
+    task_brief: ".ai-context/templates/TASK_BRIEF.md"
+    macp_prompt: ".ai-context/templates/MACP_PROMPT.md"
+
+  # History (append-only)
+  history:
+    decisions: ".ai-context/history/decisions/"
+    agent_runs: ".ai-context/history/agent-runs/"
+
+# ============================================================
+# WSL COMPATIBILITY
+# ============================================================
+
+wsl:
+  # Use LF line endings
+  line_endings: "lf"
+
+  # Paths work on both Windows and Linux
+  use_relative_paths: true
+
+  # Scripts are POSIX-compatible
+  shell_compatibility: "posix"

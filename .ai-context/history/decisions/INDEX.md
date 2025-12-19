@@ -10,6 +10,7 @@ Running list of all Multi-Agent Consensus Protocol decisions.
 
 | Date | Topic | Agents | Outcome | File |
 |------|-------|--------|---------|------|
+| 2025-12-18 | Documentation & Workflow Review | Claude + GPT-5.2 + Gemini | INFO | [Link](./2025-12-18-documentation-review.md) |
 | 2025-12-18 | Workflow v2.0 Improvements | Claude + GPT-5.2 | GO | [Link](./2025-12-18-workflow-improvements.md) |
 
 ---

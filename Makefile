@@ -57,6 +57,11 @@ security-check: ## Spustí bezpečnostní audit (jen pro VPS)
 	@echo "Toto by se mělo spouštět jen na serveru."
 	./scripts/setup_security.sh
 
+commit: ## Git commit s auto-update WORKING_CONTEXT
+	./scripts/update-working-context.sh
+	git add .ai-context/state/WORKING_CONTEXT.md
+	git commit
+
 # -----------------------------------------------------------------------------
 # 🚀 PRODUCTION COMMANDS (Používejte na serveru)
 # -----------------------------------------------------------------------------

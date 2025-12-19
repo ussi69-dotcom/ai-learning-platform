@@ -1,459 +1,573 @@
-# Claude Code Mastery: Advanced AI-Assisted Development 🚀
+# Claude Code Mastery: From Beginner to Orchestrator v2.0 🚀
 
 <Callout type="info">
-**Mission:** Go beyond basic AI coding - master Claude Code's advanced features for professional, multi-file, agentic software development.
+**Mission:** Learn Claude Code from absolute basics to advanced agentic workflows to dramatically accelerate your development velocity.
 
-⏳ **Reading Time:** 35 min | 🧪 **[3] Labs Included**
+⏳ **Reading Time:** 60 min | 🧪 **[4] Labs Included**
 </Callout>
 
-<Callout type="warning">
-**Prerequisites:** This lesson assumes you have the Claude Code CLI installed and configured. If you haven't set it up yet, install it via `npm install -g @anthropic-ai/claude-code` or visit [Claude Code docs](https://docs.anthropic.com/en/docs/claude-code).
-</Callout>
+<VideoSwitcher alternatives={[
+  {"id":"UVJXh57MgI0","title":"Complete Claude Code Guide (Alex Finn)"},
+  {"id":"Xob-2a1OnvA","title":"10x Claude Code Rules (Greg Isenberg)"},
+  {"id":"aQvpqlSiUIQ","title":"How I Start Every Project (Avthar)"},
+  {"id":"zEk7eZzA04s","title":"Celé aplikace bez dozoru (CZ - Souki)"}
+]} />
 
-<VideoSwitcher alternatives={[{"id":"SUysp3sJHbA","title":"Claude Code Tutorial #1 - Introduction & Setup (Net Ninja)"},{"id":"kZ-zzHVUrO4","title":"How I use Claude Code for real engineering (Matt Pocock)"},{"id":"nGhsgdQplHw","title":"Claude Code 2.0 Agentic Coding (IndyDevDan)"},{"id":"wHHNtetJV0c","title":"Claude Code Plugins & MCP Toggles (JeredBlu)"},{"id":"D0Rgtgtzlts","title":"AI AGENTI - AI Programování (CZ)"}]} />
+## The Agentic Revolution
 
-**You've used AI for coding. Now it's time to make AI work FOR you.**
+**Hot take: Claude Code isn't just a coding assistant—it's a universal agentic system that can orchestrate entire projects while you review and approve.**
 
-Claude Code isn't just another coding assistant - it's an agentic development environment. It can run commands, edit multiple files, delegate to specialized sub-agents, and even orchestrate complex multi-step implementations.
+If you're still using AI just to "write this function" or "fix this bug," you're leaving massive value on the table. The developers who are winning right now aren't just faster coders—they are **architects of intelligence**.
 
-But most developers only scratch the surface. Let's go deep.
+This lesson is designed as a progressive journey. If you're an expert, feel free to skip the first sections. But if you're new to programming or to using the terminal, we'll guide you through everything step by step.
+
+<Diagram type="agentic-vs-assistive" />
+
+In this deep dive, you will transform from a Claude Code user into an orchestrator. You'll learn the system that turns "AI coding assistant" into "AI Staff Engineer."
 
 ---
 
-## Beyond Chat: The Agentic Paradigm
+## Section 0: Before We Begin
 
-<ConceptCard title="Agentic vs. Assistive AI" icon="🤖">
+Welcome! This section is for complete beginners. If you already have your development environment set up, feel free to skip ahead.
 
-**Traditional AI Assistants:** You ask → AI responds → You copy/paste → You debug
+### What is Claude Code?
+Claude Code is a tool that runs in your terminal (command line). Unlike chat interfaces like ChatGPT or web-based Claude, Claude Code has direct access to files on your computer. It can read, write, and edit code, run commands, and collaborate with you on real projects.
 
-**Agentic AI (Claude Code):** You describe intent → AI plans → AI executes → AI verifies → You review
+### Why Terminal Instead of Chat?
+- **File access:** It can read your entire project and understand context.
+- **Command execution:** It can install dependencies, run tests, and build your application.
+- **Automation:** Enables complex workflows that aren't possible in chat.
 
-The key difference: **Claude Code can take action**, not just suggest it.
+Don't worry if the terminal is new to you. We'll walk you through the basics.
 
-</ConceptCard>
-
-### What Makes Claude Code Different
-
-| Feature | Traditional Chat | Claude Code |
-|---------|------------------|-------------|
-| File editing | Copy/paste suggestions | Direct file writes |
-| Command execution | "Try running..." | Actually runs commands |
-| Multi-file changes | One file at a time | Coordinated refactors |
-| Error handling | "You should check..." | Reads logs, fixes issues |
-| Context | Limited to conversation | Full codebase awareness |
+### What You'll Need:
+1.  **A Computer:** with Windows, macOS, or Linux.
+2.  **Node.js and npm:** JavaScript runtime environment. We'll show you how.
+3.  **A Terminal:** An application for typing commands.
+4.  **Anthropic API Key:** For accessing Claude models. Get it at [anthropic.com/console](https://console.anthropic.com/).
 
 ---
 
-## The Power Features
+## Section 1: Installation and Setup
 
-Let's explore the advanced features that make Claude Code powerful:
+Let's set up everything you need together. This process differs slightly depending on your operating system.
 
-### 1. Hooks: Automated Workflows
+<Diagram type="claude-code-installation-flow" />
 
-Hooks execute shell commands in response to Claude Code events. Think of them as triggers.
+### 1.1 For Windows Users: WSL (Optional but Recommended)
 
-```json
-// ~/.claude/settings.json
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "command": "echo 'File about to be modified: $TOOL_INPUT'"
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write",
-        "command": "npm run lint --fix $TOOL_INPUT"
-      }
-    ]
-  }
-}
-```
-
-**Common Hook Use Cases:**
-- Auto-format code after writes
-- Run tests after file changes
-- Notify Slack on commits
-- Validate changes against rules
-- Update documentation automatically
-
-<Callout type="warning">
-**Security Note:** Hooks execute shell commands! Review carefully before enabling. Malicious hooks could harm your system.
+<Callout type="info">
+**What is WSL?** Windows Subsystem for Linux lets you run Linux directly inside Windows. It's the preferred way to work with modern development tools on Windows.
 </Callout>
 
-### 2. MCP Servers: Extended Capabilities
+**Installing WSL2:**
 
-MCP (Model Context Protocol) servers give Claude Code new abilities - like reading Figma files, querying databases, or fetching documentation.
+1. Open **PowerShell as Administrator** (right-click → Run as administrator)
+2. Enter the command:
+   ```powershell
+   wsl --install
+   ```
+3. Restart your computer
+4. After restart, Ubuntu will open automatically and prompt you to create a username and password
 
-**Popular MCP Servers:**
+<Callout type="tip">
+**VS Code Integration:** Install the "WSL" extension in VS Code. Then you can open any folder in WSL using "Open Folder in WSL".
+</Callout>
 
-| Server | Capability |
-|--------|------------|
-| `playwright` | Browser automation, visual testing |
-| `github` | PR management, issue tracking |
-| `context7` | Library documentation lookup |
-| `figma` | Design file access |
-| `postgres` | Database queries |
+### 1.2 Terminal: Your Gateway to Efficiency
 
-<Diagram type="mcp-architecture" />
+The terminal (or command line) is a text interface for controlling your computer. Instead of clicking icons, you type commands. It's an incredibly powerful tool for developers.
 
-**Adding an MCP Server:**
+- **On macOS:** Find it as `Terminal.app`.
+- **On Linux:** Usually called `Terminal` or `Console`.
+- **On Windows with WSL:** Open Ubuntu from the Start menu.
+
+<Diagram type="terminal-basics" />
+
+### 1.3 Installing Node.js and Claude Code
+
+Node.js is an environment that allows you to run JavaScript code outside the browser. `npm` is its package manager.
+
+**Step 1: Install Node.js**
+
+The easiest way is to download the installer from [nodejs.org](https://nodejs.org/). We recommend the **LTS (Long-Term Support)** version.
+
+For Linux/WSL, you can use:
 ```bash
-# Add a server
-claude mcp add github
-
-# List active servers
-claude mcp list
-
-# Remove a server
-claude mcp remove github
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
 ```
 
-### 3. Plan Mode: Think Before Acting
+**Step 2: Verify Installation**
 
-For complex tasks, plan mode helps Claude Code think through the implementation before writing code.
+Open your terminal and type:
+```bash
+node -v
+npm -v
+```
+You should see version numbers for both tools.
+
+**Step 3: Install Claude Code CLI**
 
 ```bash
-# Enter plan mode
-/plan
-
-# Claude analyzes codebase, proposes implementation
-# You review and approve
-# Then execute with full context
+npm install -g @anthropic-ai/claude-code
 ```
 
-**When to Use Plan Mode:**
-- Multi-file refactors
-- New feature implementations
-- Architectural changes
-- When you're unsure of the approach
+**Step 4: Set Up Your API Key**
 
-### 4. Sub-Agents: Delegation at Scale
+Claude will ask for your Anthropic API key on first launch. Have it ready from [console.anthropic.com](https://console.anthropic.com/).
 
-Claude Code can spawn specialized sub-agents for different tasks:
+**Step 5: Verify Installation**
 
-```
-Main Agent (You're talking to this)
-├── Explore Agent (codebase search)
-├── Plan Agent (architecture design)
-├── Code Reviewer Agent (quality checks)
-└── Test Runner Agent (verification)
+```bash
+claude --version
 ```
 
-**Trigger delegation with:**
-- `@explore` - Find files and patterns
-- `@plan` - Design implementation approach
-- Complex multi-step tasks automatically delegate
+<Callout type="success">
+**Done!** Your environment is ready. You're just a few steps away from letting AI work for you.
+</Callout>
 
 ---
 
-## 🔬 Lab 1: Configure Your First Hook
+## 🔬 Lab 0: Your First Project
 
-Let's set up a hook that auto-formats code after every file write!
+**Objective:** Create a simple "Hello, World!" web page using Claude Code and understand the basic work cycle.
 
-**Objective:** Create a hook that runs Prettier after Claude Code writes files.
+**Time:** 10 minutes | **Difficulty:** Beginner
 
-**Step 1: Create the settings file**
+### Step 1: Create a Directory and Launch Claude
+
+In your terminal, create a new directory for your project, navigate into it, and launch Claude.
+
 ```bash
-mkdir -p ~/.claude
-cat > ~/.claude/settings.json << 'EOF'
-{
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write",
-        "command": "npx prettier --write \"$TOOL_INPUT\" 2>/dev/null || true"
-      }
-    ]
-  }
-}
-EOF
+mkdir my-first-project
+cd my-first-project
+claude
 ```
 
-**Step 2: Test it**
-Ask Claude Code to create a messy JavaScript file:
+### Step 2: Enter Your First Prompt
+
+Now you're in the Claude Code interface. Enter your first task:
 
 ```text
-Create a file called test-hook.js with some messy formatting:
-const x={a:1,b:2,c:3};function foo(x){return x+1}
+Prompt for Claude Code:
+
+Create a simple web page in a file called index.html.
+The page should have a heading "My First Project with Claude" and below it
+a paragraph with the text "This file was generated by artificial intelligence!"
+Then create a file called style.css that sets the background color to dark gray (#333),
+the text color to white, and centers the text on the page.
+Finally, link both files together.
 ```
 
-**Expected Result:**
-After Claude writes the file, Prettier automatically formats it:
-```javascript
-const x = { a: 1, b: 2, c: 3 };
-function foo(x) {
-  return x + 1;
-}
+### Step 3: Watch and Approve
+
+Claude will show you what files it's about to create or modify. Review them carefully. If everything looks good, press `y` (for yes) to approve.
+
+**Expected behavior:**
+- Claude proposes creating `index.html`
+- Claude proposes creating `style.css`
+- Claude proposes linking both files
+
+### Step 4: Verify the Result
+
+Open the `index.html` file in your web browser. You should see your new page!
+
+**Success criteria:**
+- ✅ Files `index.html` and `style.css` exist in the directory
+- ✅ The page in the browser looks as specified
+- ✅ The entire process happened using only terminal commands
+
+**💡 Aha Moment:** "Wow, Claude didn't just write the code, it created and linked the files too. I didn't have to copy and paste anything!"
+
+<LabComplete labId="lab-cc-0" />
+
+### Understanding the Approval Loop
+
+Before we dive deeper, it's crucial to understand HOW Claude Code works. Unlike chat interfaces, Claude Code asks for your permission before making changes:
+
+<Diagram type="claude-approval-loop" />
+
+This "human-in-the-loop" design keeps you in control. You're the supervisor, Claude is the worker.
+
+---
+
+## Section 2: The PSB System
+
+Most developers fail with AI agents because they skip the most critical step: **context**. They jump straight into "Build" without the "Plan" or "Setup."
+
+The **PSB System** (Plan, Setup, Build) fixes this by enforcing a high-success framework.
+
+<Diagram type="claude-code-psb-workflow" />
+
+### Phase 1: PLAN — The Blueprint
+
+Before writing a single line of code, align the agent on *what* you're building. Create a **Project Spec Doc**.
+
+**What to include:**
+- **Goal:** What problem are we solving?
+- **Constraints:** Time, tech stack, dependencies
+- **Milestones:** Deliverable checkpoints
+- **Success criteria:** How do we know it works?
+
+### Phase 2: SETUP — The Constitution
+
+This is where the magic happens. Create a "Constitution" for your project—a `CLAUDE.md` file with rules that Claude must follow.
+
+**Example `CLAUDE.md`:**
+
+```markdown
+# Project: Auth System
+## Tech Stack
+- Next.js 14 (App Router)
+- Tailwind CSS
+- Supabase (Auth + DB)
+
+## Code Style
+- TypeScript strict mode
+- Functional components only
+- File naming: kebab-case
+
+## Rules
+- NEVER delete code without explaining why
+- ALWAYS run tests before committing
+- Limit file changes to <100 lines per turn
+
+## Security
+- NO hardcoded secrets
+- Review all API endpoints for auth checks
 ```
 
-**💡 Aha Moment:** "I never have to think about formatting again. The hook handles it automatically, every single time!"
+Each section of your CLAUDE.md serves a specific purpose:
+
+<Diagram type="claude-md-anatomy" />
+
+### Phase 3: BUILD — The Execution
+
+Now, and only now, do you build. You use **Plan Mode** for complex features and let Claude delegate to **Sub-agents**.
+
+<Callout type="tip">
+**Pro tip:** The more context in CLAUDE.md, the fewer mid-task corrections you'll need. Invest 10 minutes upfront, save hours later.
+</Callout>
+
+---
+
+## 🔬 Lab 1: The Project Constitution
+
+**Objective:** Create your first `CLAUDE.md` file that Claude actually respects.
+
+**Time:** 10 minutes | **Difficulty:** Beginner
+
+### Step 1: Create the File
+
+In your project (you can continue in `my-first-project`), tell Claude to create the file.
+
+### Step 2: Copy This Prompt
+
+```text
+Prompt for Claude Code:
+
+"Create a CLAUDE.md file with the following sections:
+1. Tech Stack: HTML5, CSS3, JavaScript
+2. Code Style: Use 2 spaces for indentation
+3. Rules:
+   - Always comment complex code
+   - Limit edits to 50 lines per turn
+   - Explain changes before executing rm commands
+4. Security: No personal data in code"
+```
+
+### Step 3: Test That It Works
+
+```text
+Prompt:
+"Create a file called test.html with a simple paragraph.
+Then delete it."
+```
+
+**Expected behavior:** Claude should explain why it's deleting the file BEFORE actually deleting it.
+
+**Success criteria:**
+- ✅ `CLAUDE.md` exists in project root
+- ✅ Claude references rules when making changes
+- ✅ Destructive operations require explanation
+
+**💡 Aha Moment:** "Claude remembered my rules! I never have to repeat my coding standards again."
 
 <LabComplete labId="lab-cc-1" />
 
 ---
 
-## The Debug Workflow
+## Section 3: 10 Rules for Better Output
 
-Claude Code excels at debugging. Here's the optimal workflow:
+You have the system. Now you need the tactics. These are **10 rules** for getting dramatically better output from Claude Code.
 
-### Step 1: Share the Error
+<Diagram type="10-rules-pyramid" />
 
-Don't describe the error - SHOW it:
+| # | Rule | What It Means | Bad ❌ → Good ✅ |
+|---|------|---------------|-----------------|
+| 1 | **Collaborative Tone** | Treat AI as teammate, not tool | "Write code" → "Let's implement auth together. What's your plan?" |
+| 2 | **Be Explicit** | Specific requirements, not vague asks | "Make it better" → "Reduce from 50 to 20 lines, keep types" |
+| 3 | **Define Boundaries** | Clear scope prevents regressions | "Fix bugs" → "Fix login flow only. Don't touch profile." |
+| 4 | **Plan Before Act** | Think, then execute | *Jump to code* → "Show your plan first, wait for approval" |
+| 5 | **Structured Output** | Request specific formats | "Give ideas" → "JSON array: `[{idea, pros, cons}]`" |
+| 6 | **Explain the Why** | Context improves decisions | "Add cache" → "Add cache because API is 2s slow" |
+| 7 | **Control Length** | Match output to need | *5-page essay* → "Reply in max 3 sentences" |
+| 8 | **Provide Scaffold** | Give structure to fill | "Write tests" → "Here's the test structure, fill in cases" |
+| 9 | **Magic Words** | Use proven triggers | "Do it" → "Think step by step before answering" |
+| 10 | **Divide & Conquer** | Break big into small | "Build app" → "Step 1: Schema. Step 2: API. Step 3: UI." |
 
-```text
-❌ Bad: "I'm getting an error when I run the tests"
+### Magic Words That Actually Work
 
-✅ Good: [paste full error stack trace]
+| Phrase | Effect |
+|--------|--------|
+| "Think step by step" | Forces Chain-of-Thought reasoning |
+| "Before answering, list your assumptions" | Surfaces hidden assumptions |
+| "Critique your own plan" | Encourages self-reflection |
+| "Act as a Staff Engineer" | Sets high-competence persona |
+| "What could go wrong?" | Triggers edge case consideration |
 
-✅ Better: Run npm test and the error will appear in your context
+---
+
+## Section 4: Core Features
+
+You know the rules. Now let's look at the weapons in your arsenal.
+
+### Plan Mode — Think Before Acting
+
+Plan Mode is the difference between a toy and a tool. When you enter Plan Mode, Claude doesn't just react—it **analyzes**. It scans your codebase and proposes a comprehensive implementation plan.
+
+**How to enter Plan Mode:**
+- Type `/plan` before your prompt
+
+<Diagram type="plan-mode-flow" />
+
+**When to use Plan Mode:**
+- Multi-file refactors
+- New feature implementations
+- Architectural changes
+- When you're unsure of the approach
+
+### Essential Commands
+
+| Command | Purpose | When to Use |
+|---------|---------|-------------|
+| `/help` | List available commands | Discovery |
+| `/clear` | Reset conversation | Starting new task |
+| `/model` | Switch models | Speed vs quality tradeoff |
+| `/plan` | Enter Plan Mode | Complex features |
+| `/cost` | Check token usage | Budget awareness |
+
+### Sub-Agent Architecture
+
+For complex tasks, Claude spawns **specialized sub-agents**:
+
+<Diagram type="sub-agent-architecture" />
+
+| Agent | Purpose |
+|-------|---------|
+| **Explore** | Codebase search, pattern matching |
+| **Plan** | Architecture design, implementation planning |
+| **Review** | Code quality, security checks |
+| **Test** | Test execution, verification |
+
+**Key insight:** Each sub-agent gets a **forked context**. Their work doesn't pollute your main conversation.
+
+---
+
+## Section 5: Advanced Features
+
+These features separate casual users from power users.
+
+### MCP Servers — External Superpowers
+
+MCP (Model Context Protocol) lets Claude connect to external tools and data sources.
+
+<Diagram type="claude-code-ecosystem" />
+
+**Popular MCP Servers:**
+
+| Server | Capability | Use Case |
+|--------|------------|----------|
+| `github` | PRs, issues, code review | "Create PR for issue #42" |
+| `playwright` | Browser automation | Visual testing |
+| `postgres` | Database queries | "What's in the users table?" |
+| `context7` | Library documentation | Up-to-date API reference |
+
+**Adding an MCP Server:**
+
+```bash
+# List available servers
+claude mcp list
+
+# Add a server
+claude mcp add github
 ```
 
-### Step 2: Let Claude Investigate
+### Hooks — Automated Workflows
 
-Claude Code will:
-1. Read relevant source files
-2. Check related tests
-3. Examine configuration
-4. Trace the error path
+Hooks execute shell commands in response to Claude Code events.
 
-### Step 3: Verify the Fix
+**Common use cases:**
+- Auto-format code after writes
+- Run linter after changes
+- Execute tests after file modifications
 
-Always ask for verification:
-
-```text
-"After fixing, run the tests again to confirm it passes"
-```
-
-<Callout type="tip">
-**Pro tip:** Don't interrupt Claude Code during investigation. Let it explore fully before suggesting solutions. More context = better fixes.
+<Callout type="warning">
+**Security Warning:** Hooks execute shell commands! Review carefully before enabling.
 </Callout>
 
 ---
 
-## Multi-File Implementation Patterns
+## 🔬 Lab 2: Give Claude Superpowers
 
-For large features, use these patterns:
+**Objective:** Connect Claude to GitHub using MCP for direct issue and PR management.
 
-### Pattern 1: Top-Down Decomposition
+**Time:** 15 minutes | **Difficulty:** Intermediate
 
-```text
-"Implement user authentication. Start by:
-1. Planning the file structure
-2. Creating interfaces/types first
-3. Implementing the service layer
-4. Adding the API routes
-5. Writing tests for each layer"
+### Prerequisites
+- GitHub account with a repository
+- Personal access token (fine-grained, with repo scope)
+
+### Step 1: Add GitHub MCP Server
+
+```bash
+claude mcp add github
 ```
 
-### Pattern 2: Test-First Development
+Follow the authentication prompts. You'll need your GitHub token.
 
-```text
-"I need a function to parse CSV files.
-1. First, write the test file with expected behavior
-2. Then implement the function to pass the tests
-3. Run tests after each change"
+### Step 2: Verify Connection
+
+```bash
+claude mcp status
 ```
 
-### Pattern 3: Incremental Refactoring
+Look for: `github: connected ✓`
+
+### Step 3: Test Integration
 
 ```text
-"Refactor the UserService class:
-1. First, add tests for current behavior (don't change code yet)
-2. Make one small change
-3. Run tests to verify
-4. Repeat until complete"
+Prompt:
+"What are the top 3 open issues in this repository?
+Pick one and create a draft PR that adds a code comment
+explaining how you would fix it."
 ```
 
----
+**Success criteria:**
+- ✅ MCP status shows github connected
+- ✅ Claude can list repository issues
+- ✅ Claude can create branches/PRs
 
-## 🔬 Lab 2: Multi-File Feature Implementation
-
-Let's implement a feature across multiple files using plan mode!
-
-**Objective:** Experience how Claude Code coordinates multi-file changes.
-
-**The Prompt:**
-```text
-I want to add a "last active" timestamp feature for users.
-
-Requirements:
-- Store lastActiveAt in the User model
-- Update it on every API request
-- Display it on the profile page
-- Add a test for the middleware
-
-Use plan mode to think through this, then implement.
-```
-
-**What Claude Code Should Do:**
-
-1. **Plan Phase:**
-   - Identify files to modify (model, middleware, component, test)
-   - Propose the implementation order
-   - Ask for approval
-
-2. **Implementation Phase:**
-   - Modify User model/schema
-   - Create or update middleware
-   - Update profile component
-   - Write test file
-
-3. **Verification Phase:**
-   - Run existing tests
-   - Run new tests
-   - Check for regressions
-
-**💡 Aha Moment:** "One prompt triggered coordinated changes across 4+ files, with proper ordering and verification. This would take me 30 minutes manually!"
+**💡 Aha Moment:** "Claude can now read my issues and create PRs directly! I never have to context-switch to the GitHub UI."
 
 <LabComplete labId="lab-cc-2" />
 
 ---
 
-## Integrating with Other Tools
+## 🔬 Lab 3: Build a Feature Hands-Free
 
-Claude Code isn't alone. It integrates with your dev ecosystem:
+**Objective:** Use Plan Mode to implement a complete feature while you observe.
 
-### Cursor Integration
+**Time:** 20 minutes | **Difficulty:** Expert
 
-Use Claude Code alongside Cursor:
-- Cursor for quick inline edits
-- Claude Code for complex multi-file changes
-- Both share context via Git
+### The Challenge
 
-### Windsurf/Codeium
+You'll add a visit counter to your first project using localStorage.
 
-Similar pattern:
-- IDE extension for autocompletion
-- Claude Code CLI for agentic tasks
-- Complimentary, not competing
-
-### Git Workflow
-
-Claude Code understands Git:
+### Step 1: Enter Plan Mode
 
 ```text
-"Create a new branch for this feature,
-implement it, commit with a good message,
-and show me the PR diff"
+Type: /plan
+
+Then prompt:
+"Add a visit counter to index.html.
+Requirements:
+- Use JavaScript and localStorage
+- The number increments with each visit
+- Display 'You have visited this page X times.'
+- Add script.js and link it to index.html
+
+Show me your implementation plan before starting."
 ```
 
-It will:
-1. `git checkout -b feature/xyz`
-2. Make changes
-3. `git add` relevant files
-4. `git commit -m "Descriptive message"`
-5. Show the diff for review
+### Step 2: Review the Plan
 
----
+Claude should present:
+1. Files to create/modify
+2. Implementation order
+3. Dependencies between steps
 
-## 🔬 Lab 3: Debug a Complex Error
+**Approve with:** "Plan looks good, proceed"
 
-Let's practice the debug workflow with a realistic scenario!
+### Step 3: Observe and Verify
 
-**Objective:** Use Claude Code's debugging capabilities to fix a tricky issue.
+Watch Claude work. Open index.html in your browser and refresh the page several times.
 
-**The Scenario:**
-You have a test that's failing intermittently. Sometimes it passes, sometimes it fails.
+**Success criteria:**
+- ✅ The counter is visible on the page
+- ✅ The number increments on refresh
+- ✅ script.js exists and is linked to index.html
 
-**The Prompt:**
-```text
-I have a flaky test in my codebase. Here's what I know:
-- Test file: tests/api/user.test.js
-- It fails about 30% of the time
-- Error: "Expected 200, received 500"
-- The actual API endpoint works fine in production
-
-Help me debug this. First, read the test file and the endpoint
-it's testing. Look for race conditions, timing issues, or
-test isolation problems.
-```
-
-**What to Observe:**
-
-Claude Code will:
-1. Read the test file
-2. Read the API endpoint
-3. Check for async issues
-4. Look at test setup/teardown
-5. Identify the root cause (likely: missing await, shared state, or timing)
-6. Propose and implement a fix
-7. Run the test multiple times to verify
-
-**Common Flaky Test Causes:**
-- Missing `await` on async operations
-- Shared mutable state between tests
-- Database not properly reset
-- Race conditions in setup
-- Timeout too short for CI environment
-
-**💡 Aha Moment:** "Claude Code didn't just suggest a fix - it systematically investigated, identified the root cause, and verified the solution. That's agentic debugging!"
+**💡 Aha Moment:** "I went to get coffee and Claude built the entire feature! Multiple files, logic, everything automatically coordinated."
 
 <LabComplete labId="lab-cc-3" />
 
 ---
 
-## Configuration Best Practices
+## Troubleshooting
 
-```bash
-# Essential settings for productive Claude Code usage
+| Problem | Solution |
+|---------|----------|
+| Claude loops on same error | `/clear` and rephrase with more context |
+| Wrong assumptions made | "Stop. List your assumptions. X is incorrect because..." |
+| Too many files changed | "Revert last change. Only modify [specific file]" |
+| Context overflow | `/compact` or start fresh with `/clear` |
+| Hallucinated API/method | "Verify this API exists. Show me the documentation." |
+| Permission denied errors | Check file permissions, use `sudo` if needed |
 
-# 1. Set your preferred model (if you have access)
-export ANTHROPIC_MODEL=claude-opus-4-5-20251101
+### Context Management Strategy
 
-# 2. Configure hooks directory
-mkdir -p ~/.claude/hooks
+One of the most common issues is **context overflow**. Understanding when to compact vs. clear is key:
 
-# 3. Add useful MCP servers
-claude mcp add context7  # Library docs
-claude mcp add github    # PR management
-claude mcp add playwright # Visual testing
+<Diagram type="context-bucket" />
 
-# 4. Set up project-specific rules
-echo "Always run tests after changes" > .claude/rules/project.md
-```
+### Security Best Practices
 
-### Project-Level Configuration
-
-Create `.claude/` in your project root:
-
-```
-.claude/
-├── rules/
-│   └── project.md    # Project-specific instructions
-├── commands/
-│   └── deploy.md     # Custom slash commands
-└── settings.json     # Project settings override
-```
+1. **Review diffs** before approving
+2. **Git commit frequently** for rollback
+3. **Test in branches** — never push to main directly
+4. **Audit hooks** — untrusted hooks are security risks
+5. **Limit scope** — "Only touch files in src/auth/"
 
 ---
 
-## Common Pitfalls & Solutions
-
-| Pitfall | Symptom | Solution |
-|---------|---------|----------|
-| Context overflow | Claude forgets earlier context | Use `/compact` or start fresh |
-| Over-delegating | Simple tasks spawn unnecessary agents | Be specific about scope |
-| Not reviewing changes | Bugs in generated code | Always verify before commit |
-| Ignoring errors | Broken state | Let Claude fix before continuing |
-| Vague prompts | Unexpected results | Be specific about requirements |
-
----
-
-<ConceptCard title="Holocron: Claude Code Mastery" icon="💎">
+<ConceptCard title="Holocron: Claude Code Mastery v2.0" icon="💎">
 
 ### 🔑 Key Takeaways
 
-* **Agentic, not assistive:** Claude Code takes action, not just suggestions
-* **Hooks:** Automate workflows triggered by Claude Code events
-* **MCP Servers:** Extend capabilities (Figma, GitHub, databases, etc.)
-* **Plan Mode:** Think through complex implementations before coding
-* **Sub-Agents:** Automatic delegation for specialized tasks
-* **Debug workflow:** Show error → Investigate → Fix → Verify
-* **Multi-file patterns:** Top-down, test-first, incremental refactoring
+**Progressive Approach:**
+- From terminal and Node.js installation to advanced workflows
+- Lab 0 teaches you the basic cycle: prompt → review → approve
 
-**Pro workflow:** Plan → Implement → Test → Review → Commit
+**The PSB System:**
+- **Plan:** Create project spec before coding
+- **Setup:** Configure CLAUDE.md with rules
+- **Build:** Use Plan Mode + sub-agents
+
+**10 Rules Summary:**
+- Be collaborative, explicit, set boundaries
+- Plan first, structure output, explain "why"
+- Use magic words, divide big tasks
+
+**Power Features:**
+- **MCP Servers:** GitHub, databases, browsers
+- **Hooks:** Automate formatting, testing
+
+**Safety:**
+- Review before committing
+- Git branches for experiments
+- Scope limits prevent accidents
 
 </ConceptCard>

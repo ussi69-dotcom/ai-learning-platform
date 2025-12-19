@@ -1,459 +1,573 @@
-# Mistrovství v Claude Code: Pokročilý AI-asistovaný vývoj 🚀
+# Mistrovství v Claude Code: Od začátečníka k orchestrátorovi v2.0 🚀
 
 <Callout type="info">
-**Mise:** Jděte za hranice základního AI kódování - ovládněte pokročilé funkce Claude Code pro profesionální, vícesouborový, agentní vývoj softwaru.
+**Cíl:** Naučte se Claude Code od úplných základů až po pokročilá agentní workflow pro dramatické zrychlení vašeho vývoje.
 
-⏳ **Čas čtení:** 35 min | 🧪 **[3] Laby součástí**
+⏳ **Čas čtení:** 60 min | 🧪 **[4] Laby součástí**
 </Callout>
 
-<Callout type="warning">
-**Předpoklady:** Tato lekce předpokládá, že máte nainstalované a nakonfigurované Claude Code CLI. Pokud ne, nainstalujte ho přes `npm install -g @anthropic-ai/claude-code` nebo navštivte [Claude Code docs](https://docs.anthropic.com/en/docs/claude-code).
-</Callout>
+<VideoSwitcher alternatives={[
+  {"id":"zEk7eZzA04s","title":"Celé aplikace bez dozoru (CZ - Souki)"},
+  {"id":"UVJXh57MgI0","title":"Complete Claude Code Guide (Alex Finn)"},
+  {"id":"Xob-2a1OnvA","title":"10x Claude Code Rules (Greg Isenberg)"},
+  {"id":"aQvpqlSiUIQ","title":"How I Start Every Project (Avthar)"}
+]} />
 
-<VideoSwitcher alternatives={[{"id":"D0Rgtgtzlts","title":"AI AGENTI - AI Programování (CZ)"},{"id":"SUysp3sJHbA","title":"Claude Code Tutorial #1 - Introduction & Setup (Net Ninja)"},{"id":"kZ-zzHVUrO4","title":"How I use Claude Code for real engineering (Matt Pocock)"},{"id":"nGhsgdQplHw","title":"Claude Code 2.0 Agentic Coding (IndyDevDan)"},{"id":"wHHNtetJV0c","title":"Claude Code Plugins & MCP Toggles (JeredBlu)"}]} />
+## Agentní revoluce je tady
 
-**Použili jste AI pro kódování. Teď je čas nechat AI pracovat PRO vás.**
+**Jasný názor: Claude Code není jen asistent pro kódování — je to univerzální agentní systém, který dokáže řídit celé projekty, zatímco vy kontrolujete a schvalujete.**
 
-Claude Code není jen další coding asistent - je to agentní vývojové prostředí. Může spouštět příkazy, editovat více souborů, delegovat na specializované sub-agenty a dokonce orchestrovat komplexní vícekrokové implementace.
+Pokud stále používáte AI jen k tomu, aby "napsala tuhle funkci" nebo "opravila tenhle bug", přicházíte o obrovskou hodnotu. Vývojáři, kteří dnes vyhrávají, nejsou jen rychlejší kodéři — jsou to **architekti inteligence**.
 
-Ale většina vývojářů pouze škrábe povrch. Pojďme do hloubky.
+Tato lekce je navržena jako progresivní cesta. Pokud jste expert, klidně přeskočte první sekce. Pokud jste ale nováček v programování nebo v používání terminálu, provedeme vás vším krok za krokem.
+
+<Diagram type="agentic-vs-assistive" />
+
+V tomto hloubkovém ponoru se proměníte z uživatele Claude Code v orchestrátora. Naučíte se systém, který změní "AI asistenta pro kódování" na "AI Staff Engineera".
 
 ---
 
-## Za hranice chatu: Agentní paradigma
+## Sekce 0: Než začneme
 
-<ConceptCard title="Agentní vs. Asistentní AI" icon="🤖">
+Vítejte! Tato sekce je určena pro úplné začátečníky. Pokud už máte nastavené vývojové prostředí, můžete ji přeskočit.
 
-**Tradiční AI asistenti:** Zeptáte se → AI odpoví → Zkopírujete/vložíte → Debugujete
+### Co je Claude Code?
+Claude Code je nástroj, který běží ve vašem terminálu (příkazové řádce). Na rozdíl od chatovacích rozhraní jako ChatGPT nebo webového Claude, Claude Code má přímý přístup k souborům ve vašem počítači. Může číst, psát a upravovat kód, spouštět příkazy a spolupracovat s vámi na reálných projektech.
 
-**Agentní AI (Claude Code):** Popíšete záměr → AI plánuje → AI vykoná → AI ověří → Vy zkontrolujete
+### Proč terminál a ne chat?
+- **Přístup k souborům:** Může číst celý váš projekt a pochopit kontext.
+- **Spouštění příkazů:** Může instalovat závislosti, spouštět testy a buildit aplikaci.
+- **Automatizace:** Umožňuje komplexní pracovní postupy, které v chatu nejsou možné.
 
-Klíčový rozdíl: **Claude Code může jednat**, ne jen navrhovat.
+Nebojte se, pokud je pro vás terminál nový. Provedeme vás základy.
 
-</ConceptCard>
-
-### Co dělá Claude Code jiným
-
-| Funkce | Tradiční chat | Claude Code |
-|--------|---------------|-------------|
-| Editace souborů | Kopírovat/vložit návrhy | Přímé zápisy do souborů |
-| Spouštění příkazů | "Zkuste spustit..." | Skutečně spouští příkazy |
-| Vícesouborové změny | Jeden soubor za čas | Koordinované refaktory |
-| Zpracování chyb | "Měli byste zkontrolovat..." | Čte logy, opravuje problémy |
-| Kontext | Omezen na konverzaci | Povědomí o celé codebase |
+### Co budete potřebovat:
+1.  **Počítač:** s Windows, macOS nebo Linux.
+2.  **Node.js a npm:** Prostředí pro běh JavaScriptu. Ukážeme si, jak na to.
+3.  **Terminál:** Aplikace pro psaní příkazů.
+4.  **Anthropic API Klíč:** Pro přístup k modelům Claude. Získáte ho na [anthropic.com/console](https://console.anthropic.com/).
 
 ---
 
-## Silné funkce
+## Sekce 1: Instalace a nastavení
 
-Prozkoumejme pokročilé funkce, které dělají Claude Code silným:
+Pojďme společně nastavit vše potřebné. Tento proces se mírně liší podle vašeho operačního systému.
 
-### 1. Hooks: Automatizované workflow
+<Diagram type="claude-code-installation-flow" />
 
-Hooks spouštějí shell příkazy v reakci na Claude Code události. Představte si je jako triggery.
+### 1.1 Pro Windows uživatele: WSL (volitelné, ale doporučené)
 
-```json
-// ~/.claude/settings.json
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "command": "echo 'Soubor bude modifikován: $TOOL_INPUT'"
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write",
-        "command": "npm run lint --fix $TOOL_INPUT"
-      }
-    ]
-  }
-}
-```
-
-**Běžné use cases pro hooks:**
-- Auto-formátování kódu po zápisech
-- Spuštění testů po změnách souborů
-- Notifikace na Slack při commitech
-- Validace změn proti pravidlům
-- Automatická aktualizace dokumentace
-
-<Callout type="warning">
-**Bezpečnostní poznámka:** Hooks spouštějí shell příkazy! Pečlivě zkontrolujte před povolením. Škodlivé hooks mohou poškodit váš systém.
+<Callout type="info">
+**Co je WSL?** Windows Subsystem for Linux vám umožňuje spouštět Linux přímo ve Windows. Je to preferovaný způsob, jak pracovat s moderními vývojářskými nástroji na Windows.
 </Callout>
 
-### 2. MCP servery: Rozšířené schopnosti
+**Instalace WSL2:**
 
-MCP (Model Context Protocol) servery dávají Claude Code nové schopnosti - jako čtení Figma souborů, dotazování databází nebo načítání dokumentace.
+1. Otevřete **PowerShell jako Administrátor** (pravý klik → Spustit jako správce)
+2. Zadejte příkaz:
+   ```powershell
+   wsl --install
+   ```
+3. Restartujte počítač
+4. Po restartu se automaticky otevře Ubuntu a vyzve vás k vytvoření uživatelského jména a hesla
 
-**Populární MCP servery:**
+<Callout type="tip">
+**VS Code integrace:** Nainstalujte si rozšíření "WSL" do VS Code. Pak můžete otevřít libovolnou složku v WSL pomocí "Open Folder in WSL".
+</Callout>
 
-| Server | Schopnost |
-|--------|-----------|
-| `playwright` | Automatizace prohlížeče, vizuální testování |
-| `github` | Správa PR, sledování issues |
-| `context7` | Vyhledávání dokumentace knihoven |
-| `figma` | Přístup k design souborům |
-| `postgres` | Databázové dotazy |
+### 1.2 Terminál: Brána k efektivitě
 
-<Diagram type="mcp-architecture" />
+Terminál (nebo příkazová řádka) je textové rozhraní pro ovládání počítače. Místo klikání na ikony píšete příkazy. Je to neuvěřitelně mocný nástroj pro vývojáře.
 
-**Přidání MCP serveru:**
+- **Na macOS:** Najdete ho pod názvem `Terminal.app`.
+- **Na Linuxu:** Obvykle se jmenuje `Terminal` nebo `Console`.
+- **Na Windows s WSL:** Otevřete Ubuntu z nabídky Start.
+
+<Diagram type="terminal-basics" />
+
+### 1.3 Instalace Node.js a Claude Code
+
+Node.js je prostředí, které umožňuje spouštět JavaScriptový kód mimo prohlížeč. `npm` je jeho správce balíčků.
+
+**Krok 1: Nainstalujte Node.js**
+
+Nejjednodušší způsob je stáhnout si instalátor z oficiálních stránek [nodejs.org](https://nodejs.org/). Doporučujeme **LTS (Long-Term Support)** verzi.
+
+Pro Linux/WSL můžete použít:
 ```bash
-# Přidat server
-claude mcp add github
-
-# Vypsat aktivní servery
-claude mcp list
-
-# Odebrat server
-claude mcp remove github
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
 ```
 
-### 3. Plan Mode: Přemýšlej před akcí
+**Krok 2: Ověřte instalaci**
 
-Pro komplexní úkoly plan mode pomáhá Claude Code promyslet implementaci před psaním kódu.
+Otevřete terminál a zadejte:
+```bash
+node -v
+npm -v
+```
+Měli byste vidět čísla verzí obou nástrojů.
+
+**Krok 3: Nainstalujte Claude Code CLI**
 
 ```bash
-# Vstup do plan mode
-/plan
-
-# Claude analyzuje codebase, navrhne implementaci
-# Vy zkontrolujete a schválíte
-# Pak spustíte s plným kontextem
+npm install -g @anthropic-ai/claude-code
 ```
 
-**Kdy použít Plan Mode:**
-- Vícesouborové refaktory
-- Implementace nových funkcí
-- Architektonické změny
-- Když si nejste jistí přístupem
+**Krok 4: Nastavte API klíč**
 
-### 4. Sub-agenti: Delegace ve velkém měřítku
+Claude se vás při prvním spuštění zeptá na váš Anthropic API klíč. Mějte ho připravený z [console.anthropic.com](https://console.anthropic.com/).
 
-Claude Code může spawnovat specializované sub-agenty pro různé úkoly:
+**Krok 5: Ověřte instalaci**
 
-```
-Hlavní agent (S tímhle mluvíte)
-├── Explore Agent (hledání v codebase)
-├── Plan Agent (návrh architektury)
-├── Code Reviewer Agent (kontrola kvality)
-└── Test Runner Agent (verifikace)
+```bash
+claude --version
 ```
 
-**Spuštění delegace:**
-- `@explore` - Najdi soubory a vzorce
-- `@plan` - Navrhni implementační přístup
-- Komplexní vícekrokové úkoly automaticky delegují
+<Callout type="success">
+**Hotovo!** Vaše prostředí je připraveno. Jste jen pár kroků od toho, nechat AI pracovat za vás.
+</Callout>
 
 ---
 
-## 🔬 Lab 1: Nakonfigurujte svůj první Hook
+## 🔬 Lab 0: Váš první projekt
 
-Nastavme hook, který auto-formátuje kód po každém zápisu souboru!
+**Cíl:** Vytvořit jednoduchou "Hello, World!" webovou stránku pomocí Claude Code a pochopit základní cyklus práce.
 
-**Cíl:** Vytvořte hook, který spustí Prettier poté, co Claude Code zapíše soubory.
+**Čas:** 10 minut | **Obtížnost:** Začátečník
 
-**Krok 1: Vytvořte settings soubor**
+### Krok 1: Vytvořte adresář a spusťte Claude
+
+V terminálu vytvořte nový adresář pro váš projekt, přejděte do něj a spusťte Claude.
+
 ```bash
-mkdir -p ~/.claude
-cat > ~/.claude/settings.json << 'EOF'
-{
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write",
-        "command": "npx prettier --write \"$TOOL_INPUT\" 2>/dev/null || true"
-      }
-    ]
-  }
-}
-EOF
+mkdir muj-prvni-projekt
+cd muj-prvni-projekt
+claude
 ```
 
-**Krok 2: Otestujte**
-Požádejte Claude Code o vytvoření chaoticky formátovaného JavaScript souboru:
+### Krok 2: Zadejte první prompt
+
+Teď jste v Claude Code rozhraní. Zadejte svůj první úkol:
 
 ```text
-Vytvoř soubor test-hook.js s chaotickým formátováním:
-const x={a:1,b:2,c:3};function foo(x){return x+1}
+Prompt pro Claude Code:
+
+Vytvoř jednoduchou webovou stránku v souboru index.html.
+Stránka bude mít nadpis "Můj první projekt s Claude" a pod ním odstavec
+s textem "Tento soubor byl vygenerován umělou inteligencí!".
+Pak vytvoř soubor style.css, který nastaví barvu pozadí na tmavě šedou (#333),
+barvu textu na bílou a vycentruje text na stránce.
+Nakonec oba soubory propoj.
 ```
 
-**Očekávaný výsledek:**
-Po tom, co Claude zapíše soubor, Prettier ho automaticky zformátuje:
-```javascript
-const x = { a: 1, b: 2, c: 3 };
-function foo(x) {
-  return x + 1;
-}
+### Krok 3: Sledujte a schvalujte
+
+Claude vám ukáže, jaké soubory se chystá vytvořit nebo upravit. Pečlivě si je prohlédněte. Pokud vše vypadá dobře, stiskněte `y` (jako yes) pro schválení.
+
+**Očekávané chování:**
+- Claude navrhne vytvoření `index.html`
+- Claude navrhne vytvoření `style.css`
+- Claude navrhne propojení obou souborů
+
+### Krok 4: Ověřte výsledek
+
+Otevřete soubor `index.html` ve vašem webovém prohlížeči. Měli byste vidět vaši novou stránku!
+
+**Kritéria úspěchu:**
+- ✅ V adresáři existují soubory `index.html` a `style.css`
+- ✅ Stránka v prohlížeči vypadá podle zadání
+- ✅ Celý proces proběhl jen pomocí příkazů v terminálu
+
+**💡 Aha moment:** "Wow, Claude nejen napsal kód, ale i vytvořil a propojil soubory. Nemusel jsem nic kopírovat a vkládat!"
+
+<LabComplete labId="lab-cc-0" />
+
+### Pochopení schvalovacího cyklu
+
+Než půjdeme dál, je zásadní pochopit, JAK Claude Code funguje. Na rozdíl od chatových rozhraní vás Claude Code žádá o povolení před každou změnou:
+
+<Diagram type="claude-approval-loop" />
+
+Tento "human-in-the-loop" design vás drží pod kontrolou. Vy jste supervizor, Claude je pracovník.
+
+---
+
+## Sekce 2: Systém PSB
+
+Většina vývojářů s AI agenty selhává, protože přeskakují ten nejdůležitější krok: **kontext**. Skočí rovnou do fáze "Build" bez "Plan" nebo "Setup".
+
+**Systém PSB** (Plan, Setup, Build) to řeší vynucením osvědčeného rámce.
+
+<Diagram type="claude-code-psb-workflow" />
+
+### Fáze 1: PLAN — Návrh
+
+Před napsáním jediného řádku kódu slaďte agenta na tom, *co* stavíte. Vytvořte **Project Spec Doc**.
+
+**Co zahrnout:**
+- **Cíl:** Jaký problém řešíme?
+- **Omezení:** Čas, tech stack, závislosti
+- **Milníky:** Kontrolní body dodání
+- **Kritéria úspěchu:** Jak poznáme, že to funguje?
+
+### Fáze 2: SETUP — Ústava projektu
+
+Zde se děje magie. Vytvořte "Ústavu" pro váš projekt — soubor `CLAUDE.md` s pravidly, které musí Claude dodržovat.
+
+**Příklad `CLAUDE.md`:**
+
+```markdown
+# Projekt: Auth Systém
+## Tech Stack
+- Next.js 14 (App Router)
+- Tailwind CSS
+- Supabase (Auth + DB)
+
+## Styl kódu
+- TypeScript strict mode
+- Pouze funkcionální komponenty
+- Pojmenování souborů: kebab-case
+
+## Pravidla
+- NIKDY nemazej kód bez vysvětlení proč
+- VŽDY spusť testy před commitem
+- Omez změny souborů na <100 řádků za turn
+
+## Bezpečnost
+- ŽÁDNÉ hardcoded secrets
+- Zkontroluj všechny API endpointy na auth checks
 ```
 
-**💡 Aha moment:** "Už nikdy nemusím myslet na formátování. Hook to řeší automaticky, pokaždé!"
+Každá sekce vašeho CLAUDE.md slouží konkrétnímu účelu:
+
+<Diagram type="claude-md-anatomy" />
+
+### Fáze 3: BUILD — Provedení
+
+Teprve nyní stavíte. Používáte **Plan Mode** pro komplexní funkce a necháváte Claude delegovat na **Sub-agenty**.
+
+<Callout type="tip">
+**Pro tip:** Čím více kontextu v CLAUDE.md, tím méně korekcí během práce potřebujete. Investujte 10 minut předem, ušetřete hodiny později.
+</Callout>
+
+---
+
+## 🔬 Lab 1: Projektová ústava
+
+**Cíl:** Vytvořte svůj první soubor `CLAUDE.md`, který bude Claude skutečně respektovat.
+
+**Čas:** 10 minut | **Obtížnost:** Začátečník
+
+### Krok 1: Vytvořte soubor
+
+Ve vašem projektu (můžete pokračovat v `muj-prvni-projekt`) řekněte Claudovi, ať soubor vytvoří.
+
+### Krok 2: Zkopírujte tento prompt
+
+```text
+Prompt pro Claude Code:
+
+"Vytvoř soubor CLAUDE.md s následujícími sekcemi:
+1. Tech Stack: HTML5, CSS3, JavaScript
+2. Styl kódu: Používej 2 mezery pro odsazení
+3. Pravidla:
+   - Vždy komentuj komplexní kód
+   - Omez editace na 50 řádků za turn
+   - Vysvětli změny před spuštěním rm příkazů
+4. Bezpečnost: Žádné osobní údaje v kódu"
+```
+
+### Krok 3: Otestujte, že to funguje
+
+```text
+Prompt:
+"Vytvoř soubor test.html s jednoduchým odstavcem.
+Pak ho smaž."
+```
+
+**Očekávané chování:** Claude by měl vysvětlit, proč soubor maže, PŘEDTÍM, než ho skutečně smaže.
+
+**Kritéria úspěchu:**
+- ✅ `CLAUDE.md` existuje v root projektu
+- ✅ Claude odkazuje na pravidla při provádění změn
+- ✅ Destruktivní operace vyžaduje vysvětlení
+
+**💡 Aha moment:** "Claude si pamatuje moje pravidla! Už nikdy nemusím opakovat své standardy kódování."
 
 <LabComplete labId="lab-cc-1" />
 
 ---
 
-## Debug Workflow
+## Sekce 3: 10 pravidel pro lepší výstupy
 
-Claude Code exceluje v debugování. Zde je optimální workflow:
+Máte systém. Teď potřebujete taktiky. Toto je **10 pravidel** pro dramaticky lepší výstupy z Claude Code.
 
-### Krok 1: Sdílejte chybu
+<Diagram type="10-rules-pyramid" />
 
-Nepopisujte chybu - UKAŽTE ji:
+| # | Pravidlo | Co to znamená | Špatně ❌ → Dobře ✅ |
+|---|----------|---------------|---------------------|
+| 1 | **Tón spolupráce** | Berte AI jako kolegu, ne nástroj | "Napiš kód" → "Pojďme společně implementovat auth. Jaký máš plán?" |
+| 2 | **Buďte explicitní** | Konkrétní požadavky, ne vágní | "Vylepši to" → "Zredukuj z 50 na 20 řádků, zachovej typy" |
+| 3 | **Definujte hranice** | Jasný rozsah zabrání regresím | "Oprav bugy" → "Oprav pouze login flow. Nesahej na profil." |
+| 4 | **Nejdřív plánujte** | Přemýšlej, pak vykonávej | *Skok do kódu* → "Nejdřív ukaž svůj plán, počkej na schválení" |
+| 5 | **Strukturovaný výstup** | Vyžadujte specifické formáty | "Dej nápady" → "JSON pole: `[{idea, pros, cons}]`" |
+| 6 | **Vysvětlete proč** | Kontext zlepšuje rozhodování | "Přidej cache" → "Přidej cache, protože API je pomalé 2s" |
+| 7 | **Kontrolujte délku** | Odpovídat potřebě | *5stránková esej* → "Odpověz max 3 větami" |
+| 8 | **Poskytněte kostru** | Dejte strukturu k vyplnění | "Napiš testy" → "Tady je struktura, doplň test cases" |
+| 9 | **Magická slova** | Používejte ověřené spouštěče | "Udělej to" → "Přemýšlej krok za krokem" |
+| 10 | **Rozděl a panuj** | Velké na malé | "Postav aplikaci" → "Krok 1: Schéma. Krok 2: API. Krok 3: UI." |
 
-```text
-❌ Špatně: "Dostávám chybu když spustím testy"
+### Magická slova, která skutečně fungují
 
-✅ Dobře: [vložte celý error stack trace]
+| Fráze | Efekt |
+|-------|-------|
+| "Think step by step" | Vynutí Chain-of-Thought reasoning |
+| "Před odpovědí vypiš své předpoklady" | Odhalí skryté předpoklady |
+| "Zkritizuj svůj vlastní plán" | Podpoří sebereflexi |
+| "Chovej se jako Staff Engineer" | Nastaví personu s vysokou kompetencí |
+| "Co se může pokazit?" | Spustí zvážení edge cases |
 
-✅ Lépe: Spusťte npm test a chyba se objeví ve vašem kontextu
+---
+
+## Sekce 4: Hlavní funkce
+
+Znáte pravidla. Teď se podívejme na zbraně ve vašem arzenálu.
+
+### Plan Mode — Přemýšlej před akcí
+
+Plan Mode je rozdíl mezi hračkou a nástrojem. Když vstoupíte do Plan Mode, Claude nereaguje jen tak — **analyzuje**. Skenuje vaši codebase a navrhuje komplexní implementační plán.
+
+**Jak vstoupit do Plan Mode:**
+- Napište `/plan` před vaším promptem
+
+<Diagram type="plan-mode-flow" />
+
+**Kdy použít Plan Mode:**
+- Vícesouborové refaktory
+- Implementace nových funkcí
+- Architektonické změny
+- Když si nejste jisti přístupem
+
+### Základní příkazy
+
+| Příkaz | Účel | Kdy použít |
+|--------|------|------------|
+| `/help` | Seznam příkazů | Discovery |
+| `/clear` | Reset konverzace | Začátek nového úkolu |
+| `/model` | Přepnutí modelu | Kompromis rychlost vs kvalita |
+| `/plan` | Vstup do Plan Mode | Komplexní funkce |
+| `/cost` | Kontrola tokenů | Povědomí o rozpočtu |
+
+### Architektura sub-agentů
+
+Pro komplexní úkoly Claude spawnuje **specializované sub-agenty**:
+
+<Diagram type="sub-agent-architecture" />
+
+| Agent | Účel |
+|-------|------|
+| **Explore** | Průzkum codebase, pattern matching |
+| **Plan** | Návrh architektury, plánování implementace |
+| **Review** | Kvalita kódu, security checks |
+| **Test** | Spouštění testů, verifikace |
+
+**Klíčový insight:** Každý sub-agent dostává **forknutý kontext**. Jejich práce neznečišťuje vaši hlavní konverzaci.
+
+---
+
+## Sekce 5: Pokročilé funkce
+
+Tyto funkce oddělují běžné uživatele od power users.
+
+### MCP servery — Externí superschopnosti
+
+MCP (Model Context Protocol) umožňuje Claude připojit se k externím nástrojům a zdrojům dat.
+
+<Diagram type="claude-code-ecosystem" />
+
+**Populární MCP servery:**
+
+| Server | Schopnost | Use Case |
+|--------|-----------|----------|
+| `github` | PR, issues, code review | "Vytvoř PR pro issue #42" |
+| `playwright` | Automatizace prohlížeče | Vizuální testování |
+| `postgres` | Databázové dotazy | "Co je v tabulce users?" |
+| `context7` | Dokumentace knihoven | Aktuální API reference |
+
+**Přidání MCP serveru:**
+
+```bash
+# Seznam dostupných serverů
+claude mcp list
+
+# Přidání serveru
+claude mcp add github
 ```
 
-### Krok 2: Nechte Clauda vyšetřovat
+### Hooks — Automatizované workflow
 
-Claude Code bude:
-1. Číst relevantní zdrojové soubory
-2. Kontrolovat související testy
-3. Zkoumat konfiguraci
-4. Trasovat cestu chyby
+Hooks spouštějí shell příkazy v reakci na Claude Code události.
 
-### Krok 3: Ověřte opravu
+**Běžné use cases:**
+- Auto-formátování kódu po zápisech
+- Spuštění linteru po změnách
+- Spuštění testů po modifikaci souborů
 
-Vždy žádejte ověření:
-
-```text
-"Po opravě znovu spusť testy pro potvrzení, že projdou"
-```
-
-<Callout type="tip">
-**Pro tip:** Nepřerušujte Claude Code během vyšetřování. Nechte ho plně prozkoumat před navrhováním řešení. Více kontextu = lepší opravy.
+<Callout type="warning">
+**Bezpečnostní varování:** Hooks spouštějí shell příkazy! Pečlivě zkontrolujte před povolením.
 </Callout>
 
 ---
 
-## Vzorce vícesouborové implementace
+## 🔬 Lab 2: Dejte Claudeovi superschopnosti
 
-Pro velké funkce použijte tyto vzorce:
+**Cíl:** Připojte Claude k GitHubu pomocí MCP pro přímou správu issues a PR.
 
-### Vzorec 1: Top-Down dekompozice
+**Čas:** 15 minut | **Obtížnost:** Pokročilý
 
-```text
-"Implementuj autentifikaci uživatelů. Začni tím, že:
-1. Naplánuješ strukturu souborů
-2. Vytvoříš nejdřív interface/typy
-3. Implementuješ service vrstvu
-4. Přidáš API routes
-5. Napíšeš testy pro každou vrstvu"
+### Předpoklady
+- GitHub účet s repozitářem
+- Personal access token (fine-grained, s repo scope)
+
+### Krok 1: Přidejte GitHub MCP Server
+
+```bash
+claude mcp add github
 ```
 
-### Vzorec 2: Test-First vývoj
+Následujte autentizační prompty. Budete potřebovat váš GitHub token.
 
-```text
-"Potřebuji funkci pro parsování CSV souborů.
-1. Nejdřív napiš testovací soubor s očekávaným chováním
-2. Pak implementuj funkci, aby testy prošly
-3. Spusť testy po každé změně"
+### Krok 2: Ověřte připojení
+
+```bash
+claude mcp status
 ```
 
-### Vzorec 3: Inkrementální refaktoring
+Hledejte: `github: connected ✓`
+
+### Krok 3: Otestujte integraci
 
 ```text
-"Refaktoruj třídu UserService:
-1. Nejdřív přidej testy pro současné chování (kód zatím neměň)
-2. Udělej jednu malou změnu
-3. Spusť testy pro ověření
-4. Opakuj dokud není hotovo"
+Prompt:
+"Jaké jsou top 3 otevřené issues v tomto repozitáři?
+Vyber jeden a vytvoř draft PR, který přidá komentář
+vysvětlující, jak bys to opravil."
 ```
 
----
+**Kritéria úspěchu:**
+- ✅ MCP status ukazuje github connected
+- ✅ Claude může vypsat repository issues
+- ✅ Claude může vytvářet branches/PR
 
-## 🔬 Lab 2: Vícesouborová implementace funkce
-
-Pojďme implementovat funkci napříč více soubory pomocí plan mode!
-
-**Cíl:** Zažijte, jak Claude Code koordinuje vícesouborové změny.
-
-**Prompt:**
-```text
-Chci přidat funkci "last active" timestamp pro uživatele.
-
-Požadavky:
-- Ulož lastActiveAt v User modelu
-- Aktualizuj ho při každém API requestu
-- Zobraz ho na profile stránce
-- Přidej test pro middleware
-
-Použij plan mode k promyšlení, pak implementuj.
-```
-
-**Co by měl Claude Code udělat:**
-
-1. **Plánovací fáze:**
-   - Identifikovat soubory k modifikaci (model, middleware, komponenta, test)
-   - Navrhnout pořadí implementace
-   - Požádat o schválení
-
-2. **Implementační fáze:**
-   - Modifikovat User model/schema
-   - Vytvořit nebo aktualizovat middleware
-   - Aktualizovat profile komponentu
-   - Napsat testovací soubor
-
-3. **Verifikační fáze:**
-   - Spustit existující testy
-   - Spustit nové testy
-   - Zkontrolovat regrese
-
-**💡 Aha moment:** "Jeden prompt spustil koordinované změny napříč 4+ soubory, se správným pořadím a ověřením. Manuálně by mi to trvalo 30 minut!"
+**💡 Aha moment:** "Claude nyní může číst mé issues a vytvářet PR přímo! Nikdy nemusím přepínat do GitHub UI."
 
 <LabComplete labId="lab-cc-2" />
 
 ---
 
-## Integrace s dalšími nástroji
+## 🔬 Lab 3: Postavte funkci bez použití rukou
 
-Claude Code není sám. Integruje se s vaším dev ekosystémem:
+**Cíl:** Použijte Plan Mode k implementaci kompletní funkce, zatímco pozorujete.
 
-### Cursor integrace
+**Čas:** 20 minut | **Obtížnost:** Expert
 
-Používejte Claude Code společně s Cursor:
-- Cursor pro rychlé inline editace
-- Claude Code pro komplexní vícesouborové změny
-- Oba sdílí kontext přes Git
+### Výzva
 
-### Windsurf/Codeium
+Přidáte do vašeho prvního projektu počítadlo návštěv pomocí localStorage.
 
-Podobný vzorec:
-- IDE rozšíření pro autocomplete
-- Claude Code CLI pro agentní úkoly
-- Doplňující se, ne konkurenční
-
-### Git Workflow
-
-Claude Code rozumí Gitu:
+### Krok 1: Vstupte do Plan Mode
 
 ```text
-"Vytvoř novou větev pro tuto funkci,
-implementuj ji, commitni s dobrým message,
-a ukaž mi PR diff"
+Napište: /plan
+
+Pak prompt:
+"Přidej počítadlo návštěv do index.html.
+Požadavky:
+- Použij JavaScript a localStorage
+- Při každé návštěvě se číslo zvýší
+- Zobraz 'Tuto stránku jsi navštívil X krát.'
+- Přidej script.js a propoj s index.html
+
+Ukaž mi svůj implementační plán před začátkem."
 ```
 
-Udělá:
-1. `git checkout -b feature/xyz`
-2. Provede změny
-3. `git add` relevantní soubory
-4. `git commit -m "Popisná zpráva"`
-5. Ukáže diff ke kontrole
+### Krok 2: Zkontrolujte plán
 
----
+Claude by měl představit:
+1. Soubory k vytvoření/modifikaci
+2. Pořadí implementace
+3. Závislosti mezi kroky
 
-## 🔬 Lab 3: Debugujte komplexní chybu
+**Schvalte pomocí:** "Plán vypadá dobře, pokračuj"
 
-Pojďme procvičit debug workflow s realistickým scénářem!
+### Krok 3: Pozorujte a ověřte
 
-**Cíl:** Použijte debugging schopnosti Claude Code k opravě záludného problému.
+Sledujte jak Claude pracuje. Otevřete index.html v prohlížeči a obnovte stránku několikrát.
 
-**Scénář:**
-Máte test, který selhává občasně. Někdy projde, někdy selže.
+**Kritéria úspěchu:**
+- ✅ Na stránce je vidět počítadlo
+- ✅ Číslo se při obnovení zvyšuje
+- ✅ Existuje script.js propojený s index.html
 
-**Prompt:**
-```text
-Mám flaky test v codebase. Co vím:
-- Test soubor: tests/api/user.test.js
-- Selhává asi 30% času
-- Chyba: "Expected 200, received 500"
-- Samotný API endpoint funguje v produkci dobře
-
-Pomoz mi to debugovat. Nejdřív si přečti test soubor a endpoint,
-který testuje. Hledej race conditions, timing problémy nebo
-problémy s izolací testů.
-```
-
-**Co pozorovat:**
-
-Claude Code bude:
-1. Číst test soubor
-2. Číst API endpoint
-3. Kontrolovat async problémy
-4. Hledat v test setup/teardown
-5. Identifikovat root cause (pravděpodobně: chybějící await, sdílený stav, nebo timing)
-6. Navrhnout a implementovat opravu
-7. Spustit test vícekrát pro ověření
-
-**Běžné příčiny flaky testů:**
-- Chybějící `await` na async operacích
-- Sdílený mutable stav mezi testy
-- Databáze není správně resetována
-- Race conditions v setupu
-- Timeout příliš krátký pro CI prostředí
-
-**💡 Aha moment:** "Claude Code jen nenavrhl opravu - systematicky vyšetřil, identifikoval root cause a ověřil řešení. To je agentní debugging!"
+**💡 Aha moment:** "Šel jsem si pro kávu a Claude postavil celou funkci! Více souborů, logika, vše automaticky koordinované."
 
 <LabComplete labId="lab-cc-3" />
 
 ---
 
-## Best practices konfigurace
+## Řešení problémů
 
-```bash
-# Základní nastavení pro produktivní používání Claude Code
+| Problém | Řešení |
+|---------|--------|
+| Claude se zacyklí | `/clear` a přeformulujte s více kontextem |
+| Chybné předpoklady | "Stop. Vypiš své předpoklady. X je nesprávné protože..." |
+| Změněno příliš souborů | "Vrať poslední změnu. Modifikuj pouze [soubor]" |
+| Přetečení kontextu | `/compact` nebo začněte znovu s `/clear` |
+| Vymyšlené API | "Ověř, že toto API existuje. Ukaž dokumentaci." |
+| Permission denied chyby | Zkontrolujte oprávnění souborů, použijte `sudo` pokud je potřeba |
 
-# 1. Nastavte preferovaný model (pokud máte přístup)
-export ANTHROPIC_MODEL=claude-opus-4-5-20251101
+### Strategie správy kontextu
 
-# 2. Nakonfigurujte hooks adresář
-mkdir -p ~/.claude/hooks
+Jeden z nejčastějších problémů je **přetečení kontextu**. Pochopení kdy použít compact vs. clear je klíčové:
 
-# 3. Přidejte užitečné MCP servery
-claude mcp add context7  # Dokumentace knihoven
-claude mcp add github    # Správa PR
-claude mcp add playwright # Vizuální testování
+<Diagram type="context-bucket" />
 
-# 4. Nastavte projekt-specifická pravidla
-echo "Vždy spusť testy po změnách" > .claude/rules/project.md
-```
+### Best practices bezpečnosti
 
-### Konfigurace na úrovni projektu
-
-Vytvořte `.claude/` v root projektu:
-
-```
-.claude/
-├── rules/
-│   └── project.md    # Projekt-specifické instrukce
-├── commands/
-│   └── deploy.md     # Vlastní slash příkazy
-└── settings.json     # Override projektových settings
-```
+1. **Kontrolujte diffy** před schválením
+2. **Git commitujte často** pro možnost rollbacku
+3. **Testujte v branches** — nikdy přímo do main
+4. **Auditujte hooks** — nedůvěryhodné hooks jsou riziko
+5. **Omezte scope** — "Sahej pouze na soubory v src/auth/"
 
 ---
 
-## Běžné chyby a řešení
-
-| Chyba | Symptom | Řešení |
-|-------|---------|--------|
-| Přetečení kontextu | Claude zapomíná dřívější kontext | Použijte `/compact` nebo začněte znovu |
-| Nadměrná delegace | Jednoduché úkoly spawnují zbytečné agenty | Buďte specifičtí o rozsahu |
-| Nekontrolování změn | Bugy ve vygenerovaném kódu | Vždy ověřte před commitem |
-| Ignorování chyb | Poškozený stav | Nechte Clauda opravit před pokračováním |
-| Vágní prompty | Neočekávané výsledky | Buďte specifičtí o požadavcích |
-
----
-
-<ConceptCard title="Holokron: Mistrovství v Claude Code" icon="💎">
+<ConceptCard title="Holocron: Mistrovství v Claude Code v2.0" icon="💎">
 
 ### 🔑 Klíčové poznatky
 
-* **Agentní, ne asistentní:** Claude Code jedná, ne jen navrhuje
-* **Hooks:** Automatizujte workflow spouštěné Claude Code událostmi
-* **MCP Servery:** Rozšiřte schopnosti (Figma, GitHub, databáze, atd.)
-* **Plan Mode:** Promyslete komplexní implementace před kódováním
-* **Sub-agenti:** Automatická delegace pro specializované úkoly
-* **Debug workflow:** Ukažte chybu → Vyšetřujte → Opravte → Ověřte
-* **Vícesouborové vzorce:** Top-down, test-first, inkrementální refaktoring
+**Progresivní přístup:**
+- Od instalace terminálu a Node.js k pokročilým workflow
+- Lab 0 vás naučí základní cyklus: prompt → revize → schválení
 
-**Pro workflow:** Plan → Implement → Test → Review → Commit
+**Systém PSB:**
+- **Plan:** Vytvořte plán před kódováním
+- **Setup:** Nakonfigurujte CLAUDE.md s pravidly
+- **Build:** Použijte Plan Mode + sub-agenty
+
+**10 pravidel shrnutí:**
+- Buďte spolupracující, explicitní, definujte hranice
+- Plánujte, strukturujte výstup, vysvětlujte "proč"
+- Používejte magická slova, dělte velké úkoly
+
+**Silné funkce:**
+- **MCP servery:** GitHub, databáze, prohlížeče
+- **Hooks:** Automatizace formátování, testování
+
+**Bezpečnost:**
+- Kontrolujte před commitem
+- Git branches pro experimenty
+- Omezení scope zabraňují nehodám
 
 </ConceptCard>
