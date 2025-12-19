@@ -90,7 +90,7 @@ const GLOSSARY_TERMS = [
   // === Prompt Engineering (Course 2) ===
   {
     id: "prompt-injection",
-    term: { en: "Injection", cs: "Injekce" },
+    term: { en: "Prompt Injection", cs: "Prompt Injekce" },
     fullName: { en: "Prompt Injection", cs: "Prompt Injekce" },
     definition: {
       en: "Security attack where malicious inputs trick AI into ignoring its instructions. Critical vulnerability in AI-powered applications.",
@@ -169,7 +169,7 @@ const GLOSSARY_TERMS = [
   // === Advanced AI Techniques (Course 5) ===
   {
     id: "chain-of-thought",
-    term: { en: "CoT", cs: "CoT" },
+    term: { en: "Chain of Thought", cs: "Chain of Thought" },
     fullName: { en: "Chain-of-Thought", cs: "Chain-of-Thought" },
     definition: {
       en: "Prompting technique that asks AI to show step-by-step reasoning. Dramatically improves accuracy on complex tasks like math and logic.",
@@ -191,7 +191,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "reasoning",
-    term: { en: "Reasoning", cs: "Reasoning" },
+    term: { en: "Reasoning Models", cs: "Reasoning Modely" },
     fullName: { en: "Reasoning Models", cs: "Reasoning modely" },
     definition: {
       en: "Advanced AI models with built-in 'thinking time' (o1, o3, Claude 3.5). Solve complex problems through extended internal reasoning.",
@@ -248,7 +248,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "context",
-    term: { en: "Context", cs: "Kontext" },
+    term: { en: "Context Window", cs: "Kontextové Okno" },
     fullName: { en: "Context Window", cs: "Kontextové okno" },
     definition: {
       en: "The 'memory' of an AI during conversation. Larger context = AI remembers more. GPT-4: 128K tokens, Claude: 200K tokens.",
@@ -272,7 +272,7 @@ const GLOSSARY_TERMS = [
   // === Microsoft Copilot Mastery (Course 4) ===
   {
     id: "workflows-agent",
-    term: { en: "Workflows", cs: "Workflows" },
+    term: { en: "MS Workflows Agent", cs: "MS Workflows Agent" },
     fullName: { en: "Microsoft Workflows Agent", cs: "Microsoft Workflows Agent" },
     definition: {
       en: "Conversational AI interface in Microsoft 365 Copilot for building automations using natural language. Creates Power Automate flows from plain text descriptions.",
@@ -283,7 +283,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "copilot-studio",
-    term: { en: "Studio", cs: "Studio" },
+    term: { en: "Copilot Studio", cs: "Copilot Studio" },
     fullName: { en: "Microsoft Copilot Studio", cs: "Microsoft Copilot Studio" },
     definition: {
       en: "Enterprise platform for building custom AI agents. Define Instructions (persona), Knowledge Sources (data), and Actions (capabilities) without code.",
@@ -294,7 +294,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "knowledge-sources",
-    term: { en: "Knowledge", cs: "Knowledge" },
+    term: { en: "Knowledge Sources", cs: "Znalostní Zdroje" },
     fullName: { en: "Knowledge Sources", cs: "Znalostní zdroje" },
     definition: {
       en: "External data that AI agents can read and reference. Includes SharePoint, OneDrive, websites, and APIs. Respects user permissions automatically.",
@@ -305,7 +305,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "power-automate",
-    term: { en: "Power Auto", cs: "Power Auto" },
+    term: { en: "Power Automate", cs: "Power Automate" },
     fullName: { en: "Power Automate", cs: "Power Automate" },
     definition: {
       en: "Microsoft's workflow automation platform. Creates automated flows between apps and services. Backend engine for Workflows Agent and Copilot Studio Actions.",
@@ -316,7 +316,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "copilot-actions",
-    term: { en: "Actions", cs: "Actions" },
+    term: { en: "Copilot Actions", cs: "Copilot Akce" },
     fullName: { en: "Copilot Actions", cs: "Copilot Akce" },
     definition: {
       en: "What AI agents can DO beyond conversation: call Power Automate flows, connect to APIs (Jira, Salesforce), send Teams messages, update databases.",
