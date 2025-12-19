@@ -117,9 +117,9 @@ export default function CourseCarousel({
           )}
           {/* Badge - either special or difficulty */}
           {specialBadge === "ms365" ? (
-            <span className="absolute top-2 right-2 text-[9px] font-bold bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-2 py-1 rounded-full border border-white/20 flex items-center gap-1 shadow-lg">
-              <span className="text-[10px]">📎</span>
-              {locale === "cs" ? "Pro MS 365" : "For MS 365"}
+            <span className="absolute top-2 right-2 text-[10px] font-bold bg-black/70 dark:bg-black/80 backdrop-blur-md text-orange-400 dark:text-orange-500 px-2.5 py-1 rounded-full border border-orange-500/50 flex items-center gap-1.5 shadow-lg">
+              <span>📎</span>
+              {locale === "cs" ? "MS 365" : "MS 365"}
             </span>
           ) : (
             <span className="absolute top-2 right-2 text-[9px] font-bold bg-black/50 backdrop-blur-md text-white px-2 py-1 rounded-full border border-white/10 flex items-center gap-1">
@@ -195,7 +195,7 @@ export default function CourseCarousel({
           {/* Scroll Container */}
           <div
             ref={scrollRef}
-            className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-2"
+            className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-2 pl-1"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {courses.map((course) => (
@@ -219,9 +219,13 @@ export default function CourseCarousel({
             <ChevronRight className="w-6 h-6" />
           </button>
 
-          {/* Fade edges */}
-          <div className="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-background/80 to-transparent pointer-events-none" />
-          <div className="absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-background/80 to-transparent pointer-events-none" />
+          {/* Fade edges - only show when scrollable */}
+          {courses.length > 1 && (
+            <>
+              <div className="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-background/80 to-transparent pointer-events-none" />
+              <div className="absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-background/80 to-transparent pointer-events-none" />
+            </>
+          )}
         </div>
       )}
 
