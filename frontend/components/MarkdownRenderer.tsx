@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import MDXImage from './MDXImage';
 import Callout from './mdx/Callout';
 import Steps from './mdx/Steps';
@@ -554,5 +554,9 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
     return elements;
   };
 
-  return <div className="markdown-content">{parseContent(content)}</div>;
+  // Memoize parsed content to prevent re-creating components on every render
+  // This is critical for VideoSwitcher which registers videos via global registry
+  const parsedContent = useMemo(() => parseContent(content), [content, courseSlug, lessonSlug]);
+
+  return <div className="markdown-content">{parsedContent}</div>;
 }
