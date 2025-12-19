@@ -235,6 +235,48 @@ docker compose build --no-cache frontend
 
 ## 📝 Lessons Learned
 
+### 2025-12-19: ID/Slug Resolution & MDXImage URL - Two Critical Bugs 🐛
+
+**Kontext:** L07 Antigravity Mastery - obrázek agent-manager.png se nezobrazoval.
+
+**Problém 1: API 422 Error (ID/Slug mismatch)**
+- Frontend posílá `GET /lessons/07-antigravity-mastery` (slug)
+- Backend očekával `lesson_id: int` → 422 Unprocessable Entity
+- Stávalo se často s různými lekcemi
+
+**Root cause:** Backend endpoint `def read_lesson(lesson_id: int, ...)` nepodporoval slugy.
+
+**Řešení:** FastAPI Dependencies v `backend/app/dependencies.py`:
+```python
+def get_lesson(lesson_id: str = Path(...)) -> models.Lesson:
+    if lesson_id.isdigit():
+        lesson = db.query(models.Lesson).filter(models.Lesson.id == int(lesson_id)).first()
+    else:
+        lesson = db.query(models.Lesson).filter(models.Lesson.slug == lesson_id).first()
+    return lesson
+```
+Všechny lesson/course endpointy teď používají `Depends(get_lesson)` / `Depends(get_course)`.
+
+---
+
+**Problém 2: MDXImage hardcoded localhost**
+- `MDXImage.tsx` měl: `const API_BASE_URL = "http://localhost:8000";`
+- Browser na `learnai.cz` nemohl dosáhnout `localhost:8000`
+- Výsledek: obrázky měly jen úzký pruh (broken image)
+
+**Root cause:** Hardcoded URL místo environment variable.
+
+**Řešení:** `frontend/components/MDXImage.tsx`:
+```typescript
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+```
+
+**Checklist při nových endpoint/komponentách:**
+- [ ] Backend: Podporuje endpoint jak numeric ID, tak slug?
+- [ ] Frontend: Používá komponenta `NEXT_PUBLIC_API_URL` pro API calls?
+
+---
+
 ### 2025-12-19: MACP Content Workflow - Critical Reviewer ≠ Better Writer 🎭
 
 **Kontext:** MACP review L05 - Gemini dal 9/10, GPT-5.2 dal 7/10. Otázka: Neměl by psát lekce ten kritičtější?

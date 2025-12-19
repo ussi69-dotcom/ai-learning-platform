@@ -7,7 +7,7 @@ interface MDXImageProps {
   lessonSlug?: string;
 }
 
-const API_BASE_URL = "http://localhost:8000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function MDXImage({ src, alt, courseSlug, lessonSlug }: MDXImageProps) {
   let finalSrc = src;

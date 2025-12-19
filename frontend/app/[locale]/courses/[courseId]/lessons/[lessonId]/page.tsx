@@ -638,7 +638,7 @@ export default function LessonPage({
                     <span>»</span>
                   </Button>
                 </Link>
-              ) : (
+              ) : allLessons.length > 0 && currentIndex === allLessons.length - 1 && currentPage === calculatedTotalPages - 1 ? (
                 <Link href={`/courses/${courseId}`}>
                   <Button
                     variant="default"
@@ -648,6 +648,15 @@ export default function LessonPage({
                     {locale === "cs" ? "Dokončit kurz 🏆" : "Finish Course 🏆"}
                   </Button>
                 </Link>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled
+                  className="opacity-0"
+                >
+                  Next
+                </Button>
               )}
             </div>
           </div>

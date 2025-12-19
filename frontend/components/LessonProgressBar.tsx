@@ -29,9 +29,9 @@ export default function LessonProgressBar({
               relative group flex-1 h-2 rounded-full transition-all duration-300
               ${
                 isCurrent
-                  ? "bg-violet-600 shadow-[0_0_10px_rgba(124,58,237,0.5)] ring-2 ring-violet-500/30 h-3" // Větší aktivní
+                  ? "bg-violet-600 dark:bg-red-600 shadow-[0_0_10px_rgba(124,58,237,0.5)] dark:shadow-[0_0_10px_rgba(220,38,38,0.5)] ring-2 ring-violet-500/30 dark:ring-red-500/30 h-3" // Větší aktivní
                   : isActive
-                  ? "bg-violet-400 hover:bg-violet-500"
+                  ? "bg-violet-400 dark:bg-red-500 hover:bg-violet-500 dark:hover:bg-red-400"
                   : "bg-muted hover:bg-muted-foreground/30"
               }
             `}

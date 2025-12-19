@@ -30,7 +30,7 @@ export default function ProgressDots() {
             w-2 h-2 rounded-full transition-all duration-300
             ${
               i <= activeDotIndex
-                ? "bg-violet-600 scale-125 shadow-[0_0_10px_rgba(124,58,237,0.5)]"
+                ? "bg-violet-600 dark:bg-red-600 scale-125 shadow-[0_0_10px_rgba(124,58,237,0.5)] dark:shadow-[0_0_10px_rgba(220,38,38,0.5)]"
                 : "bg-muted-foreground/20 scale-100"
             }
           `}

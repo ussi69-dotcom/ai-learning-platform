@@ -4,6 +4,7 @@ from sqlalchemy import func
 from typing import List, Optional
 from datetime import datetime, timedelta, timezone
 from app import models, schemas, database, auth
+from app.dependencies import get_lesson, get_course
 
 router = APIRouter()
 
@@ -220,16 +221,11 @@ def read_courses(
 
 @router.get("/courses/{course_id}", response_model=schemas.Course)
 def read_course(
-    course_id: int,
+    course: models.Course = Depends(get_course),
     lang: str = "en",
-    db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
-    course = db.query(models.Course).filter(models.Course.id == course_id).first()
-    if course is None:
-        raise HTTPException(status_code=404, detail="Course not found")
-
-    # All courses are accessible (no difficulty restriction)
+    # Course is auto-resolved via dependency (supports both ID and slug)
 
     if lang == "cs":
         # Localize course
@@ -249,25 +245,27 @@ def read_course(
 
 @router.get("/courses/{course_id}/progress")
 def get_course_progress(
-    course_id: int,
+    course: models.Course = Depends(get_course),
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
     """Get progress percentage for a specific course"""
+    # Course is auto-resolved via dependency (supports both ID and slug)
+
     # Get total lessons in course
-    total_lessons = db.query(models.Lesson).filter(models.Lesson.course_id == course_id).count()
-    
+    total_lessons = db.query(models.Lesson).filter(models.Lesson.course_id == course.id).count()
+
     if total_lessons == 0:
         return {"percentage": 0, "completed": 0, "total": 0}
-    
+
     # Get completed lessons in course
     completed_lessons = db.query(models.UserProgress).filter(
         models.UserProgress.user_id == current_user.id,
-        models.UserProgress.course_id == course_id
+        models.UserProgress.course_id == course.id
     ).count()
-    
+
     percentage = int((completed_lessons / total_lessons) * 100)
-    
+
     return {
         "percentage": percentage,
         "completed": completed_lessons,
@@ -297,15 +295,11 @@ def read_lessons(
 
 @router.get("/lessons/{lesson_id}", response_model=schemas.Lesson)
 def read_lesson(
-    lesson_id: int, 
-    lang: str = "en",
-    db: Session = Depends(database.get_db)
+    lesson: models.Lesson = Depends(get_lesson),
+    lang: str = "en"
 ):
-    # Detail lekce (vrací i `content`, na rozdíl od "/lessons/")
-    lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
-    if lesson is None:
-        raise HTTPException(status_code=404, detail="Lesson not found")
-    
+    # Lesson is auto-resolved via dependency (supports both ID and slug)
+
     if lang == "cs":
         if lesson.title_cs:
             lesson.title = lesson.title_cs
@@ -315,21 +309,22 @@ def read_lesson(
             lesson.content = lesson.content_cs
         if lesson.duration_cs:
             lesson.duration = lesson.duration_cs
-            
+
     return lesson
 
 # --- QUIZ ENDPOINTS ---
 
 @router.get("/lessons/{lesson_id}/quizzes", response_model=List[schemas.Quiz])
 def get_lesson_quizzes(
-    lesson_id: int, 
+    lesson: models.Lesson = Depends(get_lesson),
     lang: str = "en",
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
     """Get all quiz questions for a lesson"""
+    # Lesson is auto-resolved via dependency (supports both ID and slug)
     quizzes = db.query(models.Quiz)\
-        .filter(models.Quiz.lesson_id == lesson_id)\
+        .filter(models.Quiz.lesson_id == lesson.id)\
         .order_by(models.Quiz.order)\
         .all()
     
@@ -354,20 +349,17 @@ def get_lesson_quizzes(
 
 @router.post("/lessons/{lesson_id}/complete", response_model=schemas.UserProgress)
 def complete_lesson(
-    lesson_id: int,
+    lesson: models.Lesson = Depends(get_lesson),
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
     """Mark a lesson as completed"""
-    # Check if lesson exists
-    lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
-    if not lesson:
-        raise HTTPException(status_code=404, detail="Lesson not found")
+    # Lesson is auto-resolved via dependency (supports both ID and slug)
 
     # Check if already completed
     existing_progress = db.query(models.UserProgress).filter(
         models.UserProgress.user_id == current_user.id,
-        models.UserProgress.lesson_id == lesson_id
+        models.UserProgress.lesson_id == lesson.id
     ).first()
 
     if existing_progress:
@@ -380,7 +372,7 @@ def complete_lesson(
     # Create new progress entry
     new_progress = models.UserProgress(
         user_id=current_user.id,
-        lesson_id=lesson_id,
+        lesson_id=lesson.id,
         course_id=lesson.course_id,
         completed_at=func.now()
     )
@@ -400,27 +392,24 @@ def complete_lesson(
 
 @router.post("/lessons/{lesson_id}/progress", response_model=schemas.UserProgress)
 def update_lesson_progress(
-    lesson_id: int,
-    page: int,
+    lesson: models.Lesson = Depends(get_lesson),
+    page: int = 0,
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
     """Update user's current page in a lesson"""
-    # Check if lesson exists
-    lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
-    if not lesson:
-        raise HTTPException(status_code=404, detail="Lesson not found")
-    
+    # Lesson is auto-resolved via dependency (supports both ID and slug)
+
     # Find existing progress or create new
     progress = db.query(models.UserProgress).filter(
         models.UserProgress.user_id == current_user.id,
-        models.UserProgress.lesson_id == lesson_id
+        models.UserProgress.lesson_id == lesson.id
     ).first()
-    
+
     if not progress:
         progress = models.UserProgress(
             user_id=current_user.id,
-            lesson_id=lesson_id,
+            lesson_id=lesson.id,
             course_id=lesson.course_id,
             current_page=page
         )
@@ -444,20 +433,17 @@ def calculate_lab_xp(step_count: int) -> int:
 
 @router.post("/lessons/{lesson_id}/lab/complete", response_model=schemas.UserProgress)
 def complete_lesson_lab(
-    lesson_id: int,
     completion: schemas.LabCompletion,
+    lesson: models.Lesson = Depends(get_lesson),
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
     """Mark a specific lab within a lesson as completed. XP based on step count."""
-    # Check if lesson exists
-    lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
-    if not lesson:
-        raise HTTPException(status_code=404, detail="Lesson not found")
+    # Lesson is auto-resolved via dependency (supports both ID and slug)
 
     progress = db.query(models.UserProgress).filter(
         models.UserProgress.user_id == current_user.id,
-        models.UserProgress.lesson_id == lesson_id
+        models.UserProgress.lesson_id == lesson.id
     ).first()
 
     lab_id = completion.lab_id
@@ -466,7 +452,7 @@ def complete_lesson_lab(
     if not progress:
         progress = models.UserProgress(
             user_id=current_user.id,
-            lesson_id=lesson_id,
+            lesson_id=lesson.id,
             course_id=lesson.course_id,
             completed_labs=[lab_id]
         )
@@ -495,8 +481,8 @@ def complete_lesson_lab(
 
 @router.post("/lessons/{lesson_id}/quiz/complete", response_model=schemas.UserProgress)
 def complete_lesson_quiz(
-    lesson_id: int,
     completion: schemas.QuizCompletion,
+    lesson: models.Lesson = Depends(get_lesson),
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
@@ -507,13 +493,11 @@ def complete_lesson_quiz(
     - Second pass (retry): +25 XP bonus
     - Subsequent: no additional XP
     """
-    lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
-    if not lesson:
-        raise HTTPException(status_code=404, detail="Lesson not found")
+    # Lesson is auto-resolved via dependency (supports both ID and slug)
 
     progress = db.query(models.UserProgress).filter(
         models.UserProgress.user_id == current_user.id,
-        models.UserProgress.lesson_id == lesson_id
+        models.UserProgress.lesson_id == lesson.id
     ).first()
 
     xp_award = 0
@@ -523,7 +507,7 @@ def complete_lesson_quiz(
         # First attempt
         progress = models.UserProgress(
             user_id=current_user.id,
-            lesson_id=lesson_id,
+            lesson_id=lesson.id,
             course_id=lesson.course_id,
             quiz_score=completion.score,
             quiz_attempts=1 if passed else 0  # Track passing attempts
