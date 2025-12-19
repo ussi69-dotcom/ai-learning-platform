@@ -79,8 +79,10 @@ export const VideoPlayer = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const [videos, setVideos] = useState<Video[]>([]);
+  const [isWaitingForVideos, setIsWaitingForVideos] = useState(true);
   const [, forceUpdate] = useState({});
   const initializedRef = useRef(false);
+  const waitTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Reset registry when lesson changes
   useEffect(() => {
@@ -94,6 +96,21 @@ export const VideoPlayer = ({
     setIsPinned(false);
     setIsExpanded(false);
     initializedRef.current = false;
+
+    // Start waiting for videos (give VideoSwitcher time to register)
+    setIsWaitingForVideos(true);
+    if (waitTimeoutRef.current) {
+      clearTimeout(waitTimeoutRef.current);
+    }
+    waitTimeoutRef.current = setTimeout(() => {
+      setIsWaitingForVideos(false);
+    }, 300); // Wait 300ms for VideoSwitcher to register videos
+
+    return () => {
+      if (waitTimeoutRef.current) {
+        clearTimeout(waitTimeoutRef.current);
+      }
+    };
   }, [lessonKey]);
 
   // Initialize with fallback video
@@ -126,18 +143,36 @@ export const VideoPlayer = ({
     if (!registry) return;
 
     const unsubscribe = registry.subscribe(() => {
-      setVideos([...registry.videos]);
+      const newVideos = [...registry.videos];
+      setVideos(newVideos);
+      // Stop waiting as soon as we have videos
+      if (newVideos.length > 0) {
+        setIsWaitingForVideos(false);
+        if (waitTimeoutRef.current) {
+          clearTimeout(waitTimeoutRef.current);
+        }
+      }
       forceUpdate({});
     });
 
-    setVideos([...registry.videos]);
+    const currentVideos = [...registry.videos];
+    setVideos(currentVideos);
+    if (currentVideos.length > 0) {
+      setIsWaitingForVideos(false);
+    }
     return unsubscribe;
   }, [lessonKey]);
 
   const activeVideo = videos.find((v) => v.id === activeVideoId) || videos[0];
   const alternativeVideos = videos.filter((v) => v.id !== activeVideo?.id);
 
-  if (!activeVideo) {
+  // Don't render anything if no video and not waiting anymore
+  if (!activeVideo && !isWaitingForVideos) {
+    return null;
+  }
+
+  // Show nothing while waiting (prevents flash of empty state)
+  if (!activeVideo && isWaitingForVideos) {
     return null;
   }
 
