@@ -145,7 +145,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
         ref={buttonRef}
         variant="ghost"
         className={cn(
-          "!rounded-full w-14 h-14 md:w-12 md:h-12 flex items-center justify-center p-0 transition-all duration-300 touch-none border-2 backdrop-blur-md select-none pointer-events-auto",
+          "!rounded-full w-11 h-11 md:w-12 md:h-12 flex items-center justify-center p-0 transition-all duration-300 touch-none border-2 backdrop-blur-md select-none pointer-events-auto",
           currentMode === 'placing'
             ? "bg-primary hover:bg-primary/90 text-primary-foreground border-primary scale-110 cursor-grabbing shadow-[0_0_25px_rgba(var(--primary),0.6)]"
             : currentMode === 'viewing'
