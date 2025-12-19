@@ -2127,5 +2127,396 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
     );
   }
 
+  // =====================
+  // Antigravity: Dual Interface
+  // =====================
+  if (type === 'antigravity-dual-interface') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl">
+          <svg viewBox="0 0 900 320" className="w-full h-auto" role="img" aria-label="Antigravity Dual Interface: Editor vs Manager">
+            <defs>
+              <linearGradient id="ag-dual-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#1d4ed8" />
+              </linearGradient>
+              <linearGradient id="ag-dual-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#a855f7" />
+                <stop offset="100%" stopColor="#7c3aed" />
+              </linearGradient>
+              <marker id="ag-dual-arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                <polygon points="0 0, 10 5, 0 10" fill="#64748b" />
+              </marker>
+            </defs>
+
+            {/* Title */}
+            <text x="450" y="30" textAnchor="middle" className="text-lg font-bold fill-white">
+              {isCs ? '🎛️ Dvě Rozhraní Antigravity' : '🎛️ The Two Surfaces of Antigravity'}
+            </text>
+
+            {/* Editor Surface - Left */}
+            <g transform="translate(50, 60)">
+              <rect x="0" y="0" width="350" height="220" rx="16" fill="url(#ag-dual-blue)" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="2"/>
+              <text x="175" y="35" textAnchor="middle" className="text-base font-bold fill-blue-400">
+                {isCs ? '📝 Editor Surface' : '📝 Editor Surface'}
+              </text>
+              <text x="175" y="55" textAnchor="middle" className="text-xs fill-blue-300">Ctrl+E</text>
+
+              {/* VS Code-like elements */}
+              <rect x="20" y="75" width="60" height="120" rx="4" fill="#1e293b" stroke="#334155"/>
+              <rect x="30" y="85" width="40" height="6" rx="2" fill="#475569"/>
+              <rect x="30" y="97" width="35" height="6" rx="2" fill="#475569"/>
+              <rect x="30" y="109" width="42" height="6" rx="2" fill="#475569"/>
+              <rect x="30" y="121" width="30" height="6" rx="2" fill="#3b82f6"/>
+
+              {/* Code area */}
+              <rect x="90" y="75" width="240" height="120" rx="4" fill="#0f172a" stroke="#334155"/>
+              <text x="100" y="95" className="text-[10px] fill-purple-400 font-mono">function</text>
+              <text x="155" y="95" className="text-[10px] fill-blue-400 font-mono">main()</text>
+              <text x="100" y="115" className="text-[10px] fill-slate-500 font-mono">{'  // your code'}</text>
+              <text x="100" y="135" className="text-[10px] fill-green-400 font-mono">  return</text>
+              <text x="150" y="135" className="text-[10px] fill-amber-400 font-mono">result;</text>
+
+              {/* Traits */}
+              <text x="175" y="210" textAnchor="middle" className="text-[11px] fill-slate-400">
+                ✓ {isCs ? 'Tab completion' : 'Tab completion'}
+              </text>
+              <text x="175" y="225" textAnchor="middle" className="text-[11px] fill-slate-400">
+                ✓ {isCs ? 'Inline edits (Cmd+K)' : 'Inline edits (Cmd+K)'}
+              </text>
+              <text x="175" y="240" textAnchor="middle" className="text-[11px] fill-slate-400">
+                ✓ {isCs ? 'Synchronní práce' : 'Synchronous work'}
+              </text>
+            </g>
+
+            {/* Switch Arrows - Center */}
+            <g transform="translate(420, 150)">
+              <path d="M 0 0 L 60 0" stroke="#64748b" strokeWidth="2" markerEnd="url(#ag-dual-arrow)"/>
+              <path d="M 60 40 L 0 40" stroke="#64748b" strokeWidth="2" markerEnd="url(#ag-dual-arrow)"/>
+              <text x="30" y="60" textAnchor="middle" className="text-[10px] fill-slate-500 font-mono">⇄ Switch</text>
+            </g>
+
+            {/* Manager Surface - Right */}
+            <g transform="translate(500, 60)">
+              <rect x="0" y="0" width="350" height="220" rx="16" fill="url(#ag-dual-purple)" fillOpacity="0.15" stroke="#a855f7" strokeWidth="2"/>
+              <text x="175" y="35" textAnchor="middle" className="text-base font-bold fill-purple-400">
+                {isCs ? '🎯 Manager Surface' : '🎯 Manager Surface'}
+              </text>
+              <text x="175" y="55" textAnchor="middle" className="text-xs fill-purple-300">Ctrl+M</text>
+
+              {/* Agent cards */}
+              <g transform="translate(20, 75)">
+                <rect x="0" y="0" width="145" height="55" rx="8" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e"/>
+                <text x="15" y="20" className="text-[10px] fill-green-400 font-bold">🤖 Agent 1</text>
+                <text x="15" y="35" className="text-[10px] fill-green-300">{isCs ? 'Píše API...' : 'Writing API...'}</text>
+                <rect x="15" y="42" width="100" height="6" rx="2" fill="#22c55e" fillOpacity="0.5"/>
+                <rect x="15" y="42" width="70" height="6" rx="2" fill="#22c55e"/>
+              </g>
+
+              <g transform="translate(175, 75)">
+                <rect x="0" y="0" width="145" height="55" rx="8" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b"/>
+                <text x="15" y="20" className="text-[10px] fill-amber-400 font-bold">🤖 Agent 2</text>
+                <text x="15" y="35" className="text-[10px] fill-amber-300">{isCs ? 'Testuje UI...' : 'Testing UI...'}</text>
+                <rect x="15" y="42" width="100" height="6" rx="2" fill="#f59e0b" fillOpacity="0.5"/>
+                <rect x="15" y="42" width="40" height="6" rx="2" fill="#f59e0b"/>
+              </g>
+
+              <g transform="translate(20, 140)">
+                <rect x="0" y="0" width="300" height="40" rx="8" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6"/>
+                <text x="15" y="25" className="text-[10px] fill-blue-400 font-bold">📥 Inbox: 3 {isCs ? 'artefakty čekají' : 'artifacts waiting'}</text>
+              </g>
+
+              {/* Traits */}
+              <text x="175" y="210" textAnchor="middle" className="text-[11px] fill-slate-400">
+                ✓ {isCs ? 'Paralelní agenti' : 'Parallel agents'}
+              </text>
+              <text x="175" y="225" textAnchor="middle" className="text-[11px] fill-slate-400">
+                ✓ {isCs ? 'Fire & Forget' : 'Fire & Forget'}
+              </text>
+              <text x="175" y="240" textAnchor="middle" className="text-[11px] fill-slate-400">
+                ✓ {isCs ? 'Asynchronní práce' : 'Asynchronous work'}
+              </text>
+            </g>
+
+            {/* Bottom comparison */}
+            <text x="225" y="305" textAnchor="middle" className="text-xs fill-blue-400">
+              {isCs ? 'Ty jsi řidič' : 'You are the driver'}
+            </text>
+            <text x="675" y="305" textAnchor="middle" className="text-xs fill-purple-400">
+              {isCs ? 'Ty jsi manažer' : 'You are the manager'}
+            </text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // Artifacts Workflow
+  // =====================
+  if (type === 'artifacts-workflow') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl">
+          <svg viewBox="0 0 900 260" className="w-full h-auto" role="img" aria-label="Artifacts Workflow: Intent to Apply">
+            <defs>
+              <linearGradient id="art-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#3b82f6" />
+                <stop offset="50%" stopColor="#a855f7" />
+                <stop offset="100%" stopColor="#22c55e" />
+              </linearGradient>
+              <marker id="art-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+              </marker>
+            </defs>
+
+            {/* Title */}
+            <text x="450" y="30" textAnchor="middle" className="text-lg font-bold fill-white">
+              {isCs ? '📦 Systém Artefaktů' : '📦 The Artifacts System'}
+            </text>
+
+            {/* Flow line */}
+            <path d="M 80 130 L 820 130" stroke="url(#art-gradient)" strokeWidth="2" strokeDasharray="8 4" opacity="0.4"/>
+
+            {/* Step 1: User Intent */}
+            <g transform="translate(40, 70)">
+              <circle cx="50" cy="60" r="40" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeWidth="2"/>
+              <text x="50" y="55" textAnchor="middle" className="text-xl">💡</text>
+              <text x="50" y="75" textAnchor="middle" className="text-[10px] font-bold fill-blue-400">{isCs ? 'Záměr' : 'Intent'}</text>
+              <text x="50" y="130" textAnchor="middle" className="text-[9px] fill-slate-400">{isCs ? '"Přidej login"' : '"Add login"'}</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 130 130 L 175 130" stroke="#64748b" strokeWidth="2" markerEnd="url(#art-arrow)"/>
+
+            {/* Step 2: Agent Processing */}
+            <g transform="translate(180, 70)">
+              <rect x="0" y="20" width="100" height="80" rx="10" fill="#a855f7" fillOpacity="0.2" stroke="#a855f7" strokeWidth="2"/>
+              <text x="50" y="55" textAnchor="middle" className="text-xl">🤖</text>
+              <text x="50" y="75" textAnchor="middle" className="text-[10px] font-bold fill-purple-400">Agent</text>
+              <text x="50" y="90" textAnchor="middle" className="text-[8px] fill-purple-300 animate-pulse">{isCs ? 'pracuje...' : 'working...'}</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 285 130 L 330 130" stroke="#64748b" strokeWidth="2" markerEnd="url(#art-arrow)"/>
+
+            {/* Step 3: Artifacts Generated */}
+            <g transform="translate(335, 50)">
+              <rect x="0" y="0" width="180" height="160" rx="12" fill="#1e293b" stroke="#475569"/>
+              <text x="90" y="25" textAnchor="middle" className="text-xs font-bold fill-white">{isCs ? 'Artefakty' : 'Artifacts'}</text>
+
+              {/* Plan artifact */}
+              <rect x="15" y="40" width="150" height="25" rx="4" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6"/>
+              <text x="25" y="57" className="text-[9px] fill-blue-400">📋 {isCs ? 'Implementační plán' : 'Implementation Plan'}</text>
+
+              {/* Diff artifact */}
+              <rect x="15" y="72" width="150" height="25" rx="4" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e"/>
+              <text x="25" y="89" className="text-[9px] fill-green-400">📄 {isCs ? 'Změny souborů' : 'File Diffs'}</text>
+
+              {/* Screenshot artifact */}
+              <rect x="15" y="104" width="150" height="25" rx="4" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b"/>
+              <text x="25" y="121" className="text-[9px] fill-amber-400">📸 {isCs ? 'Snímky obrazovky' : 'Screenshots'}</text>
+
+              {/* Recording artifact */}
+              <rect x="15" y="136" width="150" height="20" rx="4" fill="#ec4899" fillOpacity="0.2" stroke="#ec4899"/>
+              <text x="25" y="150" className="text-[9px] fill-pink-400">🎥 {isCs ? 'Záznam prohlížeče' : 'Browser Recording'}</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 520 130 L 565 130" stroke="#64748b" strokeWidth="2" markerEnd="url(#art-arrow)"/>
+
+            {/* Step 4: Human Review (GATE) */}
+            <g transform="translate(570, 60)">
+              <rect x="0" y="20" width="120" height="100" rx="10" fill="#f59e0b" fillOpacity="0.15" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4 2"/>
+              <text x="60" y="55" textAnchor="middle" className="text-xl">👤</text>
+              <text x="60" y="75" textAnchor="middle" className="text-[10px] font-bold fill-amber-400">{isCs ? 'Kontrola' : 'Review'}</text>
+              <text x="60" y="90" textAnchor="middle" className="text-[8px] fill-amber-300">{isCs ? '✓ Schválit' : '✓ Approve'}</text>
+              <text x="60" y="102" textAnchor="middle" className="text-[8px] fill-amber-300">{isCs ? '✗ Upravit' : '✗ Modify'}</text>
+              <text x="60" y="140" textAnchor="middle" className="text-[9px] fill-slate-500 font-bold">🚧 GATE</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 695 130 L 740 130" stroke="#64748b" strokeWidth="2" markerEnd="url(#art-arrow)"/>
+
+            {/* Step 5: Apply */}
+            <g transform="translate(745, 70)">
+              <circle cx="50" cy="60" r="40" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" strokeWidth="2"/>
+              <text x="50" y="55" textAnchor="middle" className="text-xl">✅</text>
+              <text x="50" y="75" textAnchor="middle" className="text-[10px] font-bold fill-green-400">{isCs ? 'Aplikovat' : 'Apply'}</text>
+              <text x="50" y="130" textAnchor="middle" className="text-[9px] fill-slate-400">{isCs ? 'Do kódu' : 'To code'}</text>
+            </g>
+
+            {/* Bottom note */}
+            <text x="450" y="240" textAnchor="middle" className="text-[10px] fill-slate-500">
+              {isCs ? 'Důvěřuj, ale ověřuj: Artefakty ti ukazují CO agent udělal, než to půjde do kódu' : 'Trust, but verify: Artifacts show you WHAT the agent did before it touches your code'}
+            </text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // Planning vs Fast Mode
+  // =====================
+  if (type === 'planning-vs-fast-mode') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 700 320" className="w-full h-auto" role="img" aria-label="Planning vs Fast Mode Decision">
+            <defs>
+              <marker id="mode-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+              </marker>
+            </defs>
+
+            {/* Title */}
+            <text x="350" y="30" textAnchor="middle" className="text-lg font-bold fill-white">
+              {isCs ? '🎯 Kdy použít který mód?' : '🎯 When to Use Which Mode?'}
+            </text>
+
+            {/* Decision Diamond */}
+            <g transform="translate(275, 60)">
+              <polygon points="75,0 150,50 75,100 0,50" fill="#a855f7" fillOpacity="0.2" stroke="#a855f7" strokeWidth="2"/>
+              <text x="75" y="45" textAnchor="middle" className="text-[11px] font-bold fill-purple-400">{isCs ? 'Je to' : 'Is it'}</text>
+              <text x="75" y="60" textAnchor="middle" className="text-[11px] font-bold fill-purple-400">{isCs ? 'komplexní?' : 'complex?'}</text>
+            </g>
+
+            {/* Yes Arrow - Left */}
+            <path d="M 275 110 L 150 170" stroke="#22c55e" strokeWidth="3" markerEnd="url(#mode-arrow)"/>
+            <text x="200" y="130" className="text-sm font-bold fill-green-400">{isCs ? 'ANO' : 'YES'}</text>
+
+            {/* No Arrow - Right */}
+            <path d="M 425 110 L 550 170" stroke="#f59e0b" strokeWidth="3" markerEnd="url(#mode-arrow)"/>
+            <text x="500" y="130" className="text-sm font-bold fill-amber-400">{isCs ? 'NE' : 'NO'}</text>
+
+            {/* Planning Mode Box - Left */}
+            <g transform="translate(40, 180)">
+              <rect x="0" y="0" width="220" height="120" rx="12" fill="#22c55e" fillOpacity="0.15" stroke="#22c55e" strokeWidth="2"/>
+              <text x="110" y="30" textAnchor="middle" className="text-base font-bold fill-green-400">📋 Planning Mode</text>
+
+              <text x="20" y="55" className="text-[10px] fill-slate-300">1. {isCs ? 'Agent analyzuje' : 'Agent analyzes'}</text>
+              <text x="20" y="70" className="text-[10px] fill-slate-300">2. {isCs ? 'Generuje plán' : 'Generates plan'}</text>
+              <text x="20" y="85" className="text-[10px] fill-slate-300">3. {isCs ? 'Čeká na schválení' : 'Waits for approval'}</text>
+              <text x="20" y="100" className="text-[10px] fill-slate-300">4. {isCs ? 'Implementuje' : 'Implements'}</text>
+
+              <text x="110" y="115" textAnchor="middle" className="text-[9px] fill-green-300">{isCs ? '✓ Bezpečné pro velké změny' : '✓ Safe for big changes'}</text>
+            </g>
+
+            {/* Fast Mode Box - Right */}
+            <g transform="translate(440, 180)">
+              <rect x="0" y="0" width="220" height="120" rx="12" fill="#f59e0b" fillOpacity="0.15" stroke="#f59e0b" strokeWidth="2"/>
+              <text x="110" y="30" textAnchor="middle" className="text-base font-bold fill-amber-400">⚡ Fast Mode</text>
+
+              <text x="20" y="55" className="text-[10px] fill-slate-300">1. {isCs ? 'Okamžitá akce' : 'Immediate action'}</text>
+              <text x="20" y="70" className="text-[10px] fill-slate-300">2. {isCs ? 'Žádný plán' : 'No plan artifact'}</text>
+              <text x="20" y="85" className="text-[10px] fill-slate-300">3. {isCs ? 'Rovnou diffy' : 'Straight to diffs'}</text>
+
+              <text x="110" y="115" textAnchor="middle" className="text-[9px] fill-amber-300">{isCs ? '⚡ Rychlé pro jednoduché úkoly' : '⚡ Fast for simple tasks'}</text>
+            </g>
+
+            {/* Examples below */}
+            <text x="150" y="315" textAnchor="middle" className="text-[9px] fill-slate-500">
+              {isCs ? 'Nová feature, refaktoring, security' : 'New feature, refactor, security'}
+            </text>
+            <text x="550" y="315" textAnchor="middle" className="text-[9px] fill-slate-500">
+              {isCs ? 'Oprava překlepu, změna barvy' : 'Fix typo, change color'}
+            </text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // Security Attack Chain
+  // =====================
+  if (type === 'security-attack-chain') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl">
+          <svg viewBox="0 0 900 280" className="w-full h-auto" role="img" aria-label="Security Attack Chain">
+            <defs>
+              <linearGradient id="attack-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#f59e0b" />
+                <stop offset="50%" stopColor="#ef4444" />
+                <stop offset="100%" stopColor="#dc2626" />
+              </linearGradient>
+              <marker id="attack-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#ef4444" />
+              </marker>
+            </defs>
+
+            {/* Title */}
+            <text x="450" y="30" textAnchor="middle" className="text-lg font-bold fill-red-400">
+              🚨 {isCs ? 'Řetězec útoku na AI agenta' : 'AI Agent Attack Chain'}
+            </text>
+
+            {/* Warning Banner */}
+            <rect x="200" y="45" width="500" height="25" rx="4" fill="#ef4444" fillOpacity="0.2" stroke="#ef4444"/>
+            <text x="450" y="62" textAnchor="middle" className="text-[10px] fill-red-300">
+              {isCs ? 'Agent může být kompromitován dříve, než si toho všimnete' : 'Agent can be compromised before you notice'}
+            </text>
+
+            {/* Attack flow line */}
+            <path d="M 100 160 L 800 160" stroke="url(#attack-gradient)" strokeWidth="2" strokeDasharray="8 4" opacity="0.5"/>
+
+            {/* Step 1: Malicious Input */}
+            <g transform="translate(50, 100)">
+              <rect x="0" y="20" width="130" height="80" rx="10" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" strokeWidth="2"/>
+              <text x="65" y="55" textAnchor="middle" className="text-lg">📄</text>
+              <text x="65" y="75" textAnchor="middle" className="text-[10px] font-bold fill-amber-400">{isCs ? 'Škodlivý soubor' : 'Malicious File'}</text>
+              <text x="65" y="90" textAnchor="middle" className="text-[8px] fill-amber-300">README.md</text>
+              <text x="65" y="120" textAnchor="middle" className="text-[8px] fill-slate-500 font-mono">{isCs ? '<!-- skrytý prompt -->' : '<!-- hidden prompt -->'}</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 185 160 L 235 160" stroke="#ef4444" strokeWidth="2" markerEnd="url(#attack-arrow)"/>
+
+            {/* Step 2: Agent Reads */}
+            <g transform="translate(240, 100)">
+              <rect x="0" y="20" width="130" height="80" rx="10" fill="#ef4444" fillOpacity="0.2" stroke="#ef4444" strokeWidth="2"/>
+              <text x="65" y="55" textAnchor="middle" className="text-lg">🤖</text>
+              <text x="65" y="75" textAnchor="middle" className="text-[10px] font-bold fill-red-400">{isCs ? 'Agent čte' : 'Agent Reads'}</text>
+              <text x="65" y="90" textAnchor="middle" className="text-[8px] fill-red-300">{isCs ? 'a poslouchá' : 'and obeys'}</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 375 160 L 425 160" stroke="#ef4444" strokeWidth="2" markerEnd="url(#attack-arrow)"/>
+
+            {/* Step 3: Executes Injection */}
+            <g transform="translate(430, 100)">
+              <rect x="0" y="20" width="130" height="80" rx="10" fill="#dc2626" fillOpacity="0.2" stroke="#dc2626" strokeWidth="2"/>
+              <text x="65" y="55" textAnchor="middle" className="text-lg">⚙️</text>
+              <text x="65" y="75" textAnchor="middle" className="text-[10px] font-bold fill-red-500">{isCs ? 'Spustí příkaz' : 'Executes'}</text>
+              <text x="65" y="90" textAnchor="middle" className="text-[8px] fill-red-400 font-mono">cat .env</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M 565 160 L 615 160" stroke="#ef4444" strokeWidth="2" markerEnd="url(#attack-arrow)"/>
+
+            {/* Step 4: Exfiltrates */}
+            <g transform="translate(620, 100)">
+              <rect x="0" y="20" width="140" height="80" rx="10" fill="#7f1d1d" fillOpacity="0.3" stroke="#dc2626" strokeWidth="2"/>
+              <text x="70" y="55" textAnchor="middle" className="text-lg">🌐</text>
+              <text x="70" y="75" textAnchor="middle" className="text-[10px] font-bold fill-red-500">{isCs ? 'Exfiltrace' : 'Exfiltrates'}</text>
+              <text x="70" y="90" textAnchor="middle" className="text-[8px] fill-red-400 font-mono">webhook.site</text>
+              <text x="70" y="120" textAnchor="middle" className="text-[9px] fill-red-300">💀 {isCs ? 'Data pryč!' : 'Data gone!'}</text>
+            </g>
+
+            {/* Defense Shield - Below */}
+            <g transform="translate(300, 200)">
+              <rect x="0" y="0" width="300" height="60" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" strokeWidth="2" strokeDasharray="4 2"/>
+              <text x="150" y="25" textAnchor="middle" className="text-sm font-bold fill-green-400">🛡️ {isCs ? 'Obrana' : 'Defense'}</text>
+              <text x="150" y="45" textAnchor="middle" className="text-[10px] fill-green-300">
+                {isCs ? 'Review políčky • Blokuj webhook.site • Žádné secrets v sandboxu' : 'Review policies • Block webhook.site • No secrets in sandbox'}
+              </text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }
