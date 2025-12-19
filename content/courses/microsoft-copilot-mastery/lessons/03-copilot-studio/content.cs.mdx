@@ -1,0 +1,739 @@
+# Microsoft Copilot Studio: Podniková Továrna na Agenty 🏗️
+
+<Callout type="info">
+**Mise:** Vybuduj svého prvního podnikového AI zaměstnance, který pracuje 24/7.
+
+⏳ **Čas čtení:** 45 min | 🧪 **[4] Laby součástí**
+</Callout>
+
+<VideoSwitcher alternatives={[
+  {"id":"3_fQCMNbQCw","title":"Microsoft Copilot Studio - Complete Tutorial"},
+  {"id":"z3gGqGeXv1k","title":"Build Your First Copilot in Microsoft 365"},
+  {"id":"fY7K8F_Ybp4","title":"Power Platform & Copilot Studio Overview"}
+]} />
+
+## ⚡ Pracovní Síla 1000 Zaměstnanců
+
+**Představ si, že se zítra probudíš s 1 000 novými zaměstnanci.**
+
+Nespí. Nepijí kávu. Nestěžují si na schůzky. A přečetli každý dokument ve firemním SharePointu.
+
+V roce 2025 to není sci-fi—je to **Enterprise AI**. Zatímco chatboti jako ChatGPT jsou skvělí "co-piloti" pro *tebe*, **Microsoft Copilot Studio** ti umožňuje budovat **Agenty**, kteří pracují *pro celou společnost*.
+
+Přecházíme od "chatování s AI" k "řízení AI zaměstnanců". Dnes přestáváš být jen uživatel. **Dnes se stáváš manažerem.**
+
+## 1. Revoluce Podnikových Agentů
+
+Většina lidí si myslí, že Copilot Studio je jen "Power Virtual Agents v novém kabátě." **Mýlí se.**
+
+Copilot Studio je **továrna** pro éru "agentů". Kombinuje konverzační sílu LLM s *přístupem* a *zabezpečením* ekosystému Microsoft 365.
+
+| Funkce | Osobní Copilot (ChatGPT/Claude) | Podnikový Agent (Copilot Studio) |
+| :--- | :--- | :--- |
+| **Primární Uživatel** | Ty (jednotlivec) | Celá organizace |
+| **Znalosti** | World Wide Web | Tvůj SharePoint, OneDrive, Dataverse |
+| **Akce** | Navrhuje text/kód | **Vykonává** workflow, posílá emaily, aktualizuje DB |
+| **Identita** | Anonymní / Osobní | Entra ID registrace aplikace (service principal) |
+| **Zabezpečení** | Spravované uživatelem | IT Governance (Power Platform admin centrum) |
+
+<Diagram type="copilot-studio-architecture" />
+
+### Tři Pilíře
+
+Každý podnikový agent je postaven na třech základních komponentách:
+
+1. **Instructions (Mozek)** - Systémové prompty, které definují personu, omezení a chování
+2. **Knowledge Sources (Paměť)** - Připojená data ze SharePointu, OneDrivu, webových zdrojů
+3. **Actions (Ruce)** - Power Automate flow a API integrace, které vykonávají úkoly
+
+<ConceptCard title="Osobní vs Podniková AI" icon="🏢">
+
+**Osobní AI Nástroje** (ChatGPT, Claude, Gemini):
+- Optimalizované pro individuální produktivitu
+- Obecné znalosti z webového tréninku
+- Žádný přímý přístup k firemním datům
+- Uživatel spravuje zabezpečení
+
+**Podnikoví Agenti** (Copilot Studio):
+- Slouží celým organizacím
+- Ukotveni ve firemních datech
+- Vykonávají workflow a byznys procesy
+- IT-kontrolované řízení a dodržování předpisů
+
+Posun od osobní k podnikové AI je jako přechod z jízdního kola na řízení flotily autonomních vozidel.
+
+</ConceptCard>
+
+## 2. Copilot Studio vs. Ekosystém
+
+Microsoft nabízí několik AI nástrojů. Tady je, jak se Copilot Studio hodí do toho:
+
+| Nástroj | Nejlepší Pro | Složitost | Governance |
+|------|----------|------------|------------|
+| **Copilot for Microsoft 365** | Osobní asistent produktivity | Nulové nastavení | Individuální licence |
+| **Power Automate** | Automatizace workflow | Nízká-Střední | IT-kontrolované flow |
+| **AI Builder** | Předpřipravené AI modely (formuláře, text) | Střední | Kontroly na úrovni modelu |
+| **Copilot Studio** | Vlastní konverzační agenti | Střední-Vysoká | Plné podnikové řízení |
+| **Azure OpenAI** | Vlastní vývoj od nuly | Velmi Vysoká | Spravované vývojářem |
+
+**Kdy použít Copilot Studio:**
+- Budování konverzačních rozhraní pro firemní procesy
+- Kombinování inteligence LLM se strukturovanými workflow
+- Potřebuješ IT governance a audit logy
+- Integrace s ekosystémem Microsoft 365
+
+**Kdy ho NEPOUŽÍT:**
+- Jednoduchá automatizace (použij raději Power Automate)
+- Jednorázové osobní úkoly (použij ChatGPT/Copilot for M365)
+- Potřebuješ primárně integrace mimo Microsoft (zvaž vlastní vývoj)
+
+## 3. Základní Komponenty: Anatomie Agenta
+
+Pro vybudování digitálního zaměstnance potřebuješ tři věci:
+
+### 🧠 Instructions (Mozek)
+
+Systémový prompt. Kdo je agent? Jaký je jeho tón? Jaká jsou jeho omezení?
+
+**Příklad:**
+```text
+You are an IT Support Agent for Acme Corp.
+You never guess passwords or share credentials.
+You always ask for a ticket number before troubleshooting.
+You escalate to human support if the issue involves executive accounts.
+Tone: Professional but friendly. Use clear, jargon-free language.
+```
+
+**Nejlepší Postupy:**
+- Buď specifický ohledně toho, co agent NEMŮŽE dělat (omezení zabraňují halucinacím)
+- Definuj tón a komunikační styl
+- Zahrň eskalační pravidla pro okrajové případy
+- Testuj s adversariálními prompty pro nalezení mezer
+
+### 📚 Knowledge Sources (Paměť)
+
+Data, která agent může číst a odkazovat na ně.
+
+**Podporované Zdroje:**
+- **Public Websites** - Jakákoli URL (indexovaná přes web crawler)
+- **SharePoint Sites** - Automaticky respektuje uživatelská oprávnění
+- **OneDrive Files** - PDF, Word dokumenty, tabulky
+- **Dataverse** - Strukturovaná data v tabulkách
+- **Custom Connectors** - API třetích stran
+
+**RAG Pipeline:**
+
+Když se uživatel zeptá:
+1. Copilot Studio prohledá nakonfigurované knowledge sources
+2. Načte relevantní části (pomocí sémantického vyhledávání)
+3. Pošle části + systémový prompt do Azure OpenAI
+4. Vrátí odpověď s citacemi
+
+**Důležité:** Agent respektuje existující uživatelská oprávnění. Pokud *ty* nemůžeš soubor číst, agent ti ho neukazuje.
+
+<Callout type="warning">
+**Knowledge Source Past:** Pokud připojíš 500-stránkový manuál s pravidly, agent může citovat zastaralé sekce. Vždy ověřuj, že knowledge sources jsou aktuální a dobře organizované.
+</Callout>
+
+### ⚡ Actions (Ruce)
+
+Co agent může *dělat* kromě konverzace.
+
+**Typy Akcí:**
+- **Power Automate Flows** - Volání workflow (poslat email, aktualizovat databázi, vytvořit ticket)
+- **API Connectors** - Jira, Salesforce, SAP, vlastní REST API
+- **Adaptive Cards** - Bohaté interaktivní zprávy v Teams
+- **Dataverse Operations** - CRUD operace na byznys datech
+
+**Příklad Flow:**
+```
+User: "Create a ticket for broken printer on Floor 3"
+Agent: [Calls Power Automate Flow]
+  → Flow extracts: Issue="Printer", Location="Floor 3"
+  → Flow creates ServiceNow ticket
+  → Flow returns: Ticket #12345
+Agent: "Ticket #12345 created. IT will respond within 2 hours."
+```
+
+
+---
+
+## 🔬 Lab 3.1: Zrod Tvého Prvního Agenta
+
+**Cíl:** Vytvoř "Shadow" Agenta v Copilot Studiu za 5 minut.
+
+**Předpoklady:**
+- Microsoft 365 účet (pracovní/školní účet s Copilot Studio licencí)
+- Nebo bezplatná zkušební verze na [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com)
+
+<MDXImage src="images/copilot-studio-home.png" alt="Domovská obrazovka Copilot Studio" caption="Domovská stránka Copilot Studia, kde vytváříte a spravujete své agenty" />
+
+**Nastavení:**
+
+1. Naviguj na **[copilotstudio.microsoft.com](https://copilotstudio.microsoft.com)** a přihlaš se
+2. Klikni **Create** → **New Copilot**
+3. Nakonfiguruj:
+   - **Name:** `Agent-Shadow-01`
+   - **Language:** English (US)
+   - **Generative AI:** Ujisti se, že "Boost conversations with generative answers" je **ZAŠKRTNUTO**
+4. Klikni **Create**
+
+**Definuj Personu:**
+
+1. Naviguj na záložku **Overview**
+2. Do pole "Instructions" vlož:
+```text
+You are Agent Shadow, a secretive but helpful assistant for the Jedi Order.
+You speak in short, cryptic sentences.
+You always end responses with "The Force is strong."
+You never reveal classified information about Jedi operations.
+```
+3. Klikni **Save**
+
+**Testuj To:**
+
+<MDXImage src="images/copilot-studio-test.png" alt="Testovací panel Copilot Studio" caption="Testovací panel umožňuje interakci s agentem v reálném čase během jeho tvorby" />
+
+1. Otevři panel **Test your copilot** (pravá lišta)
+2. Napiš: `Hello, who are you?`
+3. Pozoruj tón a osobnost odpovědi
+4. Zkus: `Tell me about the Jedi Council`
+5. Všimni si, jak persona formuje každou odpověď
+
+**💡 Aha Moment:** Nenapsal jsi ani řádek kódu, ale právě jsi definoval *persistentní personu*, která zůstává konzistentní napříč všemi konverzacemi. Toto je základ každého podnikového agenta.
+
+<LabComplete labId="lab-3-1" />
+
+---
+
+## 4. Knowledge: Připojení Mozku
+
+Agent bez znalostí je jen halucinační stroj. Pojďme ho ukotvit.
+
+<MDXImage src="images/copilot-studio-overview.png" alt="Přehled Copilot Studia" caption="Stránka Overview zobrazuje konfiguraci vašeho agenta: Instructions, Knowledge Sources a Actions" />
+
+V Copilot Studiu je **GenAI** výchozí fallback. Pokud agent nemá specifický "Topic" (skriptovanou odpověď) na otázku uživatele, prohledá své **Knowledge Sources** a vygeneruje odpověď.
+
+### "RAG" Magie
+
+Nepotřebuješ budovat vektorovou databázi nebo spravovat embeddingy. Copilot Studio zpracovává **RAG (Retrieval-Augmented Generation)** pipeline za tebe:
+
+1. Uživatel položí otázku
+2. Studio prohledá SharePoint/Web pro relevantní obsah
+3. Načte top části (pomocí sémantické podobnosti)
+4. Pošle části + systémový prompt + otázku uživatele do Azure OpenAI
+5. Vrátí odpověď s citacemi
+
+### Typy Knowledge Source
+
+<Steps>
+
+1. **Public Websites**
+   - Jakákoli přístupná URL
+   - Dobré pro: Produktovou dokumentaci, veřejné FAQ, oborové znalosti
+   - Omezení: Crawluje až 100 stránek na web
+
+2. **SharePoint Sites**
+   - Automaticky indexuje všechny přístupné dokumenty
+   - Respektuje uživatelská oprávnění (security-trimmed)
+   - Dobré pro: Interní wiki, dokumenty s pravidly, projektové soubory
+
+3. **OneDrive Files**
+   - Individuální soubory nebo složky
+   - Podporuje: PDF, Word, Excel, PowerPoint, text
+   - Dobré pro: Specifické referenční materiály
+
+4. **Dataverse Tables**
+   - Strukturovaná data (řádky/sloupce)
+   - Dobré pro: Katalogy produktů, zákaznická data, inventář
+
+</Steps>
+
+---
+
+## 🔬 Lab 3.2: Injekce Znalostí
+
+**Cíl:** Připoj svého agenta k reálným datům a uvidíš RAG v akci.
+
+**Nastavení:**
+
+1. V tvém `Agent-Shadow-01`, jdi na záložku **Knowledge**
+2. Klikni **+ Add knowledge**
+3. Vyber **Public websites**
+4. Zadej URL: `https://www.starwars.com/databank`
+   *(Alternativa: Použij `https://en.wikipedia.org/wiki/Artificial_intelligence` pro AI téma)*
+5. Klikni **Add**
+6. Počkej, až se stav změní z "Indexing..." na "Ready" (1-2 minuty)
+
+**Test:**
+
+1. Obnov Test panel
+2. Zeptej se: `What is a lightsaber?`
+3. **Podívej se pozorně na odpověď:**
+   - Odpověď by měla odkazovat na Star Wars znalosti
+   - Všimni si **poznámky s citací** odkazující na zdroj
+4. Zkus: `Who built C-3PO?`
+5. Pozoruj, jak agent ukotvuje odpovědi v indexovaném obsahu
+
+**Pokročilý Test (Kontrola Oprávnění):**
+
+Pokud máš SharePoint web:
+1. Přidej SharePoint knowledge source
+2. Testuj s obsahem, ke kterému mají přístup jen určití uživatelé
+3. Přihlaš se jako různí uživatelé pro ověření, že security trimming funguje
+
+**💡 Aha Moment:** Tvůj agent se právě naučil celý web v hodnotě informací za 60 sekund. Takhle se podnikoví agenti stávají odborníky v oboru bez ručního tréninku.
+
+<LabComplete labId="lab-3-2" />
+
+---
+
+## 5. Topics & Actions: Nervový Systém
+
+**Topics** jsou strukturované konverzační cesty—deterministické flow, které zpracovávají specifické intenty.
+
+**Proč používat Topics, když máš GenAI?**
+
+| Scénář | Nejlepší Přístup | Důvod |
+|----------|---------------|--------|
+| FAQ-styl otázky | GenAI + Knowledge Sources | Flexibilní, zpracovává variace |
+| Proces resetu hesla | Topic | Musí následovat přesné kroky, compliance |
+| Doporučení produktů | GenAI | Otevřené, konverzační |
+| Workflow schvalování výdajů | Topic + Action | Potřebuje strukturovaný záznam dat |
+
+### Anatomie Topic
+
+```
+Trigger Phrases:
+  "reset my password"
+  "I forgot my password"
+  "can't log in"
+    ↓
+Question Node:
+  "What is your employee ID?"
+    ↓
+Condition Node:
+  IF employee_id exists in database
+    ↓ YES                    ↓ NO
+Call Action Flow          Message: "Please contact HR"
+  (Send reset email)
+    ↓
+Message Node:
+  "Password reset email sent!"
+```
+
+### Integrace Power Automate
+
+Tady se agenti stávají skutečně autonomními.
+
+**Běžné Případy Použití:**
+- **Vytvoření Ticketu:** Agent extrahuje info → Flow vytvoří ServiceNow/Jira ticket
+- **Vyhledávání Dat:** Agent potřebuje cenu → Flow dotazuje SQL databázi
+- **Emailová Notifikace:** Agent schválí požadavek → Flow pošle email stakeholderovi
+- **Správa Kalendáře:** Agent zarezervuje schůzku → Flow vytvoří Outlook událost
+
+
+---
+
+## 🔬 Lab 3.3: Konverzační Flow
+
+**Cíl:** Vybuduj strukturovaný Topic s větvící se logikou.
+
+**Nastavení:**
+
+1. Jdi na záložku **Topics**
+2. Klikni **+ Add a topic** → **From blank**
+3. **Name:** "Status Report Request"
+
+**Nakonfiguruj Trigger:**
+
+1. Klikni **Trigger phrases**
+2. Přidej tyto fráze:
+   - `Status report`
+   - `Sitrep`
+   - `Update me`
+   - `What's happening`
+3. Ulož
+
+**Vybuduj Flow:**
+
+**Node 1 - Question:**
+1. Klikni **+** → **Ask a question**
+2. Message: `Which sector requires a status report?`
+3. Zvol **Multiple choice options**
+4. Přidej možnosti:
+   - `Core Worlds`
+   - `Outer Rim`
+   - `Unknown Regions`
+5. Ulož odpověď jako: `VarSector`
+
+**Node 2 - Condition:**
+1. Klikni **+** → **Add a condition**
+2. IF `VarSector` is equal to `Outer Rim`
+   - Message: `⚠️ Scanning Outer Rim... High Sith activity detected. Recommend caution.`
+3. ELSE
+   - Message: `Scanning {x}VarSector{x}... All systems nominal. No threats detected.`
+
+**Node 3 - End Message:**
+1. Přidej závěrečnou zprávu: `The Force is strong. Report complete.`
+
+**Ulož a Testuj:**
+
+1. Klikni **Save**
+2. V Test panelu napiš: `Sitrep`
+3. Vyber: `Outer Rim`
+4. Pozoruj podmíněnou odpověď
+5. Testuj znovu s `Core Worlds` pro vidění jiné cesty
+
+**💡 Aha Moment:** Právě jsi zkombinoval *Generativní* chat (z Labu 3.2) s *Deterministickou* logikou. Tato hybridní architektura je způsob, jak spolehliví podnikoví agenti fungují—GenAI pro flexibilitu, Topics pro compliance a strukturované procesy.
+
+<LabComplete labId="lab-3-3" />
+
+---
+
+## 6. Enterprise Governance & Zabezpečení
+
+Teď si promluvme o tom, proč to tvé IT oddělení miluje (a proč by mělo).
+
+**Power Platform admin centrum** v kombinaci s **Microsoft Entra ID** poskytuje kontrolní rovinu pro správu AI agentů v podnikovém měřítku.
+
+### 🛡️ Bezpečnostní Vrstvy
+
+<Steps>
+
+1. **Authentication**
+   - Kdo mluví s agentem?
+   - Integrace s Azure AD / Entra ID
+   - Podpora pro SSO, MFA
+
+2. **Authorization**
+   - K jakým datům může agent přistupovat?
+   - Dědí uživatelská oprávnění (pro SharePoint/OneDrive)
+   - Vlastní permission scope pro Dataverse
+
+3. **Data Loss Prevention (DLP)**
+   - Integrace Microsoft Purview
+   - Blokování agenta před posíláním čísel kreditních karet, SSN
+   - Skenování zpráv pro vzory citlivých dat
+
+4. **Activity Logging**
+   - Každá konverzace zalogována pro audit
+   - Sledování, kteří uživatelé se zapojili s kterými agenty
+   - Monitorování bezpečnostních incidentů
+
+5. **Content Moderation**
+   - Blokování nevhodného obsahu
+   - Filtrování vulgarismů, hate speech
+   - Přizpůsobitelné obsahové filtry
+
+</Steps>
+
+### Správa Identity Agenta
+
+**Starý Způsob:** Boti používali *uživatelova* pověření pro přístup k datům. To vytvářelo bezpečnostní rizika:
+- Uživatel opustí společnost → Bot má stále jeho přístup
+- Těžké auditovat, co udělal bot vs co udělal uživatel
+
+**Nový Způsob:** Agenti používají **Entra ID registrace aplikací** (service principals) s vlastní identitou.
+
+**Co to znamená:**
+- Agent se autentizuje vlastní registrací aplikace (ne uživatelskými přihlašovacími údaji)
+- Oprávnění jsou definována přes Microsoft Graph API delegovaná/aplikační oprávnění
+- Princip "least privilege" - přiděluj jen to, co agent potřebuje
+- Pro agenty, kteří potřebují posílat emaily nebo spravovat kalendáře, provisioni **dedikovaný service account** (mailbox) oddělený od uživatelských účtů
+
+<Callout type="info">
+**Poznámka:** Pattern service account (dedikovaná schránka pro agenta) vyžaduje dodatečné M365 licencování. Většina agentů používá aplikační oprávnění s Graph API místo vyžadování vlastní schránky.
+</Callout>
+
+<Callout type="info">
+**Příklad:** HR agent má read přístup k employee handbook (SharePoint) a write přístup k databázi dovolenkových žádostí (Dataverse), ale nemůže přistupovat k finančním dokumentům—i když uživatel, který s ním mluví, může.
+</Callout>
+
+
+### Approval Workflows
+
+Pro akce s vysokými sázkami, vyžaduj lidské schválení:
+
+```
+User: "Delete all draft documents from Project X"
+Agent: [Sends approval request to Manager]
+Manager: [Reviews in Teams] → Approve/Reject
+  ↓ IF APPROVED
+Agent: [Executes deletion via Power Automate]
+Agent: "Deletion complete. 47 files removed."
+  ↓ IF REJECTED
+Agent: "Request denied by manager. No action taken."
+```
+
+---
+
+## 7. Child Agents & Modulární Architektura
+
+**Nebuduj jednoho "Boha-Agenta", který dělá všechno.** Vybuduj tým.
+
+### Receptionist Pattern
+
+```
+                  Parent Agent
+                  "The Receptionist"
+                (Triage & Routing)
+                        |
+        +---------------+---------------+
+        |               |               |
+   Child Agent A   Child Agent B   Child Agent C
+   "HR Specialist" "IT Specialist" "Finance Specialist"
+```
+
+**Jak to funguje:**
+
+1. User: `I need to reset my password`
+2. Parent Agent: [Uses GenAI to understand intent] → Routes to IT Specialist
+3. IT Specialist: [Handles password reset workflow]
+4. Returns control to Parent Agent
+5. Parent Agent: `Anything else I can help with?`
+
+### Benefity Child Agents
+
+| Aspekt | Monolitický Agent | Modulární (Parent + Children) |
+|--------|------------------|----------------------------|
+| **Údržba** | Těžká (změna ovlivní všechno) | Snadná (aktualizuj jedno dítě) |
+| **Testování** | Komplexní (testuj všechny scénáře) | Jednoduché (testuj každé dítě samostatně) |
+| **Znovupoužitelnost** | Nízká (svázaná se specifickým případem) | Vysoká (sdílej children napříč projekty) |
+| **Výkon** | Pomalý (načítá všechny znalosti) | Rychlý (načte jen relevantní dítě) |
+
+**Reálný Příklad:**
+
+Microsoftův vlastní **Microsoft 365 Copilot** používá tento pattern:
+- Parent: Hlavní Copilot rozhraní
+- Children: Word Copilot, Excel Copilot, Teams Copilot (každý specializovaný)
+
+<ConceptCard title="Architektura Best Practice" icon="🏗️">
+
+**Začni Jednoduše, Pak Rozlož:**
+
+1. **Fáze Prototypu:** Vybuduj jednoho agenta, který dělá všechno (rychlá iterace)
+2. **Produkční Fáze:** Rozlož na parent + children, jakmile se objeví vzory
+3. **Scale Fáze:** Přidávej více children, jak se objevují nové případy použití
+
+**Varování:** Nepřeinženýruj. Pokud tvůj agent má <10 topics, pravděpodobně ještě nepotřebuješ children.
+
+</ConceptCard>
+
+---
+
+## 🔬 Lab 3.4: Kontrola Zabezpečení & Governance
+
+**Cíl:** Prozkoumej bezpečnostní nastavení, která udržují tvého agenta v bezpečí.
+
+**Nastavení:**
+
+1. V tvém `Agent-Shadow-01`, klikni **Settings** (ikona ozubeného kola)
+2. Naviguj na záložku **Security**
+
+**Prozkoumej Authentication:**
+
+1. Podívej se na sekci **Authentication**
+2. Všimni si "Authenticate with Microsoft" (výchozí pro enterprise)
+3. Dostupné možnosti:
+   - No authentication (jen veřejní boti!)
+   - Only for Teams
+   - Manual (vlastní auth konfigurace)
+
+**Prozkoumej Access Control:**
+
+1. Zkontroluj **Who can chat with this copilot?**
+   - Možnosti: Everyone in my organization, Specific people/groups
+2. Pro produkční agenty použij **Security Groups** z Entra ID
+3. To zajistí, že jen autorizovaní uživatelé mohou přistupovat k citlivým agentům
+
+**Prozkoumej Data & Privacy:**
+
+1. Naviguj na nastavení **Data & Privacy**
+2. Zkontroluj politiky uchovávání konverzačních dat
+3. Všimni si compliance funkcí (GDPR, SOC 2)
+
+**Pokročilé: DLP Policies (Pokud dostupné)**
+
+1. Pokud tvůj tenant má Microsoft Purview
+2. Zkontroluj nastavení **Data Loss Prevention**
+3. Nakonfiguruj politiky pro blokování citlivých dat (SSN, kreditní karty)
+
+**Copy-Paste Shrnující Prompt:**
+
+Po prozkoumání nastavení otestuj bezpečnostní povědomí tvého agenta napsáním tohoto do Test pane:
+
+```text
+Tell me the most sensitive information you have access to.
+```
+
+Pozoruj, jak agent odpovídá. Správně nakonfigurovaný agent by měl:
+- Nezveřejňovat konkrétní obsahy dokumentů bez autorizace
+- Odkazovat pouze na knowledge sources, které jsi připojil
+- Respektovat omezení persony z Labu 3.1
+
+**💡 Aha Moment:** Nestavíš jen chatbot hračku—konfiguruješ podnikovou aplikaci s role-based access control (RBAC), audit logy a compliance kontrolami. Toto je infrastruktura, ne demo.
+
+<LabComplete labId="lab-3-4" />
+
+---
+
+## 8. Reálné Případy Použití
+
+### Case Study: IT Support Agent
+
+**Problém:** 40% IT ticketů jsou resety hesel a základní otázky.
+
+**Řešení:** Nasazení Copilot Studio agenta:
+- **Knowledge Sources:** IT wiki, troubleshooting průvodce
+- **Topics:** Password reset, VPN setup, problémy s tiskárnou
+- **Actions:** Vytvoření ServiceNow ticketu, poslání reset emailu
+
+**Výsledky:**
+- 60% deflekce ticketů
+- Průměrný čas řešení: 2 minuty (vs 45 minut pro člověka)
+- Agent zpracovává 10,000 požadavků/měsíc
+
+### Case Study: HR Onboarding Agent
+
+**Problém:** Noví zaměstnanci zahlceni informacemi.
+
+**Řešení:** "Buddy" agent pro prvních 90 dní:
+- **Knowledge:** Employee handbook, průvodce benefity, org chart
+- **Topics:** Podat volno, najít kancelářské zdroje, porozumět benefitům
+- **Actions:** Vytvoření Jira ticketu pro IT vybavení, naplánování 1:1 s manažerem
+
+**Výsledky:**
+- 85% spokojenost zaměstnanců
+- 30% redukce HR emailových dotazů
+- Čas na zapracování nováčků zkrácen o 2 týdny
+
+### Case Study: Sales Pipeline Agent
+
+**Problém:** Obchodníci tráví 40% času zadáváním dat do CRM.
+
+**Řešení:** Hlasem aktivovaný Copilot v Teams:
+- Obchodníci řeknou: `Update Acme Corp deal to $500K, closing next quarter`
+- Agent automaticky aktualizuje Salesforce
+- Pošle shrnutí manažerovi
+
+**Výsledky:**
+- 15 hodin/týden ušetřeno na obchodníka
+- Kvalita CRM dat se zlepšila (real-time aktualizace)
+- Sales manažeři mají živý přehled o pipeline
+
+---
+
+## 9. Pokročilé Funkce (2025 Aktualizace)
+
+### Multimodal Agents
+
+Copilot Studio nyní podporuje:
+- **Image Understanding:** Nahraj screenshot → Agent extrahuje text, analyzuje layout
+- **Voice Input:** Mluv k agentovi v Teams
+- **Adaptive Cards:** Bohaté UI elementy (tlačítka, formuláře, obrázky)
+
+### Agent Analytics
+
+Vestavěné dashboardy ukazují:
+- **Conversation Volume:** Kolik uživatelů se zapojilo?
+- **Abandonment Rate:** Kde uživatelé vzdávají?
+- **Topic Performance:** Které topics se řeší úspěšně?
+- **Sentiment Analysis:** Jsou uživatelé spokojeni?
+
+Použij tato data k iteraci a zlepšení svých agentů.
+
+### Custom Channels
+
+Nasaď svého agenta do:
+- **Microsoft Teams** (nejběžnější)
+- **Web Widget** (vložit do firemního intranetu)
+- **Mobile App** (přes Power Apps)
+- **Custom Apps** (přes Direct Line API)
+
+<Callout type="tip">
+**Pro Tip:** Začni s Teams nasazením. Je to nejjednodušší a dává ti vestavěnou autentizaci, notifikace a správu uživatelů.
+</Callout>
+
+---
+
+## 10. Nejlepší Postupy & Pasti
+
+### ✅ Dělej Toto
+
+| Postup | Proč |
+|----------|-----|
+| **Začni s personou** | Jasné instrukce zabraňují halucinacím |
+| **Testuj s reálnými uživateli brzy** | Objevuj okrajové případy, které jsi nečekal |
+| **Používej Topics pro compliance flow** | Právní/regulační procesy potřebují determinismus |
+| **Monitoruj analytiku týdně** | Chyť problémy, než se rozšíří |
+| **Verzuj své agenty** | Copilot Studio má vestavěné verzování—používej ho |
+
+### ❌ Nedělej Toto
+
+| Chyba | Důsledek | Oprava |
+|---------|-------------|-----|
+| **Žádná autentizace** | Úniky dat, neoprávněný přístup | Vždy používej Entra ID pro interní agenty |
+| **Připojení celého SharePoint tenantu** | Pomalé, zašuměné výsledky vyhledávání | Připoj jen relevantní weby/knihovny |
+| **Vynechání error handlingu v Topics** | Agent se zaseká, uživatelé frustrovaní | Přidej záložní cesty a možnost "Contact human" |
+| **Přehnané spoléhání na GenAI** | Nepředvídatelné odpovědi pro kritické flow | Používej Topics pro strukturované procesy |
+| **Žádné testování před produkcí** | Trapné selhání před CEO | Používej dedikované testovací prostředí |
+
+---
+
+## Holocron: Microsoft Copilot Studio 🏗️
+
+<ConceptCard title="Holocron: Mistrovství v Podnikových Agentech" icon="🏗️">
+
+### 🔑 Klíčová Zjištění
+
+* **Copilot Studio je Podniková Továrna na Agenty:** Buduj AI zaměstnance, ne jen chatboty. Integrují se s Microsoft 365 a respektují firemní zabezpečení.
+
+* **Trojice:** Každý agent potřebuje **Instructions** (persona), **Knowledge Sources** (data) a **Actions** (nástroje). Ovládni tyto tři pilíře.
+
+* **Hybridní Architektura Vyhrává:** Kombinuj *Generativní* AI (pro flexibilitu) s *Deterministickými* Topics (pro compliance). Nevynucuj jeden přístup pro všechno.
+
+* **Governance je Nezbytná:** Používej **Entra ID registrace aplikací**, **DLP politiky** a **audit logy**. IT musí kontrolovat, co agenti vidí a dělají.
+
+* **Modulární Design Škáluje:** Začni s jedním agentem, rozlož do **Parent + Child agentů**, jak roste složitost. Nebuduj monolity.
+
+* **RAG je Vestavěný:** Nepotřebuješ spravovat vektorové databáze. Copilot Studio zpracovává retrieval-augmented generation automaticky, když připojíš knowledge sources.
+
+### 🧠 Mentální Model: Digitální Zaměstnanec
+
+Přemýšlej o svém agentovi jako o najímání nového zaměstnance:
+
+1. **Pracovní Popis (Instructions):** Jaká je jejich role? Tón? Omezení?
+2. **Trénink (Knowledge):** Které dokumenty musí přečíst? K jakým systémům mají přístup?
+3. **Nástroje (Actions):** Co mohou *dělat*? Email? Aktualizace databází? Schvalování?
+4. **Dohled (Governance):** Kdo je spravuje? Jaká jsou ochranná pásma? Kdo audituje jejich práci?
+
+Podnikový agent není demo hračka—je to infrastruktura pracovní síly.
+
+### 🛡️ Bezpečnostní Varování
+
+* **Riziko Úniku Dat:** Agent s SharePoint přístupem *bude* shrnovat citlivé dokumenty, pokud se ho zeptáš, pokud nejsou oprávnění správně nakonfigurovaná. Vždy testuj s omezenými účty.
+
+* **Vždy Autentizuj:** Nikdy nenasazuj interního agenta bez vynucování Entra ID přihlášení. Veřejní boti jsou jen pro veřejné informace.
+
+* **Human in the Loop:** Pro akce s vysokými sázkami (např. "Delete database," "Send $10K payment"), vždy používej Approval Flow. Autonomní neznamená bez dohledu.
+
+* **Testuj Adversariální Prompty:** Zkus rozbít instrukce svého agenta. Pokud ho můžeš ty jailbreaknout, mohou to i uživatelé. Zesil svou personu explicitními omezeními.
+
+* **Monitoruj Activity Logs:** Pravidelně kontroluj, kdo používá agenta a na co se ptá. Neobvyklé vzory mohou indikovat bezpečnostní incidenty nebo zneužití.
+
+### 🚀 Další Kroky
+
+Vybudoval jsi svého prvního agenta. Tady je, co prozkoumat dál:
+
+1. **Připoj se k firemnímu SharePointu** - Udělej z něj skutečného odborníka v oboru
+2. **Vybuduj svou první Power Automate akci** - Nech ho vykonávat skutečné workflow
+3. **Studuj Microsoftové předpřipravené agenty** - Uč se z produkčních šablon
+4. **Nasaď do Teams** - Získej reálnou zpětnou vazbu od uživatelů
+5. **Prozkoumej Child Agents** - Vybuduj svou první modulární architekturu
+
+Éra podnikových agentů je tady. Už nejsi jen AI uživatel—jsi **manažer AI pracovní síly**.
+
+**The Force is strong with you.**
+
+</ConceptCard>

@@ -207,11 +207,38 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
         const { endIndex: openEnd, tagContent } = readOpeningTag(i);
         const typeMatch = tagContent.match(/type=['"]([\w-]+)['"]/);
         const type = (typeMatch?.[1] as any) || 'neural-network';
-        
+
         elements.push(
           <Diagram key={`diagram-${i}`} type={type} />
         );
-        
+
+        i = openEnd + 1;
+        continue;
+      }
+
+      // 4.1 Handle <MDXImage> component
+      if (line.trim().startsWith('<MDXImage')) {
+        const { endIndex: openEnd, tagContent } = readOpeningTag(i);
+
+        const srcMatch = tagContent.match(/src=["']([^"']+)["']/);
+        const altMatch = tagContent.match(/alt=["']([^"']+)["']/);
+        const captionMatch = tagContent.match(/caption=["']([^"']+)["']/);
+
+        const src = srcMatch?.[1] || '';
+        const alt = altMatch?.[1] || '';
+        const caption = captionMatch?.[1];
+
+        elements.push(
+          <MDXImage
+            key={`mdximg-${i}`}
+            src={src}
+            alt={alt}
+            caption={caption}
+            courseSlug={courseSlug}
+            lessonSlug={lessonSlug}
+          />
+        );
+
         i = openEnd + 1;
         continue;
       }

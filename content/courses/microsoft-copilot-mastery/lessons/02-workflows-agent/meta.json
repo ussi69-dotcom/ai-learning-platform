@@ -1,0 +1,14 @@
+{
+  "id": "02-workflows-agent",
+  "slug": "workflows-agent",
+  "title": "Your Inbox Just Became Autonomous",
+  "title_cs": "Vaše pošta je nyní autonomní",
+  "description": "Master natural language automation with Microsoft's Workflows Agent. Build autonomous email assistants, recipe finders, and cross-app workflows without writing a single line of code.",
+  "description_cs": "Ovládněte automatizaci přirozeným jazykem s Microsoft Workflows Agentem. Vytvořte autonomní emailové asistenty, vyhledávače receptů a cross-app workflow bez jediného řádku kódu.",
+  "order": 2,
+  "duration_minutes": 40,
+  "video_url": "https://www.youtube.com/watch?v=_w-jVw8Uhc0",
+  "difficulty": "intermediate",
+  "tags": ["copilot", "automation", "workflows", "power-automate", "productivity"],
+  "prerequisites": ["01-ai-powered-workday"]
+}

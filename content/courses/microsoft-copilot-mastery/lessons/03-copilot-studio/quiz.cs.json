@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Co dělá AI 'opravdu agentickou' podle konceptů Copilot Studia?",
+    "option_a": "Schopnost porozumět přirozenému jazyku",
+    "option_b": "Schopnost provádět akce samostatně, nejen odpovídat na otázky",
+    "option_c": "Přístup k velkým jazykovým modelům",
+    "option_d": "Nasazení v cloudovém prostředí",
+    "correct_answer": "B",
+    "explanation": "Opravdu agentická AI může provádět akce jménem uživatele (jako vytváření souborů, posílání emailů, plánování schůzek), nejen poskytovat informace prostřednictvím konverzace.",
+    "order": 1
+  },
+  {
+    "question": "Co jsou 'Topics' v Copilot Studiu?",
+    "option_a": "Kategorie pro organizaci agentů",
+    "option_b": "Řízené konverzační toky spouštěné požadavky uživatele",
+    "option_c": "Dokumentační sekce pro agenta",
+    "option_d": "Trénovací datasety pro AI model",
+    "correct_answer": "B",
+    "explanation": "Topics jsou řízené konverzační cesty, které se spouští na základě požadavku uživatele, umožňující agentům sbírat informace a provádět sérii kroků.",
+    "order": 2
+  },
+  {
+    "question": "Co je 'child agent' v Copilot Studiu?",
+    "option_a": "Agent navržený pro mladší uživatele",
+    "option_b": "Znovupoužitelný, specializovaný agent volatelný rodičovským agentem",
+    "option_c": "Zjednodušená verze agenta pro testování",
+    "option_d": "Agent s omezenými oprávněními",
+    "correct_answer": "B",
+    "explanation": "Child agent je znovupoužitelný, specializovaný agent navržený pro specifickou funkci (např. výpočty cen), který může být volán jinými agenty, podporující modulární design.",
+    "order": 3
+  },
+  {
+    "question": "Jak se podnikové agenty autentizují v Microsoft Copilot Studio?",
+    "option_a": "Pouze pomocí osobních přihlašovacích údajů uživatele",
+    "option_b": "Přes Entra ID registrace aplikací (service principals) s omezenými oprávněními",
+    "option_c": "Anonymní přístup bez autentizace",
+    "option_d": "Sdílené heslo pro všechny agenty",
+    "correct_answer": "B",
+    "explanation": "Podnikové agenty používají Entra ID registrace aplikací (service principals), které jim umožňují autentizaci s vlastní identitou oddělenou od uživatelských přihlašovacích údajů, s oprávněními definovanými přes Microsoft Graph API.",
+    "order": 4
+  },
+  {
+    "question": "Jaký je účel Power Platform admin centra pro Copilot Studio agenty?",
+    "option_a": "Poskytovat bezplatné výpočetní zdroje pro agenty",
+    "option_b": "Spravovat, zabezpečovat a řídit všechny AI agenty v organizaci",
+    "option_c": "Trénovat vlastní jazykové modely",
+    "option_d": "Zpracovávat fakturaci za použití agentů",
+    "correct_answer": "B",
+    "explanation": "Power Platform admin centrum v kombinaci s Microsoft Entra ID poskytuje IT administrátorům centralizovanou viditelnost a kontrolu nad celým ekosystémem agentů, včetně bezpečnosti, compliance a řízení rizik.",
+    "order": 5
+  }
+]

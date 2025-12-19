@@ -1,0 +1,655 @@
+# Vaše Inbox se právě stala autonomní 🤖
+
+<Callout type="info">
+**Mise:** Transformujte se z pasivního uživatele chatu na aktivního tvůrce automatizací pomocí Microsoft 365 Workflows Agent
+
+⏳ **Čas čtení:** 40 min | 🧪 **[4] Laby součástí**
+</Callout>
+
+<VideoSwitcher alternatives={[
+  {"id":"S7xTBa93TX8","title":"Microsoft 365 Copilot - Workflows Agent Overview"},
+  {"id":"fZoM6S8-y_4","title":"Building Intelligent Workflows with Copilot Studio"},
+  {"id":"4hfB9FhCwwA","title":"Power Automate vs AI Agents - What's the Difference?"}
+]} />
+
+## ⚡ Přestaňte stavět Flow. Začněte popisovat výsledky.
+
+**Dříve jste potřebovali vývojový diagram a tři hodiny na automatizaci schvalovacího procesu.**
+
+Teď? Prostě řeknete Copilotu: *"Když přijde smlouva, zkontroluj rozpočet v Excelu, a pokud je pod 150 000 Kč, schval ji."*
+
+**Workflows Agent nepíše jen kód—on JE runtime.**
+
+V roce 2024 Microsoft zjistil, že znalostní pracovníci tráví průměrně **19 hodin týdně** hledáním informací a správou emailů. To je skoro polovina vašeho pracovního týdne promarněná digitální údržbou.
+
+Éra "budování automatizace" končí. Éra **popisování automatizace** právě začala.
+
+Nejste tu, abyste se naučili další low-code nástroj. Jste tu, abyste potkali **svého prvního autonomního kolegu**, který pracuje, zatímco vy spíte.
+
+## 🧠 Evoluce automatizace
+
+Než se ponoříme do Workflows Agentu, pochopte, kde se nachází v hierarchii automatizace:
+
+| Generace | Přístup | Příklad | Vaše role |
+|------------|----------|---------|-----------|
+| **1. generace: Skriptování** | Napište každý krok v kódu | Python skript na třídění emailů | Vývojář |
+| **2. generace: Low-Code** | Přetahování vizuálním designérem | Power Automate flow | Business analytik |
+| **3. generace: Agentní** | Popište výsledek v češtině | "Inteligentně zpracovávej zákaznické emaily" | **Lidský supervizor** |
+
+<Callout type="success">
+**Posun:** Přešli jste z "postav stroj" na "nauč asistenta, jak vypadá dobrá práce."
+</Callout>
+
+<Diagram type="automation-evolution" />
+
+## 🔌 Co je Workflows Agent?
+
+**Workflows Agent** je konverzační rozhraní Microsoft 365 Copilot pro budování automatizací. Funguje společně s App Builderem (pro vytváření lehkých aplikací) a integruje se s Power Automate na pozadí. Představte si ho jako:
+
+> **"ChatGPT, který skutečně UMÍŽ dělat věci ve vašem Microsoft 365 prostředí."**
+
+### Tři pilíře
+
+<ConceptCard title="Trojice Agenta" icon="⚡">
+
+Každý Workflows Agent funguje na třech základních komponentách:
+
+1. **Trigger (Ucho)** - Jaká událost agenta probudí?
+   - Email přijde od konkrétního odesílatele
+   - Soubor přidán do SharePoint složky
+   - Teams zpráva obsahuje klíčové slovo
+   - Naplánovaný čas (denně v 9:00)
+
+2. **Action (Ruce)** - Co agent DĚLÁ?
+   - Prohledává dokumenty napříč OneDrive
+   - Navrhuje odpovědi na emaily
+   - Aktualizuje Excel tabulky
+   - Vytváří úkoly v Planneru
+   - Posílá Teams zprávy
+
+3. **Response (Hlas)** - Jak hlásí zpět?
+   - Potvrzovací zpráva
+   - Shrnutí provedených akcí
+   - Vysvětlení chyby
+   - Požadavek na lidské schválení
+
+</ConceptCard>
+
+<Diagram type="workflows-agent-trinity" />
+
+## 🆚 Workflows Agent vs Power Automate
+
+**Kritické rozlišení:** Tohle NEJSOU stejné nástroje s jiným rozhraním.
+
+| Aspekt | Power Automate (Klasický) | Workflows Agent (Nový) |
+|--------|-------------------------|----------------------|
+| **Metoda vytvoření** | Explicitní krok-za-krokem flow | Záměr v přirozeném jazyce |
+| **Flexibilita** | Rigidní struktura (vyžaduje aktualizace při změnách API) | Adaptivní (LLM interpretuje variace) |
+| **Nejlepší použití** | Vysokoobjem transakční logika | Kontextové lidské úkoly |
+| **Zpracování chyb** | Pevně zakódované IF/ELSE větve | Sémantické porozumění edge cases |
+| **Křivka učení** | Týdny zvládnutí konektorů | Minuty popsat cíl |
+| **Předvídatelnost** | Plně deterministický výstup | LLM-based reasoning (kontrolujte výstupy) |
+| **Příklad** | Zpracuj 10 000 faktur identicky | "Inteligentně řeš zákaznické stížnosti" |
+
+<Callout type="warning">
+**Zlaté pravidlo:** Použijte **Power Automate** na výplatní pásky (potřebuje 100% determinismus). Použijte **Workflows Agent** na třídění zákaznické podpory (potřebuje sémantické porozumění).
+</Callout>
+
+
+## 🔬 Lab 1: Váš první autonomní Workflow
+
+Postavme něco okamžitě užitečného: agenta, který monitoruje konkrétní emailovou složku a automaticky ukládá účtenky do OneDrive s inteligentní kategorizací.
+
+**Cíl:** Vytvořit Workflows Agenta, který zpracovává příchozí účtenky bez manuálního zásahu
+
+**Prompt:**
+
+Zkopírujte toto do Copilota (rozhraní Workflows Agent):
+
+<MDXImage src="images/workflow-prompt-example.png" alt="Rozhraní Workflows Agent" caption="Rozhraní Workflows Agent, kde popisujete automatizaci v přirozeném jazyce" />
+
+```text
+Create a workflow that triggers when an email arrives in my "Receipts" folder in Outlook.
+
+Analyze the email subject and body to identify:
+- Merchant name
+- Purchase category (Travel, Food, Office Supplies, or Other)
+- Amount (if visible in subject or attachment filename)
+
+Save any PDF attachments to my OneDrive folder "Financial/Receipts/[YYYY]/[Category]/"
+using the filename format: "YYYY-MM-DD_[Merchant]_[Amount].pdf"
+
+Send me a Teams message with: "Filed receipt: [Merchant] - [Amount] in [Category]"
+```
+
+**Analýza:**
+
+Sledujte, co se stane, když odešlete tento prompt:
+
+1. **Copilot interpretuje záměr** - Rozpozná, že to potřebuje více služeb (Outlook, OneDrive, Teams)
+2. **Generuje strukturu workflow** - Vytvoří trigger, parsovací logiku, operaci se soubory, notifikaci
+3. **Klade upřesňující otázky** - Může se zeptat: "Mám vytvářet složky, pokud neexistují?"
+4. **Ukáže vám plán** - Zobrazí, co postaví před aktivací
+
+**Očekávané chování:**
+- Email s předmětem "Amazon Receipt - Office Chair $249" se uloží jako `2025-01-15_Amazon_249.pdf` do `Financial/Receipts/2025/Office Supplies/`
+- Obdržíte Teams notifikaci: "Filed receipt: Amazon - $249 in Office Supplies"
+
+**💡 Aha moment:** *"Právě jsem popsal workflow v češtině, na který bych potřeboval 45 minut v Power Automate. Agent pochopil kontext, formátování dat, vytváření složek A zpracování chyb—vše z přirozeného jazyka."*
+
+<MDXImage src="images/workflow-agent-interface.png" alt="Workflows Agent vytváří automatizaci" caption="Agent generuje kompletní Power Automate flow z vašeho popisu v přirozeném jazyce" />
+
+<LabComplete labId="lab-workflows-first" />
+
+## 🍳 Pattern AI Sous Chef
+
+Jeden z nejmocnějších případů použití Workflows Agenta je pattern **"Research and Report"**. Agent nepřesouvá jen data—přemýšlí o nich.
+
+### Reálný příklad: Agent pro výzkum receptů
+
+**Scénář:** Plánujete týdenní týmové obědy. Každé pondělí si emailujete "chef help" s tématem (Italská, Veganská, Levná).
+
+Agent:
+1. Vidí email trigger
+2. Extrahuje téma pomocí LLM
+3. Prohledává vaši SharePoint knihovnu "Team Recipes" pro odpovídající recepty
+4. Vyhodnocuje recepty podle obtížnosti, ceny a dietních omezení
+5. Navrhne Teams zprávu se 3 doporučenými recepty
+
+**Tohle NENÍ jednoduchý IF/THEN flow.** Tohle vyžaduje uvažování.
+
+<Callout type="info">
+**Poznámka:** Workflows Agent prohledává vaše Microsoft 365 data (SharePoint, OneDrive, Outlook). Pro externí webové vyhledávání byste potřebovali integraci s Power Automate konektory nebo Copilot Studio s webovými pluginy.
+</Callout>
+
+## 🔬 Lab 2: AI Sous Chef
+
+Postavme agenta pro výzkum receptů.
+
+**Cíl:** Vytvořit agenta, který zkoumá recepty na základě emailových požadavků a doručuje kurátorované doporučení
+
+**Prompt:**
+
+```text
+Create a workflow that triggers when I send an email to myself with subject starting with "chef help:"
+
+Extract the cuisine type or dietary requirement from the subject line (examples: "chef help: Italian", "chef help: Vegan under $50")
+
+Search my SharePoint "Team Recipes" library for recipes matching the criteria. Evaluate each recipe for:
+- Difficulty level (beginner-friendly prioritized)
+- Estimated cost
+- Preparation time under 60 minutes
+
+Select the top 3 recipes and create a Teams message to me with:
+- Recipe titles with links to SharePoint documents
+- Brief description (2 sentences max per recipe)
+- Combined shopping list of unique ingredients
+- Total estimated cost
+
+If no suitable recipes found, suggest I add new recipes to the library.
+```
+
+<Callout type="tip">
+**Vyžadované nastavení:** Před spuštěním tohoto labu vytvořte SharePoint knihovnu "Team Recipes" s několika dokumenty s recepty (Word nebo PDF). Přidejte metadata jako "Kuchyně", "Cena" a "Doba přípravy" pro lepší filtrování.
+</Callout>
+
+**Analýza:**
+
+Tento workflow demonstruje několik pokročilých schopností:
+
+1. **Sémantické vyhledávání** - Agent prohledává váš SharePoint přirozeným jazykem
+2. **Vícekriterální vyhodnocení** - Zvažuje více faktorů (ne jen keyword match)
+3. **Syntéza** - Kombinuje data z více zdrojů do jednoho nákupního seznamu
+4. **Fallback logika** - Zvládá scénář "žádné výsledky" elegantně
+
+**Testovací případy:**
+- "chef help: Thai vegetarian"
+- "chef help: quick breakfast under 15 minutes"
+- "chef help: gluten-free dessert"
+
+**💡 Aha moment:** *"Agent nevyhledával jen—VYHODNOCOVAL. Pochopil 'beginner-friendly' a 'under $50' jako sémantické filtry, ne jen klíčová slova. Tohle je místo, kde LLM září nad tradiční automatizací."*
+
+<LabComplete labId="lab-ai-sous-chef" />
+
+
+## 🛡️ Prevence smyček a bezpečnost
+
+**Problém nekonečného emailu:**
+
+Co se stane, když váš agent pošle Teams zprávu, která spustí... další workflow... který pošle email... který spustí první workflow?
+
+**💥 Nekonečná smyčka. 1000 notifikací za 10 sekund.**
+
+### Dva bezpečnostní mechanismy
+
+<Steps>
+
+#### 1. Outlook pravidla pro zprávy posílané agentem
+
+Vytvořte Outlook pravidlo:
+- **IF** odesílatel je "Workflows Agent" (nebo váš automatizační účet)
+- **THEN** přeskoč všechna ostatní pravidla a přesuň do složky "Bot Messages"
+
+#### 2. Workflow-level jističe
+
+Do vašeho workflow promptu přidejte:
+
+```text
+IMPORTANT: Before sending any message, check if the triggering event was caused
+by a previous automation (look for tag "[AUTO]" in subject).
+If yes, STOP and log "Loop prevented" instead of executing.
+```
+
+</Steps>
+
+<Callout type="warning">
+**Produkční pravidlo:** NIKDY nemějte dva workflow, které se mohou vzájemně spouštět bez explicitní logiky prevence smyček.
+</Callout>
+
+## 🔬 Lab 3: Autonomní emailový asistent
+
+Teď postavíme něco produkčně připraveného: agenta, který zpracovává běžné zákaznické dotazy bez lidského zásahu.
+
+**Cíl:** Vytvořit autonomního emailového asistenta, který třídí, zkoumá a navrhuje odpovědi na externí dotazy
+
+**Prompt:**
+
+```text
+Create a workflow that triggers when an email arrives from external domains
+(not @mycompany.com) in my "Support" folder.
+
+Step 1: Analyze the email sentiment and intent:
+- Is it a question, complaint, or request?
+- What is the urgency level (Low/Medium/High)?
+
+Step 2: Based on intent, take action:
+
+IF question about product features:
+  - Search our SharePoint "Product Docs" library
+  - Draft a reply with relevant documentation links
+  - Save as draft for my review
+
+IF complaint:
+  - Mark email as High Importance
+  - Draft apology email acknowledging the issue
+  - Create Planner task in "Customer Issues" board with email summary
+  - Send me Teams notification "Urgent: Customer complaint from [sender]"
+
+IF general inquiry:
+  - Log to "Inquiries" Excel sheet in OneDrive with columns: Date, Sender, Topic, Status
+  - Set Status to "Logged - Needs Response"
+
+Step 3: For ALL emails, add tag "[AUTO-PROCESSED]" to subject when complete.
+
+If unable to categorize, forward to me with note "Manual review needed."
+```
+
+**Analýza:**
+
+Tohle je **produkčně připravený workflow** s několika enterprise funkcemi:
+
+| Funkce | Proč je důležitá |
+|---------|----------------|
+| **Sentimentální analýza** | Prioritizuje naštvaní zákazníci |
+| **Podmíněné větvení** | Různé akce pro různé scénáře |
+| **Human-in-loop pro stížnosti** | Nikdy neposílá citlivé odpovědi automaticky |
+| **Audit trail** | Excel log sleduje všechny dotazy |
+| **Bezpečnostní tag** | "[AUTO-PROCESSED]" brání opětovnému zpracování |
+
+**Očekávané chování:**
+
+1. Email: "Jak resetuju heslo?" → Koncept odpovědi s odkazem na KB článek
+2. Email: "Váš produkt se rozbil a chci refundaci!" → Vysoká priorita + Planner úkol + Teams upozornění
+3. Email: "Posíláte do Slovenska?" → Zalogováno do Excelu jako "Logged - Needs Response"
+
+**💡 Aha moment:** *"Právě jsem postavil tier-1 support systém bez napsání jediného řádku kódu nebo konfigurace složitých pravidel. LLM zvládá otázku 'o co jde v tom emailu?', kterou tradiční automatizace nedokáže zodpovědět."*
+
+<LabComplete labId="lab-email-assistant" />
+
+
+## 📊 Správa vašich Workflows
+
+Jakmile máte postavené workflow, potřebujete je spravovat jako každý produkční systém.
+
+### Activity Tab
+
+Každý workflow má **Activity** log zobrazující:
+
+<MDXImage src="images/workflow-activity-screen.png" alt="Workflow Activity monitoring" caption="Activity tab zobrazuje každé spuštění workflow se stavem, triggerem a provedenými akcemi" />
+
+| Sloupec | Informace |
+|--------|-------------|
+| **Timestamp** | Kdy workflow běžel |
+| **Trigger Event** | Co způsobilo spuštění |
+| **Status** | Success / Failed / Partially Completed |
+| **Actions Taken** | Seznam provedených API volání |
+| **Errors** | Stack trace pokud selhalo |
+
+<Callout type="tip">
+**Pro tip pro debugging:** Přidejte krok "Notify me on failure", který pošle Teams zprávu s error logem, když něco selže. Nečekejte, až uživatelé nahlásí problémy.
+</Callout>
+
+### Testování Workflows
+
+Před aktivací workflow v produkci:
+
+<Steps>
+
+#### 1. Test Mode
+Spusťte workflow s ukázkovými daty (Copilot poskytuje tlačítko "Test run")
+
+#### 2. Dry Run
+Přidejte krok: "Místo posílání emailu ulož koncept do složky 'Test Drafts'"
+
+#### 3. Omezený rozsah
+Začněte s trigger filtrem: "Pouze emaily od mě po prvních 24 hodin"
+
+#### 4. Monitorujte první týden
+Kontrolujte Activity tab denně pro zachycení edge cases
+
+</Steps>
+
+## 🏗️ App Builder Agent (Bonus)
+
+Někdy workflow nestačí—potřebujete **uživatelské rozhraní**. K tomu slouží **App Builder Agent**.
+
+**Co dělá:** Generuje lehké Power Apps se SharePoint/Dataverse backendem pomocí přirozeného jazyka.
+
+### Příklady použití
+
+| Scénář | Tradiční přístup | App Builder Prompt |
+|----------|---------------------|-------------------|
+| Tracker výdajů týmu | 2-3 hodiny budování Power App formulářů | "Build app to track team expenses with receipt photos and approval workflow" |
+| Bug reporting formulář | SharePoint list + vlastní formuláře | "Create bug tracker with fields: Title, Description, Screenshot, Priority" |
+| Checklist onboardingu zaměstnanců | Manuální Excel + emailové připomínky | "Build onboarding app with task checklist, auto-assign to manager, send reminders" |
+
+## 🔬 Lab 4: Okamžitý Expense Tracker s App Builderem
+
+Postavme lehkou aplikaci za méně než 5 minut.
+
+**Cíl:** Vytvořit funkční aplikaci pro sledování výdajů s rozpočtovým dashboardem a schvalovacím workflow pouze pomocí přirozeného jazyka
+
+**Prompt:**
+
+Přistupte k **App Builder Agent** v Microsoft 365 Copilot a zadejte:
+
+```text
+Build an app called "Team Offsite Expense Tracker" with these requirements:
+
+Data Fields:
+- Item Name (text)
+- Cost (currency)
+- Category (dropdown: Food, Travel, Lodging, Supplies)
+- Receipt Photo (image upload)
+- Submitted By (auto-fill current user)
+- Date (auto-fill today)
+- Status (auto: Pending/Approved/Rejected)
+
+Features:
+1. Main form for team members to submit expenses
+2. Dashboard page showing:
+   - Total spent vs $5,000 budget (progress bar)
+   - Breakdown by category (pie chart)
+   - List of pending approvals
+
+3. Approval workflow:
+   - Expenses over $200 require manager approval
+   - Expenses under $200 auto-approve
+   - Send email notification when approved/rejected
+
+4. Mobile-friendly layout
+
+Store data in SharePoint list "Team Expenses"
+```
+
+**Analýza:**
+
+Agent provede:
+
+1. **Vygeneruje datové schéma** - Vytvoří SharePoint list se správnými typy sloupců
+2. **Postaví UI** - Formuláře a dashboard s responzivním layoutem
+3. **Přidá business logiku** - Schvalovací threshold ($200) automaticky vynucený
+4. **Nakonfiguruje notifikace** - Email workflow zabudovaný
+5. **Nasadí** - Aplikace je okamžitě přístupná přes Teams nebo web
+
+**Co dostanete za ~3 minuty:**
+- Plně funkční expense tracker
+- Automatické rozpočtové kalkulace
+- Schvalovací workflow
+- Mobilní aplikace
+
+**Bez App Builderu by to vyžadovalo:**
+- 1-2 hodiny návrhu SharePoint listu
+- 2-3 hodiny budování Power App obrazovek
+- 1 hodinu konfigurace Power Automate schvalovacího flow
+- **Celkem: 4-6 hodin práce**
+
+**💡 Aha moment:** *"Právě jsem popsal business problém a dostal kompletní aplikaci—databázi, UI, workflow a mobilní podporu—bez doteku Power Apps, SharePoint admin, nebo Power Automate. Tohle je co 'popisuj výsledky, ne implementace' skutečně znamená."*
+
+<LabComplete labId="lab-app-builder" />
+
+
+## 🔒 Bezpečnost a governance
+
+**"Super, právě jsem postavil bota, který může číst emaily mého CEO a postovat na sociální média."**
+
+**Stop.** Pojďme si promluvit o bezpečnostních zábradlích.
+
+### Tři ochranné prvky
+
+<ConceptCard title="Bezpečnostní model agenta" icon="🛡️">
+
+#### 1. Dědičnost oprávnění
+Workflows Agent funguje pod **VAŠIMI** oprávněními, ne zvýšenými admin právy.
+
+- ✅ Pokud nemáte přístup do HR složky, nemá ho ani váš agent
+- ✅ Pokud nemůžete posílat jako CEO, nemůže ani váš agent
+- ❌ Agenti NEMOHOU eskalovat oprávnění
+
+#### 2. Admin kontroly
+IT administrátoři mohou:
+- Zakázat Workflows Agent pro konkrétní uživatele/skupiny
+- Vyžadovat schválení pro workflow přistupující k citlivým datům
+- Auditovat všechny aktivity agenta přes Microsoft 365 Compliance Center
+- Nastavit data loss prevention (DLP) politiky blokující určité akce
+
+#### 3. Transparentnost a audit
+- Nakonfigurujte emailové footery pro označení automatizovaných zpráv (doporučeno: "Sent via Copilot Automation")
+- Přidejte "[AUTO]" tagy do předmětů pro snadné filtrování
+- Activity logy jsou uchovávány dle vašich tenant audit log politik
+
+</ConceptCard>
+
+### 3 pravidla Agent Governance
+
+<Steps>
+
+#### 1. Least Privilege
+Potřebuje váš agent na ukládání účtenek OPRAVDU Write přístup k celému OneDrive?
+
+**Oprava:** Omezte pouze na konkrétní složku "Receipts".
+
+#### 2. Human-in-the-Loop pro vysoké sázky
+Akce s důsledky (posílání peněz, mazání souborů, externí komunikace) by měly vyžadovat manuální schválení.
+
+**Příklad:** Koncepty emailů by se měly ukládat jako koncepty, ne automaticky odesílat.
+
+#### 3. Transparentní identifikace
+Agent se musí identifikovat jako AI, ne napodobovat člověka.
+
+**Špatně:** Emailový podpis "Sarah z Support Týmu"
+**Dobře:** Emailový podpis "Workflows Agent jménem Support Týmu"
+
+</Steps>
+
+<Callout type="warning">
+**Právní poznámka:** V mnoha jurisdikcích (včetně EU pod AI Act) se AI systémy musí identifikovat jako ne-lidské při interakci se zákazníky.
+</Callout>
+
+### Data Residency a compliance
+
+**Otázka:** "Kde probíhá LLM zpracování?"
+
+**Odpověď:** Microsoft 365 Copilot zpracovává data v rámci geografické oblasti vašeho Microsoft 365 tenantu (respektuje požadavky na rezidenci dat).
+
+| Compliance standard | Workflows Agent podpora |
+|---------------------|------------------------|
+| **GDPR** | ✅ Respektuje práva subjektů údajů |
+| **HIPAA** | ✅ Dostupný v HIPAA-compliant tenantech |
+| **SOC 2** | ✅ Pokrytý pod M365 SOC 2 certifikací |
+| **Data Retention** | ✅ Následuje tenant retention politiky |
+
+
+## 📈 Kdy použít který nástroj
+
+Teď máte tři nástroje v Microsoft automatizačním stacku. Tady kdy použít každý:
+
+| Nástroj | Nejlepší pro | Příklad |
+|------|----------|---------|
+| **Workflows Agent** | Kontextové úkoly se sémantickým porozuměním | "Odpovídej na zákaznické emaily podle sentimentu" |
+| **Power Automate** | Vysokoobjem deterministické procesy | "Zpracuj 10 000 faktur PDF přes OCR" |
+| **App Builder Agent** | Rychlá rozhraní pro sběr dat | "Expense tracker pro týmový offsite" |
+| **Copilot Studio** | Vlastní chatboti se složitými konverzačními flow | "IT helpdesk bot s eskalační logikou" |
+
+<Callout type="success">
+**Pro strategie:** Použijte **Workflows Agent** pro prototypování a rychlé testování automatizační logiky. Jakmile je ověřená, migrujte vysokoobjem workflow na Power Automate pro výkon.
+</Callout>
+
+## 🚀 Pokročilé patterny
+
+### Multi-Agent koordinace
+
+**Scénář:** Máte:
+- Agent A: Monitoruje support emaily
+- Agent B: Sleduje stav projektu
+- Agent C: Posílá týdenní reporty
+
+**Výzva:** Jak sdílejí kontext?
+
+**Řešení:** Použijte **sdílený Excel/SharePoint list** jako "paměť agenta"
+
+```text
+Workflow A: When processing support email, log to "Support Log" Excel with columns:
+[Date, Customer, Issue, Assigned Agent, Status]
+
+Workflow B: Before sending weekly report, read "Support Log" Excel to include
+open issues in summary
+```
+
+
+### Eskalační pattern
+
+Ne všechny úkoly by měly být plně automatizované. Postavte **eskalační triggery**:
+
+```text
+If customer email contains words: "lawsuit", "legal", "unacceptable"
+THEN: Do NOT auto-respond. Instead:
+  1. Mark as Urgent
+  2. Forward to manager immediately
+  3. Create high-priority task
+  4. Send Teams alert to legal team
+```
+
+## 🎓 Reálné úspěšné příběhy
+
+### Case Study 1: HR Onboarding
+
+**Společnost:** 500-osoba SaaS startup
+**Problém:** HR trávilo 3 hodiny na nového zaměstnance na papírování a žádosti o přístupy
+
+**Workflows Agent řešení:**
+- Trigger: Nový zaměstnanec přidán do HR systému
+- Akce:
+  - Pošli uvítací email s personalizovaným checklistem
+  - Vytvoř účty ve Slacku, GitHubu, Jira (přes IT schválení)
+  - Naplánuj 1-on-1 schůzky s manažerem a buddym
+  - Přiřaď onboarding úkoly v Planneru
+  - Pošli připomínky pro nedokončené úkoly
+
+**Výsledek:** Čas onboardingu zkrácen ze 3 hodin na 15 minut schvalovacího času manažera
+
+### Case Study 2: Kvalifikace Sales leadů
+
+**Společnost:** B2B konzultační firma
+**Problém:** Sales tým manuálně zkoumal každý příchozí lead (1 hodina na lead)
+
+**Workflows Agent řešení:**
+- Trigger: Nové odeslání lead formuláře
+- Akce:
+  - Prohledej web pro velikost společnosti, odvětví, financování
+  - Zkontroluj, jestli je společnost v cílové market (rules-based filtr)
+  - Vyhledej decision-makera na LinkedIn
+  - Označ lead jako Hot/Warm/Cold
+  - Přesměruj na příslušného sales rep
+  - Navrhni personalizovaný outreach email s výzkumem společnosti
+
+**Výsledek:** Čas výzkumu leadů snížen o 80%, čas odezvy zlepšen z 24 hodin na 2 hodiny
+
+## 🔮 Budoucnost: Agenti jako kolegové
+
+**Do roku 2026 Microsoft předpovídá:**
+- 60% znalostních pracovníků bude mít alespoň jednoho autonomního agenta
+- Průměrný znalostní pracovník deleguje 15+ hodin týdně agentům
+- Nová pracovní role: "Agent Supervisor" (správa flotily AI pracovníků)
+
+**Co to pro vás znamená:**
+
+Neučíte se nástroj. Učíte se **jak delegovat AI kolegům**.
+
+Dovednosti které potřebujete:
+1. **Jasná komunikace** - Psaní jednoznačných promptů
+2. **Procesní myšlení** - Rozklad složitých úkolů na agent-friendly kroky
+3. **Kontrola kvality** - Vědět kdy důvěřovat automatizaci vs vyžadovat lidskou kontrolu
+
+<ConceptCard title="Holocron: Workflows Agent mistrovství" icon="💎">
+
+### 🔑 Klíčové poznatky
+
+* **Záměr nad implementací:** Workflows Agent překládá "co chcete" na "jak to udělat" - vy popisujete výsledky, ne kroky
+* **Trojice agenta:** Každý workflow potřebuje Trigger (ucho), Action (ruce), Response (hlas)
+* **Není náhradou:** Doplňuje Power Automate (používejte Workflows pro sémantické úkoly, Power Automate pro deterministický vysoký objem)
+* **Bezpečnost nativně:** Agenti dědí VAŠE oprávnění—nemohou eskalovat oprávnění
+* **Skutečný posun:** Přešli jste z "budování strojů" na "supervizi AI kolegů"
+
+### 🧠 Mentální model
+
+Představte si Workflows Agent jako **najímání junior asistenta**, který:
+- ✅ Rozumí kontextu a nuancím (díky LLM)
+- ✅ Může se učit nové úkoly konverzací
+- ✅ Pracuje 24/7 bez přestávek
+- ❌ Potřebuje jasné instrukce (prompty)
+- ❌ Vyžaduje supervizi pro rozhodnutí s vysokými sázkami
+- ❌ Může dělat jen to, k čemu máte VY oprávnění
+
+### 🛡️ Produkční checklist
+
+Před nasazením JAKÉHOKOLIV workflow do produkce:
+
+```
+□ Testováno s ukázkovými daty (ne živé zákaznické emaily)
+□ Logika prevence smyček na místě (zamezení nekonečným triggerům)
+□ Zpracování chyb nakonfigurováno (co se stane když selže?)
+□ Lidské schválení vyžadováno pro citlivé akce
+□ Activity monitoring povolen (kontrola logů týdně)
+□ Transparentní identifikace (agent se deklaruje jako AI)
+□ Least privilege oprávnění (přístup jen k tomu co potřebuje)
+□ Zdokumentováno v týmové wiki (ostatní vědí že existuje)
+```
+
+### ⚡ Další kroky
+
+1. **Cvičte:** Postavte 3 workflow tento týden (začněte s Lab 1)
+2. **Sdílejte:** Ukažte kolegům co jste postavili (agenti vytvářejí síťové efekty)
+3. **Iterujte:** Necílíte na dokonalost—postavte v1, testujte, vylepšujte
+4. **Učte se ze selhání:** Když workflow selže, zjistěte PROČ (nejlepší učitel)
+
+### 🎯 Paradigmatický posun
+
+**Starý svět:** "Potřebuji se naučit Power Automate abych postavil tento workflow"
+**Nový svět:** "Potřebuji popsat tento úkol dostatečně jasně aby ho AI mohlo provést"
+
+Úzké hrdlo už není vaše technické dovednosti—je to vaše schopnost myslet v **delegovatelných úkolech**.
+
+Vítejte ve věku **AI kolegů**. Vaše inbox vám poděkuje.
+
+</ConceptCard>

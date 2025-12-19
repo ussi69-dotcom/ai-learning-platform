@@ -6,8 +6,9 @@ import { X, ExternalLink, Sparkles, Zap, ZapOff } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 
-// Extended glossary data with 12 terms
+// Comprehensive glossary data with terms from ALL lessons across all courses
 const GLOSSARY_TERMS = [
+  // === AI Basics (Course 3) ===
   {
     id: "llm",
     term: { en: "LLM", cs: "LLM" },
@@ -16,7 +17,7 @@ const GLOSSARY_TERMS = [
       en: "AI systems trained on massive text datasets to understand and generate human-like text. Examples: GPT-4, Claude, Gemini.",
       cs: "AI systémy trénované na obrovských textových datech pro porozumění a generování lidského textu. Příklady: GPT-4, Claude, Gemini.",
     },
-    lesson: { courseId: 1, lessonId: 3 },
+    lesson: { courseId: 3, lessonId: 3 },
     hue: 260,
   },
   {
@@ -27,7 +28,7 @@ const GLOSSARY_TERMS = [
       en: "The art of crafting instructions for AI models to get optimal results. A well-designed prompt can dramatically improve AI output quality.",
       cs: "Umění tvorby instrukcí pro AI modely pro dosažení optimálních výsledků. Dobře navržený prompt může dramaticky zlepšit kvalitu AI výstupu.",
     },
-    lesson: { courseId: 1, lessonId: 4 },
+    lesson: { courseId: 3, lessonId: 4 },
     hue: 200,
   },
   {
@@ -38,7 +39,7 @@ const GLOSSARY_TERMS = [
       en: "When AI confidently generates false or fabricated information. A critical limitation to understand when using AI systems.",
       cs: "Když AI sebevědomě generuje nepravdivé nebo vymyšlené informace. Kritické omezení, které je třeba znát při používání AI.",
     },
-    lesson: { courseId: 1, lessonId: 5 },
+    lesson: { courseId: 3, lessonId: 5 },
     hue: 0,
   },
   {
@@ -49,19 +50,8 @@ const GLOSSARY_TERMS = [
       en: "Computing systems inspired by biological brains, using layers of interconnected nodes to learn patterns from data.",
       cs: "Výpočetní systémy inspirované biologickým mozkem, používající vrstvy propojených uzlů k učení vzorů z dat.",
     },
-    lesson: { courseId: 1, lessonId: 2 },
+    lesson: { courseId: 3, lessonId: 2 },
     hue: 160,
-  },
-  {
-    id: "rag",
-    term: { en: "RAG", cs: "RAG" },
-    fullName: { en: "Retrieval-Augmented Generation", cs: "Retrieval-Augmented Generation" },
-    definition: {
-      en: "Technique that enhances AI responses by retrieving relevant information from external knowledge bases before generating answers.",
-      cs: "Technika vylepšující AI odpovědi načítáním relevantních informací z externích znalostních bází před generováním odpovědí.",
-    },
-    lesson: { courseId: 2, lessonId: 14 },
-    hue: 45,
   },
   {
     id: "token",
@@ -71,30 +61,8 @@ const GLOSSARY_TERMS = [
       en: "The basic unit of text that AI models process. A token is roughly 4 characters or 0.75 words. Context window = how many tokens AI can 'remember'.",
       cs: "Základní jednotka textu, kterou AI modely zpracovávají. Token je přibližně 4 znaky nebo 0.75 slova. Kontextové okno = kolik tokenů si AI 'pamatuje'.",
     },
-    lesson: { courseId: 1, lessonId: 3 },
+    lesson: { courseId: 3, lessonId: 3 },
     hue: 330,
-  },
-  {
-    id: "finetuning",
-    term: { en: "Fine-tune", cs: "Fine-tune" },
-    fullName: { en: "Model Fine-tuning", cs: "Doladění modelu" },
-    definition: {
-      en: "Process of further training a pre-trained AI model on specific data to specialize it for particular tasks or domains.",
-      cs: "Proces dalšího trénování předtrénovaného AI modelu na specifických datech pro specializaci na konkrétní úkoly nebo domény.",
-    },
-    lesson: { courseId: 3, lessonId: 11 },
-    hue: 280,
-  },
-  {
-    id: "agent",
-    term: { en: "AI Agent", cs: "AI Agent" },
-    fullName: { en: "Autonomous AI Agent", cs: "Autonomní AI Agent" },
-    definition: {
-      en: "AI systems that can independently plan, use tools, and take actions to achieve goals. The frontier of AI capability in 2025.",
-      cs: "AI systémy, které mohou samostatně plánovat, používat nástroje a provádět akce k dosažení cílů. Hranice AI schopností v roce 2025.",
-    },
-    lesson: { courseId: 2, lessonId: 17 },
-    hue: 190,
   },
   {
     id: "transformer",
@@ -104,8 +72,146 @@ const GLOSSARY_TERMS = [
       en: "The revolutionary neural network architecture behind modern AI. Uses 'attention' to process all parts of input simultaneously.",
       cs: "Revoluční architektura neuronové sítě za moderní AI. Používá 'attention' pro zpracování všech částí vstupu současně.",
     },
-    lesson: { courseId: 1, lessonId: 3 },
+    lesson: { courseId: 3, lessonId: 3 },
     hue: 120,
+  },
+  {
+    id: "bias",
+    term: { en: "AI Bias", cs: "AI Bias" },
+    fullName: { en: "AI Bias & Fairness", cs: "Zkreslení a férovost AI" },
+    definition: {
+      en: "Systematic errors in AI outputs caused by biased training data or algorithms. Can perpetuate discrimination if not addressed.",
+      cs: "Systematické chyby v AI výstupech způsobené zkreslenými trénovacími daty nebo algoritmy. Mohou perpetuovat diskriminaci, pokud nejsou řešeny.",
+    },
+    lesson: { courseId: 3, lessonId: 5 },
+    hue: 15,
+  },
+
+  // === Prompt Engineering (Course 2) ===
+  {
+    id: "prompt-injection",
+    term: { en: "Injection", cs: "Injekce" },
+    fullName: { en: "Prompt Injection", cs: "Prompt Injekce" },
+    definition: {
+      en: "Security attack where malicious inputs trick AI into ignoring its instructions. Critical vulnerability in AI-powered applications.",
+      cs: "Bezpečnostní útok, kde škodlivé vstupy oklamou AI, aby ignorovala své instrukce. Kritická zranitelnost v AI aplikacích.",
+    },
+    lesson: { courseId: 2, lessonId: 2 },
+    hue: 355,
+  },
+  {
+    id: "local-ai",
+    term: { en: "Local AI", cs: "Lokální AI" },
+    fullName: { en: "Local AI / Ollama", cs: "Lokální AI / Ollama" },
+    definition: {
+      en: "Running AI models directly on your computer without internet. Tools like Ollama enable private, offline AI with full data control.",
+      cs: "Spouštění AI modelů přímo na vašem počítači bez internetu. Nástroje jako Ollama umožňují soukromou, offline AI s plnou kontrolou dat.",
+    },
+    lesson: { courseId: 2, lessonId: 4 },
+    hue: 175,
+  },
+  {
+    id: "claude-code",
+    term: { en: "Claude Code", cs: "Claude Code" },
+    fullName: { en: "Claude Code CLI", cs: "Claude Code CLI" },
+    definition: {
+      en: "Anthropic's agentic coding tool. Lives in your terminal, reads/writes files, runs commands, and builds entire features autonomously.",
+      cs: "Agentický kódovací nástroj od Anthropic. Žije v terminálu, čte/píše soubory, spouští příkazy a buduje celé funkce autonomně.",
+    },
+    lesson: { courseId: 2, lessonId: 6 },
+    hue: 35,
+  },
+  {
+    id: "cursor",
+    term: { en: "Cursor", cs: "Cursor" },
+    fullName: { en: "Cursor AI IDE", cs: "Cursor AI IDE" },
+    definition: {
+      en: "AI-native code editor built on VS Code. Features inline AI suggestions, chat, and automatic code generation with full context awareness.",
+      cs: "AI-nativní editor kódu postavený na VS Code. Nabízí inline AI návrhy, chat a automatické generování kódu s plným kontextovým povědomím.",
+    },
+    lesson: { courseId: 2, lessonId: 5 },
+    hue: 270,
+  },
+  {
+    id: "github-copilot",
+    term: { en: "GH Copilot", cs: "GH Copilot" },
+    fullName: { en: "GitHub Copilot", cs: "GitHub Copilot" },
+    definition: {
+      en: "AI pair programmer by GitHub/Microsoft. Suggests code completions, explains code, and generates functions based on comments and context.",
+      cs: "AI párový programátor od GitHub/Microsoft. Navrhuje doplnění kódu, vysvětluje kód a generuje funkce na základě komentářů a kontextu.",
+    },
+    lesson: { courseId: 2, lessonId: 5 },
+    hue: 250,
+  },
+  {
+    id: "antigravity",
+    term: { en: "Antigravity", cs: "Antigravity" },
+    fullName: { en: "Antigravity AI Agent", cs: "Antigravity AI Agent" },
+    definition: {
+      en: "Full-stack AI development agent by Sourcegraph. Autonomous coding with project understanding, multi-file edits, and git integration.",
+      cs: "Full-stack AI vývojový agent od Sourcegraph. Autonomní kódování s pochopením projektu, multi-file úpravami a git integrací.",
+    },
+    lesson: { courseId: 2, lessonId: 7 },
+    hue: 310,
+  },
+  {
+    id: "agent",
+    term: { en: "AI Agent", cs: "AI Agent" },
+    fullName: { en: "Autonomous AI Agent", cs: "Autonomní AI Agent" },
+    definition: {
+      en: "AI systems that can independently plan, use tools, and take actions to achieve goals. The frontier of AI capability in 2025.",
+      cs: "AI systémy, které mohou samostatně plánovat, používat nástroje a provádět akce k dosažení cílů. Hranice AI schopností v roce 2025.",
+    },
+    lesson: { courseId: 2, lessonId: 5 },
+    hue: 190,
+  },
+
+  // === Advanced AI Techniques (Course 5) ===
+  {
+    id: "chain-of-thought",
+    term: { en: "CoT", cs: "CoT" },
+    fullName: { en: "Chain-of-Thought", cs: "Chain-of-Thought" },
+    definition: {
+      en: "Prompting technique that asks AI to show step-by-step reasoning. Dramatically improves accuracy on complex tasks like math and logic.",
+      cs: "Promptovací technika, která žádá AI, aby ukázala krokové uvažování. Dramaticky zlepšuje přesnost u složitých úkolů jako matematika a logika.",
+    },
+    lesson: { courseId: 5, lessonId: 1 },
+    hue: 55,
+  },
+  {
+    id: "few-shot",
+    term: { en: "Few-Shot", cs: "Few-Shot" },
+    fullName: { en: "Few-Shot Learning", cs: "Few-Shot Learning" },
+    definition: {
+      en: "Teaching AI by providing a few input-output examples before your actual task. The model learns the pattern and applies it to new inputs.",
+      cs: "Učení AI poskytnutím několika příkladů vstup-výstup před vaším skutečným úkolem. Model se naučí vzorec a aplikuje ho na nové vstupy.",
+    },
+    lesson: { courseId: 5, lessonId: 2 },
+    hue: 95,
+  },
+  {
+    id: "reasoning",
+    term: { en: "Reasoning", cs: "Reasoning" },
+    fullName: { en: "Reasoning Models", cs: "Reasoning modely" },
+    definition: {
+      en: "Advanced AI models with built-in 'thinking time' (o1, o3, Claude 3.5). Solve complex problems through extended internal reasoning.",
+      cs: "Pokročilé AI modely s vestavěným 'časem na přemýšlení' (o1, o3, Claude 3.5). Řeší složité problémy rozšířeným interním uvažováním.",
+    },
+    lesson: { courseId: 5, lessonId: 3 },
+    hue: 140,
+  },
+
+  // === AI Engineering (Course 1) ===
+  {
+    id: "rag",
+    term: { en: "RAG", cs: "RAG" },
+    fullName: { en: "Retrieval-Augmented Generation", cs: "Retrieval-Augmented Generation" },
+    definition: {
+      en: "Technique that enhances AI responses by retrieving relevant information from external knowledge bases before generating answers.",
+      cs: "Technika vylepšující AI odpovědi načítáním relevantních informací z externích znalostních bází před generováním odpovědí.",
+    },
+    lesson: { courseId: 1, lessonId: 1 },
+    hue: 45,
   },
   {
     id: "embedding",
@@ -115,19 +221,30 @@ const GLOSSARY_TERMS = [
       en: "Converting text/images into numbers (vectors) that capture meaning. Similar concepts have similar vectors. Foundation of semantic search.",
       cs: "Převod textu/obrázků na čísla (vektory), které zachycují význam. Podobné koncepty mají podobné vektory. Základ sémantického vyhledávání.",
     },
-    lesson: { courseId: 2, lessonId: 14 },
+    lesson: { courseId: 1, lessonId: 1 },
     hue: 70,
   },
   {
-    id: "inference",
-    term: { en: "Inference", cs: "Inference" },
-    fullName: { en: "Model Inference", cs: "Inference modelu" },
+    id: "finetuning",
+    term: { en: "Fine-tune", cs: "Fine-tune" },
+    fullName: { en: "Model Fine-tuning", cs: "Doladění modelu" },
     definition: {
-      en: "Running a trained AI model to get predictions. The 'thinking' phase when you chat with ChatGPT or generate an image.",
-      cs: "Spuštění natrénovaného AI modelu pro získání predikcí. Fáze 'přemýšlení' když chatujete s ChatGPT nebo generujete obrázek.",
+      en: "Process of further training a pre-trained AI model on specific data to specialize it for particular tasks or domains.",
+      cs: "Proces dalšího trénování předtrénovaného AI modelu na specifických datech pro specializaci na konkrétní úkoly nebo domény.",
     },
-    lesson: { courseId: 2, lessonId: 16 },
-    hue: 230,
+    lesson: { courseId: 1, lessonId: 2 },
+    hue: 280,
+  },
+  {
+    id: "n8n",
+    term: { en: "n8n", cs: "n8n" },
+    fullName: { en: "n8n Automation", cs: "n8n Automatizace" },
+    definition: {
+      en: "Open-source workflow automation platform. Connect AI models with 400+ services using visual node-based programming.",
+      cs: "Open-source platforma pro automatizaci workflow. Propojte AI modely s 400+ službami pomocí vizuálního programování.",
+    },
+    lesson: { courseId: 1, lessonId: 3 },
+    hue: 320,
   },
   {
     id: "context",
@@ -137,8 +254,87 @@ const GLOSSARY_TERMS = [
       en: "The 'memory' of an AI during conversation. Larger context = AI remembers more. GPT-4: 128K tokens, Claude: 200K tokens.",
       cs: "‚Paměť' AI během konverzace. Větší kontext = AI si pamatuje více. GPT-4: 128K tokenů, Claude: 200K tokenů.",
     },
-    lesson: { courseId: 1, lessonId: 4 },
+    lesson: { courseId: 3, lessonId: 4 },
     hue: 300,
+  },
+  {
+    id: "inference",
+    term: { en: "Inference", cs: "Inference" },
+    fullName: { en: "Model Inference", cs: "Inference modelu" },
+    definition: {
+      en: "Running a trained AI model to get predictions. The 'thinking' phase when you chat with ChatGPT or generate an image.",
+      cs: "Spuštění natrénovaného AI modelu pro získání predikcí. Fáze 'přemýšlení' když chatujete s ChatGPT nebo generujete obrázek.",
+    },
+    lesson: { courseId: 1, lessonId: 2 },
+    hue: 230,
+  },
+
+  // === Microsoft Copilot Mastery (Course 4) ===
+  {
+    id: "workflows-agent",
+    term: { en: "Workflows", cs: "Workflows" },
+    fullName: { en: "Microsoft Workflows Agent", cs: "Microsoft Workflows Agent" },
+    definition: {
+      en: "Conversational AI interface in Microsoft 365 Copilot for building automations using natural language. Creates Power Automate flows from plain text descriptions.",
+      cs: "Konverzační AI rozhraní v Microsoft 365 Copilot pro tvorbu automatizací pomocí přirozeného jazyka. Vytváří Power Automate flows z textových popisů.",
+    },
+    lesson: { courseId: 4, lessonId: 2 },
+    hue: 25,
+  },
+  {
+    id: "copilot-studio",
+    term: { en: "Studio", cs: "Studio" },
+    fullName: { en: "Microsoft Copilot Studio", cs: "Microsoft Copilot Studio" },
+    definition: {
+      en: "Enterprise platform for building custom AI agents. Define Instructions (persona), Knowledge Sources (data), and Actions (capabilities) without code.",
+      cs: "Podniková platforma pro tvorbu vlastních AI agentů. Definujte Instructions (personu), Knowledge Sources (data) a Actions (schopnosti) bez kódu.",
+    },
+    lesson: { courseId: 4, lessonId: 3 },
+    hue: 340,
+  },
+  {
+    id: "knowledge-sources",
+    term: { en: "Knowledge", cs: "Knowledge" },
+    fullName: { en: "Knowledge Sources", cs: "Znalostní zdroje" },
+    definition: {
+      en: "External data that AI agents can read and reference. Includes SharePoint, OneDrive, websites, and APIs. Respects user permissions automatically.",
+      cs: "Externí data, která AI agenti mohou číst a odkazovat. Zahrnuje SharePoint, OneDrive, weby a API. Automaticky respektuje uživatelská oprávnění.",
+    },
+    lesson: { courseId: 4, lessonId: 3 },
+    hue: 85,
+  },
+  {
+    id: "power-automate",
+    term: { en: "Power Auto", cs: "Power Auto" },
+    fullName: { en: "Power Automate", cs: "Power Automate" },
+    definition: {
+      en: "Microsoft's workflow automation platform. Creates automated flows between apps and services. Backend engine for Workflows Agent and Copilot Studio Actions.",
+      cs: "Automatizační platforma Microsoft. Vytváří automatizované toky mezi aplikacemi a službami. Backend engine pro Workflows Agent a Copilot Studio Actions.",
+    },
+    lesson: { courseId: 4, lessonId: 2 },
+    hue: 210,
+  },
+  {
+    id: "copilot-actions",
+    term: { en: "Actions", cs: "Actions" },
+    fullName: { en: "Copilot Actions", cs: "Copilot Akce" },
+    definition: {
+      en: "What AI agents can DO beyond conversation: call Power Automate flows, connect to APIs (Jira, Salesforce), send Teams messages, update databases.",
+      cs: "Co AI agenti mohou DĚLAT kromě konverzace: volat Power Automate flows, připojovat se k API (Jira, Salesforce), posílat Teams zprávy, aktualizovat databáze.",
+    },
+    lesson: { courseId: 4, lessonId: 3 },
+    hue: 145,
+  },
+  {
+    id: "m365-copilot",
+    term: { en: "M365 Copilot", cs: "M365 Copilot" },
+    fullName: { en: "Microsoft 365 Copilot", cs: "Microsoft 365 Copilot" },
+    definition: {
+      en: "AI assistant integrated into Word, Excel, Outlook, Teams. Drafts documents, summarizes emails, creates presentations from your enterprise data.",
+      cs: "AI asistent integrovaný do Word, Excel, Outlook, Teams. Píše dokumenty, shrnuje e-maily, vytváří prezentace z vašich firemních dat.",
+    },
+    lesson: { courseId: 4, lessonId: 1 },
+    hue: 50,
   },
 ];
 
@@ -229,18 +425,39 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
     };
   }, []);
 
-  // Responsive dimensions
+  // Responsive dimensions - scale container 1.5x larger than cube grid for physics movement
   useEffect(() => {
     const updateDimensions = () => {
       const width = window.innerWidth;
+      const termCount = GLOSSARY_TERMS.length;
+
+      // Calculate grid dimensions and scale container 1.5x for physics space
       if (width < 480) {
-        setDimensions({ height: 650, cubeSize: 85 });
+        // Mobile: 3 columns, need more vertical space
+        const cols = 3;
+        const cubeSize = 85;
+        const rows = Math.ceil(termCount / cols);
+        const baseHeight = rows * (cubeSize + 15) + 40;
+        setDimensions({ height: Math.round(baseHeight * 1.5), cubeSize });
       } else if (width < 640) {
-        setDimensions({ height: 550, cubeSize: 95 });
+        const cols = 4;
+        const cubeSize = 95;
+        const rows = Math.ceil(termCount / cols);
+        const baseHeight = rows * (cubeSize + 15) + 40;
+        setDimensions({ height: Math.round(baseHeight * 1.5), cubeSize });
       } else if (width < 768) {
-        setDimensions({ height: 480, cubeSize: 105 });
+        const cols = 5;
+        const cubeSize = 105;
+        const rows = Math.ceil(termCount / cols);
+        const baseHeight = rows * (cubeSize + 15) + 40;
+        setDimensions({ height: Math.round(baseHeight * 1.5), cubeSize });
       } else {
-        setDimensions({ height: 360, cubeSize: 120 });
+        // Desktop: 6 columns
+        const cols = 6;
+        const cubeSize = 120;
+        const rows = Math.ceil(termCount / cols);
+        const baseHeight = rows * (cubeSize + 15) + 40;
+        setDimensions({ height: Math.round(baseHeight * 1.5), cubeSize });
       }
     };
 

@@ -2504,5 +2504,202 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
     );
   }
 
+  // =====================
+  // Copilot Studio Architecture
+  // =====================
+  if (type === 'copilot-studio-architecture') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl">
+          <svg viewBox="0 0 800 320" className="w-full h-auto" role="img" aria-label="Copilot Studio Architecture">
+            <defs>
+              <linearGradient id="cs-grad-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#1d4ed8" />
+              </linearGradient>
+              <linearGradient id="cs-grad-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#a855f7" />
+                <stop offset="100%" stopColor="#7c3aed" />
+              </linearGradient>
+              <linearGradient id="cs-grad-green" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#22c55e" />
+                <stop offset="100%" stopColor="#16a34a" />
+              </linearGradient>
+            </defs>
+
+            {/* Title */}
+            <text x="400" y="30" textAnchor="middle" className="text-lg font-bold fill-slate-300">
+              {isCs ? 'Architektura Enterprise Agenta' : 'Enterprise Agent Architecture'}
+            </text>
+
+            {/* Pillar 1: Instructions (Brain) */}
+            <g transform="translate(50, 60)">
+              <rect x="0" y="0" width="200" height="220" rx="16" fill="url(#cs-grad-blue)" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="2"/>
+              <text x="100" y="40" textAnchor="middle" className="text-3xl">🧠</text>
+              <text x="100" y="70" textAnchor="middle" className="text-base font-bold fill-blue-400">Instructions</text>
+              <text x="100" y="90" textAnchor="middle" className="text-sm fill-blue-300">{isCs ? '(Mozek)' : '(The Brain)'}</text>
+              <rect x="15" y="110" width="170" height="30" rx="6" fill="#fff" fillOpacity="0.05"/>
+              <text x="100" y="130" textAnchor="middle" className="text-xs fill-slate-400">{isCs ? 'Systémový prompt' : 'System Prompt'}</text>
+              <rect x="15" y="150" width="170" height="30" rx="6" fill="#fff" fillOpacity="0.05"/>
+              <text x="100" y="170" textAnchor="middle" className="text-xs fill-slate-400">{isCs ? 'Tón a osobnost' : 'Tone & Persona'}</text>
+              <rect x="15" y="190" width="170" height="30" rx="6" fill="#fff" fillOpacity="0.05"/>
+              <text x="100" y="210" textAnchor="middle" className="text-xs fill-slate-400">{isCs ? 'Omezení' : 'Constraints'}</text>
+            </g>
+
+            {/* Pillar 2: Knowledge (Memory) */}
+            <g transform="translate(300, 60)">
+              <rect x="0" y="0" width="200" height="220" rx="16" fill="url(#cs-grad-purple)" fillOpacity="0.15" stroke="#a855f7" strokeWidth="2"/>
+              <text x="100" y="40" textAnchor="middle" className="text-3xl">📚</text>
+              <text x="100" y="70" textAnchor="middle" className="text-base font-bold fill-purple-400">Knowledge</text>
+              <text x="100" y="90" textAnchor="middle" className="text-sm fill-purple-300">{isCs ? '(Paměť)' : '(The Memory)'}</text>
+              <rect x="15" y="110" width="170" height="30" rx="6" fill="#fff" fillOpacity="0.05"/>
+              <text x="100" y="130" textAnchor="middle" className="text-xs fill-slate-400">SharePoint</text>
+              <rect x="15" y="150" width="170" height="30" rx="6" fill="#fff" fillOpacity="0.05"/>
+              <text x="100" y="170" textAnchor="middle" className="text-xs fill-slate-400">OneDrive / Dataverse</text>
+              <rect x="15" y="190" width="170" height="30" rx="6" fill="#fff" fillOpacity="0.05"/>
+              <text x="100" y="210" textAnchor="middle" className="text-xs fill-slate-400">{isCs ? 'Veřejné weby' : 'Public Websites'}</text>
+            </g>
+
+            {/* Pillar 3: Actions (Hands) */}
+            <g transform="translate(550, 60)">
+              <rect x="0" y="0" width="200" height="220" rx="16" fill="url(#cs-grad-green)" fillOpacity="0.15" stroke="#22c55e" strokeWidth="2"/>
+              <text x="100" y="40" textAnchor="middle" className="text-3xl">⚡</text>
+              <text x="100" y="70" textAnchor="middle" className="text-base font-bold fill-green-400">Actions</text>
+              <text x="100" y="90" textAnchor="middle" className="text-sm fill-green-300">{isCs ? '(Ruce)' : '(The Hands)'}</text>
+              <rect x="15" y="110" width="170" height="30" rx="6" fill="#fff" fillOpacity="0.05"/>
+              <text x="100" y="130" textAnchor="middle" className="text-xs fill-slate-400">Power Automate Flows</text>
+              <rect x="15" y="150" width="170" height="30" rx="6" fill="#fff" fillOpacity="0.05"/>
+              <text x="100" y="170" textAnchor="middle" className="text-xs fill-slate-400">API Connectors</text>
+              <rect x="15" y="190" width="170" height="30" rx="6" fill="#fff" fillOpacity="0.05"/>
+              <text x="100" y="210" textAnchor="middle" className="text-xs fill-slate-400">Dataverse CRUD</text>
+            </g>
+
+            {/* Bottom: Azure OpenAI */}
+            <rect x="200" y="290" width="400" height="25" rx="8" fill="#f97316" fillOpacity="0.2" stroke="#f97316"/>
+            <text x="400" y="308" textAnchor="middle" className="text-sm font-bold fill-orange-400">Azure OpenAI → {isCs ? 'Odpověď' : 'Response'}</text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // Workflows Agent Trinity
+  // =====================
+  if (type === 'workflows-agent-trinity') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 700 200" className="w-full h-auto" role="img" aria-label="Workflows Agent Trinity">
+            <defs>
+              <marker id="wa-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+              </marker>
+            </defs>
+
+            {/* Step 1: Trigger */}
+            <g transform="translate(50, 40)">
+              <rect x="0" y="0" width="140" height="120" rx="12" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="2"/>
+              <text x="70" y="35" textAnchor="middle" className="text-2xl">👂</text>
+              <text x="70" y="60" textAnchor="middle" className="text-sm font-bold fill-blue-400">Trigger</text>
+              <text x="70" y="80" textAnchor="middle" className="text-xs fill-blue-300">{isCs ? '(Ucho)' : '(The Ear)'}</text>
+              <text x="70" y="105" textAnchor="middle" className="text-xs fill-slate-400">{isCs ? 'Email, Soubor, Čas' : 'Email, File, Time'}</text>
+            </g>
+
+            {/* Arrow 1 */}
+            <path d="M 200 100 L 250 100" stroke="#64748b" strokeWidth="2" markerEnd="url(#wa-arrow)" />
+
+            {/* Step 2: Action (with LLM) */}
+            <g transform="translate(260, 40)">
+              <rect x="0" y="0" width="180" height="120" rx="12" fill="#a855f7" fillOpacity="0.15" stroke="#a855f7" strokeWidth="2"/>
+              <text x="90" y="35" textAnchor="middle" className="text-2xl">🤖</text>
+              <text x="90" y="60" textAnchor="middle" className="text-sm font-bold fill-purple-400">Action + LLM</text>
+              <text x="90" y="80" textAnchor="middle" className="text-xs fill-purple-300">{isCs ? '(Mozek + Ruce)' : '(Brain + Hands)'}</text>
+              <text x="90" y="105" textAnchor="middle" className="text-xs fill-slate-400">{isCs ? 'Analyzuj, Hledej, Ulož' : 'Analyze, Search, Save'}</text>
+            </g>
+
+            {/* Arrow 2 */}
+            <path d="M 450 100 L 500 100" stroke="#64748b" strokeWidth="2" markerEnd="url(#wa-arrow)" />
+
+            {/* Step 3: Response */}
+            <g transform="translate(510, 40)">
+              <rect x="0" y="0" width="140" height="120" rx="12" fill="#22c55e" fillOpacity="0.15" stroke="#22c55e" strokeWidth="2"/>
+              <text x="70" y="35" textAnchor="middle" className="text-2xl">📣</text>
+              <text x="70" y="60" textAnchor="middle" className="text-sm font-bold fill-green-400">Response</text>
+              <text x="70" y="80" textAnchor="middle" className="text-xs fill-green-300">{isCs ? '(Hlas)' : '(The Voice)'}</text>
+              <text x="70" y="105" textAnchor="middle" className="text-xs fill-slate-400">{isCs ? 'Teams, Email, Log' : 'Teams, Email, Log'}</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // Automation Evolution
+  // =====================
+  if (type === 'automation-evolution') {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+          <svg viewBox="0 0 700 280" className="w-full h-auto" role="img" aria-label="Evolution of Automation">
+            {/* Title */}
+            <text x="350" y="30" textAnchor="middle" className="text-base font-bold fill-slate-300">
+              {isCs ? 'Evoluce automatizace' : 'Evolution of Automation'}
+            </text>
+
+            {/* Generation 1: Scripting */}
+            <g transform="translate(50, 50)">
+              <rect x="0" y="0" width="180" height="180" rx="12" fill="#64748b" fillOpacity="0.1" stroke="#64748b" strokeWidth="2"/>
+              <text x="90" y="40" textAnchor="middle" className="text-3xl">💻</text>
+              <text x="90" y="70" textAnchor="middle" className="text-sm font-bold fill-slate-400">{isCs ? '1. Generace' : '1st Gen'}</text>
+              <text x="90" y="95" textAnchor="middle" className="text-base font-bold fill-slate-300">Scripting</text>
+              <rect x="20" y="115" width="140" height="25" rx="4" fill="#374151"/>
+              <text x="90" y="133" textAnchor="middle" className="text-xs fill-slate-400 font-mono">if email.from == ...</text>
+              <text x="90" y="165" textAnchor="middle" className="text-xs fill-slate-500">{isCs ? 'Role: Vývojář' : 'Role: Developer'}</text>
+            </g>
+
+            {/* Arrow 1-2 */}
+            <path d="M 240 140 L 260 140" stroke="#64748b" strokeWidth="2"/>
+            <polygon points="260,135 270,140 260,145" fill="#64748b"/>
+
+            {/* Generation 2: Low-Code */}
+            <g transform="translate(260, 50)">
+              <rect x="0" y="0" width="180" height="180" rx="12" fill="#3b82f6" fillOpacity="0.1" stroke="#3b82f6" strokeWidth="2"/>
+              <text x="90" y="40" textAnchor="middle" className="text-3xl">🔲</text>
+              <text x="90" y="70" textAnchor="middle" className="text-sm font-bold fill-blue-400">{isCs ? '2. Generace' : '2nd Gen'}</text>
+              <text x="90" y="95" textAnchor="middle" className="text-base font-bold fill-blue-300">Low-Code</text>
+              <rect x="30" y="115" width="40" height="25" rx="4" fill="#1d4ed8"/>
+              <rect x="80" y="115" width="40" height="25" rx="4" fill="#1d4ed8"/>
+              <path d="M 50 140 L 80 127" stroke="#3b82f6" strokeWidth="2"/>
+              <path d="M 50 140 L 80 140" stroke="#3b82f6" strokeWidth="2"/>
+              <text x="90" y="165" textAnchor="middle" className="text-xs fill-blue-400">{isCs ? 'Role: Analytik' : 'Role: Analyst'}</text>
+            </g>
+
+            {/* Arrow 2-3 */}
+            <path d="M 450 140 L 470 140" stroke="#64748b" strokeWidth="2"/>
+            <polygon points="470,135 480,140 470,145" fill="#64748b"/>
+
+            {/* Generation 3: Agentic */}
+            <g transform="translate(470, 50)">
+              <rect x="0" y="0" width="180" height="180" rx="12" fill="#22c55e" fillOpacity="0.15" stroke="#22c55e" strokeWidth="2"/>
+              <text x="90" y="40" textAnchor="middle" className="text-3xl">🤖</text>
+              <text x="90" y="70" textAnchor="middle" className="text-sm font-bold fill-green-400">{isCs ? '3. Generace' : '3rd Gen'}</text>
+              <text x="90" y="95" textAnchor="middle" className="text-base font-bold fill-green-300">Agentic AI</text>
+              <rect x="15" y="115" width="150" height="25" rx="4" fill="#166534"/>
+              <text x="90" y="133" textAnchor="middle" className="text-xs fill-green-300">{isCs ? '"Zpracuj emaily"' : '"Handle emails"'}</text>
+              <text x="90" y="165" textAnchor="middle" className="text-xs fill-green-400">{isCs ? 'Role: Supervizor' : 'Role: Supervisor'}</text>
+            </g>
+
+            {/* Bottom label */}
+            <text x="350" y="265" textAnchor="middle" className="text-sm fill-slate-500">
+              {isCs ? 'Méně kódu → Více abstrakce → Vyšší produktivita' : 'Less Code → More Abstraction → Higher Productivity'}
+            </text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }

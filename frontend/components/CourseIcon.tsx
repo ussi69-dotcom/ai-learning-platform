@@ -87,9 +87,10 @@ export default function CourseIcon({
 
   const getType = (): string => {
     if (slug?.includes("beginner") || courseId === 3) return "beginner";
-    if (slug?.includes("prompt") || courseId === 4) return "prompt";
+    if (slug?.includes("copilot") || slug?.includes("microsoft") || courseId === 4) return "copilot";
+    if (slug?.includes("prompt") || courseId === 2) return "prompt";
     if (slug?.includes("engineering") || courseId === 1) return "engineering";
-    if (slug?.includes("advanced") || courseId === 2) return "advanced";
+    if (slug?.includes("advanced") || courseId === 5) return "advanced";
     return "default";
   };
   const type = getType();
@@ -336,6 +337,195 @@ export default function CourseIcon({
           opacity="0.9"
           filter="url(#glow)"
         />
+      </svg>
+    );
+  }
+
+  if (type === "copilot") {
+    // Concept: Microsoft Copilot - Holographic AI Assistant (Jedi/Sith Corporate)
+    return (
+      <svg
+        viewBox="0 0 200 200"
+        className={className}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          {/* Jedi Light theme gradient */}
+          <linearGradient id="grad-copilot-jedi" x1="0" y1="0" x2="200" y2="200">
+            <stop offset="0%" stopColor="#3b82f6" />
+            <stop offset="50%" stopColor="#8b5cf6" />
+            <stop offset="100%" stopColor="#06b6d4" />
+          </linearGradient>
+
+          {/* Sith Dark theme gradient */}
+          <linearGradient id="grad-copilot-sith" x1="0" y1="0" x2="200" y2="200">
+            <stop offset="0%" stopColor="#dc2626" />
+            <stop offset="50%" stopColor="#9333ea" />
+            <stop offset="100%" stopColor="#be123c" />
+          </linearGradient>
+
+          {/* Holographic glow */}
+          <radialGradient id="holo-glow">
+            <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#60a5fa" stopOpacity="0" />
+          </radialGradient>
+
+          <filter id="copilot-glow">
+            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
+          {/* Scan line pattern */}
+          <pattern id="scanlines" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="4" y2="0" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+          </pattern>
+        </defs>
+
+        {/* Background hexagon (corporate feel) */}
+        <path
+          d="M100 20 L170 55 L170 145 L100 180 L30 145 L30 55 Z"
+          fill="url(#grad-copilot-jedi)"
+          fillOpacity="0.15"
+          stroke="url(#grad-copilot-jedi)"
+          strokeWidth="2"
+          className="dark:hidden"
+        />
+        <path
+          d="M100 20 L170 55 L170 145 L100 180 L30 145 L30 55 Z"
+          fill="url(#grad-copilot-sith)"
+          fillOpacity="0.15"
+          stroke="url(#grad-copilot-sith)"
+          strokeWidth="2"
+          className="hidden dark:block"
+        />
+
+        {/* Holographic scan lines overlay */}
+        <path
+          d="M100 20 L170 55 L170 145 L100 180 L30 145 L30 55 Z"
+          fill="url(#scanlines)"
+          opacity="0.3"
+        />
+
+        {/* AI Assistant "face" - stylized hologram */}
+        <g filter="url(#copilot-glow)">
+          {/* Outer ring - Jedi blue */}
+          <circle
+            cx="100"
+            cy="95"
+            r="45"
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth="3"
+            strokeDasharray="8 4"
+            opacity="0.8"
+            className="dark:hidden animate-spin"
+            style={{ animationDuration: "20s" }}
+          />
+          {/* Outer ring - Sith red */}
+          <circle
+            cx="100"
+            cy="95"
+            r="45"
+            fill="none"
+            stroke="#dc2626"
+            strokeWidth="3"
+            strokeDasharray="8 4"
+            opacity="0.8"
+            className="hidden dark:block animate-spin"
+            style={{ animationDuration: "20s" }}
+          />
+
+          {/* Inner face circle */}
+          <circle
+            cx="100"
+            cy="95"
+            r="32"
+            fill="#0f172a"
+            stroke="#60a5fa"
+            strokeWidth="2"
+            className="dark:stroke-red-400"
+          />
+
+          {/* AI "eyes" - left */}
+          <ellipse
+            cx="86"
+            cy="90"
+            rx="8"
+            ry="4"
+            fill="#60a5fa"
+            className="dark:fill-red-400 animate-pulse"
+          />
+          {/* AI "eyes" - right */}
+          <ellipse
+            cx="114"
+            cy="90"
+            rx="8"
+            ry="4"
+            fill="#60a5fa"
+            className="dark:fill-red-400 animate-pulse"
+          />
+
+          {/* AI "mouth" - smile line */}
+          <path
+            d="M85 105 Q100 115 115 105"
+            fill="none"
+            stroke="#60a5fa"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            className="dark:stroke-red-400"
+          />
+        </g>
+
+        {/* Microsoft Copilot "wings" - stylized */}
+        <g opacity="0.9">
+          {/* Left wing - Jedi */}
+          <path
+            d="M55 95 L30 75 L25 95 L30 115 Z"
+            fill="url(#grad-copilot-jedi)"
+            className="dark:hidden"
+          />
+          {/* Left wing - Sith */}
+          <path
+            d="M55 95 L30 75 L25 95 L30 115 Z"
+            fill="url(#grad-copilot-sith)"
+            className="hidden dark:block"
+          />
+
+          {/* Right wing - Jedi */}
+          <path
+            d="M145 95 L170 75 L175 95 L170 115 Z"
+            fill="url(#grad-copilot-jedi)"
+            className="dark:hidden"
+          />
+          {/* Right wing - Sith */}
+          <path
+            d="M145 95 L170 75 L175 95 L170 115 Z"
+            fill="url(#grad-copilot-sith)"
+            className="hidden dark:block"
+          />
+        </g>
+
+        {/* "M" hint for Microsoft (subtle) */}
+        <path
+          d="M90 150 L100 140 L110 150"
+          fill="none"
+          stroke="#60a5fa"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.6"
+          className="dark:stroke-red-400"
+        />
+
+        {/* Floating particles (holographic effect) */}
+        <circle cx="60" cy="60" r="2" fill="#60a5fa" className="dark:fill-red-400 animate-pulse" opacity="0.6" />
+        <circle cx="140" cy="65" r="1.5" fill="#8b5cf6" className="dark:fill-purple-400 animate-pulse" style={{ animationDelay: "0.5s" }} opacity="0.5" />
+        <circle cx="75" cy="140" r="2" fill="#06b6d4" className="dark:fill-red-500 animate-pulse" style={{ animationDelay: "1s" }} opacity="0.6" />
+        <circle cx="130" cy="135" r="1.5" fill="#3b82f6" className="dark:fill-rose-400 animate-pulse" style={{ animationDelay: "0.75s" }} opacity="0.5" />
       </svg>
     );
   }

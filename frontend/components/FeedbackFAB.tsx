@@ -118,7 +118,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
 
 
   return (
-    <div className="fixed bottom-6 right-4 z-40 flex flex-col items-end space-y-4 group/fab">
+    <div className="fixed bottom-20 right-6 z-40 flex flex-col items-end space-y-4 group/fab">
       {/* Instructions - placing and viewing always visible, idle only on hover */}
       {currentMode === 'placing' && (
         <div className="bg-black/60 backdrop-blur-xl border border-primary/50 text-primary-foreground px-4 py-2 rounded-xl shadow-[0_0_15px_rgba(var(--primary),0.3)] text-sm flex items-center gap-2 animate-in slide-in-from-right fade-in duration-300 mb-2">
@@ -146,7 +146,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
         ref={buttonRef}
         variant="ghost"
         className={cn(
-          "!rounded-full w-14 h-14 flex items-center justify-center p-0 transition-all duration-300 touch-none border-2 backdrop-blur-md select-none",
+          "!rounded-full w-12 h-12 flex items-center justify-center p-0 transition-all duration-300 touch-none border-2 backdrop-blur-md select-none",
           currentMode === 'placing'
             ? "bg-primary hover:bg-primary/90 text-primary-foreground border-primary scale-110 cursor-grabbing shadow-[0_0_25px_rgba(var(--primary),0.6)]"
             : currentMode === 'viewing'
@@ -164,11 +164,11 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
         title={t('report_bug')}
       >
         {currentMode === 'placing' ? (
-          <AlertCircle size={32} />
+          <AlertCircle size={24} />
         ) : currentMode === 'viewing' ? (
-          <X size={32} />
+          <X size={24} />
         ) : (
-          <SplitBugEyeIcon size={48} />
+          <SplitBugEyeIcon size={36} />
         )}
       </Button>
 

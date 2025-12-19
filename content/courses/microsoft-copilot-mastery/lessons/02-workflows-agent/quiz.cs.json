@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Co je Workflows Agent v Microsoft 365 Copilot?",
+    "option_a": "Vizuální drag-and-drop nástroj pro automatizaci",
+    "option_b": "Konverzační AI nástroj pro vytváření automatizací pomocí přirozeného jazyka",
+    "option_c": "Editor kódu pro psaní Power Automate skriptů",
+    "option_d": "Nástroj pro správu databází",
+    "correct_answer": "B",
+    "explanation": "Workflows Agent je konverzační AI nástroj, který umožňuje vytvářet automatizace popsáním toho, co chcete, v přirozeném jazyce, bez nutnosti složitých vizuálních designerů.",
+    "order": 1
+  },
+  {
+    "question": "Jaké jsou tři základní komponenty dobře strukturovaného Workflows promptu?",
+    "option_a": "Vstup, Proces, Výstup",
+    "option_b": "Trigger, Akce, Odpověď",
+    "option_c": "Začátek, Střed, Konec",
+    "option_d": "Dotaz, Filtr, Výsledek",
+    "correct_answer": "B",
+    "explanation": "Úspěšný Workflows prompt obsahuje: Trigger (co spouští workflow), Akci (co agent dělá) a Odpověď (finální výstup nebo notifikace).",
+    "order": 2
+  },
+  {
+    "question": "Jaká backendová technologie pohání workflow vytvořené Workflows Agentem?",
+    "option_a": "Microsoft Azure Functions",
+    "option_b": "Power Automate",
+    "option_c": "Microsoft Graph API",
+    "option_d": "SharePoint Workflows",
+    "correct_answer": "B",
+    "explanation": "Workflows Agent vytváří automatizace poháněné technologií Power Automate, poskytující zjednodušené rozhraní v přirozeném jazyce pro vytváření Power Automate flows.",
+    "order": 3
+  },
+  {
+    "question": "Proč se při vytváření autonomních emailových workflow doporučuje používat 'vytvořit koncept emailu' místo 'odpovědět přímo odesílateli'?",
+    "option_a": "Koncepty se vytvářejí rychleji",
+    "option_b": "Pro zachování 'člověka ve smyčce' pro kontrolu kvality",
+    "option_c": "Přímé odpovědi nefungují s Workflows Agentem",
+    "option_d": "Koncepty šetří API volání",
+    "correct_answer": "B",
+    "explanation": "Používání konceptů místo přímých odpovědí zachovává 'člověka ve smyčce' pro kontrolu přesnosti a tónu před odesláním, což je důležité během fáze early-access nástroje.",
+    "order": 4
+  },
+  {
+    "question": "Jaká je hlavní výhoda Workflows Agent oproti Power Automate pro zpracování emailů?",
+    "option_a": "Běží rychleji než Power Automate",
+    "option_b": "Dokáže porozumět kontextu a sentimentu, nejen sledovat rigidní pravidla",
+    "option_c": "Nevyžaduje licenci Microsoft 365",
+    "option_d": "Funguje offline bez připojení k cloudu",
+    "correct_answer": "B",
+    "explanation": "Workflows Agent používá LLM reasoning k pochopení kontextu, sentimentu a nuancí v emailech, zatímco Power Automate sleduje deterministická pravidla, která nedokáží interpretovat význam.",
+    "order": 5
+  }
+]

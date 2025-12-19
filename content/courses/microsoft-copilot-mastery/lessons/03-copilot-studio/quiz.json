@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What makes an AI 'truly agentic' according to Copilot Studio concepts?",
+    "option_a": "The ability to understand natural language",
+    "option_b": "The ability to perform actions on its own behalf, not just answer questions",
+    "option_c": "Having access to large language models",
+    "option_d": "Being deployed in a cloud environment",
+    "correct_answer": "B",
+    "explanation": "A truly agentic AI can perform actions on behalf of the user (like creating files, sending emails, scheduling meetings), not just provide information through conversation.",
+    "order": 1
+  },
+  {
+    "question": "What are 'Topics' in Copilot Studio?",
+    "option_a": "Categories for organizing agents",
+    "option_b": "Guided conversational flows triggered by user requests",
+    "option_c": "Documentation sections for the agent",
+    "option_d": "Training datasets for the AI model",
+    "correct_answer": "B",
+    "explanation": "Topics are guided conversational paths that are triggered based on a user's request, allowing agents to collect information and execute a series of steps.",
+    "order": 2
+  },
+  {
+    "question": "What is a 'child agent' in Copilot Studio?",
+    "option_a": "An agent designed for younger users",
+    "option_b": "A reusable, specialized agent that can be called by a parent agent",
+    "option_c": "A simplified version of an agent for testing",
+    "option_d": "An agent with reduced permissions",
+    "correct_answer": "B",
+    "explanation": "A child agent is a reusable, specialized agent designed to perform a specific function (e.g., pricing calculations) that can be called by other agents, promoting modular design.",
+    "order": 3
+  },
+  {
+    "question": "How do enterprise agents authenticate in Microsoft Copilot Studio?",
+    "option_a": "Using the user's personal credentials only",
+    "option_b": "Through Entra ID app registrations (service principals) with scoped permissions",
+    "option_c": "Anonymous access with no authentication",
+    "option_d": "Shared password for all agents",
+    "correct_answer": "B",
+    "explanation": "Enterprise agents use Entra ID app registrations (service principals) which allow them to authenticate with their own identity, separate from user credentials, with permissions scoped via Microsoft Graph API.",
+    "order": 4
+  },
+  {
+    "question": "What is the purpose of the Power Platform admin center for Copilot Studio agents?",
+    "option_a": "To provide free computing resources for agents",
+    "option_b": "To manage, secure, and govern all AI agents within an organization",
+    "option_c": "To train custom language models",
+    "option_d": "To handle billing for agent usage",
+    "correct_answer": "B",
+    "explanation": "The Power Platform admin center combined with Microsoft Entra ID provides IT administrators with centralized visibility and control over the entire agent ecosystem, including security, compliance, and risk management.",
+    "order": 5
+  }
+]

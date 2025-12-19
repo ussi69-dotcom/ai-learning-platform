@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What is the Workflows Agent in Microsoft 365 Copilot?",
+    "option_a": "A visual drag-and-drop automation builder",
+    "option_b": "A conversational AI tool for building automations using natural language",
+    "option_c": "A code editor for writing Power Automate scripts",
+    "option_d": "A database management tool",
+    "correct_answer": "B",
+    "explanation": "The Workflows Agent is a conversational AI tool that allows users to build automations by describing what they want in natural language, eliminating the need for complex visual designers.",
+    "order": 1
+  },
+  {
+    "question": "What are the three essential components of a well-structured Workflows prompt?",
+    "option_a": "Input, Process, Output",
+    "option_b": "Trigger, Action, Response",
+    "option_c": "Start, Middle, End",
+    "option_d": "Query, Filter, Result",
+    "correct_answer": "B",
+    "explanation": "A successful Workflows prompt includes: the Trigger (what initiates the workflow), the Action (what the agent does), and the Response (the final output or notification).",
+    "order": 2
+  },
+  {
+    "question": "What backend technology powers the workflows created by the Workflows Agent?",
+    "option_a": "Microsoft Azure Functions",
+    "option_b": "Power Automate",
+    "option_c": "Microsoft Graph API",
+    "option_d": "SharePoint Workflows",
+    "correct_answer": "B",
+    "explanation": "The Workflows Agent creates automations backed by Power Automate technology, providing a simplified natural language interface for building Power Automate flows.",
+    "order": 3
+  },
+  {
+    "question": "Why is it recommended to initially use 'create a draft email' instead of 'reply directly to sender' when building autonomous email workflows?",
+    "option_a": "Drafts are faster to create",
+    "option_b": "To maintain a 'human in the loop' for quality review",
+    "option_c": "Direct replies don't work with Workflows Agent",
+    "option_d": "Drafts save API calls",
+    "correct_answer": "B",
+    "explanation": "Using drafts instead of direct replies keeps a 'human in the loop' to review accuracy and tone before sending, which is important during the early-access phase of the tool.",
+    "order": 4
+  },
+  {
+    "question": "What is the main advantage of Workflows Agent over Power Automate for email handling?",
+    "option_a": "It runs faster than Power Automate",
+    "option_b": "It can understand context and sentiment, not just follow rigid rules",
+    "option_c": "It requires no Microsoft 365 license",
+    "option_d": "It works offline without cloud connection",
+    "correct_answer": "B",
+    "explanation": "Workflows Agent uses LLM reasoning to understand context, sentiment, and nuance in emails, while Power Automate follows deterministic rules that can't interpret meaning.",
+    "order": 5
+  }
+]

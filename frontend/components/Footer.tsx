@@ -65,7 +65,7 @@ export default function Footer() {
               {locale === "cs" ? "Technologie" : "Tech Stack"}
             </h3>
             <div className="flex flex-wrap gap-2">
-              {["Next.js 16", "FastAPI", "Claude Opus", "Gemini 3"].map(
+              {["Next.js 16", "Tailwind v4", "FastAPI", "PostgreSQL", "Docker", "Claude Opus 4.5", "Gemini 3 Pro", "GPT-5.2"].map(
                 (tech) => (
                   <span
                     key={tech}
