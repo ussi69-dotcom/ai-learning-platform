@@ -36,7 +36,15 @@ def seed_data():
     # Admin
     superuser_email = os.getenv("FIRST_SUPERUSER", "admin@ai-platform.com")
     superuser_password = os.getenv("FIRST_SUPERUSER_PASSWORD", "admin123")
-    
+
+    # SECURITY: Prevent default password in production
+    environment = os.getenv("ENVIRONMENT", "development")
+    if environment == "production" and superuser_password == "admin123":
+        raise ValueError(
+            "🚨 SECURITY ERROR: Cannot use default admin password 'admin123' in production! "
+            "Set FIRST_SUPERUSER_PASSWORD environment variable to a secure password."
+        )
+
     admin = db.query(User).filter(User.email == superuser_email).first()
     if not admin:
         admin = User(

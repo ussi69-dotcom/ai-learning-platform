@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import CourseIcon from "./CourseIcon";
 import DifficultyIcon from "./DifficultyIcon";
+import { useTranslations } from "next-intl";
 
 // Course difficulty labels (Duke Nukem style)
 const COURSE_DIFFICULTY_LABELS: Record<string, string> = {
@@ -46,6 +47,7 @@ export default function CourseCarousel({
   userLevel,
   showRecommended = false,
 }: CourseCarouselProps) {
+  const t = useTranslations("Course");
   const [expanded, setExpanded] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -108,7 +110,7 @@ export default function CourseCarousel({
           {isRecommended && (
             <span className="absolute top-2 left-2 text-[10px] font-bold bg-yellow-500 text-black px-2 py-1 rounded-full flex items-center gap-1 shadow-lg">
               <Star size={10} fill="currentColor" />
-              {locale === "cs" ? "Doporučeno" : "Recommended"}
+              {t("recommended")}
             </span>
           )}
           {/* Difficulty badge */}
@@ -141,7 +143,7 @@ export default function CourseCarousel({
               size="sm"
               className="w-full text-xs bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_10px_rgba(220,38,38,0.4)] border-none"
             >
-              {locale === "cs" ? "Začít kurz →" : "Start Course →"}
+              {t("startArrow")}
             </Button>
           </Link>
         </CardContent>
@@ -152,14 +154,8 @@ export default function CourseCarousel({
   if (courses.length === 0) {
     return (
       <div className="col-span-3 p-12 border-2 border-dashed border-border rounded-xl text-center text-muted-foreground glass-panel">
-        <p>
-          {locale === "cs"
-            ? "Zatím nejsou dostupné žádné kurzy."
-            : "No courses available yet."}
-        </p>
-        <p className="text-sm mt-2">
-          {locale === "cs" ? "Zkuste to brzy znovu!" : "Check back soon!"}
-        </p>
+        <p>{t("noCourses")}</p>
+        <p className="text-sm mt-2">{t("checkBack")}</p>
       </div>
     );
   }
@@ -231,12 +227,12 @@ export default function CourseCarousel({
             {expanded ? (
               <>
                 <ChevronUp className="w-4 h-4" />
-                {locale === "cs" ? "Sbalit" : "Collapse"}
+                {t("collapse")}
               </>
             ) : (
               <>
                 <ChevronDown className="w-4 h-4" />
-                {locale === "cs" ? "Zobrazit vše" : "Show All"}
+                {t("showAll")}
                 <span className="text-xs opacity-70">({courses.length})</span>
               </>
             )}

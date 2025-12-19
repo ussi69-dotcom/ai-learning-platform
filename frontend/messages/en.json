@@ -91,6 +91,29 @@
     "saving": "Saving...",
     "mark_complete": "Mark Lab as Complete"
   },
+  "Glossary": {
+    "title": "AI Terms",
+    "subtitle": "Click an ice cube to learn more",
+    "physicsOn": "Physics ON",
+    "physicsOff": "Physics OFF",
+    "learnMore": "Learn more in lesson",
+    "interactiveGlossary": "Interactive Glossary"
+  },
+  "Course": {
+    "recommended": "Recommended",
+    "lessons": "lessons",
+    "minutes": "min",
+    "start": "Start Course",
+    "startArrow": "Start Course →",
+    "continue": "Continue",
+    "completed": "Completed",
+    "previous": "Previous",
+    "next": "Next",
+    "collapse": "Collapse",
+    "showAll": "Show All",
+    "noCourses": "No courses available at the moment.",
+    "checkBack": "Check back soon!"
+  },
   "Home": {
     "teaser_title": "CYCLE #35 – AI × Human",
     "teaser_subtitle": "How we build AI platform: Red Team (Claude) + Blue Team (Gemini) + Human",

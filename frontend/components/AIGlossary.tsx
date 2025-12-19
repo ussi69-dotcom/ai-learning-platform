@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink, Sparkles, Zap, ZapOff } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 // Comprehensive glossary data with terms from ALL lessons across all courses
 const GLOSSARY_TERMS = [
@@ -372,6 +373,7 @@ const SLEEP_FRAMES = 30; // Frames below threshold before sleeping
 const FIXED_TIMESTEP = 1000 / 60; // 60 FPS physics
 
 export default function AIGlossary({ locale }: AIGlossaryProps) {
+  const t = useTranslations("Glossary");
   const [selectedTerm, setSelectedTerm] = useState<GlossaryTerm | null>(null);
   const [isLowPerf, setIsLowPerf] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -713,15 +715,13 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-sm font-mono text-cyan-400 mb-4">
             <Sparkles className="w-4 h-4" />
-            <span>{locale === "cs" ? "Interaktivní slovník" : "Interactive Glossary"}</span>
+            <span>{t("interactiveGlossary")}</span>
           </div>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-            {locale === "cs" ? "AI Pojmy" : "AI Terms"}
+            {t("title")}
           </h2>
           <p className="text-slate-400 text-sm max-w-md mx-auto mb-4">
-            {locale === "cs"
-              ? "Klikni na ledovou kostku a zjisti více"
-              : "Click an ice cube to learn more"}
+            {t("subtitle")}
           </p>
 
           {/* Physics Toggle Button */}
@@ -761,12 +761,12 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
               {physicsEnabled ? (
                 <>
                   <Zap className="w-4 h-4" />
-                  {locale === "cs" ? "Fyzika ZAPNUTA" : "Physics ON"}
+                  {t("physicsOn")}
                 </>
               ) : (
                 <>
                   <ZapOff className="w-4 h-4" />
-                  {locale === "cs" ? "Fyzika VYPNUTA" : "Physics OFF"}
+                  {t("physicsOff")}
                 </>
               )}
               {isLowPerf && (
@@ -958,7 +958,7 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
                       hsla(${selectedTerm.hue}, 70%, 40%, 1) 100%)`,
                   }}
                 >
-                  {locale === "cs" ? "Zjistit více v lekci" : "Learn more in lesson"}
+                  {t("learnMore")}
                   <ExternalLink size={16} />
                 </Button>
               </Link>

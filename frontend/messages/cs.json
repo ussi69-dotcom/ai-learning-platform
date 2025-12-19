@@ -91,6 +91,29 @@
     "saving": "Ukládám...",
     "mark_complete": "Označit laboratoř jako hotovou"
   },
+  "Glossary": {
+    "title": "AI Pojmy",
+    "subtitle": "Klikni na ledovou kostku a zjisti více",
+    "physicsOn": "Fyzika ZAPNUTA",
+    "physicsOff": "Fyzika VYPNUTA",
+    "learnMore": "Zjistit více v lekci",
+    "interactiveGlossary": "Interaktivní slovník"
+  },
+  "Course": {
+    "recommended": "Doporučeno",
+    "lessons": "lekcí",
+    "minutes": "min",
+    "start": "Spustit kurz",
+    "startArrow": "Začít kurz →",
+    "continue": "Pokračovat",
+    "completed": "Dokončeno",
+    "previous": "Předchozí",
+    "next": "Další",
+    "collapse": "Sbalit",
+    "showAll": "Zobrazit vše",
+    "noCourses": "Momentálně nejsou dostupné žádné kurzy.",
+    "checkBack": "Zkuste to brzy znovu!"
+  },
   "Home": {
     "teaser_title": "CYCLE #35 – AI × Human",
     "teaser_subtitle": "Jak stavíme AI platformu: Red Team (Claude) + Blue Team (Gemini) + Člověk",

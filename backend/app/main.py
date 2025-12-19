@@ -12,8 +12,9 @@ from fastapi.staticfiles import StaticFiles
 from . import models, schemas, database, auth
 from app.routers import sandbox, lessons, feedback, users, health, certificates, news, digest
 
-# Vytvoření tabulek (pro jistotu, i když to dělá seed)
-models.Base.metadata.create_all(bind=database.engine)
+# NOTE: Table creation removed - rely solely on Alembic migrations and seed.py
+# This prevents schema drift when scaling multiple API instances
+# See: RECOMMENDATIONS.md P1.7
 
 app = FastAPI(title="AI Learning Platform API")
 

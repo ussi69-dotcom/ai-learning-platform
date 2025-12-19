@@ -9,10 +9,20 @@ logger = logging.getLogger(__name__)
 class ContentLoader:
     def __init__(self, base_path: str):
         self.base_path = Path(base_path)
+        self.dry_run = False  # When True, only log what would happen
 
-    def sync_to_db(self, db: Session, owner_id: int):
-        """Syncs content from file system to database."""
-        logger.info(f"🔄 Syncing content from {self.base_path}...")
+    def sync_to_db(self, db: Session, owner_id: int, dry_run: bool = False):
+        """
+        Syncs content from file system to database.
+
+        Args:
+            db: Database session
+            owner_id: Owner user ID for new content
+            dry_run: If True, only log what would happen without making changes
+        """
+        self.dry_run = dry_run
+        mode = "DRY-RUN" if dry_run else "LIVE"
+        logger.info(f"🔄 [{mode}] Syncing content from {self.base_path}...")
         
         courses_dir = self.base_path / "courses"
         if not courses_dir.exists():
@@ -34,10 +44,11 @@ class ContentLoader:
         with open(meta_path, "r", encoding="utf-8") as f:
             meta = json.load(f)
 
-        logger.info(f"📚 Processing course: {meta.get('title')}")
+        course_slug = course_dir.name  # Use directory name as stable identifier
+        logger.info(f"📚 Processing course: {meta.get('title')} (slug: {course_slug})")
 
-        # Create or Update Course
-        course = db.query(Course).filter(Course.title == meta["title"]).first()
+        # Create or Update Course - use SLUG as identity (not title, which can change)
+        course = db.query(Course).filter(Course.slug == course_slug).first()
         if not course:
             course = Course(
                 title=meta["title"],
@@ -76,13 +87,25 @@ class ContentLoader:
         existing_lessons = db.query(Lesson).filter(Lesson.course_id == course.id).all()
         for lesson in existing_lessons:
             if lesson.slug not in processed_slugs:
-                logger.info(f"  🗑️  Deleting orphaned lesson: {lesson.slug}")
-                # Delete related user progress first
-                db.query(UserProgress).filter(UserProgress.lesson_id == lesson.id).delete()
-                # Delete related quizzes
-                db.query(Quiz).filter(Quiz.lesson_id == lesson.id).delete()
-                db.delete(lesson)
-        db.commit()
+                # Count affected user progress for warning
+                progress_count = db.query(UserProgress).filter(UserProgress.lesson_id == lesson.id).count()
+                if self.dry_run:
+                    logger.warning(
+                        f"  🗑️  [DRY-RUN] WOULD DELETE orphaned lesson: {lesson.slug} "
+                        f"(affects {progress_count} user progress records)"
+                    )
+                else:
+                    logger.warning(
+                        f"  🗑️  Deleting orphaned lesson: {lesson.slug} "
+                        f"(deleting {progress_count} user progress records)"
+                    )
+                    # Delete related user progress first
+                    db.query(UserProgress).filter(UserProgress.lesson_id == lesson.id).delete()
+                    # Delete related quizzes
+                    db.query(Quiz).filter(Quiz.lesson_id == lesson.id).delete()
+                    db.delete(lesson)
+        if not self.dry_run:
+            db.commit()
 
     def _process_lesson(self, db: Session, lesson_dir: Path, course_id: int) -> str | None:
         """Process a lesson directory and return its slug, or None if skipped."""
@@ -140,9 +163,11 @@ class ContentLoader:
             # For now, picking EN as default.
             video_url = video_url.get("en")
 
-        logger.info(f"  📖 Processing lesson: {title} ({duration}, {lab_count} labs)")
+        lesson_slug = lesson_dir.name  # Use directory name as stable identifier
+        logger.info(f"  📖 Processing lesson: {title} ({duration}, {lab_count} labs) [slug: {lesson_slug}]")
 
-        lesson = db.query(Lesson).filter(Lesson.title == title, Lesson.course_id == course_id).first()
+        # Use SLUG as identity (not title, which can change)
+        lesson = db.query(Lesson).filter(Lesson.slug == lesson_slug, Lesson.course_id == course_id).first()
         if not lesson:
             lesson = Lesson(
                 title=title,

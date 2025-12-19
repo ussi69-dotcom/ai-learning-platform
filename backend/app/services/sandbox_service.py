@@ -50,11 +50,18 @@ class SandboxService:
                 mem_limit=mem_limit,
                 cpu_period=cpu_period,
                 cpu_quota=cpu_quota,
-                network_disabled=True, # No internet access for now
+                network_disabled=True,  # No internet access
                 working_dir="/app",
+                # Security hardening
+                read_only=True,  # Read-only root filesystem
+                user="nobody",  # Run as non-root user
+                security_opt=["no-new-privileges:true"],  # Prevent privilege escalation
+                cap_drop=["ALL"],  # Drop all Linux capabilities
+                # Prevent container from accessing host resources
+                pids_limit=50,  # Limit number of processes
                 # Remove container automatically ONLY if we don't need to inspect it after stop.
                 # But we need logs. So auto_remove=False.
-                auto_remove=False, 
+                auto_remove=False,
             )
 
             try:
