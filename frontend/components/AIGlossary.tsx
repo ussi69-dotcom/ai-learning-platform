@@ -483,6 +483,16 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
     }));
   }, []);
 
+  // Restart physics loop (called when cubes wake up)
+  const restartPhysicsLoop = useCallback(() => {
+    if (animationRef.current === null && physicsEnabled && !prefersReducedMotion) {
+      lastTimeRef.current = 0;
+      accumulatorRef.current = 0;
+      // The useEffect will handle starting the loop
+      // We trigger a re-render by setting allSleepingRef
+    }
+  }, [physicsEnabled, prefersReducedMotion]);
+
   // Wake up cubes (used by scroll and click)
   const wakeUpCubes = useCallback((indices?: number[]) => {
     const bodies = physicsRef.current;
@@ -494,8 +504,104 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
         bodies[i].sleepCounter = 0;
       }
     });
+
+    const wasSleeping = allSleepingRef.current;
     allSleepingRef.current = false;
-  }, []);
+
+    // Restart animation loop if it was stopped (P2 optimization)
+    if (wasSleeping && animationRef.current === null && physicsEnabled && !prefersReducedMotion) {
+      const { height: containerHeight, cubeSize } = dimensions;
+      const groundY = containerHeight - cubeSize - 10;
+      const ceilingY = 5;
+
+      const simulate = (now: number) => {
+        if (lastTimeRef.current === 0) lastTimeRef.current = now;
+        const deltaTime = Math.min(now - lastTimeRef.current, 100);
+        lastTimeRef.current = now;
+        accumulatorRef.current += deltaTime;
+
+        if (allSleepingRef.current) {
+          animationRef.current = null;
+          return;
+        }
+
+        const containerWidth = containerRef.current?.offsetWidth || 800;
+        const minX = 10;
+        const maxX = containerWidth - cubeSize - 10;
+
+        while (accumulatorRef.current >= FIXED_TIMESTEP) {
+          accumulatorRef.current -= FIXED_TIMESTEP;
+          let allSleeping = true;
+
+          for (let i = 0; i < bodies.length; i++) {
+            const body = bodies[i];
+            if (body.sleeping) continue;
+            allSleeping = false;
+
+            body.vy += GRAVITY;
+            body.x += body.vx;
+            body.y += body.vy;
+            body.vx *= FRICTION;
+            body.rotation += body.vx * 1.2;
+            body.rotation *= ROTATION_DAMPING;
+
+            if (body.y > groundY) { body.y = groundY; body.vy = -body.vy * BOUNCE; body.vx *= 0.85; }
+            if (body.y < ceilingY) { body.y = ceilingY; body.vy = Math.abs(body.vy) * BOUNCE; }
+            if (body.x < minX) { body.x = minX; body.vx = -body.vx * BOUNCE; }
+            if (body.x > maxX) { body.x = maxX; body.vx = -body.vx * BOUNCE; }
+
+            for (let j = i + 1; j < bodies.length; j++) {
+              const other = bodies[j];
+              if (other.sleeping) continue;
+              const dx = body.x - other.x;
+              const dy = body.y - other.y;
+              const distSq = dx * dx + dy * dy;
+              const minDist = cubeSize * 0.85;
+              if (distSq < minDist * minDist && distSq > 0) {
+                const dist = Math.sqrt(distSq);
+                const overlap = minDist - dist;
+                const nx = dx / dist;
+                const ny = dy / dist;
+                const separation = overlap * 0.5;
+                body.x += nx * separation; body.y += ny * separation;
+                other.x -= nx * separation; other.y -= ny * separation;
+                const relVx = body.vx - other.vx;
+                const relVy = body.vy - other.vy;
+                const impulse = (relVx * nx + relVy * ny) * 0.5;
+                body.vx -= impulse * nx; body.vy -= impulse * ny;
+                other.vx += impulse * nx; other.vy += impulse * ny;
+              }
+            }
+
+            const speed = Math.sqrt(body.vx * body.vx + body.vy * body.vy);
+            if (speed < SLEEP_THRESHOLD && body.y >= groundY - 1) {
+              body.sleepCounter++;
+              if (body.sleepCounter > SLEEP_FRAMES) {
+                body.sleeping = true; body.vx = 0; body.vy = 0;
+              }
+            } else {
+              body.sleepCounter = 0;
+            }
+          }
+          allSleepingRef.current = allSleeping;
+        }
+
+        for (let i = 0; i < bodies.length; i++) {
+          const el = cubeRefs.current[i];
+          if (el) {
+            const body = bodies[i];
+            el.style.transform = `translate3d(${body.x}px, ${body.y}px, 0) rotate(${body.rotation}deg)`;
+          }
+        }
+
+        animationRef.current = requestAnimationFrame(simulate);
+      };
+
+      lastTimeRef.current = 0;
+      accumulatorRef.current = 0;
+      animationRef.current = requestAnimationFrame(simulate);
+    }
+  }, [dimensions, physicsEnabled, prefersReducedMotion]);
 
   // Scroll-based impulse (optimized - no setState)
   useEffect(() => {
@@ -556,9 +662,10 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
       lastTimeRef.current = now;
       accumulatorRef.current += deltaTime;
 
-      // Skip if all cubes are sleeping
+      // Stop animation loop when all cubes are sleeping (P2 optimization)
       if (allSleepingRef.current) {
-        animationRef.current = requestAnimationFrame(simulate);
+        // Don't request new frame - loop will restart when cubes wake up
+        animationRef.current = null;
         return;
       }
 

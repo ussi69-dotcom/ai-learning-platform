@@ -41,9 +41,14 @@ export default function JediSithToggle({
 
   return (
     <div
+      role="radiogroup"
+      aria-label="Theme selection"
       className={`bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-primary/50 rounded-full p-1 flex shadow-inner ${className}`}
     >
       <button
+        role="radio"
+        aria-checked={theme === "light"}
+        aria-label="Switch to Jedi (light) mode"
         onClick={() => toggleTheme("light")}
         className={`
           flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all duration-300
@@ -54,11 +59,14 @@ export default function JediSithToggle({
           }
         `}
       >
-        <Sun className="w-3.5 h-3.5" />
+        <Sun className="w-3.5 h-3.5" aria-hidden="true" />
         <span className="hidden xl:inline">Jedi</span>
       </button>
 
       <button
+        role="radio"
+        aria-checked={theme === "dark"}
+        aria-label="Switch to Sith (dark) mode"
         onClick={() => toggleTheme("dark")}
         className={`
           flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all duration-300
@@ -69,7 +77,7 @@ export default function JediSithToggle({
           }
         `}
       >
-        <Moon className="w-3.5 h-3.5" />
+        <Moon className="w-3.5 h-3.5" aria-hidden="true" />
         <span className="hidden xl:inline">Sith</span>
       </button>
     </div>
