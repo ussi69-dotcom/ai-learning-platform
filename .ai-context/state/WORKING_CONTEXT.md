@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-20 16:07 (Agent: Codex GPT-5.2)
+**Last Updated:** 2025-12-20 17:26 (Agent: Codex GPT-5.2)
 **Last Commit:** `6a1b58e` docs: document VideoSwitcher parsing + Opus CLI
-**Status:** 🟡 Copilot lessons 02/03 UI polish landed (mobile diagram layouts, full-width MDX images, feedback auto-hide all screens, Sith next-page color). Additional fixes: mobile tables render as cards, inline emoji replaced with Lucide SVGs in MarkdownRenderer, ConceptCard emoji mapping expanded, VideoPlayer shows YouTube thumbnail background. Visual QA blocked on local because frontend points to `https://learnai.cz/api` (prod) and returns lesson not found for local slugs; needs frontend env switch to local API for accurate screenshots. `npm run verify` passes (lint warnings only). Subagent orchestration instructions updated in MEMORY.
+**Status:** 🟡 Copilot lessons 02/03 UI polish landed (mobile diagram layouts, full-width MDX images, feedback auto-hide all screens, Sith next-page color). Additional fixes: mobile tables render as cards, inline emoji replaced with Lucide SVGs in MarkdownRenderer, ConceptCard emoji mapping expanded, VideoPlayer shows YouTube thumbnail background. Added `docker-compose.qa.yml` to run local-only QA frontend on `127.0.0.1:3001` with `NEXT_PUBLIC_API_URL=http://localhost:8000` and started `ai-frontend-qa` (backend container recreated). `npm run verify` passes (lint warnings only). Subagent orchestration instructions updated in MEMORY.
 
 ---
 
