@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
-import { Lightbulb, Brain, Cpu, Zap, Database, Search, Bot, Layers, Code, Terminal, Sparkles } from 'lucide-react';
+import { Lightbulb, Brain, Cpu, Zap, Database, Search, Bot, Layers, Code, Terminal, Sparkles, Shield, Gem, Briefcase } from 'lucide-react';
 
 interface ConceptCardProps {
   title: string;
@@ -48,6 +48,10 @@ const getIcon = (iconStr: string) => {
   if (lower.includes('code') || iconStr === '💻') return <Code className="w-10 h-10" />;
   if (lower.includes('term') || iconStr === '🖥️') return <Terminal className="w-10 h-10" />;
   if (lower.includes('game') || iconStr === '🎮') return <Sparkles className="w-10 h-10" />;
+  if (iconStr === '🛡️') return <Shield className="w-10 h-10" />;
+  if (iconStr === '💎') return <Gem className="w-10 h-10" />;
+  if (iconStr === '🏢') return <Briefcase className="w-10 h-10" />;
+  if (iconStr === '🏗️') return <Layers className="w-10 h-10" />;
   
   // Default fallback if it's just a string/emoji we don't recognize specifically
   // If it's a single emoji, we might just render it, but let's try to use a generic icon for "Method X" titles

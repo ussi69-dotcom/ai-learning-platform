@@ -1,6 +1,25 @@
 "use client";
 
 import React, { useMemo } from 'react';
+import {
+  Bot,
+  BookOpen,
+  Brain,
+  Briefcase,
+  CheckCircle,
+  Clock,
+  FlaskConical,
+  Gem,
+  GitMerge,
+  Lightbulb,
+  Rocket,
+  Search,
+  Shield,
+  Sparkles,
+  Target,
+  TrendingUp,
+  Zap
+} from 'lucide-react';
 import MDXImage from './MDXImage';
 import Callout from './mdx/Callout';
 import Steps from './mdx/Steps';
@@ -22,6 +41,51 @@ interface MarkdownRendererProps {
 }
 
 export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: MarkdownRendererProps) {
+  const INLINE_ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+    "🤖": Bot,
+    "⏳": Clock,
+    "🧪": FlaskConical,
+    "🧠": Brain,
+    "⚡": Zap,
+    "🔌": Zap,
+    "🔬": FlaskConical,
+    "💡": Lightbulb,
+    "🍳": Sparkles,
+    "🛡️": Shield,
+    "💥": Zap,
+    "📌": Target,
+    "📊": TrendingUp,
+    "🏗️": Briefcase,
+    "🔒": Shield,
+    "📈": TrendingUp,
+    "🚀": Rocket,
+    "🎓": BookOpen,
+    "🔮": Sparkles,
+    "💎": Gem,
+    "🔑": Target,
+    "🎯": Target,
+    "✅": CheckCircle,
+    "🏢": Briefcase,
+    "📚": BookOpen,
+    "🆚": GitMerge
+  };
+  const iconTokens = Object.keys(INLINE_ICON_MAP);
+  const iconRegex = new RegExp(`(${iconTokens.map((token) => token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gu');
+
+  const renderTextWithIcons = (text: string, keyPrefix: string): React.ReactNode[] => {
+    if (!iconTokens.length) return [text];
+    return text.split(iconRegex).map((part, idx) => {
+      const Icon = INLINE_ICON_MAP[part];
+      if (Icon) {
+        return (
+          <span key={`${keyPrefix}-icon-${idx}`} className="inline-flex align-middle text-primary/80">
+            <Icon className="w-4 h-4" />
+          </span>
+        );
+      }
+      return part;
+    });
+  };
   
   const parseContent = (text: string): React.ReactNode[] => {
     const lines = text.split('\n');
@@ -436,29 +500,44 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
             const headers = tableLines[0].split('|').filter(c => c.trim()).map(c => c.trim());
             const rows = tableLines.slice(2).map(l => l.split('|').filter(c => c.trim()).map(c => c.trim()));
             elements.push(
-              <div key={`table-${i}`} className="relative overflow-x-auto mb-6">
-                <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-background/90 to-transparent md:hidden" />
-                <div className="pointer-events-none absolute right-2 top-2 rounded-full bg-background/80 px-2 py-0.5 text-[10px] font-semibold text-muted-foreground backdrop-blur-sm md:hidden">
-                  Scroll {"->"}
-                </div>
-                <table className="min-w-full border-collapse border border-slate-200 dark:border-slate-700">
-                  <thead>
-                    <tr className="bg-muted/50">
-                      {headers.map((h, k) => (
-                        <th key={k} className="border border-border p-2 text-left text-sm font-semibold text-foreground whitespace-nowrap">{parseInlineText(h)}</th>
+              <div key={`table-${i}`} className="mb-6">
+                <div className="md:hidden space-y-3">
+                  {rows.map((row, r) => (
+                    <div key={`table-card-${r}`} className="rounded-xl border border-border/70 bg-muted/20 p-3 shadow-sm">
+                      {row.map((cell, c) => (
+                        <div key={`table-card-${r}-${c}`} className="py-1">
+                          <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                            {parseInlineText(headers[c] || '')}
+                          </div>
+                          <div className="text-sm text-foreground">
+                            {parseInlineText(cell)}
+                          </div>
+                        </div>
                       ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rows.map((row, r) => (
-                      <tr key={r} className="even:bg-muted/20">
-                        {row.map((cell, c) => (
-                          <td key={c} className="border border-border p-2 text-muted-foreground min-w-[100px]">{parseInlineText(cell)}</td>
+                    </div>
+                  ))}
+                </div>
+                <div className="relative hidden md:block overflow-x-auto">
+                  <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-background/90 to-transparent" />
+                  <table className="min-w-full border-collapse border border-slate-200 dark:border-slate-700">
+                    <thead>
+                      <tr className="bg-muted/50">
+                        {headers.map((h, k) => (
+                          <th key={k} className="border border-border p-2 text-left text-sm font-semibold text-foreground whitespace-nowrap">{parseInlineText(h)}</th>
                         ))}
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {rows.map((row, r) => (
+                        <tr key={r} className="even:bg-muted/20">
+                          {row.map((cell, c) => (
+                            <td key={c} className="border border-border p-2 text-muted-foreground min-w-[100px]">{parseInlineText(cell)}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             );
             i = j; continue;
@@ -502,11 +581,21 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
   const parseInlineText = (text: string): React.ReactNode => {
     // Note: Very basic parsing. Doesn't handle nested.
     const parts = text.split(/(\**.*?\**|\*.*?\*|`.*?`)/g);
-    return parts.map((part, k) => {
-      if (part.startsWith('**') && part.endsWith('**')) return <strong key={k}>{part.slice(2, -2)}</strong>;
-      if (part.startsWith('*') && part.endsWith('*')) return <em key={k}>{part.slice(1, -1)}</em>;
-      if (part.startsWith('`') && part.endsWith('`')) return <code key={k} className="bg-muted px-1 py-0.5 rounded text-sm font-mono text-primary">{part.slice(1, -1)}</code>;
-      return part;
+    return parts.flatMap((part, k) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return (
+          <strong key={`strong-${k}`}>{renderTextWithIcons(part.slice(2, -2), `strong-${k}`)}</strong>
+        );
+      }
+      if (part.startsWith('*') && part.endsWith('*')) {
+        return (
+          <em key={`em-${k}`}>{renderTextWithIcons(part.slice(1, -1), `em-${k}`)}</em>
+        );
+      }
+      if (part.startsWith('`') && part.endsWith('`')) {
+        return <code key={`code-${k}`} className="bg-muted px-1 py-0.5 rounded text-sm font-mono text-primary">{part.slice(1, -1)}</code>;
+      }
+      return renderTextWithIcons(part, `text-${k}`);
     });
   };
 

@@ -145,6 +145,7 @@ export const VideoPlayer = ({
     origin ? `&origin=${encodeURIComponent(origin)}` : ""
   }`;
   const watchUrl = `https://www.youtube.com/watch?v=${activeVideo.id}`;
+  const thumbnailUrl = `https://img.youtube.com/vi/${activeVideo.id}/hqdefault.jpg`;
 
   return (
     <VideoRegistryContext.Provider value={contextValue}>
@@ -157,7 +158,10 @@ export const VideoPlayer = ({
         style={isPinned ? { marginTop: "-1rem" } : {}}
       >
         {/* Video Player */}
-        <div className="relative aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-border/50 ring-1 ring-black/5">
+        <div
+          className="relative aspect-video bg-black bg-center bg-cover rounded-2xl overflow-hidden shadow-2xl border border-border/50 ring-1 ring-black/5"
+          style={{ backgroundImage: `url(${thumbnailUrl})` }}
+        >
           {!isVideoLoaded && !showFallback && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/80 text-xs text-white/80 tracking-wide">
               {locale === "cs" ? "Načítám video…" : "Loading video…"}
