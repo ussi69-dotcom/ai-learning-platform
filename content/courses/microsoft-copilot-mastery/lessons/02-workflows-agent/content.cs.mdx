@@ -554,25 +554,15 @@ Přemýšlejte o governance jako o **vrstvené obraně**, ne jako o jednom přep
 
 ### 3 pravidla Agent Governance
 
-<Steps>
+1. **🛡️ Least Privilege** — Potřebuje váš agent na ukládání účtenek OPRAVDU Write přístup k celému OneDrive?  
+   **Oprava:** Omezte pouze na konkrétní složku "Receipts".
 
-#### 1. Least Privilege
-Potřebuje váš agent na ukládání účtenek OPRAVDU Write přístup k celému OneDrive?
+2. **✅ Human-in-the-Loop pro vysoké sázky** — Akce s důsledky (posílání peněz, mazání souborů, externí komunikace) by měly vyžadovat manuální schválení.  
+   **Příklad:** Koncepty emailů by se měly ukládat jako koncepty, ne automaticky odesílat.
 
-**Oprava:** Omezte pouze na konkrétní složku "Receipts".
-
-#### 2. Human-in-the-Loop pro vysoké sázky
-Akce s důsledky (posílání peněz, mazání souborů, externí komunikace) by měly vyžadovat manuální schválení.
-
-**Příklad:** Koncepty emailů by se měly ukládat jako koncepty, ne automaticky odesílat.
-
-#### 3. Transparentní identifikace
-Agent se musí identifikovat jako AI, ne napodobovat člověka.
-
-**Špatně:** Emailový podpis "Sarah z Support Týmu"
-**Dobře:** Emailový podpis "Workflows Agent jménem Support Týmu"
-
-</Steps>
+3. **🔒 Transparentní identifikace** — Agent se musí identifikovat jako AI, ne napodobovat člověka.  
+   **Špatně:** Emailový podpis "Sarah z Support Týmu"  
+   **Dobře:** Emailový podpis "Workflows Agent jménem Support Týmu"
 
 <Callout type="warning">
 **Právní poznámka:** V mnoha jurisdikcích (včetně EU pod AI Act) se AI systémy musí identifikovat jako ne-lidské při interakci se zákazníky.

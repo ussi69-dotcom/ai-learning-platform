@@ -551,25 +551,15 @@ Think of governance as **layered defense**, not a single toggle.
 
 ### The 3 Rules of Agent Governance
 
-<Steps>
+1. **🛡️ Least Privilege** — Does your receipt-filing agent REALLY need Write access to the entire OneDrive?  
+   **Fix:** Limit to specific "Receipts" folder only.
 
-#### 1. Least Privilege
-Does your receipt-filing agent REALLY need Write access to the entire OneDrive?
+2. **✅ Human-in-the-Loop for High Stakes** — Actions with consequences (sending money, deleting files, external communications) should require manual approval.  
+   **Example:** Email drafts should save as drafts, not auto-send.
 
-**Fix:** Limit to specific "Receipts" folder only.
-
-#### 2. Human-in-the-Loop for High Stakes
-Actions with consequences (sending money, deleting files, external communications) should require manual approval.
-
-**Example:** Email drafts should save as drafts, not auto-send.
-
-#### 3. Transparent Identification
-The agent must identify itself as AI, not impersonate a human.
-
-**Bad:** Email signature "Sarah from Support Team"
-**Good:** Email signature "Workflows Agent on behalf of Support Team"
-
-</Steps>
+3. **🔒 Transparent Identification** — The agent must identify itself as AI, not impersonate a human.  
+   **Bad:** Email signature "Sarah from Support Team"  
+   **Good:** Email signature "Workflows Agent on behalf of Support Team"
 
 <Callout type="warning">
 **Legal Note:** In many jurisdictions (including EU under AI Act), AI systems must disclose their non-human nature when interacting with customers.
