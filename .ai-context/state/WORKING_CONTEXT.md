@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-20 23:05 (Agent: Codex GPT-5.2)
-**Last Commit:** `6cdb925` docs(content): vary copilot studio governance visuals
-**Status:** 🟡 Replaced L03 ai-security-layers diagram with security-attack-chain to avoid repetition with L02; added tradeoff-radar under analytics. No tests run.
+**Last Updated:** 2025-12-20 23:10 (Agent: Codex GPT-5.2)
+**Last Commit:** `f2cad57` fix(ui): separate tradeoff radar title from labels
+**Status:** 🟡 Shifted tradeoff radar chart down to prevent title/subtitle overlap with axis label. No tests run.
 
 ---
 
@@ -98,6 +98,7 @@
 
 | Task | Status | Notes |
 |------|--------|-------|
+| Tradeoff radar title overlap | ✅ Done | Moved chart center down to clear top labels |
 | L03 governance visual swap | ✅ Done | Replaced ai-security-layers with security-attack-chain; added tradeoff-radar in analytics |
 | AI security diagram readability | ✅ Done | Moved AI agent/HITL markers below Audit Log text |
 | L02/L03 extra visual anchors | ✅ Done | Added agentic-vs-assistive + MCP architecture + regression matrix diagrams; prompt language callouts |
@@ -135,6 +136,7 @@
 
 | Hash | Message |
 |------|---------|
+| `f2cad57` | fix(ui): separate tradeoff radar title from labels |
 | `6cdb925` | docs(content): vary copilot studio governance visuals |
 | `0b240be` | fix(ui): improve ai security diagram readability |
 | `dcf905f` | docs(ui): add visual anchors for copilot lessons |
