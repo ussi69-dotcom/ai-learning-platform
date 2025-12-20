@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-20 20:47 (Agent: Codex GPT-5.2)
-**Last Commit:** `a63a0a2` docs(content): expand copilot lesson clarifications
-**Status:** 🟡 Added L02/L03 content clarifications after Claude+Gemini review: re-prompt editing + inventory visibility for Workflows Agent, App Builder preview note, Copilot Studio graduation triggers, model choice note, and Agent 365 example. No tests run for content-only changes.
+**Last Updated:** 2025-12-20 21:04 (Agent: Codex GPT-5.2)
+**Last Commit:** `cb51aa9` docs: add camoufox transcript SOP
+**Status:** 🟡 Added always-on Camoufox transcript extraction SOP to MEMORY (save VTT to /tmp, summarize via subagents, avoid transcript spam).
 
 ---
 
@@ -98,6 +98,7 @@
 
 | Task | Status | Notes |
 |------|--------|-------|
+| Camoufox transcript SOP | ✅ Done | Added always-on workflow to MEMORY |
 | L02/L03 content clarifications | ✅ Done | Workflows Agent re-prompt edits + inventory visibility + App Builder preview; Copilot Studio graduation triggers + model choice + Agent 365 example |
 | FeedbackFAB auto-hide all screens + lower position | ✅ Done | `frontend/components/FeedbackFAB.tsx` |
 | Sith last-page “Další strana” button color | ✅ Done | `frontend/app/[locale]/courses/[courseId]/lessons/[lessonId]/page.tsx` |
@@ -129,6 +130,7 @@
 
 | Hash | Message |
 |------|---------|
+| `cb51aa9` | docs: add camoufox transcript SOP |
 | `a63a0a2` | docs(content): expand copilot lesson clarifications |
 | `e6c2a69` | docs: update working context |
 | `94d9007` | fix(ui): polish copilot lesson visuals |
