@@ -2,7 +2,7 @@
 
 **Last Updated:** 2025-12-20 16:07 (Agent: Codex GPT-5.2)
 **Last Commit:** `6a1b58e` docs: document VideoSwitcher parsing + Opus CLI
-**Status:** 🟡 Copilot lessons 02/03 UI polish landed (mobile diagram layouts, full-width MDX images, feedback auto-hide all screens, Sith next-page color). Visual QA done via Gemini + Playwright screenshots; Gemini flagged missing emoji fonts (likely headless), mobile table squeeze, L03 mobile video black. Claude content review says L02/L03 are GOLDEN. `npm run verify` passes (lint warnings only). Subagent orchestration instructions updated in MEMORY.
+**Status:** 🟡 Copilot lessons 02/03 UI polish landed (mobile diagram layouts, full-width MDX images, feedback auto-hide all screens, Sith next-page color). Additional fixes: mobile tables render as cards, inline emoji replaced with Lucide SVGs in MarkdownRenderer, ConceptCard emoji mapping expanded, VideoPlayer shows YouTube thumbnail background. Visual QA blocked on local because frontend points to `https://learnai.cz/api` (prod) and returns lesson not found for local slugs; needs frontend env switch to local API for accurate screenshots. `npm run verify` passes (lint warnings only). Subagent orchestration instructions updated in MEMORY.
 
 ---
 
@@ -104,6 +104,9 @@
 | Mobile diagram HTML fallbacks | ✅ Done | `DiagramArchitecture.tsx`, `DiagramConcepts.tsx` |
 | Table scroll hint + gradient | ✅ Done | `frontend/components/MarkdownRenderer.tsx` |
 | Video fallback timer cleanup | ✅ Done | `frontend/components/VideoPlayer.tsx` |
+| Mobile table cards + inline icon mapping | ✅ Done | `frontend/components/MarkdownRenderer.tsx` |
+| ConceptCard emoji → Lucide mapping | ✅ Done | `frontend/components/mdx/ConceptCard.tsx` |
+| Video thumbnail background | ✅ Done | `frontend/components/VideoPlayer.tsx` |
 | Visual QA artifacts | ✅ Done | `visual_tests/lesson-02/03-*` |
 | Gemini visual QA | ✅ Done | Flags: missing emoji fonts (likely headless), mobile table squeeze, L03 mobile video black |
 | Claude content review | ✅ Done | Verdict: L02/L03 GOLDEN; verify referenced images/diagrams exist |
