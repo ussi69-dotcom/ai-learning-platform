@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-20 21:10 (Agent: Codex GPT-5.2)
-**Last Commit:** `94d9007` fix(ui): polish copilot lesson visuals
-**Status:** 🟡 Copilot lessons 02/03 UI polish expanded: emoji → inline Lucide icons in lesson/course headers + metadata, fixed inline parser to avoid emoji split, human-in-the-loop diagram now full-bleed on mobile with non-emoji labels, added `backend/pytest.ini` to fix pytest imports. Ran `npm run verify` (warnings only) + `pytest` (3 passed, 6 skipped). Playwright screenshots captured for L02/L03 desktop+mobile and L02 Sith last page (paths in session notes). MEMORY updated with new subagent orchestration rules.
+**Last Updated:** 2025-12-20 20:47 (Agent: Codex GPT-5.2)
+**Last Commit:** `a63a0a2` docs(content): expand copilot lesson clarifications
+**Status:** 🟡 Added L02/L03 content clarifications after Claude+Gemini review: re-prompt editing + inventory visibility for Workflows Agent, App Builder preview note, Copilot Studio graduation triggers, model choice note, and Agent 365 example. No tests run for content-only changes.
 
 ---
 
@@ -98,6 +98,7 @@
 
 | Task | Status | Notes |
 |------|--------|-------|
+| L02/L03 content clarifications | ✅ Done | Workflows Agent re-prompt edits + inventory visibility + App Builder preview; Copilot Studio graduation triggers + model choice + Agent 365 example |
 | FeedbackFAB auto-hide all screens + lower position | ✅ Done | `frontend/components/FeedbackFAB.tsx` |
 | Sith last-page “Další strana” button color | ✅ Done | `frontend/app/[locale]/courses/[courseId]/lessons/[lessonId]/page.tsx` |
 | MDX images full-width on mobile | ✅ Done | `frontend/components/MDXImage.tsx` |
@@ -108,8 +109,8 @@
 | ConceptCard emoji → Lucide mapping | ✅ Done | `frontend/components/mdx/ConceptCard.tsx` |
 | Video thumbnail background | ✅ Done | `frontend/components/VideoPlayer.tsx` |
 | Visual QA artifacts | ✅ Done | `visual_tests/lesson-02/03-*` |
-| Gemini visual QA | ✅ Done | Flags: missing emoji fonts (likely headless), mobile table squeeze, L03 mobile video black |
-| Claude content review | ✅ Done | Verdict: L02/L03 GOLDEN; verify referenced images/diagrams exist |
+| Gemini content review | ✅ Done | Suggested: App Builder note, model choice, graduation path, evals/analytics emphasis |
+| Claude content review | ✅ Done | Suggested: re-prompt editing UX, inventory location, model choice, Agent 365 example |
 | Frontend verify | ✅ Done | `npm run verify` (lint warnings only) |
 
 ### Latest Session (Dec 19, 2025 - VideoSwitcher Debugging)
@@ -128,6 +129,9 @@
 
 | Hash | Message |
 |------|---------|
+| `a63a0a2` | docs(content): expand copilot lesson clarifications |
+| `e6c2a69` | docs: update working context |
+| `94d9007` | fix(ui): polish copilot lesson visuals |
 | `6a1b58e` | docs: document VideoSwitcher parsing + Opus CLI |
 | `abf8bd3` | fix(VideoSwitcher): unify registration and parsing |
 | `9d09329` | fix(MarkdownRenderer): memoize parsed content to prevent VideoSwitcher remounts |
