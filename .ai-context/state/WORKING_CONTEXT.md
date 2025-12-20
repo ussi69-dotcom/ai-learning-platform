@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-20 21:04 (Agent: Codex GPT-5.2)
-**Last Commit:** `cb51aa9` docs: add camoufox transcript SOP
-**Status:** 🟡 Added always-on Camoufox transcript extraction SOP to MEMORY (save VTT to /tmp, summarize via subagents, avoid transcript spam).
+**Last Updated:** 2025-12-20 22:23 (Agent: Codex GPT-5.2)
+**Last Commit:** `4c45ef1` docs(content): add copilot updates and videos
+**Status:** 🟡 Added L02/L03 deltas + new VideoSwitcher alternatives (BRK313/Reza/Shane Young), admin inventory note for Workflows Agent, App Builder storage on Lists/SharePoint, MCP server support preview. No tests run (content-only).
 
 ---
 
@@ -98,6 +98,7 @@
 
 | Task | Status | Notes |
 |------|--------|-------|
+| L02/L03 video alternatives + deltas | ✅ Done | Added admin inventory + App Builder storage + MCP preview; added BRK313/Reza/Shane Young videos |
 | Camoufox transcript SOP | ✅ Done | Added always-on workflow to MEMORY |
 | L02/L03 content clarifications | ✅ Done | Workflows Agent re-prompt edits + inventory visibility + App Builder preview; Copilot Studio graduation triggers + model choice + Agent 365 example |
 | FeedbackFAB auto-hide all screens + lower position | ✅ Done | `frontend/components/FeedbackFAB.tsx` |
@@ -130,6 +131,8 @@
 
 | Hash | Message |
 |------|---------|
+| `4c45ef1` | docs(content): add copilot updates and videos |
+| `db1d79f` | docs: update working context |
 | `cb51aa9` | docs: add camoufox transcript SOP |
 | `a63a0a2` | docs(content): expand copilot lesson clarifications |
 | `e6c2a69` | docs: update working context |
