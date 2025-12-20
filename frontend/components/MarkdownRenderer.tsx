@@ -1,25 +1,6 @@
 "use client";
 
 import React, { useMemo } from 'react';
-import {
-  Bot,
-  BookOpen,
-  Brain,
-  Briefcase,
-  CheckCircle,
-  Clock,
-  FlaskConical,
-  Gem,
-  GitMerge,
-  Lightbulb,
-  Rocket,
-  Search,
-  Shield,
-  Sparkles,
-  Target,
-  TrendingUp,
-  Zap
-} from 'lucide-react';
 import MDXImage from './MDXImage';
 import Callout from './mdx/Callout';
 import Steps from './mdx/Steps';
@@ -33,6 +14,7 @@ import KeyTakeaway from './mdx/KeyTakeaway';
 import { YouTube } from './mdx/YouTube';
 import { VideoSwitcher } from './mdx/VideoSwitcher';
 import { parseVideoSwitcherTag } from '@/lib/video-parsing';
+import { renderTextWithIcons } from '@/lib/inline-icons';
 
 interface MarkdownRendererProps {
   content: string;
@@ -41,52 +23,6 @@ interface MarkdownRendererProps {
 }
 
 export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: MarkdownRendererProps) {
-  const INLINE_ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
-    "🤖": Bot,
-    "⏳": Clock,
-    "🧪": FlaskConical,
-    "🧠": Brain,
-    "⚡": Zap,
-    "🔌": Zap,
-    "🔬": FlaskConical,
-    "💡": Lightbulb,
-    "🍳": Sparkles,
-    "🛡️": Shield,
-    "💥": Zap,
-    "📌": Target,
-    "📊": TrendingUp,
-    "🏗️": Briefcase,
-    "🔒": Shield,
-    "📈": TrendingUp,
-    "🚀": Rocket,
-    "🎓": BookOpen,
-    "🔮": Sparkles,
-    "💎": Gem,
-    "🔑": Target,
-    "🎯": Target,
-    "✅": CheckCircle,
-    "🏢": Briefcase,
-    "📚": BookOpen,
-    "🆚": GitMerge
-  };
-  const iconTokens = Object.keys(INLINE_ICON_MAP);
-  const iconRegex = new RegExp(`(${iconTokens.map((token) => token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gu');
-
-  const renderTextWithIcons = (text: string, keyPrefix: string): React.ReactNode[] => {
-    if (!iconTokens.length) return [text];
-    return text.split(iconRegex).map((part, idx) => {
-      const Icon = INLINE_ICON_MAP[part];
-      if (Icon) {
-        return (
-          <span key={`${keyPrefix}-icon-${idx}`} className="inline-flex align-middle text-primary/80">
-            <Icon className="w-4 h-4" />
-          </span>
-        );
-      }
-      return part;
-    });
-  };
-  
   const parseContent = (text: string): React.ReactNode[] => {
     const lines = text.split('\n');
     const elements: React.ReactNode[] = [];
@@ -421,15 +357,27 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
       // 7. Headings
       const trimmedLine = line.trim();
       if (trimmedLine.startsWith('# ')) {
-        elements.push(<h1 key={`h1-${i}`} className="text-4xl font-bold mb-4 text-foreground text-wrap">{trimmedLine.substring(2)}</h1>);
+        elements.push(
+          <h1 key={`h1-${i}`} className="text-4xl font-bold mb-4 text-foreground text-wrap">
+            {parseInlineText(trimmedLine.substring(2))}
+          </h1>
+        );
         i++; continue;
       }
       if (trimmedLine.startsWith('## ')) {
-        elements.push(<h2 key={`h2-${i}`} className="text-3xl font-bold mt-8 mb-4 text-foreground text-wrap">{trimmedLine.substring(3)}</h2>);
+        elements.push(
+          <h2 key={`h2-${i}`} className="text-3xl font-bold mt-8 mb-4 text-foreground text-wrap">
+            {parseInlineText(trimmedLine.substring(3))}
+          </h2>
+        );
         i++; continue;
       }
       if (trimmedLine.startsWith('### ')) {
-        elements.push(<h3 key={`h3-${i}`} className="text-2xl font-semibold mt-6 mb-3 text-foreground text-wrap">{trimmedLine.substring(4)}</h3>);
+        elements.push(
+          <h3 key={`h3-${i}`} className="text-2xl font-semibold mt-6 mb-3 text-foreground text-wrap">
+            {parseInlineText(trimmedLine.substring(4))}
+          </h3>
+        );
         i++; continue;
       }
 
@@ -580,7 +528,7 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
 
   const parseInlineText = (text: string): React.ReactNode => {
     // Note: Very basic parsing. Doesn't handle nested.
-    const parts = text.split(/(\**.*?\**|\*.*?\*|`.*?`)/g);
+    const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g);
     return parts.flatMap((part, k) => {
       if (part.startsWith('**') && part.endsWith('**')) {
         return (
@@ -637,7 +585,11 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
 
       const trimmedLine = line.trim();
       if (trimmedLine.startsWith('### ')) {
-        elements.push(<h3 key={`step-h3-${i}`} className="text-lg font-bold mt-4 mb-2">{trimmedLine.substring(4)}</h3>);
+        elements.push(
+          <h3 key={`step-h3-${i}`} className="text-lg font-bold mt-4 mb-2">
+            {parseInlineText(trimmedLine.substring(4))}
+          </h3>
+        );
       } else if (trimmedLine !== '') {
         elements.push(<p key={`step-p-${i}`} className="mb-2">{parseInlineText(trimmedLine)}</p>);
       }

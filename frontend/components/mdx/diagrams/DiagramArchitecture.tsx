@@ -16,7 +16,7 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   // =====================
   if (type === 'local-llm-architecture') {
     return (
-      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
           <svg viewBox="0 0 800 300" className="w-full h-auto" role="img" aria-label="Local LLM Architecture: User -> UI -> Inference Engine -> Hardware">
             <defs>
@@ -809,37 +809,37 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   // =====================
   if (type === 'sub-agent-architecture') {
     return (
-      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
-          <div className="md:hidden space-y-4">
+          <div className="md:hidden space-y-5">
             <div className="text-center">
-              <div className="text-base font-bold text-slate-200">🕸️ {isCs ? 'Sub-Agent Architektura' : 'Sub-Agent Architecture'}</div>
-              <div className="text-xs text-slate-400">{isCs ? 'Každý agent má vlastní context window' : 'Each agent gets its own context window'}</div>
+              <div className="text-lg font-bold text-slate-200">🕸️ {isCs ? 'Sub-Agent Architektura' : 'Sub-Agent Architecture'}</div>
+              <div className="text-sm text-slate-400">{isCs ? 'Každý agent má vlastní context window' : 'Each agent gets its own context window'}</div>
             </div>
-            <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 p-3 text-center">
-              <div className="text-base font-semibold text-purple-300">Main Agent</div>
-              <div className="text-sm text-slate-400">{isCs ? '(Mluvíš s ním) • Orchestruje ostatní' : '(You talk to this) • Orchestrates others'}</div>
+            <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 p-4 text-center">
+              <div className="text-lg font-semibold text-purple-300">Main Agent</div>
+              <div className="text-base text-slate-400">{isCs ? '(Mluvíš s ním) • Orchestruje ostatní' : '(You talk to this) • Orchestrates others'}</div>
             </div>
-            <div className="grid gap-2 text-base">
-              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-3 py-2">
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3">
                 <span className="mr-2">🔍</span>
                 <span className="font-semibold text-blue-300">Explore Agent</span>
-                <span className="text-sm text-slate-400"> — {isCs ? 'Prohledává codebase' : 'Searches codebase'}</span>
+                <span className="text-base text-slate-400"> — {isCs ? 'Prohledává codebase' : 'Searches codebase'}</span>
               </div>
-              <div className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2">
+              <div className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3">
                 <span className="mr-2">📐</span>
                 <span className="font-semibold text-amber-300">Plan Agent</span>
-                <span className="text-sm text-slate-400"> — {isCs ? 'Navrhuje architekturu' : 'Designs architecture'}</span>
+                <span className="text-base text-slate-400"> — {isCs ? 'Navrhuje architekturu' : 'Designs architecture'}</span>
               </div>
-              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-3 py-2">
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3">
                 <span className="mr-2">🔬</span>
                 <span className="font-semibold text-green-300">Review Agent</span>
-                <span className="text-sm text-slate-400"> — {isCs ? 'Kontroluje kvalitu' : 'Checks quality'}</span>
+                <span className="text-base text-slate-400"> — {isCs ? 'Kontroluje kvalitu' : 'Checks quality'}</span>
               </div>
-              <div className="rounded-xl border border-red-500/40 bg-red-500/10 px-3 py-2">
+              <div className="rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3">
                 <span className="mr-2">✅</span>
                 <span className="font-semibold text-red-300">Test Agent</span>
-                <span className="text-sm text-slate-400"> — {isCs ? 'Spouští testy' : 'Runs tests'}</span>
+                <span className="text-base text-slate-400"> — {isCs ? 'Spouští testy' : 'Runs tests'}</span>
               </div>
             </div>
           </div>
@@ -1677,21 +1677,21 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   // =====================
   if (type === 'paradigm-shift-pyramid') {
     return (
-      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
-          <div className="md:hidden space-y-3">
-            <div className="text-center text-base font-bold text-slate-200">🎬 {isCs ? "Evoluce vývojáře" : "Developer Evolution"}</div>
-            <div className="grid gap-2 text-sm">
-              <div className="rounded-lg bg-slate-600/30 border border-slate-500/40 px-3 py-2 text-slate-100">
+          <div className="md:hidden space-y-4">
+            <div className="text-center text-lg font-bold text-slate-200">🎬 {isCs ? "Evoluce vývojáře" : "Developer Evolution"}</div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-lg bg-slate-600/30 border border-slate-500/40 px-4 py-3 text-slate-100">
                 {isCs ? "📝 Písař kódu (Pre-2020)" : "📝 Code Writer (Pre-2020)"}
               </div>
-              <div className="rounded-lg bg-blue-600/30 border border-blue-500/40 px-3 py-2 text-blue-100">
+              <div className="rounded-lg bg-blue-600/30 border border-blue-500/40 px-4 py-3 text-blue-100">
                 {isCs ? "🤖 AI uživatel (2021–23)" : "🤖 AI User (2021–23)"}
               </div>
-              <div className="rounded-lg bg-purple-600/30 border border-purple-500/40 px-3 py-2 text-purple-100">
+              <div className="rounded-lg bg-purple-600/30 border border-purple-500/40 px-4 py-3 text-purple-100">
                 {isCs ? "💬 Prompt inženýr (2024)" : "💬 Prompt Engineer (2024)"}
               </div>
-              <div className="rounded-lg bg-green-600/30 border border-green-500/40 px-3 py-2 text-green-100">
+              <div className="rounded-lg bg-green-600/30 border border-green-500/40 px-4 py-3 text-green-100">
                 {isCs ? "🧑‍💼 Režisér agentů (2025+)" : "🧑‍💼 Agent Director (2025+)"}
               </div>
             </div>
@@ -1948,25 +1948,25 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   // =====================
   if (type === 'context-hierarchy') {
     return (
-      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
-          <div className="md:hidden space-y-3">
-            <div className="text-center text-base font-bold text-slate-200">🧠 {isCs ? "Hierarchie kontextu" : "Context Hierarchy"}</div>
-            <div className="grid gap-2 text-sm">
-              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-3 py-2">
+          <div className="md:hidden space-y-4">
+            <div className="text-center text-lg font-bold text-slate-200">🧠 {isCs ? "Hierarchie kontextu" : "Context Hierarchy"}</div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3">
                 <div className="font-semibold text-green-300">{isCs ? "📜 Projektová ústava" : "📜 Project Constitution"}</div>
-                <div className="text-xs text-slate-400">CLAUDE.md, .cursorrules, .windsurfrules</div>
-                <div className="text-xs text-green-200 mt-1">{isCs ? "TRVALÝ" : "PERMANENT"}</div>
+                <div className="text-sm text-slate-400">CLAUDE.md, .cursorrules, .windsurfrules</div>
+                <div className="text-sm text-green-200 mt-1">{isCs ? "TRVALÝ" : "PERMANENT"}</div>
               </div>
-              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-3 py-2">
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3">
                 <div className="font-semibold text-blue-300">{isCs ? "📋 Kontext úlohy" : "📋 Task Context"}</div>
-                <div className="text-xs text-slate-400">{isCs ? "Inline komentáře, popisy, TODO" : "Inline comments, descriptions, TODO"}</div>
-                <div className="text-xs text-blue-200 mt-1">{isCs ? "DOČASNÝ" : "TEMPORARY"}</div>
+                <div className="text-sm text-slate-400">{isCs ? "Inline komentáře, popisy, TODO" : "Inline comments, descriptions, TODO"}</div>
+                <div className="text-sm text-blue-200 mt-1">{isCs ? "DOČASNÝ" : "TEMPORARY"}</div>
               </div>
-              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-3 py-2">
+              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-4 py-3">
                 <div className="font-semibold text-purple-300">{isCs ? "⚡ Dynamický kontext" : "⚡ Dynamic Context"}</div>
-                <div className="text-xs text-slate-400">{isCs ? "MCP resources, čtení souborů, API" : "MCP resources, file reads, API calls"}</div>
-                <div className="text-xs text-purple-200 mt-1">{isCs ? "EFEMÉRNÍ" : "EPHEMERAL"}</div>
+                <div className="text-sm text-slate-400">{isCs ? "MCP resources, čtení souborů, API" : "MCP resources, file reads, API calls"}</div>
+                <div className="text-sm text-purple-200 mt-1">{isCs ? "EFEMÉRNÍ" : "EPHEMERAL"}</div>
               </div>
             </div>
           </div>
@@ -2128,25 +2128,25 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   // =====================
   if (type === 'ai-security-layers') {
     return (
-      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
-          <div className="md:hidden space-y-4">
-            <div className="text-center text-base font-bold text-slate-200">🔒 {isCs ? "Vrstvy zabezpečení AI" : "AI Security Layers"}</div>
-            <div className="text-center text-xs text-slate-400">Defense-in-Depth</div>
-            <div className="grid gap-2 text-sm">
-              <div className="rounded-xl border border-red-400/40 bg-red-500/10 px-3 py-2 text-red-200">
+          <div className="md:hidden space-y-5">
+            <div className="text-center text-lg font-bold text-slate-200">🔒 {isCs ? "Vrstvy zabezpečení AI" : "AI Security Layers"}</div>
+            <div className="text-center text-sm text-slate-400">Defense-in-Depth</div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-red-200">
                 🐳 {isCs ? "Sandbox (Docker kontejner)" : "Sandbox (Docker Container)"}
               </div>
-              <div className="rounded-xl border border-amber-400/40 bg-amber-500/10 px-3 py-2 text-amber-200">
+              <div className="rounded-xl border border-amber-400/40 bg-amber-500/10 px-4 py-3 text-amber-200">
                 🔑 {isCs ? "OAuth 2.0 / Autentizace" : "OAuth 2.0 / Authentication"}
               </div>
-              <div className="rounded-xl border border-green-400/40 bg-green-500/10 px-3 py-2 text-green-200">
+              <div className="rounded-xl border border-green-400/40 bg-green-500/10 px-4 py-3 text-green-200">
                 🛡️ {isCs ? "Nejmenší oprávnění (RBAC)" : "Least Privilege (RBAC)"}
               </div>
-              <div className="rounded-xl border border-blue-400/40 bg-blue-500/10 px-3 py-2 text-blue-200">
+              <div className="rounded-xl border border-blue-400/40 bg-blue-500/10 px-4 py-3 text-blue-200">
                 📋 {isCs ? "Audit Log" : "Audit Logging"}
               </div>
-              <div className="rounded-xl border border-purple-400/40 bg-purple-500/10 px-3 py-2 text-purple-200 text-center">
+              <div className="rounded-xl border border-purple-400/40 bg-purple-500/10 px-4 py-3 text-purple-200 text-center">
                 🤖 {isCs ? "AI Agent + HITL" : "AI Agent + HITL"}
               </div>
             </div>
@@ -2599,24 +2599,24 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   // =====================
   if (type === 'copilot-studio-architecture') {
     return (
-      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
-          <div className="md:hidden space-y-4">
-            <div className="text-center text-base font-bold text-slate-200">
+          <div className="md:hidden space-y-5">
+            <div className="text-center text-lg font-bold text-slate-200">
               {isCs ? 'Architektura Enterprise Agenta' : 'Enterprise Agent Architecture'}
             </div>
-            <div className="grid gap-3 text-sm">
-              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-3 py-2">
+            <div className="grid gap-4 text-base">
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3">
                 <div className="font-semibold text-blue-300">🧠 Instructions</div>
-                <div className="text-xs text-slate-400">{isCs ? 'Systémový prompt • Tón • Omezení' : 'System Prompt • Tone • Constraints'}</div>
+                <div className="text-sm text-slate-400">{isCs ? 'Systémový prompt • Tón • Omezení' : 'System Prompt • Tone • Constraints'}</div>
               </div>
-              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-3 py-2">
+              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-4 py-3">
                 <div className="font-semibold text-purple-300">📚 Knowledge</div>
-                <div className="text-xs text-slate-400">SharePoint • OneDrive/Dataverse • {isCs ? 'Veřejné weby' : 'Public Websites'}</div>
+                <div className="text-sm text-slate-400">SharePoint • OneDrive/Dataverse • {isCs ? 'Veřejné weby' : 'Public Websites'}</div>
               </div>
-              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-3 py-2">
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3">
                 <div className="font-semibold text-green-300">⚡ Actions</div>
-                <div className="text-xs text-slate-400">Power Automate • API Connectors • Dataverse</div>
+                <div className="text-sm text-slate-400">Power Automate • API Connectors • Dataverse</div>
               </div>
             </div>
           </div>
@@ -2697,33 +2697,33 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   // =====================
   if (type === 'workflows-agent-trinity') {
     return (
-      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
-          <div className="md:hidden space-y-4">
+          <div className="md:hidden space-y-5">
             <div className="text-center">
-              <div className="text-base font-bold text-slate-200">🧩 {isCs ? 'Workflows Agent Trinity' : 'Workflows Agent Trinity'}</div>
-              <div className="text-xs text-slate-400">{isCs ? 'Trigger → Akce + LLM → Odpověď' : 'Trigger → Action + LLM → Response'}</div>
+              <div className="text-lg font-bold text-slate-200">🧩 {isCs ? 'Workflows Agent Trinity' : 'Workflows Agent Trinity'}</div>
+              <div className="text-sm text-slate-400">{isCs ? 'Trigger → Akce + LLM → Odpověď' : 'Trigger → Action + LLM → Response'}</div>
             </div>
-            <div className="grid gap-3">
-              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 p-3">
-                <div className="flex items-center gap-2 text-sm font-semibold text-blue-300">
-                  <span className="text-lg">👂</span> Trigger <span className="text-xs text-blue-200/80">{isCs ? '(Ucho)' : '(The Ear)'}</span>
+            <div className="grid gap-4">
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 p-4">
+                <div className="flex items-center gap-2 text-base font-semibold text-blue-300">
+                  <span className="text-xl">👂</span> Trigger <span className="text-sm text-blue-200/80">{isCs ? '(Ucho)' : '(The Ear)'}</span>
                 </div>
-                <div className="text-xs text-slate-400 mt-1">{isCs ? 'Email, Soubor, Čas' : 'Email, File, Time'}</div>
+                <div className="text-sm text-slate-400 mt-1">{isCs ? 'Email, Soubor, Čas' : 'Email, File, Time'}</div>
               </div>
               <div className="text-center text-xs text-slate-500">↓</div>
-              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 p-3">
-                <div className="flex items-center gap-2 text-sm font-semibold text-purple-300">
-                  <span className="text-lg">🤖</span> Action + LLM <span className="text-xs text-purple-200/80">{isCs ? '(Mozek + Ruce)' : '(Brain + Hands)'}</span>
+              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 p-4">
+                <div className="flex items-center gap-2 text-base font-semibold text-purple-300">
+                  <span className="text-xl">🤖</span> Action + LLM <span className="text-sm text-purple-200/80">{isCs ? '(Mozek + Ruce)' : '(Brain + Hands)'}</span>
                 </div>
-                <div className="text-xs text-slate-400 mt-1">{isCs ? 'Analyzuj, Hledej, Ulož' : 'Analyze, Search, Save'}</div>
+                <div className="text-sm text-slate-400 mt-1">{isCs ? 'Analyzuj, Hledej, Ulož' : 'Analyze, Search, Save'}</div>
               </div>
               <div className="text-center text-xs text-slate-500">↓</div>
-              <div className="rounded-xl border border-green-500/40 bg-green-500/10 p-3">
-                <div className="flex items-center gap-2 text-sm font-semibold text-green-300">
-                  <span className="text-lg">📣</span> Response <span className="text-xs text-green-200/80">{isCs ? '(Hlas)' : '(The Voice)'}</span>
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 p-4">
+                <div className="flex items-center gap-2 text-base font-semibold text-green-300">
+                  <span className="text-xl">📣</span> Response <span className="text-sm text-green-200/80">{isCs ? '(Hlas)' : '(The Voice)'}</span>
                 </div>
-                <div className="text-xs text-slate-400 mt-1">{isCs ? 'Teams, Email, Log' : 'Teams, Email, Log'}</div>
+                <div className="text-sm text-slate-400 mt-1">{isCs ? 'Teams, Email, Log' : 'Teams, Email, Log'}</div>
               </div>
             </div>
           </div>
@@ -2777,30 +2777,30 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   // =====================
   if (type === 'automation-evolution') {
     return (
-      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
-          <div className="md:hidden space-y-4">
-            <div className="text-center text-base font-bold text-slate-200">{isCs ? 'Evoluce automatizace' : 'Evolution of Automation'}</div>
-            <div className="grid gap-3">
-              <div className="rounded-xl border border-slate-500/40 bg-slate-500/10 p-3">
-                <div className="flex items-center gap-2 text-sm font-semibold text-slate-200">
-                  <span className="text-lg">💻</span> {isCs ? '1. Generace — Scripting' : '1st Gen — Scripting'}
+          <div className="md:hidden space-y-5">
+            <div className="text-center text-lg font-bold text-slate-200">{isCs ? 'Evoluce automatizace' : 'Evolution of Automation'}</div>
+            <div className="grid gap-4">
+              <div className="rounded-xl border border-slate-500/40 bg-slate-500/10 p-4">
+                <div className="flex items-center gap-2 text-base font-semibold text-slate-200">
+                  <span className="text-xl">💻</span> {isCs ? '1. Generace — Scripting' : '1st Gen — Scripting'}
                 </div>
-                <div className="text-xs text-slate-400 mt-1">{isCs ? 'Role: Vývojář' : 'Role: Developer'}</div>
+                <div className="text-sm text-slate-400 mt-1">{isCs ? 'Role: Vývojář' : 'Role: Developer'}</div>
               </div>
               <div className="text-center text-xs text-slate-500">↓</div>
-              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 p-3">
-                <div className="flex items-center gap-2 text-sm font-semibold text-blue-300">
-                  <span className="text-lg">🔲</span> {isCs ? '2. Generace — Low-Code' : '2nd Gen — Low-Code'}
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 p-4">
+                <div className="flex items-center gap-2 text-base font-semibold text-blue-300">
+                  <span className="text-xl">🔲</span> {isCs ? '2. Generace — Low-Code' : '2nd Gen — Low-Code'}
                 </div>
-                <div className="text-xs text-slate-400 mt-1">{isCs ? 'Role: Analytik' : 'Role: Analyst'}</div>
+                <div className="text-sm text-slate-400 mt-1">{isCs ? 'Role: Analytik' : 'Role: Analyst'}</div>
               </div>
               <div className="text-center text-xs text-slate-500">↓</div>
-              <div className="rounded-xl border border-green-500/40 bg-green-500/10 p-3">
-                <div className="flex items-center gap-2 text-sm font-semibold text-green-300">
-                  <span className="text-lg">🤖</span> {isCs ? '3. Generace — Agentic' : '3rd Gen — Agentic'}
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 p-4">
+                <div className="flex items-center gap-2 text-base font-semibold text-green-300">
+                  <span className="text-xl">🤖</span> {isCs ? '3. Generace — Agentic' : '3rd Gen — Agentic'}
                 </div>
-                <div className="text-xs text-slate-400 mt-1">{isCs ? 'Role: Orchestrátor' : 'Role: Orchestrator'}
+                <div className="text-sm text-slate-400 mt-1">{isCs ? 'Role: Orchestrátor' : 'Role: Orchestrator'}
                 </div>
               </div>
             </div>

@@ -9,6 +9,7 @@ import { useAuth } from "@/context/AuthContext";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { extractAlternativeVideos } from "@/lib/video-parsing";
+import { renderTextWithIcons } from "@/lib/inline-icons";
 import Quiz, { QuizQuestion } from "@/components/Quiz";
 import LessonComplete from "@/components/LessonComplete";
 import ProgressDots from "@/components/mdx/ProgressDots";
@@ -465,10 +466,10 @@ export default function LessonPage({
               )}
             </div>
             <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent tracking-tight drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)] pb-1">
-              {lesson.title}
+              {renderTextWithIcons(lesson.title, "lesson-title")}
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
-              {lesson.description}
+              {renderTextWithIcons(lesson.description, "lesson-desc")}
             </p>
           </div>
 
@@ -582,7 +583,7 @@ export default function LessonPage({
                 disabled={currentPage === calculatedTotalPages - 1}
                 className={`w-full md:w-auto min-w-[120px] h-full text-base font-bold shadow-md ${
                   currentPage === calculatedTotalPages - 1
-                    ? "bg-gradient-to-br from-violet-700 via-indigo-500 via-violet-400 to-violet-800 hover:opacity-90 text-white border-none dark:from-red-700 dark:via-red-500 dark:via-red-400 dark:to-red-800"
+                    ? "bg-gradient-to-br from-primary via-primary/80 to-primary/90 hover:opacity-90 text-primary-foreground border-none"
                     : ""
                 }`}
               >

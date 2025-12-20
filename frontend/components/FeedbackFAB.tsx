@@ -40,7 +40,6 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
 
     // Listen to activity events
     window.addEventListener("scroll", showAndResetTimer, { passive: true });
-    window.addEventListener("mousemove", showAndResetTimer);
     window.addEventListener("click", showAndResetTimer);
     window.addEventListener("keydown", showAndResetTimer);
     window.addEventListener("touchstart", showAndResetTimer, { passive: true });
@@ -50,7 +49,6 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
         clearTimeout(hideTimeoutRef.current);
       }
       window.removeEventListener("scroll", showAndResetTimer);
-      window.removeEventListener("mousemove", showAndResetTimer);
       window.removeEventListener("click", showAndResetTimer);
       window.removeEventListener("keydown", showAndResetTimer);
       window.removeEventListener("touchstart", showAndResetTimer);
@@ -154,7 +152,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
 
   return (
     <div className={cn(
-      "fixed bottom-4 md:bottom-6 right-4 md:right-6 z-40 flex flex-col items-end space-y-2 group/fab pointer-events-none transition-opacity duration-300",
+      "fixed bottom-2 md:bottom-4 right-4 md:right-5 z-40 flex flex-col items-end space-y-2 group/fab pointer-events-none transition-opacity duration-300",
       isVisible ? "opacity-100" : "opacity-0"
     )}>
       {/* Instructions - placing and viewing always visible, idle only on hover */}

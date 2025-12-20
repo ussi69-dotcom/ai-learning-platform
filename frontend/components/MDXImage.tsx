@@ -24,7 +24,7 @@ export default function MDXImage({ src, alt, caption, courseSlug, lessonSlug }: 
   const displayCaption = caption || alt;
 
   return (
-    <div className="my-8 group -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+    <div className="my-8 group w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
       <div className="p-0 md:p-2 rounded-none md:rounded-2xl bg-white/30 dark:bg-white/5 backdrop-blur-xl border border-white/20 shadow-xl transition-all hover:scale-[1.01] hover:shadow-2xl">
         <img
           src={finalSrc}

@@ -12,7 +12,8 @@ import FeedbackFAB from "@/components/FeedbackFAB";
 import FeedbackSubmissionModal from "@/components/FeedbackSubmissionModal";
 import FeedbackDetailModal from "@/components/FeedbackDetailModal";
 import FeedbackMarker from "@/components/FeedbackMarker";
-import { Rocket } from "lucide-react";
+import { renderTextWithIcons } from "@/lib/inline-icons";
+import { Clock, FlaskConical, Rocket } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 type FeedbackMode = "idle" | "placing" | "viewing";
@@ -278,18 +279,20 @@ export default function CoursePage({
                   </div>
                   <div className="flex-grow min-w-0 pr-4">
                     <h3 className="text-lg font-semibold group-hover:text-violet-600 dark:group-hover:text-red-500 transition-colors text-slate-900 dark:text-white">
-                      {lesson.title}
+                      {renderTextWithIcons(lesson.title, `lesson-title-${lesson.id}`)}
                     </h3>
                     <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-                      {lesson.description}
+                      {renderTextWithIcons(lesson.description, `lesson-desc-${lesson.id}`)}
                     </p>
                     {/* Metadata Row */}
                     <div className="flex items-center gap-4 mt-3 text-xs font-medium text-slate-500 dark:text-slate-500">
                       <span className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md">
-                        <span>⏳</span> {lesson.duration || "15 min"}
+                        <Clock className="w-3 h-3" aria-hidden="true" />
+                        <span>{lesson.duration || "15 min"}</span>
                       </span>
                       <span className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md">
-                        <span>🧪</span> {lesson.lab_count || 0} Labs
+                        <FlaskConical className="w-3 h-3" aria-hidden="true" />
+                        <span>{lesson.lab_count || 0} Labs</span>
                       </span>
                     </div>
                   </div>

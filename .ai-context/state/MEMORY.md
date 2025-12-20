@@ -75,6 +75,8 @@ ESKALUJ na GPT-5.2 když:
 - **Have subagents write output to temp files** (or quiet stdout) and **do not surface directly to user**.
 - **You must review/verify** their output before applying changes or reporting.
 - **Parallelize** independent subagent tasks when practical.
+- **Assign explicit skills/roles per task** (visual QA, research, code review) and keep agents scoped.
+- **Escalate to Codex extra-high** for complex decisions or when stuck; keep the orchestrator role separate from implementer.
 - **Gemini = CLI for analysis/review**; **Playwright = MCP** to generate screenshots used by Gemini.
 
 ### Orchestration Policy (Always On)

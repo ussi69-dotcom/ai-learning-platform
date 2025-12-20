@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Bot, CheckCircle, Eye } from "lucide-react";
 import { useLocale } from "next-intl";
 
 interface DiagramProps {
@@ -2342,21 +2343,24 @@ export default function DiagramConcepts({ type }: DiagramProps) {
 
   if (type === "human-in-the-loop") {
     return (
-      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
           <div className="md:hidden space-y-3">
             <div className="text-center text-base font-bold text-slate-200">Human-in-the-Loop</div>
             <div className="grid gap-2 text-sm">
-              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-3 py-2">
-                <span className="mr-2">🤖</span> 1. AI Draft — <span className="text-xs text-slate-400">“80% Done”</span>
+              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-3 py-2 flex items-center gap-2">
+                <Bot className="w-4 h-4 text-purple-300" aria-hidden="true" />
+                <span>1. AI Draft — <span className="text-xs text-slate-400">“80% Done”</span></span>
               </div>
               <div className="text-center text-xs text-slate-500">↓</div>
-              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-3 py-2">
-                <span className="mr-2">👀</span> 2. Human Review — <span className="text-xs text-slate-400">“Spot errors”</span>
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-3 py-2 flex items-center gap-2">
+                <Eye className="w-4 h-4 text-blue-300" aria-hidden="true" />
+                <span>2. Human Review — <span className="text-xs text-slate-400">“Spot errors”</span></span>
               </div>
               <div className="text-center text-xs text-slate-500">↓</div>
-              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-3 py-2">
-                <span className="mr-2">✅</span> 3. Refine & Ship — <span className="text-xs text-slate-400">“Safe output”</span>
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-3 py-2 flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-300" aria-hidden="true" />
+                <span>3. Refine & Ship — <span className="text-xs text-slate-400">“Safe output”</span></span>
               </div>
             </div>
           </div>
@@ -2391,8 +2395,13 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                 fillOpacity="0.1"
                 stroke="#a855f7"
               />
-              <text x="60" y="30" textAnchor="middle" className="text-2xl">
-                🤖
+              <text
+                x="60"
+                y="30"
+                textAnchor="middle"
+                className="text-lg font-bold fill-slate-900 dark:fill-slate-100"
+              >
+                AI
               </text>
               <text
                 x="60"
@@ -2432,8 +2441,13 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                 fillOpacity="0.1"
                 stroke="#3b82f6"
               />
-              <text x="60" y="30" textAnchor="middle" className="text-2xl">
-                👩‍💻
+              <text
+                x="60"
+                y="30"
+                textAnchor="middle"
+                className="text-lg font-bold fill-slate-900 dark:fill-slate-100"
+              >
+                REV
               </text>
               <text
                 x="60"
@@ -2473,8 +2487,13 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                 fillOpacity="0.1"
                 stroke="#22c55e"
               />
-              <text x="60" y="30" textAnchor="middle" className="text-2xl">
-                ✨
+              <text
+                x="60"
+                y="30"
+                textAnchor="middle"
+                className="text-lg font-bold fill-slate-900 dark:fill-slate-100"
+              >
+                GO
               </text>
               <text
                 x="60"

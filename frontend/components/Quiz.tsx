@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { BookOpen, Brain, CheckCircle, Sparkles } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useParams } from "next/navigation";
 import axios from "axios";
@@ -126,6 +127,12 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
   const percentage = storedScore !== null ? storedScore : (submitted ? Math.round((calculateScore() / quizzes.length) * 100) : 0);
   // Reverse engineer correct count from percentage if restored
   const correctCount = storedScore !== null ? Math.round((storedScore / 100) * quizzes.length) : (submitted ? calculateScore() : 0);
+  const scoreFeedback = percentage >= 80
+    ? { Icon: Sparkles, text: "Excellent work!" }
+    : percentage >= 60
+    ? { Icon: CheckCircle, text: "Good job!" }
+    : { Icon: BookOpen, text: "Keep practicing!" };
+  const ScoreIcon = scoreFeedback.Icon;
 
   return (
     <div className="mt-16 border-t border-border pt-12 relative">
@@ -139,7 +146,10 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
       )}
       
       <div className="mb-8">
-        <h2 className="text-3xl font-bold mb-2 text-foreground">Test Your Knowledge 🧠</h2>
+        <h2 className="text-3xl font-bold mb-2 text-foreground flex items-center gap-2">
+          <Brain className="w-7 h-7 text-primary" aria-hidden="true" />
+          <span>Test Your Knowledge</span>
+        </h2>
         <p className="text-muted-foreground">
           Answer all {quizzes.length} questions to see how well you understood this lesson!
         </p>
@@ -150,10 +160,9 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
             <h3 className="text-2xl font-bold mb-2 text-primary">
               Your Score: {correctCount}/{quizzes.length} ({percentage}%)
             </h3>
-            <p className="text-lg mb-4 text-foreground">
-              {percentage >= 80 ? "🎉 Excellent work!" :
-               percentage >= 60 ? "✅ Good job!" :
-               "📚 Keep practicing!"}
+            <p className="text-lg mb-4 text-foreground flex items-center justify-center gap-2">
+              <ScoreIcon className="w-5 h-5 text-primary" aria-hidden="true" />
+              <span>{scoreFeedback.text}</span>
             </p>
             {/* Only show 'Try Again' if score is low */}
             {percentage < 70 && (

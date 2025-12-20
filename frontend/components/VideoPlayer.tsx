@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { Film, Flag, Lightbulb, MapPin, Pin, Star, User } from "lucide-react";
 import { useLocale } from "next-intl";
 import { VideoRegistryContext, Video } from "./mdx/VideoSwitcher";
 
@@ -34,6 +35,7 @@ export const VideoPlayer = ({
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
   const fallbackTimerRef = useRef<number | null>(null);
+  const loadedVideoIdsRef = useRef<Set<string>>(new Set());
   const initializedRef = useRef(false);
 
   // Initialize with fallback video and any initial videos
@@ -104,6 +106,16 @@ export const VideoPlayer = ({
     if (!activeVideo?.id) {
       setIsVideoLoaded(false);
       setShowFallback(false);
+      return undefined;
+    }
+
+    if (loadedVideoIdsRef.current.has(activeVideo.id)) {
+      setIsVideoLoaded(true);
+      setShowFallback(false);
+      if (fallbackTimerRef.current) {
+        window.clearTimeout(fallbackTimerRef.current);
+        fallbackTimerRef.current = null;
+      }
       return undefined;
     }
 
@@ -194,6 +206,7 @@ export const VideoPlayer = ({
             onLoad={() => {
               setIsVideoLoaded(true);
               setShowFallback(false);
+              loadedVideoIdsRef.current.add(activeVideo.id);
               if (fallbackTimerRef.current) {
                 window.clearTimeout(fallbackTimerRef.current);
                 fallbackTimerRef.current = null;
@@ -208,20 +221,22 @@ export const VideoPlayer = ({
             {/* Language Badge */}
             {activeVideo.lang && (
               <span
-                className={`shrink-0 px-2 py-0.5 rounded text-xs font-bold ${
+                className={`shrink-0 px-2 py-0.5 rounded text-xs font-bold flex items-center gap-1 ${
                   activeVideo.lang === "cs"
                     ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
                     : "bg-red-500/20 text-red-400 border border-red-500/30"
                 }`}
               >
-                {activeVideo.lang === "cs" ? "🇨🇿 CZ" : "🇬🇧 EN"}
+                <Flag className="w-3 h-3" aria-hidden="true" />
+                <span>{activeVideo.lang === "cs" ? "CZ" : "EN"}</span>
               </span>
             )}
 
             {/* Main Badge */}
             {activeVideo.isMain && (
-              <span className="shrink-0 px-2 py-0.5 rounded text-xs font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
-                ⭐ MAIN
+              <span className="shrink-0 px-2 py-0.5 rounded text-xs font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 flex items-center gap-1">
+                <Star className="w-3 h-3" aria-hidden="true" />
+                <span>MAIN</span>
               </span>
             )}
 
@@ -230,8 +245,9 @@ export const VideoPlayer = ({
                 {activeVideo.title}
               </div>
               {activeVideo.author && (
-                <div className="text-xs text-muted-foreground">
-                  👤 {activeVideo.author}
+                <div className="text-xs text-muted-foreground flex items-center gap-1">
+                  <User className="w-3 h-3" aria-hidden="true" />
+                  <span>{activeVideo.author}</span>
                 </div>
               )}
             </div>
@@ -250,7 +266,11 @@ export const VideoPlayer = ({
               }
             `}
           >
-            <span>{isPinned ? "📌" : "📍"}</span>
+            {isPinned ? (
+              <Pin className="w-4 h-4" aria-hidden="true" />
+            ) : (
+              <MapPin className="w-4 h-4" aria-hidden="true" />
+            )}
             <span className="hidden sm:inline">
               {isPinned ? "Odepnout" : "Připnout"}
             </span>
@@ -265,7 +285,7 @@ export const VideoPlayer = ({
               className="w-full flex items-center justify-between px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-200"
             >
               <div className="flex items-center gap-2">
-                <span>🎬</span>
+                <Film className="w-4 h-4 text-primary" aria-hidden="true" />
                 <span className="text-sm font-medium">
                   {locale === "cs"
                     ? "Další doporučená videa"
@@ -342,8 +362,9 @@ function VideoCard({
         </div>
 
         {/* Language flag */}
-        <div className="absolute bottom-1 right-1 bg-black/80 text-white text-xs px-1 rounded">
-          {video.lang === "cs" ? "🇨🇿" : "🇬🇧"}
+        <div className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] px-1.5 py-0.5 rounded flex items-center gap-1">
+          <Flag className="w-3 h-3" aria-hidden="true" />
+          <span>{video.lang === "cs" ? "CZ" : "EN"}</span>
         </div>
       </div>
 
@@ -353,24 +374,30 @@ function VideoCard({
         <div className="flex items-center gap-2 mb-1.5">
           {/* Language Badge */}
           <span
-            className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+            className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 ${
               video.lang === "cs"
                 ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
                 : "bg-red-500/20 text-red-400 border border-red-500/30"
             }`}
           >
-            {video.lang === "cs" ? "Čeština" : "English"}
+            <Flag className="w-3 h-3" aria-hidden="true" />
+            <span>{video.lang === "cs" ? "Čeština" : "English"}</span>
           </span>
 
           {/* Main/Recommended Badge */}
           <span
-            className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+            className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 ${
               video.isMain
                 ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
                 : "bg-violet-500/20 text-violet-400 border border-violet-500/30"
             }`}
           >
-            {video.isMain ? "⭐ Main" : "💡 Doporučeno"}
+            {video.isMain ? (
+              <Star className="w-3 h-3" aria-hidden="true" />
+            ) : (
+              <Lightbulb className="w-3 h-3" aria-hidden="true" />
+            )}
+            <span>{video.isMain ? "Main" : "Doporučeno"}</span>
           </span>
         </div>
 
@@ -382,7 +409,7 @@ function VideoCard({
         {/* Author */}
         {video.author && (
           <div className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
-            <span>👤</span>
+            <User className="w-3 h-3" aria-hidden="true" />
             <span>{video.author}</span>
           </div>
         )}
