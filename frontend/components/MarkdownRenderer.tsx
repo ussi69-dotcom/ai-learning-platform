@@ -436,7 +436,11 @@ export default function MarkdownRenderer({ content, courseSlug, lessonSlug }: Ma
             const headers = tableLines[0].split('|').filter(c => c.trim()).map(c => c.trim());
             const rows = tableLines.slice(2).map(l => l.split('|').filter(c => c.trim()).map(c => c.trim()));
             elements.push(
-              <div key={`table-${i}`} className="overflow-x-auto mb-6">
+              <div key={`table-${i}`} className="relative overflow-x-auto mb-6">
+                <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-background/90 to-transparent md:hidden" />
+                <div className="pointer-events-none absolute right-2 top-2 rounded-full bg-background/80 px-2 py-0.5 text-[10px] font-semibold text-muted-foreground backdrop-blur-sm md:hidden">
+                  Scroll {"->"}
+                </div>
                 <table className="min-w-full border-collapse border border-slate-200 dark:border-slate-700">
                   <thead>
                     <tr className="bg-muted/50">

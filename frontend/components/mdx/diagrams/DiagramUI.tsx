@@ -14,7 +14,7 @@ export default function DiagramUI({ type }: DiagramProps) {
   if (type === 'meeting-timeline') {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
           <svg viewBox="0 0 700 200" className="w-full h-auto" role="img" aria-label="AI Meeting Assistant: Audio -> Transcript -> Summary">
             <defs>
               <marker id="arrowhead-meeting" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
@@ -75,7 +75,7 @@ export default function DiagramUI({ type }: DiagramProps) {
   if (type === 'dashboard-ui') {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-2 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl w-full max-w-2xl">
+        <div className="relative p-2 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl w-full max-w-none md:max-w-2xl">
           <svg viewBox="0 0 600 300" className="w-full h-auto" role="img" aria-label="AI Dashboard Interface">
             {/* Sidebar */}
             <rect x="0" y="0" width="100" height="300" fill="#1e293b" />
@@ -117,7 +117,7 @@ export default function DiagramUI({ type }: DiagramProps) {
   if (type === 'data-analysis-chart') {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-none md:max-w-2xl">
           <svg viewBox="0 0 600 250" className="w-full h-auto" role="img" aria-label="Data Analysis Visualization">
             {/* Grid Lines */}
             <line x1="50" y1="50" x2="550" y2="50" stroke="#334155" strokeDasharray="4 4" />

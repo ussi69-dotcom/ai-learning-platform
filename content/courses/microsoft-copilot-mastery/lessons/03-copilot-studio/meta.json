@@ -7,7 +7,7 @@
   "description_cs": "Vytvářejte podnikové AI agenty, kteří pracují 24/7. Ovládněte Instructions, Knowledge Sources, Actions a governance framework Agent 365.",
   "order": 3,
   "duration_minutes": 45,
-  "video_url": "https://www.youtube.com/watch?v=dX9MJM5EokE",
+  "video_url": "https://www.youtube.com/embed/dX9MJM5EokE",
   "difficulty": "advanced",
   "tags": ["copilot-studio", "agents", "enterprise", "governance", "mcp"],
   "prerequisites": ["02-workflows-agent"]

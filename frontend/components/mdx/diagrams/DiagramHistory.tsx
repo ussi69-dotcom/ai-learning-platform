@@ -14,7 +14,7 @@ export default function DiagramHistory({ type }: DiagramProps) {
   if (type === "traditional-vs-ml") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
           <svg
             viewBox="0 0 700 300"
             className="w-full h-auto"
@@ -247,7 +247,7 @@ export default function DiagramHistory({ type }: DiagramProps) {
   if (type === "ai-timeline") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-6xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-6xl">
           <svg
             viewBox="0 0 700 300"
             className="w-full h-auto"
@@ -495,7 +495,7 @@ export default function DiagramHistory({ type }: DiagramProps) {
   if (type === "ai-history-timeline") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-6xl overflow-x-auto">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-6xl overflow-x-auto">
           <svg
             viewBox="0 0 800 200"
             className="w-full min-w-[700px] h-auto"

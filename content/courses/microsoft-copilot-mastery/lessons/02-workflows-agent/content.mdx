@@ -7,9 +7,9 @@
 </Callout>
 
 <VideoSwitcher alternatives={[
-  {"id":"S7xTBa93TX8","title":"Microsoft 365 Copilot - Workflows Agent Overview"},
-  {"id":"fZoM6S8-y_4","title":"Building Intelligent Workflows with Copilot Studio"},
-  {"id":"4hfB9FhCwwA","title":"Power Automate vs AI Agents - What's the Difference?"}
+  {"id":"_w-jVw8Uhc0","title":"NEW Copilot Workflows Agent Will Automate Your Job (Full Tutorial)"},
+  {"id":"CYejFpBXWBM","title":"Microsoft 365 Copilot Can Now Build Apps and Workflows: Here’s How It Works"},
+  {"id":"Vvk1ScZT-lo","title":"Automate with Workflows Agent in Microsoft 365 Copilot (Frontier)"}
 ]} />
 
 ## ⚡ Stop Building Flows. Start Describing Outcomes.
@@ -18,9 +18,9 @@
 
 Now? You just tell Copilot: *"When a contract arrives, check the budget in Excel, and if it's under $5k, approve it."*
 
-**Workflows Agent doesn't just write the code—it IS the runtime.**
+**Workflows Agent doesn't just draft the flow—it creates a managed workflow you can run and monitor.**
 
-In 2024, Microsoft reported that knowledge workers spend an average of **19 hours per week** searching for information and managing emails. That's nearly half your workweek wasted on digital housekeeping.
+In most organizations, email and information search consume a painful chunk of the day. This is where small automations compound into real time saved.
 
 The era of "building automation" is ending. The era of **describing automation** has arrived.
 
@@ -44,7 +44,7 @@ Before we dive into Workflows Agent, understand where it sits in the automation 
 
 ## 🔌 What is Workflows Agent?
 
-**Workflows Agent** is Microsoft 365 Copilot's conversational interface for building automations. It works alongside App Builder (for creating lightweight apps) and integrates with Power Automate under the hood. Think of it as:
+**Workflows Agent** is Microsoft 365 Copilot's conversational interface for building automations. It works alongside App Builder (for creating lightweight apps) and sits on the Power Platform infrastructure (but uses a different build experience than the classic Power Automate designer). Think of it as:
 
 > **"ChatGPT that can actually DO things in your Microsoft 365 environment."**
 
@@ -79,20 +79,43 @@ Every Workflows Agent operates on three fundamental components:
 
 ## 🆚 Workflows Agent vs Power Automate
 
-**Critical distinction:** These are NOT the same tool with different interfaces.
+**Critical distinction:** This isn’t just a new UI—it's a different asset type and editing model.
 
 | Aspect | Power Automate (Classic) | Workflows Agent (New) |
 |--------|-------------------------|----------------------|
 | **Creation Method** | Explicit step-by-step flow | Natural language intent |
-| **Flexibility** | Rigid structure (requires updates when APIs change) | Adaptive (LLM interprets variations) |
+| **Flexibility** | Rigid structure (requires updates when APIs change) | LLM interprets intent during authoring; execution stays deterministic |
 | **Best Use Case** | High-volume transactional logic | Context-aware human tasks |
-| **Error Handling** | Hard-coded IF/ELSE branches | Semantic understanding of edge cases |
+| **Error Handling** | Hard-coded IF/ELSE branches | Explicit paths + LLM-drafted responses |
 | **Learning Curve** | Weeks to master connectors | Minutes to describe goal |
-| **Predictability** | Fully deterministic output | LLM-based reasoning (review outputs) |
+| **Predictability** | Fully deterministic output | Deterministic execution, LLM assists with intent/content |
 | **Example** | Process 10,000 invoices identically | "Handle customer complaints intelligently" |
+| **Where It Lives** | Power Automate cloud flow | Workflows Agent asset (not edited in the classic designer as of late 2025) |
+| **Editing Model** | Visual designer + expressions | Primarily re-prompt and refine in chat |
+
+This shift moves you up the abstraction ladder—from **building steps** to **directing outcomes**.
+
+<Diagram type="paradigm-shift-pyramid" />
 
 <Callout type="warning">
 **Golden Rule:** Use **Power Automate** for payroll (needs 100% determinism). Use **Workflows Agent** for customer support triage (needs semantic understanding).
+</Callout>
+
+<Callout type="warning">
+**Reality Check (Frontier Preview, tenant-dependent):**
+- As of late 2025, Workflows Agent is part of the **Copilot Frontier** early-access program and may be **English-only** depending on tenant/region.
+- Requires a **Microsoft 365 Copilot** license.
+- You may see it labeled **"flow builder frontier"** in some tenants.
+- The safest edits happen by **re-prompting**, not by opening a Power Automate designer.
+- Connector coverage is growing; expect limits compared to full Power Automate.
+- Verify availability in your tenant’s Copilot/Frontier settings.
+</Callout>
+
+<Callout type="warning">
+**Anti-Patterns (Don’t use Workflows Agent when):**
+- The task must be 100% deterministic or legally auditable (payroll, invoicing).
+- The action is irreversible without review (deletions, payments, external sends).
+- The workflow can trigger other workflows without explicit loop breakers.
 </Callout>
 
 
@@ -130,6 +153,10 @@ Watch what happens when you submit this prompt:
 2. **Generates workflow structure** - Creates trigger, parsing logic, file operation, notification
 3. **Asks clarifying questions** - Might ask: "Should I create folders if they don't exist?"
 4. **Shows you the plan** - Displays what it will build before activating
+
+<Callout type="tip">
+**Prompt Precision Tip:** Use full SharePoint URLs and exact list/plan names. The more specific your inputs, the fewer follow-up questions the agent needs.
+</Callout>
 
 **Expected behavior:**
 - Email with subject "Amazon Receipt - Office Chair $249" gets saved as `2025-01-15_Amazon_249.pdf` in `Financial/Receipts/2025/Office Supplies/`
@@ -245,6 +272,10 @@ If yes, STOP and log "Loop prevented" instead of executing.
 **Production Rule:** NEVER have two workflows that can trigger each other without explicit loop prevention logic.
 </Callout>
 
+The safest automations insert a **human checkpoint** before irreversible actions.
+
+<Diagram type="human-in-the-loop" />
+
 ## 🔬 Lab 3: Autonomous Email Assistant
 
 Now we build something production-ready: an agent that handles common customer inquiries without human intervention.
@@ -305,9 +336,31 @@ This is a **production-grade workflow** with several enterprise features:
 
 <LabComplete labId="lab-email-assistant" />
 
+## 📌 Micro-Case: 2-Week Triage Pilot (Template)
+
+**Goal:** Prove value without risking production.
+
+**Scope:**
+- One shared inbox, 1-2 intents, *draft-only* replies
+- Daily human review of drafts for the first week
+- Auto-tag every action with `[AUTO]`
+
+**KPIs to track:**
+- Time to first response (baseline vs pilot)
+- Draft acceptance rate (no edits needed)
+- Escalation rate to humans
+- False positives (wrong intent)
+
+**Suggested success criteria (adjust to your org):**
+- ≥30% triage time saved
+- ≤10% false positives
+- ≥80% draft acceptance
+
 ## 📊 Managing Your Workflows
 
 Once you've built workflows, you need to manage them like any production system.
+
+Workflows are stored as assets in your **Power Platform environment** (default by default; some tenants route maker assets to personal developer environments).
 
 ### The Activity Tab
 
@@ -320,8 +373,8 @@ Every workflow has an **Activity** log showing:
 | **Timestamp** | When the workflow ran |
 | **Trigger Event** | What caused it to run |
 | **Status** | Success / Failed / Partially Completed |
-| **Actions Taken** | List of API calls made |
-| **Errors** | Stack trace if failure occurred |
+| **Actions Taken** | Summary of actions/connectors used |
+| **Errors** | Error summary (often not a full stack trace) |
 
 <Callout type="tip">
 **Pro Debugging Tip:** Add a "Notify me on failure" step that sends a Teams message with the error log when something breaks. Don't wait for users to report issues.
@@ -334,7 +387,9 @@ Before activating a workflow in production:
 <Steps>
 
 #### 1. Test Mode
-Run the workflow with sample data (Copilot provides a "Test run" button)
+Run the workflow with sample data (Copilot provides a "Test run" / beaker view)
+
+**Tip:** In Workflows Agent, the test beaker view shows step-by-step execution; re-run tests after each prompt change.
 
 #### 2. Dry Run
 Add a step: "Instead of sending email, save draft to 'Test Drafts' folder"
@@ -344,6 +399,21 @@ Start with trigger filter: "Only emails from myself for first 24 hours"
 
 #### 4. Monitor First Week
 Check Activity tab daily to catch edge cases
+
+</Steps>
+
+### The 3 Launch Rules
+
+<Steps>
+
+#### 1. Narrow Scope First
+Start with a single folder or sender and a limited time window.
+
+#### 2. Draft-Only External Messages
+Never auto-send to customers on day one.
+
+#### 3. Instrument Everything
+Add tags, failure alerts, and a rollback plan.
 
 </Steps>
 
@@ -456,6 +526,10 @@ IT administrators can:
 - Activity logs are retained per your tenant's audit log policies
 
 </ConceptCard>
+
+Think of governance as **layered defense**, not a single toggle.
+
+<Diagram type="ai-security-layers" />
 
 ### The 3 Rules of Agent Governance
 

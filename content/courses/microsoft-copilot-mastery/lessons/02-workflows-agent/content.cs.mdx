@@ -1,4 +1,4 @@
-# Vaše Inbox se právě stala autonomní 🤖
+# Vaše pošta je nyní autonomní 🤖
 
 <Callout type="info">
 **Mise:** Transformujte se z pasivního uživatele chatu na aktivního tvůrce automatizací pomocí Microsoft 365 Workflows Agent
@@ -7,9 +7,9 @@
 </Callout>
 
 <VideoSwitcher alternatives={[
-  {"id":"S7xTBa93TX8","title":"Microsoft 365 Copilot - Workflows Agent Overview"},
-  {"id":"fZoM6S8-y_4","title":"Building Intelligent Workflows with Copilot Studio"},
-  {"id":"4hfB9FhCwwA","title":"Power Automate vs AI Agents - What's the Difference?"}
+  {"id":"_w-jVw8Uhc0","title":"NEW Copilot Workflows Agent Will Automate Your Job (Full Tutorial)"},
+  {"id":"CYejFpBXWBM","title":"Microsoft 365 Copilot Can Now Build Apps and Workflows: Here’s How It Works"},
+  {"id":"Vvk1ScZT-lo","title":"Automate with Workflows Agent in Microsoft 365 Copilot (Frontier)"}
 ]} />
 
 ## ⚡ Přestaňte stavět Flow. Začněte popisovat výsledky.
@@ -18,9 +18,9 @@
 
 Teď? Prostě řeknete Copilotu: *"Když přijde smlouva, zkontroluj rozpočet v Excelu, a pokud je pod 150 000 Kč, schval ji."*
 
-**Workflows Agent nepíše jen kód—on JE runtime.**
+**Workflows Agent nepíše jen flow — vytváří spravované workflow, které můžete spouštět a monitorovat.**
 
-V roce 2024 Microsoft zjistil, že znalostní pracovníci tráví průměrně **19 hodin týdně** hledáním informací a správou emailů. To je skoro polovina vašeho pracovního týdne promarněná digitální údržbou.
+Většině organizací ukrojí emaily a hledání informací bolestivě velký kus dne. Právě tady se malé automatizace sčítají do velkého dopadu.
 
 Éra "budování automatizace" končí. Éra **popisování automatizace** právě začala.
 
@@ -44,9 +44,9 @@ Než se ponoříme do Workflows Agentu, pochopte, kde se nachází v hierarchii 
 
 ## 🔌 Co je Workflows Agent?
 
-**Workflows Agent** je konverzační rozhraní Microsoft 365 Copilot pro budování automatizací. Funguje společně s App Builderem (pro vytváření lehkých aplikací) a integruje se s Power Automate na pozadí. Představte si ho jako:
+**Workflows Agent** je konverzační rozhraní Microsoft 365 Copilot pro budování automatizací. Funguje společně s App Builderem (pro vytváření lehkých aplikací) a běží na Power Platform infrastruktuře (ale s jiným build zážitkem než klasický Power Automate designer). Představte si ho jako:
 
-> **"ChatGPT, který skutečně UMÍŽ dělat věci ve vašem Microsoft 365 prostředí."**
+> **"ChatGPT, který skutečně UMÍ dělat věci ve vašem Microsoft 365 prostředí."**
 
 ### Tři pilíře
 
@@ -79,20 +79,43 @@ Každý Workflows Agent funguje na třech základních komponentách:
 
 ## 🆚 Workflows Agent vs Power Automate
 
-**Kritické rozlišení:** Tohle NEJSOU stejné nástroje s jiným rozhraním.
+**Kritické rozlišení:** Tohle není jen jiné rozhraní — je to jiný typ assetu a způsob editace.
 
 | Aspekt | Power Automate (Klasický) | Workflows Agent (Nový) |
 |--------|-------------------------|----------------------|
 | **Metoda vytvoření** | Explicitní krok-za-krokem flow | Záměr v přirozeném jazyce |
-| **Flexibilita** | Rigidní struktura (vyžaduje aktualizace při změnách API) | Adaptivní (LLM interpretuje variace) |
+| **Flexibilita** | Rigidní struktura (vyžaduje aktualizace při změnách API) | LLM interpretuje záměr při tvorbě; běh zůstává deterministický |
 | **Nejlepší použití** | Vysokoobjem transakční logika | Kontextové lidské úkoly |
-| **Zpracování chyb** | Pevně zakódované IF/ELSE větve | Sémantické porozumění edge cases |
+| **Zpracování chyb** | Pevně zakódované IF/ELSE větve | Explicitní větve + LLM navrhne odpovědi |
 | **Křivka učení** | Týdny zvládnutí konektorů | Minuty popsat cíl |
-| **Předvídatelnost** | Plně deterministický výstup | LLM-based reasoning (kontrolujte výstupy) |
+| **Předvídatelnost** | Plně deterministický výstup | Deterministický běh, LLM pomáhá s intentem/obsahem |
 | **Příklad** | Zpracuj 10 000 faktur identicky | "Inteligentně řeš zákaznické stížnosti" |
+| **Kde to žije** | Power Automate cloud flow | Workflows Agent asset (mimo klasický designer k 2025) |
+| **Editace** | Vizuální designer + expression | Primárně re-prompt a iterace v chatu |
+
+Tenhle posun vás posouvá po žebříčku abstrakce — od **stavění kroků** k **řízení výsledků**.
+
+<Diagram type="paradigm-shift-pyramid" />
 
 <Callout type="warning">
 **Zlaté pravidlo:** Použijte **Power Automate** na výplatní pásky (potřebuje 100% determinismus). Použijte **Workflows Agent** na třídění zákaznické podpory (potřebuje sémantické porozumění).
+</Callout>
+
+<Callout type="warning">
+**Reality Check (Frontier Preview, závislé na tenantu):**
+- K pozdnímu roku 2025 je Workflows Agent součást **Copilot Frontier** early-access programu a může být **jen v angličtině** podle tenantu/regionu.
+- Vyžaduje **Microsoft 365 Copilot** licenci.
+- V některých tenantech je označen jako **"flow builder frontier"**.
+- Nejbezpečnější úpravy jsou přes **re-prompt**, ne přes Power Automate designer.
+- Seznam konektorů roste, ale zatím je užší než v plném Power Automate.
+- Dostupnost ověřte v tenant nastavení Copilot/Frontier.
+</Callout>
+
+<Callout type="warning">
+**Anti-patterny (Workflows Agent nepoužívejte, když):**
+- potřebujete 100% determinismus nebo auditovatelnost (výplaty, fakturace),
+- akce je nevratná bez kontroly (mazání, platby, externí odeslání),
+- workflow může spouštět jiné workflow bez explicitní ochrany proti smyčkám.
 </Callout>
 
 
@@ -130,6 +153,10 @@ Sledujte, co se stane, když odešlete tento prompt:
 2. **Generuje strukturu workflow** - Vytvoří trigger, parsovací logiku, operaci se soubory, notifikaci
 3. **Klade upřesňující otázky** - Může se zeptat: "Mám vytvářet složky, pokud neexistují?"
 4. **Ukáže vám plán** - Zobrazí, co postaví před aktivací
+
+<Callout type="tip">
+**Tip na přesný prompt:** Používejte plné SharePoint URL a přesné názvy listů/plánů. Čím konkrétnější zadání, tím méně doptávání.
+</Callout>
 
 **Očekávané chování:**
 - Email s předmětem "Amazon Receipt - Office Chair $249" se uloží jako `2025-01-15_Amazon_249.pdf` do `Financial/Receipts/2025/Office Supplies/`
@@ -246,6 +273,10 @@ If yes, STOP and log "Loop prevented" instead of executing.
 **Produkční pravidlo:** NIKDY nemějte dva workflow, které se mohou vzájemně spouštět bez explicitní logiky prevence smyček.
 </Callout>
 
+Nejbezpečnější automatizace vkládají **lidský checkpoint** před nevratnými akcemi.
+
+<Diagram type="human-in-the-loop" />
+
 ## 🔬 Lab 3: Autonomní emailový asistent
 
 Teď postavíme něco produkčně připraveného: agenta, který zpracovává běžné zákaznické dotazy bez lidského zásahu.
@@ -306,10 +337,32 @@ Tohle je **produkčně připravený workflow** s několika enterprise funkcemi:
 
 <LabComplete labId="lab-email-assistant" />
 
+## 📌 Mikro-case: 2týdenní pilot třídění (šablona)
+
+**Cíl:** Ověřit hodnotu bez rizika v produkci.
+
+**Rozsah:**
+- jedna sdílená schránka, 1–2 intenti, *jen koncepty*
+- denní lidská kontrola konceptů první týden
+- automatické tagování `[AUTO]`
+
+**KPI, které sledovat:**
+- čas do první odpovědi (baseline vs pilot)
+- míra akceptace konceptů (bez úprav)
+- eskalační míra na člověka
+- false positives (špatný intent)
+
+**Doporučená kritéria úspěchu (upravte podle organizace):**
+- ≥30 % úspora času na triáži
+- ≤10 % false positives
+- ≥80 % akceptace konceptů
+
 
 ## 📊 Správa vašich Workflows
 
 Jakmile máte postavené workflow, potřebujete je spravovat jako každý produkční systém.
+
+Workflows se ukládají jako assety do vašeho **Power Platform environmentu** (default ve výchozím nastavení; některé tenanty směrují maker assety do osobního developer environmentu).
 
 ### Activity Tab
 
@@ -322,8 +375,8 @@ Každý workflow má **Activity** log zobrazující:
 | **Timestamp** | Kdy workflow běžel |
 | **Trigger Event** | Co způsobilo spuštění |
 | **Status** | Success / Failed / Partially Completed |
-| **Actions Taken** | Seznam provedených API volání |
-| **Errors** | Stack trace pokud selhalo |
+| **Actions Taken** | Shrnutí akcí a použitých konektorů |
+| **Errors** | Shrnutí chyby (často ne plný stack trace) |
 
 <Callout type="tip">
 **Pro tip pro debugging:** Přidejte krok "Notify me on failure", který pošle Teams zprávu s error logem, když něco selže. Nečekejte, až uživatelé nahlásí problémy.
@@ -336,7 +389,9 @@ Před aktivací workflow v produkci:
 <Steps>
 
 #### 1. Test Mode
-Spusťte workflow s ukázkovými daty (Copilot poskytuje tlačítko "Test run")
+Spusťte workflow s ukázkovými daty (Copilot nabízí "Test run" / beaker view)
+
+**Tip:** Ve Workflows Agentu uvidíte test beaker s krok-za-krokem průběhem; po každé změně promptu test znovu spusťte.
 
 #### 2. Dry Run
 Přidejte krok: "Místo posílání emailu ulož koncept do složky 'Test Drafts'"
@@ -346,6 +401,21 @@ Začněte s trigger filtrem: "Pouze emaily od mě po prvních 24 hodin"
 
 #### 4. Monitorujte první týden
 Kontrolujte Activity tab denně pro zachycení edge cases
+
+</Steps>
+
+### 3 pravidla nasazení
+
+<Steps>
+
+#### 1. Úzký rozsah na start
+Začněte s jednou složkou/odesílatelem a časovým oknem.
+
+#### 2. Externí komunikace jen jako koncepty
+První dny nic neodesílat automaticky.
+
+#### 3. Instrumentujte vše
+Tagy, alerty na chyby a rollback plán.
 
 </Steps>
 
@@ -459,6 +529,10 @@ IT administrátoři mohou:
 - Activity logy jsou uchovávány dle vašich tenant audit log politik
 
 </ConceptCard>
+
+Přemýšlejte o governance jako o **vrstvené obraně**, ne jako o jednom přepínači.
+
+<Diagram type="ai-security-layers" />
 
 ### 3 pravidla Agent Governance
 

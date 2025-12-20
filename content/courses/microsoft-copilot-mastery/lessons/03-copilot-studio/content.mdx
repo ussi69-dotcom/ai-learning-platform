@@ -7,9 +7,9 @@
 </Callout>
 
 <VideoSwitcher alternatives={[
-  {"id":"3_fQCMNbQCw","title":"Microsoft Copilot Studio - Complete Tutorial"},
-  {"id":"z3gGqGeXv1k","title":"Build Your First Copilot in Microsoft 365"},
-  {"id":"fY7K8F_Ybp4","title":"Power Platform & Copilot Studio Overview"}
+  {"id":"dX9MJM5EokE","title":"How to Use Microsoft Copilot Studio (Step-by-Step Tutorial)"},
+  {"id":"6rXUJ4JFVWo","title":"Copilot Studio in Microsoft 365 Copilot"},
+  {"id":"_Xny7HkmNpk","title":"What is Copilot Studio?"}
 ]} />
 
 ## ⚡ The 1000-Employee Workforce
@@ -35,6 +35,10 @@ Copilot Studio is the **foundry** for the "Agentic" era. It combines the convers
 | **Actions** | Suggests text/code | **Executes** workflows, sends emails, updates DBs |
 | **Identity** | Anonymous / Personal | Entra ID app registration (service principal) |
 | **Security** | User-managed | IT Governance (Power Platform admin center) |
+
+This shift isn't just feature scope—it’s a **new operating layer** for how work happens.
+
+<Diagram type="paradigm-shift-pyramid" />
 
 <Diagram type="copilot-studio-architecture" />
 
@@ -86,6 +90,14 @@ Microsoft offers several AI-building tools. Here's how Copilot Studio fits in:
 - Simple automation (use Power Automate instead)
 - One-off personal tasks (use ChatGPT/Copilot for M365)
 - Need non-Microsoft integrations primarily (consider custom dev)
+
+<Callout type="info">
+**M365 “Create Agent” vs Copilot Studio (full maker experience):** The lightweight builder inside Microsoft 365 Copilot is great for quick, declarative agents. In some tenants, you can open/export that agent in Copilot Studio for advanced features (topics, tools, evals, multi-agent). If the handoff isn’t available, rebuild in Copilot Studio directly.
+</Callout>
+
+<Callout type="warning">
+**Anti-Pattern Alert:** If your first Copilot Studio build needs 20+ topics, 15 connectors, and no human approvals, you're building a compliance risk—not an MVP.
+</Callout>
 
 ## 3. Core Components: The Anatomy of an Agent
 
@@ -223,6 +235,12 @@ You don't need to build a vector database or manage embeddings. Copilot Studio h
 3. Retrieves top chunks (using semantic similarity)
 4. Sends chunks + system prompt + user question to Azure OpenAI
 5. Returns answer with citations
+
+**Recent updates (as of late 2025):** Microsoft continues to improve the RAG pipeline, so you may see quality gains without redesigning your agent.
+
+This creates a **hierarchy of context**—instructions first, knowledge second, actions last.
+
+<Diagram type="context-hierarchy" />
 
 ### Knowledge Source Types
 
@@ -397,6 +415,8 @@ Now, let's talk about why your IT department loves this (and why they should).
 
 The **Power Platform admin center** combined with **Microsoft Entra ID** provides the control plane for managing AI agents at enterprise scale.
 
+**Important:** The **Environment** you choose is a security boundary. It controls what data, connectors, and services the agent can access.
+
 ### 🛡️ Security Layers
 
 <Steps>
@@ -428,6 +448,10 @@ The **Power Platform admin center** combined with **Microsoft Entra ID** provide
 
 </Steps>
 
+You want **defense in depth**, not a single checkbox.
+
+<Diagram type="ai-security-layers" />
+
 ### Agent Identity Management
 
 **The Old Way:** Bots used the *user's* credentials to access data. This created security risks:
@@ -448,6 +472,10 @@ The **Power Platform admin center** combined with **Microsoft Entra ID** provide
 
 <Callout type="info">
 **Example:** An HR agent has read access to employee handbook (SharePoint) and write access to vacation request database (Dataverse), but cannot access finance documents—even if the user talking to it can.
+</Callout>
+
+<Callout type="tip">
+**Admin Control Plane:** Use agent inventory + maker workspaces to control who can build, where agents live, and how they’re governed across the tenant.
 </Callout>
 
 
@@ -501,6 +529,12 @@ Agent: "Request denied by manager. No action taken."
 | **Testing** | Complex (test all scenarios) | Simple (test each child independently) |
 | **Reusability** | Low (tied to specific use case) | High (share children across projects) |
 | **Performance** | Slow (loads all knowledge) | Fast (only load relevant child) |
+
+Visualize the routing layer as a **parent agent with specialist children**. In enterprise, that might be **HR/IT/Finance**; in delivery teams it can be **Explore/Plan/Review/Test** orchestration.
+
+Copilot Studio now supports **connected agents**, so the parent can call specialized agents built in Copilot Studio, Azure AI Foundry, or other external systems.
+
+<Diagram type="sub-agent-architecture" />
 
 **Real-World Example:**
 
@@ -578,6 +612,27 @@ Observe how the agent responds. A well-configured agent should:
 
 ---
 
+## 📌 Micro-Case: 4-Week Agent Pilot (Template)
+
+**Goal:** Prove adoption and safety before scaling.
+
+**Scope:**
+- One department, 2–3 intents, Teams channel only
+- Human approval for any external communication
+- Weekly review with IT + business owner
+
+**KPIs to track:**
+- Containment rate (resolved without human)
+- Time to resolution (baseline vs pilot)
+- Escalation rate
+- CSAT or thumbs-up rate
+- Top 3 failure modes
+
+**Suggested success criteria (adjust to your org):**
+- ≥30% containment on supported intents
+- ≤10% escalations due to wrong intent
+- Stable CSAT trend for 2+ weeks
+
 ## 8. Real-World Use Cases
 
 ### Case Study: IT Support Agent
@@ -626,12 +681,21 @@ Observe how the agent responds. A well-configured agent should:
 
 ## 9. Advanced Features (2025 Updates)
 
+<Callout type="info">
+**Availability Note (late 2025):** Some features (App Builder, Workflows Agent, or specific tools) may be in **Frontier/Preview** depending on your tenant and region. Always verify in the M365 admin center or Copilot Studio release notes.
+</Callout>
+
 ### Multimodal Agents
 
-Copilot Studio now supports:
+Where supported, Copilot Studio can provide:
 - **Image Understanding:** Upload screenshot → Agent extracts text, analyzes layout
 - **Voice Input:** Speak to agent in Teams
 - **Adaptive Cards:** Rich UI elements (buttons, forms, images)
+
+### Built-in Tools (Preview in some tenants)
+
+- **Code Interpreter:** Agent can generate and run Python to analyze files (Excel/CSV/PDF) and produce charts (availability varies by tenant).
+- **Computer Use:** Agent can operate legacy desktop/web apps without APIs via a virtual mouse/keyboard (availability varies by tenant).
 
 ### Agent Analytics
 
@@ -640,8 +704,26 @@ Built-in dashboards show:
 - **Abandonment Rate:** Where do users give up?
 - **Topic Performance:** Which topics resolve successfully?
 - **Sentiment Analysis:** Are users satisfied?
+- **Themes:** Semantic clustering of user questions to reveal gaps
+- **ROI:** Time/cost savings estimates (if enabled)
 
 Use this data to iterate and improve your agents.
+
+### Evaluation & Testing
+
+Run **built-in evaluations** with uploaded or AI-generated test sets:
+- Pass/fail scoring with detailed feedback
+- Side-by-side comparisons (A/B test prompts/models/versions)
+- Regression detection before rollout
+
+### Model Choice & Tool Protocols
+
+- **Model choice (preview in some tenants):** Select from available models when enabled.
+- **Tool integration:** Connectors/actions today; standardized tool protocols (e.g., MCP) are roadmap/preview in some tenants.
+
+### Agent Identity (Agent 365)
+
+Roadmap capability: agents can receive an identity (alias, email, Teams presence) and participate like colleagues (verify availability/timeline).
 
 ### Custom Channels
 
@@ -680,6 +762,21 @@ Deploy your agent to:
 | **No testing before production** | Embarrassing failures in front of CEO | Use dedicated test environment |
 
 ---
+
+## ✅ The 3 Launch Rules
+
+<Steps>
+
+#### 1. Ship Narrow, Not Broad
+Limit to 2–3 intents and one channel (Teams) in week one.
+
+#### 2. Approvals for High-Stakes Actions
+Money, deletions, and external emails always require approval.
+
+#### 3. Review Analytics Weekly
+If you can’t measure it, you can’t scale it.
+
+</Steps>
 
 ## Holocron: Microsoft Copilot Studio 🏗️
 

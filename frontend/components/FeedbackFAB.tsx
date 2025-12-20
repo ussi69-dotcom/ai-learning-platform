@@ -18,23 +18,20 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
   const [isDragging, setIsDragging] = useState(false);
   const [draggedPosition, setDraggedPosition] = useState<{ x: number; y: number } | null>(null);
   const [dragStartPos, setDragStartPos] = useState<{ x: number; y: number } | null>(null);
-  const [isVisibleOnMobile, setIsVisibleOnMobile] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
   const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const t = useTranslations('Feedback');
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Auto-hide on mobile after 2s of inactivity
+  // Auto-hide after 2s of inactivity
   useEffect(() => {
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    if (!isMobile) return;
-
     const showAndResetTimer = () => {
-      setIsVisibleOnMobile(true);
+      setIsVisible(true);
       if (hideTimeoutRef.current) {
         clearTimeout(hideTimeoutRef.current);
       }
       hideTimeoutRef.current = setTimeout(() => {
-        setIsVisibleOnMobile(false);
+        setIsVisible(false);
       }, 2000);
     };
 
@@ -42,17 +39,21 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
     showAndResetTimer();
 
     // Listen to activity events
-    window.addEventListener('scroll', showAndResetTimer, { passive: true });
-    window.addEventListener('touchstart', showAndResetTimer, { passive: true });
-    window.addEventListener('click', showAndResetTimer);
+    window.addEventListener("scroll", showAndResetTimer, { passive: true });
+    window.addEventListener("mousemove", showAndResetTimer);
+    window.addEventListener("click", showAndResetTimer);
+    window.addEventListener("keydown", showAndResetTimer);
+    window.addEventListener("touchstart", showAndResetTimer, { passive: true });
 
     return () => {
       if (hideTimeoutRef.current) {
         clearTimeout(hideTimeoutRef.current);
       }
-      window.removeEventListener('scroll', showAndResetTimer);
-      window.removeEventListener('touchstart', showAndResetTimer);
-      window.removeEventListener('click', showAndResetTimer);
+      window.removeEventListener("scroll", showAndResetTimer);
+      window.removeEventListener("mousemove", showAndResetTimer);
+      window.removeEventListener("click", showAndResetTimer);
+      window.removeEventListener("keydown", showAndResetTimer);
+      window.removeEventListener("touchstart", showAndResetTimer);
     };
   }, []);
 
@@ -153,8 +154,8 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
 
   return (
     <div className={cn(
-      "fixed bottom-4 md:bottom-20 right-4 md:right-6 z-40 flex flex-col items-end space-y-2 group/fab pointer-events-none transition-opacity duration-300",
-      isVisibleOnMobile ? "opacity-100" : "opacity-0 md:opacity-100"
+      "fixed bottom-4 md:bottom-6 right-4 md:right-6 z-40 flex flex-col items-end space-y-2 group/fab pointer-events-none transition-opacity duration-300",
+      isVisible ? "opacity-100" : "opacity-0"
     )}>
       {/* Instructions - placing and viewing always visible, idle only on hover */}
       {currentMode === 'placing' && (

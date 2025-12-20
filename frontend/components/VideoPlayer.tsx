@@ -31,6 +31,9 @@ export const VideoPlayer = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const [videos, setVideos] = useState<Video[]>([]);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [showFallback, setShowFallback] = useState(false);
+  const fallbackTimerRef = useRef<number | null>(null);
   const initializedRef = useRef(false);
 
   // Initialize with fallback video and any initial videos
@@ -97,6 +100,32 @@ export const VideoPlayer = ({
   const activeVideo = videos.find((v) => v.id === activeVideoId) || videos[0];
   const alternativeVideos = videos.filter((v) => v.id !== activeVideo?.id);
 
+  useEffect(() => {
+    if (!activeVideo?.id) {
+      setIsVideoLoaded(false);
+      setShowFallback(false);
+      return undefined;
+    }
+
+    setIsVideoLoaded(false);
+    setShowFallback(false);
+
+    if (fallbackTimerRef.current) {
+      window.clearTimeout(fallbackTimerRef.current);
+    }
+
+    fallbackTimerRef.current = window.setTimeout(() => {
+      setShowFallback(true);
+    }, 6000);
+
+    return () => {
+      if (fallbackTimerRef.current) {
+        window.clearTimeout(fallbackTimerRef.current);
+        fallbackTimerRef.current = null;
+      }
+    };
+  }, [activeVideo?.id]);
+
   // Always render the wrapper with context provider
   // This ensures VideoSwitcher can register videos even if no video yet
   const contextValue = { addVideos };
@@ -110,7 +139,12 @@ export const VideoPlayer = ({
     );
   }
 
-  const embedUrl = `https://www.youtube.com/embed/${activeVideo.id}?cc_load_policy=1&cc_lang_pref=${locale}&hl=${locale}`;
+  const origin =
+    typeof window !== "undefined" ? window.location.origin : "";
+  const embedUrl = `https://www.youtube.com/embed/${activeVideo.id}?cc_load_policy=1&cc_lang_pref=${locale}&hl=${locale}${
+    origin ? `&origin=${encodeURIComponent(origin)}` : ""
+  }`;
+  const watchUrl = `https://www.youtube.com/watch?v=${activeVideo.id}`;
 
   return (
     <VideoRegistryContext.Provider value={contextValue}>
@@ -123,7 +157,29 @@ export const VideoPlayer = ({
         style={isPinned ? { marginTop: "-1rem" } : {}}
       >
         {/* Video Player */}
-        <div className="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-border/50 ring-1 ring-black/5">
+        <div className="relative aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-border/50 ring-1 ring-black/5">
+          {!isVideoLoaded && !showFallback && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/80 text-xs text-white/80 tracking-wide">
+              {locale === "cs" ? "Načítám video…" : "Loading video…"}
+            </div>
+          )}
+          {showFallback && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/80 text-center text-white/80 px-6">
+              <div className="text-xs uppercase tracking-wider">
+                {locale === "cs"
+                  ? "Video se nedaří načíst"
+                  : "Video not loading"}
+              </div>
+              <a
+                href={watchUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs font-semibold text-white bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full border border-white/20 transition-colors"
+              >
+                {locale === "cs" ? "Otevřít na YouTube" : "Open on YouTube"}
+              </a>
+            </div>
+          )}
           <iframe
             key={activeVideo.id}
             className="w-full h-full"
@@ -131,6 +187,14 @@ export const VideoPlayer = ({
             title={activeVideo.title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
+            onLoad={() => {
+              setIsVideoLoaded(true);
+              setShowFallback(false);
+              if (fallbackTimerRef.current) {
+                window.clearTimeout(fallbackTimerRef.current);
+                fallbackTimerRef.current = null;
+              }
+            }}
           />
         </div>
 

@@ -14,7 +14,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "tokenization-viz") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-none md:max-w-2xl">
           <svg
             viewBox="0 0 600 150"
             className="w-full h-auto"
@@ -186,7 +186,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "llm-next-token") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
           <svg
             viewBox="0 0 600 200"
             className="w-full h-auto"
@@ -293,7 +293,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "context-window") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
           <svg
             viewBox="0 0 600 150"
             className="w-full h-auto"
@@ -353,7 +353,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "temperature-scale") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-3xl">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
           <svg
             viewBox="0 0 600 200"
             className="w-full h-auto"
@@ -425,7 +425,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "bias-in-data") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-2xl">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-none md:max-w-2xl">
           <svg
             viewBox="0 0 600 250"
             className="w-full h-auto"
@@ -602,7 +602,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "rag-architecture") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-5xl">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-none md:max-w-5xl">
           {/* Increased viewBox width to 960 to prevent cropping */}
           <svg
             viewBox="0 0 960 400"
@@ -882,7 +882,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "black-box") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
           <svg
             viewBox="0 0 600 200"
             className="w-full h-auto"
@@ -1038,7 +1038,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "transformer-architecture-simplified") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-6xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-6xl">
           <svg
             viewBox="0 0 700 300"
             className="w-full h-auto"
@@ -1229,7 +1229,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "alignment-misalignment") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-6xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-6xl">
           <svg
             viewBox="0 0 600 250"
             className="w-full h-auto"
@@ -1335,7 +1335,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "learning-types-overview") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
           <svg
             viewBox="0 0 800 280"
             className="w-full h-auto"
@@ -1567,7 +1567,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "supervised-learning-flow") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
           <svg
             viewBox="0 0 650 200"
             className="w-full h-auto"
@@ -1765,7 +1765,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "clustering-visualization") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
           <svg
             viewBox="0 0 600 250"
             className="w-full h-auto"
@@ -1931,7 +1931,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "reinforcement-learning-loop") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
           <svg
             viewBox="0 0 600 300"
             className="w-full h-auto"
@@ -2146,7 +2146,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "ai-ml-dl-circles") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-2xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-2xl">
           <svg
             viewBox="0 0 500 400"
             className="w-full h-auto"
@@ -2343,10 +2343,26 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "human-in-the-loop") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-3xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
+          <div className="md:hidden space-y-3">
+            <div className="text-center text-base font-bold text-slate-200">Human-in-the-Loop</div>
+            <div className="grid gap-2 text-sm">
+              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-3 py-2">
+                <span className="mr-2">🤖</span> 1. AI Draft — <span className="text-xs text-slate-400">“80% Done”</span>
+              </div>
+              <div className="text-center text-xs text-slate-500">↓</div>
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-3 py-2">
+                <span className="mr-2">👀</span> 2. Human Review — <span className="text-xs text-slate-400">“Spot errors”</span>
+              </div>
+              <div className="text-center text-xs text-slate-500">↓</div>
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-3 py-2">
+                <span className="mr-2">✅</span> 3. Refine & Ship — <span className="text-xs text-slate-400">“Safe output”</span>
+              </div>
+            </div>
+          </div>
           <svg
             viewBox="0 0 600 200"
-            className="w-full h-auto"
+            className="hidden md:block w-full h-auto"
             role="img"
             aria-label="Human in the Loop: Draft -> Review -> Refine"
           >
@@ -2504,7 +2520,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
   if (type === "multi-agent-workflow") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
-        <div className="relative p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-4xl">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
           <svg
             viewBox="0 0 700 520"
             className="w-full h-auto"

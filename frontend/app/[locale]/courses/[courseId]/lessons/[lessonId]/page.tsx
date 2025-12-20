@@ -582,7 +582,7 @@ export default function LessonPage({
                 disabled={currentPage === calculatedTotalPages - 1}
                 className={`w-full md:w-auto min-w-[120px] h-full text-base font-bold shadow-md ${
                   currentPage === calculatedTotalPages - 1
-                    ? "bg-gradient-to-br from-violet-700 via-indigo-500 via-violet-400 to-violet-800 hover:opacity-90 text-white border-none"
+                    ? "bg-gradient-to-br from-violet-700 via-indigo-500 via-violet-400 to-violet-800 hover:opacity-90 text-white border-none dark:from-red-700 dark:via-red-500 dark:via-red-400 dark:to-red-800"
                     : ""
                 }`}
               >
@@ -663,7 +663,7 @@ export default function LessonPage({
                   disabled
                   className="opacity-0"
                 >
-                  Next
+                  {locale === "cs" ? "Další" : "Next"}
                 </Button>
               )}
             </div>

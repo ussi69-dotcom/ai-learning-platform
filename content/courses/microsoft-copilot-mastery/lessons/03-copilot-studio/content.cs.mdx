@@ -7,9 +7,9 @@
 </Callout>
 
 <VideoSwitcher alternatives={[
-  {"id":"3_fQCMNbQCw","title":"Microsoft Copilot Studio - Complete Tutorial"},
-  {"id":"z3gGqGeXv1k","title":"Build Your First Copilot in Microsoft 365"},
-  {"id":"fY7K8F_Ybp4","title":"Power Platform & Copilot Studio Overview"}
+  {"id":"dX9MJM5EokE","title":"How to Use Microsoft Copilot Studio (Step-by-Step Tutorial)"},
+  {"id":"6rXUJ4JFVWo","title":"Copilot Studio in Microsoft 365 Copilot"},
+  {"id":"_Xny7HkmNpk","title":"What is Copilot Studio?"}
 ]} />
 
 ## ⚡ Pracovní Síla 1000 Zaměstnanců
@@ -35,6 +35,10 @@ Copilot Studio je **továrna** pro éru "agentů". Kombinuje konverzační sílu
 | **Akce** | Navrhuje text/kód | **Vykonává** workflow, posílá emaily, aktualizuje DB |
 | **Identita** | Anonymní / Osobní | Entra ID registrace aplikace (service principal) |
 | **Zabezpečení** | Spravované uživatelem | IT Governance (Power Platform admin centrum) |
+
+Tenhle posun není jen o feature setu—je to **nová vrstva fungování práce**.
+
+<Diagram type="paradigm-shift-pyramid" />
 
 <Diagram type="copilot-studio-architecture" />
 
@@ -86,6 +90,14 @@ Microsoft nabízí několik AI nástrojů. Tady je, jak se Copilot Studio hodí 
 - Jednoduchá automatizace (použij raději Power Automate)
 - Jednorázové osobní úkoly (použij ChatGPT/Copilot for M365)
 - Potřebuješ primárně integrace mimo Microsoft (zvaž vlastní vývoj)
+
+<Callout type="info">
+**M365 „Create Agent“ vs Copilot Studio (plný maker zážitek):** Lehký builder v Microsoft 365 Copilotu je skvělý pro rychlé deklarativní agenty. V některých tenantech lze agenta otevřít/exportovat do Copilot Studio pro pokročilé funkce (topics, nástroje, evaluace, multi-agent). Pokud handoff není dostupný, vytvoř agenta rovnou v Copilot Studio.
+</Callout>
+
+<Callout type="warning">
+**Anti-pattern alert:** Pokud první Copilot Studio projekt potřebuje 20+ topics, 15 konektorů a žádné schvalování, stavíš compliance riziko—not MVP.
+</Callout>
 
 ## 3. Základní Komponenty: Anatomie Agenta
 
@@ -223,6 +235,12 @@ Nepotřebuješ budovat vektorovou databázi nebo spravovat embeddingy. Copilot S
 3. Načte top části (pomocí sémantické podobnosti)
 4. Pošle části + systémový prompt + otázku uživatele do Azure OpenAI
 5. Vrátí odpověď s citacemi
+
+**Novější update (k pozdnímu 2025):** Microsoft dál zlepšuje RAG pipeline, takže kvalita se může zlepšovat bez redesignu agenta.
+
+Tím vzniká **hierarchie kontextu** — nejdřív instrukce, pak znalosti, nakonec akce.
+
+<Diagram type="context-hierarchy" />
 
 ### Typy Knowledge Source
 
@@ -397,6 +415,8 @@ Teď si promluvme o tom, proč to tvé IT oddělení miluje (a proč by mělo).
 
 **Power Platform admin centrum** v kombinaci s **Microsoft Entra ID** poskytuje kontrolní rovinu pro správu AI agentů v podnikovém měřítku.
 
+**Důležité:** Vybraný **Environment** je bezpečnostní hranice. Určuje, k jakým datům, konektorům a službám agent přistupuje.
+
 ### 🛡️ Bezpečnostní Vrstvy
 
 <Steps>
@@ -428,6 +448,10 @@ Teď si promluvme o tom, proč to tvé IT oddělení miluje (a proč by mělo).
 
 </Steps>
 
+Chcete **obranu do hloubky**, ne jeden checkbox.
+
+<Diagram type="ai-security-layers" />
+
 ### Správa Identity Agenta
 
 **Starý Způsob:** Boti používali *uživatelova* pověření pro přístup k datům. To vytvářelo bezpečnostní rizika:
@@ -448,6 +472,10 @@ Teď si promluvme o tom, proč to tvé IT oddělení miluje (a proč by mělo).
 
 <Callout type="info">
 **Příklad:** HR agent má read přístup k employee handbook (SharePoint) a write přístup k databázi dovolenkových žádostí (Dataverse), ale nemůže přistupovat k finančním dokumentům—i když uživatel, který s ním mluví, může.
+</Callout>
+
+<Callout type="tip">
+**Admin Control Plane:** Používej agent inventory + maker workspaces pro řízení toho, kdo může stavět, kde agenti žijí a jak se napříč tenantem governují.
 </Callout>
 
 
@@ -501,6 +529,12 @@ Agent: "Request denied by manager. No action taken."
 | **Testování** | Komplexní (testuj všechny scénáře) | Jednoduché (testuj každé dítě samostatně) |
 | **Znovupoužitelnost** | Nízká (svázaná se specifickým případem) | Vysoká (sdílej children napříč projekty) |
 | **Výkon** | Pomalý (načítá všechny znalosti) | Rychlý (načte jen relevantní dítě) |
+
+Vizualizujte si routing jako **parent agenta se specialisty**. V enterprise to může být **HR/IT/Finance**, v delivery týmu zase **Explore/Plan/Review/Test** orchestrace.
+
+Copilot Studio nyní podporuje **connected agents**, takže parent může volat specializované agenty z Copilot Studia, Azure AI Foundry nebo externích systémů.
+
+<Diagram type="sub-agent-architecture" />
 
 **Reálný Příklad:**
 
@@ -578,6 +612,27 @@ Pozoruj, jak agent odpovídá. Správně nakonfigurovaný agent by měl:
 
 ---
 
+## 📌 Mikro-case: 4týdenní pilot agenta (šablona)
+
+**Cíl:** Ověřit adopci a bezpečnost před škálováním.
+
+**Rozsah:**
+- jedno oddělení, 2–3 intenti, pouze Teams kanál
+- lidské schválení pro externí komunikaci
+- týdenní review s IT + business ownerem
+
+**KPI, které sledovat:**
+- míra vyřešení bez člověka (containment)
+- čas do vyřešení (baseline vs pilot)
+- eskalační míra
+- CSAT nebo thumbs-up rate
+- top 3 failure modes
+
+**Doporučená kritéria úspěchu (upravte podle organizace):**
+- ≥30 % containment na podporovaných intentech
+- ≤10 % eskalací kvůli špatnému intentu
+- stabilní CSAT trend 2+ týdny
+
 ## 8. Reálné Případy Použití
 
 ### Case Study: IT Support Agent
@@ -626,12 +681,21 @@ Pozoruj, jak agent odpovídá. Správně nakonfigurovaný agent by měl:
 
 ## 9. Pokročilé Funkce (2025 Aktualizace)
 
+<Callout type="info">
+**Poznámka k dostupnosti (k pozdnímu 2025):** Některé funkce (App Builder, Workflows Agent nebo konkrétní nástroje) mohou být v **Frontier/Preview** podle tenantu a regionu. Vždy ověř v M365 admin centru nebo release notes Copilot Studio.
+</Callout>
+
 ### Multimodal Agents
 
-Copilot Studio nyní podporuje:
+Pokud je to v tenant dostupné, Copilot Studio může podporovat:
 - **Image Understanding:** Nahraj screenshot → Agent extrahuje text, analyzuje layout
 - **Voice Input:** Mluv k agentovi v Teams
 - **Adaptive Cards:** Bohaté UI elementy (tlačítka, formuláře, obrázky)
+
+### Vestavěné Nástroje (Preview v některých tenantech)
+
+- **Code Interpreter:** Agent umí generovat a spouštět Python pro analýzu souborů (Excel/CSV/PDF) a tvorbu grafů (dostupnost se liší podle tenantu).
+- **Computer Use:** Agent umí ovládat legacy desktop/web aplikace bez API přes virtuální myš/klávesnici (dostupnost se liší podle tenantu).
 
 ### Agent Analytics
 
@@ -640,8 +704,26 @@ Vestavěné dashboardy ukazují:
 - **Abandonment Rate:** Kde uživatelé vzdávají?
 - **Topic Performance:** Které topics se řeší úspěšně?
 - **Sentiment Analysis:** Jsou uživatelé spokojeni?
+- **Themes:** Sémantické shluky dotazů odhalují slabá místa
+- **ROI:** Odhad úspory času a nákladů (pokud je zapnuto)
 
 Použij tato data k iteraci a zlepšení svých agentů.
+
+### Evaluace & Testování
+
+Spouštějte **vestavěné evaluace** s vlastním nebo AI-generovaným test setem:
+- Pass/fail scoring s detailní zpětnou vazbou
+- Side-by-side porovnání (A/B test promptů/modelů/verzí)
+- Odhalení regresí před nasazením
+
+### Výběr modelů & Tool protokoly
+
+- **Výběr modelu (preview v některých tenantech):** Vyberte z dostupných modelů, pokud je funkce povolena.
+- **Integrace nástrojů:** Dnes konektory/akce; standardizované tool protokoly (např. MCP) jsou roadmap/preview v některých tenantech.
+
+### Agent Identita (Agent 365)
+
+Roadmap funkce: agent může získat identitu (alias, email, Teams presence) a fungovat jako digitální kolega (ověřte dostupnost/timeline).
 
 ### Custom Channels
 
@@ -680,6 +762,21 @@ Nasaď svého agenta do:
 | **Žádné testování před produkcí** | Trapné selhání před CEO | Používej dedikované testovací prostředí |
 
 ---
+
+## ✅ 3 pravidla nasazení
+
+<Steps>
+
+#### 1. Nasadit úzce, ne široce
+Omez se na 2–3 intenti a jeden kanál (Teams) v prvním týdnu.
+
+#### 2. Schvalování pro rizikové akce
+Peníze, mazání a externí emaily vždy se schválením.
+
+#### 3. Týdenní review analytiky
+Co neměříš, nemůžeš škálovat.
+
+</Steps>
 
 ## Holocron: Microsoft Copilot Studio 🏗️
 

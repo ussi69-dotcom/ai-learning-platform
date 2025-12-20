@@ -7,7 +7,7 @@
   "description_cs": "Ovládněte automatizaci přirozeným jazykem s Microsoft Workflows Agentem. Vytvořte autonomní emailové asistenty, vyhledávače receptů a cross-app workflow bez jediného řádku kódu.",
   "order": 2,
   "duration_minutes": 40,
-  "video_url": "https://www.youtube.com/watch?v=_w-jVw8Uhc0",
+  "video_url": "https://www.youtube.com/embed/_w-jVw8Uhc0",
   "difficulty": "intermediate",
   "tags": ["copilot", "automation", "workflows", "power-automate", "productivity"],
   "prerequisites": ["01-ai-powered-workday"]

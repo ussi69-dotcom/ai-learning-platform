@@ -24,12 +24,12 @@ export default function MDXImage({ src, alt, caption, courseSlug, lessonSlug }: 
   const displayCaption = caption || alt;
 
   return (
-    <div className="my-8 group">
-      <div className="p-2 rounded-2xl bg-white/30 dark:bg-white/5 backdrop-blur-xl border border-white/20 shadow-xl transition-all hover:scale-[1.01] hover:shadow-2xl">
+    <div className="my-8 group -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="p-0 md:p-2 rounded-none md:rounded-2xl bg-white/30 dark:bg-white/5 backdrop-blur-xl border border-white/20 shadow-xl transition-all hover:scale-[1.01] hover:shadow-2xl">
         <img
           src={finalSrc}
           alt={alt}
-          className="w-full h-auto object-cover rounded-xl"
+          className="w-full h-auto object-contain rounded-none md:rounded-xl"
           onError={(e) => {
             // Fallback or error handling could go here
             console.warn(`Failed to load image: ${finalSrc}`);
