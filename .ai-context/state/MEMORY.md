@@ -64,7 +64,7 @@ ESKALUJ na GPT-5.2 když:
 - User reports frontend "Failed to connect to backend" from Cloudflare dev access. Check `NEXT_PUBLIC_API_URL` inside the frontend container (may be stale, e.g., `http://localhost:8000`) and restart if needed.
 - **CLI usage:** Call **Gemini and Claude via bash** (heredoc/pipe workflow).
 - **Change safety:** Do not adjust `.env` or restart containers unless explicitly asked; avoid breaking dev access.
-- **Visual QA login:** Use admin credentials from `.env` (e.g., `FIRST_SUPERUSER`/`FIRST_SUPERUSER_PASSWORD`) and never print them. Prefer local `http://localhost:3000` if Cloudflare access is flaky.
+- **Visual QA login:** User explicitly wants normal login for visual checks. Use admin creds from `.env` (e.g., `FIRST_SUPERUSER`/`FIRST_SUPERUSER_PASSWORD`), never print them. Prefer local `http://localhost:3000` or QA frontend `http://localhost:3001` if Cloudflare access is flaky.
 - **QA frontend (local only):** `docker compose -f docker-compose.yml -f docker-compose.qa.yml up -d frontend-qa`, then use `http://localhost:3001` for Playwright/Gemini QA.
 
 ### Subagent Orchestration Standard (Always On)
