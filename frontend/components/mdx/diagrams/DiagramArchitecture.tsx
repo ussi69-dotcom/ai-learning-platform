@@ -753,7 +753,7 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
             {/* RIGHT: Agentic */}
             <g transform="translate(420, 60)">
               <rect x="0" y="0" width="350" height="250" rx="12" fill="#22c55e" fillOpacity="0.05" stroke="#22c55e" strokeWidth="2" />
-              <text x="175" y="30" textAnchor="middle" className="text-sm font-bold fill-green-400">✅ {isCs ? 'AGENTNÍ AI (Claude Code)' : 'AGENTIC AI (Claude Code)'}</text>
+            <text x="175" y="30" textAnchor="middle" className="text-sm font-bold fill-green-400">✅ {isCs ? 'AGENTNÍ AI' : 'AGENTIC AI'}</text>
 
               {/* Circular flow */}
               <g transform="translate(115, 70)">
@@ -796,7 +796,7 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
 
             {/* Bottom highlight */}
             <rect x="200" y="320" width="400" height="25" rx="6" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" />
-            <text x="400" y="338" textAnchor="middle" className="text-sm font-bold fill-green-400">💡 {isCs ? 'Claude Code může JEDNAT, nejen radit' : 'Claude Code can take ACTION, not just suggest'}</text>
+            <text x="400" y="338" textAnchor="middle" className="text-sm font-bold fill-green-400">💡 {isCs ? 'Agentní AI může JEDNAT, nejen radit' : 'Agentic AI can take ACTION, not just suggest'}</text>
 
           </svg>
         </div>

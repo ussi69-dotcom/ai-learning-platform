@@ -113,6 +113,11 @@ Pro vybudování digitálního zaměstnance potřebuješ tři věci:
 Systémový prompt. Kdo je agent? Jaký je jeho tón? Jaká jsou jeho omezení?
 
 **Příklad:**
+
+<Callout type="info">
+**Poznámka:** Prompty jsou v angličtině — Copilot Studio je optimalizované pro EN instrukce a výsledky jsou stabilnější.
+</Callout>
+
 ```text
 You are an IT Support Agent for Acme Corp.
 You never guess passwords or share credentials.
@@ -721,11 +726,15 @@ Spouštějte **vestavěné evaluace** s vlastním nebo AI-generovaným test sete
 - Side-by-side porovnání (A/B test promptů/modelů/verzí)
 - Odhalení regresí před nasazením
 
+<Diagram type="regression-matrix" />
+
 ### Výběr modelů & Tool protokoly
 
 - **Výběr modelu (preview v některých tenantech):** Některé tenanty umí volit mezi modely (např. OpenAI GPT‑4o a Anthropic Claude 3.5). Vyšší kvalita často znamená vyšší náklad/latenci — mapuj to na use‑case.
 - **MCP Server Support (preview):** Model Context Protocol umožňuje napojit standardizované nástroje a data bez custom wrapperů.
 - **Integrace nástrojů:** Dnes konektory/akce; standardizované tool protokoly (např. MCP) jsou preview v některých tenantech.
+
+<Diagram type="mcp-architecture" />
 
 ### Agent Identita (Agent 365)
 

@@ -113,6 +113,11 @@ To build a digital employee, you need three things:
 The system prompt. Who is the agent? What is its tone? What are its constraints?
 
 **Example:**
+
+<Callout type="info">
+**Note:** Prompts are in English because Copilot Studio is optimized for EN instructions and results are more reliable.
+</Callout>
+
 ```text
 You are an IT Support Agent for Acme Corp.
 You never guess passwords or share credentials.
@@ -721,11 +726,15 @@ Run **built-in evaluations** with uploaded or AI-generated test sets:
 - Side-by-side comparisons (A/B test prompts/models/versions)
 - Regression detection before rollout
 
+<Diagram type="regression-matrix" />
+
 ### Model Choice & Tool Protocols
 
 - **Model choice (preview in some tenants):** Some tenants can choose between models (e.g., OpenAI GPT‑4o and Anthropic Claude 3.5). Higher quality often means higher cost/latency—map it to the use case.
 - **MCP server support (preview):** Model Context Protocol lets you connect standardized tools/data without custom wrappers.
 - **Tool integration:** Connectors/actions today; standardized tool protocols (e.g., MCP) are preview in some tenants.
+
+<Diagram type="mcp-architecture" />
 
 ### Agent Identity (Agent 365)
 
