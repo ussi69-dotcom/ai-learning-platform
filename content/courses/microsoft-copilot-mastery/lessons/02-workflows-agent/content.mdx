@@ -9,7 +9,9 @@
 <VideoSwitcher alternatives={[
   {"id":"_w-jVw8Uhc0","title":"NEW Copilot Workflows Agent Will Automate Your Job (Full Tutorial)"},
   {"id":"CYejFpBXWBM","title":"Microsoft 365 Copilot Can Now Build Apps and Workflows: Here’s How It Works"},
-  {"id":"Vvk1ScZT-lo","title":"Automate with Workflows Agent in Microsoft 365 Copilot (Frontier)"}
+  {"id":"Vvk1ScZT-lo","title":"Automate with Workflows Agent in Microsoft 365 Copilot (Frontier)"},
+  {"id":"CNrPpoYNuQ8","title":"Inside Microsoft 365 Copilot’s NEW App Builder and Workflow Agents — Full Tutorial"},
+  {"id":"lajUQhuCx6w","title":"Workflows Agent Explained: Microsoft’s NEW AI tool inside M365 Copilot"}
 ]} />
 
 ## ⚡ Stop Building Flows. Start Describing Outcomes.
@@ -363,7 +365,7 @@ Once you've built workflows, you need to manage them like any production system.
 Workflows are stored as assets in your **Power Platform environment** (default by default; some tenants route maker assets to personal developer environments).
 
 <Callout type="info">
-**Where to find them:** Workflows Agent assets appear in Copilot/Power Platform inventory views, but **not** in the classic Power Automate designer. Edits happen via re-prompting in chat.
+**Where to find them:** Workflows Agent assets show up in the Microsoft 365 admin center / Power Platform inventory, but **not** in the classic Power Automate designer. Edits happen via re-prompting in chat.
 </Callout>
 
 ### The Activity Tab
@@ -429,10 +431,14 @@ Add tags, failure alerts, and a rollback plan.
 
 Sometimes a workflow isn't enough—you need a **user interface**. That's where **App Builder Agent** comes in.
 
-**What it does:** Generates lightweight Power Apps with SharePoint/Dataverse backend through natural language.
+**What it does:** Generates lightweight Power Apps on Microsoft Lists (SharePoint) or Dataverse through natural language.
 
 <Callout type="warning">
 **Availability:** App Builder Agent is Frontier/Preview depending on tenant/region. It typically requires a Microsoft 365 Copilot license per user and is managed in the Power Platform admin center.
+</Callout>
+
+<Callout type="info">
+**Data storage:** App Builder stores data in Microsoft Lists (SharePoint). Sharing is link-based and respects M365 permissions.
 </Callout>
 
 ### Example Use Cases
