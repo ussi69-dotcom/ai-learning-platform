@@ -364,6 +364,10 @@ Jakmile máte postavené workflow, potřebujete je spravovat jako každý produk
 
 Workflows se ukládají jako assety do vašeho **Power Platform environmentu** (default ve výchozím nastavení; některé tenanty směrují maker assety do osobního developer environmentu).
 
+<Callout type="info">
+**Kde to najdete:** Workflows Agent assety uvidíte v přehledu Copilot/Power Platform inventáře, ale **ne** v klasickém Power Automate designeru. Změny se dělají re-promptem v chatu.
+</Callout>
+
 ### Activity Tab
 
 Každý workflow má **Activity** log zobrazující:
@@ -404,6 +408,10 @@ Kontrolujte Activity tab denně pro zachycení edge cases
 
 </Steps>
 
+<Callout type="warning">
+**Editace = re-prompt:** Workflow neupravujete tažením uzlů. Změny děláte novým promptem → znovu otestovat → až pak aktivovat.
+</Callout>
+
 ### 3 pravidla nasazení
 
 <Steps>
@@ -424,6 +432,10 @@ Tagy, alerty na chyby a rollback plán.
 Někdy workflow nestačí—potřebujete **uživatelské rozhraní**. K tomu slouží **App Builder Agent**.
 
 **Co dělá:** Generuje lehké Power Apps se SharePoint/Dataverse backendem pomocí přirozeného jazyka.
+
+<Callout type="warning">
+**Dostupnost:** App Builder Agent je Frontier/Preview podle tenantu/regionu. Obvykle vyžaduje Microsoft 365 Copilot licenci pro každého uživatele a spravuje se v Power Platform admin centru.
+</Callout>
 
 ### Příklady použití
 

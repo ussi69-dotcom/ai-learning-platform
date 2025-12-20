@@ -362,6 +362,10 @@ Once you've built workflows, you need to manage them like any production system.
 
 Workflows are stored as assets in your **Power Platform environment** (default by default; some tenants route maker assets to personal developer environments).
 
+<Callout type="info">
+**Where to find them:** Workflows Agent assets appear in Copilot/Power Platform inventory views, but **not** in the classic Power Automate designer. Edits happen via re-prompting in chat.
+</Callout>
+
 ### The Activity Tab
 
 Every workflow has an **Activity** log showing:
@@ -402,6 +406,10 @@ Check Activity tab daily to catch edge cases
 
 </Steps>
 
+<Callout type="warning">
+**Editing = re-prompt:** You don’t edit nodes on a canvas. You change the prompt → re-test → then activate.
+</Callout>
+
 ### The 3 Launch Rules
 
 <Steps>
@@ -422,6 +430,10 @@ Add tags, failure alerts, and a rollback plan.
 Sometimes a workflow isn't enough—you need a **user interface**. That's where **App Builder Agent** comes in.
 
 **What it does:** Generates lightweight Power Apps with SharePoint/Dataverse backend through natural language.
+
+<Callout type="warning">
+**Availability:** App Builder Agent is Frontier/Preview depending on tenant/region. It typically requires a Microsoft 365 Copilot license per user and is managed in the Power Platform admin center.
+</Callout>
 
 ### Example Use Cases
 

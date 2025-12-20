@@ -95,6 +95,10 @@ Microsoft offers several AI-building tools. Here's how Copilot Studio fits in:
 **M365 “Create Agent” vs Copilot Studio (full maker experience):** The lightweight builder inside Microsoft 365 Copilot is great for quick, declarative agents. In some tenants, you can open/export that agent in Copilot Studio for advanced features (topics, tools, evals, multi-agent). If the handoff isn’t available, rebuild in Copilot Studio directly.
 </Callout>
 
+<Callout type="tip">
+**When to “graduate” to Copilot Studio:** If you need Topics/flows, custom tools or connectors, evaluations and analytics, multi-agent orchestration, or deployment outside M365 (web/mobile/custom).
+</Callout>
+
 <Callout type="warning">
 **Anti-Pattern Alert:** If your first Copilot Studio build needs 20+ topics, 15 connectors, and no human approvals, you're building a compliance risk—not an MVP.
 </Callout>
@@ -718,12 +722,16 @@ Run **built-in evaluations** with uploaded or AI-generated test sets:
 
 ### Model Choice & Tool Protocols
 
-- **Model choice (preview in some tenants):** Select from available models when enabled.
+- **Model choice (preview in some tenants):** Some tenants can choose between models (e.g., OpenAI GPT‑4o and Anthropic Claude 3.5). Higher quality often means higher cost/latency—map it to the use case.
 - **Tool integration:** Connectors/actions today; standardized tool protocols (e.g., MCP) are roadmap/preview in some tenants.
 
 ### Agent Identity (Agent 365)
 
 Roadmap capability: agents can receive an identity (alias, email, Teams presence) and participate like colleagues (verify availability/timeline).
+
+<Callout type="info">
+**Example:** `HR-Agent@company.com` has a People Card, can be @mentioned in Teams, and receives email requests it can handle or escalate.
+</Callout>
 
 ### Custom Channels
 

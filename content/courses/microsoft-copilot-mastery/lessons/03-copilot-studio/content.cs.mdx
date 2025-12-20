@@ -95,6 +95,10 @@ Microsoft nabízí několik AI nástrojů. Tady je, jak se Copilot Studio hodí 
 **M365 „Create Agent“ vs Copilot Studio (plný maker zážitek):** Lehký builder v Microsoft 365 Copilotu je skvělý pro rychlé deklarativní agenty. V některých tenantech lze agenta otevřít/exportovat do Copilot Studio pro pokročilé funkce (topics, nástroje, evaluace, multi-agent). Pokud handoff není dostupný, vytvoř agenta rovnou v Copilot Studio.
 </Callout>
 
+<Callout type="tip">
+**Kdy "graduovat" do Copilot Studio:** Když potřebuješ Topics/flows, vlastní nástroje nebo konektory, evaluace a analytiku, multi-agent orchestraci, nebo nasazení mimo M365 (web/mobile/custom).
+</Callout>
+
 <Callout type="warning">
 **Anti-pattern alert:** Pokud první Copilot Studio projekt potřebuje 20+ topics, 15 konektorů a žádné schvalování, stavíš compliance riziko—not MVP.
 </Callout>
@@ -718,12 +722,16 @@ Spouštějte **vestavěné evaluace** s vlastním nebo AI-generovaným test sete
 
 ### Výběr modelů & Tool protokoly
 
-- **Výběr modelu (preview v některých tenantech):** Vyberte z dostupných modelů, pokud je funkce povolena.
+- **Výběr modelu (preview v některých tenantech):** Některé tenanty umí volit mezi modely (např. OpenAI GPT‑4o a Anthropic Claude 3.5). Vyšší kvalita často znamená vyšší náklad/latenci — mapuj to na use‑case.
 - **Integrace nástrojů:** Dnes konektory/akce; standardizované tool protokoly (např. MCP) jsou roadmap/preview v některých tenantech.
 
 ### Agent Identita (Agent 365)
 
 Roadmap funkce: agent může získat identitu (alias, email, Teams presence) a fungovat jako digitální kolega (ověřte dostupnost/timeline).
+
+<Callout type="info">
+**Příklad:** `HR-Agent@firma.cz` má vlastní People Card, může být @mention v Teams a přijímá emaily se žádostmi, které zpracuje nebo eskaluje.
+</Callout>
 
 ### Custom Channels
 
