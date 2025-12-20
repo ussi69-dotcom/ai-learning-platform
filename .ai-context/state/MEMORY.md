@@ -59,6 +59,23 @@ ESKALUJ na GPT-5.2 když:
 - **MCP Tools:** Playwright (`@playwright/mcp`), Context7 (`@upstash/context7-mcp`), Perplexity
 - **Network:** Zero Trust (UFW + Cloudflare Tunnel) - bind ports to `127.0.0.1:PORT`
 
+### Dev Access Note (as of 2025-12-20)
+
+- User reports frontend "Failed to connect to backend" from Cloudflare dev access. Check `NEXT_PUBLIC_API_URL` inside the frontend container (may be stale, e.g., `http://localhost:8000`) and restart if needed.
+- **CLI usage:** Call **Gemini and Claude via bash** (heredoc/pipe workflow).
+- **Change safety:** Do not adjust `.env` or restart containers unless explicitly asked; avoid breaking dev access.
+- **Visual QA login:** Use admin credentials from `.env` (e.g., `FIRST_SUPERUSER`/`FIRST_SUPERUSER_PASSWORD`) and never print them. Prefer local `http://localhost:3000` if Cloudflare access is flaky.
+
+### Subagent Orchestration Standard (Always On)
+
+- **Use subagents** (Gemini/Claude) for discrete tasks (research, extraction, review) with **clear task + context**.
+- **Provide all needed content + research** in the prompt; do not assume hidden context.
+- **Instruct subagents to draft only** and **not to report to the user**.
+- **Have subagents write output to temp files** (or quiet stdout) and **do not surface directly to user**.
+- **You must review/verify** their output before applying changes or reporting.
+- **Parallelize** independent subagent tasks when practical.
+- **Gemini = CLI for analysis/review**; **Playwright = MCP** to generate screenshots used by Gemini.
+
 ## 🔑 Standard Operating Protocols (SOPs)
 
 ### 0. Agent & Tool Selection Matrix 🎯 (v5.1)
@@ -129,6 +146,14 @@ EOF
 
 # Visual QA s obrázkem
 gemini -m gemini-3-pro-preview --file /path/to/screenshot.png "Analyze UI"
+```
+
+**Claude CLI (Anthropic):**
+```bash
+# Use bash heredoc/pipe (same pattern as Gemini)
+cat << 'EOF' | claude
+[prompt]
+EOF
 ```
 
 **Gemini Deep Research (Google AI Plus):**
@@ -234,6 +259,10 @@ docker compose build --no-cache frontend
 ---
 
 ## 📝 Lessons Learned
+
+### 2025-12-20: NotebookLM Extraction Request 🔎
+
+**Rule:** When new "must-use" videos are found, provide the user a NotebookLM extraction prompt + expected outputs (summary, key takeaways, timestamps, pitfalls) so they can pre-digest content.
 
 ### 2025-12-19: ID/Slug Resolution & MDXImage URL - Two Critical Bugs 🐛
 

@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-19 23:44 (Agent: Codex GPT-5.2)
-**Last Commit:** `abf8bd3` fix(VideoSwitcher): unify registration and parsing
-**Status:** 🟢 VideoSwitcher parsing hardened + verify run (lint warnings remain)
+**Last Updated:** 2025-12-20 16:07 (Agent: Codex GPT-5.2)
+**Last Commit:** `6a1b58e` docs: document VideoSwitcher parsing + Opus CLI
+**Status:** 🟡 Copilot lessons 02/03 UI polish landed (mobile diagram layouts, full-width MDX images, feedback auto-hide all screens, Sith next-page color). Visual QA done via Gemini + Playwright screenshots; Gemini flagged missing emoji fonts (likely headless), mobile table squeeze, L03 mobile video black. Claude content review says L02/L03 are GOLDEN. `npm run verify` passes (lint warnings only). Subagent orchestration instructions updated in MEMORY.
 
 ---
 
@@ -94,6 +94,21 @@
 
 ## 🎯 Current State
 
+### Latest Session (Dec 20, 2025 - L02/L03 UI Polish + Visual QA)
+
+| Task | Status | Notes |
+|------|--------|-------|
+| FeedbackFAB auto-hide all screens + lower position | ✅ Done | `frontend/components/FeedbackFAB.tsx` |
+| Sith last-page “Další strana” button color | ✅ Done | `frontend/app/[locale]/courses/[courseId]/lessons/[lessonId]/page.tsx` |
+| MDX images full-width on mobile | ✅ Done | `frontend/components/MDXImage.tsx` |
+| Mobile diagram HTML fallbacks | ✅ Done | `DiagramArchitecture.tsx`, `DiagramConcepts.tsx` |
+| Table scroll hint + gradient | ✅ Done | `frontend/components/MarkdownRenderer.tsx` |
+| Video fallback timer cleanup | ✅ Done | `frontend/components/VideoPlayer.tsx` |
+| Visual QA artifacts | ✅ Done | `visual_tests/lesson-02/03-*` |
+| Gemini visual QA | ✅ Done | Flags: missing emoji fonts (likely headless), mobile table squeeze, L03 mobile video black |
+| Claude content review | ✅ Done | Verdict: L02/L03 GOLDEN; verify referenced images/diagrams exist |
+| Frontend verify | ✅ Done | `npm run verify` (lint warnings only) |
+
 ### Latest Session (Dec 19, 2025 - VideoSwitcher Debugging)
 
 | Task | Status | Notes |
@@ -110,6 +125,7 @@
 
 | Hash | Message |
 |------|---------|
+| `6a1b58e` | docs: document VideoSwitcher parsing + Opus CLI |
 | `abf8bd3` | fix(VideoSwitcher): unify registration and parsing |
 | `9d09329` | fix(MarkdownRenderer): memoize parsed content to prevent VideoSwitcher remounts |
 | `679e6f6` | fix(VideoPlayer): wait 300ms for VideoSwitcher before giving up |
@@ -422,6 +438,8 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-20 | Codex GPT-5.2 | **L02/L03 QA Fixes** - softened claims, added availability caveats, fixed CZ “Laby”, added video fallback + origin param, localized hidden “Next” |
+| 2025-12-20 | Codex GPT-5.2 | **Copilot L02/L03 QA** - frontend verify OK (warnings), backend pytest fails (ModuleNotFoundError), Playwright visual blocked by Alpine deps; captured lesson screenshots via Playwright MCP |
 | 2025-12-19 | Codex GPT-5.2 | **VideoSwitcher Parsing** - unified parser + non-greedy regex + trailing comma cleanup; verify run |
 | 2025-12-19 | Codex GPT-5.2 | **VideoSwitcher Debugging** - registry race, subscription swap, wait state, memoized MDX parse; issue still intermittent |
 | 2025-12-19 | Claude      | **UX Polish** - FeedbackFAB mobile (auto-hide, bigger icon), Course sections (AI Path + MS365), P0-P3 RECOMMENDATIONS implemented |
