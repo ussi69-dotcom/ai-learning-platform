@@ -76,6 +76,35 @@ ESKALUJ na GPT-5.2 když:
 - **Parallelize** independent subagent tasks when practical.
 - **Gemini = CLI for analysis/review**; **Playwright = MCP** to generate screenshots used by Gemini.
 
+### Orchestration Policy (Always On)
+
+**Decision matrix**
+- Small localized change: implement directly; run narrow verification.
+- Multi-file/behavior change: write short plan; implement in slices; verify each slice.
+- Bug with repro: reproduce first; fix; add regression test when feasible.
+- Ambiguous requirements: ask 1–3 clarifying questions before editing.
+- Risky domains (auth/data/migrations/infra): invoke Codex extra-high; require explicit go/no-go.
+
+**Parallelism rules**
+- Parallelize independent, read-only discovery; keep batches small.
+- Never run `apply_patch` in parallel with other tools.
+- Avoid parallel commands sharing state (same files/dirs, DB, ports).
+- If one output gates next step, run it first, then parallelize.
+
+**Codex extra-high triggers**
+- Data-loss risk, security-sensitive paths, deps/CI/ops changes.
+- Large refactors or concurrency/perf hotspots.
+- Low-test-coverage areas where failure is costly.
+
+**Always-on checklist (<=8 lines)**
+- [ ] Restate goal + constraints (sandbox/network/approval)
+- [ ] Identify minimal files/symbols to touch
+- [ ] Decide: direct fix vs short plan
+- [ ] Implement smallest safe diff first
+- [ ] Add/run the narrowest verification available
+- [ ] Re-check edge cases + rollback path
+- [ ] Summarize changes, risks, next steps
+
 ## 🔑 Standard Operating Protocols (SOPs)
 
 ### 0. Agent & Tool Selection Matrix 🎯 (v5.1)
