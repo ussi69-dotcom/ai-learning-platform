@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-20 17:26 (Agent: Codex GPT-5.2)
-**Last Commit:** `6a1b58e` docs: document VideoSwitcher parsing + Opus CLI
-**Status:** 🟡 Copilot lessons 02/03 UI polish landed (mobile diagram layouts, full-width MDX images, feedback auto-hide all screens, Sith next-page color). Additional fixes: mobile tables render as cards, inline emoji replaced with Lucide SVGs in MarkdownRenderer, ConceptCard emoji mapping expanded, VideoPlayer shows YouTube thumbnail background. Added `docker-compose.qa.yml` to run local-only QA frontend on `127.0.0.1:3001` with `NEXT_PUBLIC_API_URL=http://localhost:8000` and started `ai-frontend-qa` (backend container recreated). `npm run verify` passes (lint warnings only). Subagent orchestration instructions updated in MEMORY.
+**Last Updated:** 2025-12-20 21:10 (Agent: Codex GPT-5.2)
+**Last Commit:** `94d9007` fix(ui): polish copilot lesson visuals
+**Status:** 🟡 Copilot lessons 02/03 UI polish expanded: emoji → inline Lucide icons in lesson/course headers + metadata, fixed inline parser to avoid emoji split, human-in-the-loop diagram now full-bleed on mobile with non-emoji labels, added `backend/pytest.ini` to fix pytest imports. Ran `npm run verify` (warnings only) + `pytest` (3 passed, 6 skipped). Playwright screenshots captured for L02/L03 desktop+mobile and L02 Sith last page (paths in session notes). MEMORY updated with new subagent orchestration rules.
 
 ---
 
@@ -441,6 +441,7 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-20 | Claude      | **Copilot L02/L03 Visual Polish** - inline emoji→Lucide in lesson/course headers, fixed inline parser, human-in-the-loop full-bleed mobile, added backend pytest.ini; Playwright screenshots + tests run |
 | 2025-12-20 | Codex GPT-5.2 | **L02/L03 QA Fixes** - softened claims, added availability caveats, fixed CZ “Laby”, added video fallback + origin param, localized hidden “Next” |
 | 2025-12-20 | Codex GPT-5.2 | **Copilot L02/L03 QA** - frontend verify OK (warnings), backend pytest fails (ModuleNotFoundError), Playwright visual blocked by Alpine deps; captured lesson screenshots via Playwright MCP |
 | 2025-12-19 | Codex GPT-5.2 | **VideoSwitcher Parsing** - unified parser + non-greedy regex + trailing comma cleanup; verify run |
