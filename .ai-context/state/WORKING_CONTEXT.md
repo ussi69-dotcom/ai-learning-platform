@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-20 23:10 (Agent: Codex GPT-5.2)
-**Last Commit:** `f2cad57` fix(ui): separate tradeoff radar title from labels
-**Status:** 🟡 Shifted tradeoff radar chart down to prevent title/subtitle overlap with axis label. No tests run.
+**Last Updated:** 2025-12-20 23:58 (Agent: Codex GPT-5.2)
+**Last Commit:** `67fd0ec` docs: allow login for visual QA
+**Status:** 🟡 Documented that normal login is allowed for visual QA; rechecked Quality Trade-offs Radar via local Playwright login and confirmed no overlap.
 
 ---
 
@@ -98,6 +98,7 @@
 
 | Task | Status | Notes |
 |------|--------|-------|
+| Radar overlap visual check | ✅ Done | Logged in locally, captured `visual_tests/lesson-03-quality-tradeoff-radar.png` |
 | Tradeoff radar title overlap | ✅ Done | Moved chart center down to clear top labels |
 | L03 governance visual swap | ✅ Done | Replaced ai-security-layers with security-attack-chain; added tradeoff-radar in analytics |
 | AI security diagram readability | ✅ Done | Moved AI agent/HITL markers below Audit Log text |
