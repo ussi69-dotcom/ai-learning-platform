@@ -2194,13 +2194,13 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
             </g>
 
             {/* Center: AI Agent */}
-            <g transform="translate(260, 215)">
+            <g transform="translate(260, 265)">
               <circle cx="40" cy="20" r="25" fill="#a855f7" fillOpacity="0.3" stroke="#a855f7" strokeWidth="2"/>
               <text x="40" y="25" textAnchor="middle" className="text-lg">🤖</text>
             </g>
 
             {/* HITL arrow */}
-            <g transform="translate(400, 210)">
+            <g transform="translate(400, 265)">
               <path d="M 0 20 L 80 20" stroke="#ec4899" strokeWidth="2" strokeDasharray="4 4"/>
               <circle cx="100" cy="20" r="20" fill="#ec4899" fillOpacity="0.2" stroke="#ec4899"/>
               <text x="100" y="25" textAnchor="middle" className="text-sm">👤</text>
