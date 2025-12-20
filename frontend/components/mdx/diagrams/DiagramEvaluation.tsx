@@ -255,7 +255,7 @@ function TradeoffRadarDiagram() {
   const fixed = { name: 'Fixed', values: [80, 90, 55, 75], color: '#22c55e' };
 
   const centerX = 300;
-  const centerY = 200;
+  const centerY = 220;
   const maxRadius = 120;
 
   // Calculate point positions
