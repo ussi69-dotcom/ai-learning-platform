@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-20 22:44 (Agent: Codex GPT-5.2)
-**Last Commit:** `2763bb0` docs(content): simplify governance rules list
-**Status:** 🟡 Converted L02 governance rules from heading Steps to numbered list with inline SVG icons for faster scanning/memory. No tests run (content-only).
+**Last Updated:** 2025-12-20 22:53 (Agent: Codex GPT-5.2)
+**Last Commit:** `dcf905f` docs(ui): add visual anchors for copilot lessons
+**Status:** 🟡 Added more visual anchors for L02/L03: agentic-vs-assistive diagram (now generic), MCP architecture diagram, regression matrix diagram, and EN-prompt info callouts. No tests run (content-only).
 
 ---
 
@@ -98,6 +98,7 @@
 
 | Task | Status | Notes |
 |------|--------|-------|
+| L02/L03 extra visual anchors | ✅ Done | Added agentic-vs-assistive + MCP architecture + regression matrix diagrams; prompt language callouts |
 | L02 governance list format | ✅ Done | Replaced Steps headings with numbered list + inline icons |
 | L02/L03 video alternatives + deltas | ✅ Done | Added admin inventory + App Builder storage + MCP preview; added BRK313/Reza/Shane Young videos |
 | Camoufox transcript SOP | ✅ Done | Added always-on workflow to MEMORY |
@@ -132,6 +133,7 @@
 
 | Hash | Message |
 |------|---------|
+| `dcf905f` | docs(ui): add visual anchors for copilot lessons |
 | `2763bb0` | docs(content): simplify governance rules list |
 | `4c45ef1` | docs(content): add copilot updates and videos |
 | `db1d79f` | docs: update working context |
