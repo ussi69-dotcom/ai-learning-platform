@@ -79,6 +79,14 @@ ESKALUJ na GPT-5.2 když:
 - **Escalate to Codex extra-high** for complex decisions or when stuck; keep the orchestrator role separate from implementer.
 - **Gemini = CLI for analysis/review**; **Playwright = MCP** to generate screenshots used by Gemini.
 
+### Camoufox Transcript Extraction SOP (Always On)
+
+- **Use Camoufox when MCP transcripts fail** (YouTube captions blocked or missing via APIs).
+- **Do not paste transcripts into chat**. Save to `/tmp/transcripts/<videoId>.vtt` and summarize from file.
+- **Flow:** open video URL → read `ytInitialPlayerResponse` → extract `captionTracks[].baseUrl` → download VTT/SRT → store to `/tmp/transcripts` → parse for timestamps.
+- **Delegation:** Claude/Gemini summarizes only from files; outputs delta notes + timestamped cites to `/tmp/transcripts/<videoId>.summary.md`. I review before reporting.
+- **Cookies only if needed:** request Netscape-format cookies for age/region gating; store to `/tmp/cookies.txt` and never commit.
+
 ### Orchestration Policy (Always On)
 
 **Decision matrix**
