@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-21 10:39 (Agent: Codex GPT-5.2)
-**Last Commit:** `fa3bb78` fix(ui): enhance copilot lesson visuals
-**Status:** 🟢 Added workflow impact cards to L02; refined tradeoff radar label spacing and AI security layers padding; `npm run verify` passes (lint warnings only).
+**Last Updated:** 2025-12-21 10:57 (Agent: Codex GPT-5.2)
+**Last Commit:** `7f5dc09` docs: add lesson upgrade golden path
+**Status:** 🟢 Documented L2/L3 upgrade template in content guidelines + multi-agent workflow; visuals remain golden; `npm run verify` passes (lint warnings only).
 
 ---
 
@@ -112,6 +112,7 @@
 | Hash | Message |
 |------|---------|
 | `fa3bb78` | fix(ui): enhance copilot lesson visuals |
+| `7f5dc09` | docs: add lesson upgrade golden path |
 
 ### Latest Session (Dec 20, 2025 - L02/L03 UI Polish + Visual QA)
 
