@@ -280,7 +280,19 @@ function TradeoffRadarDiagram({ isCs }: { isCs: boolean }) {
   const centerX = 300;
   const centerY = 240;
   const maxRadius = 110;
-  const labelRadius = maxRadius + 14;
+  const labelRadius = maxRadius + 22;
+  const labelOffsets = [
+    { x: 0, y: -6, anchor: 'middle' },
+    { x: 12, y: 0, anchor: 'start' },
+    { x: 0, y: 12, anchor: 'middle' },
+    { x: -12, y: 0, anchor: 'end' },
+  ] as const;
+  const keyOffsets = [
+    { x: 0, y: 10 },
+    { x: 12, y: 14 },
+    { x: 0, y: 18 },
+    { x: -12, y: 10 },
+  ] as const;
 
   // Calculate point positions
   const getPoint = (index: number, value: number) => {
@@ -462,8 +474,8 @@ function TradeoffRadarDiagram({ isCs }: { isCs: boolean }) {
           {/* Dimension labels */}
           {dimensions.map((dim, i) => {
             const angle = (Math.PI * 2 * i) / numDimensions - Math.PI / 2;
-            const x = centerX + Math.cos(angle) * labelRadius;
-            const y = centerY + Math.sin(angle) * labelRadius;
+            const x = centerX + Math.cos(angle) * labelRadius + labelOffsets[i].x;
+            const y = centerY + Math.sin(angle) * labelRadius + labelOffsets[i].y;
 
             // Highlight Safety and Helpfulness as key trade-off
             const isKeyDimension = dim === 'Safety' || dim === 'Helpfulness';
@@ -473,16 +485,16 @@ function TradeoffRadarDiagram({ isCs }: { isCs: boolean }) {
                 <text
                   x={x}
                   y={y}
-                  textAnchor="middle"
+                  textAnchor={labelOffsets[i].anchor}
                   className={`text-sm font-bold ${isKeyDimension ? 'fill-amber-600 dark:fill-amber-400' : 'fill-slate-600 dark:fill-slate-300'}`}
                 >
                   {dim}
                 </text>
                 {isKeyDimension && (
                   <text
-                    x={x}
-                    y={y + 14}
-                    textAnchor="middle"
+                    x={x + keyOffsets[i].x}
+                    y={y + keyOffsets[i].y}
+                    textAnchor={labelOffsets[i].anchor}
                     className="text-[9px] font-semibold fill-amber-700 dark:fill-amber-300"
                   >
                     ⚡ Key Trade-off

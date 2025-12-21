@@ -17,7 +17,7 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   if (type === 'local-llm-architecture') {
     return (
       <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
-        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
+        <div className="relative p-3 sm:p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
           <svg viewBox="0 0 800 300" className="w-full h-auto" role="img" aria-label="Local LLM Architecture: User -> UI -> Inference Engine -> Hardware">
             <defs>
               <linearGradient id="arch-grad-blue" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2186,7 +2186,7 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
               </div>
             </div>
           </div>
-          <svg viewBox="0 0 600 380" className="hidden md:block w-full h-auto" role="img" aria-label="AI Security Layers">
+          <svg viewBox="0 0 600 400" className="hidden md:block w-full h-auto" role="img" aria-label="AI Security Layers">
             {/* Title */}
             <text x="300" y="30" textAnchor="middle" className="text-lg font-bold fill-white">
               🔒 {isCs ? "Vrstvy zabezpečení AI" : "AI Security Layers"}
@@ -2229,13 +2229,13 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
             </g>
 
             {/* Center: AI Agent */}
-            <g transform="translate(260, 260)">
+            <g transform="translate(260, 270)">
               <circle cx="40" cy="20" r="25" fill="#a855f7" fillOpacity="0.3" stroke="#a855f7" strokeWidth="2"/>
               <text x="40" y="25" textAnchor="middle" className="text-lg">🤖</text>
             </g>
 
             {/* HITL arrow */}
-            <g transform="translate(400, 260)">
+            <g transform="translate(400, 270)">
               <path d="M 0 20 L 80 20" stroke="#ec4899" strokeWidth="2" strokeDasharray="4 4"/>
               <circle cx="100" cy="20" r="20" fill="#ec4899" fillOpacity="0.2" stroke="#ec4899"/>
               <text x="100" y="25" textAnchor="middle" className="text-sm">👤</text>
@@ -2243,7 +2243,7 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
             </g>
 
             {/* Bottom tip */}
-            <text x="300" y="370" textAnchor="middle" className="text-[10px] fill-slate-500">
+            <text x="300" y="392" textAnchor="middle" className="text-[10px] fill-slate-500">
               {isCs ? "Každá vrstva zachytí útoky, které prošly předchozí" : "Each layer catches attacks that passed the previous one"}
             </text>
           </svg>
@@ -3107,6 +3107,69 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
               <text x="135" y="30" textAnchor="middle" className="text-sm font-bold fill-green-300">{isCs ? 'Týden 2' : 'Week 2'}</text>
               <text x="135" y="52" textAnchor="middle" className="text-xs fill-slate-300">
                 {isCs ? 'Rozšíření • KPI • rollback plan' : 'Expand • KPIs • rollback plan'}
+              </text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // Workflow Impact Cards
+  // =====================
+  if (type === 'workflow-impact-cards') {
+    return (
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
+          <div className="md:hidden space-y-4">
+            <div className="text-center text-lg font-bold text-slate-200">
+              {isCs ? 'Dopad Workflows Agentu' : 'Workflow Impact Snapshots'}
+            </div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3">
+                <div className="font-semibold text-blue-300">🧑‍💼 {isCs ? 'HR Onboarding' : 'HR Onboarding'}</div>
+                <div className="text-sm text-slate-400">{isCs ? '3 h → 15 min (jen schválení)' : '3h → 15m (manager approval only)'}</div>
+              </div>
+              <div className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3">
+                <div className="font-semibold text-amber-300">💼 {isCs ? 'Kvalifikace leadů' : 'Sales Lead Qualification'}</div>
+                <div className="text-sm text-slate-400">{isCs ? '−80% výzkumu • 24 h → 2 h' : '−80% research • 24h → 2h'}</div>
+              </div>
+            </div>
+          </div>
+          <svg viewBox="0 0 800 240" className="hidden md:block w-full h-auto" role="img" aria-label="Workflow impact snapshots">
+            <text x="400" y="30" textAnchor="middle" className="text-lg font-bold fill-white">
+              {isCs ? 'Dopad Workflows Agentu' : 'Workflow Impact Snapshots'}
+            </text>
+            <text x="400" y="50" textAnchor="middle" className="text-xs fill-slate-400">
+              {isCs ? 'Reálné workflow přináší měřitelný čas' : 'Real workflows deliver measurable time savings'}
+            </text>
+
+            <g transform="translate(60, 70)">
+              <rect x="0" y="0" width="320" height="140" rx="16" fill="#3b82f6" fillOpacity="0.12" stroke="#3b82f6" strokeWidth="2" />
+              <text x="160" y="40" textAnchor="middle" className="text-2xl">🧑‍💼</text>
+              <text x="160" y="70" textAnchor="middle" className="text-base font-bold fill-blue-300">
+                {isCs ? 'HR Onboarding' : 'HR Onboarding'}
+              </text>
+              <text x="160" y="98" textAnchor="middle" className="text-sm fill-blue-200">
+                {isCs ? '3 h → 15 min' : '3h → 15m'}
+              </text>
+              <text x="160" y="120" textAnchor="middle" className="text-xs fill-slate-300">
+                {isCs ? 'Manažer jen schvaluje' : 'Manager approval only'}
+              </text>
+            </g>
+
+            <g transform="translate(420, 70)">
+              <rect x="0" y="0" width="320" height="140" rx="16" fill="#f59e0b" fillOpacity="0.12" stroke="#f59e0b" strokeWidth="2" />
+              <text x="160" y="40" textAnchor="middle" className="text-2xl">💼</text>
+              <text x="160" y="70" textAnchor="middle" className="text-base font-bold fill-amber-300">
+                {isCs ? 'Kvalifikace leadů' : 'Sales Lead Qualification'}
+              </text>
+              <text x="160" y="98" textAnchor="middle" className="text-sm fill-amber-200">
+                {isCs ? '−80% výzkumu' : '−80% research'}
+              </text>
+              <text x="160" y="120" textAnchor="middle" className="text-xs fill-slate-300">
+                {isCs ? '24 h → 2 h reakce' : '24h → 2h response'}
               </text>
             </g>
           </svg>
