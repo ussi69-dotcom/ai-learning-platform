@@ -2223,19 +2223,19 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
               <text x="160" y="25" textAnchor="middle" className="text-sm font-bold fill-blue-400">
                 📋 {isCs ? "Audit Log" : "Audit Logging"}
               </text>
-              <text x="160" y="45" textAnchor="middle" className="text-[10px] fill-blue-300">
+              <text x="160" y="45" textAnchor="middle" className="text-[10px] fill-blue-600 dark:fill-blue-200">
                 {isCs ? "Všechna volání nástrojů" : "All tool invocations"}
               </text>
             </g>
 
             {/* Center: AI Agent */}
-            <g transform="translate(260, 300)">
+            <g transform="translate(260, 260)">
               <circle cx="40" cy="20" r="25" fill="#a855f7" fillOpacity="0.3" stroke="#a855f7" strokeWidth="2"/>
               <text x="40" y="25" textAnchor="middle" className="text-lg">🤖</text>
             </g>
 
             {/* HITL arrow */}
-            <g transform="translate(400, 300)">
+            <g transform="translate(400, 260)">
               <path d="M 0 20 L 80 20" stroke="#ec4899" strokeWidth="2" strokeDasharray="4 4"/>
               <circle cx="100" cy="20" r="20" fill="#ec4899" fillOpacity="0.2" stroke="#ec4899"/>
               <text x="100" y="25" textAnchor="middle" className="text-sm">👤</text>

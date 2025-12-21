@@ -483,7 +483,7 @@ function TradeoffRadarDiagram({ isCs }: { isCs: boolean }) {
                     x={x}
                     y={y + 14}
                     textAnchor="middle"
-                    className="text-[9px] fill-amber-500 dark:fill-amber-500"
+                    className="text-[9px] font-semibold fill-amber-700 dark:fill-amber-300"
                   >
                     ⚡ Key Trade-off
                   </text>
