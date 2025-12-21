@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-21 10:57 (Agent: Codex GPT-5.2)
-**Last Commit:** `7f5dc09` docs: add lesson upgrade golden path
-**Status:** 🟢 Documented L2/L3 upgrade template in content guidelines + multi-agent workflow; visuals remain golden; `npm run verify` passes (lint warnings only).
+**Last Updated:** 2025-12-21 12:28 (Agent: Codex GPT-5.2)
+**Last Commit:** `ed96b60` feat(lesson-01): align copilot workday with golden
+**Status:** 🟢 Lesson 01 (Copilot workday) aligned to golden standard with Copilot Pages flow diagram + EN/CS parity; tests passed (lint warnings only).
 
 ---
 
@@ -94,7 +94,19 @@
 
 ## 🎯 Current State
 
-### Latest Session (Dec 21, 2025 - L02/L03 Visual Scaling + Auth QA)
+### Latest Session (Dec 21, 2025 - Copilot Lesson 01 Golden Upgrade)
+
+| Task | Status | Notes |
+|------|--------|-------|
+| Copilot Pages flow diagram | ✅ Done | Added `copilot-pages-flow` diagram + routing in Diagram components. |
+| L01 EN/CS parity + numbering | ✅ Done | New Copilot Pages section + Lab 2, renumbered sections/labs; reading time 40 min / 4 labs. |
+| Prompt language callout | ✅ Done | Added EN/CS note about prompts staying in English. |
+| Visual QA (local) | ✅ Done | Playwright screenshots: `/tmp/lesson-01-visual/lesson-01-en.png`, `/tmp/lesson-01-visual/lesson-01-cs.png`; Codex review flagged small/low-contrast secondary text (global UI). |
+| MDX validation | ⚠️ Warnings | `node scripts/validate_mdx.js` reports existing warnings + archive errors (known). |
+| Frontend verify | ✅ Done | `npm run verify` (lint warnings only, build ok). |
+| Backend tests | ✅ Done | `make test-backend` (3 passed, 6 skipped, warnings only). |
+
+### Previous Session (Dec 21, 2025 - L02/L03 Visual Scaling + Auth QA)
 
 | Task | Status | Notes |
 |------|--------|-------|
