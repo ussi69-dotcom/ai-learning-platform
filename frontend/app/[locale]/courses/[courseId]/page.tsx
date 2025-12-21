@@ -285,12 +285,12 @@ export default function CoursePage({
                       {renderTextWithIcons(lesson.description, `lesson-desc-${lesson.id}`)}
                     </p>
                     {/* Metadata Row */}
-                    <div className="flex items-center gap-4 mt-3 text-xs font-medium text-slate-500 dark:text-slate-500">
-                      <span className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md">
+                    <div className="flex items-center gap-4 mt-3 text-xs font-medium text-slate-600 dark:text-slate-400">
+                      <span className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-md">
                         <Clock className="w-3 h-3" aria-hidden="true" />
                         <span>{lesson.duration || "15 min"}</span>
                       </span>
-                      <span className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md">
+                      <span className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-md">
                         <FlaskConical className="w-3 h-3" aria-hidden="true" />
                         <span>{lesson.lab_count || 0} Labs</span>
                       </span>

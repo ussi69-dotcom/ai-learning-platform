@@ -163,10 +163,10 @@ export default function ProfilePage() {
 
                     {/* Edit Overlay */}
                     <div
-                      className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
                       onClick={() => setIsEditingAvatar(!isEditingAvatar)}
                     >
-                      <Settings className="w-8 h-8 text-white animate-spin-slow" />
+                      <Settings className="w-8 h-8 text-white animate-spin-slow group-hover:scale-110 transition-transform" />
                     </div>
                   </div>
                 </div>
@@ -274,7 +274,7 @@ export default function ProfilePage() {
                             style={{ width: `${Math.min(100, ((user.xp - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100)}%` }}
                           />
                         </div>
-                        <p className="text-xs text-slate-500 text-center">
+                        <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
                           {locale === 'cs'
                             ? `${nextLevelXP - user.xp} XP do další hodnosti`
                             : `${nextLevelXP - user.xp} XP to next rank`}
