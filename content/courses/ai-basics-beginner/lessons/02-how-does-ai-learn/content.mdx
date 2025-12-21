@@ -5,13 +5,13 @@
 ⏳ **Reading Time:** 20 min | 🧪 **[3] Labs Included**
 </Callout>
 
-<VideoSwitcher alternatives={[{"id":"Ilg3gGewQ5U","title":"Backpropagation Explained (3B1B)"},{"id":"aircAruvnKk","title":"Neural Networks (3B1B Classic)"}]} />
+<VideoSwitcher alternatives={[{"id":"Ilg3gGewQ5U","title":"Backpropagation Explained (3B1B)"},{"id":"aircAruvnKk","title":"Neural Networks (3B1B Classic)"},{"id":"E0Hmnixke2g","title":"All ML Algorithms in 17 min (2024)"},{"id":"PeMlggyqz0Y","title":"ML in 100 Seconds (Fireship)"}]} />
 
 ## ⚡ The Revelation
 
 **A neuron is just a number.**
 
-That's it. No magic. No consciousness. Just a number between 0 and 1 stored in a computer. And yet, when you connect trillions of these numbers in the right way... you get GPT-5.1.
+That's it. No magic. No consciousness. Just a number between 0 and 1 stored in a computer. And yet, when you connect trillions of these numbers in the right way... you get GPT-5.
 
 How does adding more numbers create *understanding*? How does a pile of math learn to write poetry, code software, and diagnose diseases?
 
@@ -171,34 +171,47 @@ It is **Trial and Error** on steroids.
 *   **Key:** Needs a simulation to run millions of times.
 </ConceptCard>
 
-### 🔬 Lab 3: The Associative Mixer
+### 🔬 Lab 3: The RLHF Simulator
 
-AI can transfer **style and tone** across completely unrelated domains. This proves it learns abstract patterns, not just facts.
+This lab simulates how AI actually improves through **human feedback**—the core of Reinforcement Learning from Human Feedback (RLHF).
 
-**Objective:** Watch AI apply 18th-century military rhetoric to... toothpaste.
+**Objective:** Experience the feedback loop that makes AI assistants helpful.
 
 **The Prompt:**
 ```text
-Write a product review for TOOTHPASTE, but in the style of an 18th-century military general writing a battle report.
+We're going to simulate RLHF (Reinforcement Learning from Human Feedback).
 
-Requirements:
-- Use archaic language ("henceforth", "whereby", "the enemy")
-- Treat plaque as a military enemy to be conquered
-- Include strategic terminology (flanking maneuvers, tactical retreat, victory)
-- End with a recommendation to "the Crown" or "High Command"
-- Keep it 2-3 paragraphs
+ROUND 1:
+Write a short explanation of photosynthesis for a 10-year-old. (2-3 sentences)
 
-Topic: Reviewing "MintFresh 3000" toothpaste after 2 weeks of use.
+[Wait for my feedback before Round 2]
+```
+
+**After AI responds, give feedback:**
+```text
+FEEDBACK: That was too technical. A 10-year-old wouldn't understand "chlorophyll" or "glucose".
+REWARD: 3/10
+
+ROUND 2:
+Try again. Use only words a child would know. Compare it to something fun like cooking or magic.
+```
+
+**After Round 2, give final feedback:**
+```text
+FEEDBACK: Much better! The cooking analogy worked great.
+REWARD: 9/10
+
+Now explain: What changed between Round 1 and Round 2? How did my feedback shape your response?
 ```
 
 **Analysis:**
-*   AI should produce something like: *"I write to inform the High Command of our decisive victory against the plaque insurgency..."*
-*   Notice how AI seamlessly blends two unrelated domains (dental hygiene + military history)
-*   This **cross-domain transfer** is impossible for rule-based systems
+*   Watch how AI adapts its response based on your feedback (reward signal)
+*   This is exactly how RLHF works: humans rate outputs, AI learns to maximize positive ratings
+*   The AI will explain its own learning process—meta-learning in action!
 
-**💡 Aha Moment:** "AI doesn't store 'toothpaste knowledge' and 'military knowledge' separately. It learned PATTERNS of language that can be mixed freely. That's why it can write a Shakespearean sonnet about pizza."
+**💡 Aha Moment:** "I just trained an AI in real-time! By giving feedback (reward/penalty), I shaped its behavior. This is exactly how ChatGPT learned to be helpful instead of just smart."
 
-<LabComplete labId="lab-associative-mixer" />
+<LabComplete labId="lab-rlhf-simulator" />
 
 ---
 
@@ -238,7 +251,7 @@ It's a **Black Box**.
 
 <Diagram type="black-box" />
 
-Inside a modern AI (like GPT-5.1), there are **trillions** of numbers (parameters) interacting in complex ways.
+Inside a modern AI (like GPT-5), there are **trillions** of numbers (parameters) interacting in complex ways.
 If you ask an engineer *"Why did the AI say 'Hello' instead of 'Hi'?"*, they can't point to a specific line of code.
 They can only say: *"Because the math decided it was 0.001% more likely."*
 

@@ -5,13 +5,13 @@
 ⏳ **Čas čtení:** 20 min | 🧪 **[3] Laby součástí**
 </Callout>
 
-<VideoSwitcher alternatives={[{"id":"Ilg3gGewQ5U","title":"Backpropagation (3B1B)"},{"id":"aircAruvnKk","title":"Neuronové sítě (3B1B Klasika)"}]} />
+<VideoSwitcher alternatives={[{"id":"Ilg3gGewQ5U","title":"Backpropagation (3B1B)"},{"id":"aircAruvnKk","title":"Neuronové sítě (3B1B Klasika)"},{"id":"E0Hmnixke2g","title":"Všechny ML algoritmy za 17 min (2024)"},{"id":"zQwL4uo3kf0","title":"Jak funguje AI? (CZ 2025)"}]} />
 
 ## ⚡ Zjevení
 
 **Neuron je jen číslo.**
 
-To je celé. Žádná magie. Žádné vědomí. Jen číslo mezi 0 a 1 uložené v počítači. A přesto, když propojíš biliony těchto čísel správným způsobem... dostaneš GPT-5.1.
+To je celé. Žádná magie. Žádné vědomí. Jen číslo mezi 0 a 1 uložené v počítači. A přesto, když propojíš biliony těchto čísel správným způsobem... dostaneš GPT-5.
 
 Jak může přidání dalších čísel vytvořit *porozumění*? Jak se hromada matematiky naučí psát poezii, programovat software a diagnostikovat nemoci?
 
@@ -171,34 +171,47 @@ Je to **Pokus a Omyl** na steroidech.
 *   **Klíč:** Potřebuje simulaci, aby mohla běžet miliony krát.
 </ConceptCard>
 
-### 🔬 Lab 3: Asociativní mixér
+### 🔬 Lab 3: RLHF Simulátor
 
-AI dokáže přenášet **styl a tón** mezi úplně nesouvisejícími oblastmi. To dokazuje, že se učí abstraktní vzory, ne jen fakta.
+Tento lab simuluje, jak se AI skutečně zlepšuje pomocí **lidské zpětné vazby** — jádro RLHF (Reinforcement Learning from Human Feedback).
 
-**Cíl:** Sledovat, jak AI aplikuje vojenskou rétoriku 18. století na... zubní pastu.
+**Cíl:** Zažít zpětnovazební smyčku, která dělá AI asistenty užitečnými.
 
 **Prompt:**
 ```text
-Napiš recenzi na ZUBNÍ PASTU, ale ve stylu vojenského generála z 18. století, který píše bojovou zprávu.
+Budeme simulovat RLHF (Reinforcement Learning from Human Feedback - Učení posilováním z lidské zpětné vazby).
 
-Požadavky:
-- Používej archaický jazyk ("tudíž", "načež", "nepřítel")
-- Zacházej se zubním plakem jako s vojenským nepřítelem k poražení
-- Zahrň strategickou terminologii (obchvatné manévry, taktický ústup, vítězství)
-- Zakonči doporučením "Koruně" nebo "Velitelství"
-- Délka 2-3 odstavce
+KOLO 1:
+Napiš krátké vysvětlení fotosyntézy pro 10leté dítě. (2-3 věty)
 
-Téma: Recenzuji zubní pastu "MátaNádhera 3000" po 2 týdnech používání.
+[Počkej na mou zpětnou vazbu před Kolem 2]
+```
+
+**Po odpovědi AI dej zpětnou vazbu:**
+```text
+ZPĚTNÁ VAZBA: To bylo příliš odborné. 10leté dítě by nerozumělo "chlorofyl" nebo "glukóza".
+ODMĚNA: 3/10
+
+KOLO 2:
+Zkus to znovu. Používej jen slova, která by dítě znalo. Přirovnej to k něčemu zábavnému jako vaření nebo kouzla.
+```
+
+**Po Kole 2 dej finální zpětnou vazbu:**
+```text
+ZPĚTNÁ VAZBA: Mnohem lepší! Přirovnání k vaření fungovalo skvěle.
+ODMĚNA: 9/10
+
+Teď vysvětli: Co se změnilo mezi Kolem 1 a Kolem 2? Jak moje zpětná vazba ovlivnila tvou odpověď?
 ```
 
 **Analýza:**
-*   AI by měla vyprodukovat něco jako: *"Oznamuji Nejvyššímu velitelství naše rozhodující vítězství proti insurgenci zubního plaku..."*
-*   Všimni si, jak AI plynule spojuje dvě nesouvisející oblasti (dentální hygiena + vojenská historie)
-*   Tento **cross-domain transfer** je nemožný pro systémy založené na pravidlech
+*   Sleduj, jak AI přizpůsobuje odpověď na základě tvé zpětné vazby (signál odměny)
+*   Přesně takto funguje RLHF: lidé hodnotí výstupy, AI se učí maximalizovat pozitivní hodnocení
+*   AI vysvětlí svůj vlastní proces učení — meta-učení v akci!
 
-**💡 Aha Moment:** "AI neukládá 'znalosti o zubní pastě' a 'vojenské znalosti' odděleně. Naučila se VZORY jazyka, které lze libovolně kombinovat. Proto umí napsat Shakespearovský sonet o pizze."
+**💡 Aha Moment:** "Právě jsem v reálném čase trénoval/a AI! Poskytnutím zpětné vazby (odměna/trest) jsem formoval/a její chování. Přesně takto se ChatGPT naučil být užitečný, ne jen chytrý."
 
-<LabComplete labId="lab-associative-mixer" />
+<LabComplete labId="lab-rlhf-simulator" />
 
 ---
 
@@ -238,7 +251,7 @@ Je to **Černá skříňka**.
 
 <Diagram type="black-box" />
 
-Uvnitř moderní AI (jako GPT-5.1) jsou **biliony** čísel (parametrů), které interagují složitými způsoby.
+Uvnitř moderní AI (jako GPT-5) jsou **biliony** čísel (parametrů), které interagují složitými způsoby.
 Když se zeptáš inženýra *"Proč AI řekla 'Ahoj' místo 'Čau'?"*, nemůže ukázat na konkrétní řádek kódu.
 Může jen říct: *"Protože matematika rozhodla, že to bylo o 0,001 % pravděpodobnější."*
 

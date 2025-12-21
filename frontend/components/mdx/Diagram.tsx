@@ -20,7 +20,7 @@ export default function Diagram({ type }: DiagramProps) {
   }
 
   // Training & Learning Processes
-  if (['training-loop', 'training-pipeline'].includes(type)) {
+  if (['training-loop', 'training-pipeline', 'neural-network', 'learning-types-overview', 'supervised-learning-flow', 'clustering-visualization', 'reinforcement-learning-loop'].includes(type)) {
     return <DiagramTraining type={type} />;
   }
 
