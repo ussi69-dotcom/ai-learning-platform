@@ -152,7 +152,7 @@ export default function FeedbackFAB({ onModeChange, currentMode, onPlaceFeedback
 
   return (
     <div className={cn(
-      "fixed bottom-2 md:bottom-4 right-4 md:right-5 z-40 flex flex-col items-end space-y-2 group/fab pointer-events-none transition-opacity duration-300",
+      "fixed bottom-1 md:bottom-2 right-3 md:right-4 z-40 flex flex-col items-end space-y-2 group/fab pointer-events-none transition-opacity duration-300",
       isVisible ? "opacity-100" : "opacity-0"
     )}>
       {/* Instructions - placing and viewing always visible, idle only on hover */}

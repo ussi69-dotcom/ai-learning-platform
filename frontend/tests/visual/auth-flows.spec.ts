@@ -1,13 +1,34 @@
 import { test, expect } from '@playwright/test';
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Visual tests for authenticated user flows
  * Uses test admin credentials
  */
 
+const loadEnvFile = () => {
+  const envPath = path.resolve(__dirname, '../../../.env');
+  if (!fs.existsSync(envPath)) {
+    return {};
+  }
+
+  return fs.readFileSync(envPath, 'utf8')
+    .split(/\r?\n/)
+    .filter((line) => line.trim() && !line.trim().startsWith('#'))
+    .reduce<Record<string, string>>((acc, line) => {
+      const [key, ...rest] = line.split('=');
+      if (!key) return acc;
+      const rawValue = rest.join('=').trim();
+      acc[key.trim()] = rawValue.replace(/^['"]|['"]$/g, '');
+      return acc;
+    }, {});
+};
+
+const envVars = loadEnvFile();
 const TEST_USER = {
-  email: 'admin@ai-platform.com',
-  password: 'admin123',
+  email: process.env.FIRST_SUPERUSER || envVars.FIRST_SUPERUSER || 'admin@ai-platform.com',
+  password: process.env.FIRST_SUPERUSER_PASSWORD || envVars.FIRST_SUPERUSER_PASSWORD || 'admin123',
 };
 
 test.describe('Authenticated Pages', () => {

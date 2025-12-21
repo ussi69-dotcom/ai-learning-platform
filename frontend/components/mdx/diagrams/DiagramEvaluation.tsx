@@ -1,18 +1,22 @@
 "use client";
 
 import React from 'react';
+import { useLocale } from 'next-intl';
 
 interface DiagramProps {
   type: string;
 }
 
 export default function DiagramEvaluation({ type }: DiagramProps) {
+  const locale = useLocale();
+  const isCs = locale === 'cs';
+
   if (type === 'regression-matrix') {
-    return <RegressionMatrixDiagram />;
+    return <RegressionMatrixDiagram isCs={isCs} />;
   }
 
   if (type === 'tradeoff-radar') {
-    return <TradeoffRadarDiagram />;
+    return <TradeoffRadarDiagram isCs={isCs} />;
   }
 
   return null;
@@ -23,7 +27,7 @@ export default function DiagramEvaluation({ type }: DiagramProps) {
  * Shows Test Cases vs Versions with Pass/Fail indicators
  * Highlights how Fix #1 fixed TC3/TC4 but broke TC5 (regression)
  */
-function RegressionMatrixDiagram() {
+function RegressionMatrixDiagram({ isCs }: { isCs: boolean }) {
   // Test case data: [name, baseline, fix1, fix2]
   // true = pass (green), false = fail (red)
   const testCases = [
@@ -44,11 +48,30 @@ function RegressionMatrixDiagram() {
   const startY = 80;
 
   return (
-    <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+    <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
       <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
+        <div className="md:hidden space-y-3">
+          <div className="text-center text-lg font-bold text-slate-200">
+            {isCs ? 'Regresní matice' : 'Regression Matrix'}
+          </div>
+          <div className="text-sm text-slate-400 text-center">
+            {isCs ? 'Fix #1 opravuje edge cases, ale rozbíjí TC5' : 'Fix #1 fixes edge cases but breaks TC5'}
+          </div>
+          <div className="grid gap-2 text-sm">
+            <div className="rounded-xl border border-green-500/30 bg-green-500/10 px-3 py-2 text-green-200">
+              {isCs ? 'Baseline: TC1, TC2, TC5 ✅' : 'Baseline: TC1, TC2, TC5 ✅'}
+            </div>
+            <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-amber-200">
+              {isCs ? 'Fix #1: TC3, TC4 ✅ • TC5 ❌' : 'Fix #1: TC3, TC4 ✅ • TC5 ❌'}
+            </div>
+            <div className="rounded-xl border border-green-500/30 bg-green-500/10 px-3 py-2 text-green-200">
+              {isCs ? 'Fix #2: všechno ✅' : 'Fix #2: all ✅'}
+            </div>
+          </div>
+        </div>
         <svg
           viewBox="0 0 600 380"
-          className="w-full h-auto"
+          className="hidden md:block w-full h-auto"
           role="img"
           aria-label="Regression Matrix: Test Cases vs Versions showing how Fix #1 introduced a regression in TC5"
         >
@@ -245,7 +268,7 @@ function RegressionMatrixDiagram() {
  * Shows Accuracy, Safety, Helpfulness, Conciseness
  * Two data series: Baseline vs Fixed
  */
-function TradeoffRadarDiagram() {
+function TradeoffRadarDiagram({ isCs }: { isCs: boolean }) {
   // Dimensions for radar chart
   const dimensions = ['Accuracy', 'Safety', 'Helpfulness', 'Conciseness'];
   const numDimensions = dimensions.length;
@@ -257,6 +280,7 @@ function TradeoffRadarDiagram() {
   const centerX = 300;
   const centerY = 220;
   const maxRadius = 120;
+  const labelRadius = maxRadius + 10;
 
   // Calculate point positions
   const getPoint = (index: number, value: number) => {
@@ -280,11 +304,27 @@ function TradeoffRadarDiagram() {
   const gridLevels = [20, 40, 60, 80, 100];
 
   return (
-    <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+    <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
       <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
+        <div className="md:hidden space-y-3">
+          <div className="text-center text-lg font-bold text-slate-200">
+            {isCs ? 'Radar kompromisů kvality' : 'Quality Trade-offs Radar'}
+          </div>
+          <div className="text-sm text-slate-400 text-center">
+            {isCs ? 'Bezpečnost vs. užitečnost v praxi' : 'Safety vs helpfulness in practice'}
+          </div>
+          <div className="grid gap-2 text-sm">
+            <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-2 text-red-200">
+              {isCs ? 'Baseline: vyšší užitečnost, nižší bezpečnost' : 'Baseline: higher helpfulness, lower safety'}
+            </div>
+            <div className="rounded-xl border border-green-500/30 bg-green-500/10 px-3 py-2 text-green-200">
+              {isCs ? 'Fixed: vyšší bezpečnost, nižší užitečnost' : 'Fixed: higher safety, lower helpfulness'}
+            </div>
+          </div>
+        </div>
         <svg
           viewBox="0 0 600 420"
-          className="w-full h-auto"
+          className="hidden md:block w-full h-auto"
           role="img"
           aria-label="Tradeoff Radar: Comparing Baseline (high helpfulness, low safety) vs Fixed (high safety, lower helpfulness)"
         >
@@ -422,7 +462,6 @@ function TradeoffRadarDiagram() {
           {/* Dimension labels */}
           {dimensions.map((dim, i) => {
             const angle = (Math.PI * 2 * i) / numDimensions - Math.PI / 2;
-            const labelRadius = maxRadius + 30;
             const x = centerX + Math.cos(angle) * labelRadius;
             const y = centerY + Math.sin(angle) * labelRadius;
 

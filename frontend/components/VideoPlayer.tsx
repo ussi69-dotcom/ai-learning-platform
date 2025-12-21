@@ -34,6 +34,7 @@ export const VideoPlayer = ({
   const [videos, setVideos] = useState<Video[]>([]);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
+  const [reloadToken, setReloadToken] = useState(0);
   const fallbackTimerRef = useRef<number | null>(null);
   const loadedVideoIdsRef = useRef<Set<string>>(new Set());
   const initializedRef = useRef(false);
@@ -109,6 +110,8 @@ export const VideoPlayer = ({
       return undefined;
     }
 
+    setReloadToken(0);
+
     if (loadedVideoIdsRef.current.has(activeVideo.id)) {
       setIsVideoLoaded(true);
       setShowFallback(false);
@@ -158,6 +161,13 @@ export const VideoPlayer = ({
   }`;
   const watchUrl = `https://www.youtube.com/watch?v=${activeVideo.id}`;
   const thumbnailUrl = `https://img.youtube.com/vi/${activeVideo.id}/hqdefault.jpg`;
+  const retryLoad = () => {
+    if (!activeVideo?.id) return;
+    loadedVideoIdsRef.current.delete(activeVideo.id);
+    setShowFallback(false);
+    setIsVideoLoaded(false);
+    setReloadToken((prev) => prev + 1);
+  };
 
   return (
     <VideoRegistryContext.Provider value={contextValue}>
@@ -186,6 +196,13 @@ export const VideoPlayer = ({
                   ? "Video se nedaří načíst"
                   : "Video not loading"}
               </div>
+              <button
+                type="button"
+                onClick={retryLoad}
+                className="text-xs font-semibold text-white bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full border border-white/20 transition-colors"
+              >
+                {locale === "cs" ? "Zkusit znovu" : "Retry"}
+              </button>
               <a
                 href={watchUrl}
                 target="_blank"
@@ -197,7 +214,7 @@ export const VideoPlayer = ({
             </div>
           )}
           <iframe
-            key={activeVideo.id}
+            key={`${activeVideo.id}-${reloadToken}`}
             className="w-full h-full"
             src={embedUrl}
             title={activeVideo.title}

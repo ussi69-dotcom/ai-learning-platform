@@ -98,9 +98,26 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   // =====================
   if (type === 'mcp-architecture') {
     return (
-      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
-          <svg viewBox="0 0 800 350" className="w-full h-auto" role="img" aria-label="MCP Architecture: Client <-> Protocol <-> Server <-> Resource">
+          <div className="md:hidden space-y-4">
+            <div className="text-center text-lg font-bold text-slate-200">🔌 MCP Architecture</div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3">
+                {isCs ? '1. MCP Host (klient)' : '1. MCP Host (client)'}
+              </div>
+              <div className="rounded-xl border border-slate-500/40 bg-slate-500/10 px-4 py-3">
+                {isCs ? '2. MCP Protocol (JSON-RPC)' : '2. MCP Protocol (JSON-RPC)'}
+              </div>
+              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-4 py-3">
+                {isCs ? '3. MCP Server (tool runtime)' : '3. MCP Server (tool runtime)'}
+              </div>
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3">
+                {isCs ? '4. Resources (DB, Files, APIs)' : '4. Resources (DB, Files, APIs)'}
+              </div>
+            </div>
+          </div>
+          <svg viewBox="0 0 800 350" className="hidden md:block w-full h-auto" role="img" aria-label="MCP Architecture: Client <-> Protocol <-> Server <-> Resource">
              <defs>
               <marker id="mcp-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
                 <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
@@ -706,9 +723,27 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   // =====================
   if (type === 'agentic-vs-assistive') {
     return (
-      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
-          <svg viewBox="0 0 800 350" className="w-full h-auto" role="img" aria-label="Agentic vs Assistive AI Comparison">
+          <div className="md:hidden space-y-4">
+            <div className="text-center text-lg font-bold text-slate-200">🤖 {isCs ? 'Asistivní vs Agentní AI' : 'Assistive vs Agentic AI'}</div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3">
+                <div className="font-semibold text-red-300">{isCs ? 'Asistivní (ty makáš)' : 'Assistive (you work)'}</div>
+                <div className="text-sm text-slate-400">
+                  {isCs ? 'Prompt → odpověď → copy/paste → debug' : 'Prompt → response → copy/paste → debug'}
+                </div>
+              </div>
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3">
+                <div className="font-semibold text-green-300">{isCs ? 'Agentní (AI pracuje)' : 'Agentic (AI works)'}</div>
+                <div className="text-sm text-slate-400">
+                  {isCs ? 'Cíl → plán → akce → verifikace' : 'Goal → plan → act → verify'}
+                </div>
+              </div>
+            </div>
+            <div className="text-center text-sm text-slate-400">💡 {isCs ? 'Agentní AI může jednat, ne jen radit' : 'Agentic AI can act, not just suggest'}</div>
+          </div>
+          <svg viewBox="0 0 800 350" className="hidden md:block w-full h-auto" role="img" aria-label="Agentic vs Assistive AI Comparison">
             <defs>
               <marker id="compare-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
                 <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
@@ -2194,13 +2229,13 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
             </g>
 
             {/* Center: AI Agent */}
-            <g transform="translate(260, 265)">
+            <g transform="translate(260, 280)">
               <circle cx="40" cy="20" r="25" fill="#a855f7" fillOpacity="0.3" stroke="#a855f7" strokeWidth="2"/>
               <text x="40" y="25" textAnchor="middle" className="text-lg">🤖</text>
             </g>
 
             {/* HITL arrow */}
-            <g transform="translate(400, 265)">
+            <g transform="translate(400, 280)">
               <path d="M 0 20 L 80 20" stroke="#ec4899" strokeWidth="2" strokeDasharray="4 4"/>
               <circle cx="100" cy="20" r="20" fill="#ec4899" fillOpacity="0.2" stroke="#ec4899"/>
               <text x="100" y="25" textAnchor="middle" className="text-sm">👤</text>
@@ -2211,6 +2246,96 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
             <text x="300" y="340" textAnchor="middle" className="text-[10px] fill-slate-500">
               {isCs ? "Každá vrstva zachytí útoky, které prošly předchozí" : "Each layer catches attacks that passed the previous one"}
             </text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // Enterprise Agent Triad
+  // =====================
+  if (type === 'enterprise-agent-triad') {
+    return (
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
+          <div className="md:hidden space-y-4">
+            <div className="text-center text-lg font-bold text-slate-200">
+              {isCs ? 'Tři pilíře agenta' : 'The Agent Triad'}
+            </div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-indigo-500/40 bg-indigo-500/10 px-4 py-3">
+                {isCs ? 'Instrukce: persona, ton, limity' : 'Instructions: persona, tone, constraints'}
+              </div>
+              <div className="rounded-xl border border-sky-500/40 bg-sky-500/10 px-4 py-3">
+                {isCs ? 'Znalost: SharePoint, OneDrive, web' : 'Knowledge: SharePoint, OneDrive, web'}
+              </div>
+              <div className="rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3">
+                {isCs ? 'Akce: flowy, API, automatizace' : 'Actions: flows, APIs, automation'}
+              </div>
+            </div>
+          </div>
+          <svg viewBox="0 0 800 320" className="hidden md:block w-full h-auto" role="img" aria-label="Enterprise Agent Triad: Instructions, Knowledge, Actions around an Agent core">
+            <defs>
+              <marker id="triad-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Title */}
+            <text x="400" y="30" textAnchor="middle" className="text-lg font-bold fill-white">
+              {isCs ? 'Tři pilíře enterprise agenta' : 'The Enterprise Agent Triad'}
+            </text>
+            <text x="400" y="50" textAnchor="middle" className="text-xs fill-slate-400">
+              {isCs ? 'Instrukce • Znalost • Akce' : 'Instructions • Knowledge • Actions'}
+            </text>
+
+            {/* Center Agent */}
+            <g transform="translate(350, 130)">
+              <circle cx="50" cy="50" r="45" fill="#0f172a" stroke="#94a3b8" strokeWidth="2"/>
+              <text x="50" y="46" textAnchor="middle" className="text-xl">🤖</text>
+              <text x="50" y="70" textAnchor="middle" className="text-xs font-bold fill-slate-200">
+                {isCs ? 'Agent' : 'Agent'}
+              </text>
+            </g>
+
+            {/* Instructions */}
+            <g transform="translate(280, 70)">
+              <rect x="0" y="0" width="240" height="70" rx="12" fill="#6366f1" fillOpacity="0.15" stroke="#6366f1" strokeWidth="2"/>
+              <text x="120" y="28" textAnchor="middle" className="text-sm font-bold fill-indigo-300">
+                {isCs ? 'Instrukce' : 'Instructions'}
+              </text>
+              <text x="120" y="48" textAnchor="middle" className="text-xs fill-indigo-200">
+                {isCs ? 'Persona, ton, limity' : 'Persona, tone, constraints'}
+              </text>
+            </g>
+
+            {/* Knowledge */}
+            <g transform="translate(80, 210)">
+              <rect x="0" y="0" width="260" height="70" rx="12" fill="#0ea5e9" fillOpacity="0.15" stroke="#0ea5e9" strokeWidth="2"/>
+              <text x="130" y="28" textAnchor="middle" className="text-sm font-bold fill-sky-300">
+                {isCs ? 'Znalost' : 'Knowledge'}
+              </text>
+              <text x="130" y="48" textAnchor="middle" className="text-xs fill-sky-200">
+                {isCs ? 'SharePoint, OneDrive, web' : 'SharePoint, OneDrive, web'}
+              </text>
+            </g>
+
+            {/* Actions */}
+            <g transform="translate(460, 210)">
+              <rect x="0" y="0" width="260" height="70" rx="12" fill="#10b981" fillOpacity="0.15" stroke="#10b981" strokeWidth="2"/>
+              <text x="130" y="28" textAnchor="middle" className="text-sm font-bold fill-emerald-300">
+                {isCs ? 'Akce' : 'Actions'}
+              </text>
+              <text x="130" y="48" textAnchor="middle" className="text-xs fill-emerald-200">
+                {isCs ? 'Flowy, API, automace' : 'Flows, APIs, automation'}
+              </text>
+            </g>
+
+            {/* Connectors */}
+            <path d="M 400 140 L 400 180" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#triad-arrow)" />
+            <path d="M 320 210 L 400 190" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#triad-arrow)" />
+            <path d="M 480 210 L 400 190" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#triad-arrow)" />
           </svg>
         </div>
       </div>
@@ -2511,9 +2636,28 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   // =====================
   if (type === 'security-attack-chain') {
     return (
-      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
-          <svg viewBox="0 0 800 340" className="w-full h-auto" role="img" aria-label="Security Attack Chain">
+          <div className="md:hidden space-y-4">
+            <div className="text-center text-lg font-bold text-slate-200">
+              {isCs ? 'Řetězec útoku na AI agenta' : 'AI Agent Attack Chain'}
+            </div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3">
+                {isCs ? '1. Škodlivý soubor' : '1. Malicious file'}
+              </div>
+              <div className="rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3">
+                {isCs ? '2. Agent čte a poslouchá' : '2. Agent reads and obeys'}
+              </div>
+              <div className="rounded-xl border border-red-600/40 bg-red-600/10 px-4 py-3">
+                {isCs ? '3. Spustí příkaz (exfiltrace)' : '3. Executes command (exfiltration)'}
+              </div>
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3">
+                {isCs ? 'Obrana: review + blokace webhooků + žádné secrets' : 'Defense: review + block webhooks + no secrets'}
+              </div>
+            </div>
+          </div>
+          <svg viewBox="0 0 800 340" className="hidden md:block w-full h-auto" role="img" aria-label="Security Attack Chain">
             <defs>
               <linearGradient id="attack-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#f59e0b" />
@@ -2765,6 +2909,260 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
               <text x="70" y="60" textAnchor="middle" className="text-sm font-bold fill-green-400">Response</text>
               <text x="70" y="80" textAnchor="middle" className="text-xs fill-green-300">{isCs ? '(Hlas)' : '(The Voice)'}</text>
               <text x="70" y="105" textAnchor="middle" className="text-xs fill-slate-400">{isCs ? 'Teams, Email, Log' : 'Teams, Email, Log'}</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // Workflow Lifecycle Loop
+  // =====================
+  if (type === 'workflow-lifecycle-loop') {
+    return (
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
+          <div className="md:hidden space-y-4">
+            <div className="text-center text-lg font-bold text-slate-200">♻️ {isCs ? 'Životní cyklus workflow' : 'Workflow Lifecycle'}</div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3">
+                1. {isCs ? 'Záměr + Prompt' : 'Intent + Prompt'}
+              </div>
+              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-4 py-3">
+                2. {isCs ? 'Build + Integrace' : 'Build + Integrations'}
+              </div>
+              <div className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3">
+                3. {isCs ? 'Test + Debug' : 'Test + Debug'}
+              </div>
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3">
+                4. {isCs ? 'Monitor + Iterace' : 'Monitor + Iterate'}
+              </div>
+            </div>
+          </div>
+          <svg viewBox="0 0 800 260" className="hidden md:block w-full h-auto" role="img" aria-label="Workflow lifecycle loop">
+            <defs>
+              <marker id="lifecycle-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            <text x="400" y="30" textAnchor="middle" className="text-lg font-bold fill-white">
+              ♻️ {isCs ? 'Životní cyklus workflow' : 'Workflow Lifecycle'}
+            </text>
+            <text x="400" y="50" textAnchor="middle" className="text-xs fill-slate-400">
+              {isCs ? 'Nikdy není hotovo — jen stabilnější' : 'Never done — only more stable'}
+            </text>
+
+            {/* Top: Intent + Prompt */}
+            <g transform="translate(300, 70)">
+              <rect x="0" y="0" width="200" height="50" rx="10" fill="#3b82f6" fillOpacity="0.12" stroke="#3b82f6" />
+              <text x="100" y="30" textAnchor="middle" className="text-sm font-bold fill-blue-300">
+                1. {isCs ? 'Záměr + Prompt' : 'Intent + Prompt'}
+              </text>
+            </g>
+
+            {/* Right: Build + Integrations */}
+            <g transform="translate(540, 120)">
+              <rect x="0" y="0" width="220" height="50" rx="10" fill="#a855f7" fillOpacity="0.12" stroke="#a855f7" />
+              <text x="110" y="30" textAnchor="middle" className="text-sm font-bold fill-purple-300">
+                2. {isCs ? 'Build + Integrace' : 'Build + Integrations'}
+              </text>
+            </g>
+
+            {/* Bottom: Test + Debug */}
+            <g transform="translate(300, 170)">
+              <rect x="0" y="0" width="200" height="50" rx="10" fill="#f59e0b" fillOpacity="0.12" stroke="#f59e0b" />
+              <text x="100" y="30" textAnchor="middle" className="text-sm font-bold fill-amber-300">
+                3. {isCs ? 'Test + Debug' : 'Test + Debug'}
+              </text>
+            </g>
+
+            {/* Left: Monitor + Iterate */}
+            <g transform="translate(40, 120)">
+              <rect x="0" y="0" width="220" height="50" rx="10" fill="#22c55e" fillOpacity="0.12" stroke="#22c55e" />
+              <text x="110" y="30" textAnchor="middle" className="text-sm font-bold fill-green-300">
+                4. {isCs ? 'Monitor + Iterace' : 'Monitor + Iterate'}
+              </text>
+            </g>
+
+            {/* Loop arrows */}
+            <path d="M 400 120 L 540 145" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#lifecycle-arrow)" />
+            <path d="M 650 170 L 500 195" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#lifecycle-arrow)" />
+            <path d="M 300 195 L 150 170" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#lifecycle-arrow)" />
+            <path d="M 150 120 L 300 95" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#lifecycle-arrow)" />
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // Pilot Timeline (4-week)
+  // =====================
+  if (type === 'pilot-timeline') {
+    return (
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
+          <div className="md:hidden space-y-4">
+            <div className="text-center text-lg font-bold text-slate-200">🧪 {isCs ? 'Pilotní roadmapa (4 týdny)' : 'Pilot Roadmap (4 weeks)'}</div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3">
+                {isCs ? 'Týden 1: Scope + data + guardrails' : 'Week 1: Scope + data + guardrails'}
+              </div>
+              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-4 py-3">
+                {isCs ? 'Týden 2: Shadow mode + review' : 'Week 2: Shadow mode + review'}
+              </div>
+              <div className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3">
+                {isCs ? 'Týden 3: Limited rollout + metrics' : 'Week 3: Limited rollout + metrics'}
+              </div>
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3">
+                {isCs ? 'Týden 4: Expand + harden' : 'Week 4: Expand + harden'}
+              </div>
+            </div>
+          </div>
+          <svg viewBox="0 0 800 220" className="hidden md:block w-full h-auto" role="img" aria-label="4-week pilot timeline">
+            <text x="400" y="28" textAnchor="middle" className="text-lg font-bold fill-white">
+              🧪 {isCs ? 'Pilotní roadmapa (4 týdny)' : 'Pilot Roadmap (4 weeks)'}
+            </text>
+            <text x="400" y="48" textAnchor="middle" className="text-xs fill-slate-400">
+              {isCs ? 'Bezpečné rozšíření od prototypu k produkci' : 'Safe path from prototype to production'}
+            </text>
+
+            <line x1="80" y1="110" x2="720" y2="110" stroke="#334155" strokeWidth="4" strokeLinecap="round" />
+
+            <g transform="translate(80, 70)">
+              <circle cx="0" cy="40" r="10" fill="#3b82f6" />
+              <rect x="20" y="0" width="170" height="80" rx="10" fill="#3b82f6" fillOpacity="0.12" stroke="#3b82f6" />
+              <text x="105" y="30" textAnchor="middle" className="text-sm font-bold fill-blue-300">{isCs ? 'Týden 1' : 'Week 1'}</text>
+              <text x="105" y="50" textAnchor="middle" className="text-xs fill-slate-300">{isCs ? 'Scope + data + guardrails' : 'Scope + data + guardrails'}</text>
+            </g>
+
+            <g transform="translate(270, 70)">
+              <circle cx="0" cy="40" r="10" fill="#a855f7" />
+              <rect x="20" y="0" width="170" height="80" rx="10" fill="#a855f7" fillOpacity="0.12" stroke="#a855f7" />
+              <text x="105" y="30" textAnchor="middle" className="text-sm font-bold fill-purple-300">{isCs ? 'Týden 2' : 'Week 2'}</text>
+              <text x="105" y="50" textAnchor="middle" className="text-xs fill-slate-300">{isCs ? 'Shadow mode + review' : 'Shadow mode + review'}</text>
+            </g>
+
+            <g transform="translate(460, 70)">
+              <circle cx="0" cy="40" r="10" fill="#f59e0b" />
+              <rect x="20" y="0" width="170" height="80" rx="10" fill="#f59e0b" fillOpacity="0.12" stroke="#f59e0b" />
+              <text x="105" y="30" textAnchor="middle" className="text-sm font-bold fill-amber-300">{isCs ? 'Týden 3' : 'Week 3'}</text>
+              <text x="105" y="50" textAnchor="middle" className="text-xs fill-slate-300">{isCs ? 'Limited rollout + metrics' : 'Limited rollout + metrics'}</text>
+            </g>
+
+            <g transform="translate(650, 70)">
+              <circle cx="0" cy="40" r="10" fill="#22c55e" />
+              <rect x="20" y="0" width="170" height="80" rx="10" fill="#22c55e" fillOpacity="0.12" stroke="#22c55e" />
+              <text x="105" y="30" textAnchor="middle" className="text-sm font-bold fill-green-300">{isCs ? 'Týden 4' : 'Week 4'}</text>
+              <text x="105" y="50" textAnchor="middle" className="text-xs fill-slate-300">{isCs ? 'Expand + harden' : 'Expand + harden'}</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // Triage Pilot Timeline (2-week)
+  // =====================
+  if (type === 'triage-pilot-timeline') {
+    return (
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
+          <div className="md:hidden space-y-4">
+            <div className="text-center text-lg font-bold text-slate-200">🧪 {isCs ? '2týdenní triage pilot' : '2-week Triage Pilot'}</div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3">
+                {isCs ? 'Týden 1: Draft-only + lidský review' : 'Week 1: Draft-only + human review'}
+              </div>
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3">
+                {isCs ? 'Týden 2: Rozšíření + KPI' : 'Week 2: Expand + KPIs'}
+              </div>
+            </div>
+          </div>
+          <svg viewBox="0 0 700 200" className="hidden md:block w-full h-auto" role="img" aria-label="2-week triage pilot timeline">
+            <text x="350" y="28" textAnchor="middle" className="text-lg font-bold fill-white">
+              🧪 {isCs ? '2týdenní triage pilot' : '2-week Triage Pilot'}
+            </text>
+            <text x="350" y="48" textAnchor="middle" className="text-xs fill-slate-400">
+              {isCs ? 'Bezpečný start, rychlá validace' : 'Safe start, fast validation'}
+            </text>
+
+            <line x1="90" y1="110" x2="610" y2="110" stroke="#334155" strokeWidth="4" strokeLinecap="round" />
+
+            <g transform="translate(90, 70)">
+              <circle cx="0" cy="40" r="10" fill="#3b82f6" />
+              <rect x="20" y="0" width="230" height="80" rx="10" fill="#3b82f6" fillOpacity="0.12" stroke="#3b82f6" />
+              <text x="135" y="30" textAnchor="middle" className="text-sm font-bold fill-blue-300">{isCs ? 'Týden 1' : 'Week 1'}</text>
+              <text x="135" y="52" textAnchor="middle" className="text-xs fill-slate-300">
+                {isCs ? 'Draft-only • denní review' : 'Draft-only • daily review'}
+              </text>
+            </g>
+
+            <g transform="translate(380, 70)">
+              <circle cx="0" cy="40" r="10" fill="#22c55e" />
+              <rect x="20" y="0" width="230" height="80" rx="10" fill="#22c55e" fillOpacity="0.12" stroke="#22c55e" />
+              <text x="135" y="30" textAnchor="middle" className="text-sm font-bold fill-green-300">{isCs ? 'Týden 2' : 'Week 2'}</text>
+              <text x="135" y="52" textAnchor="middle" className="text-xs fill-slate-300">
+                {isCs ? 'Rozšíření • KPI • rollback plan' : 'Expand • KPIs • rollback plan'}
+              </text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
+  // Real-World Use Cases (Triad)
+  // =====================
+  if (type === 'use-case-triad') {
+    return (
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
+          <div className="md:hidden space-y-4">
+            <div className="text-center text-lg font-bold text-slate-200">🧩 {isCs ? '3 ověřené use-casy' : '3 proven use cases'}</div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3">
+                {isCs ? 'IT Support — ticket deflection' : 'IT Support — ticket deflection'}
+              </div>
+              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-4 py-3">
+                {isCs ? 'HR Onboarding — 90-day buddy' : 'HR Onboarding — 90-day buddy'}
+              </div>
+              <div className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3">
+                {isCs ? 'Sales Pipeline — CRM autopilot' : 'Sales Pipeline — CRM autopilot'}
+              </div>
+            </div>
+          </div>
+          <svg viewBox="0 0 800 240" className="hidden md:block w-full h-auto" role="img" aria-label="Real-world use cases triad">
+            <text x="400" y="28" textAnchor="middle" className="text-lg font-bold fill-white">
+              🧩 {isCs ? '3 ověřené use-casy' : '3 Proven Use Cases'}
+            </text>
+            <text x="400" y="48" textAnchor="middle" className="text-xs fill-slate-400">
+              {isCs ? 'Rychlé ROI, jasné KPI' : 'Fast ROI, clear KPIs'}
+            </text>
+
+            <g transform="translate(50, 80)">
+              <rect x="0" y="0" width="220" height="120" rx="12" fill="#3b82f6" fillOpacity="0.12" stroke="#3b82f6" />
+              <text x="110" y="45" textAnchor="middle" className="text-3xl">🛠️</text>
+              <text x="110" y="75" textAnchor="middle" className="text-sm font-bold fill-blue-300">IT Support</text>
+              <text x="110" y="95" textAnchor="middle" className="text-xs fill-slate-300">{isCs ? 'Deflekce ticketů' : 'Ticket deflection'}</text>
+            </g>
+
+            <g transform="translate(290, 80)">
+              <rect x="0" y="0" width="220" height="120" rx="12" fill="#a855f7" fillOpacity="0.12" stroke="#a855f7" />
+              <text x="110" y="45" textAnchor="middle" className="text-3xl">🎒</text>
+              <text x="110" y="75" textAnchor="middle" className="text-sm font-bold fill-purple-300">HR Onboarding</text>
+              <text x="110" y="95" textAnchor="middle" className="text-xs fill-slate-300">{isCs ? '90denní buddy' : '90-day buddy'}</text>
+            </g>
+
+            <g transform="translate(530, 80)">
+              <rect x="0" y="0" width="220" height="120" rx="12" fill="#f59e0b" fillOpacity="0.12" stroke="#f59e0b" />
+              <text x="110" y="45" textAnchor="middle" className="text-3xl">📈</text>
+              <text x="110" y="75" textAnchor="middle" className="text-sm font-bold fill-amber-300">Sales Pipeline</text>
+              <text x="110" y="95" textAnchor="middle" className="text-xs fill-slate-300">{isCs ? 'CRM autopilot' : 'CRM autopilot'}</text>
             </g>
           </svg>
         </div>

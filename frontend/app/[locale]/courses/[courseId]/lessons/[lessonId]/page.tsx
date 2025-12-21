@@ -570,11 +570,7 @@ export default function LessonPage({
 
             <div className="flex w-full md:w-auto justify-end order-3 h-12">
               <Button
-                variant={
-                  currentPage === calculatedTotalPages - 1
-                    ? "default"
-                    : "outline"
-                }
+                variant="outline"
                 onClick={() =>
                   setCurrentPage(
                     Math.min(calculatedTotalPages - 1, currentPage + 1)
@@ -583,8 +579,8 @@ export default function LessonPage({
                 disabled={currentPage === calculatedTotalPages - 1}
                 className={`w-full md:w-auto min-w-[120px] h-full text-base font-bold shadow-md ${
                   currentPage === calculatedTotalPages - 1
-                    ? "bg-gradient-to-br from-primary via-primary/80 to-primary/90 hover:opacity-90 text-primary-foreground border-none"
-                    : ""
+                    ? "bg-muted/30 text-muted-foreground border-border"
+                    : "bg-gradient-to-br from-primary via-primary/80 to-primary/90 hover:opacity-90 text-primary-foreground border-none"
                 }`}
               >
                 {locale === "cs" ? "Další strana" : "Next Page"} →
