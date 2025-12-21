@@ -112,6 +112,10 @@ gemini -m gemini-3-pro-preview --file /path/to/before.png --file /path/to/after.
   "Task: Visual QA. Compare before/after. Focus: [navbar/spacing/dark mode]. Output: 10-20 bullets."
 ```
 
+**Fallback (kdyz CLI neumi obrazky):**
+- Spust `npm run test:visual` nebo lokalni screenshoty.
+- Manual review (Claude + `view_image`) a **poznamka**, ze external visual QA nebyla dostupna.
+
 ---
 
 ## 5) Standardní flow
@@ -138,6 +142,18 @@ gemini -m gemini-3-pro-preview --file /path/to/before.png --file /path/to/after.
 3. **Gemini** dodá QA report (co je špatně, kde, priorita).
 4. **Claude** opraví UI + znovu `npm run test:visual`.
 
+### 5.4 Lesson Upgrade Golden Path (L2/L3 template)
+
+1. **Orchestrator (Claude):** shrn cile lekce + DoD (hook, learning curve, vizualy, laby, Holocron).
+2. **Research (Perplexity/Gemini):** najdi nove videa/perly; pokud nejsou, potvrdit existing set.
+3. **Content delta:** dopln jen nove/posilujici veci, bez nafukovani.
+4. **Visual mapping:** kazda sekce = diagram/MDXImage, mobile full-bleed, zadny overlap.
+5. **Labs:** prompty EN-first (i v CS), s callout vysvetlenim.
+6. **Localization parity:** EN/CS mirror, terminologie konzistentni.
+7. **QA:** `node scripts/validate_mdx.js`, `npm run verify`.
+8. **Visual QA:** login admin, screenshoty, iterace do "masterpiece".
+9. **Finalize:** update WORKING_CONTEXT + commit; untracked vizualy nech jako artifacty.
+
 ---
 
 ## 6) Session & Handoff discipline
@@ -148,4 +164,3 @@ gemini -m gemini-3-pro-preview --file /path/to/before.png --file /path/to/after.
 - přilož cesty k artefaktům
 
 **Cíl:** další agent naváže do 2 minut bez zpětného doptávání.
-

@@ -117,6 +117,53 @@ Then came the moment that changed everything.
 - **Srovnání** → Side-by-side, radar charts
 - **Timeline** → Horizontal timeline s milníky
 
+---
+
+## ✅ Lesson Upgrade Template (Golden Path)
+
+Pouzij tento proces jako **defaultni template** pro dalsi lekce (L2/L3 golden standard).
+
+### 1) Intake + Scope
+- Zaznamenej cile lekce, reading time, pocet labu.
+- Definuj co je "golden": hook + learning curve + vizualy + labs + Holocron.
+
+### 2) Research + Video Selection
+- Quick research (Perplexity) na nove videa/perly.
+- Pokud najdes nova videa: pridat do VideoSwitcher, oznacit CZ alternativu jako ALT.
+- Kdyz nejsou nova videa: pracuj s existujicimi (golden standard).
+
+### 3) Content Delta
+- Vypichni co je NOVE vs aktualni lekce.
+- Doplneni jen tam, kde zvysuje learning curve (ne bloated).
+- Zachovat Edutainment format: hook -> concepts -> labs -> Holocron.
+
+### 4) Visual Plan
+- Ke kazde hlavni sekci prirad **diagram** nebo **MDXImage**.
+- Kontrola mobile: diagramy full-bleed (`w-screen`), bez miniaturnich vizualu.
+- U zadnych SVG: text overlap, orez, nechtene prekryti.
+
+### 5) Labs + Prompt Policy
+- Prompty v EN, i v CS verzi, pokud UI produktu je EN-first.
+- Vzdy pridat Callout s vysvetlenim proc EN prompt.
+
+### 6) Localization
+- EN + CS parity: stejne sekce, stejne prompty, stejne diagramy.
+- Terminologie sjednotit (Workflows Agent vs Copilot Studio vs Declarative Agents).
+
+### 7) QA + Validation
+- `node scripts/validate_mdx.js` (ber warnings jako backlog).
+- `npm run verify` (lint warnings jsou ok).
+
+### 8) Visual QA Loop
+- **Login jako admin** (.env creds, nikdy neprintovat).
+- Screenshoty pro klicove diagramy + problematicke sekce.
+- Iteruj do "masterpiece" (bez overlapu, bez drobneho textu).
+
+### 9) Final Gate
+- Update `.ai-context/state/WORKING_CONTEXT.md`.
+- Commit jen relevantni zmeny.
+- Untracked vizualy necommituj (jen artifacty).
+
 ### 🧪 LAB PHILOSOPHY
 
 **Labs nejsou cvičení. Labs jsou MISE.**
