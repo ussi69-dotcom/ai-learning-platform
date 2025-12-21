@@ -14,11 +14,11 @@
 
 ## ⚡ The 10x Multiplier
 
-**90% of people use AI wrong.**
+**Most people under-specify their prompts.**
 
-They type "Help me write an email" and get generic garbage. Then they declare "AI is overhyped."
+They type "Help me write an email" and get generic output. Then they declare "AI is overhyped."
 
-But 10% of people? They get AI to write emails that close deals. Create presentations in minutes. Debug code that would take hours. The difference isn't the AI—it's the **prompt**.
+But those who master prompting? They get AI to write emails that close deals. Create presentations in minutes. Debug code that would take hours. The difference isn't the AI—it's the **prompt**.
 
 This lesson is your ROI moment. What you learn here, you will use **tomorrow at 9 AM**.
 
@@ -112,9 +112,11 @@ The most common failure is giving a Task without Context.
 Master Engineers use **Delimiters** to separate instructions from data.
 Common delimiters: `"""`, `---`, `###`.
 
-<ConceptCard title="Safety First" icon="🛡️">
-  Using delimiters prevents **Prompt Injection** (where the text tricks the AI).
+<ConceptCard title="Clarity First" icon="🛡️">
+  Using delimiters **helps separate** your instructions from input data.
   It tells the AI: "Everything inside these quotes is DATA, not INSTRUCTIONS."
+
+  **Note:** Delimiters improve clarity and reduce confusion, but they are not a complete security measure against prompt injection. For untrusted input, additional safeguards (input validation, sandboxing) are needed.
 </ConceptCard>
 
 ### 🔬 Lab 2: The Data Separator
@@ -200,17 +202,18 @@ Leia is a princess/general and uses a blaster too.
 
 ## 🐘 8. The "Pink Elephant" (Constraints)
 
-Avoid negative constraints (_"Don't do X"_). Use positive constraints (_"Do Y"_).
+Negative constraints (_"Don't do X"_) can be tricky—models sometimes focus on the forbidden concept. **Combine them with positive constraints** (_"Do Y"_) for best results.
 
-- ❌ "Don't write long sentences."
-- ✅ "Use short sentences (under 10 words)."
+- ❌ **Weak:** "Don't write long sentences."
+- ✅ **Better:** "Use short sentences (under 10 words)."
+- ✅ **Best:** "Use short sentences (under 10 words). Avoid complex clauses."
 
 ---
 
 ## 🧠 9. Chain of Thought (Logic Hack)
 
-If the AI fails at math or logic, it is "rushing".
-Force it to slow down with the magic phrase: **"Let's think step by step."**
+When AI struggles with complex reasoning, it often needs explicit decomposition.
+Ask it to **show its work** with phrases like: **"Let's solve this step by step"** or **"First, list the constraints, then propose a solution."**
 
 <Diagram type="chain-of-thought" />
 
@@ -233,9 +236,8 @@ Let's think step by step.
 
 **Analysis:**
 
-- **Without CoT:** The AI often hallucinates a schedule where Session A and C clash, or puts Session B in the Blue room. It tries to "guess" the answer in one go.
-- **With CoT:** The magic phrase forces it to write: _"First, let's place Session B in Red. Next, let's schedule A and C in different slots..."_ This "scratchpad" thinking ensures accuracy.
-  </LabSection>
+- **Without CoT:** The AI often produces a schedule where Session A and C clash, or puts Session B in the Blue room. It tries to solve everything in one go without explicit decomposition.
+- **With CoT:** Asking for step-by-step reasoning encourages the model to write: _"First, let's place Session B in Red (needs projector). Next, let's schedule A and C in different slots (shared instructor)..."_ This structured approach helps—but always verify the output against your constraints.
 
 <LabComplete labId="lab-reasoning-anchor" />
 

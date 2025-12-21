@@ -14,11 +14,11 @@
 
 ## ⚡ 10× Multiplikátor
 
-**90 % lidí používá AI špatně.**
+**Většina lidí své prompty nedostatečně specifikuje.**
 
-Napíšou „Pomoz mi napsat email" a dostanou generické smetí. Pak prohlásí „AI je přeceňovaná."
+Napíšou „Pomoz mi napsat email" a dostanou generický výstup. Pak prohlásí „AI je přeceňovaná."
 
-Ale těch zbylých 10 %? Ti dostanou AI, aby psala emaily, které uzavírají obchody. Vytvářela prezentace za minuty. Debugovala kód, který by trval hodiny. Rozdíl není v AI—je v **promptu**.
+Ale ti, kdo ovládnou prompting? Ti dostanou AI, aby psala emaily, které uzavírají obchody. Vytvářela prezentace za minuty. Debugovala kód, který by trval hodiny. Rozdíl není v AI—je v **promptu**.
 
 Tato lekce je tvůj ROI moment. Co se tu naučíš, použiješ **zítra v 9 ráno**.
 
@@ -112,9 +112,11 @@ Nejčastějším selháním je zadání Úkolu bez Kontextu.
 Mistři inženýři používají **Oddělovače** k oddělení instrukcí od dat.
 Běžné oddělovače: `"""`, `---`, `###`.
 
-<ConceptCard title="Bezpečnost především" icon="🛡️">
-  Použití oddělovačů zabraňuje **Prompt Injection** (kdy text oklame AI). Říká
-  AI: "Vše uvnitř těchto uvozovek jsou DATA, ne INSTRUKCE."
+<ConceptCard title="Přehlednost především" icon="🛡️">
+  Použití oddělovačů **pomáhá oddělit** tvé instrukce od vstupních dat.
+  Říká AI: „Vše uvnitř těchto uvozovek jsou DATA, ne INSTRUKCE."
+
+  **Poznámka:** Oddělovače zlepšují přehlednost a snižují zmatení, ale nejsou kompletním bezpečnostním opatřením proti prompt injection. Pro nedůvěryhodný vstup jsou potřeba další záruky (validace vstupu, sandboxing).
 </ConceptCard>
 
 ### 🔬 Lab 2: Oddělovač dat
@@ -200,17 +202,18 @@ Leia je princezna/generál a také používá blaster.
 
 ## 🐘 8. "Růžový slon" (Omezení)
 
-Vyhni se negativním omezením (_"Nedělej X"_). Používej pozitivní omezení (_"Udělej Y"_).
+Negativní omezení (_„Nedělej X"_) mohou být záludná—modely se někdy zaměří na zakázaný koncept. **Kombinuj je s pozitivními omezeními** (_„Udělej Y"_) pro nejlepší výsledky.
 
-- ❌ "Nepiš dlouhé věty."
-- ✅ "Používej krátké věty (pod 10 slov)."
+- ❌ **Slabé:** „Nepiš dlouhé věty."
+- ✅ **Lepší:** „Používej krátké věty (pod 10 slov)."
+- ✅ **Nejlepší:** „Používej krátké věty (pod 10 slov). Vyhni se složitým souvětím."
 
 ---
 
 ## 🧠 9. Řetězec myšlenek (Logický hack)
 
-Pokud AI selže v matematice nebo logice, "spěchá".
-Donuť ji zpomalit magickou frází: **"Pojďme přemýšlet krok za krokem."**
+Když AI bojuje se složitým uvažováním, často potřebuje explicitní dekompozici.
+Požádej ji, aby **ukázala svůj postup** frázemi jako: **„Pojďme to vyřešit krok za krokem"** nebo **„Nejdřív vypiš omezení, pak navrhni řešení."**
 
 <Diagram type="chain-of-thought" />
 
@@ -233,9 +236,8 @@ Pojďme přemýšlet krok za krokem.
 
 **Analýza:**
 
-- **Bez CoT:** AI často vyhalucinuje rozvrh, kde se A a C střetávají, nebo dá B do Modré místnosti. Snaží se "uhádnout" odpověď najednou.
-- **S CoT:** Magická fráze ji donutí napsat: _"Nejprve umístíme Sezení B do Červené. Dále naplánujeme A a C do různých časů..."_ Toto myšlení "nanečisto" zajišťuje přesnost.
-  </LabSection>
+- **Bez CoT:** AI často vytvoří rozvrh, kde se A a C střetávají, nebo dá B do Modré místnosti. Snaží se vyřešit vše najednou bez explicitní dekompozice.
+- **S CoT:** Požadavek na postup krok za krokem povzbudí model napsat: _„Nejprve umístíme Sezení B do Červené (potřebuje projektor). Dále naplánujeme A a C do různých časů (sdílený instruktor)..."_ Tento strukturovaný přístup pomáhá—ale vždy ověř výstup vůči svým omezením.
 
 <LabComplete labId="lab-reasoning-anchor" />
 

@@ -1,12 +1,12 @@
 [
   {
-    "question": "What is the purpose of using 'Delimiters' (like \"\") in a prompt?",
+    "question": "What is the purpose of using Delimiters (like --- or ###) in a prompt?",
     "option_a": "To make the prompt look cooler.",
     "option_b": "To clearly separate your instructions from the data/text you want the AI to process.",
     "option_c": "To increase the speed of the AI.",
     "option_d": "To encrypt the message.",
     "correct_answer": "B",
-    "explanation": "Delimiters act like fences. They tell the AI: 'Everything inside these triple quotes is data, not instructions.' This prevents confusion and Prompt Injection.",
+    "explanation": "Delimiters act like fences. They tell the AI: 'Everything inside these triple quotes is data, not instructions.' This helps reduce confusion and accidental instruction-following from untrusted text (though it's not a complete security measure).",
     "order": 1
   },
   {
@@ -30,9 +30,9 @@
     "order": 3
   },
   {
-    "question": "Why is 'Positive Constraint' better than 'Negative Constraint'?",
-    "option_a": "It isn't; negative is better.",
-    "option_b": "AI struggles with 'Don't' instructions (Pink Elephant effect). It works better when told exactly WHAT to do.",
+    "question": "Why is combining positive and negative constraints recommended?",
+    "option_a": "You only need negative constraints.",
+    "option_b": "Negative constraints alone can be tricky (models may focus on the forbidden concept). Combining them with positive targets gives clearer guidance.",
     "option_c": "Positive constraints use fewer tokens.",
     "option_d": "Negative constraints make the AI angry.",
     "correct_answer": "B",

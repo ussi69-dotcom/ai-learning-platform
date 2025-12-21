@@ -1,12 +1,12 @@
 [
   {
-    "question": "Jaký je účel používání 'Oddělovačů' (jako \"\") v promptu?",
+    "question": "Jaký je účel používání Oddělovačů (jako --- nebo ###) v promptu?",
     "option_a": "Aby prompt vypadal lépe.",
     "option_b": "Aby se jasně oddělily instrukce od dat/textu, který má AI zpracovat.",
     "option_c": "Pro zvýšení rychlosti AI.",
     "option_d": "Pro zašifrování zprávy.",
     "correct_answer": "B",
-    "explanation": "Oddělovače fungují jako ploty. Říkají AI: 'Vše uvnitř těchto trojitých uvozovek jsou data, ne instrukce.' To zabraňuje zmatení a Prompt Injection.",
+    "explanation": "Oddělovače fungují jako ploty. Říkají AI: 'Vše uvnitř těchto trojitých uvozovek jsou data, ne instrukce.' To pomáhá snížit zmatení a náhodné provádění instrukcí z nedůvěryhodného textu (i když nejde o kompletní bezpečnostní opatření).",
     "order": 1
   },
   {
@@ -30,9 +30,9 @@
     "order": 3
   },
   {
-    "question": "Proč je 'Pozitivní omezení' lepší než 'Negativní omezení'?",
-    "option_a": "Není; negativní je lepší.",
-    "option_b": "AI má problémy s instrukcemi 'Nedělej' (efekt Růžového slona). Funguje lépe, když se jí řekne přesně, CO má dělat.",
+    "question": "Proč je doporučeno kombinovat pozitivní a negativní omezení?",
+    "option_a": "Stačí pouze negativní omezení.",
+    "option_b": "Negativní omezení sama o sobě mohou být záludná (modely se mohou zaměřit na zakázaný koncept). Kombinace s pozitivními cíli poskytuje jasnější vedení.",
     "option_c": "Pozitivní omezení používají méně tokenů.",
     "option_d": "Negativní omezení AI naštvou.",
     "correct_answer": "B",
