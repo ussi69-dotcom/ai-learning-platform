@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-20 23:58 (Agent: Codex GPT-5.2)
-**Last Commit:** `67fd0ec` docs: allow login for visual QA
-**Status:** 🟡 Documented that normal login is allowed for visual QA; rechecked Quality Trade-offs Radar via local Playwright login and confirmed no overlap.
+**Last Updated:** 2025-12-21 00:53 (Agent: Codex GPT-5.2)
+**Last Commit:** `ef01713` fix(ui): polish copilot lesson visuals
+**Status:** 🟢 L02/L03 visuals scaled for mobile, new enterprise triad diagram, video retry fallback, and Playwright auth uses `.env` admin creds.
 
 ---
 
@@ -93,6 +93,26 @@
 ---
 
 ## 🎯 Current State
+
+### Latest Session (Dec 21, 2025 - L02/L03 Visual Scaling + Auth QA)
+
+| Task | Status | Notes |
+|------|--------|-------|
+| Full-bleed diagrams on mobile | ✅ Done | Switched key L02/L03 diagram wrappers to `w-screen` full-bleed for mobile readability. |
+| Enterprise agent triad visual | ✅ Done | Added `enterprise-agent-triad` diagram and inserted into L03 (EN/CS). |
+| Tradeoff radar overlap | ✅ Done | Tightened label radius to prevent title/label collisions. |
+| AI security layers spacing | ✅ Done | Moved AI/HITL markers down to avoid text overlap. |
+| FeedbackFAB position | ✅ Done | Lowered desktop FAB to reduce overlap; auto-hide remains. |
+| Video fallback resilience | ✅ Done | Added retry button + reload token for YouTube iframe failures. |
+| Sith last-page CTA | ✅ Done | Disabled “Další strana” now uses muted styling in Sith mode. |
+| Playwright auth creds | ✅ Done | Visual auth tests now read admin credentials from `.env`. |
+| Visual tests | ✅ Done | `npm run test:visual:update`, `npm run test:visual` (pass). |
+
+### Commits This Session
+
+| Hash | Message |
+|------|---------|
+| `ef01713` | fix(ui): polish copilot lesson visuals |
 
 ### Latest Session (Dec 20, 2025 - L02/L03 UI Polish + Visual QA)
 

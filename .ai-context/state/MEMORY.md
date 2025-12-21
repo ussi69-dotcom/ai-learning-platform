@@ -66,6 +66,7 @@ ESKALUJ na GPT-5.2 když:
 - **Change safety:** Do not adjust `.env` or restart containers unless explicitly asked; avoid breaking dev access.
 - **Visual QA login:** User explicitly wants normal login for visual checks. Use admin creds from `.env` (e.g., `FIRST_SUPERUSER`/`FIRST_SUPERUSER_PASSWORD`), never print them. Prefer local `http://localhost:3000` or QA frontend `http://localhost:3001` if Cloudflare access is flaky.
 - **QA frontend (local only):** `docker compose -f docker-compose.yml -f docker-compose.qa.yml up -d frontend-qa`, then use `http://localhost:3001` for Playwright/Gemini QA.
+- **Playwright auth tests:** Load admin credentials from `.env` (`FIRST_SUPERUSER`/`FIRST_SUPERUSER_PASSWORD`), avoid hardcoded credentials and never log them.
 
 ### Subagent Orchestration Standard (Always On)
 
