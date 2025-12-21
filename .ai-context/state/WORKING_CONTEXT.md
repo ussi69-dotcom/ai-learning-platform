@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-21 12:28 (Agent: Codex GPT-5.2)
-**Last Commit:** `ed96b60` feat(lesson-01): align copilot workday with golden
-**Status:** 🟢 Lesson 01 (Copilot workday) aligned to golden standard with Copilot Pages flow diagram + EN/CS parity; tests passed (lint warnings only).
+**Last Updated:** 2025-12-21 12:48 (Agent: Codex GPT-5.2)
+**Last Commit:** `b1481c8` fix(ui): improve lesson text contrast
+**Status:** 🟢 Global readability boost (nav, footer, progress, callouts, video metadata) applied; Lesson 01 visuals verified; `npm run verify` passes (lint warnings only).
 
 ---
 
@@ -105,6 +105,14 @@
 | MDX validation | ⚠️ Warnings | `node scripts/validate_mdx.js` reports existing warnings + archive errors (known). |
 | Frontend verify | ✅ Done | `npm run verify` (lint warnings only, build ok). |
 | Backend tests | ✅ Done | `make test-backend` (3 passed, 6 skipped, warnings only). |
+
+### Latest Session (Dec 21, 2025 - UI Contrast Pass)
+
+| Task | Status | Notes |
+|------|--------|-------|
+| Lesson UI contrast | ✅ Done | Boosted contrast/size for nav buttons, footer text, progress bar, callouts, and video metadata. |
+| Visual QA refresh | ✅ Done | Screenshot refreshed: `/tmp/lesson-01-visual/lesson-01-en.png`. |
+| Frontend verify | ✅ Done | `npm run verify` (lint warnings only, build ok). |
 
 ### Previous Session (Dec 21, 2025 - L02/L03 Visual Scaling + Auth QA)
 
