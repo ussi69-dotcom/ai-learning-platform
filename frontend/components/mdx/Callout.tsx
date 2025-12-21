@@ -51,7 +51,7 @@ export default function Callout({ type = 'info', children }: CalloutProps) {
       <div className={`flex-shrink-0 mt-0.5 ${style.iconColor}`}>
         <Icon className="w-6 h-6" />
       </div>
-      <div className="flex-1 prose prose-slate dark:prose-invert max-w-none prose-p:my-1 prose-p:leading-relaxed">
+      <div className="flex-1 prose prose-base prose-slate dark:prose-invert max-w-none text-slate-900 dark:text-slate-100 prose-p:my-1 prose-p:leading-relaxed prose-strong:text-slate-950 dark:prose-strong:text-slate-50">
         {children}
       </div>
     </div>

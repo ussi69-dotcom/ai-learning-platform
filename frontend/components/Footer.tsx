@@ -20,7 +20,7 @@ export default function Footer() {
             >
               AI Edutainment
             </Link>
-            <p className="text-sm text-slate-600 dark:text-slate-400">
+            <p className="text-base text-slate-900 dark:text-slate-200">
               {locale === "cs"
                 ? "Open-source AI vzdělávání tvořené lidmi a AI agenty společně."
                 : "Open-source AI education created by humans and AI agents together."}
@@ -35,7 +35,7 @@ export default function Footer() {
             <nav className="flex flex-col gap-2">
               <Link
                 href="/about"
-                className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-violet-600 dark:hover:text-red-500 transition-colors"
+                className="flex items-center gap-2 text-base text-slate-900 dark:text-slate-200 hover:text-violet-600 dark:hover:text-red-500 transition-colors"
               >
                 <Info size={16} />
                 {locale === "cs" ? "O projektu" : "About"}
@@ -44,14 +44,14 @@ export default function Footer() {
                 href="https://github.com/Zimm01/ai-learning-platform"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-violet-600 dark:hover:text-red-500 transition-colors"
+                className="flex items-center gap-2 text-base text-slate-900 dark:text-slate-200 hover:text-violet-600 dark:hover:text-red-500 transition-colors"
               >
                 <Github size={16} />
                 GitHub
               </a>
               <a
                 href="mailto:info@ai-edutainment.com"
-                className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-violet-600 dark:hover:text-red-500 transition-colors"
+                className="flex items-center gap-2 text-base text-slate-900 dark:text-slate-200 hover:text-violet-600 dark:hover:text-red-500 transition-colors"
               >
                 <Mail size={16} />
                 {locale === "cs" ? "Kontakt" : "Contact"}
@@ -69,7 +69,7 @@ export default function Footer() {
                 (tech) => (
                   <span
                     key={tech}
-                    className="px-2 py-1 text-xs font-medium bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-md"
+                    className="px-3 py-1.5 text-base font-semibold bg-slate-200/90 dark:bg-slate-800 text-slate-900 dark:text-slate-200 rounded-md"
                   >
                     {tech}
                   </span>
@@ -81,13 +81,13 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-slate-500 dark:text-slate-500">
+          <p className="text-base text-slate-900 dark:text-slate-300">
             © {currentYear} AI Edutainment.{" "}
             {locale === "cs"
               ? "Všechna práva vyhrazena."
               : "All rights reserved."}
           </p>
-          <p className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-500">
+          <p className="flex items-center gap-1 text-base text-slate-900 dark:text-slate-300">
             {locale === "cs" ? "Vytvořeno s" : "Made with"}
             <Heart size={12} className="text-red-500 fill-red-500" />
             {locale === "cs" ? "lidmi & AI" : "by humans & AI"}

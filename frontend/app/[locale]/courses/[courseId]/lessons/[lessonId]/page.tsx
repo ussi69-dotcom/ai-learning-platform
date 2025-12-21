@@ -410,7 +410,7 @@ export default function LessonPage({
           <div className="flex items-center justify-between gap-4 mb-8 p-3 -mx-3 rounded-xl bg-card/30 border border-border/50 backdrop-blur-md hover:bg-card/50 transition-all duration-300">
             <div className="flex gap-2">
               <Link href={`/courses/${courseId}`}>
-                <Button variant="outline" size="sm" className="gap-2">
+                <Button variant="outline" size="sm" className="gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
                   ← {locale === "cs" ? "Zpět na kurz" : "Back to Course"}
                 </Button>
               </Link>
@@ -418,7 +418,7 @@ export default function LessonPage({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="gap-2 text-muted-foreground hover:text-foreground"
+                  className="gap-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
                   onClick={() => setCurrentPage(0)}
                 >
                   {locale === "cs" ? "Zpět na stranu 1" : "Back to Page 1"}
@@ -430,6 +430,7 @@ export default function LessonPage({
               <Button
                 variant="ghost"
                 size="sm"
+                className="text-sm font-semibold text-slate-700 dark:text-slate-200"
                 onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
                 disabled={currentPage === 0}
               >
@@ -438,6 +439,7 @@ export default function LessonPage({
               <Button
                 variant="ghost"
                 size="sm"
+                className="text-sm font-semibold text-slate-700 dark:text-slate-200"
                 onClick={() =>
                   setCurrentPage(
                     Math.min(calculatedTotalPages - 1, currentPage + 1)
@@ -459,7 +461,7 @@ export default function LessonPage({
               {course && (
                 <Link
                   href={`/courses/${courseId}`}
-                  className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors hover:underline underline-offset-4"
+                  className="text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white text-base font-semibold transition-colors hover:underline underline-offset-4"
                 >
                   {course.title}
                 </Link>
@@ -468,7 +470,7 @@ export default function LessonPage({
             <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 dark:bg-gradient-to-br dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent tracking-tight drop-shadow-sm dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.15)] pb-1">
               {renderTextWithIcons(lesson.title, "lesson-title")}
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
+            <p className="text-lg md:text-xl text-slate-900 dark:text-slate-100 leading-relaxed max-w-2xl">
               {renderTextWithIcons(lesson.description, "lesson-desc")}
             </p>
           </div>
@@ -487,7 +489,7 @@ export default function LessonPage({
               className="glass-panel rounded-3xl p-6 md:p-10 mb-8 min-h-[400px] relative animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 border border-border/50 shadow-xl shadow-primary/5 dark:shadow-primary/10 hover:shadow-2xl hover:shadow-primary/10 transition-shadow duration-500"
             >
               {/* Page Indicator (Top) */}
-              <div className="flex justify-between items-center mb-6 text-xs font-bold text-muted-foreground uppercase tracking-wider">
+              <div className="flex justify-between items-center mb-6 text-base font-semibold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
                 <span>
                   {locale === "cs" ? "Sekce" : "Section"} {currentPage + 1}{" "}
                   {locale === "cs" ? "z" : "of"} {calculatedTotalPages}
@@ -599,7 +601,7 @@ export default function LessonPage({
                   <Button
                     variant="outline"
                     size="sm"
-                    className="text-muted-foreground hover:text-foreground gap-2 hover:-translate-x-1 transition-all duration-200"
+                    className="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white gap-2 hover:-translate-x-1 transition-all duration-200"
                   >
                     <span>«</span>{" "}
                     {locale === "cs" ? "Předchozí lekce" : "Prev Lesson"}
@@ -623,7 +625,7 @@ export default function LessonPage({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="border-dashed border-border/50 text-muted-foreground hover:text-foreground hover:border-border hover:bg-card/50 transition-all duration-200"
+                  className="text-sm font-semibold border-dashed border-border/50 bg-slate-100/70 dark:bg-slate-900/50 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:border-border hover:bg-slate-200/80 dark:hover:bg-slate-900/70 transition-all duration-200"
                 >
                   {locale === "cs" ? "Přehled kurzu" : "Course Overview"}
                 </Button>
@@ -637,7 +639,7 @@ export default function LessonPage({
                   <Button
                     variant="outline"
                     size="sm"
-                    className="text-muted-foreground hover:text-foreground gap-2 hover:translate-x-1 transition-all duration-200"
+                    className="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white gap-2 hover:translate-x-1 transition-all duration-200"
                   >
                     {locale === "cs" ? "Další lekce" : "Next Lesson"}{" "}
                     <span>»</span>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Film, Flag, Lightbulb, MapPin, Pin, Star, User } from "lucide-react";
+import { ChevronDown, Film, Flag, Lightbulb, MapPin, Pin, Star, User } from "lucide-react";
 import { useLocale } from "next-intl";
 import { VideoRegistryContext, Video } from "./mdx/VideoSwitcher";
 
@@ -258,11 +258,11 @@ export const VideoPlayer = ({
             )}
 
             <div className="min-w-0">
-              <div className="text-sm font-medium text-foreground truncate">
+              <div className="text-base font-semibold text-foreground truncate">
                 {activeVideo.title}
               </div>
               {activeVideo.author && (
-                <div className="text-xs text-muted-foreground flex items-center gap-1">
+                <div className="text-sm text-slate-600 dark:text-slate-300 flex items-center gap-1">
                   <User className="w-3 h-3" aria-hidden="true" />
                   <span>{activeVideo.author}</span>
                 </div>
@@ -301,24 +301,23 @@ export const VideoPlayer = ({
               onClick={() => setIsExpanded(!isExpanded)}
               className="w-full flex items-center justify-between px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-200"
             >
-              <div className="flex items-center gap-2">
-                <Film className="w-4 h-4 text-primary" aria-hidden="true" />
-                <span className="text-sm font-medium">
+              <div className="flex items-center gap-2 text-slate-800 dark:text-slate-100">
+                <Film className="w-5 h-5 text-primary" aria-hidden="true" />
+                <span className="text-base font-semibold">
                   {locale === "cs"
                     ? "Další doporučená videa"
                     : "More recommended videos"}
                 </span>
-                <span className="text-xs text-muted-foreground bg-white/10 px-2 py-0.5 rounded-full">
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-200 bg-white/10 px-2 py-0.5 rounded-full">
                   {alternativeVideos.length}
                 </span>
               </div>
-              <span
-                className={`transition-transform duration-200 ${
+              <ChevronDown
+                className={`w-4 h-4 text-slate-600 dark:text-slate-300 transition-transform duration-200 ${
                   isExpanded ? "rotate-180" : ""
                 }`}
-              >
-                ▼
-              </span>
+                aria-hidden="true"
+              />
             </button>
 
             {isExpanded && (
