@@ -6,6 +6,39 @@ This document defines the **Edutainment v3.0** quality standard. "Good enough" i
 
 ---
 
+## 🚨 MODEL/PRODUCT VERIFICATION (KRITICKÉ!)
+
+> **Lesson Learned (2025-12-21):** Zastaralé názvy modelů znehodnocují obsah!
+
+**PŘED zmíněním jakéhokoliv AI modelu v obsahu MUSÍŠ ověřit jeho aktuálnost přes WebSearch!**
+
+### Aktuální modely (prosinec 2025):
+
+| Firma | ❌ ZASTARALÉ | ✅ AKTUÁLNÍ |
+|-------|-------------|-------------|
+| **OpenAI** | GPT-4, GPT-4o, o1, o1-mini | GPT-5, GPT-5 mini, o3, o4-mini |
+| **Anthropic** | Claude 3, Claude 3.5 | Claude Opus 4.5, Claude Sonnet 4 |
+| **Google** | Gemini 2.5, Gemini Pro | Gemini 3 Pro, Gemini 3 Flash |
+
+**Výjimka:** Historický kontext je OK ("V roce 2023 přišel GPT-4...")
+
+### Checklist pro content creation:
+
+```
+□ Zmiňuji AI model? → WebSearch pro ověření aktuálnosti
+□ Je to historická zmínka? → OK použít starý název
+□ Je to aktuální doporučení? → MUSÍ být aktuální model
+```
+
+**Instrukce pro Gemini/agenty při tvorbě obsahu:**
+```
+⚠️ POVINNÉ: Před zmíněním AI modelu (OpenAI, Anthropic, Google) ověř aktuálnost!
+Nepoužívej: GPT-4, o1, Claude 3, Gemini 2.5 (pokud nejde o historický kontext)
+Aktuální (12/2025): GPT-5, o3, Claude Opus 4.5, Gemini 3
+```
+
+---
+
 ## 🔥 EDUTAINMENT BIBLE (SKALOPEVNÁ PRAVIDLA)
 
 > **Tato pravidla jsou ABSOLUTNÍ. Žádné výjimky. Žádné "ale v tomto případě..."**
@@ -116,6 +149,11 @@ Then came the moment that changed everything.
 - **Procesy/Flow** → Pipeline diagrams, flowcharts
 - **Srovnání** → Side-by-side, radar charts
 - **Timeline** → Horizontal timeline s milníky
+
+**UI Screenshot Rule (NEW):**
+- Kdykoliv popisuješ konkrétní konzoli, obrazovku nebo krok v UI, přidej **reálný screenshot**.
+- **Priorita zdrojů:** oficiální dokumentace → veřejný web → (až poslední možnost) generovaný screenshot.
+- Ukládej do `content/.../images/` a vkládej přes `<MDXImage ... />`.
 
 ---
 
@@ -508,6 +546,32 @@ Collapsible hints for stuck users.
 * **Dark Mode:** Always use `fill-slate-600 dark:fill-slate-400` for compatibility.
 * **Registration:** New diagram types must be registered in `frontend/components/mdx/Diagram.tsx`.
 * 🆕 **Gemini Generator:** Pro nové diagramy použij Gemini CLI k generování SVG kódu.
+
+### 📱 MOBILE-FIRST SVG (POVINNÉ!)
+
+> **Lesson Learned (2025-12-21):** Diagramy musí být čitelné na mobilu BEZ ZOOMOVÁNÍ!
+
+| Pravidlo | Požadavek |
+|----------|-----------|
+| **Min. font-size** | 14px v SVG (ne menší!) |
+| **Max. elementy** | 5-6 hlavních prvků na diagram |
+| **Šířka** | Musí být čitelné na 375px |
+| **Komplexní diagramy** | Rozděl na více jednodušších NEBO implementuj mobile variantu |
+
+**Checklist pro každý diagram:**
+```
+□ Text čitelný na 375px šířce bez zoomu?
+□ Font-size min 14px?
+□ Max 5-6 hlavních elementů?
+□ Pokud složitější → má mobile variantu?
+```
+
+**Mobile varianta implementace:**
+```tsx
+// Pro složité diagramy - detekce viewport
+const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+if (isMobile) return <SimplifiedMobileVersion />;
+```
 
 ### ⚠️ DIAGRAM REGISTRATION CHECKLIST (POVINNÉ!)
 
