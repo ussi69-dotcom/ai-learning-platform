@@ -1,7 +1,7 @@
 # How Does AI Learn?
 
 <Callout type="info">
-**Mission Goal:** Master the 3 ways machines learn, the "Black Box" mystery, and the secret 4th way.
+**Mission Goal:** Master the 3 ways machines learn, the "Black Box" mystery, and how modern LLMs combine them all.
 ⏳ **Reading Time:** 20 min | 🧪 **[3] Labs Included**
 </Callout>
 
@@ -11,7 +11,7 @@
 
 **A neuron is just a number.**
 
-That's it. No magic. No consciousness. Just a number between 0 and 1 stored in a computer. And yet, when you connect trillions of these numbers in the right way... you get GPT-5.
+That's it. No magic. No consciousness. Just a number stored in a computer. And yet, when you connect billions of these numbers in the right way... you get modern AI like ChatGPT.
 
 How does adding more numbers create *understanding*? How does a pile of math learn to write poetry, code software, and diagnose diseases?
 
@@ -33,7 +33,7 @@ The video shows something profound: AI learning to recognize handwritten digits.
 <Diagram type="neural-network" />
 
 ### 💡 The Key Insight
-Each neuron "activates" (gets closer to 1) when it detects a specific pattern. Some neurons learn to detect **edges**. Others detect **curves**. Others detect **the loop in a 9**.
+Each neuron "activates" (outputs a higher value) when it detects a specific pattern. Some neurons learn to detect **edges**. Others detect **curves**. Others detect **the loop in a 9**.
 
 Nobody programs these patterns. The network **discovers them by itself**.
 
@@ -71,9 +71,9 @@ Eventually, the AI learns the patterns of a "Cat" (pointy ears, whiskers) and ca
 
 ### 🔬 Lab 1: The Pattern Teacher
 
-Let's see how AI learns from examples, not instructions. This is the core of **Few-Shot Learning**—show a pattern, and AI extracts the rule.
+Let's see how AI can infer rules from examples. This is **In-Context Learning**—the AI uses examples in your prompt to figure out the pattern (it's not training, just clever inference).
 
-**Objective:** Discover that AI can infer rules purely from examples.
+**Objective:** Discover that AI can infer rules purely from examples in the prompt.
 
 **The Prompt:**
 ```text
@@ -95,9 +95,9 @@ Finally: Describe the rule you discovered.
 **Analysis:**
 *   AI should output: G, T, P (first letter of each word)
 *   The magic: You never TOLD the AI the rule. It INFERRED it from patterns.
-*   This is exactly how Supervised Learning works—labels (examples) teach patterns.
+*   Note: This is **in-context learning** (inference), not actual training. The AI already learned patterns during training—now it applies them to your examples.
 
-**💡 Aha Moment:** "AI learns like a child—from examples, not definitions. I showed it 4 flashcards and it figured out the rule by itself!"
+**💡 Aha Moment:** "AI doesn't need explicit instructions—it recognizes patterns in the examples I provide. This is why prompts with examples work so well!"
 
 <LabComplete labId="lab-pattern-teacher" />
 
@@ -120,11 +120,15 @@ This is **Unsupervised Learning**. The AI meditates on the data until it finds h
 *   **Use Case:** Customer Segmentation, Recommendation Engines (Netflix), Anomaly Detection.
 </ConceptCard>
 
-### 🔬 Lab 2: The Space Language
+### 🔬 Lab 2: The Abstract Pattern
 
-AI can learn **any abstract rule**, even in fictional languages. This proves AI works with **patterns**, not meanings.
+AI can recognize **any abstract pattern**, even in fictional languages. This proves AI works with **patterns**, not meanings—it doesn't need to "understand" the data to find structure.
 
-**Objective:** Create a made-up language rule and watch AI master it instantly.
+**Objective:** Create a made-up transformation rule and watch AI infer it instantly.
+
+<Callout type="warning">
+**Note:** This lab demonstrates pattern inference, not true unsupervised learning (which would involve clustering without any examples). True unsupervised learning happens during AI training, not in a chat prompt.
+</Callout>
 
 **The Prompt:**
 ```text
@@ -205,11 +209,15 @@ Now explain: What changed between Round 1 and Round 2? How did my feedback shape
 ```
 
 **Analysis:**
-*   Watch how AI adapts its response based on your feedback (reward signal)
-*   This is exactly how RLHF works: humans rate outputs, AI learns to maximize positive ratings
-*   The AI will explain its own learning process—meta-learning in action!
+*   Watch how AI adapts its response based on your feedback
+*   This **simulates** the RLHF concept—in reality, RLHF is an offline training process where thousands of human ratings are used to train a reward model
+*   Your chat feedback doesn't actually update the AI's weights—but it shows you the *principle* behind how ChatGPT was aligned
 
-**💡 Aha Moment:** "I just trained an AI in real-time! By giving feedback (reward/penalty), I shaped its behavior. This is exactly how ChatGPT learned to be helpful instead of just smart."
+<Callout type="info">
+**Reality Check:** In this lab, you're role-playing RLHF. The actual RLHF process happens **offline** during training: humans rate thousands of outputs → a reward model is trained → the AI is fine-tuned to maximize that reward. Your chat doesn't change the model—it's already trained!
+</Callout>
+
+**💡 Aha Moment:** "Now I understand how ChatGPT was trained! Humans rated responses as helpful or harmful, and the AI learned to maximize positive ratings—all before I ever chatted with it."
 
 <LabComplete labId="lab-rlhf-simulator" />
 
@@ -251,7 +259,7 @@ It's a **Black Box**.
 
 <Diagram type="black-box" />
 
-Inside a modern AI (like GPT-5), there are **trillions** of numbers (parameters) interacting in complex ways.
+Inside a modern AI (like GPT-4), there are estimated **hundreds of billions** of numbers (parameters) interacting in complex ways—the exact count is not publicly known.
 If you ask an engineer *"Why did the AI say 'Hello' instead of 'Hi'?"*, they can't point to a specific line of code.
 They can only say: *"Because the math decided it was 0.001% more likely."*
 
@@ -267,12 +275,12 @@ They can only say: *"Because the math decided it was 0.001% more likely."*
 How did we get ChatGPT? It wasn't just one method. It was a combination.
 The secret sauce is **RLHF (Reinforcement Learning from Human Feedback)**.
 
-1.  📚 **Supervised:** We taught it grammar by reading the internet.
-2.  👍 **Reinforcement:** Humans chatted with it and voted "Thumbs Up" or "Thumbs Down".
-    *   If it was rude -> Thumbs Down (Penalty).
-    *   If it was helpful -> Thumbs Up (Reward).
+1.  📚 **Self-Supervised Pretraining:** It learned language patterns by predicting the next word on billions of web pages—no human labels needed.
+2.  👍 **RLHF (Reinforcement):** Humans rated many responses, training a "reward model" that predicts what humans prefer. The AI was then fine-tuned to maximize that reward.
+    *   Helpful, honest responses → High reward.
+    *   Rude or harmful responses → Low reward.
 
-This aligned the alien intelligence with human values.
+This alignment process shaped the raw language model into a helpful assistant.
 
 ---
 

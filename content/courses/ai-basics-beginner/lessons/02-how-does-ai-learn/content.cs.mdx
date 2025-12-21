@@ -1,7 +1,7 @@
 # Jak se AI učí?
 
 <Callout type="info">
-**Cíl mise:** Zvládnout 3 způsoby, jak se stroje učí, záhadu "Černé skříňky" a tajný 4. způsob.
+**Cíl mise:** Zvládnout 3 způsoby, jak se stroje učí, záhadu "Černé skříňky" a jak je moderní LLM kombinují.
 ⏳ **Čas čtení:** 20 min | 🧪 **[3] Laby součástí**
 </Callout>
 
@@ -11,7 +11,7 @@
 
 **Neuron je jen číslo.**
 
-To je celé. Žádná magie. Žádné vědomí. Jen číslo mezi 0 a 1 uložené v počítači. A přesto, když propojíš biliony těchto čísel správným způsobem... dostaneš GPT-5.
+To je celé. Žádná magie. Žádné vědomí. Jen číslo uložené v počítači. A přesto, když propojíš miliardy těchto čísel správným způsobem... dostaneš moderní AI jako ChatGPT.
 
 Jak může přidání dalších čísel vytvořit *porozumění*? Jak se hromada matematiky naučí psát poezii, programovat software a diagnostikovat nemoci?
 
@@ -33,7 +33,7 @@ Video ukazuje něco hlubokého: AI se učí rozpoznávat ručně psané číslic
 <Diagram type="neural-network" />
 
 ### 💡 Klíčový vhled
-Každý neuron se „aktivuje" (přiblíží se k 1), když detekuje specifický vzor. Některé neurony se naučí detekovat **hrany**. Jiné detekují **křivky**. Další detekují **smyčku v devítce**.
+Každý neuron se „aktivuje" (výstupní hodnota se zvýší), když detekuje specifický vzor. Některé neurony se naučí detekovat **hrany**. Jiné detekují **křivky**. Další detekují **smyčku v devítce**.
 
 Nikdo tyto vzory neprogramuje. Síť je **objevuje sama**.
 
@@ -71,9 +71,9 @@ AI se nakonec naučí vzory "Kočky" (špičaté uši, vousky) a dokáže rozpoz
 
 ### 🔬 Lab 1: Učitel vzorů
 
-Podívejme se, jak se AI učí z příkladů, ne z instrukcí. Toto je jádro **Few-Shot Learning** — ukaž vzor a AI si pravidlo odvodí sama.
+Podívejme se, jak AI dokáže odvodit pravidla z příkladů. Toto je **In-Context Learning** — AI použije příklady v tvém promptu k odvození vzoru (nejedná se o trénování, ale o chytrou inferenci).
 
-**Cíl:** Objevit, že AI dokáže odvodit pravidla čistě z příkladů.
+**Cíl:** Objevit, že AI dokáže odvodit pravidla čistě z příkladů v promptu.
 
 **Prompt:**
 ```text
@@ -95,9 +95,9 @@ Nakonec: Popiš pravidlo, které jsi objevil/a.
 **Analýza:**
 *   AI by měla odpovědět: Ž, T, P (první písmeno každého slova)
 *   Kouzlo: Nikdy jsi AI pravidlo NEŘEKL/A. Sama ho ODVODILA ze vzorů.
-*   Přesně takto funguje Supervised Learning — štítky (příklady) učí vzory.
+*   Poznámka: Toto je **in-context learning** (inference), ne skutečný trénink. AI se naučila vzory během tréninku—teď je aplikuje na tvé příklady.
 
-**💡 Aha Moment:** "AI se učí jako dítě — z příkladů, ne z definic. Ukázal/a jsem jí 4 kartičky a ona sama přišla na pravidlo!"
+**💡 Aha Moment:** "AI nepotřebuje explicitní instrukce—rozpoznává vzory v příkladech, které jí poskytnu. Proto prompty s příklady fungují tak dobře!"
 
 <LabComplete labId="lab-pattern-teacher" />
 
@@ -120,11 +120,15 @@ To je **Učení bez učitele**. AI medituje nad daty, dokud nenajde skryté stru
 *   **Případ užití:** Segmentace zákazníků, Doporučovací systémy (Netflix), Detekce anomálií.
 </ConceptCard>
 
-### 🔬 Lab 2: Jazyk z vesmíru
+### 🔬 Lab 2: Abstraktní vzor
 
-AI se dokáže naučit **jakékoli abstraktní pravidlo**, i ve vymyšleném jazyce. To dokazuje, že AI pracuje se **vzory**, ne s významy.
+AI dokáže rozpoznat **jakýkoliv abstraktní vzor**, i ve vymyšleném jazyce. To dokazuje, že AI pracuje se **vzory**, ne s významy—nepotřebuje "rozumět" datům, aby našla strukturu.
 
-**Cíl:** Vymyslet si pravidlo jazyka a sledovat, jak ho AI okamžitě zvládne.
+**Cíl:** Vymyslet si pravidlo transformace a sledovat, jak ho AI okamžitě odvodí.
+
+<Callout type="warning">
+**Poznámka:** Tento lab demonstruje odvozování vzorů, ne skutečné učení bez učitele (které by zahrnovalo shlukování bez příkladů). Skutečné unsupervised learning probíhá během tréninku AI, ne v chat promptu.
+</Callout>
 
 **Prompt:**
 ```text
@@ -132,18 +136,18 @@ Zahrajeme si s vymyšleným jazykem. V mém jazyce existuje jednoduchý systém 
 
 Pes → Pesofon (přidej "-ofon")
 Banán → Banánofon (přidej "-ofon")
-Auto → Autofon (přidej "-ofon")
+Vlak → Vlakofon (přidej "-ofon")
 
 Teď mi řekni:
 1. Jak se řekne "POČÍTAČ" v mém jazyce?
-2. Jak se řekne "KÁVA" v mém jazyce?
-3. Jak se řekne "LÁSKA" v mém jazyce?
+2. Jak se řekne "STROM" v mém jazyce?
+3. Jak se řekne "SEN" v mém jazyce?
 
 Pro KAŽDÉ slovo VYSVĚTLI pravidlo, které jsi použil/a.
 ```
 
 **Analýza:**
-*   AI by měla vygenerovat: Počítačofon, Kávofon, Láskofon
+*   AI by měla vygenerovat: Počítačofon, Stromofon, Senofon
 *   Sleduj vysvětlení — AI popíše pravidlo, které odvodila
 *   To dokazuje, že AI pracuje na úrovni SYMBOLŮ, ne konceptů
 
@@ -205,11 +209,15 @@ Teď vysvětli: Co se změnilo mezi Kolem 1 a Kolem 2? Jak moje zpětná vazba o
 ```
 
 **Analýza:**
-*   Sleduj, jak AI přizpůsobuje odpověď na základě tvé zpětné vazby (signál odměny)
-*   Přesně takto funguje RLHF: lidé hodnotí výstupy, AI se učí maximalizovat pozitivní hodnocení
-*   AI vysvětlí svůj vlastní proces učení — meta-učení v akci!
+*   Sleduj, jak AI přizpůsobuje odpověď na základě tvé zpětné vazby
+*   Toto **simuluje** koncept RLHF—ve skutečnosti je RLHF offline trénovací proces, kde tisíce lidských hodnocení slouží k trénování reward modelu
+*   Tvá zpětná vazba v chatu ve skutečnosti neaktualizuje váhy AI—ale ukazuje ti *princip*, jak byl ChatGPT alignován
 
-**💡 Aha Moment:** "Právě jsem v reálném čase trénoval/a AI! Poskytnutím zpětné vazby (odměna/trest) jsem formoval/a její chování. Přesně takto se ChatGPT naučil být užitečný, ne jen chytrý."
+<Callout type="info">
+**Kontrola reality:** V tomto labu hraješ RLHF na nečisto. Skutečný RLHF proces probíhá **offline** během tréninku: lidé hodnotí tisíce výstupů → trénuje se reward model → AI je doladěna k maximalizaci této odměny. Tvůj chat model nemění—ten už je natrénovaný!
+</Callout>
+
+**💡 Aha Moment:** "Teď chápu, jak byl ChatGPT trénován! Lidé hodnotili odpovědi jako užitečné nebo škodlivé a AI se naučila maximalizovat pozitivní hodnocení—to vše ještě předtím, než jsem si s ní vůbec psala!"
 
 <LabComplete labId="lab-rlhf-simulator" />
 
@@ -251,7 +259,7 @@ Je to **Černá skříňka**.
 
 <Diagram type="black-box" />
 
-Uvnitř moderní AI (jako GPT-5) jsou **biliony** čísel (parametrů), které interagují složitými způsoby.
+Uvnitř moderní AI (jako GPT-4) je odhadovaně **stovky miliard** čísel (parametrů), které interagují složitými způsoby—přesný počet není veřejně znám.
 Když se zeptáš inženýra *"Proč AI řekla 'Ahoj' místo 'Čau'?"*, nemůže ukázat na konkrétní řádek kódu.
 Může jen říct: *"Protože matematika rozhodla, že to bylo o 0,001 % pravděpodobnější."*
 
@@ -267,12 +275,12 @@ Může jen říct: *"Protože matematika rozhodla, že to bylo o 0,001 % pravdě
 Jak jsme dostali ChatGPT? Nebyla to jen jedna metoda. Byla to kombinace.
 Tou tajnou přísadou je **RLHF (Reinforcement Learning from Human Feedback - Učení posilováním z lidské zpětné vazby)**.
 
-1.  📚 **Supervised:** Naučili jsme ji gramatiku čtením internetu.
-2.  👍 **Reinforcement:** Lidé s ní chatovali a hlasovali "Palec nahoru" nebo "Palec dolů".
-    *   Pokud byla hrubá -> Palec dolů (Trest).
-    *   Pokud byla nápomocná -> Palec nahoru (Odměna).
+1.  📚 **Self-Supervised Pretraining:** Naučila se jazykové vzory předpovídáním dalšího slova na miliardách webových stránek—bez lidských štítků.
+2.  👍 **RLHF (Reinforcement):** Lidé ohodnotili mnoho odpovědí a natrénovali „reward model", který předpovídá, co lidé preferují. AI pak byla doladěna, aby maximalizovala tuto odměnu.
+    *   Nápomocné, upřímné odpovědi → Vysoká odměna.
+    *   Hrubé nebo škodlivé odpovědi → Nízká odměna.
 
-Tím se mimozemská inteligence sladila s lidskými hodnotami.
+Tento alignment proces přetvořil surový jazykový model v užitečného asistenta.
 
 ---
 
