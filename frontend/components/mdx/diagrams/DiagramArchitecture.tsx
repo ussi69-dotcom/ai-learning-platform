@@ -3116,6 +3116,82 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
   }
 
   // =====================
+  // Copilot Pages Flow
+  // =====================
+  if (type === 'copilot-pages-flow') {
+    return (
+      <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
+        <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
+          <div className="md:hidden space-y-3">
+            <div className="text-center text-lg font-bold text-slate-200">
+              {isCs ? 'Tok Copilot Pages' : 'Copilot Pages Flow'}
+            </div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3">
+                {isCs ? '1. Položte otázku v Copilot Chatu' : '1. Ask in Copilot Chat'}
+              </div>
+              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-4 py-3">
+                {isCs ? '2. Klikněte na Create page' : '2. Click Create page'}
+              </div>
+              <div className="rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3">
+                {isCs ? '3. Sdílejte a průběžně aktualizujte' : '3. Share and keep it updated'}
+              </div>
+            </div>
+          </div>
+          <svg viewBox="0 0 800 240" className="hidden md:block w-full h-auto" role="img" aria-label="Copilot Pages Flow: Chat -> Create page -> Share">
+            <defs>
+              <marker id="pages-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            <text x="400" y="30" textAnchor="middle" className="text-lg font-bold fill-white">
+              {isCs ? 'Tok Copilot Pages' : 'Copilot Pages Flow'}
+            </text>
+            <text x="400" y="50" textAnchor="middle" className="text-xs fill-slate-400">
+              {isCs ? 'Z odpovědi vzniká sdílený živý dokument' : 'Turn answers into a shared living doc'}
+            </text>
+
+            <g transform="translate(40, 80)">
+              <rect x="0" y="0" width="200" height="100" rx="14" fill="#3b82f6" fillOpacity="0.12" stroke="#3b82f6" strokeWidth="2"/>
+              <text x="100" y="45" textAnchor="middle" className="text-sm font-bold fill-blue-300">
+                {isCs ? 'Copilot Chat' : 'Copilot Chat'}
+              </text>
+              <text x="100" y="68" textAnchor="middle" className="text-xs fill-blue-200">
+                {isCs ? 'Položte otázku' : 'Ask a question'}
+              </text>
+            </g>
+
+            <path d="M 240 130 L 300 130" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#pages-arrow)" />
+
+            <g transform="translate(300, 80)">
+              <rect x="0" y="0" width="200" height="100" rx="14" fill="#a855f7" fillOpacity="0.12" stroke="#a855f7" strokeWidth="2"/>
+              <text x="100" y="45" textAnchor="middle" className="text-sm font-bold fill-purple-300">
+                {isCs ? 'Create page' : 'Create page'}
+              </text>
+              <text x="100" y="68" textAnchor="middle" className="text-xs fill-purple-200">
+                {isCs ? 'Vygenerujte stránku' : 'Generate the page'}
+              </text>
+            </g>
+
+            <path d="M 500 130 L 560 130" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#pages-arrow)" />
+
+            <g transform="translate(560, 80)">
+              <rect x="0" y="0" width="200" height="100" rx="14" fill="#10b981" fillOpacity="0.12" stroke="#10b981" strokeWidth="2"/>
+              <text x="100" y="45" textAnchor="middle" className="text-sm font-bold fill-emerald-300">
+                {isCs ? 'Sdílej a iteruj' : 'Share & iterate'}
+              </text>
+              <text x="100" y="68" textAnchor="middle" className="text-xs fill-emerald-200">
+                {isCs ? 'Živý dokument' : 'Living document'}
+              </text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // =====================
   // Workflow Impact Cards
   // =====================
   if (type === 'workflow-impact-cards') {

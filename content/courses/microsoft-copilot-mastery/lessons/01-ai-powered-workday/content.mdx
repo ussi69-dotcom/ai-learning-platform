@@ -3,13 +3,15 @@
 <Callout type="info">
 **Mission Goal:** Transform your daily work routine from manual drudgery to AI-augmented productivity by mastering Copilot's memory, automation, and cross-app intelligence.
 
-⏳ **Reading Time:** 35 min | 🧪 **[3] Labs Included**
+⏳ **Reading Time:** 40 min | 🧪 **[4] Labs Included**
 </Callout>
 
 <VideoSwitcher alternatives={[
+  {"id":"JbOJliF-Cn4","title":"Microsoft 365 Copilot Tutorial – Beginner’s Guide (2025)"},
+  {"id":"RY1NRd-aoyI","title":"Copilot in Outlook & Teams: Communication Boost"},
+  {"id":"4UkKFnuAHSY","title":"Microsoft 365 Copilot Ultimate Guide (2025)"},
   {"id":"9sFA-dWNUlc","title":"Copilot Master Tips (Microsoft Engineer)"},
-  {"id":"0T39n8uAqOk","title":"Outlook, Excel & Chat Tips"},
-  {"id":"GeeK0GoFlkE","title":"5 Hidden Copilot Tips"}
+  {"id":"bAAsmyG1ZL0","title":"Copilot Across Excel, Word, and Outlook"}
 ]} />
 
 ## ⚡ Your Inbox Had 147 Unread Emails This Morning
@@ -113,6 +115,8 @@ When Q4 ends, update the memory. Copilot adapts instantly.
 
 </Callout>
 
+<Diagram type="context-hierarchy" />
+
 ---
 
 ## 🔬 Lab 1: The Memory Implant
@@ -122,6 +126,10 @@ When Q4 ends, update the memory. Copilot adapts instantly.
 ### 📋 Prerequisites
 - Microsoft 365 Copilot license (M365 CPI or E3/E5 with Copilot add-on)
 - Access to copilot.microsoft.com or the Copilot app
+
+<Callout type="info">
+**Why prompts are in English:** Copilot’s UI and model behavior are most consistent in EN. Copy the prompts as-is, then translate outputs if needed.
+</Callout>
 
 ### 🛠️ Steps
 
@@ -190,7 +198,7 @@ Example response:
 
 You know what's wild? Microsoft built a **prompt marketplace** and almost nobody uses it.
 
-It's called **Copilot Lab** (copilot.microsoft.com → Copilot Lab tab). It's a searchable gallery of pre-written, production-tested prompts for every M365 app.
+It's called the **Prompt Gallery** (sometimes labeled **Copilot Lab**) inside the Microsoft 365 Copilot app. It's a searchable library of pre-written, production-tested prompts for every M365 app.
 
 ### Why This Exists
 
@@ -198,7 +206,7 @@ Most people waste 60% of their Copilot time *figuring out how to ask the questio
 
 Microsoft's answer: **"Stop reinventing prompts. Use the ones that already work."**
 
-### How to Use Copilot Lab
+### How to Use the Prompt Gallery (Copilot Lab)
 
 <Steps>
 
@@ -231,6 +239,8 @@ Microsoft's answer: **"Stop reinventing prompts. Use the ones that already work.
 | **Excel Analysis** | "Identify the top 3 products by revenue growth in Q4 and explain what changed compared to Q3." |
 | **Word Editing** | "Rewrite this section to be 50% shorter while keeping all key data points." |
 
+<Diagram type="prompt-cheat-sheet" />
+
 <Callout type="warning">
 
 **Trap to Avoid:**
@@ -257,7 +267,50 @@ Found a killer prompt? **Share it to a Teams channel** so your whole team can re
 
 ---
 
-## 📊 3. Excel Upgrades: Agent Mode & =COPILOT() Function
+## 🧩 3. Copilot Pages: From Chat to Living Doc
+
+Copilot answers are great. **Copilot Pages makes them reusable.**
+
+Think of Pages as a shared, living document created directly from a Copilot response. It’s perfect for weekly briefs, project summaries, and recurring deliverables.
+
+**How it works:**
+1. Ask Copilot a question in M365 Copilot Chat
+2. Click **Create page** (or **Add to page**)
+3. Copilot generates a structured page you can edit, share, and keep updated
+
+<Diagram type="copilot-pages-flow" />
+
+<Callout type="info">
+**Availability note:** Copilot Pages roll out by tenant. If you don’t see it yet, check M365 Copilot release notes or your admin’s rollout settings.
+</Callout>
+
+## 🔬 Lab 2: The Weekly Brief Page
+
+**Objective:** Generate a weekly status brief and turn it into a shareable Copilot Page.
+
+**Prompt (in M365 Copilot Chat):**
+
+```text
+Create a weekly brief for my team. Include:
+- Top 3 wins from this week
+- Blockers and risks
+- Decisions needed next week
+- 3 action items with owners
+```
+
+**Steps:**
+1. Run the prompt
+2. Click **Create page**
+3. Rename it to “Weekly Brief – [Week of Date]”
+4. Share the page in Teams or email
+
+**💡 Aha Moment:** *"I just created a reusable weekly update that the whole team can edit—and it started as a single chat prompt."*
+
+<LabComplete labId="lab-weekly-brief-page" />
+
+---
+
+## 📊 4. Excel Upgrades: Agent Mode & =COPILOT() Function
 
 This is where Copilot stops being a chatbot and becomes a **data analyst sitting in your spreadsheet**.
 
@@ -275,6 +328,10 @@ Normal Copilot in Excel is reactive—you ask, it responds with text. **Agent Mo
 4. Install the add-in (free, built by Microsoft Research)
 5. Open the Excel Labs pane (appears on the right side)
 6. Enable **"Copilot Agent Mode"** toggle
+
+<Callout type="warning">
+**Availability:** Excel Labs and Agent Mode are experimental and may be tenant/region dependent. If you don't see them, use Copilot in Excel Chat (right sidebar) for similar analysis workflows.
+</Callout>
 
 **Example Mission:**
 
@@ -335,7 +392,7 @@ Copilot processes the question, identifies the relevant cells, and gives you the
 
 ---
 
-## 🔬 Lab 2: The Excel Whisperer
+## 🔬 Lab 3: The Excel Whisperer
 
 **Objective:** Use the =COPILOT() function to categorize customer feedback data and identify trends without writing traditional formulas.
 
@@ -413,7 +470,7 @@ What's the most common complaint theme?
 
 ---
 
-## 📧 4. Outlook Superpowers: AI Prioritization & Draft Instructions
+## 📧 5. Outlook Superpowers: AI Prioritization & Draft Instructions
 
 Your inbox is chaos. Not because you're disorganized—because **everyone else's urgency becomes your priority**.
 
@@ -538,7 +595,7 @@ Switch profiles based on who you're emailing.
 
 ---
 
-## 🔬 Lab 3: The Inbox Tamer
+## 🔬 Lab 4: The Inbox Tamer
 
 **Objective:** Configure AI prioritization rules and Draft Instructions, then use Copilot to handle 3 common email scenarios in under 5 minutes.
 
@@ -641,7 +698,7 @@ Group by priority and tell me which ones need action from me.
 
 ---
 
-## 🤝 5. Cross-App Intelligence: Teams Mode & M365 Chat
+## 🤝 6. Cross-App Intelligence: Teams Mode & M365 Chat
 
 Here's the killer feature nobody talks about: **Copilot doesn't live in silos.**
 
@@ -709,7 +766,7 @@ Returns:
 
 ---
 
-## 📝 6. Word & PowerPoint: The Content Accelerators
+## 📝 7. Word & PowerPoint: The Content Accelerators
 
 ### Word: From Blank Page to First Draft in 3 Minutes
 
@@ -759,57 +816,35 @@ It redesigns the slides automatically.
 
 ---
 
-## 🚀 7. Advanced Features (The 2026 Roadmap)
+## 🚀 8. Advanced Features (2025+ Updates)
 
-Microsoft is moving fast. Here's what's live or coming soon:
+Microsoft is moving fast. These are the upgrades most relevant to day‑to‑day work:
 
-### Video Creation with Sora 2 (November 2025)
+### Copilot Chat in the M365 Apps
+Copilot Chat is now integrated directly in **Word, Excel, PowerPoint, Outlook, and OneNote** in many tenants. You can ask questions *in context* without jumping to a separate chat.
 
-Copilot integrated **OpenAI's Sora 2** video generation model. You can now create:
-- Product demo videos from text prompts
-- Training videos with AI-generated voiceovers
-- Social media clips
+### Copilot Pages (and the Library)
+Pages turn responses into living documents. You can keep a reusable **Weekly Brief**, share it, and update it each week instead of starting from scratch.
 
-**How:** Open Clipchamp (Microsoft's video editor) → Copilot pane → "Generate video"
+### Prompt Gallery (Copilot Lab)
+The prompt library is now a first‑class feature in the Copilot app. Save, reuse, and share the prompts that work.
 
-### Scheduled Prompts (M365 CPI License)
+### Teams + Outlook Recap Improvements
+Meeting recap, action items, and thread summaries continue to improve and are rolling out tenant‑by‑tenant.
 
-Want a daily digest of unread emails at 8am? Weekly sales report every Friday at 4pm?
+### Scheduled Prompts (If Available)
+Some tenants can schedule recurring prompts (daily digest, weekly KPI report). If you don’t see it, ask your admin or check release notes.
 
-**Scheduled Prompts** let you automate recurring Copilot tasks:
+### Copilot Agents in M365 App
+Specialized agents can be pinned alongside Copilot Chat for common tasks (policy Q&A, onboarding, HR help).
 
-1. Write the prompt: "Summarize all emails from [Client] this week"
-2. Set schedule: "Every Friday at 4pm"
-3. Choose delivery: Email, Teams message, or save to OneDrive
-
-Copilot runs it automatically. You get the result without asking.
-
-### Survey Agent (Beta)
-
-Generate customer surveys, employee feedback forms, or event registrations by describing what you need. Copilot creates the Microsoft Forms survey, writes the questions, and sets up response collection.
-
-### Researcher Agent with Claude Option
-
-The **Researcher** agent can now use **Anthropic's Claude** instead of GPT for deep research tasks.
-
-<Callout type="warning">
-
-**CRITICAL SECURITY NOTE:**
-
-If you enable Claude in Researcher mode, **Microsoft's enterprise data protection is DISABLED**. Your queries and data are sent to Anthropic's servers, not kept within Microsoft's compliance boundary.
-
-**Only use this if:**
-- You're researching public/non-sensitive topics
-- Your company allows third-party AI tool usage
-- You're not handling customer data, proprietary info, or regulated content
-
-For enterprise work, stick with the default GPT-based Researcher.
-
+<Callout type="info">
+**Availability varies:** Features roll out by tenant/region. Always check M365 Copilot release notes or your admin’s rollout page before promising a capability.
 </Callout>
 
 ---
 
-## 🛡️ 8. Licensing & What's New in E3/E5 (2025 Update)
+## 🛡️ 9. Licensing & What's New in E3/E5 (2025 Update)
 
 If you're on **Microsoft 365 E3** or **E5**, you got some major upgrades in late 2025:
 
@@ -840,7 +875,7 @@ If you're in a regulated industry (finance, healthcare, government), **E5 + Copi
 
 ---
 
-## 🎯 9. The 5-Minute Workday Transformation
+## 🎯 10. The 5-Minute Workday Transformation
 
 Here's what your Monday morning looks like **after mastering these features**:
 
@@ -981,4 +1016,4 @@ Go.
 
 **End of Lesson**
 
-*Reading Time: 35 minutes | Labs Completed: 3*
+*Reading Time: 40 minutes | Labs Completed: 4*

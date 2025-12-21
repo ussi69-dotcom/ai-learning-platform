@@ -3,13 +3,15 @@
 <Callout type="info">
 **Cíl mise:** Transformujte svou každodenní pracovní rutinu z manuální dřiny na produktivitu zesílenou AI pomocí zvládnutí paměti Copilota, automatizace a inteligence napříč aplikacemi.
 
-⏳ **Čas čtení:** 35 min | 🧪 **[3] Laby součástí**
+⏳ **Čas čtení:** 40 min | 🧪 **[4] Laby součástí**
 </Callout>
 
 <VideoSwitcher alternatives={[
+  {"id":"JbOJliF-Cn4","title":"Microsoft 365 Copilot Tutorial – Beginner’s Guide (2025)"},
+  {"id":"RY1NRd-aoyI","title":"Copilot in Outlook & Teams: Communication Boost"},
+  {"id":"4UkKFnuAHSY","title":"Microsoft 365 Copilot Ultimate Guide (2025)"},
   {"id":"9sFA-dWNUlc","title":"Copilot Master Tips (Microsoft Engineer)"},
-  {"id":"0T39n8uAqOk","title":"Outlook, Excel & Chat Tips"},
-  {"id":"GeeK0GoFlkE","title":"5 Hidden Copilot Tips"}
+  {"id":"bAAsmyG1ZL0","title":"Copilot Across Excel, Word, and Outlook"}
 ]} />
 
 ## ⚡ Dnes ráno jste měli v inbox 147 nepřečtených emailů
@@ -113,6 +115,8 @@ Když 4. čtvrtletí skončí, aktualizujte paměť. Copilot se přizpůsobí ok
 
 </Callout>
 
+<Diagram type="context-hierarchy" />
+
 ---
 
 ## 🔬 Lab 1: Paměťový implantát
@@ -122,6 +126,10 @@ Když 4. čtvrtletí skončí, aktualizujte paměť. Copilot se přizpůsobí ok
 ### 📋 Předpoklady
 - Microsoft 365 Copilot licence (M365 CPI nebo E3/E5 s Copilot doplňkem)
 - Přístup na copilot.microsoft.com nebo do aplikace Copilot
+
+<Callout type="info">
+**Poznámka:** Prompty jsou v angličtině — Copilot reaguje nejpřesněji na EN a rozhraní je EN-first. Výstupy si můžete přeložit.
+</Callout>
 
 ### 🛠️ Kroky
 
@@ -190,7 +198,7 @@ Příklad odpovědi:
 
 Víte, co je divoký? Microsoft postavil **tržiště s prompty** a skoro nikdo ho nepoužívá.
 
-Jmenuje se to **Copilot Lab** (copilot.microsoft.com → záložka Copilot Lab). Je to prohledávatelná galerie předepsaných, v produkci otestovaných promptů pro každou M365 aplikaci.
+Jmenuje se **Prompt Gallery** (někde označeno jako **Copilot Lab**) v aplikaci Microsoft 365 Copilot. Je to prohledávatelná galerie předepsaných, v produkci otestovaných promptů pro každou M365 aplikaci.
 
 ### Proč tohle existuje
 
@@ -198,7 +206,7 @@ Většina lidí promrhá 60 % svého času s Copilotem *přemýšlením, jak pol
 
 Microsoftí odpověď: **"Přestaňte vymýšlet prompty. Používejte ty, co už fungují."**
 
-### Jak používat Copilot Lab
+### Jak používat Prompt Gallery (Copilot Lab)
 
 <Steps>
 
@@ -231,6 +239,8 @@ Microsoftí odpověď: **"Přestaňte vymýšlet prompty. Používejte ty, co u�
 | **Analýza v Excelu** | "Identify the top 3 products by revenue growth in Q4 and explain what changed compared to Q3." |
 | **Editace ve Wordu** | "Rewrite this section to be 50% shorter while keeping all key data points." |
 
+<Diagram type="prompt-cheat-sheet" />
+
 <Callout type="warning">
 
 **Past k vyhnutí:**
@@ -257,7 +267,50 @@ Našli jste skvělý prompt? **Sdílejte ho do Teams kanálu**, aby ho celý tý
 
 ---
 
-## 📊 3. Excel upgrady: Agent Mode & =COPILOT() funkce
+## 🧩 3. Copilot Pages: Z chatu do živého dokumentu
+
+Copilot odpovědi jsou skvělé. **Copilot Pages je dělá znovupoužitelné.**
+
+Pages jsou sdílené, živé dokumenty vytvořené přímo z odpovědi Copilota. Hodí se na týdenní reporty, shrnutí projektů nebo opakující se deliverables.
+
+**Jak to funguje:**
+1. Položte otázku v M365 Copilot Chatu
+2. Klikněte na **Create page** (nebo **Add to page**)
+3. Copilot vytvoří strukturovanou stránku, kterou můžete upravovat a sdílet
+
+<Diagram type="copilot-pages-flow" />
+
+<Callout type="info">
+**Poznámka k dostupnosti:** Copilot Pages se rolloutuje po tenantech. Pokud ji nevidíte, ověřte release notes nebo se zeptejte admina.
+</Callout>
+
+## 🔬 Lab 2: Týdenní brief stránka
+
+**Cíl:** Vygenerovat týdenní status brief a převést ho do sdílené Copilot Page.
+
+**Prompt (v M365 Copilot Chatu):**
+
+```text
+Create a weekly brief for my team. Include:
+- Top 3 wins from this week
+- Blockers and risks
+- Decisions needed next week
+- 3 action items with owners
+```
+
+**Kroky:**
+1. Spusťte prompt
+2. Klikněte **Create page**
+3. Přejmenujte na “Weekly Brief – [Week of Date]”
+4. Sdílejte v Teams nebo emailem
+
+**💡 Aha Moment:** *"Právě jsem vytvořil znovupoužitelný týdenní update, který může celý tým editovat – a vznikl z jednoho promptu."*
+
+<LabComplete labId="lab-weekly-brief-page" />
+
+---
+
+## 📊 4. Excel upgrady: Agent Mode & =COPILOT() funkce
 
 Tady Copilot přestává být chatbot a stává se **datovým analytikem sedícím ve vašem spreadsheetu**.
 
@@ -275,6 +328,10 @@ Normální Copilot v Excelu je reaktivní—ptáte se, odpovídá textem. **Agen
 4. Nainstalujte doplněk (zdarma, postavený Microsoft Research)
 5. Otevřete Excel Labs panel (objeví se na pravé straně)
 6. Zapněte přepínač **"Copilot Agent Mode"**
+
+<Callout type="warning">
+**Dostupnost:** Excel Labs a Agent Mode jsou experimentální a závisí na tenantu/regionu. Pokud je nevidíte, použijte Copilot v Excel Chat (pravý panel) pro podobné analýzy.
+</Callout>
 
 **Příklad mise:**
 
@@ -335,7 +392,7 @@ Copilot zpracuje otázku, identifikuje relevantní buňky a dá vám odpověď s
 
 ---
 
-## 🔬 Lab 2: Šeptal Excelu
+## 🔬 Lab 3: Šeptal Excelu
 
 **Cíl:** Použít funkci =COPILOT() ke kategorizaci zákaznických zpětných vazeb a identifikaci trendů bez psaní tradičních vzorců.
 
@@ -413,7 +470,7 @@ What's the most common complaint theme?
 
 ---
 
-## 📧 4. Outlook superschopnosti: AI prioritizace & Draft Instructions
+## 📧 5. Outlook superschopnosti: AI prioritizace & Draft Instructions
 
 Vaše schránka je chaos. Ne proto, že jste neorganizovaní—proto, že **naléhavost všech ostatních se stává vaší prioritou**.
 
@@ -538,7 +595,7 @@ Přepínejte profily podle toho, komu píšete.
 
 ---
 
-## 🔬 Lab 3: Krotitel schránky
+## 🔬 Lab 4: Krotitel schránky
 
 **Cíl:** Nakonfigurovat AI pravidla prioritizace a Draft Instructions, pak použít Copilota ke zvládnutí 3 běžných emailových scénářů pod 5 minut.
 
@@ -641,7 +698,7 @@ Group by priority and tell me which ones need action from me.
 
 ---
 
-## 🤝 5. Cross-App inteligence: Teams Mode & M365 Chat
+## 🤝 6. Cross-App inteligence: Teams Mode & M365 Chat
 
 Tady je ta zabijácká funkce, o které nikdo nemluví: **Copilot nežije v silech.**
 
@@ -709,7 +766,7 @@ Vrátí:
 
 ---
 
-## 📝 6. Word & PowerPoint: Akcelerátory obsahu
+## 📝 7. Word & PowerPoint: Akcelerátory obsahu
 
 ### Word: Z prázdné stránky k prvnímu konceptu za 3 minuty
 
@@ -759,57 +816,35 @@ Automaticky přestyluje slidy.
 
 ---
 
-## 🚀 7. Pokročilé funkce (Plán 2026)
+## 🚀 8. Pokročilé funkce (Update 2025+)
 
-Microsoft jede rychle. Tady je, co je živé nebo přichází brzy:
+Microsoft jede rychle. Tohle jsou upgrady nejvíc relevantní pro běžný pracovní den:
 
-### Tvorba videa se Sora 2 (listopad 2025)
+### Copilot Chat přímo v M365 aplikacích
+Copilot Chat je integrovaný přímo ve **Wordu, Excelu, PowerPointu, Outlooku a OneNote** (v mnoha tenantech). Můžete se ptát přímo v kontextu dokumentu.
 
-Copilot integroval **OpenAI Sora 2** model pro generování videa. Nyní můžete vytvářet:
-- Produktová demo videa z textových promptů
-- Školicí videa s AI generovanými voice-overy
-- Klipy pro sociální média
+### Copilot Pages (a knihovna)
+Pages přetváří odpovědi na živé dokumenty. Udržíte si **Weekly Brief**, můžete ho sdílet a aktualizovat každý týden.
 
-**Jak:** Otevřete Clipchamp (Microsoftí video editor) → Copilot panel → "Generate video"
+### Prompt Gallery (Copilot Lab)
+Knihovna promptů je teď first‑class feature v Copilot appce. Ukládejte, znovu používejte a sdílejte prompty, které fungují.
 
-### Naplánované prompty (M365 CPI licence)
+### Vylepšené recapy v Teams a Outlooku
+Recap meetingů, action items a thread summaries se průběžně zlepšují a rolloutují po tenantech.
 
-Chcete denní digest nepřečtených emailů v 8 ráno? Týdenní prodejní report každý pátek ve 4 odpoledne?
+### Naplánované prompty (pokud dostupné)
+Některé tenanty umožňují plánovat opakující se prompty (denní digest, týdenní KPI report). Když to nevidíte, zeptejte se admina nebo zkontrolujte release notes.
 
-**Scheduled Prompts** vám umožňují automatizovat opakující se Copilot úkoly:
+### Copilot Agenty v M365 appce
+Specializované agenty můžete připnout vedle Copilot Chatu pro opakující se úkoly (policy Q&A, onboarding, HR pomoc).
 
-1. Napište prompt: "Summarize all emails from [Klient] this week"
-2. Nastavte plán: "Every Friday at 4pm"
-3. Vyberte doručení: Email, Teams zpráva, nebo uložení na OneDrive
-
-Copilot to spustí automaticky. Dostanete výsledek bez ptaní.
-
-### Survey Agent (Beta)
-
-Generujte zákaznické dotazníky, formuláře zpětné vazby od zaměstnanců nebo registrace na eventy popsáním, co potřebujete. Copilot vytvoří Microsoft Forms průzkum, napíše otázky a nastaví sběr odpovědí.
-
-### Researcher Agent s Claude opcí
-
-**Researcher** agent nyní může používat **Anthropic Claude** místo GPT pro hluboké výzkumné úkoly.
-
-<Callout type="warning">
-
-**KRITICKÁ BEZPEČNOSTNÍ POZNÁMKA:**
-
-Pokud povolíte Claude v Researcher módu, **Microsoftí podniková ochrana dat je DEAKTIVOVÁNA**. Vaše dotazy a data jsou posílána na servery Anthropic, ne udržována v rámci Microsoftí compliance hranice.
-
-**Používejte pouze pokud:**
-- Zkoumáte veřejná/necitlivá témata
-- Vaše firma povoluje používání AI nástrojů třetích stran
-- Nezpracováváte zákaznická data, vlastnické info nebo regulovaný obsah
-
-Pro podnikovou práci zůstaňte u výchozího GPT-based Researchera.
-
+<Callout type="info">
+**Dostupnost se liší:** Funkce se rolloutují podle tenantu/regionu. Vždy ověřte v release notes nebo u admina před sliby.
 </Callout>
 
 ---
 
-## 🛡️ 8. Licence & Co je nového v E3/E5 (Update 2025)
+## 🛡️ 9. Licence & Co je nového v E3/E5 (Update 2025)
 
 Pokud jste na **Microsoft 365 E3** nebo **E5**, dostali jste v pozdním roce 2025 velké upgrady:
 
@@ -840,7 +875,7 @@ Pokud jste v regulovaném odvětví (finance, zdravotnictví, vláda), **E5 + Co
 
 ---
 
-## 🎯 9. 5minutová transformace pracovního dne
+## 🎯 10. 5minutová transformace pracovního dne
 
 Takhle vypadá vaše pondělní ráno **po zvládnutí těchto funkcí**:
 
@@ -981,4 +1016,4 @@ Jděte na to.
 
 **Konec lekce**
 
-*Čas čtení: 35 minut | Dokončené laby: 3*
+*Čas čtení: 40 minut | Dokončené laby: 4*
