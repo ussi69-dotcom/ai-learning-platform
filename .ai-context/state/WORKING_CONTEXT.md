@@ -1,7 +1,92 @@
 # Working Context
 
-**Last Updated:** 2025-12-21 12:48 (Agent: Codex GPT-5.2)
-**Last Commit:** `b1481c8` fix(ui): improve lesson text contrast
+**Last Updated:** 2025-12-21 21:30 (Agent: Claude Opus 4.5)
+
+## 🎯 Current Task: MASTERPIECE Upgrade - ai-basics L03 ✅
+**Started:** 2025-12-21 (Session 5)
+**Status:** ✅ COMPLETED
+
+### Session 5 Progress - MASTERPIECE L03 Upgrade
+
+| Task | Status | Notes |
+|------|--------|-------|
+| PHASE 1 Research | ✅ Done | YouTube MCP (Andrej Karpathy, IBM, CZ native) |
+| PHASE 2 Content Enrichment | ✅ Done | Gemini 54→59/60 |
+| PHASE 3 Visual Anchors | ✅ Done | All 6 diagrams already implemented |
+| PHASE 4 Multi-Agent QA | ✅ Done | Gemini scored 59/60 MASTERPIECE |
+| PHASE 5 Visual QA | ✅ Done | Verified transformer diagram + quiz |
+
+### Key Changes (L03)
+
+- **VideoSwitcher EN:** 2→4 videos (added Andrej Karpathy, IBM)
+- **VideoSwitcher CS:** 2→4 videos (added Andrej Karpathy, CZ native "Co je LLM?")
+- **Model refs:** GPT-5.1 → GPT-5 (timeless)
+- **Diagrams:** All 6 already implemented (llm-next-token, transformer-architecture-simplified, tokenization-viz, context-window, temperature-scale, training-pipeline)
+
+### Commits This Session
+
+| Hash | Message |
+|------|---------|
+| `5589bf0` | feat(lesson-03): MASTERPIECE upgrade for LLMs Explained |
+
+### Previous Session (Session 4) - MASTERPIECE L02 ✅
+
+| Task | Status | Notes |
+|------|--------|-------|
+| PHASE 1-5 | ✅ Done | 5 new diagrams, Lab 3 rewritten, 59/60 MASTERPIECE |
+
+| Hash | Message |
+|------|---------|
+| `14ede31` | feat(content): upgrade ai-basics L02 to MASTERPIECE |
+
+### Previous Session (Session 3) - MASTERPIECE L01 ✅
+
+| Hash | Message |
+|------|---------|
+| `7ef6a6c` | feat(content): upgrade ai-basics L01 to MASTERPIECE |
+| `3d0e841` | fix(content): update AI models to current versions + add verification rules |
+| `7d00133` | fix(content): add Czech prompts to CZ labs + update labs policy |
+
+### Previous: VideoSwitcher Debug (Session 2)
+
+### Previous: Beginner Lessons → Golden Standard ✅
+**Completed:** 2025-12-21
+
+| Course | Beginner Lessons | Status |
+|--------|------------------|--------|
+| microsoft-copilot-mastery | 1 (L01 only) | ✅ Done |
+| ai-basics-beginner | 7 | ✅ Done |
+
+**Note:** copilot/02-workflows-agent is `intermediate`, copilot/03-copilot-studio is `advanced` - skipped.
+
+### Lesson Progress Tracker
+
+| # | Lesson | Review | Fixes | Multi-Agent | Visual QA | Done |
+|---|--------|--------|-------|-------------|-----------|------|
+| 1 | copilot/01-ai-powered-workday | ✅ | ✅ | ✅ (Gemini+Codex) | ✅ Desktop | ✅ |
+| 2 | basics/01-what-is-ai | ✅ | N/A | ✅ (Gemini) | N/A | ✅ |
+| 3 | basics/02-how-does-ai-learn | ✅ | N/A | ✅ (Gemini) | N/A | ✅ |
+| 4 | basics/03-llms-explained | ✅ | N/A | ✅ (Gemini) | N/A | ✅ |
+| 5 | basics/04-your-first-prompt | ✅ | N/A | ✅ (Gemini) | N/A | ✅ |
+| 6 | basics/05-the-dark-side | ✅ | N/A | ✅ (Gemini) | N/A | ✅ |
+| 7 | basics/06-ai-at-work | ✅ | N/A | ✅ (Gemini) | N/A | ✅ |
+| 8 | basics/07-course-summary | ✅ | N/A | ✅ (Gemini) | N/A | ✅ |
+
+### Gemini Review Summary (AI Basics Course)
+**Verdict:** 🟢 Excellent / Ready for Release
+
+**Strengths:**
+- Logical progression for absolute beginners
+- Star Wars theme (Padawan→Jedi) engaging and consistent
+- Czech translation natural with appropriate terminology
+
+**Nice-to-have improvements (not blockers):**
+- L04: Add Czech cultural reference (Švejk/Cimrman)
+- L06: Ensure Excel lab explains formulas
+- L07: Mention mobile apps explicitly
+
+---
+**Last Commit:** `c0c8adb` docs: update working context
 **Status:** 🟢 Global readability boost (nav, footer, progress, callouts, video metadata) applied; Lesson 01 visuals verified; `npm run verify` passes (lint warnings only).
 
 ---
@@ -501,6 +586,10 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-21 | Claude      | **MASTERPIECE ai-basics L03** - VideoSwitcher 2→4 videos (Andrej Karpathy, IBM, CZ native), GPT-5.1→GPT-5, all 6 diagrams verified, Gemini 59/60 |
+| 2025-12-21 | Claude      | **MASTERPIECE ai-basics L02** - 5 new diagrams (neural-network, learning-types, supervised-flow, clustering, RL-loop), Lab 3 rewritten as RLHF Simulator, VideoSwitcher 4 videos, Gemini 59/60 |
+| 2025-12-21 | Claude      | **MASTERPIECE ai-basics L01** - Full WORKFLOW_V6 upgrade, model verification rules (GPT-5/o3), mobile-first SVG rules, Czech labs policy (CZ prompts), 3 commits |
+| 2025-12-21 | Claude      | **Beginner Lessons Golden Standard** - Reviewed 8 beginner lessons (1 copilot + 7 ai-basics), fixed cosmetic tone L01, multi-agent verified with Gemini (Excellent rating), Visual QA desktop L01, skipped L02/L03 copilot (intermediate/advanced) |
 | 2025-12-20 | Claude      | **Copilot L02/L03 Visual Polish** - inline emoji→Lucide in lesson/course headers, fixed inline parser, human-in-the-loop full-bleed mobile, added backend pytest.ini; Playwright screenshots + tests run |
 | 2025-12-20 | Codex GPT-5.2 | **L02/L03 QA Fixes** - softened claims, added availability caveats, fixed CZ “Laby”, added video fallback + origin param, localized hidden “Next” |
 | 2025-12-20 | Codex GPT-5.2 | **Copilot L02/L03 QA** - frontend verify OK (warnings), backend pytest fails (ModuleNotFoundError), Playwright visual blocked by Alpine deps; captured lesson screenshots via Playwright MCP |
