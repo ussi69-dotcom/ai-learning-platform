@@ -9,11 +9,11 @@
 
 ## ⚡ The Uncomfortable Truth
 
-**ChatGPT doesn't understand anything.**
+**LLMs don't have human-like understanding.**
 
-Read that again. The machine that writes poetry, debugs code, and passes the bar exam doesn't "understand" a single word it produces. It's playing the most sophisticated game of *autocomplete* ever created.
+Read that again. The machine that writes poetry, debugs code, and passes the bar exam doesn't "understand" words the way you do. It generates text by predicting tokens from patterns in data—the most sophisticated game of *autocomplete* ever created.
 
-Every word ChatGPT generates is a statistical bet. A prediction. A gamble on what token should come next based on 175 billion parameters trained on the internet.
+Every word ChatGPT generates is a statistical bet. A prediction. A gamble on what token should come next, based on billions of learned parameters (exact counts are typically not public).
 
 **And yet... it works.**
 
@@ -25,7 +25,7 @@ The video above by 3Blue1Brown will show you exactly how. Watch it—you'll neve
 
 Imagine C-3PO is translating an ancient Sith dialect. He doesn't "feel" the anger in the words. He calculates the **probability** of which word usually follows the previous one.
 
-An LLM is exactly that. It is a machine trained on the entire internet (The Jedi Archives) to play one simple game: **"Guess the next token."**
+An LLM is exactly that. It is a machine trained on massive text corpora—web pages, books, code, and other sources—to play one simple game: **"Guess the next token."**
 
 <Diagram type="llm-next-token" />
 
@@ -39,8 +39,8 @@ An LLM is exactly that. It is a machine trained on the entire internet (The Jedi
 
 ## 🏗️ 2. The Engine: Attention is All You Need
 
-Before 2017, AI was bad at long sentences. It forgot the beginning by the time it reached the end.
-Then Google invented the **Transformer**.
+Before 2017, AI struggled with long sentences. It would forget the beginning by the time it reached the end.
+Then researchers introduced the **Transformer** architecture (Vaswani et al., 2017, Google).
 
 The secret sauce is **"Self-Attention"**.
 Imagine reading a sentence: *"The animal didn't cross the street because it was too tired."*
@@ -50,7 +50,7 @@ Imagine reading a sentence: *"The animal didn't cross the street because it was 
 
 <Diagram type="transformer-architecture-simplified" />
 
-It pays "attention" to all words at once, weighing their importance. This is why it understands context so well.
+It pays "attention" to all words at once, weighing their importance. This is why it handles context so effectively.
 
 ---
 
@@ -87,13 +87,13 @@ It's time to see the Matrix. But here's the secret: AI can't actually *see* its 
 
 Now test these inputs and observe the token count:
 
-| Input | Expected Behavior |
+| Input | What to Observe |
 |-------|------------------|
-| `hello` | 1 token |
-| `Hello` | 1 token (same!) |
-| ` hello` | 2 tokens (space is separate!) |
-| `hello!` | 2 tokens |
-| `🎉` | 1-3 tokens (emoji = expensive!) |
+| `hello` | Often 1 token |
+| `Hello` | Often 1 token (may differ from lowercase) |
+| ` hello` | May be 1-2 tokens (space handling varies) |
+| `hello!` | Often 2 tokens |
+| `🎉` | 1-3 tokens (emoji tokenization varies) |
 
 **Part C: The AI Comparison**
 
@@ -104,7 +104,7 @@ How many tokens is the word "Supercalifragilisticexpialidocious" approximately?
 
 Compare its estimate to the real tokenizer. How close was it?
 
-**💡 Aha Moment:** "AI doesn't see letters—it sees chunks. A space before a word is a whole extra token! Emoji can be 3 tokens! This is why AI sometimes struggles with spelling—it literally can't see individual characters."
+**💡 Aha Moment:** "AI doesn't see letters—it sees chunks (tokens). Leading whitespace often changes tokenization; emojis and punctuation can map to multiple tokens. This is why character-level tasks (like spelling or counting letters) can be harder—the model operates on tokens, not individual characters."
 
 <LabComplete labId="lab-tokenizer-view" />
 
@@ -121,7 +121,7 @@ Imagine a Jedi deflecting blaster bolts. They can only focus on a certain number
 
 *   **Input:** Everything you type + everything the AI replied so far.
 *   **Limit:** Every model has a max limit (e.g., 128k tokens).
-*   **Overflow:** If you cross the limit, the AI "forgets" the oldest part of the conversation (FIFO: First In, First Out).
+*   **Overflow:** When you exceed the limit, the system must reduce context—often by dropping older tokens or summarizing—so earlier details may be lost.
 
 ---
 
@@ -139,7 +139,11 @@ This parameter controls how "risky" the AI is when choosing the next token.
 
 ## 🔬 Lab 2: The Temperature DJ
 
-Most chat apps don't expose the temperature slider, but we can simulate its effect with careful prompting. Watch the same content transform based on "creativity level."
+Most chat apps don't expose the temperature slider—that's an API/model setting. However, we can approximate "deterministic vs creative" behavior via instructions. Watch how the same content transforms based on style guidance.
+
+<Callout type="info">
+**Note:** This lab uses prompting to *simulate* temperature effects. Real temperature is a sampling parameter set at the API level—your chat instructions can mimic the effect but don't actually change the model's randomness setting.
+</Callout>
 
 **Objective:** See how temperature affects tone, word choice, and structure.
 
@@ -179,8 +183,8 @@ An LLM doesn't just appear. It is forged in two fires.
 
 <Diagram type="training-pipeline" />
 
-1.  **Pre-training (The Base Model):** It reads the internet. It is wild and unpredictable. It just wants to complete sentences.
-2.  **Fine-tuning (The Chat Model):** Humans teach it to be helpful. This is how raw GPT-5 becomes ChatGPT.
+1.  **Pre-training (Base Model):** Next-token prediction on massive text corpora. The result is powerful but raw—it just wants to complete text.
+2.  **Post-training/Alignment (Chat Model):** Instruction tuning + human preference optimization (e.g., RLHF) to make it follow instructions, be helpful, and avoid harmful outputs. This transforms the base model into an assistant like ChatGPT.
 
 ---
 

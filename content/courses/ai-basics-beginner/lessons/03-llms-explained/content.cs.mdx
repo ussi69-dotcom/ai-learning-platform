@@ -9,11 +9,11 @@
 
 ## ⚡ Nepříjemná pravda
 
-**ChatGPT ničemu nerozumí.**
+**LLM nemají lidské porozumění.**
 
-Přečti si to znovu. Stroj, který píše poezii, ladí kód a složil advokátní zkoušky, „nerozumí" jedinému slovu, které produkuje. Hraje nejsofistikovanější hru na *automatické doplňování*, jaká kdy vznikla.
+Přečti si to znovu. Stroj, který píše poezii, ladí kód a složil advokátní zkoušky, „nerozumí" slovům tak jako ty. Generuje text předpovídáním tokenů ze vzorů v datech—nejsofistikovanější hra na *automatické doplňování*, jaká kdy vznikla.
 
-Každé slovo, které ChatGPT vygeneruje, je statistická sázka. Predikce. Hazard na to, který token by měl přijít dál, založený na 175 miliardách parametrů trénovaných na internetu.
+Každé slovo, které ChatGPT vygeneruje, je statistická sázka. Predikce. Hazard na to, který token by měl přijít dál, založený na miliardách naučených parametrů (přesné počty obvykle nejsou veřejné).
 
 **A přesto... to funguje.**
 
@@ -25,7 +25,7 @@ Video výše od 3Blue1Brown ti ukáže přesně jak. Podívej se na něj—už n
 
 Představ si, že C-3PO překládá prastarý sithský dialekt. Necítí v těch slovech hněv. Vypočítává **pravděpodobnost**, které slovo obvykle následuje po tom předchozím.
 
-LLM je přesně tohle. Je to stroj vycvičený na celém internetu (Archivy Jediů), aby hrál jednu jednoduchou hru: **"Uhádni další token."**
+LLM je přesně tohle. Je to stroj vycvičený na masivních textových korpusech—webových stránkách, knihách, kódu a dalších zdrojích—aby hrál jednu jednoduchou hru: **„Uhádni další token."**
 
 <Diagram type="llm-next-token" />
 
@@ -39,8 +39,8 @@ LLM je přesně tohle. Je to stroj vycvičený na celém internetu (Archivy Jedi
 
 ## 🏗️ 2. Motor: Pozornost je vše, co potřebuješ
 
-Před rokem 2017 byla AI špatná na dlouhé věty. Než se dostala na konec, zapomněla začátek.
-Pak Google vynalezl **Transformer**.
+Před rokem 2017 měla AI problémy s dlouhými větami. Než se dostala na konec, zapomněla začátek.
+Pak výzkumníci představili architekturu **Transformer** (Vaswani et al., 2017, Google).
 
 Tou tajnou přísadou je **"Sebe-pozornost" (Self-Attention)**.
 Představ si, že čteš větu: *"Zvíře nepřešlo ulici, protože bylo příliš unavené."*
@@ -50,7 +50,7 @@ Představ si, že čteš větu: *"Zvíře nepřešlo ulici, protože bylo příl
 
 <Diagram type="transformer-architecture-simplified" />
 
-Věnuje "pozornost" všem slovům najednou a váží jejich důležitost. Proto tak dobře chápe kontext.
+Věnuje „pozornost" všem slovům najednou a váží jejich důležitost. Proto tak efektivně pracuje s kontextem.
 
 ---
 
@@ -87,13 +87,13 @@ Je čas spatřit Matrix. Ale tady je tajemství: AI ve skutečnosti *nevidí* sv
 
 Teď otestuj tyto vstupy a sleduj počet tokenů:
 
-| Vstup | Očekávané chování |
+| Vstup | Co sledovat |
 |-------|------------------|
-| `ahoj` | 1 token |
-| `Ahoj` | 1 token (stejné!) |
-| ` ahoj` | 2 tokeny (mezera je extra!) |
-| `ahoj!` | 2 tokeny |
-| `🎉` | 1-3 tokeny (emoji = drahé!) |
+| `ahoj` | Často 1 token |
+| `Ahoj` | Často 1 token (může se lišit od malého) |
+| ` ahoj` | Může být 1-2 tokeny (zpracování mezer se liší) |
+| `ahoj!` | Často 2 tokeny |
+| `🎉` | 1-3 tokeny (tokenizace emoji se liší) |
 
 **Část C: Porovnání s AI**
 
@@ -104,7 +104,7 @@ Kolik tokenů má přibližně slovo "Nejneobhospodařovávatelnějšími"?
 
 Porovnej její odhad se skutečným tokenizérem. Jak přesná byla?
 
-**💡 Aha Moment:** "AI nevidí písmena—vidí shluky. Mezera před slovem je celý extra token! Emoji může být 3 tokeny! Proto má AI někdy problémy s pravopisem—doslova nevidí jednotlivé znaky."
+**💡 Aha Moment:** „AI nevidí písmena—vidí shluky (tokeny). Mezera na začátku často mění tokenizaci; emoji a interpunkce se mohou mapovat na více tokenů. Proto jsou úlohy na úrovni znaků (jako pravopis nebo počítání písmen) těžší—model pracuje s tokeny, ne s jednotlivými znaky."
 
 <LabComplete labId="lab-tokenizer-view" />
 
@@ -121,7 +121,7 @@ Představ si Jediho odrážejícího střely z blasterů. Může se soustředit 
 
 *   **Vstup:** Vše, co napíšeš + vše, co AI zatím odpověděla.
 *   **Limit:** Každý model má maximální limit (např. 128k tokenů).
-*   **Přetečení:** Pokud překročíš limit, AI "zapomene" nejstarší část konverzace (FIFO: První dovnitř, první ven).
+*   **Přetečení:** Když překročíš limit, systém musí zredukovat kontext—často vypuštěním starších tokenů nebo sumarizací—takže dřívější detaily mohou být ztraceny.
 
 ---
 
@@ -139,7 +139,11 @@ Tento parametr řídí, jak "riskantní" je AI při výběru dalšího tokenu.
 
 ## 🔬 Lab 2: DJ Teploty
 
-Většina chatovacích aplikací neukazuje posuvník teploty, ale můžeme jeho efekt simulovat pečlivým promptem. Sleduj, jak se stejný obsah transformuje podle "úrovně kreativity."
+Většina chatovacích aplikací neukazuje posuvník teploty—to je nastavení API/modelu. Můžeme však aproximovat „deterministické vs kreativní" chování pomocí instrukcí. Sleduj, jak se stejný obsah transformuje podle stylu.
+
+<Callout type="info">
+**Poznámka:** Tento lab používá prompting k *simulaci* efektů teploty. Skutečná teplota je sampling parametr nastavený na úrovni API—tvé chat instrukce mohou napodobit efekt, ale ve skutečnosti nemění nastavení náhodnosti modelu.
+</Callout>
 
 **Cíl:** Vidět, jak teplota ovlivňuje tón, volbu slov a strukturu.
 
@@ -179,8 +183,8 @@ LLM se jen tak neobjeví. Je ukován ve dvou ohních.
 
 <Diagram type="training-pipeline" />
 
-1.  **Předtrénování (Základní model):** Čte internet. Je divoký a nepředvídatelný. Chce jen dokončovat věty.
-2.  **Doladění (Chatovací model):** Lidé ho učí být nápomocným. Tak se ze surového GPT-5 stává ChatGPT.
+1.  **Předtrénování (Základní model):** Predikce dalšího tokenu na masivních textových korpusech. Výsledek je silný, ale surový—chce jen dokončovat text.
+2.  **Post-trénování/Alignment (Chatovací model):** Instruction tuning + optimalizace lidských preferencí (např. RLHF), aby model následoval instrukce, byl nápomocný a vyhýbal se škodlivým výstupům. Tím se základní model transformuje na asistenta jako ChatGPT.
 
 ---
 
