@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-21 09:57 (Agent: Codex GPT-5.2)
-**Last Commit:** `bf316b9` fix(ui): refine copilot lesson visuals
-**Status:** 🟢 Tradeoff radar + AI security layers spacing updated; L02 governance list tightened; Visual QA loop documented; backend restarted after content edits; `npm run verify` passes (lint warnings only).
+**Last Updated:** 2025-12-21 10:08 (Agent: Codex GPT-5.2)
+**Last Commit:** `54be12e` docs: update working context
+**Status:** 🟢 Tradeoff radar contrast + AI security layers spacing updated; L02 governance list tightened; Visual QA loop documented; backend restarted after content edits; `npm run verify` passes (lint warnings only).
 
 ---
 
@@ -100,8 +100,8 @@
 |------|--------|-------|
 | Full-bleed diagrams on mobile | ✅ Done | Switched key L02/L03 diagram wrappers to `w-screen` full-bleed for mobile readability. |
 | Enterprise agent triad visual | ✅ Done | Added `enterprise-agent-triad` diagram and inserted into L03 (EN/CS). |
-| Tradeoff radar overlap | ✅ Done | Adjusted center/radius + legend spacing to avoid label/title collisions. |
-| AI security layers spacing | ✅ Done | Lowered AI/HITL markers + bottom tip to avoid overlap. |
+| Tradeoff radar overlap | ✅ Done | Adjusted center/radius + legend spacing; darkened key trade-off labels for contrast. |
+| AI security layers spacing | ✅ Done | Repositioned AI/HITL markers and boosted inner label contrast. |
 | L02 governance list format | ✅ Done | Replaced H4 blocks with numbered list for denser scan. |
 | Visual QA loop doc | ✅ Done | Added explicit login + capture + Gemini review loop to MEMORY. |
 | Backend content reload | ✅ Done | `docker compose restart backend`. |
