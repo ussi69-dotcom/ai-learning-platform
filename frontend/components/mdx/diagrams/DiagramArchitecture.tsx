@@ -2186,7 +2186,7 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
               </div>
             </div>
           </div>
-          <svg viewBox="0 0 600 350" className="hidden md:block w-full h-auto" role="img" aria-label="AI Security Layers">
+          <svg viewBox="0 0 600 380" className="hidden md:block w-full h-auto" role="img" aria-label="AI Security Layers">
             {/* Title */}
             <text x="300" y="30" textAnchor="middle" className="text-lg font-bold fill-white">
               🔒 {isCs ? "Vrstvy zabezpečení AI" : "AI Security Layers"}
@@ -2229,13 +2229,13 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
             </g>
 
             {/* Center: AI Agent */}
-            <g transform="translate(260, 280)">
+            <g transform="translate(260, 300)">
               <circle cx="40" cy="20" r="25" fill="#a855f7" fillOpacity="0.3" stroke="#a855f7" strokeWidth="2"/>
               <text x="40" y="25" textAnchor="middle" className="text-lg">🤖</text>
             </g>
 
             {/* HITL arrow */}
-            <g transform="translate(400, 280)">
+            <g transform="translate(400, 300)">
               <path d="M 0 20 L 80 20" stroke="#ec4899" strokeWidth="2" strokeDasharray="4 4"/>
               <circle cx="100" cy="20" r="20" fill="#ec4899" fillOpacity="0.2" stroke="#ec4899"/>
               <text x="100" y="25" textAnchor="middle" className="text-sm">👤</text>
@@ -2243,7 +2243,7 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
             </g>
 
             {/* Bottom tip */}
-            <text x="300" y="340" textAnchor="middle" className="text-[10px] fill-slate-500">
+            <text x="300" y="370" textAnchor="middle" className="text-[10px] fill-slate-500">
               {isCs ? "Každá vrstva zachytí útoky, které prošly předchozí" : "Each layer catches attacks that passed the previous one"}
             </text>
           </svg>

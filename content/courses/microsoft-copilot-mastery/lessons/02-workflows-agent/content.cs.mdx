@@ -537,24 +537,21 @@ Agent provede:
 
 <ConceptCard title="Bezpečnostní model agenta" icon="🛡️">
 
-#### 1. Dědičnost oprávnění
-Workflows Agent funguje pod **VAŠIMI** oprávněními, ne zvýšenými admin právy.
+1. **🔑 Dědičnost oprávnění** — Workflows Agent funguje pod **VAŠIMI** oprávněními, ne zvýšenými admin právy.
+   - ✅ Pokud nemáte přístup do HR složky, nemá ho ani váš agent
+   - ✅ Pokud nemůžete posílat jako CEO, nemůže ani váš agent
+   - ❌ Agenti NEMOHOU eskalovat oprávnění
 
-- ✅ Pokud nemáte přístup do HR složky, nemá ho ani váš agent
-- ✅ Pokud nemůžete posílat jako CEO, nemůže ani váš agent
-- ❌ Agenti NEMOHOU eskalovat oprávnění
+2. **🧭 Admin kontroly** — IT administrátoři mohou:
+   - Zakázat Workflows Agent pro konkrétní uživatele/skupiny
+   - Vyžadovat schválení pro workflow přistupující k citlivým datům
+   - Auditovat všechny aktivity agenta přes Microsoft 365 Compliance Center
+   - Nastavit data loss prevention (DLP) politiky blokující určité akce
 
-#### 2. Admin kontroly
-IT administrátoři mohou:
-- Zakázat Workflows Agent pro konkrétní uživatele/skupiny
-- Vyžadovat schválení pro workflow přistupující k citlivým datům
-- Auditovat všechny aktivity agenta přes Microsoft 365 Compliance Center
-- Nastavit data loss prevention (DLP) politiky blokující určité akce
-
-#### 3. Transparentnost a audit
-- Nakonfigurujte emailové footery pro označení automatizovaných zpráv (doporučeno: "Sent via Copilot Automation")
-- Přidejte "[AUTO]" tagy do předmětů pro snadné filtrování
-- Activity logy jsou uchovávány dle vašich tenant audit log politik
+3. **🔎 Transparentnost a audit** — Udělejte automatizaci viditelnou:
+   - Nakonfigurujte emailové footery pro označení automatizovaných zpráv (doporučeno: "Sent via Copilot Automation")
+   - Přidejte "[AUTO]" tagy do předmětů pro snadné filtrování
+   - Activity logy jsou uchovávány dle vašich tenant audit log politik
 
 </ConceptCard>
 

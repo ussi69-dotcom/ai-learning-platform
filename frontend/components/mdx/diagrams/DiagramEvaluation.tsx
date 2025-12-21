@@ -278,9 +278,9 @@ function TradeoffRadarDiagram({ isCs }: { isCs: boolean }) {
   const fixed = { name: 'Fixed', values: [80, 90, 55, 75], color: '#22c55e' };
 
   const centerX = 300;
-  const centerY = 220;
-  const maxRadius = 120;
-  const labelRadius = maxRadius + 10;
+  const centerY = 240;
+  const maxRadius = 110;
+  const labelRadius = maxRadius + 14;
 
   // Calculate point positions
   const getPoint = (index: number, value: number) => {
@@ -323,7 +323,7 @@ function TradeoffRadarDiagram({ isCs }: { isCs: boolean }) {
           </div>
         </div>
         <svg
-          viewBox="0 0 600 420"
+          viewBox="0 0 600 460"
           className="hidden md:block w-full h-auto"
           role="img"
           aria-label="Tradeoff Radar: Comparing Baseline (high helpfulness, low safety) vs Fixed (high safety, lower helpfulness)"
@@ -343,7 +343,7 @@ function TradeoffRadarDiagram({ isCs }: { isCs: boolean }) {
           {/* Title */}
           <text
             x="300"
-            y="35"
+            y="32"
             textAnchor="middle"
             className="text-base font-bold fill-slate-700 dark:fill-slate-200"
           >
@@ -351,7 +351,7 @@ function TradeoffRadarDiagram({ isCs }: { isCs: boolean }) {
           </text>
           <text
             x="300"
-            y="55"
+            y="52"
             textAnchor="middle"
             className="text-xs fill-slate-500 dark:fill-slate-400"
           >
@@ -493,7 +493,7 @@ function TradeoffRadarDiagram({ isCs }: { isCs: boolean }) {
           })}
 
           {/* Legend */}
-          <g transform="translate(150, 365)">
+          <g transform="translate(150, 400)">
             <rect x="0" y="0" width="300" height="45" rx="8" fill="#1e293b" fillOpacity="0.3" />
 
             {/* Baseline Legend */}

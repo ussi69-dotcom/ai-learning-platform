@@ -534,24 +534,21 @@ The agent will:
 
 <ConceptCard title="Agent Security Model" icon="🛡️">
 
-#### 1. Permission Inheritance
-Workflows Agent operates under **YOUR** permissions, not elevated admin rights.
+1. **🔑 Permission inheritance** — Workflows Agent operates under **YOUR** permissions, not elevated admin rights.
+   - ✅ If you can't access the HR folder, neither can your agent
+   - ✅ If you can't send as CEO, neither can your agent
+   - ❌ Agents CANNOT escalate privileges
 
-- ✅ If you can't access the HR folder, neither can your agent
-- ✅ If you can't send as CEO, neither can your agent
-- ❌ Agents CANNOT escalate privileges
+2. **🧭 Admin controls** — IT administrators can:
+   - Disable Workflows Agent for specific users/groups
+   - Require approval for workflows that access sensitive data
+   - Audit all agent activities via Microsoft 365 Compliance Center
+   - Set data loss prevention (DLP) policies blocking certain actions
 
-#### 2. Admin Controls
-IT administrators can:
-- Disable Workflows Agent for specific users/groups
-- Require approval for workflows that access sensitive data
-- Audit all agent activities via Microsoft 365 Compliance Center
-- Set data loss prevention (DLP) policies blocking certain actions
-
-#### 3. Transparency & Audit
-- Configure email footers to indicate automated messages (recommended: "Sent via Copilot Automation")
-- Add "[AUTO]" tags to subjects for easy filtering
-- Activity logs are retained per your tenant's audit log policies
+3. **🔎 Transparency & audit** — Make automation visible:
+   - Configure email footers to indicate automated messages (recommended: "Sent via Copilot Automation")
+   - Add "[AUTO]" tags to subjects for easy filtering
+   - Activity logs are retained per your tenant's audit log policies
 
 </ConceptCard>
 
