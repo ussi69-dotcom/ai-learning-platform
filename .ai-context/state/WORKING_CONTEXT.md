@@ -1,8 +1,8 @@
 # Working Context
 
-**Last Updated:** 2025-12-21 00:53 (Agent: Codex GPT-5.2)
-**Last Commit:** `ef01713` fix(ui): polish copilot lesson visuals
-**Status:** 🟢 L02/L03 visuals scaled for mobile, new enterprise triad diagram, video retry fallback, and Playwright auth uses `.env` admin creds.
+**Last Updated:** 2025-12-21 09:57 (Agent: Codex GPT-5.2)
+**Last Commit:** `bf316b9` fix(ui): refine copilot lesson visuals
+**Status:** 🟢 Tradeoff radar + AI security layers spacing updated; L02 governance list tightened; Visual QA loop documented; backend restarted after content edits; `npm run verify` passes (lint warnings only).
 
 ---
 
@@ -100,13 +100,12 @@
 |------|--------|-------|
 | Full-bleed diagrams on mobile | ✅ Done | Switched key L02/L03 diagram wrappers to `w-screen` full-bleed for mobile readability. |
 | Enterprise agent triad visual | ✅ Done | Added `enterprise-agent-triad` diagram and inserted into L03 (EN/CS). |
-| Tradeoff radar overlap | ✅ Done | Tightened label radius to prevent title/label collisions. |
-| AI security layers spacing | ✅ Done | Moved AI/HITL markers down to avoid text overlap. |
-| FeedbackFAB position | ✅ Done | Lowered desktop FAB to reduce overlap; auto-hide remains. |
-| Video fallback resilience | ✅ Done | Added retry button + reload token for YouTube iframe failures. |
-| Sith last-page CTA | ✅ Done | Disabled “Další strana” now uses muted styling in Sith mode. |
-| Playwright auth creds | ✅ Done | Visual auth tests now read admin credentials from `.env`. |
-| Visual tests | ✅ Done | `npm run test:visual:update`, `npm run test:visual` (pass). |
+| Tradeoff radar overlap | ✅ Done | Adjusted center/radius + legend spacing to avoid label/title collisions. |
+| AI security layers spacing | ✅ Done | Lowered AI/HITL markers + bottom tip to avoid overlap. |
+| L02 governance list format | ✅ Done | Replaced H4 blocks with numbered list for denser scan. |
+| Visual QA loop doc | ✅ Done | Added explicit login + capture + Gemini review loop to MEMORY. |
+| Backend content reload | ✅ Done | `docker compose restart backend`. |
+| Frontend verify | ✅ Done | `npm run verify` (lint warnings only, build ok). |
 
 ### Commits This Session
 
