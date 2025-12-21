@@ -180,13 +180,27 @@ Pouzij tento proces jako **defaultni template** pro dalsi lekce (L2/L3 golden st
 - Kontrola mobile: diagramy full-bleed (`w-screen`), bez miniaturnich vizualu.
 - U zadnych SVG: text overlap, orez, nechtene prekryti.
 
-### 5) Labs + Prompt Policy
-- Prompty v EN, i v CS verzi, pokud UI produktu je EN-first.
-- Vzdy pridat Callout s vysvetlenim proc EN prompt.
+### 5) Labs + Prompt Policy (DŮLEŽITÉ!)
+
+**🇨🇿 ČESKÉ LABY = ČESKÉ PROMPTY (default!)**
+
+| Typ lekce | Jazyk promptů | Příklad |
+|-----------|---------------|---------|
+| **Obecné AI lekce** | 🇨🇿 Česky | ai-basics, prompt-engineering |
+| **Business/Enterprise** | 🇬🇧 Anglicky (výjimka) | Microsoft Copilot (UI je EN-first) |
+
+**Pravidlo:** České verze lekcí mají české prompty v labech, POKUD:
+- Lekce není o produktu s anglickým UI (Copilot, Azure, etc.)
+- Uživatel nepracuje primárně v EN prostředí
+
+**Výjimka (EN prompty v CZ verzi):**
+- Pouze pro business/enterprise lekce kde produkt má EN UI
+- MUSÍ být Callout s vysvětlením proč EN prompt
 
 ### 6) Localization
-- EN + CS parity: stejne sekce, stejne prompty, stejne diagramy.
-- Terminologie sjednotit (Workflows Agent vs Copilot Studio vs Declarative Agents).
+- EN + CS parity: stejné sekce, stejné diagramy
+- **LABY:** CZ verze = CZ prompty (kromě business výjimek)
+- Terminologie sjednotit (Workflows Agent vs Copilot Studio vs Declarative Agents)
 
 ### 7) QA + Validation
 - `node scripts/validate_mdx.js` (ber warnings jako backlog).
