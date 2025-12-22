@@ -10,7 +10,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from . import models, schemas, database, auth
-from app.routers import sandbox, lessons, feedback, users, health, certificates, news, digest
+from app.routers import sandbox, lessons, feedback, users, health, certificates, news, digest, admin
 from app.config import is_production_env
 
 # NOTE: Table creation removed - rely solely on Alembic migrations and seed.py
@@ -35,6 +35,7 @@ app.include_router(users.router)
 app.include_router(certificates.router, tags=["certificates"])
 app.include_router(news.router)
 app.include_router(digest.router)
+app.include_router(admin.router)
 
 # Mount content directory for static assets (images, etc.)
 # This maps http://localhost:8000/content/ -> /app/content/

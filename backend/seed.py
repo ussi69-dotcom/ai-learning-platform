@@ -1,7 +1,7 @@
 import logging
 import os
 from pathlib import Path
-from app.database import SessionLocal, engine, Base
+from app.database import SessionLocal
 from app.models import User, Course, Lesson, Quiz, DifficultyLevel, UserProgress
 from app.auth import get_password_hash
 from app.services.content_loader import ContentLoader
@@ -26,8 +26,9 @@ def reset_db(db):
         db.rollback()
 
 def seed_data():
-    logger.info("🏗️  Vytvářím strukturu databáze...")
-    Base.metadata.create_all(bind=engine)
+    # NOTE: Schema is managed by Alembic migrations (entrypoint.sh runs 'alembic upgrade head')
+    # DO NOT use Base.metadata.create_all() here - it bypasses Alembic version tracking!
+    logger.info("🌱 Seeding database (schema managed by Alembic)...")
 
     db = SessionLocal()
     # reset_db(db)

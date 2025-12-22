@@ -80,3 +80,52 @@ down-prod: ## Zastaví produkční stack
 
 logs-prod: ## Zobrazí logy produkčního stacku
 	docker compose -f docker-compose.prod.yml logs -f
+
+# -----------------------------------------------------------------------------
+# 🧪 TEST COMMANDS
+# -----------------------------------------------------------------------------
+
+smoke-test: ## Spustí rychlý smoke test proti produkci
+	@echo "🧪 Running smoke tests against $(URL)..."
+	./tests/smoke/smoke_test.sh $(URL)
+
+smoke-test-prod: ## Spustí smoke test proti ai-teaching.eu
+	./tests/smoke/smoke_test.sh https://ai-teaching.eu
+
+smoke-test-local: ## Spustí smoke test proti localhost
+	./tests/smoke/smoke_test.sh http://localhost
+
+test-visual: ## Spustí Playwright visual testy
+	cd frontend && npx playwright test
+
+test-visual-update: ## Aktualizuje Playwright snapshoty
+	cd frontend && npx playwright test --update-snapshots
+
+test-smoke-playwright: ## Spustí Playwright production smoke testy
+	cd frontend && npx playwright test production-smoke.spec.ts
+
+test-registration: ## Spustí testy registračního flow (vyžaduje TEST_API_KEY)
+	@if [ -z "$(TEST_API_KEY)" ]; then \
+		echo "❌ TEST_API_KEY is required. Usage: make test-registration TEST_API_KEY=your-key"; \
+		exit 1; \
+	fi
+	cd frontend && TEST_API_KEY=$(TEST_API_KEY) npx playwright test registration-flow.spec.ts
+
+test-all-e2e: ## Spustí všechny E2E testy (vyžaduje TEST_API_KEY)
+	@if [ -z "$(TEST_API_KEY)" ]; then \
+		echo "❌ TEST_API_KEY is required. Usage: make test-all-e2e TEST_API_KEY=your-key"; \
+		exit 1; \
+	fi
+	./tests/smoke/smoke_test.sh http://localhost
+	cd frontend && TEST_API_KEY=$(TEST_API_KEY) npx playwright test
+
+test-prod-full: ## Kompletní test produkce (smoke + visual + registration)
+	@if [ -z "$(TEST_API_KEY)" ]; then \
+		echo "❌ TEST_API_KEY is required. Usage: make test-prod-full TEST_API_KEY=your-key URL=https://ai-teaching.eu"; \
+		exit 1; \
+	fi
+	@echo "🧪 Running full production test suite..."
+	./tests/smoke/smoke_test.sh $(URL)
+	cd frontend && PLAYWRIGHT_BASE_URL=$(URL) npx playwright test production-smoke.spec.ts
+	cd frontend && PLAYWRIGHT_BASE_URL=$(URL) TEST_API_KEY=$(TEST_API_KEY) npx playwright test registration-flow.spec.ts
+	@echo "✅ All production tests passed!"

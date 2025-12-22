@@ -37,6 +37,10 @@ sys.exit(1)
 
 echo "✅ Database is ready!"
 
+# Run Alembic migrations (ensures schema is up-to-date)
+echo "🔄 Running Alembic migrations..."
+alembic upgrade head
+
 # Spustíme seed (ten si sám ověří, jestli už data existují, nebo je přepíše pokud je nastaven reset)
 echo "🌱 Seeding database..."
 python seed.py

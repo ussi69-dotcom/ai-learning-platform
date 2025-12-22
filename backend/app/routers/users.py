@@ -1,9 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Header
 from sqlalchemy.orm import Session
 from typing import List, Optional
+import os
 from app import models, schemas, database, auth
 
 router = APIRouter()
+
+# Test API key for E2E testing (only set in test environments)
+TEST_API_KEY = os.getenv("TEST_API_KEY")
 
 @router.get("/users/me", response_model=schemas.User)
 def read_users_me(current_user: models.User = Depends(auth.get_current_user)):
@@ -112,3 +116,65 @@ def get_user_last_lesson(
         models.UserProgress.user_id == current_user.id
     ).order_by(models.UserProgress.last_accessed.desc()).first()
     return progress
+
+
+# =============================================================================
+# TEST ENDPOINTS (Protected by TEST_API_KEY - only for E2E testing)
+# =============================================================================
+
+def verify_test_api_key(x_test_api_key: Optional[str] = Header(None)):
+    """Verify the test API key is valid and configured."""
+    if not TEST_API_KEY:
+        raise HTTPException(
+            status_code=403,
+            detail="Test API not configured. Set TEST_API_KEY environment variable."
+        )
+    if x_test_api_key != TEST_API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid test API key")
+    return True
+
+
+@router.get("/test/verification-token/{email}")
+def get_verification_token(
+    email: str,
+    db: Session = Depends(database.get_db),
+    _: bool = Depends(verify_test_api_key)
+):
+    """
+    Get verification token for a user (TEST ONLY).
+    Protected by TEST_API_KEY header.
+    Used for E2E testing of registration flow.
+    """
+    user = db.query(models.User).filter(models.User.email == email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    if not user.verification_token:
+        raise HTTPException(status_code=400, detail="User already verified or no token")
+    return {"verification_token": user.verification_token}
+
+
+@router.delete("/test/user/{email}")
+def delete_test_user(
+    email: str,
+    db: Session = Depends(database.get_db),
+    _: bool = Depends(verify_test_api_key)
+):
+    """
+    Delete a user by email (TEST ONLY).
+    Protected by TEST_API_KEY header.
+    Used for E2E testing cleanup.
+    """
+    user = db.query(models.User).filter(models.User.email == email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Clean up related data
+    db.query(models.UserProgress).filter(models.UserProgress.user_id == user.id).delete()
+    db.query(models.FeedbackVote).filter(models.FeedbackVote.user_id == user.id).delete()
+    db.query(models.FeedbackItem).filter(models.FeedbackItem.user_id == user.id).delete()
+    db.query(models.Certificate).filter(models.Certificate.user_id == user.id).delete()
+
+    db.delete(user)
+    db.commit()
+
+    return {"message": f"User {email} deleted successfully"}

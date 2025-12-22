@@ -33,6 +33,7 @@ services:
       dockerfile: Dockerfile
     container_name: ai-backend
     environment:
+      - ENVIRONMENT=production
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -54,6 +55,10 @@ services:
       - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
       - FRONTEND_URL=${FRONTEND_URL:-https://ai-teaching.eu}
       - DOMAIN_NAME=${DOMAIN_NAME:-ai-teaching.eu}
+      # E2E Test API key (optional, for running automated tests)
+      - TEST_API_KEY=${TEST_API_KEY:-}
+      # Admin emails (comma-separated)
+      - ADMIN_EMAILS=${ADMIN_EMAILS:-}
     volumes:
       - ./content:/app/content
     command: [ "./entrypoint.sh" ]
