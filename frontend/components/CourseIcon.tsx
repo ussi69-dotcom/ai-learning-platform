@@ -21,6 +21,7 @@ export default function CourseIcon({
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [useOriginalUrl, setUseOriginalUrl] = useState(false);
 
   useEffect(() => {
     // Detect dark mode
@@ -47,6 +48,7 @@ export default function CourseIcon({
   // Reset image error when theme changes (try loading the new variant)
   useEffect(() => {
     setImageError(false);
+    setUseOriginalUrl(false);
   }, [isDark]);
 
   // Use theme-specific image if available and no error occurred
@@ -55,7 +57,8 @@ export default function CourseIcon({
     // External URLs (http/https) are used as-is
     const isLocalImage = imageUrl.startsWith("/");
 
-    const themeImage = isLocalImage
+    // Try theme-specific first, then fallback to original
+    const themeImage = isLocalImage && !useOriginalUrl
       ? imageUrl.replace(
           /\.(jpg|jpeg|png|webp)$/i,
           isDark ? "_dark.$1" : "_light.$1"
@@ -72,7 +75,15 @@ export default function CourseIcon({
           className={`object-${objectFit}`}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority
-          onError={() => setImageError(true)}
+          onError={() => {
+            // If themed image failed and we haven't tried original yet, try original
+            if (!useOriginalUrl && isLocalImage) {
+              setUseOriginalUrl(true);
+            } else {
+              // Original also failed, show SVG fallback
+              setImageError(true);
+            }
+          }}
         />
       </div>
     );
