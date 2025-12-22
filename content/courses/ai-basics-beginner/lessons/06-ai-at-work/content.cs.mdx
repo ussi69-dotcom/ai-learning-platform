@@ -1,155 +1,166 @@
-# AI v Práci: Podniková éra 💼
+# AI v práci: Podniková éra 💼
 
 <Callout type="info">
-**Cíl mise:** Přestaň se topit v práci. Nauč se používat AI pro schůzky, psaní a analýzu dat.
+**Mission Goal:** Přestaň se topit v operativě. Nauč se používat AI na meetingy, psaní a analýzu dat.
 ⏳ **Čas čtení:** 25 min | 🧪 **[3] Laby součástí**
 </Callout>
 
-<VideoSwitcher alternatives={[{"id":"q0vityx5I7g","title":"AI v Excelu (Jeff Su)"},{"id":"bS9R6aCVEzw","title":"n8n ti změní život"}]} />
+<VideoSwitcher alternatives={[{"id":"KXqR6VuPBlk","title":"Copilot v Excelu (Excel’s Biggest Upgrade Ever)","author":"Kevin Stratvert","lang":"en"},{"id":"lipUo_6WuNM","title":"Copilot v Teams: Meeting Recap","author":"Chris Menard","lang":"en"},{"id":"bS9R6aCVEzw","title":"n8n Will Change Your Life","author":"Cole Medin","lang":"en"},{"id":"zhQ5z1XTVr8","title":"UŽ ŽÁDNÉ VZORCE! Copilot v Excelu","author":"SuperAjťák by XEVOS","lang":"cs"}]} />
 
-## ⚡ Dar 2 hodin
+## ⚡ Dárek 2 hodin denně
 
-**Co kdybys mohl každý den získat 2 hodiny zpět?**
+**Co kdybys mohl zastavit tu digitální potopu?**
 
-Průměrný znalostní pracovník tráví 28 % času na e-mailech, 31 % na schůzkách a 19 % hledáním informací. To je **78 % tvého dne** na aktivitách, se kterými teď může pomoci AI.
+Podle **Microsoft Work Trend Index Special Report (2025)** čelí průměrný zaměstnanec **117 e-mailům a 153 zprávám na Teams denně**.
+Tlak je tak velký, že **40 % lidí kontroluje e-maily před 6:00 ráno** a **počet večerních schůzek vzrostl o 16 %**.
 
-Lidé, kteří se přizpůsobí, budou pracovat 6 hodin denně s lepšími výsledky. Ti, kteří ne, se budou divit, proč jsou pořád pozadu.
+Ti, kdo se přizpůsobí, získají svůj čas zpět. Ti, kdo ne, vyhoří.
 
-Tato lekce ti dá návod.
+Tahle lekce ti dá konkrétní playbook.
+
+<Callout type="secondary">
+**Zdroj:** Microsoft Work Trend Index Special Report (2025-06-17).
+</Callout>
 
 ---
 
-## 🏭 1. Mezera v produktivitě
+## 🏭 1. Produktivitní propast
 
-Topíme se v datech.
-*   **28 %** pracovního času se tráví na e-mailech.
-*   **31 %** se tráví na schůzkách.
-*   **19 %** je hledání informací.
-To ponechává pouze **22 %** na skutečnou kreativní práci.
+Nejlepší hodiny dne pálíme na špatných věcech:
+
+- **117 e-mailů + 153 zpráv na Teams** denně = neustálé přepínání kontextu.
+- **Vyrušení každé ~2 minuty** (275+ za den) rozbíjí soustředění.
+- **Večerní meetingy +16 %** = rozlézající se pracovní den.
+
+<MDXImage src="images/dashboard.png" alt="Dashboard zahlcené komunikace během pracovního dne" />
 
 <Diagram type="dashboard-ui" />
 
 <ConceptCard title="Nová rovnice" icon="📈">
-*   **Starý způsob:** Ty děláš výzkum + Ty píšeš návrh + Ty upravuješ finále + Ty formátuješ slajdy.
-*   **Způsob AI:** AI dělá výzkum + AI píše návrh -> **Ty upravuješ a ladíš.**
+*   **Starý způsob:** Ty hledáš + Ty píšeš první draft + Ty edituješ + Ty formátuješ.
+*   **AI způsob:** AI hledá + AI píše -> **Ty upravuješ a finalizuješ.**
 </ConceptCard>
 
 ---
 
-## 🤖 2. Nástroj 1: Asistent schůzky
+## 🤖 2. Nástroj 1: Meetingový asistent
 
-Schůzky jsou nutné, ale psaní poznámek ne.
-Moderní nástroje jako **Microsoft Copilot**, **Zoom AI Companion** nebo **Otter.ai** fungují jako tvá osobní sekretářka.
+Meetingy jsou nutné, ale zapisovat si poznámky nemusíš.
+Moderní nástroje jako **Microsoft Copilot**, **Zoom AI Companion** nebo **Otter.ai** fungují jako tvůj osobní sekretář.
 
-### Co dělají:
-1.  **Přepis v reálném čase:** Každé slovo je zaznamenáno.
-2.  **Rozpoznání mluvčího:** Ví, *kdo* co řekl.
-3.  **Extrakce úkolů:** Poslouchá "Pošlu ten report" a přidá to do tvého to-do listu.
+### Co umí:
+1.  **Transkripce v reálném čase:** Každé slovo je zachyceno.
+2.  **Rozpoznání řečníků:** Ví, *kdo* co řekl.
+3.  **Akční úkoly:** Vytáhne z textu závazky typu "pošlu report" a zapíše je.
 
 <Diagram type="meeting-timeline" />
 
+<MDXImage src="images/meeting-viz.png" alt="AI shrnutí meetingu s akčními úkoly" />
+
 <Callout type="info">
-**Jak bylo vidět ve videu:** Copilot není jen pro živé schůzky. Můžeš ho použít k **"Dohození"** schůzky, kterou jsi zmeškal, dotazem: *"Shrň, co mi uteklo za posledních 15 minut."*
+**Jak ve videu:** Copilot není jen pro live meeting. Můžeš ho použít i na meeting, který jsi nestihl — stačí se zeptat: *"Shrň, co jsem zmeškal za posledních 15 minut."*
 </Callout>
 
 ---
 
-## 🔬 Lab 1: Mistr zápisů
+## 🔬 Lab 1: Mistr zápisu z meetingu
 
-**Cíl:** Přeměnit chaotický přepis na čistý zápis.
+**Mission Objective:** Změň chaotický přepis na strukturovaný a akční zápis.
 
 **Prompt:**
-Zkopíruj tento prompt. Budeme simulovat chaotický přepis schůzky.
+Zkopíruj tento prompt. Budeme simulovat zmatečný přepis schůzky.
 
 ```text
-Hraj roli profesionální sekretářky. Shrň tento přepis do:
-1. Klíčových rozhodnutí
-2. Úkolů (Kdo - Co - Termín)
+Chovej se jako profesionální zapisovatel. Shrň tento přepis do:
+1. Klíčová rozhodnutí
+2. Akční úkoly (Kdo - Co - Deadline)
 
 Přepis:
 John: "Musíme spustit do pátku."
-Sarah: "Nemůžu, server je dole. Potřebuji čas do pondělí."
-John: "Dobře, pondělí. Ale Mike musí aktualizovat grafiku."
-Mike: "Udělám to dnes večer."
+Sarah: "Nemůžu, server je down. Potřebuju do pondělí."
+John: "Dobře, pondělí. Ale Mike musí upravit grafiku."
+Mike: "Udělám to dneska večer."
 ```
 
-**Analýza:**
-Identifikovala AI správně nový termín (Pondělí) a Mikeův úkol?
+**Kritéria úspěchu:**
+Identifikovala AI správně **nový deadline (pondělí)** a přiřadila **úkol s grafikou Mikeovi**?
 
 <LabComplete labId="lab-meeting-minute-master" />
 
 ---
 
-## ✍️ 3. Nástroj 2: Partner pro psaní
+## ✍️ 3. Nástroj 2: Parťák na psaní
 
-"Syndrom prázdné stránky" je nepřítelem rychlosti.
-Ať už je to e-mail, report nebo blog post, začít od nuly je těžké.
+Syndrom prázdné stránky je nepřítel rychlosti.
+Ať píšeš e-mail, report nebo blog post, začít od nuly je těžké.
 
 ### Workflow "Co-Pilot"
 Neříkej AI "napiš e-mail". Buď konkrétní.
-*   **Návrh:** "Navrhni zdvořilé odmítnutí tohoto pozvání."
-*   **Změna tónu:** "Přepiš tento naštvaný e-mail, aby byl profesionální a diplomatický."
-*   **Shrnutí:** "Shrň toto 50stránkové PDF do 3 odrážek."
+*   **Drafting:** "Napiš slušné odmítnutí pozvánky."
+*   **Změna tónu:** "Přepiš tento naštvaný e-mail do profesionálního a diplomatického tónu."
+*   **Shrnutí:** "Shrň 50stránkový PDF do 3 bodů."
 
-![Robot Office Copilot](images/copilot-robot.png)
+<MDXImage src="images/copilot-robot.png" alt="Office Copilot Robot" />
 
 ---
 
-## 🔬 Lab 2: Vyleštění e-mailu
+## 🔬 Lab 2: Uklidni e-mail
 
-**Cíl:** Přeměnit hrubý e-mail na profesionální.
+**Mission Objective:** Deeskaluj konflikt přepsáním toxického e-mailu.
 
 **Prompt:**
 ```text
-Přepiš tento e-mail, aby byl profesionální, diplomatický, ale pevný.
+Přepiš tento e-mail do profesionálního, diplomatického, ale pevného tónu:
 
-"Čau, tvůj report je odpad. Je pozdě a plný chyb. Oprav to hned, nebo máš padáka."
+"Ahoj, tvůj report je garbage. Je pozdě a plný chyb. Oprav to hned, nebo končíš."
 ```
 
-**Analýza:**
-Podívej se, jak AI zachová zprávu ("oprav to"), ale odstraní toxicitu. To zachraňuje vztahy.
+**Kritéria úspěchu:**
+Výstup musí být slušný (žádné urážky jako "garbage"), ale musí zachovat hlavní sdělení: report vyžaduje okamžitou opravu.
 
 <LabComplete labId="lab-email-polish" />
 
 ---
 
-## 🔄 4. Workflow Člověk ve smyčce
+## 🔄 4. Human-in-the-Loop workflow
 
-Největší chybou, kterou lidé dělají, je důvěra v první návrh AI.
-AI není náhrada; je to **akcelerátor**.
+Největší chyba: věřit prvnímu draftu AI slepě.
+AI není náhrada – je **akcelerátor**.
 
 <Diagram type="human-in-the-loop" />
 
-*   **Krok 1 (Návrh AI):** Nech AI udělat těžkou práci (80 %).
-*   **Krok 2 (Revize):** Ty přidáš lidský dotek (kontrola faktů, tón, nuance).
-*   **Krok 3 (Finále):** Výsledek je lepší, než co bys udělal sám, a rychlejší.
+*   **Krok 1 (AI draft):** Nech AI udělat 80 % práce.
+*   **Krok 2 (Review):** Přidej lidský dotek (fact-check, tón, nuance).
+*   **Krok 3 (Final):** Výsledek je lepší a rychlejší, než co bys zvládl sám.
 
-**Pravidlo:** Nikdy neposílej surový výstup AI. Vždy ho zkontroluj.
+**Pravidlo:** Nikdy neposílej raw AI output. Vždy kontroluj.
 
 ---
 
 ## 📊 5. Nástroj 3: Datový analytik
 
-Excel je mocný, ale vzorce jsou děsivé.
-AI nástroje (jako **Copilot pro Excel** nebo **ChatGPT Data Analyst**) ti umožní mluvit se svými daty.
+Excel je mocný, ale vzorce jsou strašák.
+AI nástroje (např. **Copilot pro Excel** nebo **ChatGPT Data Analyst**) ti dovolí mluvit s daty lidskou řečí.
 
 ### Už žádné vzorce
-Místo psaní `=VLOOKUP(...)` můžeš napsat:
-> *"Ukaž mi trend prodejů za Q3 v porovnání s Q4."*
+Místo psaní `=SVYHLEDAT(...)` můžeš napsat:
+> *"Ukaž trend prodejů Q3 vs Q4."*
 
 <Diagram type="data-analysis-chart" />
 
-### Hledání neviditelného
-AI dokáže proskenovat tisíce řádků a najít:
-*   **Odlehlé hodnoty:** "Která transakce vypadá podezřele?"
-*   **Trendy:** "Zvyšuje se odchod zákazníků?"
-*   **Korelace:** "Prodáváme více deštníků v úterý?"
+<MDXImage src="images/data-analyst.png" alt="AI analyzuje tabulková data" />
+
+### Najdi neviditelné
+AI projede tisíce řádků a najde:
+*   **Outliery:** "Která transakce vypadá podezřele?"
+*   **Trendy:** "Roste odchod zákazníků?"
+*   **Korelace:** "Prodáváme víc deštníků v úterý?"
 
 ---
 
 ## 🔬 Lab 3: Výslech dat
 
-**Cíl:** Simulovat analýzu datasetu.
+**Mission Objective:** Vygeneruj komplexní Excel vzorec pomocí přirozeného jazyka.
 
 **Prompt:**
 ```text
@@ -158,143 +169,145 @@ Sloupec A: Datum
 Sloupec B: Produkt
 Sloupec C: Částka
 
-Napiš vzorec pro Excel, který sečte celkovou Částku pro "Widgety" prodané v "Lednu".
+Napiš Excel vzorec, který sečte celkovou Částku pro "Widgets" prodané v "lednu".
 ```
 
-**Analýza:**
-Měla by vygenerovat `SUMIFS` vzorec. Nemusel jsi si pamatovat syntaxi.
+**Kritéria úspěchu:**
+AI by měla vygenerovat vzorec `SUMIFS`. Neměl bys vidět žádné ruční počty, jen správnou syntaxi připravenou ke kopírování.
 
 <LabComplete labId="lab-data-interrogation" />
 
 ---
 
-## 🧠 6. Nástroj 4: Znalostní báze (RAG)
+## 🧠 6. Nástroj 4: Knowledge Base (RAG)
 
-Představ si, kdyby ChatGPT znal tajemství tvé firmy (bezpečně).
-**RAG (Retrieval Augmented Generation)** propojuje AI s tvými interními soubory:
+Představ si, že ChatGPT zná firemní tajemství (bezpečně).
+**RAG (Retrieval Augmented Generation)** propojuje AI s interními soubory:
 *   SharePoint
 *   Google Drive
-*   PDF Smlouvy
+*   PDF smlouvy
 
-### Revoluce "Vyhledávání"
-Místo hledání "Pravidla dovolené 2024.pdf" a čtení 20 stránek se zeptáš:
-> *"Kolik dní otcovské dovolené dostanu?"*
+### Revoluce "Search"
+Místo hledání "Dovolená 2024.pdf" a čtení 20 stran se zeptáš:
+> *"Kolik dní otcovské dovolené mám?"*
 
-AI najde dokument, přečte relevantní odstavec a dá ti odpověď s citací.
+AI najde dokument, přečte relevantní pasáž a vrátí odpověď i s citací.
 
 <Diagram type="rag-architecture" />
 
-### 🆕 Nová funkce: Copilot Pages
-Jak bylo zdůrazněno v tutoriálu, **Copilot Pages** ti umožní proměnit prchavou konverzaci s AI na trvalý dokument pro více hráčů.
-*   **Chat:** Brainstormuj nápady s AI.
-*   **Editace:** Klikni na "Upravit v Pages" pro uložení výstupu.
-*   **Spolupráce:** Sdílej Page se svým týmem, aby do ní mohl každý přispět.
+### 🆕 Novinka: Copilot Pages
+Jak je ukázáno v tutoriálu, **Copilot Pages** ti umožní převést jednorázovou AI konverzaci do trvalého, sdíleného dokumentu.
+*   **Chat:** Brainstormuj s AI.
+*   **Edit:** Klikni "Edit in Pages" a ulož výstup.
+*   **Spolupráce:** Sdílej Page s týmem, ať může každý přispět.
 
 ---
 
-## 🛡️ 7. Bezpečnost a Soukromí v práci
+## 🛡️ 7. Bezpečnost & soukromí v práci
 
-**Pravidlo #1: Tvá data jsou tvá data.**
-Dodržuj tento postup před vložením jakýchkoli firemních dat do AI nástroje.
+**Pravidlo #1: Tvoje data = tvoje data.**
+Než vložíš jakákoliv firemní data do AI, projdi tento workflow.
 
 <Steps>
-### 1. Zkontroluj typ nástroje 🔍
-Je to **Veřejné** (ChatGPT Free, Osobní účet) nebo **Enterprise** (Copilot, ChatGPT Enterprise)?
-*   **Veřejné:** Trénovací data se sbírají. Nebezpečné pro tajemství.
-*   **Enterprise:** Data zůstávají ve tvém tenantu. Bezpečné pro práci.
+### 1. Typ nástroje 🔍
+Je to **Public** (ChatGPT Free, osobní účet) nebo **Enterprise** (Copilot, ChatGPT Enterprise)?
+*   **Public:** Data se používají na trénink. **Nebezpečné** pro tajné info.
+*   **Enterprise:** Data zůstávají ve tvém tenantovi. Obecně bezpečné pro práci.
 
-### 2. Posuď citlivost dat 🔐
-Pracuješ s veřejnými informacemi (marketingový text) nebo tajnými informacemi (roadmapa, hesla, PII)?
-*   **Nikdy** nevkládej hesla nebo PII (Osobní identifikační údaje) do ŽÁDNÉ AI.
+### 2. Zkontroluj firemní politiku 📜
+I u Enterprise nástrojů mohou spotřebitelské verze data používat.
+*   **Vždy ověř politiku svého tenanta.** Některé firmy zakazují i Enterprise nástroje nebo naopak povolují specifické výjimky.
 
-### 3. Test Samsung 📱
-Zeptej se sám sebe: *"Kdyby tato konverzace zítra unikla ke konkurenci, dostal bych padáka?"*
-Pokud ano, nepiš to tam.
+### 3. Samsung test 📱
+Zeptej se: *"Kdyby tenhle chat zítra unikl konkurenci, vyhodí mě?"*
+Pokud je odpověď "Ano", nepiš to.
 </Steps>
 
 <Callout type="warning">
-**"Incident Samsung":** Inženýři vložili proprietární kód do veřejného chatbota, aby ho opravili. Ten kód se stal součástí trénovacích dat modelu. Nebuď ten člověk.
+**Samsung incident:** Inženýři vložili proprietární kód do veřejného chatbota. Kód se stal součástí trénovacích dat. Nedělej to.
 </Callout>
 
 ---
 
-## 🚀 8. Tipy a Triky pro efektivitu
+## 🚀 8. Tipy na zrychlení
 
-AI je násobič síly. Zde jsou tři hacky, které ti dnes ušetří hodinu.
+AI je násobič síly. Tady jsou 3 hacky, které ti ušetří hodinu dnes.
 
-### 1. Pravidlo "Navrhuj, nevytvářej" 📝
-Nikdy nepiš dokument od nuly. Požádej AI o osnovu nebo první návrh. Je snazší upravit špatný text než psát nový text z ničeho.
-> *Prompt: "Navrhni program pro 30minutovou úvodní schůzku k Projektu X."*
+### 1. Pravidlo "Draft, ne Create" 📝
+Nikdy nepiš dokument od nuly. Požádej AI o osnovu nebo první draft. Snáz se opravuje špatný text než tvoří nový.
+> *Prompt: "Napiš osnovu pro 30min kickoff meeting Projectu X."*
 
-### 2. Pravidlo "Nejdřív shrň" 📉
-Než začneš číst dlouhé vlákno e-mailů nebo 50stránkové PDF, zeptej se AI: *"Shrň konflikt v tomto vlákně"* nebo *"Jaká jsou 3 klíčová rizika v této smlouvě?"*.
-*   **Výhoda:** Vstupuješ do fáze hlubokého čtení s mentální mapou toho, na čem záleží.
+### 2. Pravidlo "Summarize First" 📉
+Než přečteš dlouhý e-mail chain nebo 50stránkový PDF, zeptej se AI: *"Shrň konflikt v tomhle vláknu"* nebo *"Jaká jsou 3 hlavní rizika v téhle smlouvě?"*.
+*   **Benefit:** Do detailu jdeš s mentální mapou toho podstatného.
 
-### 3. Hack "Příprava na schůzku" 🤝
-Před schůzkou s klientem požádej AI: *"Prohledej web pro aktuální zprávy o [Název Firmy]. Jaké jsou jejich současné výzvy?"*
-*   **Výsledek:** Přijdeš a vypadáš, jako bys dělal 2 hodiny výzkumu.
+### 3. Hack "Meeting Prep" 🤝
+Před meetingem s klientem se zeptej AI: *"Najdi na webu poslední novinky o [Company Name]. Jaké mají aktuální výzvy?"*
+*   **Výsledek:** Vypadáš, že jsi dělal 2 hodiny research.
 
 ---
 
 ## 🎭 9. Specializované nástroje
 
-Není to jen o textu. AI transformuje každé oddělení.
+Nejde jen o text. AI mění každé oddělení.
 
-### 🎨 Design a Marketing
-*   **Adobe Firefly / Midjourney:** Generování podkladů pro prezentace nebo sociální sítě okamžitě.
-*   **Canva Magic Studio:** "Udělej tuto prezentaci profesionální" jedním kliknutím.
+### 🎨 Design & Marketing
+*   **Adobe Firefly / Midjourney:** Generování vizuálů na slide decky nebo sociální sítě.
+*   **Canva Magic Studio:** "Udělej z téhle prezentace profi" na jeden klik.
 
-### 💻 IT a Vývoj
-*   **GitHub Copilot:** Píše ~46 % nového kódu pro vývojáře. Je to jako mít seniorního inženýra, který programuje s tebou.
-*   **Text-to-SQL:** Analytici mohou napsat "Ukaž mi aktivní uživatele" a získat SQL dotaz automaticky.
+### 💻 IT & Vývoj
+*   **GitHub Copilot:** GitHub výzkum ukázal, že vývojáři dokončují úkoly s Copilotem **o 55 % rychleji**.
+*   **Text-to-SQL:** Analytici napíšou "Ukaž aktivní uživatele" a AI vrátí SQL dotaz automaticky.
 
-### 👥 Lidské zdroje (HR)
-*   **Textio:** Analyzuje popisy práce pro skryté zkreslení (např. slova, která odrazují ženy od přihlášení).
-*   **Screening životopisů:** AI dokáže projít tisíce životopisů a najít odpovídající dovednosti (ale pozor na zkreslení!).
+### 👥 HR
+*   **Textio:** Analyzuje job descriptions kvůli skrytému biasu (např. slova odrazující ženy).
+*   **Resume Screening:** AI může filtrovat tisíce CV a hledat shodu (pozor na bias!).
 
-### 🤖 Vlastní agenti
-Video představuje **Copilot Agenty**—specializované boty, které si můžeš postavit pro konkrétní úkoly.
-*   **Příklad:** "Cestovní agent", který zná pouze cestovní politiku tvé firmy a rezervační kódy.
-*   **Síla:** Tyto agenty můžeš vytvořit jen tím, že popíšeš, co chceš, aby dělali, a ukotvíš je ve svých konkrétních složkách SharePointu.
+### 🤖 Custom Agents
+Video ukazuje **Copilot Agents** — specializované boty na konkrétní úkoly.
+*   **Příklad:** "Travel Agent", co zná jen firemní travel policy a rezervační kódy.
+*   **Síla:** Agenty vytvoříš pouhým popisem, napojené na tvé SharePoint složky.
 
 ---
 
-## 📝 10. Rámec promptů "CO-STAR"
+## 📝 10. "CO-STAR" prompt framework
 
-Pro profesionální výsledky používej profesionální strukturu. Vágní prompt dostane vágní odpověď.
+Pro profi výsledky používej profi strukturu. Vague prompt = vague odpověď.
 
 | Písmeno | Význam | Příklad |
 | :--- | :--- | :--- |
-| **C** | **Kontext (Context)** | "Jsem projektový manažer spouštějící novou aplikaci..." |
-| **O** | **Cíl (Objective)** | "Napiš e-mail o stavu projektu..." |
-| **S** | **Styl (Style)** | "Stručný, odrážky, žádná omáčka..." |
-| **T** | **Tón (Tone)** | "Profesionální, ale naléhavý..." |
-| **A** | **Publikum (Audience)** | "Pro výkonný tým..." |
-| **R** | **Odpověď (Response)** | "Formátuj jako tabulku se sloupci pro Riziko a Mitigaci." |
+| **C** | **Context** | "Jsem PM, spouštím novou app..." |
+| **O** | **Objective** | "Napiš status update e-mail..." |
+| **S** | **Style** | "Stručně, body, bez omáčky..." |
+| **T** | **Tone** | "Profesionální, ale urgentní..." |
+| **A** | **Audience** | "Pro vedení firmy..." |
+| **R** | **Response** | "Formátuj jako tabulku s Riziko/Mitigace." |
 
 <Callout type="tip">
-**Zkus to:** Příště, až budeš potřebovat e-mail, neříkej jen "Napiš e-mail". Řekni: *"Jsem [Kontext], napiš [Cíl] pro [Publikum] ve stylu [Styl]."*
+**Konkrétní příklad:**
+Místo *"Napiš e-mail o zpoždění"* zkus:
+*"Jsem **Project Manager** (Context). Napiš **status update** (Objective) pro **klienta** (Audience) vysvětlující výpadek serveru. Udržuj tón **omluvný, ale orientovaný na řešení** (Tone) a použij **odrážky** (Style)."*
 </Callout>
 
 ---
 
-## 🏆 11. Závěrečná zpráva z mise
+## 🏆 11. Finální mission report
 
-Nyní jsi vybaven pro moderní pracoviště.
-Cílem není nechat AI dělat tvou práci. Cílem je nechat AI dělat ty **nudné části** tvé práce, abys ses mohl soustředit na ty **lidské části** (strategie, kreativita, empatie).
+Teď jsi vybavený pro moderní workplace.
+Cíl není, aby AI dělala tvou práci. Cíl je, aby AI dělala **nudné části** tvé práce, abys ty mohl dělat **lidské části** (strategie, kreativita, empatie).
 
-<ConceptCard title="Holocron: Podniková AI" icon="💼">
+<ConceptCard title="Holocron: Enterprise AI" icon="💼">
 
-### 🛠️ Sada nástrojů
-*   **Asistent schůzky:** Přepisuje a shrnuje (Teams/Zoom). *Už nikdy nedělej zápisy.*
-*   **Partner pro psaní:** Navrhuje a leští (Word/Docs). *Léčí syndrom prázdné stránky.*
-*   **Datový analytik:** Hledá trendy bez vzorců (Excel). *Mluv se svými daty.*
-*   **Znalostní báze:** Chatuje s interními dokumenty (RAG). *Najdi odpovědi během sekund.*
+### 🛠️ Toolkit
+*   **Meetingový asistent:** Přepis a shrnutí (Teams/Zoom). *Už nikdy zapisování.*
+*   **Parťák na psaní:** Drafty a polish (Word/Docs). *Konec prázdné stránky.*
+*   **Datový analytik:** Trendy bez vzorců (Excel). *Mluv s daty.*
+*   **Knowledge Base:** Chat s interními dokumenty (RAG). *Odpovědi za sekundy.*
 
 ### 🛡️ Pravidla
-1.  **Ověřuj:** AI dělá chyby. Ty jsi zodpovědný.
-2.  **Soukromí:** Používej Enterprise nástroje pro tajemství. Veřejná AI = Veřejná data.
-3.  **Prompt:** Používej CO-STAR pro nejlepší výsledky. Kontext je Král.
+1.  **Verify:** AI dělá chyby. Ty odpovídáš.
+2.  **Privacy:** Enterprise pro tajné věci. Public AI = Public data.
+3.  **Prompt:** CO-STAR dává nejlepší výsledky. Kontext je král.
 
 </ConceptCard>
 

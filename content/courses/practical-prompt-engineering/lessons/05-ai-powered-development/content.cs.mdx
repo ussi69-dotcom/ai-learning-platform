@@ -6,15 +6,15 @@
 ⏳ **Čas čtení:** 35 min | 🧪 **[2] Laby součástí**
 </Callout>
 
-<VideoSwitcher alternatives={[{"id":"kQmXtrmQ5Zg","title":"MCP Full Workshop - Anthropic (1h44m)"},{"id":"GuTcle5edjk","title":"You NEED to Learn MCP NOW! (NetworkChuck)"},{"id":"MsQACpcuTkU","title":"AI in Terminal - The Right Way (NetworkChuck)"},{"id":"HIp8sFB2GGw","title":"Cursor 2.0 - 5 Things You Didn't Know (Fireship)"}]} />
+<VideoSwitcher alternatives={[{"id":"kQmXtrmQ5Zg","title":"MCP Full Workshop","author":"Anthropic","lang":"en"},{"id":"GuTcle5edjk","title":"You NEED to Learn MCP NOW!","author":"NetworkChuck","lang":"en"},{"id":"MsQACpcuTkU","title":"AI in Terminal - The Right Way","author":"NetworkChuck","lang":"en"},{"id":"HIp8sFB2GGw","title":"Cursor 2.0 - 5 Things You Didn't Know","author":"Fireship","lang":"en"}]} />
 
-## ⚡ 90% AI iniciativ selže. Zde je důvod.
+## ⚡ Proč AI projekty stagnují
 
-**"AI pohltilo internet, a ted se snazime nacpat AI do existujiciho podniku. Problem? Vidime 90%+ selhani AI iniciativ timto stylem."** — IBM Technology
+**"AI pohltilo internet, a teď se snažíme nacpat AI do existujícího podniku."** — IBM Technology
 
-Firmy ktere selhavaji nepouzivaji spatne AI modely. Pouzivaji AI *spatnym zpusobem*.
+Firmy, které selhávají, nepoužívají špatné modely. Používají AI *špatným způsobem*.
 
-V roce 2025 je prechod z "AI-asistovaneho" na "AI-native" vyvoj dokoncen. GitHub Copilot pise 46% noveho kodu ve firmach ktere ho pouzivaji. MCP vyrostlo na **1100+ komunitne vytvorenych serveru** behem pouhych mesicu. Anthropic to nazyva "zakladnim protokolem pro agenty obecne."
+V roce 2025 se přechod z **AI‑asistovaného** na **AI‑native** vývoj rychle zrychluje. GitHub výzkum ukázal, že vývojáři dokončují úkoly s Copilotem **o 55 % rychleji**. Anthropic představil **MCP** jako otevřený standard pro napojení modelů na nástroje a data — ekosystém rychle roste.
 
 Toto neni o uceni dalsiho nastroje. Je to o pochopeni **univerzalnich principu** ktere delaji AI vyvoj funkcnim — principu ktere plati at uz pouzivate Cursor, Claude Code, Windsurf nebo jakykoli nastroj ktery prijde.
 
@@ -66,6 +66,10 @@ Před přijetím JAKÉHOKOLIV kódu generovaného AI proveď tyto tři testy:
 
 **Model Context Protocol (MCP)** je pro AI tím čím je USB-C pro zařízení — univerzální standard který propojuje jakéhokoli AI klienta s jakoukoli schopností.
 
+<Callout type="info">
+**Zdroj:** Anthropic představil MCP jako otevřený standard pro napojení modelů na nástroje a data (11/2024).
+</Callout>
+
 <Diagram type="mcp-architecture" />
 
 ### Proc MCP zmenilo vsechno
@@ -104,11 +108,11 @@ MCP poskytuje **jeden protokol** ktery funguje vsude:
 | **Cloud** | Cloudflare, Stripe | API integrace |
 | **Bezpecnost** | Kali Linux (Docker) | Pen testing nastroje |
 
-**Cisla mluvi jasne:**
-- 1100+ komunitne vytvorenych serveru (a roste)
-- Oficialni integrace od Cloudflare, Stripe a dalsich
-- LangGraph adaptery pro agentni frameworky
-- Oficialni registr brzy
+**Ekosystém rychle roste:**
+- Komunitní servery napříč kategoriemi
+- Oficiální integrace od Cloudflare, Stripe a dalších
+- Adaptery pro agentní frameworky (např. LangGraph)
+- Registr a discovery tooling dozrává
 
 ### Production-Ready MCP
 
@@ -166,8 +170,8 @@ Kazde AI IDE podporuje nejakou formu projektoveho kontextoveho souboru:
 | Claude Code | `CLAUDE.md` | Koren repozitare |
 | Cursor | `.cursorrules` | Koren repozitare |
 | Windsurf | `.windsurfrules` | Koren repozitare |
-| Codex | `agents.md` | Koren repozitare |
-| Gemini CLI | `gemini.md` | Koren repozitare |
+| Codex | `CODEX.md` (plus `AGENTS.md` pro repo pravidla) | Koren repozitare |
+| Gemini CLI | `GEMINI.md` | Koren repozitare |
 
 **Struktura obsahu je univerzalni:**
 
@@ -194,17 +198,18 @@ Kazde AI IDE podporuje nejakou formu projektoveho kontextoveho souboru:
 ```
 
 <Callout type="tip">
-**Pro tip od NetworkChuck:** Udrzujte kontextove soubory synchronizovane mezi nastroji. "Session closer" agent muze aktualizovat vsechny kontextove soubory (claude.md, gemini.md, agents.md) na konci kazde pracovni session, cimz zajisti ze vsechny nastroje sdili stejny stav projektu.
+**Pro tip od NetworkChuck:** Udržujte kontextové soubory synchronizované mezi nástroji. „Session closer“ agent může aktualizovat všechny kontextové soubory (`CLAUDE.md`, `GEMINI.md`, `CODEX.md`, `AGENTS.md`) na konci každé session, čímž zajistí, že všechny nástroje sdílí stejný stav projektu.
 </Callout>
 
 ### Realita tokenového rozpočtu
 
 Kontext není zdarma. Každý token který nakrmíte LLM stojí peníze a snižuje prostor pro uvažování.
 
-| Model | Kontextové okno | Typická cena |
-|-------|----------------|--------------|
-| Claude 3.5 Sonnet | 200k tokenů | ~$3/M vstup |
-| GPT-4o | 128k tokenů | ~$2.50/M vstup |
+| Model | Kontextové okno | Poznámka k ceně |
+|-------|----------------|-----------------|
+| Claude Opus 4.5 / Sonnet 4 | 200k+ | Ceny se často mění |
+| GPT‑5 rodina | 128k+ | Ceny se často mění |
+| Gemini 3 Pro | 1M+ | Ceny se často mění |
 | Claude Code | 200k + summary | Session-based |
 
 **Praktické důsledky:**
@@ -528,14 +533,14 @@ Pokud používáte více nástrojů, zkopírujte jádro obsahu do všech kontext
 ### 🔑 Klíčové poznatky
 
 1. 🎬 **Teď jste režisér.** Přestaň psát kód; začni režírovat AI aby psalo kód správně.
-2. 🔌 **MCP je univerzální standard.** 1100+ serverů, production-ready, žádný vendor lock-in.
+2. 🔌 **MCP je univerzální standard.** Otevřený, production‑ready a rychle rostoucí.
 3. 🧠 **Kontext je všechno.** Projektová ústava + memory soubory = inteligentní AI.
 4. 🔒 **Bezpečnost na prvním místě.** Nejmenší oprávnění, sandboxing, audit logy, human-in-the-loop.
 
 ### 🛠️ Váš základní stack
 
 ```text
-Protokol:   MCP (univerzální, 1100+ serverů)
+Protokol:   MCP (otevřený standard, rostoucí ekosystém)
 Kontext:    Projektová ústava + Memory soubory
 Bezpečnost: Docker sandbox + OAuth + Audit
 Nástroje:   Vybírejte dle úlohy (Cursor denně, Claude Code pro hloubku)

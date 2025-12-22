@@ -1,0 +1,134 @@
+{
+  "lesson": {
+    "course_id": "ai-basics-beginner",
+    "lesson_number": 6,
+    "lesson_path": "content/courses/ai-basics-beginner/lessons/06-ai-at-work/",
+    "title": "AI at Work: The Enterprise Era",
+    "target_level": "beginner",
+    "estimated_minutes": 25,
+    "labs_count": 3,
+    "focus_topics": [
+      "meeting-ai",
+      "writing-ai",
+      "data-analysis-ai",
+      "rag",
+      "privacy",
+      "co-star",
+      "copilot"
+    ],
+    "existing_diagrams": [
+      "dashboard-ui",
+      "meeting-timeline",
+      "human-in-the-loop",
+      "data-analysis-chart",
+      "rag-architecture"
+    ],
+    "last_updated": "2025-12-21"
+  },
+  "learning_outcomes": [
+    "Create a meeting-minutes prompt that turns a messy transcript into (1) key decisions and (2) action items in a clear Owner–Task–Deadline format.",
+    "Rewrite a low-quality workplace email into a professional version by specifying constraints (tone, length, and required sections) and producing two variant drafts.",
+    "Translate a plain-English spreadsheet question into a correct Excel formula (e.g., SUMIFS) and explain what each range/criterion does in one sentence.",
+    "Explain, at a beginner level, what RAG/enterprise knowledge base chat does (retrieve then generate) and list two situations where it is safer than “memory-only” chat for company policies.",
+    "Apply a simple workplace AI privacy checklist to classify data (public, internal, confidential/PII) and choose an appropriate tool category (public vs enterprise) for each."
+  ],
+  "must_be_true_facts": [
+    {
+      "id": "knowledge-worker-time-split-email-meetings-search",
+      "fact": "Widely cited workplace research estimates that interaction/knowledge workers spend about 28% of the workweek managing email and about ~19–20% searching for internal information; meeting time varies by organization, with some datasets reporting meeting load around ~28–32% of the workweek (supporting a lesson-level rounded claim of ~31% as “roughly one-third”).",
+      "details": {
+        "email_percent": 28,
+        "search_percent_estimate": 19,
+        "search_percent_range": [19, 20],
+        "meetings_percent_estimate": 31,
+        "meetings_percent_range": [28, 32],
+        "note": "Do not attribute all three percentages to a single study unless the chosen source explicitly reports all three; present meeting share as variable and cite the meeting-time source separately."
+      },
+      "sources": [
+        {
+          "type": "report",
+          "title": "The social economy: Unlocking value and productivity through social technologies",
+          "citation": "McKinsey Global Institute (2012) — notes interaction workers spend ~28% on email and nearly 20% looking for internal information.",
+          "url": "https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/the-social-economy"
+        },
+        {
+          "type": "industry_report",
+          "title": "Meetings Statistics: How Many Hours Do We Spend in Meetings?",
+          "citation": "Fellow.app (meeting analytics summary) — reports % of the workweek spent in meetings (e.g., ~28.3% average; ~32% at 1,000+ employee companies).",
+          "url": "https://fellow.ai/blog/meetings-statistics-how-many-hours-do-we-spend-in-meetings/"
+        }
+      ]
+    },
+    {
+      "id": "samsung-chatgpt-code-leak-2023",
+      "fact": "In 2023, Samsung restricted employee use of public generative-AI tools after reports that staff had uploaded sensitive internal information (including source code) to ChatGPT, raising concerns about data leaving company-controlled systems.",
+      "sources": [
+        {
+          "type": "news",
+          "title": "Samsung bans use of generative AI tools like ChatGPT after April internal data leak",
+          "citation": "TechCrunch (May 2, 2023) — reports Samsung’s temporary restriction and cites an internal leak to ChatGPT.",
+          "url": "https://techcrunch.com/2023/05/02/samsung-bans-use-of-generative-ai-tools-like-chatgpt-after-april-internal-data-leak/"
+        },
+        {
+          "type": "news",
+          "title": "Samsung Bans Staff From Using AI Like ChatGPT, Bard After a Sensitive Data Leak",
+          "citation": "Business Insider (May 2, 2023) — reports a Samsung memo citing a source code leak to ChatGPT and a workplace ban.",
+          "url": "https://www.businessinsider.com/samsung-chatgpt-bard-data-leak-bans-employee-use-report-2023-5"
+        }
+      ]
+    },
+    {
+      "id": "github-copilot-46-percent-code",
+      "fact": "GitHub has publicly stated that GitHub Copilot is “already writing 46% of code” and can help developers code faster (GitHub’s own claim; actual impact varies by team, language, and workflow).",
+      "sources": [
+        {
+          "type": "vendor_blog",
+          "title": "GitHub Copilot X: The AI-powered developer experience",
+          "citation": "GitHub Blog — includes the “46% of code” and “up to 55% faster” claims in the Copilot X announcement post.",
+          "url": "https://github.blog/news-insights/product-news/github-copilot-x-the-ai-powered-developer-experience/"
+        }
+      ]
+    },
+    {
+      "id": "co-star-framework-govtech",
+      "fact": "The CO-STAR prompt framework (Context, Objective, Style, Tone, Audience, Response) is documented by GovTech Singapore’s Data Science & AI Division in its Prompt Engineering Playbook.",
+      "sources": [
+        {
+          "type": "playbook",
+          "title": "Prompt Engineering Playbook (Beta v3)",
+          "citation": "GovTech Singapore (Data Science & AI Division) — Playbook section “The CO-STAR approach to writing your prompts” (updated Aug 30, 2023).",
+          "url": "https://www.developer.tech.gov.sg/products/collections/data-science-and-artificial-intelligence/playbooks/prompt-engineering-playbook-beta-v3.pdf"
+        },
+        {
+          "type": "gov_article",
+          "title": "Mastering the art of prompt engineering with Empower",
+          "citation": "GovTech Singapore (tech.gov.sg) — explains CO-STAR and attributes it to GovTech’s prompt engineering playbook.",
+          "url": "https://www.tech.gov.sg/technews/mastering-the-art-of-prompt-engineering-with-empower/"
+        }
+      ]
+    }
+  ],
+  "dont_claim": [
+    "Don't present the email/meetings/search percentages as universal or as coming from a single study unless the cited source explicitly reports all of them.",
+    "Don't promise guaranteed time savings (e.g., “everyone will save 2 hours/day” or “you’ll work 6-hour days”); frame benefits as potential and context-dependent.",
+    "Don't claim that anything pasted into a public chatbot “becomes training data” by default; data retention/training depends on vendor policies and settings.",
+    "Don't claim “Enterprise = zero risk”; even enterprise tools require policy, access controls, and human review to prevent leaks or mistakes.",
+    "Don't imply AI meeting notes, emails, or spreadsheet formulas are automatically correct; require human review and spot-checking.",
+    "Don't claim RAG/knowledge-base chat guarantees truth or perfect citations; retrieved sources can be wrong, incomplete, or outdated and must be verified.",
+    "Don't overgeneralize the Samsung incident to mean all companies have had identical leaks or that the exact leaked content is publicly confirmed in detail."
+  ],
+  "rubric": {
+    "hook_effectiveness_min": 8,
+    "concept_clarity_min": 8,
+    "lab_quality_min": 8,
+    "visual_anchors_min": 8,
+    "progressive_difficulty_min": 8,
+    "edutainment_factor_min": 8,
+    "masterpiece_total_min": 59,
+    "masterpiece_total_max": 60,
+    "rules": [
+      "Any category score below 8/10 fails the MASTERPIECE gate, even if the total meets the threshold.",
+      "MASTERPIECE requires total ≥59/60."
+    ]
+  }
+}

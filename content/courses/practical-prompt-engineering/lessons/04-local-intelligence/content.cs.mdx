@@ -6,21 +6,20 @@
 ⏳ **Čas čtení:** 40 min | 🧪 **[3] Laby součástí**
 </Callout>
 
-<VideoSwitcher alternatives={[{"id":"Wjrdr0NU4Sk","title":"host ALL your AI locally (NetworkChuck)"},{"id":"R_iA-S2N-iE","title":"ChatGPT na vašem počítači (AI s rozumem)"}]} />
+<VideoSwitcher alternatives={[{"id":"Wjrdr0NU4Sk","title":"Host ALL your AI locally","author":"NetworkChuck","lang":"en"},{"id":"sfilT8m73xM","title":"Use Llama 3 Locally with Ollama","author":"David Mbugua","lang":"en"},{"id":"W8CObaM-gjA","title":"DeepSeek R1 Full Local Review","author":"Matthew Berman","lang":"en"},{"id":"zRECqmt9LlE","title":"ChatGPT na vašem počítači? Ollama","author":"AI s rozumem","lang":"cs"}]} />
 
 ## ⚡ Deklarace AI nezávislosti
 
 **Co kdyby každý AI rozhovor, který jste kdy vedli, zůstal navždy na vašem počítači?**
 
-Právě teď každý prompt, který pošlete do ChatGPT, Claude nebo Gemini, putuje přes internet, sedí na serveru někoho jiného a stává se trénovacími daty pro další model. Vaše geniální nápady, vaše soukromé myšlenky, firemní tajemství — všechno pryč.
+Většina promptů do cloudových modelů opouští vaše zařízení. **Spotřebitelské nástroje mohou data používat k vylepšování modelů**, zatímco enterprise nabídky často opt‑outují — vždy ověřte firemní politiku.
 
 Ale nemusí to tak být.
 
-V roce 2025 lokální AI modely překročily kritický práh: **Llama 4 Scout běžící na grafice za 8 000 Kč teď poráží původní benchmark GPT-4.** Propast se zmenšuje. Pro většinu úkolů není lokální AI jen "dost dobrá" — je *lepší*.
+V letech 2024–2025 lokální AI modely překročily kritický práh: **lokální provoz je konečně praktický pro reálnou práci**. Rodiny jako **Meta Llama 3**, **Alibaba Qwen2** a **DeepSeek‑R1** přinesly solidní reasoning i na osobní hardware.
 
 <Callout type="warning">
-**Reality Check 2025:** 1 milion tokenů přes GPT-5.1 stojí ~$30. Lokálně na RTX 4090 stojí ~$0.02 (elektřina).
-Pro agentní smyčky, kde model iteruje 100×, je rozdíl astronomický.
+**Realita nákladů:** Cloud pricing se často mění. Lokální provoz má vyšší vstupní náklad, ale předvídatelný marginál. Při vysokém objemu se break‑even dostaví rychle.
 </Callout>
 
 ---
@@ -36,33 +35,38 @@ V éře dominance API jako OpenAI a Anthropic hnutí k **Lokální Inteligenci**
 | Důvod           | Cloud API              | Lokální LLM                |
 | --------------- | ---------------------- | -------------------------- |
 | **🔒 Soukromí** | Data opouští perimetr  | Data nikdy neopustí RAM    |
-| **💰 Náklady**  | $0.01-0.06 / 1k tokenů | Fixní (HW + elektřina)     |
+| **💰 Náklady**  | Variabilní, mění se často | Fixní (HW + elektřina)     |
 | **⚡ Latence**  | 150-400ms              | 10-20ms                    |
 | **🎛️ Kontrola** | Censored, RLHF         | Plná kontrola, fine-tuning |
 
 ---
 
-## 2. Benchmark Arena 2025 📊
+## 2. Rodiny modelů, které stojí za pozornost (2024–2025) 📊
 
-Jak si lokální modely vedou proti cloudovým gigantům?
+Open‑weight modely jdou rychle dopředu. Dominují tři rodiny:
+
+- **Meta Llama 3:** Silné univerzály s obrovskou komunitou.
+- **Alibaba Qwen2:** Výborné instrukční modely, silná vícejazyčnost.
+- **DeepSeek‑R1:** Zaměřeno na reasoning.
 
 <Diagram type="model-benchmark-chart" />
 
-### Detailní srovnání
+### Praktický výběr (rule of thumb)
 
-| Model                | MMLU-Pro | VRAM (Q4) | Tokeny/s (RTX 5090) | Poznámka             |
-| -------------------- | -------- | --------- | ------------------- | -------------------- |
-| **GPT-5.1**          | 92.1%    | ☁️ Cloud  | N/A                 | Reference cloud      |
-| **Claude Opus 4.5**  | 91.5%    | ☁️ Cloud  | N/A                 | Nejlepší pro kód     |
-| **Gemini 3 Pro**     | 91.0%    | ☁️ Cloud  | N/A                 | 1M kontext           |
-| **Llama 4 Maverick** | 89.2%    | ~45 GB    | 35 t/s              | Nejlepší open-source |
-| **Qwen 3 235B**      | 88.5%    | ~90 GB    | 15 t/s              | Alibaba flagship     |
-| **Llama 4 Scout**    | 80.5%    | ~8 GB     | 100 t/s             | Budget král          |
-| **DeepSeek-R1**      | 78.3%    | ~12 GB    | 60 t/s              | Reasoning specialist |
+| Třída | Příklad | Typická VRAM (4‑bit) | Vhodné pro |
+|------|---------|-----------------------|------------|
+| **Tiny** | 2–4B modely | 2–4 GB | Rychlé úkoly, lehké agenty |
+| **Standard** | Llama 3 8B / Qwen2 7B | 6–8 GB | Denní práce |
+| **Mid** | Qwen2 14B | 10–12 GB | Lepší kvalita psaní/kódu |
+| **Reasoning** | DeepSeek‑R1 | 12+ GB | Vícekrokové uvažování |
+| **Large** | 70B třída | 40+ GB | Serverové nasazení |
 
 <Callout type="tip">
-  **Pro Tip:** **Llama 4 Scout** je sweet spot pro většinu použití. 80.5% na
-  MMLU-Pro je lepší než GPT-4 a běží na 8GB GPU.
+**Sweet spot:** 7–8B modely na běžných GPU; 13–14B pokud máš 12 GB+ VRAM.
+</Callout>
+
+<Callout type="info">
+**Zdroje:** Meta Llama 3 (2024‑04‑18), Alibaba Qwen2 (2024‑06‑11), DeepSeek‑R1 (2024‑07‑25).
 </Callout>
 
 ---
@@ -74,10 +78,10 @@ Pro spuštění modelu musíte načíst jeho **váhy** do VRAM. Standardní tré
 ### Matematika
 
 ```text
-Llama 4 8B @ FP16:
+Llama 3 8B @ FP16:
 8,000,000,000 parametrů × 2 byty = 16 GB VRAM
 
-Llama 4 8B @ Q4_K_M:
+Llama 3 8B @ Q4_K_M:
 8,000,000,000 parametrů × 0.5 bytu = 4 GB VRAM
 ```
 
@@ -110,10 +114,10 @@ Pravidlo palce (Q4_K_M):
 | Kategorie     | Model       | VRAM (Q4) | Tvůj HW                   |
 | ------------- | ----------- | --------- | ------------------------- |
 | **Tiny**      | Gemma 3 2B  | < 2 GB    | Jakýkoli                  |
-| **Standard**  | Llama 4 8B  | ~6 GB     | RTX 3060+                 |
-| **Mid**       | Qwen 3 14B  | ~10 GB    | RTX 4070+                 |
+| **Standard**  | Llama 3 8B  | ~6 GB     | RTX 3060+                 |
+| **Mid**       | Qwen2 14B   | ~10 GB    | RTX 4070+                 |
 | **Reasoning** | DeepSeek-R1 | ~12 GB    | RTX 4080+                 |
-| **Large**     | Llama 4 70B | ~40 GB    | 2× RTX 4090 nebo M4 Ultra |
+| **Large**     | Llama 3 70B | ~40 GB    | 2× RTX 4090 nebo M4 Ultra |
 
 <Callout type="warning">
   **Pozor na kontext!** Tabulka předpokládá 4-8k kontext. 128k kontext může
@@ -427,7 +431,7 @@ Ne všechno musí běžet lokálně. Chytrá architektura kombinuje obojí.
 ```text
 Hardware: RTX 4090 / Mac M4 Pro / Mac M4 Ultra
 Engine:   Ollama (CLI) + Open WebUI (GUI)
-Model:    Llama 4 8B (everyday) / 70B (complex)
+Model:    Llama 3 8B (everyday) / 70B (complex)
 Format:   GGUF Q4_K_M
 ```
 

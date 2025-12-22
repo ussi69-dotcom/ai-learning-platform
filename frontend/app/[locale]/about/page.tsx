@@ -27,6 +27,7 @@ import {
   Box,
   CircleDot,
   Shield,
+  Video,
 } from "lucide-react";
 import Diagram from "@/components/mdx/Diagram";
 
@@ -97,15 +98,21 @@ export default function AboutPage() {
       icon: <Terminal className="w-5 h-5" />,
     },
     {
-      year: "Dec 2025",
+      year: "Dec 12, 2025",
       title: t("Timeline.vanguard_title"),
       desc: t("Timeline.vanguard_desc"),
       icon: <Users className="w-5 h-5" />,
     },
     {
-      year: "Now",
-      title: t("Timeline.multiagent_v4_title"),
-      desc: t("Timeline.multiagent_v4_desc"),
+      year: "Dec 18, 2025",
+      title: t("Timeline.youtube_mcp_title"),
+      desc: t("Timeline.youtube_mcp_desc"),
+      icon: <Video className="w-5 h-5" />,
+    },
+    {
+      year: "Dec 21, 2025",
+      title: t("Timeline.masterpiece_title"),
+      desc: t("Timeline.masterpiece_desc"),
       icon: <Sparkles className="w-5 h-5" />,
     },
   ];

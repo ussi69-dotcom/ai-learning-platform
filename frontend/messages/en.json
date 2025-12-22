@@ -219,10 +219,12 @@
         "hyperdrive_desc": "Antigravity framework released. Integrated same-day. Development velocity hits Mach 10.",
         "weapon_title": "The Weapon",
         "weapon_desc": "Gemini 3.0 CLI access granted. Zero-day integration. The stack becomes self-aware.",
-        "vanguard_title": "The Vanguard",
-        "vanguard_desc": "Claude Opus 4.5 + Gemini 3 Pro dual-agent workflow. Edutainment v3.0 launched.",
-        "multiagent_v4_title": "Multi-Agent v4.0",
-        "multiagent_v4_desc": "GPT-5.2 + Perplexity join the team. 4 AI models, one orchestrator. Zero-day integration: GPT-5.2 dropped Dec 11, deployed Dec 12."
+        "vanguard_title": "Multi-Agent v4.0",
+        "vanguard_desc": "GPT-5.2 + Perplexity join the team. 4 AI models, one orchestrator. Zero-day integration: GPT-5.2 dropped Dec 11, deployed Dec 12.",
+        "youtube_mcp_title": "YouTube MCP Integration",
+        "youtube_mcp_desc": "YouTube Data MCP server with 14 functions: video details, transcripts, playlists, search. Video research becomes instant.",
+        "masterpiece_title": "MASTERPIECE Workflow",
+        "masterpiece_desc": "Lessons upgraded to MASTERPIECE standard (59-60/60). AI Basics L01-L03 complete with 6+ diagrams, 4 videos, premium content."
     },
     "TechStack": {
         "nextjs_name": "Next.js 16",

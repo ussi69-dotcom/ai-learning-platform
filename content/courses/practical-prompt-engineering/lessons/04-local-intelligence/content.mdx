@@ -6,22 +6,13 @@
 ⏳ **Reading Time:** 40 min | 🧪 **[3] Labs Included**
 </Callout>
 
-<VideoSwitcher alternatives={[{"id":"Wjrdr0NU4Sk","title":"host ALL your AI locally (NetworkChuck)"},{"id":"W8CObaM-gjA","title":"DeepSeek R1 Full Local Review (Matthew Berman)"}]} />
+<VideoSwitcher alternatives={[{"id":"Wjrdr0NU4Sk","title":"Host ALL your AI locally","author":"NetworkChuck","lang":"en"},{"id":"sfilT8m73xM","title":"Use Llama 3 Locally with Ollama","author":"David Mbugua","lang":"en"},{"id":"W8CObaM-gjA","title":"DeepSeek R1 Full Local Review","author":"Matthew Berman","lang":"en"},{"id":"zRECqmt9LlE","title":"ChatGPT na vašem počítači? Ollama","author":"AI s rozumem","lang":"cs"}]} />
 
 ## ⚡ The Declaration of AI Independence
 
 **What if every AI conversation you ever had stayed on your computer, forever?**
 
-Right now, every prompt you send to ChatGPT, Claude, or Gemini travels across the internet, sits on someone else's server, and becomes training data for the next model. Your brilliant ideas, your private thoughts, your company secrets — all of it, gone.
-
-But it doesn't have to be this way.
-
-In 2025, local AI models have crossed a critical threshold: **Llama 4 Scout running on a $300 graphics card now beats GPT-4's original benchmark.** The gap is closing. For most tasks, local is not just "good enough" — it's *better*.
-
-<Callout type="warning">
-**2025 Reality Check:** 1 million tokens via GPT-5.1 costs ~$30. Locally on RTX 4090 costs ~$0.02 (electricity).
-For agentic loops where the model iterates 100×, the difference is astronomical.
-</Callout>
+Right now, most prompts sent to cloud AI leave your device. **Consumer tools may use data to improve models**, while many enterprise offerings opt out — always check your policy.\n\nBut it doesn’t have to be this way.\n\nIn 2024–2025, open‑weight models crossed a critical threshold: **local is finally viable for real work**. Families like **Meta Llama 3**, **Alibaba Qwen2**, and **DeepSeek‑R1** made strong reasoning and coding possible on personal hardware.\n\n<Callout type="warning">\n**Cost reality:** Cloud pricing changes constantly. Local has a higher upfront cost, but predictable marginal cost. If you run high‑volume workloads, break‑even happens fast.\n</Callout>
 
 ---
 
@@ -36,32 +27,38 @@ In an era dominated by API providers like OpenAI and Anthropic, the movement tow
 | Reason | Cloud API | Local LLM |
 |--------|-----------|-----------|
 | **🔒 Privacy** | Data leaves perimeter | Data never leaves RAM |
-| **💰 Cost** | $0.01-0.06 / 1k tokens | Fixed (HW + electricity) |
+| **💰 Cost** | Usage‑based, pricing changes often | Fixed (HW + electricity) |
 | **⚡ Latency** | 150-400ms | 10-20ms |
 | **🎛️ Control** | Censored, RLHF | Full control, fine-tuning |
 
 ---
 
-## 2. Benchmark Arena 2025 📊
+## 2. Model Families to Watch (2024–2025) 📊
 
-How do local models compare to cloud giants?
+Open‑weight leaders are moving fast. Three families dominate the local landscape:
+
+- **Meta Llama 3:** Strong general‑purpose models with wide community support.
+- **Alibaba Qwen2:** Multilingual, excellent instruction following.
+- **DeepSeek‑R1:** Reasoning‑focused models built for complex tasks.
 
 <Diagram type="model-benchmark-chart" />
 
-### Detailed Comparison
+### Practical Selection (Rule of Thumb)
 
-| Model | MMLU-Pro | VRAM (Q4) | Tokens/s (RTX 5090) | Notes |
-|-------|----------|-----------|---------------------|-------|
-| **GPT-5.1** | 92.1% | ☁️ Cloud | N/A | Reference cloud |
-| **Claude Opus 4.5** | 91.5% | ☁️ Cloud | N/A | Best for code |
-| **Gemini 3 Pro** | 91.0% | ☁️ Cloud | N/A | 1M context |
-| **Llama 4 Maverick** | 89.2% | ~45 GB | 35 t/s | Best open-source |
-| **Qwen 3 235B** | 88.5% | ~90 GB | 15 t/s | Alibaba flagship |
-| **Llama 4 Scout** | 80.5% | ~8 GB | 100 t/s | Budget king |
-| **DeepSeek-R1** | 78.3% | ~12 GB | 60 t/s | Reasoning specialist |
+| Tier | Example family | Typical VRAM (4‑bit) | Best for |
+|------|----------------|----------------------|---------|
+| **Tiny** | 2–4B models | 2–4 GB | Quick tasks, lightweight agents |
+| **Standard** | Llama 3 8B / Qwen2 7B | 6–8 GB | Daily work, assistants |
+| **Mid** | Qwen2 14B | 10–12 GB | Higher quality writing/coding |
+| **Reasoning** | DeepSeek‑R1 | 12+ GB | Multi‑step reasoning |
+| **Large** | 70B class | 40+ GB | Server‑class deployments |
 
 <Callout type="tip">
-**Pro Tip:** **Llama 4 Scout** is the sweet spot for most use cases. 80.5% on MMLU-Pro beats GPT-4 and runs on 8GB GPU.
+**Sweet spot:** 7–8B models on consumer GPUs; 13–14B if you have 12 GB+ VRAM.
+</Callout>
+
+<Callout type="info">
+**Sources:** Meta Llama 3 release (2024‑04‑18), Alibaba Qwen2 release (2024‑06‑11), DeepSeek‑R1 release (2024‑07‑25).
 </Callout>
 
 ---
@@ -73,10 +70,10 @@ To run a model, you need to load its **weights** into VRAM. Standard training us
 ### The Math
 
 ```text
-Llama 4 8B @ FP16:
+Llama 3 8B @ FP16:
 8,000,000,000 parameters × 2 bytes = 16 GB VRAM
 
-Llama 4 8B @ Q4_K_M:
+Llama 3 8B @ Q4_K_M:
 8,000,000,000 parameters × 0.5 bytes = 4 GB VRAM
 ```
 
@@ -109,10 +106,10 @@ Rule of thumb (Q4_K_M):
 | Category | Model | VRAM (Q4) | Your HW |
 |----------|-------|-----------|---------|
 | **Tiny** | Gemma 3 2B | < 2 GB | Any |
-| **Standard** | Llama 4 8B | ~6 GB | RTX 3060+ |
-| **Mid** | Qwen 3 14B | ~10 GB | RTX 4070+ |
+| **Standard** | Llama 3 8B | ~6 GB | RTX 3060+ |
+| **Mid** | Qwen2 14B | ~10 GB | RTX 4070+ |
 | **Reasoning** | DeepSeek-R1 | ~12 GB | RTX 4080+ |
-| **Large** | Llama 4 70B | ~40 GB | 2× RTX 4090 or M4 Ultra |
+| **Large** | Llama 3 70B | ~40 GB | 2× RTX 4090 or M4 Ultra |
 
 <Callout type="warning">
 **Watch the context!** Table assumes 4-8k context. 128k context can consume tens of GB extra in KV Cache!
@@ -411,7 +408,7 @@ Not everything needs to run locally. Smart architecture combines both.
 ```text
 Hardware: RTX 4090 / Mac M4 Pro / Mac M4 Ultra
 Engine:   Ollama (CLI) + Open WebUI (GUI)
-Model:    Llama 4 8B (everyday) / 70B (complex)
+Model:    Llama 3 8B (everyday) / 70B (complex)
 Format:   GGUF Q4_K_M
 ```
 

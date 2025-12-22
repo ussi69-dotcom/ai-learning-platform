@@ -12,9 +12,9 @@
   "prerequisites": ["01-prompt-architecture"],
   "learning_objectives": [
     "Understand why local AI matters (privacy, cost, latency, control)",
-    "Compare local vs cloud model performance using benchmarks",
+    "Compare local vs cloud trade-offs for performance, privacy, and cost",
     "Calculate VRAM requirements for any model size",
-    "Install and run Ollama with Llama 4 8B",
+    "Install and run Ollama with Llama 3 8B",
     "Integrate local LLMs into Python applications",
     "Run local image generation with LLaVA"
   ]

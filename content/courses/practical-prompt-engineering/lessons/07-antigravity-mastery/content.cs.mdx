@@ -60,7 +60,7 @@ Tohle mění hru. High-level dashboard, kde spouštíte, monitorujete a řídít
 | **Myšlení** | "Jak implementuji tuto funkci?" | "Postav mi přihlašovací systém." |
 | **Zkratka** | `Ctrl+E` | `Ctrl+M` |
 
-![Agent Manager v akci - více workspaces, sledování průběhu a Claude Opus 4.5](images/agent-manager.png)
+<MDXImage src="images/agent-manager.png" alt="Agent Manager s více workspaces a průběhem úkolů" />
 
 ---
 
@@ -90,7 +90,7 @@ Když dáte agentovi úkol, nevyplivne jen kód do vašich souborů. Předloží
 
 Můžete zanechat komentáře přímo na jakémkoli artefaktu. Vidíte krok v Implementation Plan, se kterým nesouhlasíte? Okomentujte ho. Agent začlení vaši zpětnou vazbu, aniž by zastavil svůj tok provádění.
 
-![Implementation Plan artefakt s inline komentováním a Review tlačítkem](images/artifacts-panel.png)
+<MDXImage src="images/artifacts-panel.png" alt="Artefakt Implementation Plan s inline komentáři a tlačítkem Review" />
 
 ---
 
@@ -330,8 +330,8 @@ Jak si stojí v porovnání s ostatními AI kódovacími titány? *(Srovnání k
 | **Agent Orchestration** | Multi-agent Manager (paralelní) | Single-agent sidebar | CLI agent (sekvenční) |
 | **Artifacts System** | Plány, diffy, nahrávky, screenshoty | Pouze diffy | Diffy, patche |
 | **Browser Automation** | Vestavěná (self-healing) | Omezená | Přes externí nástroje |
-| **Image Generation** | Nano Banana (Gemini image AI) | Žádná | Žádná |
-| **Cena** | **ZDARMA** (Gemini 3 Pro) | $20/měsíc | ~$8/úkol |
+| **Image Generation** | Gemini Image / Firefly (integrované) | Žádná | Žádná |
+| **Cena** | Závisí na plánu | Předplatné | Usage-based |
 | **Nejlepší pro** | Rychlé prototypování, celé funkce | Denní kódování, precizní úpravy | Refaktoring, skripty |
 
 <Callout type="tip">
@@ -408,7 +408,7 @@ A obsah se může objevit v cloud-synced chatech logs.
 | **Planning Mode** | Agent generuje plán pro schválení jako první |
 | **Fast Mode** | Agent vykonává okamžitě (rychlé úkoly) |
 | **Browser Subagent** | Autonomní prohlížeč pro testování/ověřování |
-| **Nano Banana** | Gemini image AI pro generování UI mockupů |
+| **Image Model** | Gemini Image / Firefly pro UI mockupy |
 
 ### 🎯 Kdy co použít
 
@@ -416,7 +416,7 @@ A obsah se může objevit v cloud-synced chatech logs.
 |--------|-----|------|
 | Implementace celé funkce | Planning | Review před exekucí |
 | Rychlá oprava bugu | Fast | Rychlost nad bezpečností |
-| Generování UI mockupu | Obojí | Nano Banana řeší vizuály |
+| Generování UI mockupu | Obojí | Použij image model pro vizuály |
 | Bezpečnostně citlivý kód | **Planning + Request Review** | Maximální lidský dohled |
 
 ### 🛡️ Bezpečnostní pravidla

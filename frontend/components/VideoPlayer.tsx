@@ -1,9 +1,30 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { ChevronDown, Film, Flag, Lightbulb, MapPin, Pin, Star, User } from "lucide-react";
 import { useLocale } from "next-intl";
 import { VideoRegistryContext, Video } from "./mdx/VideoSwitcher";
+
+/**
+ * Extract YouTube video ID from various URL formats.
+ */
+function extractVideoId(url: string): string | null {
+  if (!url) return null;
+
+  const embedMatch = url.match(/embed\/([^?]+)/);
+  if (embedMatch) return embedMatch[1];
+
+  const watchMatch = url.match(/watch\?v=([^&]+)/);
+  if (watchMatch) return watchMatch[1];
+
+  const shortMatch = url.match(/youtu\.be\/([^?]+)/);
+  if (shortMatch) return shortMatch[1];
+
+  // Last resort: if it looks like a YouTube ID
+  if (/^[a-zA-Z0-9_-]{10,12}$/.test(url)) return url;
+
+  return null;
+}
 
 interface VideoPlayerProps {
   fallbackUrl?: string;
@@ -15,11 +36,44 @@ interface VideoPlayerProps {
 }
 
 /**
+ * Compute initial videos array from fallback URL and initial videos.
+ * This is used for both initial state and when props change.
+ */
+function computeInitialVideos(
+  fallbackUrl: string | undefined,
+  fallbackTitle: string | undefined,
+  initialVideos: Video[]
+): Video[] {
+  const videos: Video[] = [];
+
+  // Add main video from fallback URL first
+  if (fallbackUrl) {
+    const id = extractVideoId(fallbackUrl);
+    if (id) {
+      videos.push({
+        id,
+        title: fallbackTitle || "Video",
+        isMain: true,
+      });
+    }
+  }
+
+  // Add initial videos, avoiding duplicates
+  for (const v of initialVideos) {
+    if (v?.id && !videos.some((existing) => existing.id === v.id)) {
+      videos.push(v);
+    }
+  }
+
+  return videos;
+}
+
+/**
  * VideoPlayer wraps content and provides video registry context.
  * VideoSwitcher components inside children can register videos.
  *
- * Key fix: Using React Context instead of global registry avoids
- * race conditions between effect ordering during navigation.
+ * Key fix: Initialize state directly from props to avoid race conditions.
+ * Videos and activeVideoId are computed on first render.
  */
 export const VideoPlayer = ({
   fallbackUrl,
@@ -30,60 +84,40 @@ export const VideoPlayer = ({
   const locale = useLocale();
   const [isPinned, setIsPinned] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
-  const [videos, setVideos] = useState<Video[]>([]);
+
+  // Initialize videos and activeVideoId directly from props (no useEffect race)
+  const [videos, setVideos] = useState<Video[]>(() =>
+    computeInitialVideos(fallbackUrl, fallbackTitle, initialVideos)
+  );
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(() => {
+    const initial = computeInitialVideos(fallbackUrl, fallbackTitle, initialVideos);
+    return initial[0]?.id || null;
+  });
+
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
   const [reloadToken, setReloadToken] = useState(0);
   const fallbackTimerRef = useRef<number | null>(null);
   const loadedVideoIdsRef = useRef<Set<string>>(new Set());
-  const initializedRef = useRef(false);
 
-  // Initialize with fallback video and any initial videos
+  // Handle prop changes after mount (e.g., navigation between lessons)
   useEffect(() => {
-    const baseVideos = [...initialVideos];
-    
-    if (fallbackUrl && !initializedRef.current) {
-      const id = extractVideoId(fallbackUrl);
-      if (id) {
-        const mainVideo: Video = {
-          id,
-          title: fallbackTitle || "Video",
-          isMain: true,
-        };
-        
-        setVideos((prev) => {
-          // Merge initialVideos, existing videos, and main video
-          const combined = [mainVideo, ...baseVideos, ...prev];
-          const unique = Array.from(new Map(combined.map(v => [v.id, v])).values());
-          return unique;
-        });
-        
-        setActiveVideoId(id);
-        initializedRef.current = true;
-      } else {
-        // No valid fallback URL, just set initial videos
-        setVideos(prev => {
-          const combined = [...baseVideos, ...prev];
-          const unique = Array.from(new Map(combined.map(v => [v.id, v])).values());
-          return unique;
-        });
-      }
-    } else if (initialVideos.length > 0) {
-      setVideos(prev => {
-        const combined = [...baseVideos, ...prev];
-        const unique = Array.from(new Map(combined.map(v => [v.id, v])).values());
-        return unique;
+    const newVideos = computeInitialVideos(fallbackUrl, fallbackTitle, initialVideos);
+    if (newVideos.length > 0) {
+      setVideos((prev) => {
+        // Merge new videos with any dynamically added ones
+        const combined = [...newVideos, ...prev.filter((p) => !newVideos.some((n) => n.id === p.id))];
+        return combined;
+      });
+      // Set active video to main if current is not in new list
+      setActiveVideoId((current) => {
+        if (!current || !newVideos.some((v) => v.id === current)) {
+          return newVideos[0]?.id || null;
+        }
+        return current;
       });
     }
   }, [fallbackUrl, fallbackTitle, initialVideos]);
-
-  // Set first video as active if none selected
-  useEffect(() => {
-    if (!activeVideoId && videos.length > 0) {
-      setActiveVideoId(videos[0].id);
-    }
-  }, [videos, activeVideoId]);
 
   // Context callback for VideoSwitcher to add videos
   const addVideos = useCallback((newVideos: Video[]) => {
@@ -444,22 +478,4 @@ function VideoCard({
       </div>
     </button>
   );
-}
-
-function extractVideoId(url: string): string | null {
-  if (!url) return null;
-
-  const embedMatch = url.match(/embed\/([^?]+)/);
-  if (embedMatch) return embedMatch[1];
-
-  const watchMatch = url.match(/watch\?v=([^&]+)/);
-  if (watchMatch) return watchMatch[1];
-
-  const shortMatch = url.match(/youtu\.be\/([^?]+)/);
-  if (shortMatch) return shortMatch[1];
-
-  // Last resort: if it looks like a YouTube ID
-  if (/^[a-zA-Z0-9_-]{10,12}$/.test(url)) return url;
-
-  return null;
 }

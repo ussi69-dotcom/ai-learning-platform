@@ -6,11 +6,17 @@
 ⏳ **Reading Time:** 40 min | 🧪 **[4] Labs Included**
 </Callout>
 
+<Callout type="warning">
+**Availability checklist:** Some features are tenant/licensing dependent (Copilot Memory, Prompt Gallery, Copilot Pages, Excel Labs/Agent Mode, `=COPILOT()`). If you don’t see a menu item, check your admin’s rollout settings or the Microsoft 365 release notes.
+</Callout>
+
 <VideoSwitcher alternatives={[
   {"id":"JbOJliF-Cn4","title":"Microsoft 365 Copilot Tutorial – Beginner’s Guide (2025)"},
+  {"id":"X-d0vRoHVGE","title":"How to Use the NEW Microsoft Copilot Chat – Tips & Tricks"},
   {"id":"RY1NRd-aoyI","title":"Copilot in Outlook & Teams: Communication Boost"},
   {"id":"4UkKFnuAHSY","title":"Microsoft 365 Copilot Ultimate Guide (2025)"},
   {"id":"9sFA-dWNUlc","title":"Copilot Master Tips (Microsoft Engineer)"},
+  {"id":"0T39n8uAqOk","title":"My Favorite Copilot Tips for Outlook, Excel & Copilot Chat"},
   {"id":"bAAsmyG1ZL0","title":"Copilot Across Excel, Word, and Outlook"}
 ]} />
 
@@ -48,6 +54,8 @@ Think of Custom Instructions as the **system prompt for your entire work life**.
 4. Write your instructions in two sections:
    - **What would you like Copilot to know about you?** (Your role, company, preferences)
    - **How would you like Copilot to respond?** (Tone, format, constraints)
+
+<MDXImage src="images/custom-instructions-menu.jpg" alt="Copilot personalization menu showing Custom Instructions and Copilot Memory" caption="Settings → Personalization. If you see a disabled panel, your admin may have turned personalization off." />
 
 **Example Custom Instructions:**
 
@@ -96,11 +104,15 @@ This is the game-changer. **Copilot Memory** is a persistent knowledge base that
 2. Copilot stores this fact in your memory bank.
 3. Next week, you ask: **"What's the status of our upcoming launches?"**—Copilot recalls Phoenix automatically.
 
+<MDXImage src="images/copilot-memory-add.jpg" alt="Copilot chat showing a memory updated confirmation" caption="When you say “Remember…”, Copilot confirms with a Memory updated tag." />
+
 **Viewing & Managing Memory:**
 
 - Go to **Settings** → **Personalization** → **Copilot Memory**
 - See a list of all stored facts
 - Delete outdated ones (e.g., when a project ends)
+
+<MDXImage src="images/copilot-memory-settings.jpg" alt="Copilot Memory settings panel in Microsoft 365 Copilot" caption="Copilot Memory settings showing saved memories and the personalization toggle." />
 
 <Callout type="tip">
 
@@ -230,6 +242,8 @@ Microsoft's answer: **"Stop reinventing prompts. Use the ones that already work.
 
 </Steps>
 
+<MDXImage src="images/prompt-gallery.jpg" alt="Microsoft 365 Copilot Prompt Gallery page" caption="The Prompt Gallery shows task-based prompts you can reuse across Microsoft 365 apps." />
+
 **Real Examples from Copilot Lab:**
 
 | Use Case | Prompt Template |
@@ -277,6 +291,8 @@ Think of Pages as a shared, living document created directly from a Copilot resp
 1. Ask Copilot a question in M365 Copilot Chat
 2. Click **Create page** (or **Add to page**)
 3. Copilot generates a structured page you can edit, share, and keep updated
+
+<MDXImage src="images/copilot-pages-workspace.jpg" alt="Copilot Pages side-by-side with Copilot Chat" caption="Copilot Pages opens beside chat so you can refine living docs in real time." />
 
 <Diagram type="copilot-pages-flow" />
 
@@ -329,8 +345,14 @@ Normal Copilot in Excel is reactive—you ask, it responds with text. **Agent Mo
 5. Open the Excel Labs pane (appears on the right side)
 6. Enable **"Copilot Agent Mode"** toggle
 
+<MDXImage src="images/excel-copilot-tutorial.jpg" alt="Copilot in Excel showing insights and a chat panel" caption="Copilot inside Excel turns natural language into tables, charts, and insights." />
+
 <Callout type="warning">
 **Availability:** Excel Labs and Agent Mode are experimental and may be tenant/region dependent. If you don't see them, use Copilot in Excel Chat (right sidebar) for similar analysis workflows.
+</Callout>
+
+<Callout type="info">
+**Fallback if `=COPILOT()` is missing:** Use the Copilot chat pane to label sentiment, then paste results into column C. The lab still works—you just apply the results manually.
 </Callout>
 
 **Example Mission:**
@@ -537,6 +559,8 @@ This is like Custom Instructions, but **only for email drafting**.
 1. Outlook **Settings** → **Copilot** → **Draft Instructions**
 2. Define your email writing style:
 
+<MDXImage src="images/outlook-draft-instructions-settings.png" alt="Outlook settings showing Copilot Draft Instructions" caption="In new Outlook: Settings → Copilot → Draft Instructions." />
+
 ```text
 TONE:
 - Professional but conversational
@@ -559,6 +583,8 @@ NEVER:
 ```
 
 3. Save Draft Instructions
+
+<MDXImage src="images/outlook-draft-copilot.jpg" alt="Draft with Copilot prompt panel in Outlook" caption="Outlook’s Copilot panel offers suggested prompts and quick draft options." />
 
 **Usage:**
 
@@ -715,6 +741,8 @@ You're in a Teams chat with 4 people. Someone asks a complex question about last
 3. Copilot searches the Teams file history, finds Sarah's report, analyzes it, and replies *in the chat thread* where everyone can see
 
 **Everyone in the chat can now interact with the same Copilot thread.** It's no longer "your AI"—it's **the team's AI**.
+
+<MDXImage src="images/teams-copilot-pane.jpg" alt="Copilot pane in Microsoft Teams chat" caption="Copilot in Teams can summarize chats and surface action items inside the thread." />
 
 ### M365 Copilot Chat (The Command Center)
 

@@ -5,13 +5,13 @@
 ⏳ **Reading Time:** 25 min | 🧪 **[4] Labs Included**
 </Callout>
 
-<VideoSwitcher alternatives={[{"id":"eJEvFDuU6bo","title":"The Dark Side: Deepfakes"},{"id":"QGLGq8WIMzM","title":"AI Companions (ColdFusion)"}]} />
+<VideoSwitcher alternatives={[{"id":"QGLGq8WIMzM","title":"The Rise of A.I. Companions (ColdFusion)"},{"id":"eXdVDhOGqoE","title":"AI Is Dangerous (TED)"},{"id":"gV0_raKR2UQ","title":"Algorithmic Bias (CrashCourse)"}]} />
 
 ## ⚡ The Confident Liar
 
-**In May 2023, a New York lawyer submitted a brief citing 6 court cases. ChatGPT had invented all of them.**
+**In *Mata v. Avianca* (2023), a New York lawyer faced a nightmare: he submitted a brief citing six court cases that didn't exist.**
 
-The lawyer trusted AI. The judge didn't find it funny. The fake cases had fake citations, fake judges, and fake rulings—all delivered with absolute confidence.
+ChatGPT had invented all of them—judges, docket numbers, and even internal quotes. The result? A public humiliation and a **$5,000 sanction** by Judge P. Kevin Castel. The AI didn't just lie; it lied with such confidence that a legal professional was fooled.
 
 This isn't a bug. It's a feature of how LLMs work. They don't "know" anything—they **predict** what sounds right. And sometimes, fiction sounds more plausible than truth.
 
@@ -24,7 +24,7 @@ Welcome to the Dark Side.
 Before we blame the droid for lying, we must understand its nature.
 An LLM (Large Language Model) does not "know" facts. It does not have a database of truth like Wikipedia.
 
-It is a **Probabilistic Engine**. Researchers call this a **"Stochastic Parrot"**.
+It is a **Probabilistic Engine**. Researchers call this a **"Stochastic Parrot"** (Bender et al., 2021).
 
 ![The Stochastic Parrot: AI predicting the next token](images/stochastic-parrot.png)
 
@@ -227,13 +227,13 @@ Training a Large Language Model takes months and costs millions. Once trained, i
 
 | Model | Knowledge Cutoff (Approx) | Can it answer "Who won the game yesterday?" |
 | :--- | :--- | :--- |
-| **GPT-4o** | Oct 2024 | ❌ No (unless connected to web) |
-| **GPT-5.1** | Sep 2025 | ❌ No (unless connected to web) |
+| **GPT-5** | Sep 2024 | ❌ No (unless connected to web) |
+| **o3** | Jun 2024 | ❌ No (unless connected to web) |
 | **Humans** | Now | ✅ Yes |
 
 <Callout type="info">
 **The Solution: RAG (Retrieval Augmented Generation)**
-Modern tools (like Perplexity, Bing, or Gemini) fix this by searching the web *first*, reading the results, and *then* summarizing them for you.
+Modern tools (like Perplexity, Bing, or Gemini) mitigate this by searching the web *first*, reading the results, and *then* summarizing them for you. This technique (Lewis et al., 2020) is now standard—but remember: **RAG doesn't guarantee truth**. Retrieved sources can be wrong or outdated, so always verify citations.
 </Callout>
 
 ---

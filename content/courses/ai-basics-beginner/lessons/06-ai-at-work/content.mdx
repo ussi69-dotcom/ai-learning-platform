@@ -5,27 +5,34 @@
 ⏳ **Reading Time:** 25 min | 🧪 **[3] Labs Included**
 </Callout>
 
-<VideoSwitcher alternatives={[{"id":"q0vityx5I7g","title":"AI in Excel (Jeff Su)"},{"id":"bS9R6aCVEzw","title":"n8n Will Change Your Life"}]} />
+<VideoSwitcher alternatives={[{"id":"KXqR6VuPBlk","title":"Copilot in Excel (Excel’s Biggest Upgrade Ever)","author":"Kevin Stratvert","lang":"en"},{"id":"lipUo_6WuNM","title":"Copilot in Teams: Meeting Recap","author":"Chris Menard","lang":"en"},{"id":"bS9R6aCVEzw","title":"n8n Will Change Your Life","author":"Cole Medin","lang":"en"},{"id":"zhQ5z1XTVr8","title":"UŽ ŽÁDNÉ VZORCE! Copilot v Excelu","author":"SuperAjťák by XEVOS","lang":"cs"}]} />
 
 ## ⚡ The 2-Hour Gift
 
-**What if you could get 2 hours back every day?**
+**What if you could stop the digital deluge?**
 
-The average knowledge worker spends 28% of their time on email, 31% in meetings, and 19% searching for information. That's **78% of your day** on activities AI can now assist with.
+The **Microsoft Work Trend Index Special Report (2025)** found that the average employee faces **117 emails and 153 Teams messages every day**.
+The pressure is so high that **40% check email before 6:00 AM**, and **after‑hours meetings are up 16%** year‑over‑year.
 
-The people who adapt will work 6-hour days with better results. The people who don't will wonder why they're always behind.
+The people who adapt will reclaim their time. The people who don't will burn out.
 
 This lesson gives you the playbook.
+
+<Callout type="secondary">
+**Source:** Microsoft Work Trend Index Special Report (2025-06-17).
+</Callout>
 
 ---
 
 ## 🏭 1. The Productivity Gap
 
-We are drowning in data.
-*   **28%** of work time is spent on email.
-*   **31%** is spent in meetings.
-*   **19%** is searching for information.
-That leaves only **22%** for actual creative work.
+We are spending our best hours on the wrong tasks:
+
+- **117 emails + 153 Teams messages** per day (constant context switching).
+- **Interruptions every ~2 minutes** (275+ per day) break focus cycles.
+- **After‑hours meetings up 16%** = workday creep.
+
+<MDXImage src="images/dashboard.png" alt="Workday dashboard showing communication overload" />
 
 <Diagram type="dashboard-ui" />
 
@@ -44,9 +51,11 @@ Modern tools like **Microsoft Copilot**, **Zoom AI Companion**, or **Otter.ai** 
 ### What they do:
 1.  **Real-time Transcription:** Every word is recorded.
 2.  **Speaker Recognition:** It knows *who* said *what*.
-3.  **Action Item Extraction:** It listens for "I will send that report" and adds it to your to-do list.
+3.  **Action Item Extraction:** It listens for commitments like "I will send that report" and logs them.
 
 <Diagram type="meeting-timeline" />
+
+<MDXImage src="images/meeting-viz.png" alt="AI meeting recap with action items" />
 
 <Callout type="info">
 **As seen in the video:** Copilot isn't just for live meetings. You can use it to **"Catch Up"** on a meeting you missed by asking: *"Summarize what I missed in the last 15 minutes."*
@@ -56,10 +65,10 @@ Modern tools like **Microsoft Copilot**, **Zoom AI Companion**, or **Otter.ai** 
 
 ## 🔬 Lab 1: The Meeting Minute Master
 
-**Objective:** Turn a messy transcript into clean minutes.
+**Mission Objective:** Turn a chaotic transcript into structured, actionable minutes.
 
 **The Prompt:**
-Copy this prompt. We will simulate a chaotic meeting transcript.
+Copy this prompt. We will simulate a messy meeting transcript.
 
 ```text
 Act as a professional secretary. Summarize this transcript into:
@@ -73,8 +82,8 @@ John: "Fine, Monday. But Mike needs to update the graphics."
 Mike: "I'll do it tonight."
 ```
 
-**Analysis:**
-Did it correctly identify the new deadline (Monday) and Mike's task?
+**Success Criteria:**
+Did the AI correctly identify the **new deadline (Monday)** and assign the **graphics task to Mike**?
 
 <LabComplete labId="lab-meeting-minute-master" />
 
@@ -91,13 +100,13 @@ Don't ask AI to "write an email". Be specific.
 *   **Tone Shift:** "Rewrite this angry email to be professional and diplomatic."
 *   **Summarizing:** "Summarize this 50-page PDF into 3 bullet points."
 
-![Office Copilot Robot](images/copilot-robot.png)
+<MDXImage src="images/copilot-robot.png" alt="Office Copilot Robot" />
 
 ---
 
 ## 🔬 Lab 2: Email Polish
 
-**Objective:** Turn a rude email into a professional one.
+**Mission Objective:** De-escalate a conflict by rewriting a toxic email.
 
 **The Prompt:**
 ```text
@@ -106,8 +115,8 @@ Rewrite this email to be professional, diplomatic, but firm.
 "Hey, your report is garbage. It's late and full of errors. Fix it now or you're fired."
 ```
 
-**Analysis:**
-See how the AI keeps the message ("fix it") but removes the toxicity. This saves relationships.
+**Success Criteria:**
+The output must be polite (no insults like "garbage") but maintain the core message: the report needs immediate correction.
 
 <LabComplete labId="lab-email-polish" />
 
@@ -115,7 +124,7 @@ See how the AI keeps the message ("fix it") but removes the toxicity. This saves
 
 ## 🔄 4. The Human-in-the-Loop Workflow
 
-The biggest mistake people make is trusting the AI's first draft.
+The biggest mistake people make is trusting the AI's first draft blindly.
 AI is not a replacement; it is an **accelerator**.
 
 <Diagram type="human-in-the-loop" />
@@ -131,13 +140,15 @@ AI is not a replacement; it is an **accelerator**.
 ## 📊 5. Tool 3: The Data Analyst
 
 Excel is powerful, but formulas are scary.
-AI tools (like **Copilot for Excel** or **ChatGPT Data Analyst**) allow you to talk to your data.
+AI tools (like **Copilot for Excel** or **ChatGPT Data Analyst**) allow you to talk to your data in plain English.
 
 ### No More Formulas
 Instead of writing `=VLOOKUP(...)`, you can type:
 > *"Show me the sales trend for Q3 compared to Q4."*
 
 <Diagram type="data-analysis-chart" />
+
+<MDXImage src="images/data-analyst.png" alt="AI analyzing spreadsheet data" />
 
 ### Finding the Invisible
 AI can scan thousands of rows to find:
@@ -149,7 +160,7 @@ AI can scan thousands of rows to find:
 
 ## 🔬 Lab 3: Data Interrogation
 
-**Objective:** Simulate analyzing a dataset.
+**Mission Objective:** Generate a complex Excel formula using natural language.
 
 **The Prompt:**
 ```text
@@ -161,8 +172,8 @@ Column C: Amount
 Write an Excel formula to sum the total Amount for "Widgets" sold in "January".
 ```
 
-**Analysis:**
-It should generate a `SUMIFS` formula for you. You didn't need to memorize the syntax.
+**Success Criteria:**
+The AI should generate a `SUMIFS` formula. You should not see any manual math—just the correct syntax ready to copy-paste.
 
 <LabComplete labId="lab-data-interrogation" />
 
@@ -200,16 +211,16 @@ Follow this workflow before pasting any company data into an AI tool.
 <Steps>
 ### 1. Check the Tool Type 🔍
 Is it **Public** (ChatGPT Free, Personal Account) or **Enterprise** (Copilot, ChatGPT Enterprise)?
-*   **Public:** Training data is collected. Unsafe for secrets.
-*   **Enterprise:** Data stays in your tenant. Safe for work.
+*   **Public:** Training data is collected. **Unsafe** for secrets.
+*   **Enterprise:** Data stays in your tenant. Generally safe for work.
 
-### 2. Assess Data Sensitivity 🔐
-Are you working with public info (marketing copy) or secret info (roadmap, passwords, PII)?
-*   **Never** paste passwords or PII (Personally Identifiable Information) into ANY AI.
+### 2. Check Your Policy 📜
+Even with Enterprise tools, consumer versions often use data for training.
+*   **Always check your specific tenant policy.** Some companies opt-out of training even on public tools, while others restrict enterprise tools.
 
 ### 3. The Samsung Test 📱
 Ask yourself: *"If this conversation leaked to a competitor tomorrow, would I be fired?"*
-If yes, do not type it.
+If the answer is "Yes," do not type it.
 </Steps>
 
 <Callout type="warning">
@@ -245,7 +256,7 @@ It's not just about text. AI is transforming every department.
 *   **Canva Magic Studio:** "Make this presentation look professional" with one click.
 
 ### 💻 IT & Development
-*   **GitHub Copilot:** Writes ~46% of new code for developers. It's like having a senior engineer pair-programming with you.
+*   **GitHub Copilot:** GitHub research found developers finished tasks **55% faster** with Copilot.
 *   **Text-to-SQL:** Analysts can write "Show me active users" and get the SQL query automatically.
 
 ### 👥 Human Resources
@@ -273,7 +284,9 @@ To get professional results, use a professional structure. A vague prompt gets a
 | **R** | **Response** | "Format as a table with columns for Risk and Mitigation." |
 
 <Callout type="tip">
-**Try it:** Next time you need an email, don't just say "Write an email". Say: *"I am a [Context], write a [Objective] for [Audience] in a [Style] style."*
+**Concrete Example:**
+Instead of *"Write an email about the delay,"* try:
+*"I am a **Project Manager** (Context). Write a **status update** (Objective) for the **Client** (Audience) explaining the server crash. Keep it **apologetic but solution-oriented** (Tone) and use **bullet points** (Style)."*
 </Callout>
 
 ---

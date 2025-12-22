@@ -6,15 +6,15 @@
 ⏳ **Reading Time:** 35 min | 🧪 **[2] Labs Included**
 </Callout>
 
-<VideoSwitcher alternatives={[{"id":"kQmXtrmQ5Zg","title":"MCP Full Workshop - Anthropic (1h44m)"},{"id":"GuTcle5edjk","title":"You NEED to Learn MCP NOW! (NetworkChuck)"},{"id":"MsQACpcuTkU","title":"AI in Terminal - The Right Way (NetworkChuck)"},{"id":"HIp8sFB2GGw","title":"Cursor 2.0 - 5 Things You Didn't Know (Fireship)"}]} />
+<VideoSwitcher alternatives={[{"id":"kQmXtrmQ5Zg","title":"MCP Full Workshop","author":"Anthropic","lang":"en"},{"id":"GuTcle5edjk","title":"You NEED to Learn MCP NOW!","author":"NetworkChuck","lang":"en"},{"id":"MsQACpcuTkU","title":"AI in Terminal - The Right Way","author":"NetworkChuck","lang":"en"},{"id":"HIp8sFB2GGw","title":"Cursor 2.0 - 5 Things You Didn't Know","author":"Fireship","lang":"en"}]} />
 
-## ⚡ 90% of AI Initiatives Fail. Here's Why.
+## ⚡ Why AI Projects Stall
 
-**"AI swallowed the internet, and now we're trying to jam AI into the existing enterprise. The problem? We're seeing 90%+ failure of AI initiatives happening in this style."** — IBM Technology
+**"AI swallowed the internet, and now we're trying to jam AI into the existing enterprise."** — IBM Technology
 
-The companies failing aren't using bad AI models. They're using AI the *wrong way*.
+The teams that struggle aren’t using “bad” models. They’re using AI the *wrong way*.
 
-In 2025, the shift from "AI-assisted" to "AI-native" development is complete. GitHub Copilot writes 46% of new code at companies that use it. MCP has grown to **1,100+ community-built servers** in just months. Anthropic calls it "the foundational protocol for agents broadly."
+In 2025, the shift from **AI‑assisted** to **AI‑native** development is accelerating. GitHub research found developers completed tasks **55% faster** with Copilot. Anthropic introduced **MCP** as an open standard that connects models to tools and data — and the ecosystem is growing quickly.
 
 This isn't about learning another tool. It's about understanding the **universal principles** that make AI development work — principles that apply whether you use Cursor, Claude Code, Windsurf, or any tool that comes next.
 
@@ -66,6 +66,10 @@ Before accepting ANY AI-generated code, run these three tests:
 
 **Model Context Protocol (MCP)** is to AI what USB-C is to devices — a universal standard that connects any AI client to any capability.
 
+<Callout type="info">
+**Source:** Anthropic introduced MCP as an open standard for connecting models to tools and data (Nov 2024).
+</Callout>
+
 <Diagram type="mcp-architecture" />
 
 ### Why MCP Changed Everything
@@ -104,11 +108,11 @@ MCP provides **one protocol** that works everywhere:
 | **Cloud** | Cloudflare, Stripe | API integrations |
 | **Security** | Kali Linux (Docker) | Pen testing tools |
 
-**The numbers tell the story:**
-- 1,100+ community-built servers (and growing)
+**The ecosystem is growing fast:**
+- Community servers across code, data, and web
 - Official integrations from Cloudflare, Stripe, and more
-- LangGraph adapters for agent frameworks
-- Official registry coming soon
+- Agent‑framework adapters (e.g., LangGraph)
+- Registry and discovery tooling maturing
 
 ### Production-Ready MCP
 
@@ -166,8 +170,8 @@ Every AI IDE supports some form of project context file:
 | Claude Code | `CLAUDE.md` | Repo root |
 | Cursor | `.cursorrules` | Repo root |
 | Windsurf | `.windsurfrules` | Repo root |
-| Codex | `agents.md` | Repo root |
-| Gemini CLI | `gemini.md` | Repo root |
+| Codex | `CODEX.md` (plus `AGENTS.md` for repo rules) | Repo root |
+| Gemini CLI | `GEMINI.md` | Repo root |
 
 **The content structure is universal:**
 
@@ -194,17 +198,18 @@ Every AI IDE supports some form of project context file:
 ```
 
 <Callout type="tip">
-**Pro tip from NetworkChuck:** Keep your context files synced across tools. A "session closer" agent can update all context files (claude.md, gemini.md, agents.md) at the end of each work session, ensuring all tools share the same project state.
+**Pro tip from NetworkChuck:** Keep your context files synced across tools. A "session closer" agent can update all context files (`CLAUDE.md`, `GEMINI.md`, `CODEX.md`, `AGENTS.md`) at the end of each work session, ensuring all tools share the same project state.
 </Callout>
 
 ### Token Budget Reality
 
 Context isn't free. Every token you feed the LLM costs money and reduces the space available for reasoning.
 
-| Model | Context Window | Typical Cost |
-|-------|---------------|--------------|
-| Claude 3.5 Sonnet | 200k tokens | ~$3/M input |
-| GPT-4o | 128k tokens | ~$2.50/M input |
+| Model | Context Window | Cost Notes |
+|-------|---------------|-----------|
+| Claude Opus 4.5 / Sonnet 4 | 200k+ | Pricing changes often |
+| GPT‑5 family | 128k+ | Pricing changes often |
+| Gemini 3 Pro | 1M+ | Pricing changes often |
 | Claude Code | 200k + summary | Session-based |
 
 **Practical implications:**
@@ -528,14 +533,14 @@ If using multiple tools, copy the core content to all context files. Add a comme
 ### 🔑 Key Takeaways
 
 1. 🎬 **You're now a Director.** Stop writing code; start directing AI to write code correctly.
-2. 🔌 **MCP is the universal standard.** 1,100+ servers, production-ready, no vendor lock-in.
+2. 🔌 **MCP is the universal standard.** Open, production‑ready, and growing fast.
 3. 🧠 **Context is everything.** Project constitution + memory files = intelligent AI.
 4. 🔒 **Security first.** Least privilege, sandboxing, audit logs, human-in-the-loop.
 
 ### 🛠️ Your Foundation Stack
 
 ```text
-Protocol:   MCP (universal, 1100+ servers)
+Protocol:   MCP (open standard, growing ecosystem)
 Context:    Project Constitution + Memory Files
 Security:   Docker sandbox + OAuth + Audit
 Tools:      Pick per task (Cursor daily, Claude Code for depth)

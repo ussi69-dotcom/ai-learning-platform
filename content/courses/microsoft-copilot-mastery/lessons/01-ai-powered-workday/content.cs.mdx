@@ -6,6 +6,10 @@
 ⏳ **Čas čtení:** 40 min | 🧪 **[4] Laby součástí**
 </Callout>
 
+<Callout type="warning">
+**Checklist dostupnosti:** Některé funkce jsou závislé na tenant/licenci (Copilot Memory, Prompt Gallery, Copilot Pages, Excel Labs/Agent Mode, `=COPILOT()`). Pokud položku nevidíte, ověřte rollout u admina nebo v M365 release notes.
+</Callout>
+
 <VideoSwitcher alternatives={[
   {"id":"JbOJliF-Cn4","title":"Microsoft 365 Copilot Tutorial – Beginner’s Guide (2025)"},
   {"id":"RY1NRd-aoyI","title":"Copilot in Outlook & Teams: Communication Boost"},
@@ -48,6 +52,8 @@ Custom Instructions si představte jako **systémový prompt pro celý váš pra
 4. Napište své instrukce ve dvou sekcích:
    - **What would you like Copilot to know about you?** (Vaše role, firma, preference)
    - **How would you like Copilot to respond?** (Tón, formát, omezení)
+
+<MDXImage src="images/custom-instructions-menu.jpg" alt="Menu Personalization s Custom Instructions a Copilot Memory" caption="Settings → Personalization. Pokud je panel šedý, personalization může být vypnutá adminem." />
 
 **Příklad Custom Instructions:**
 
@@ -96,11 +102,15 @@ Tohle mění hru. **Copilot Memory** je perzistentní databáze znalostí, ktero
 2. Copilot uloží tento fakt do vaší paměťové banky.
 3. Příští týden se zeptáte: **"What's the status of our upcoming launches?"**—Copilot si Phoenix automaticky vybaví.
 
+<MDXImage src="images/copilot-memory-add.jpg" alt="Copilot chat s potvrzením Memory updated" caption="Když řeknete „Remember…“, Copilot potvrdí přidání štítkem Memory updated." />
+
 **Prohlížení a správa paměti:**
 
 - Jděte do **Settings** → **Personalization** → **Copilot Memory**
 - Uvidíte seznam všech uložených faktů
 - Smažte zastaralé (např. když projekt skončí)
+
+<MDXImage src="images/copilot-memory-settings.jpg" alt="Panel nastavení Copilot Memory v Microsoft 365 Copilot" caption="Nastavení Copilot Memory se seznamem uložených faktů a přepínačem personalizace." />
 
 <Callout type="tip">
 
@@ -188,7 +198,7 @@ Příklad odpovědi:
 
 **💡 Aha Moment:**
 
-"Do prdele—nemusel jsem vysvětlovat, kdo jsem nebo na čem pracuji. Copilot to prostě... *věděl*. Takhle vypadá opravdový AI asistent."
+"Sakra—nemusel jsem vysvětlovat, kdo jsem nebo na čem pracuji. Copilot to prostě... *věděl*. Takhle vypadá opravdový AI asistent."
 
 <LabComplete labId="lab-memory-implant" />
 
@@ -229,6 +239,8 @@ Microsoftí odpověď: **"Přestaňte vymýšlet prompty. Používejte ty, co u�
    - Přizpůsobte s vašimi specifickými daty
 
 </Steps>
+
+<MDXImage src="images/prompt-gallery.jpg" alt="Stránka Microsoft 365 Copilot Prompt Gallery" caption="Prompt Gallery nabízí task‑based prompty použitelné napříč aplikacemi Microsoft 365." />
 
 **Reálné příklady z Copilot Lab:**
 
@@ -277,6 +289,8 @@ Pages jsou sdílené, živé dokumenty vytvořené přímo z odpovědi Copilota.
 1. Položte otázku v M365 Copilot Chatu
 2. Klikněte na **Create page** (nebo **Add to page**)
 3. Copilot vytvoří strukturovanou stránku, kterou můžete upravovat a sdílet
+
+<MDXImage src="images/copilot-pages-workspace.jpg" alt="Copilot Pages vedle Copilot chatu" caption="Copilot Pages se otevře vedle chatu, abyste mohli živý dokument upravovat v reálném čase." />
 
 <Diagram type="copilot-pages-flow" />
 
@@ -329,8 +343,14 @@ Normální Copilot v Excelu je reaktivní—ptáte se, odpovídá textem. **Agen
 5. Otevřete Excel Labs panel (objeví se na pravé straně)
 6. Zapněte přepínač **"Copilot Agent Mode"**
 
+<MDXImage src="images/excel-copilot-tutorial.jpg" alt="Copilot v Excelu s panelem chatu a insighty" caption="Copilot v Excelu převádí přirozený jazyk na tabulky, grafy a insighty." />
+
 <Callout type="warning">
 **Dostupnost:** Excel Labs a Agent Mode jsou experimentální a závisí na tenantu/regionu. Pokud je nevidíte, použijte Copilot v Excel Chat (pravý panel) pro podobné analýzy.
+</Callout>
+
+<Callout type="info">
+**Fallback, když chybí `=COPILOT()`:** Použijte Copilot chat k označení sentimentu a výsledky pak vložte do sloupce C ručně. Lab pořád funguje.
 </Callout>
 
 **Příklad mise:**
@@ -537,6 +557,8 @@ Tohle je jako Custom Instructions, ale **jen pro psaní emailů**.
 1. Outlook **Settings** → **Copilot** → **Draft Instructions**
 2. Definujte svůj styl psaní emailů:
 
+<MDXImage src="images/outlook-draft-instructions-settings.png" alt="Outlook nastavení s Copilot Draft Instructions" caption="V novém Outlooku: Settings → Copilot → Draft Instructions." />
+
 ```text
 TONE:
 - Professional but conversational
@@ -559,6 +581,8 @@ NEVER:
 ```
 
 3. Uložte Draft Instructions
+
+<MDXImage src="images/outlook-draft-copilot.jpg" alt="Panel Draft with Copilot v Outlooku" caption="Copilot v Outlooku nabízí doporučené prompty a rychlé drafty." />
 
 **Použití:**
 
@@ -715,6 +739,8 @@ Jste v Teams chatu se 4 lidmi. Někdo se zeptá na složitou otázku ohledně pr
 3. Copilot prohledá historii souborů v Teams, najde report od Sarah, analyzuje ho a odpoví *ve vláknu chatu*, kde to všichni vidí
 
 **Všichni v chatu mohou nyní interagovat se stejným Copilot vláknem.** Už to není "vaše AI"—je to **týmová AI**.
+
+<MDXImage src="images/teams-copilot-pane.jpg" alt="Copilot panel v Microsoft Teams chatu" caption="Copilot v Teams umí shrnout chat a vytáhnout akční kroky přímo ve vláknu." />
 
 ### M365 Copilot Chat (Velitelské centrum)
 

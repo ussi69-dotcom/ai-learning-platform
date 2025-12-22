@@ -1,23 +1,23 @@
 # Pokročilé reasoning techniky a Red Teaming
 
 <Callout type="info">
-**Cíl mise:** Naučíš se **donutit AI myslet krok za krokem** a pak její myšlení **prolomit dříve, než to udělá někdo jiný**.
+**Cíl mise:** Naučíš se **strukturovat AI uvažování** a pak **prolomit nebezpečné prompty dříve, než to udělá někdo jiný**.
 
 ⏳ **Čas čtení:** 35 min | 🧪 **[4] Laby součástí**
 </Callout>
 
-<VideoSwitcher alternatives={[{"id":"2OPVViV-GQk","title":"SQL Injections are scary!! (NetworkChuck)"},{"id":"M75Jz2r7GJA","title":"Prompt Injection Explained (Simon Willison)"}]} />
+<VideoSwitcher alternatives={[{"id":"2OPVViV-GQk","title":"SQL Injections are scary!!","author":"NetworkChuck","lang":"en"},{"id":"M75Jz2r7GJA","title":"Prompt Injection Explained","author":"Simon Willison","lang":"en"},{"id":"jrHRe9lSqqA","title":"What Is a Prompt Injection Attack?","author":"IBM Technology","lang":"en"}]} />
 
 ## ⚡ Otázka za 10 000 dolarů
 
-**Co kdybych ti řekl, že každý AI chatbot, který jsi kdy použil, může být manipulován prostou textovou zprávou?**
+**Co kdybych ti řekl, že každý AI chatbot, který jsi kdy použil, lze manipulovat jednou větou?**
 
-Jen v roce 2025 bylo zaznamenáno přes 460 000 prompt injection útoků. Google Gemini byl obejit za 5 minut technikou, kterou by zvládl desetiletý kluk. Microsoft Copilot prozradil firemní tajemství. A někde právě teď vývojář posílá do produkce AI produkt s myšlenkou "můj system prompt mě ochrání."
+OWASP Top 10 pro LLM aplikace (2025) uvádí **Prompt Injection** jako **LLM01** – nejvyšší riziko. DeepMind ve své 2025 studii o ochraně Gemini před **nepřímými prompt injection** ukazuje, že útok může být schovaný v e‑mailu, PDF nebo webové stránce, kterou model čte.
 
-Neochrání.
+Pokud AI čte nedůvěryhodný obsah, už je cílem.
 
 Dnes se naučíš dvě klíčové dovednosti:
-1. **Chain-of-Thought (CoT)** — 🧠 Jak přinutit AI "přemýšlet nahlas"
+1. **Strukturované uvažování** — 🧠 Jak donutit AI ukázat kroky v kontrolovaném formátu
 2. **Red Teaming** — 🛡️ Jak úmyslně prolomit vlastní prompty ještě před produkčním nasazením
 
 ---
@@ -39,7 +39,7 @@ NetworkChuckovo video o SQL Injection je **perfektní analogie** pro pochopení,
 ## 1. Reality Check 2025: Proč na tom záleží 📊
 
 <Callout type="warning">
-**Statistika 2025:** Podle reportu Proofpoint bylo v roce 2025 zaznamenáno **461,640 prompt injection útoků** na firemní LLM. Ani giganti nejsou v bezpečí – Google Gemini byl hacknut za 5 minut pomocí jednoduchého jailbreaku.
+**Reality check:** OWASP Top 10 pro LLM Apps (2025) řadí Prompt Injection jako LLM01. DeepMind (2025) ukazuje nepřímé útoky schované v obsahu, který model čte.
 </Callout>
 
 Většina vývojářů si myslí: *"Můj system prompt to ošetří."*
@@ -121,7 +121,7 @@ Nejjednodušší CoT spouštěč. Přidej na konec promptu:
 Pojďme přemýšlet krok za krokem.
 ```
 
-Tato jednoduchá věta aktivuje reasoning mód v modelech jako GPT-5.1, Claude 4.5 a Gemini 3.
+Tahle věta většině moderních modelů pomáhá strukturovat odpověď. Pokud model nezobrazuje celý chain‑of‑thought, vyžádej si **stručný outline** nebo checklist.
 
 ---
 
@@ -559,7 +559,7 @@ Pro české firmy: NÚKIB v roce 2025 doporučuje pravidelný red teaming LLM ap
 
 ### 🔑 Key Takeaways
 
-1. 🧠 **Thinking takes time:** CoT umožňuje modelu "počítat" před odpovědí. `Pojďme přemýšlet krok za krokem` je magie.
+1. 🧠 **Strukturované uvažování pomáhá:** Vyžádej si stručný outline nebo checklist, aby se snížila chybovost.
 2. 🚫 **Trust no input:** Každý uživatelský vstup je potenciální vektor. Zacházej s ním jako s nedůvěryhodným SQL.
 3. 🛡️ **Layers save lives:** Sandwich + XML + Refusal Examples + Output Filter = robustní systém.
 

@@ -1,24 +1,24 @@
 # Advanced Reasoning & Red Teaming
 
 <Callout type="info">
-**Mission Goal:** Learn to **force AI to think step by step** and then **break that thinking before someone else does**.
+**Mission Goal:** Learn to **structure AI reasoning** and then **break unsafe prompts before someone else does**.
 
 ⏳ **Reading Time:** 35 min | 🧪 **[4] Labs Included**
 </Callout>
 
-<VideoSwitcher alternatives={[{"id":"2OPVViV-GQk","title":"SQL Injections are scary!! (NetworkChuck)"},{"id":"M75Jz2r7GJA","title":"Prompt Injection Explained (Simon Willison)"}]} />
+<VideoSwitcher alternatives={[{"id":"2OPVViV-GQk","title":"SQL Injections are scary!!","author":"NetworkChuck","lang":"en"},{"id":"M75Jz2r7GJA","title":"Prompt Injection Explained","author":"Simon Willison","lang":"en"},{"id":"jrHRe9lSqqA","title":"What Is a Prompt Injection Attack?","author":"IBM Technology","lang":"en"}]} />
 
 ## ⚡ The $10,000 Question
 
-**What if I told you that every AI chatbot you've ever used can be manipulated with a simple text message?**
+**What if I told you that every AI chatbot you've ever used can be manipulated with a single line of text?**
 
-In 2025 alone, over 460,000 prompt injection attacks were recorded. Google Gemini was bypassed in 5 minutes using a technique a 10-year-old could learn. Microsoft Copilot leaked company secrets. And somewhere, right now, a developer is shipping an AI product thinking "my system prompt will protect me."
+OWASP’s Top 10 for LLM Applications (2025) lists **Prompt Injection** as **LLM01** — the #1 risk. DeepMind’s 2025 paper on defending Gemini against **indirect prompt injections** shows how attacks can be hidden inside emails, PDFs, or web pages the model reads.
 
-It won't.
+If your AI can read untrusted content, it is already a target.
 
 Today you'll learn two critical skills:
-1. **Chain-of-Thought (CoT)** — 🧠 How to make AI "think out loud"
-2. **Red Teaming** — 🛡️ How to intentionally break your own prompts before production deployment
+1. **Structured reasoning** — 🧠 How to make AI show its steps in a controlled format
+2. **Red teaming** — 🛡️ How to intentionally break your own prompts before production deployment
 
 ---
 
@@ -39,7 +39,7 @@ NetworkChuck's SQL Injection video is the **perfect analogy** for understanding 
 ## 1. Reality Check 2025: Why It Matters 📊
 
 <Callout type="warning">
-**2025 Stat:** According to Proofpoint, **461,640 prompt injection attacks** were recorded in 2025. Even giants aren't safe – Google Gemini was hacked in 5 minutes using a simple jailbreak.
+**Reality check:** OWASP Top 10 for LLM Apps (2025) lists Prompt Injection as LLM01. DeepMind’s 2025 “Lessons from Defending Gemini Against Indirect Prompt Injections” shows indirect attacks hidden inside the content your model reads.
 </Callout>
 
 Most developers think: *"My system prompt will handle it."*
@@ -121,7 +121,7 @@ The simplest CoT trigger. Add to the end of your prompt:
 Let's think step by step.
 ```
 
-This simple sentence activates reasoning mode in models like GPT-5.1, Claude 4.5 and Gemini 3.
+This simple sentence nudges most modern models to structure their answer. If a model hides chain-of-thought, ask for a **brief reasoning outline** or a checklist instead.
 
 ---
 
@@ -559,7 +559,7 @@ For enterprise: OWASP LLM Top 10 2025 recommends regular red teaming of LLM appl
 
 ### 🔑 Key Takeaways
 
-1. 🧠 **Thinking takes time:** CoT allows the model to "compute" before answering. `Let's think step by step` is magic.
+1. 🧠 **Structured reasoning helps:** Ask for a brief reasoning outline or checklist to reduce mistakes.
 2. 🚫 **Trust no input:** Every user input is a potential vector. Treat it like untrusted SQL data.
 3. 🛡️ **Layers save lives:** Sandwich + XML + Refusal Examples + Output Filter = Robust system.
 

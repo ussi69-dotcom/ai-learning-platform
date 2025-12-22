@@ -1,8 +1,8 @@
 {
   "title": "What is Artificial Intelligence?",
   "title_cs": "Co je umělá inteligence?",
-  "description": "The origin story of AI - from Alan Turing's dream to ChatGPT. A cinematic journey through the pioneers who changed the world.",
-  "description_cs": "Příběh vzniku AI - od snu Alana Turinga po ChatGPT. Filmová cesta příběhy průkopníků, kteří změnili svět.",
+  "description": "The origin story of AI - from Alan Turing's dream to today's language models. A cinematic journey through the pioneers who changed the world.",
+  "description_cs": "Příběh vzniku AI - od snu Alana Turinga po dnešní jazykové modely. Filmová cesta příběhy průkopníků, kteří změnili svět.",
   "video_url": "https://www.youtube.com/embed/IBe2o-cZncU",
   "order": 1
 }
