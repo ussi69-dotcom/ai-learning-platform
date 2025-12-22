@@ -170,6 +170,23 @@ They do NOT report to the user. Orchestrator reviews and reports.
   - Claude strong model for implementation
   - Codex for orchestration + final gate
 
+## 4.2) Claude Prompting (Opus Default)
+
+- Use Opus as the default Claude model (per user preference).
+- Only downgrade for speed if user explicitly asks for it.
+- For complex reasoning: provide explicit constraints and ask for step-by-step analysis.
+- Keep the final output short even when reasoning is deep.
+
+## 4.3) Codex Profiles (When to Go Deep)
+
+- Use `fast` for triage and quick sanity checks.
+- Use `review` before implementation when approach is uncertain.
+- Use `tests` for new endpoints or risky behavior changes.
+- Use `security` for auth/permissions changes.
+- Use `deep` for root-cause analysis after 2 failed attempts.
+- Use `hotfix` for prod incidents and smallest-safe fixes.
+- Use `orchestrator` for multi-component planning and trade-offs.
+
 ## 5) Parallelization Strategy
 
 Run in parallel when possible:
@@ -177,6 +194,39 @@ Run in parallel when possible:
 - Visual QA in parallel with test runs
 
 Orchestrator merges results, resolves conflicts, and issues next tasks.
+
+## 5.1) Scenario Playbooks (Role + Flow)
+
+- Quick bugfix (single file, low risk):
+  - Claude implements directly if single-file and <20 LOC
+  - Codex review if 2+ files touched or behavior is ambiguous
+  - Verify minimal tests
+
+- Complex debugging (stuck or >30 min):
+  - Codex orchestrates root-cause plan
+  - Claude runs experiments/fixes
+  - Codex validates and decides next step
+
+- Content upgrade (MASTERPIECE):
+  - Gemini drafts
+  - Claude QA + integrates
+  - Codex final gate
+  - Visual QA required
+
+- Visual regression:
+  - Claude captures Playwright artifacts
+  - Gemini reviews visuals by file path
+  - Claude fixes, Codex verifies
+
+- Release readiness:
+  - Codex orchestrates checklist + risk review
+  - Claude runs tests/build/visual
+  - MACP if any security/auth/DB changes
+
+- Research spike:
+  - Perplexity fast pass
+  - Gemini Deep Research if needed
+  - Codex distills decisions + action plan
 
 ## 6) Claude Early-Exit Guard
 
