@@ -6,6 +6,9 @@ from pydantic_settings import BaseSettings
 
 logger = logging.getLogger(__name__)
 
+def is_production_env() -> bool:
+    return os.getenv("NODE_ENV") == "production" or os.getenv("ENVIRONMENT") == "production"
+
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     PROJECT_NAME: str = "AI Learning Platform"
@@ -21,7 +24,7 @@ class Settings(BaseSettings):
         Validate SECRET_KEY is not the default in production.
         ⚠️ SECURITY: 'changeme' allows anyone to forge JWT tokens!
         """
-        is_production = os.getenv("NODE_ENV") == "production" or os.getenv("ENVIRONMENT") == "production"
+        is_production = is_production_env()
 
         if v == "changeme":
             if is_production:

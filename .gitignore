@@ -32,6 +32,7 @@ CONTEXT_FOR_ARCHITECT.md
 /frontend/playwright-report/
 /frontend/playwright/.cache/
 /frontend/test-results/
+/frontend/tests/visual/.auth/
 
 # Local Config
 .mcp.json

@@ -28,13 +28,157 @@ interface NewsStats {
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const VISUAL_TEST_ITEMS: NewsItem[] = [
+  {
+    id: 1,
+    external_id: "visual-yt-1",
+    title: "Workflow automation with AI agents",
+    description: "A fast overview of agentic workflows for teams.",
+    source: "youtube",
+    source_url: "https://example.com/visual-video-1",
+    thumbnail_url: "/images/placeholder-video.svg",
+    channel_name: "AI Weekly",
+    published_at: null,
+    video_id: null,
+    duration_seconds: 540,
+    score: null,
+    created_at: "2025-01-01T00:00:00Z",
+  },
+  {
+    id: 2,
+    external_id: "visual-rss-1",
+    title: "Prompting patterns that scale",
+    description: "A practical guide to reliable prompts for ops teams.",
+    source: "rss",
+    source_url: "https://example.com/visual-article-1",
+    thumbnail_url: "/images/placeholder-article.svg",
+    channel_name: "AI Ops Blog",
+    published_at: null,
+    video_id: null,
+    duration_seconds: null,
+    score: null,
+    created_at: "2025-01-01T00:00:00Z",
+  },
+  {
+    id: 3,
+    external_id: "visual-hn-1",
+    title: "Agent toolchains: what works in practice",
+    description: "Community notes on reliable agent toolchains.",
+    source: "hackernews",
+    source_url: "https://example.com/visual-hn-1",
+    thumbnail_url: "/images/placeholder-hackernews.svg",
+    channel_name: "Hacker News",
+    published_at: null,
+    video_id: null,
+    duration_seconds: null,
+    score: 412,
+    created_at: "2025-01-01T00:00:00Z",
+  },
+  {
+    id: 4,
+    external_id: "visual-paper-1",
+    title: "Alignment updates for small models",
+    description: "A lightweight summary of recent alignment results.",
+    source: "papers",
+    source_url: "https://example.com/visual-paper-1",
+    thumbnail_url: "/images/placeholder-paper.svg",
+    channel_name: "arXiv",
+    published_at: null,
+    video_id: null,
+    duration_seconds: null,
+    score: null,
+    created_at: "2025-01-01T00:00:00Z",
+  },
+  {
+    id: 5,
+    external_id: "visual-yt-2",
+    title: "Copilot workflows in 15 minutes",
+    description: "Tight demo of task routing and approvals.",
+    source: "youtube",
+    source_url: "https://example.com/visual-video-2",
+    thumbnail_url: "/images/placeholder-video.svg",
+    channel_name: "Copilot Studio",
+    published_at: null,
+    video_id: null,
+    duration_seconds: 780,
+    score: null,
+    created_at: "2025-01-01T00:00:00Z",
+  },
+  {
+    id: 6,
+    external_id: "visual-rss-2",
+    title: "Shipping safe automation",
+    description: "Guardrails and review loops for AI workflows.",
+    source: "rss",
+    source_url: "https://example.com/visual-article-2",
+    thumbnail_url: "/images/placeholder-article.svg",
+    channel_name: "Safety Notes",
+    published_at: null,
+    video_id: null,
+    duration_seconds: null,
+    score: null,
+    created_at: "2025-01-01T00:00:00Z",
+  },
+  {
+    id: 7,
+    external_id: "visual-hn-2",
+    title: "LLM evals that do not lie",
+    description: "Notes on making evaluation results reliable.",
+    source: "hackernews",
+    source_url: "https://example.com/visual-hn-2",
+    thumbnail_url: "/images/placeholder-hackernews.svg",
+    channel_name: "Hacker News",
+    published_at: null,
+    video_id: null,
+    duration_seconds: null,
+    score: 257,
+    created_at: "2025-01-01T00:00:00Z",
+  },
+  {
+    id: 8,
+    external_id: "visual-paper-2",
+    title: "Context windows and tool use",
+    description: "Short overview of long-context tool use.",
+    source: "papers",
+    source_url: "https://example.com/visual-paper-2",
+    thumbnail_url: "/images/placeholder-paper.svg",
+    channel_name: "arXiv",
+    published_at: null,
+    video_id: null,
+    duration_seconds: null,
+    score: null,
+    created_at: "2025-01-01T00:00:00Z",
+  },
+];
+
+const VISUAL_TEST_STATS: NewsStats = VISUAL_TEST_ITEMS.reduce(
+  (acc, item) => {
+    acc.total += 1;
+    acc[item.source] += 1;
+    return acc;
+  },
+  {
+    total: 0,
+    youtube: 0,
+    rss: 0,
+    hackernews: 0,
+    papers: 0,
+  }
+);
 
 export default function NewsFeed({ locale }: NewsFeedProps) {
-  const [items, setItems] = useState<NewsItem[]>([]);
+  const visualMode =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).has("visual");
+  const [items, setItems] = useState<NewsItem[]>(
+    visualMode ? VISUAL_TEST_ITEMS : []
+  );
   const [filter, setFilter] = useState<string>("hot"); // Default to hot news
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!visualMode);
   const [error, setError] = useState<string | null>(null);
-  const [stats, setStats] = useState<NewsStats | null>(null);
+  const [stats, setStats] = useState<NewsStats | null>(
+    visualMode ? VISUAL_TEST_STATS : null
+  );
   const [expanded, setExpanded] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -108,9 +252,12 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
   }, []);
 
   useEffect(() => {
+    if (visualMode) {
+      return;
+    }
     fetchNews(filter, expanded);
     fetchStats();
-  }, [filter, expanded, fetchNews, fetchStats]);
+  }, [filter, expanded, fetchNews, fetchStats, visualMode]);
 
   // Check scroll buttons visibility
   const checkScrollButtons = useCallback(() => {
@@ -139,6 +286,9 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
   };
 
   const handleRefresh = () => {
+    if (visualMode) {
+      return;
+    }
     fetchNews(filter, expanded);
     fetchStats();
   };

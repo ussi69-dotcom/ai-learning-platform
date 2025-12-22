@@ -7,6 +7,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests/visual',
+  globalSetup: './tests/visual/auth.setup.ts',
 
   // Run tests in parallel
   fullyParallel: true,
@@ -29,7 +30,7 @@ export default defineConfig({
   // Shared settings for all projects
   use: {
     // Base URL for the frontend
-    baseURL: 'http://localhost:3000',
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000',
 
     // Collect trace on failure
     trace: 'on-first-retry',

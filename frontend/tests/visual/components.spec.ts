@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Navigation', () => {
   test('navbar desktop view', async ({ page }) => {
-    await page.goto('/en');
+    await page.goto('/en?visual=1');
     await page.waitForLoadState('networkidle');
 
     const navbar = page.locator('nav').first();
@@ -17,7 +17,7 @@ test.describe('Navigation', () => {
 
   test('navbar mobile menu', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('/en');
+    await page.goto('/en?visual=1');
     await page.waitForLoadState('networkidle');
 
     // Open mobile menu if hamburger exists

@@ -11,6 +11,7 @@ from fastapi.staticfiles import StaticFiles
 
 from . import models, schemas, database, auth
 from app.routers import sandbox, lessons, feedback, users, health, certificates, news, digest
+from app.config import is_production_env
 
 # NOTE: Table creation removed - rely solely on Alembic migrations and seed.py
 # This prevents schema drift when scaling multiple API instances
@@ -136,26 +137,28 @@ async def register_user(request: Request, user: schemas.UserCreate, db: Session 
         raise HTTPException(status_code=400, detail="Email already registered")
     
     hashed_password = auth.get_password_hash(user.password)
-    verification_token = str(uuid.uuid4())
+    is_production = is_production_env()
+    verification_token = str(uuid.uuid4()) if is_production else None
 
     new_user = models.User(
         email=user.email, 
         hashed_password=hashed_password,
         difficulty=models.DifficultyLevel(user.difficulty),
         avatar=user.avatar,
-        is_verified=False, # Must verify email
+        is_verified=not is_production, # Skip verification in non-prod
         verification_token=verification_token
     )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
 
-    # Send verification email (background task would be better, but await is fine for now)
-    try:
-        await send_verification_email(new_user.email, verification_token)
-    except Exception as e:
-        print(f"Failed to send email: {e}")
-        # Don't fail registration, just log it. User can request resend later.
+    # Send verification email only in production.
+    if is_production and verification_token:
+        try:
+            await send_verification_email(new_user.email, verification_token)
+        except Exception as e:
+            print(f"Failed to send email: {e}")
+            # Don't fail registration, just log it. User can request resend later.
 
     return new_user
 
@@ -195,7 +198,7 @@ def login_for_access_token(request: Request, form_data: OAuth2PasswordRequestFor
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    if not user.is_verified:
+    if is_production_env() and not user.is_verified:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Email not verified. Please check your inbox.",

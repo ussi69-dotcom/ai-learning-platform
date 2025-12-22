@@ -10,7 +10,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Public Pages', () => {
   test('homepage renders correctly', async ({ page }) => {
-    await page.goto('/en');
+    await page.goto('/en?visual=1');
     await page.waitForLoadState('networkidle');
 
     // Wait for any animations to settle
@@ -23,7 +23,7 @@ test.describe('Public Pages', () => {
   });
 
   test('homepage - Czech version', async ({ page }) => {
-    await page.goto('/cs');
+    await page.goto('/cs?visual=1');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
 
@@ -67,7 +67,7 @@ test.describe('Public Pages', () => {
 
 test.describe('Theme Switching', () => {
   test('Jedi theme (light mode)', async ({ page }) => {
-    await page.goto('/en');
+    await page.goto('/en?visual=1');
     await page.waitForLoadState('networkidle');
 
     // Ensure Jedi theme is active (default)
@@ -83,7 +83,7 @@ test.describe('Theme Switching', () => {
   });
 
   test('Sith theme (dark mode)', async ({ page }) => {
-    await page.goto('/en');
+    await page.goto('/en?visual=1');
     await page.waitForLoadState('networkidle');
 
     // Switch to Sith theme
@@ -102,7 +102,7 @@ test.describe('Theme Switching', () => {
 test.describe('Responsive Design', () => {
   test('homepage mobile layout', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('/en');
+    await page.goto('/en?visual=1');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
 
@@ -114,7 +114,7 @@ test.describe('Responsive Design', () => {
 
   test('homepage tablet layout', async ({ page }) => {
     await page.setViewportSize({ width: 768, height: 1024 });
-    await page.goto('/en');
+    await page.goto('/en?visual=1');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
 

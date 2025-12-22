@@ -25,12 +25,70 @@ interface DailySummaryProps {
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const VISUAL_TEST_DIGEST: DailyDigest = {
+  id: 999,
+  digest_date: "2025-01-15",
+  summary_en: [
+    "Ops teams adopt agent checklists for daily tasks.",
+    "New guardrails reduce prompt injection risk.",
+    "Tooling stacks converge on MCP-style connectors.",
+  ],
+  summary_cs: [
+    "Tymy nasazuji agentni checklisty pro denni ulohy.",
+    "Nove guardrails snizuji riziko prompt injection.",
+    "Tooling stacky se sbihaji k MCP konektorum.",
+  ],
+  feed_en: [
+    {
+      title: "Agent checklists",
+      description: "Ops playbook updates",
+      source_url: "https://example.com/visual-digest-1",
+    },
+    {
+      title: "Prompt injection guardrails",
+      description: "Security notes",
+      source_url: "https://example.com/visual-digest-2",
+    },
+    {
+      title: "MCP connectors",
+      description: "Tooling round-up",
+      source_url: "https://example.com/visual-digest-3",
+    },
+  ],
+  feed_cs: [
+    {
+      title: "Agentni checklisty",
+      description: "Aktualizace playbooku",
+      source_url: "https://example.com/visual-digest-1",
+    },
+    {
+      title: "Guardrails proti prompt injection",
+      description: "Security notes",
+      source_url: "https://example.com/visual-digest-2",
+    },
+    {
+      title: "MCP konektory",
+      description: "Tooling round-up",
+      source_url: "https://example.com/visual-digest-3",
+    },
+  ],
+  source: "visual",
+  created_at: "2025-01-15T00:00:00Z",
+};
 
 export default function DailySummary({ locale }: DailySummaryProps) {
-  const [digest, setDigest] = useState<DailyDigest | null>(null);
-  const [loading, setLoading] = useState(true);
+  const visualMode =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).has("visual");
+  const [digest, setDigest] = useState<DailyDigest | null>(
+    visualMode ? VISUAL_TEST_DIGEST : null
+  );
+  const [loading, setLoading] = useState(!visualMode);
 
   useEffect(() => {
+    if (visualMode) {
+      return;
+    }
     const fetchDigest = async () => {
       try {
         const response = await fetch(`${API_URL}/digest`);
@@ -46,7 +104,7 @@ export default function DailySummary({ locale }: DailySummaryProps) {
     };
 
     fetchDigest();
-  }, []);
+  }, [visualMode]);
 
   // Don't render if no digest available
   if (loading || !digest) {
