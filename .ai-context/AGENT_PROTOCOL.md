@@ -462,6 +462,8 @@ gemini -m deep-research-pro-preview-12-2025 "Research question"
 ### 1. Načti společný protokol
 ```
 READ: .ai-context/AGENT_PROTOCOL.md (tento soubor)
+READ: .ai-context/INDEX.md           ← Aktivní mapování dokumentů
+READ: .ai-context/INIT_CARDS.md      ← Always-on vs situational
 ```
 
 ### 2. Načti working state
@@ -489,7 +491,7 @@ Pokud se neshodují → **NEČTI WORKING_CONTEXT jako pravdu!** Místo toho:
 |---------------|---------------------|
 | Content creation | `core/CONTENT_GUIDELINES.md`, `core/CURRICULUM_ROADMAP.md` |
 | Coding/Tech | `core/ARCHITECTURE.md` |
-| Multi-agent work | `workflows/MULTI_AGENT_WORKFLOW.md` |
+| Multi-agent work | `workflows/UNIFIED_ORCHESTRATION.md` |
 | Codebase exploration | `workflows/SUBAGENT_STRATEGY.md` (a USE Explore agent!) |
 | Deployment | `workflows/DEV_AND_DEPLOYMENT_GUIDE.md` |
 | Visual testing | `workflows/VISUAL_INSPECTION.md` |

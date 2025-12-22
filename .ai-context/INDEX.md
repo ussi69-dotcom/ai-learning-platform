@@ -1,144 +1,30 @@
-# 🗺️ AI Learning Platform - Documentation Index (v3.0)
+# .ai-context Index (Active)
 
-**Welcome, Agent.** This is your navigation map.
+## Always-on
+- AGENT_PROTOCOL.md
+- state/WORKING_CONTEXT.md
+- state/MEMORY.md
+- workflows/UNIFIED_ORCHESTRATION.md
+- INIT_CARDS.md
 
----
+## Situational
+- workflows/WORKFLOW_V6_MASTERPIECE.md (content upgrades)
+- workflows/RELEASE_CHECKLIST.md (release readiness)
+- workflows/DATABASE_MIGRATIONS.md (schema changes)
+- workflows/INCIDENT_REPORTING.md (prod incidents)
+- workflows/VISUAL_INSPECTION.md (visual QA)
+- workflows/SUBAGENT_STRATEGY.md (subagent usage)
+- workflows/MCP_SETUP.md (tooling changes)
+- workflows/DEV_AND_DEPLOYMENT_GUIDE.md (deploy/dev)
+- workflows/DOMAIN_CHANGE_GUIDE.md (domain changes)
+- templates/TASK_BRIEF.md
+- templates/DEBUG_PACKET.md
+- templates/MACP_PROMPT.md
+- templates/VISUAL_QA_REQUEST.md
 
-## 🚀 Quick Start: Which Agent Are You?
+## Reference
+- core/*.md (vision, architecture, content guidelines)
+- learning/*.md (technical primers)
 
-| Agent | Entry Point | Then Read | Role |
-|-------|-------------|-----------|------|
-| **GPT-5.2 / Codex** | `CODEX.md` | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` | **Situational Orchestrator** |
-| **Claude Code** | `CLAUDE.md` (auto) | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` | Primary Implementer |
-| **Gemini CLI** | `GEMINI.md` (auto) | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` | Visual QA + Content |
-| **Antigravity/IDE** | `.agent/rules/rules.md` | → `AGENT_PROTOCOL.md` → `WORKING_CONTEXT.md` | Full-stack Dev |
-
-**Po načtení odpověz:**
-> "Jsem [agent]. Pokračujeme od [task]. Stav: [status]. Další: [next step]."
-
----
-
-## 📂 Directory Structure (v3.0)
-
-### 🔴 Boot Files (Načíst při startu)
-| Soubor | Účel | Kdo čte |
-|--------|------|---------|
-| `AGENT_PROTOCOL.md` | Společná pravidla všech agentů | Všichni |
-| `state/WORKING_CONTEXT.md` | Kde jsme, co děláme | Všichni |
-| `state/MEMORY.md` | Dlouhodobá paměť, protokoly | Všichni |
-
-### 🟡 State Files (`/state`) - Simplified v3.1
-> *Read/Write. Živá paměť projektu. POUZE 2 soubory.*
-
-| Soubor | Účel | Kdy aktualizovat |
-|--------|------|------------------|
-| **WORKING_CONTEXT.md** | Aktuální task, progress, mini log | Průběžně, PŘED compactem! |
-| **MEMORY.md** | Protokoly, lessons learned | Při nových poznatcích |
-
-### 🟢 Core Files (`/core`)
-> *Read-Only. Reference dokumenty.*
-
-| Soubor | Obsah |
-|--------|-------|
-| **CONTENT_GUIDELINES.md** | Jak psát lekce (MDX, komponenty) |
-| **CURRICULUM_ROADMAP.md** | Struktura kurzů, progress |
-| **ARCHITECTURE.md** | Tech stack, infrastruktura |
-| **VISION.md** | Vize projektu, design philosophy |
-| **COMPONENT_PATTERNS.md** | UI komponenty specs |
-| **GLOSSARY.md** | Terminologie |
-
-### 🔵 Workflows (`/workflows`)
-> *How-To Guides. Načti dle potřeby.*
-
-| Soubor | Kdy načíst |
-|--------|------------|
-| **MULTI_AGENT_WORKFLOW.md** | Spolupráce v5.1 (Claude/GPT‑5.2/Gemini) |
-| **SUBAGENT_STRATEGY.md** | Použití Task tool (Explore, Plan, etc.) |
-| **MCP_SETUP.md** | MCP konfigurace |
-| **VISUAL_INSPECTION.md** | Playwright visual testing |
-| **DEV_AND_DEPLOYMENT_GUIDE.md** | Deployment, Docker |
-| **DATABASE_MIGRATIONS.md** | Alembic workflow |
-| **DOMAIN_CHANGE_GUIDE.md** | Změna domény |
-| **INCIDENT_REPORTING.md** | Hlášení incidentů |
-| **RELEASE_CHECKLIST.md** | Pre-release QA checklist |
-
-### 📚 Learning (`/learning`)
-> *Knowledge Base.*
-
-| Soubor | Obsah |
-|--------|-------|
-| **walkthrough.md** | Prohlídka codebase |
-| **IDEAS.md** | Nápady, brainstorming |
-| **CI_AND_CODE_QUALITY.md** | CI/CD, linting |
-| **PLAYWRIGHT_ARM64_SETUP.md** | Playwright MCP na ARM64 WSL2 |
-
-### 📦 Guides (`/guides`)
-> *External research, reference materials.*
-
-| Soubor | Obsah |
-|--------|-------|
-| **GITHUB_GUIDE.md** | GitHub workflow |
-| **LESSON_PRODUCTION_WORKFLOW.md** | Content creation workflow |
-
-### 📋 Templates (`/templates`)
-> *Copy & Fill. Šablony pro multi-agent workflow.*
-
-| Soubor | Kdy použít |
-|--------|------------|
-| **DEBUG_PACKET.md** | Před voláním GPT-5.2 pro debugging |
-| **VISUAL_QA_REQUEST.md** | Před voláním Gemini pro visual QA |
-| **TASK_BRIEF.md** | Delegování úkolů agentům |
-| **MACP_PROMPT.md** | Multi-Agent Consensus voting |
-
-### ⚙️ Config Files (root of .ai-context)
-> *System configuration for portable workflow.*
-
-| Soubor | Účel |
-|--------|------|
-| **_bootstrap.sh** | One-command setup pro nový projekt |
-| **_config.yaml** | Project-agnostic konfigurace v6.0 |
-
-### ⚫ Archive (`/history/archive`)
-> *NEČÍST při startu. Historické záznamy.*
-
-- `completed_cycles/` - Staré vývojové cykly
-- `2025-Q4-cleanup/` - Archivované reports, research, A/B testy
-- `incidents/` - Incident reports (RCA)
-
----
-
-## 🔄 Memory Protocol (Simplified v3.1)
-
-```
-┌─────────────────────────────────────────────────┐
-│  WORKING_CONTEXT.md (Short-term + Mini Log)     │
-│  Aktualizuj: průběžně, před compactem           │
-│  Obsah: current task, progress, posledních 5    │
-└─────────────────┬───────────────────────────────┘
-                  │ lessons learned
-                  ▼
-┌─────────────────────────────────────────────────┐
-│  MEMORY.md (Long-term)                          │
-│  Aktualizuj: při nových poznatcích              │
-│  Obsah: protokoly, pravidla, patterns           │
-└─────────────────────────────────────────────────┘
-```
-
----
-
-## 📋 Role-Based Loading
-
-| Když děláš... | Načti dodatečně |
-|---------------|-----------------|
-| Content creation | `core/CONTENT_GUIDELINES.md`, `core/CURRICULUM_ROADMAP.md` |
-| Coding/Tech | `core/ARCHITECTURE.md` |
-| Multi-agent work | `workflows/MULTI_AGENT_WORKFLOW.md` |
-| Codebase exploration | `workflows/SUBAGENT_STRATEGY.md` |
-| Deployment | `workflows/DEV_AND_DEPLOYMENT_GUIDE.md` |
-| Visual testing | `workflows/VISUAL_INSPECTION.md` |
-
----
-
-*Version: 3.1*
-*Updated: 2025-12-19*
-*Previous: INDEX.md v3.0*
+## Archive
+- archive/README.md

@@ -26,21 +26,24 @@ OUTPUT_FILE = "CONTEXT_FOR_ARCHITECT.md"
 # Soubory, které tvoří "Paměť projektu" (v tomto pořadí)
 # Tyto soubory jsou načteny VŽDY a v tomto pořadí
 CRITICAL_FILES = [
-    (".agent/rules/rules.md", "🤖 AGENT RULES & WORKFLOW"),  # 0. PRAVIDLA PRO AI AGENTY
-    ("PROJECT_CONTEXT.md", "📋 Project Context"),      # 1. Základní kontext
-    ("CONTENT_GUIDELINES.md", "🎨 Content Guidelines"), # 2. UI/UX pravidla
-    ("ARCHITECTURE.md", "🏗️ Architecture"),           # 3. Tech stack
-    ("STRATEGY.md", "🎯 Strategy"),                    # 4. Curriculum
-    ("WORKFLOW.md", "⚙️ Workflow"),                    # 5. Development workflow
-    ("AGENT-STATE.md", "📊 Agent State"),              # 6. Aktuální stav
-    ("IDEAS.md", "💡 Ideas Backlog"),                  # 7. Backlog
+    (".agent/rules/rules.md", "🤖 Agent Rules & Workflow"),
+    ("AGENT_PROTOCOL.md", "🧭 Agent Protocol"),
+    ("INDEX.md", "🗂️ Context Index"),
+    ("INIT_CARDS.md", "🧩 Agent Init Cards"),
+    ("state/WORKING_CONTEXT.md", "📊 Working Context"),
+    ("state/MEMORY.md", "🧠 Memory"),
+    ("workflows/UNIFIED_ORCHESTRATION.md", "🤝 Unified Orchestration"),
+    ("workflows/WORKFLOW_V6_MASTERPIECE.md", "🏆 MASTERPIECE Workflow"),
+    ("core/CONTENT_GUIDELINES.md", "🎨 Content Guidelines"),
+    ("core/ARCHITECTURE.md", "🏗️ Architecture"),
+    ("core/CURRICULUM_ROADMAP.md", "🎯 Curriculum Roadmap"),
 ]
 
 # Složky, které ignorujeme při výpisu struktury
 IGNORE_DIRS = {
-    '.git', '__pycache__', 'node_modules', '.next', 'venv', 
+    '.git', '__pycache__', 'node_modules', '.next', 'venv',
     '_archive', '.pytest_cache', '.vscode', 'coverage', 'dist',
-    '.turbo', 'build', '.cache', 'completed_cycles'
+    '.turbo', 'build', '.cache', 'completed_cycles', '.ai-context/archive'
 }
 
 # Soubory, které ignorujeme při výpisu struktury
@@ -149,8 +152,8 @@ Při každém úkolu:
 - **Star Wars theme:** All content má Star Wars analogie (Jedi, Sith, holocrons, etc.)
 
 #### 🧪 Testing (KRITICKÉ - viz rules.md)
-- **Before commit:** Run `npm run build` (frontend) a `pytest` (backend)
-- **Visual verification:** Playwright scripts v `visual_tests/`
+- **Before commit:** Run `npm run verify` (frontend) a `pytest` (backend)
+- **Visual verification:** `frontend/tests/visual` (Playwright)
 - **Manual:** Otestuj v prohlížeči dark mode + mobile viewport
 - **NEVER commit broken code** or placeholder TODOs
 
@@ -161,13 +164,16 @@ Při každém úkolu:
 Následující soubory tvoří "paměť" projektu:
 
 0. **rules.md** - AI agent pravidla (workflow, constraints, testing, commit standards)
-1. **PROJECT_CONTEXT.md** - Tech stack, porty, design philosophy
-2. **CONTENT_GUIDELINES.md** - Pravidla pro tvorbu lekcí, UI komponenty, "Liquid Glass"
-3. **ARCHITECTURE.md** - Detailní popis technologií (Next.js 16, FastAPI, Docker)
-4. **STRATEGY.md** - Curriculum strategie, difficulty levels, learning path
-5. **WORKFLOW.md** - Development workflow, git, visual inspection
-6. **AGENT-STATE.md** - Aktuální stav (cykly, milníky, co je hotovo)
-7. **IDEAS.md** - Backlog funkcí a nápadů
+1. **AGENT_PROTOCOL.md** - SSOT pravidla pro agenty
+2. **INDEX.md** - Aktivní mapování dokumentů
+3. **INIT_CARDS.md** - Always-on vs situational čtení
+4. **WORKING_CONTEXT.md** - Aktuální stav práce
+5. **MEMORY.md** - Lessons learned + protokoly
+6. **UNIFIED_ORCHESTRATION.md** - Multi-agent orchestrace
+7. **WORKFLOW_V6_MASTERPIECE.md** - MASTERPIECE content workflow
+8. **CONTENT_GUIDELINES.md** - Pravidla pro tvorbu lekcí a UI
+9. **ARCHITECTURE.md** - Tech stack + architektura
+10. **CURRICULUM_ROADMAP.md** - Curriculum strategie
 
 ---
 

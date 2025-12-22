@@ -819,5 +819,5 @@ Known issues to address:
 | Architekturu | `.ai-context/core/ARCHITECTURE.md` |
 | Vizi projektu | `.ai-context/core/VISION.md` |
 | Content pravidla | `.ai-context/core/CONTENT_GUIDELINES.md` |
-| Multi-agent workflow | `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md` |
+| Multi-agent workflow | `.ai-context/workflows/UNIFIED_ORCHESTRATION.md` |
 | Subagent strategy | `.ai-context/workflows/SUBAGENT_STRATEGY.md` |
