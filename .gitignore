@@ -32,6 +32,7 @@ CONTEXT_FOR_ARCHITECT.md
 /frontend/playwright-report/
 /frontend/playwright/.cache/
 /frontend/test-results/
+/visual_tests/
 /frontend/tests/visual/.auth/
 
 # Local Config
