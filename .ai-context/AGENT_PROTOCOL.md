@@ -12,6 +12,7 @@
 | **v6.0** | Claude Code | Long autonomous sessions, implementation-heavy, minimal user interaction |
 
 **v6.0 Details:** See `workflows/WORKFLOW_V6_CLAUDE_FIRST.md`
+**Unified Orchestration (Codex + Claude consoles):** See `workflows/UNIFIED_ORCHESTRATION.md`
 
 **Codex Accounts:**
 ```bash
