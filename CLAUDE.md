@@ -106,6 +106,7 @@ Aktivuj když: Security změny | DB migrace | Breaking API | >30min stuck + 2 fa
 | Když děláš... | Přečti PŘED akcí | Proč |
 |---------------|------------------|------|
 | Content/lekce | `.ai-context/core/CONTENT_GUIDELINES.md` | Formát, persona, QA checklist |
+| **MASTERPIECE upgrade** | `.ai-context/workflows/WORKFLOW_V6_MASTERPIECE.md` | Full upgrade workflow |
 | Multi-agent/MACP | `.ai-context/AGENT_PROTOCOL.md` | Domain weights, handoff |
 | Debug >30min | `.ai-context/state/MEMORY.md` → Lessons | Neopakuj stejné chyby |
 | Architektura | `.ai-context/core/ARCHITECTURE.md` | Struktura systému |
@@ -119,6 +120,38 @@ Aktivuj když: Security změny | DB migrace | Breaking API | >30min stuck + 2 fa
 - **Deleguj:** content + visual QA → Gemini CLI; quick research → Perplexity
 - **Eskaluj:** hard reasoning / záhadné bugy → GPT‑5.2 přes Codex
 - **Thin protocol:** do chatu jen shrnutí + cesty k artefaktům
+
+---
+
+## 🤖 Subagent Orchestration (v2.0)
+
+**Hlavní princip:** Dej každému subagentovi content + research který potřebuje. Orchestruj je. Řekni jim ať NEreportují zpět. Místo toho zkontroluj jejich práci.
+
+### Workflow Pattern
+```
+1. PREPARE  → Shromáždi kontext + research před spawnem
+2. SPAWN    → Dej subagentovi plný brief (task, context, constraints, output format)
+3. INSTRUCT → "Draft only, do not report to user"
+4. CHECK    → Zkontroluj output před aplikací nebo reportem
+5. PARALLEL → Spusť nezávislé subagent tasky souběžně
+```
+
+### GPT-5.2 jako Orchestrátor
+```bash
+# Plánování
+codex exec -p orchestrator "Shrn kontext: [X]. Co mám teď dělat?"
+
+# Po dokončení tasku
+codex exec -p orchestrator "Udělal jsem [X]. Ověř a řekni co dál."
+
+# Pattern: Plan → Execute → Verify → Ask "co dál?"
+```
+
+### Anti-Patterns
+- ❌ Spawn subagenta bez plného kontextu
+- ❌ Nechat subagenta reportovat přímo uživateli
+- ❌ Neověřit output subagenta
+- ❌ Použít špatný model (gemini-2.5-pro místo gemini-3-pro-preview)
 
 ---
 

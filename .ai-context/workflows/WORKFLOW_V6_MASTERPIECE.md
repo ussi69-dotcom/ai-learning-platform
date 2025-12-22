@@ -1,4 +1,4 @@
-# MASTERPIECE Lesson Upgrade Workflow v7.0
+# MASTERPIECE Lesson Upgrade Workflow v7.1
 
 **Trigger:** User says: "Upgrade [LESSON_PATH] na MASTERPIECE"
 
@@ -6,11 +6,12 @@
 
 ---
 
-## 🔑 KEY PRINCIPLE: Codex as Final Gatekeeper
+## 🔑 KEY PRINCIPLE: Codex as Operator + Final Gatekeeper
 
 **Only Codex (GPT-5.2) declares MASTERPIECE** - not Gemini alone!
 
-- **Codex Role:** Orchestrator + critical reviewer + final approver
+- **Codex Role:** Operator + orchestrator + final approver
+- **Claude Role:** Opposition review + optional visual QA (Playwright)
 - **Dual-Gate Rule:** Hard gates green + Gemini ≥59/60 + Codex ≥59/60
 - **Max Iterations:** 2 full cycles before human escalation
 
@@ -30,18 +31,18 @@
 │  ├─ Get transcripts from top videos                                 │
 │  └─ Codex extracts minimum claims + citations                       │
 ├─────────────────────────────────────────────────────────────────────┤
-│  PHASE 2: Draft/Enrich (Gemini → Codex pre-check)                   │
+│  PHASE 2: Draft/Enrich (Gemini → Codex pre-check → Claude critique) │
 │  ├─ Gemini generates MDX + quiz + diagram specs                     │
 │  ├─ Codex does fast rubric pre-check                                │
-│  └─ Codex emits prioritized issue_ledger for Claude                 │
+│  └─ Claude provides opposition review → issue_ledger                │
 ├─────────────────────────────────────────────────────────────────────┤
-│  PHASE 3: Implement (Claude → Codex local QA)                       │
-│  ├─ Claude applies changes in repo                                  │
+│  PHASE 3: Implement (Codex → local QA)                              │
+│  ├─ Codex applies changes in repo                                   │
 │  ├─ Codex runs local QA (MDX/build/link checks)                     │
 │  └─ Codex updates issue_ledger                                      │
 ├─────────────────────────────────────────────────────────────────────┤
-│  PHASE 4: Visual QA (automation-first, artifacts to files)          │
-│  ├─ Subagent runs Playwright → screenshots to disk                  │
+│  PHASE 4: Visual QA (Claude Playwright, artifacts to files)         │
+│  ├─ Claude runs Playwright → screenshots to disk                    │
 │  ├─ Output: short JSON/MD summary (pass/fail + paths)               │
 │  └─ Codex only reviews failures (targeted)                          │
 ├─────────────────────────────────────────────────────────────────────┤
@@ -119,7 +120,7 @@ EOF
 ### Step 1.1: Find Must-Have Videos (Perplexity)
 
 ```bash
-# Claude executes this:
+# Codex executes this:
 cat << 'EOF' | codex exec -p orchestrator 2>&1
 I need to find the best educational videos for a lesson about [TOPIC].
 
@@ -208,7 +209,7 @@ DO NOT report to user. Write draft only.
 EOF
 ```
 
-### Step 2.2: GPT Reviews & Suggests Next Steps
+### Step 2.2: Codex Pre-Check (Fast Rubric)
 
 ```bash
 cat << 'EOF' | codex exec -p orchestrator 2>&1
@@ -231,6 +232,22 @@ Next action:
 EOF
 ```
 
+### Step 2.3: Claude Opposition Review (Adversarial QA)
+
+```bash
+cat << 'EOF' | claude 2>&1
+Act as a skeptical reviewer. Find flaws, gaps, or risky claims.
+
+## Draft Content
+[PASTE GEMINI OUTPUT]
+
+## Output format
+- Top 5 issues (ordered by severity)
+- 3 concrete improvements
+- 1 "must-fix" before MASTERPIECE
+EOF
+```
+
 ---
 
 ## 📋 PHASE 3: Visual Anchors
@@ -238,7 +255,7 @@ EOF
 ### Step 3.1: Add SVG Diagrams
 
 ```bash
-# Claude implements based on content:
+# Codex implements based on content:
 # 1. Check existing diagrams in frontend/components/mdx/diagrams/
 # 2. Create new if needed
 # 3. Register in Diagram.tsx
@@ -300,7 +317,7 @@ If not MASTERPIECE, list specific fixes needed.
 EOF
 ```
 
-### Step 4.2: GPT Cross-Validates
+### Step 4.2: Codex Cross-Validates
 
 ```bash
 cat << 'EOF' | codex exec -p orchestrator 2>&1
@@ -321,6 +338,8 @@ Cross-validate Gemini's assessment:
 Provide final verdict and next action.
 EOF
 ```
+
+**Optional (if disagreement or borderline):** Claude opposition review to challenge weak claims.
 
 ### Step 4.3: Iterate Until Consensus
 
@@ -343,18 +362,18 @@ LOOP:
 - **DON'T** feed browser_snapshot/accessibility trees into LLM (14k+ tokens!)
 - **DO** save screenshots to files, output short summary
 
-### Step 4.1: Subagent Captures Screenshots
+### Step 4.1: Claude Captures Screenshots (Playwright)
 
 ```bash
-# Use Task tool with Explore subagent OR dedicated script
+# Claude runs Playwright and saves screenshots to disk.
 # NEVER use browser_snapshot in main context!
 
-# Option A: Subagent (recommended)
-Task tool: subagent_type="Explore"
+# Option A: Claude (recommended)
+Task tool: subagent_type="Claude"
 prompt: "Navigate to lesson [URL], take desktop (1920x1080) and mobile (375x812)
 screenshots, save to visual_tests/lesson-XX-*.png, report only pass/fail + paths"
 
-# Option B: Direct Playwright (only screenshots, no snapshots)
+# Option B: Direct Playwright (Codex fallback; only screenshots, no snapshots)
 mcp__playwright__browser_navigate url="[LESSON_URL]"
 mcp__playwright__browser_take_screenshot filename="visual_tests/lesson-XX-desktop.png"
 mcp__playwright__browser_resize width=375 height=812
@@ -480,9 +499,9 @@ Execute this workflow:
 0. PHASE 0: Codex creates lesson_spec (outcomes, facts, rubric)
 1. Read lesson content (EN + CS)
 2. PHASE 1: Research → Codex extracts claims
-3. PHASE 2: Gemini enriches → Codex pre-check → issue_ledger
-4. PHASE 3: Claude implements → Codex local QA
-5. PHASE 4: Visual QA (subagent → screenshots to files → summary only)
+3. PHASE 2: Gemini enriches → Codex pre-check → Claude opposition review
+4. PHASE 3: Codex implements → local QA
+5. PHASE 4: Visual QA (Claude Playwright → screenshots to files → summary only)
 6. PHASE 5: Dual gate (Gemini score + Codex score)
    - IF both ≥59/60 → Codex says "MASTERPIECE CONFIRMED"
    - ELSE → Loop to PHASE 3 (max 2x)
@@ -608,5 +627,5 @@ const DiagramComponent = ({ type, mobileSimplified = false }) => {
 ---
 
 _Created: 2025-12-21 by Claude Opus 4.5_
-_Updated: 2025-12-21 - v7.0: Codex as final gatekeeper, dual-gate confirmation, Visual QA context optimization_
+_Updated: 2025-12-21 - v7.1: Codex as operator, Claude opposition + visual QA_
 _Use with: "Upgrade [LESSON_PATH] na MASTERPIECE"_

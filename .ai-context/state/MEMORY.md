@@ -68,17 +68,34 @@ ESKALUJ na GPT-5.2 když:
 - **QA frontend (local only):** `docker compose -f docker-compose.yml -f docker-compose.qa.yml up -d frontend-qa`, then use `http://localhost:3001` for Playwright/Gemini QA.
 - **Playwright auth tests:** Load admin credentials from `.env` (`FIRST_SUPERUSER`/`FIRST_SUPERUSER_PASSWORD`), avoid hardcoded credentials and never log them.
 
-### Subagent Orchestration Standard (Always On)
+### Subagent Orchestration Standard (Always On) v2.0
 
-- **Use subagents** (Gemini/Claude) for discrete tasks (research, extraction, review) with **clear task + context**.
-- **Provide all needed content + research** in the prompt; do not assume hidden context.
-- **Instruct subagents to draft only** and **not to report to the user**.
-- **Have subagents write output to temp files** (or quiet stdout) and **do not surface directly to user**.
-- **You must review/verify** their output before applying changes or reporting.
-- **Parallelize** independent subagent tasks when practical.
-- **Assign explicit skills/roles per task** (visual QA, research, code review) and keep agents scoped.
-- **Escalate to Codex extra-high** for complex decisions or when stuck; keep the orchestrator role separate from implementer.
-- **Gemini = CLI for analysis/review**; **Playwright = MCP** to generate screenshots used by Gemini.
+**Core Principle:** Give each subagent the content + research it needs. Orchestrate them. Tell them NOT to report back. Check their work instead.
+
+**Workflow:**
+1. **Prepare context** - Gather all needed content + research before spawning subagent
+2. **Spawn with full brief** - Include task, context, constraints, expected output format
+3. **Instruct: "Draft only, do not report"** - Subagent writes to file, does not surface to user
+4. **Check work** - You review output before applying or reporting
+5. **Parallelize** - Run independent subagent tasks concurrently
+
+**Subagent Types:**
+| Agent | Use For | Command |
+|-------|---------|---------|
+| Gemini CLI | Content generation, Visual QA | `gemini -m gemini-3-pro-preview` |
+| Codex CLI | Planning, Hard reasoning | `codex exec -p orchestrator` |
+| Claude Subagent | Code exploration, Implementation | Task tool with subagent_type |
+
+**Anti-Patterns:**
+- ❌ Spawning subagent without full context
+- ❌ Letting subagent report directly to user
+- ❌ Not verifying subagent output
+- ❌ Using wrong model (e.g., gemini-2.5-pro instead of gemini-3-pro-preview)
+
+**GPT-5.2 as Orchestrator:**
+- Use Codex for planning: `codex exec -p orchestrator "Shrn kontext a řekni co dál"`
+- After task completion: `codex exec -p orchestrator "Ověř výsledek, shrň a řekni co dál"`
+- Pattern: **Plan → Execute → Verify → Ask "co dál?"**
 
 ### Visual QA Loop (Always On)
 
@@ -86,6 +103,12 @@ ESKALUJ na GPT-5.2 když:
 2. **Capture** targeted screenshots to `/tmp/lesson-visual-check`.
 3. **Delegate** visual review to Gemini (CLI) with file paths only.
 4. **Apply fixes**, re-capture, repeat until consensus = “masterpiece”.
+
+### UI Screenshot Rule (Always On)
+
+- Když popisuješ konkrétní konzoli, obrazovku nebo krok v UI, přidej **reálný screenshot** do lekce.
+- **Priorita zdrojů:** oficiální dokumentace → veřejný web → (poslední možnost) generovaný screenshot.
+- Ukládej do `content/.../images/` a vkládej přes `<MDXImage ... />` (EN + CS parity).
 
 ### Camoufox Transcript Extraction SOP (Always On)
 

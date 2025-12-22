@@ -1,6 +1,23 @@
-# Agent Protocol v5.1
+# Agent Protocol v5.1 / v6.0
 
 **Single Source of Truth for all AI agents working on this project.**
+
+---
+
+## 🔀 Workflow Selection
+
+| Workflow | Orchestrator | When to Use |
+|----------|--------------|-------------|
+| **v5.1** | GPT-5.2 (Codex) | Hard debugging, architecture decisions, security audits |
+| **v6.0** | Claude Code | Long autonomous sessions, implementation-heavy, minimal user interaction |
+
+**v6.0 Details:** See `workflows/WORKFLOW_V6_CLAUDE_FIRST.md`
+
+**Codex Accounts:**
+```bash
+codex2    # Team (primary) - higher limits
+codex1    # Plus (fallback)
+```
 
 ---
 

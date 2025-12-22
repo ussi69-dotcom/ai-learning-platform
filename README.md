@@ -333,7 +333,7 @@ Vytvořeno při prvním seedování (`backend/seed.py`).
 
 ## 🤖 Multi-Agent Workflow (v5.1) - December 2025
 
-Projekt využívá **4 specializované AI modely** (a volitelně subagenty) pro optimální výkon:
+Projekt využívá **5 specializovaných AI nástrojů** pro optimální výkon:
 
 ### Architektura
 
@@ -347,12 +347,14 @@ Projekt využívá **4 specializované AI modely** (a volitelně subagenty) pro 
 ┌─────────────────────────────────────────────────────────────────┐
 │  Claude Code = Primary Implementer + QA gate                     │
 │  - coding, git, integration, test/verify                         │
+│  - MCP: Playwright, Context7, Perplexity, YouTube Data           │
 └───────────────────┬───────────────────────────────┬─────────────┘
                     │                               │
                     ▼                               ▼
-   Gemini 3 Pro (CLI)                         Perplexity
-   - content + visual QA                      - quick research (<5 min)
-   - 2M context                               Gemini Deep Research (20–60 min)
+   Gemini 3 Pro (CLI)                         Research Tools
+   - content + visual QA                      - Perplexity MCP (<5 min)
+   - 2M context                               - YouTube Data MCP (14 tools)
+   - MASTERPIECE workflow                     - Gemini Deep Research (20–60 min)
 ```
 
 ### Kdy volat kterého agenta
@@ -362,8 +364,9 @@ Projekt využívá **4 specializované AI modely** (a volitelně subagenty) pro 
 | **Hard reasoning** (architektura, debugging >30 min / 2+ failed) | GPT‑5.2 (Codex) | Nejlepší reasoning, root cause |
 | **Kódování** (implementace, refactor, QA gate) | Claude Code | Nejrychlejší pro každodenní práci v repo |
 | **Visual QA** (screenshoty, UI regressions) | Gemini 3 Pro (CLI) | 2M kontext, rychlá vizuální analýza |
-| **Content generation** | Gemini 3 Pro (CLI) | Kvalitní drafty, levné iterace |
-| **Quick research** (<5 min) | Perplexity | Rychlé, s citacemi |
+| **Content generation / MASTERPIECE** | Gemini 3 Pro (CLI) | Kvalitní drafty, edutainment focus |
+| **Quick research** (<5 min) | Perplexity MCP | Rychlé, s citacemi |
+| **YouTube research** (videa, transkripty, playlists) | YouTube Data MCP | 14 funkcí pro video research |
 | **Deep research** (20-60 min) | Gemini Deep Research | Autonomní dlouhý výzkum |
 | **Exploration/Planning** | Subagenti (volitelně) | Systematické prohledání / plánování |
 
@@ -388,6 +391,15 @@ MEMORY.md (Long-term)
 | `CODEX.md` | Entry point pro Codex CLI (GPT‑5.2 orchestrator) |
 | `GEMINI.md` | Konfigurace pro Gemini CLI |
 | `AGENTS.md` | Repo guidelines pro všechny agenty |
+
+### MCP Servery (Model Context Protocol)
+
+| Server | Účel | Klíčové funkce |
+|--------|------|----------------|
+| **Playwright** | Visual QA, browser automation | `browser_navigate`, `browser_take_screenshot`, `browser_click` |
+| **Context7** | Dokumentace knihoven | `resolve-library-id`, `get-library-docs` |
+| **Perplexity** | Quick research | `perplexity_ask`, `perplexity_search` |
+| **YouTube Data** | Video research | `get_video_details`, `get_transcript`, `search_videos` (14 funkcí) |
 
 ### Scripts
 

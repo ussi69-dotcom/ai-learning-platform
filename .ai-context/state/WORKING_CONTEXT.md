@@ -1,8 +1,109 @@
 # Working Context
 
-**Last Updated:** 2025-12-21 21:30 (Agent: Claude Opus 4.5)
+**Last Updated:** 2025-12-21 23:43 (Agent: Codex GPT-5.2)
 
-## 🎯 Current Task: MASTERPIECE Upgrade - ai-basics L03 ✅
+## 🎯 Current Task: MASTERPIECE Upgrade - Beginner + Intermediate Complete
+**Started:** 2025-12-21 (Session 8)
+**Status:** ✅ Completed - all beginner + intermediate lessons upgraded and visual QA captured
+
+### Context Sync (Dec 21, 2025)
+- **Detected drift:** WORKING_CONTEXT hash outdated vs `git log -1`.
+- **Latest commits:** `10cbfc1` (fix L04 MASTERPIECE), `39abe63` (UI contrast), `09e5ca7` (workflow v7).
+
+### Key Focus (Session 8)
+- **Beginner:** L06 "AI at Work" + L07 "Course Summary" upgraded to MASTERPIECE
+- **Intermediate:** Practical Prompt Engineering (all lessons) upgraded to MASTERPIECE
+- **Workflow:** MASTERPIECE workflow updated to Codex-operator + Claude opposition/visual QA
+- **Visual QA:** Playwright screenshots captured for all updated lessons
+
+### MASTERPIECE Progress (ai-basics-beginner)
+
+| Lesson | Status | Score | Notes |
+|--------|--------|-------|-------|
+| L01 What is AI | ✅ MASTERPIECE | 59/60 | Model verification rules, mobile SVG |
+| L02 How Does AI Learn | ✅ MASTERPIECE | 59/60 | 5 new diagrams, RLHF Lab |
+| L03 LLMs Explained | ✅ MASTERPIECE | 59/60 | 4 videos, 6 diagrams |
+| L04 Your First Prompt | ✅ MASTERPIECE | 59/60 | Advanced prompting labs |
+| L05 The Dark Side | ✅ MASTERPIECE | 59/60 | Dual gate: Gemini + Codex |
+| L06 AI at Work | ✅ MASTERPIECE | 59/60 | Work Trend Index stats, 4 videos |
+| L07 Course Summary | ✅ MASTERPIECE | 59/60 | New toolkit + next mission path |
+
+### MASTERPIECE Progress (practical-prompt-engineering)
+
+| Lesson | Status | Score | Notes |
+|--------|--------|-------|-------|
+| L01 Prompt Architecture | ✅ MASTERPIECE | 59/60 | New videos + model table refresh |
+| L02 Prompt Injection | ✅ MASTERPIECE | 59/60 | OWASP/DeepMind updates, safer CoT |
+| L04 Local Intelligence | ✅ MASTERPIECE | 59/60 | Llama 3/Qwen2/DeepSeek updates |
+| L05 AI-Powered Development | ✅ MASTERPIECE | 59/60 | MCP + context files refreshed |
+| L06 Claude Code Mastery | ✅ MASTERPIECE | 59/60 | v2.0 retained, visuals verified |
+| L07 Antigravity Mastery | ✅ MASTERPIECE | 59/60 | Visuals swapped to MDXImage |
+
+### Visual QA (Session 8)
+- **Playwright output:** `/tmp/playwright-mcp-output/1766360199498/masterpiece-visual/`
+
+---
+
+## 🎯 Previous Task: Platform-wide Visual QA
+**Started:** 2025-12-21 (Session 6)
+**Status:** ✅ COMPLETED
+
+### Visual QA Workflow (KONTEXT-SAVING!)
+```
+1. Claude: Playwright screenshot → uloží do visual_tests/
+2. Claude: Spawn Task subagent s obrázkem → "Evaluate this screenshot"
+3. Subagent: Analyzuje, vrátí findings
+4. Claude: Dokumentuje návrhy změn
+```
+**Důvod:** Playwright snapshoty žerou 14k+ tokenů. Delegace na subagenty šetří hlavní context.
+
+### Visual QA Results (Dec 21, 2025)
+
+| Page | Verdict | Score | Key Notes |
+|------|---------|-------|-----------|
+| Homepage (`/`) | ✅ PASS | 8.5/10 | Clean layout, dark mode works |
+| Login | ✅ PASS | 9/10 | Solid auth UI, good contrast |
+| Register | ✅ PASS | 9/10 | Password validation visible |
+| Profile | ✅ PASS | 8.5/10 | Minor contrast issues (helper text) |
+| Course listing | ✅ CONDITIONAL | - | Metadata badge contrast could improve |
+| Lesson 01 (L01) | ✅ PASS | - | All components working |
+| Lesson 02 (L02) | ✅ PASS | - | VideoSwitcher OK, navigation works |
+| Lesson 03 (L03) | ✅ PASS | - | Ready for release |
+
+**Screenshots saved:** `.playwright-mcp/visual_tests/`
+
+### Proposed UX Improvements (Nice-to-Have)
+
+#### P1 - Profile Page
+| Issue | Current | Proposed Fix |
+|-------|---------|--------------|
+| XP helper text low contrast | `text-slate-400` | `text-slate-300 dark:text-slate-400` |
+| Avatar gear icon subtle | No hover effect | Add `hover:scale-110 transition` |
+| Achievement icons inconsistent | Varying visual weight | Normalize to 24px with consistent stroke |
+
+#### P2 - Course Listing
+| Issue | Current | Proposed Fix |
+|-------|---------|--------------|
+| Time/Labs badges low contrast | Light gray on dark | `bg-slate-700 text-slate-200` |
+
+#### P3 - General (No Action Needed)
+- All lesson pages render correctly
+- VideoSwitcher works across all lessons
+- Dark mode (Sith) theme consistent
+- Navigation flows smoothly
+- No broken images or layouts
+
+### Technical Issues Found
+| Issue | Severity | Status |
+|-------|----------|--------|
+| Session hydration delay | Low | Known - 2-3s wait needed after nav |
+| Cookie persistence on refresh | Low | Works after hydration |
+
+**Conclusion:** Platform is production-ready. P1/P2 improvements are cosmetic enhancements, not blockers.
+
+---
+
+## 🎯 Previous Task: MASTERPIECE Upgrade - ai-basics L03 ✅
 **Started:** 2025-12-21 (Session 5)
 **Status:** ✅ COMPLETED
 
@@ -586,6 +687,7 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-21 | Claude      | **MASTERPIECE ai-basics L05** - Dual gate (Gemini+Codex 59/60), Mata v. Avianca hook, Stochastic Parrots + RAG citations, model table GPT-5/o3, RAG warning fix |
 | 2025-12-21 | Claude      | **MASTERPIECE ai-basics L03** - VideoSwitcher 2→4 videos (Andrej Karpathy, IBM, CZ native), GPT-5.1→GPT-5, all 6 diagrams verified, Gemini 59/60 |
 | 2025-12-21 | Claude      | **MASTERPIECE ai-basics L02** - 5 new diagrams (neural-network, learning-types, supervised-flow, clustering, RL-loop), Lab 3 rewritten as RLHF Simulator, VideoSwitcher 4 videos, Gemini 59/60 |
 | 2025-12-21 | Claude      | **MASTERPIECE ai-basics L01** - Full WORKFLOW_V6 upgrade, model verification rules (GPT-5/o3), mobile-first SVG rules, Czech labs policy (CZ prompts), 3 commits |
