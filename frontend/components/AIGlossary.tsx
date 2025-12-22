@@ -18,7 +18,7 @@ const GLOSSARY_TERMS = [
       en: "AI systems trained on massive text datasets to understand and generate human-like text. Examples: GPT-4, Claude, Gemini.",
       cs: "AI systémy trénované na obrovských textových datech pro porozumění a generování lidského textu. Příklady: GPT-4, Claude, Gemini.",
     },
-    lesson: { courseId: 3, lessonId: 3 },
+    lesson: { courseSlug: "ai-basics-beginner", lessonSlug: "03-llms-explained" },
     hue: 260,
   },
   {
@@ -29,7 +29,7 @@ const GLOSSARY_TERMS = [
       en: "The art of crafting instructions for AI models to get optimal results. A well-designed prompt can dramatically improve AI output quality.",
       cs: "Umění tvorby instrukcí pro AI modely pro dosažení optimálních výsledků. Dobře navržený prompt může dramaticky zlepšit kvalitu AI výstupu.",
     },
-    lesson: { courseId: 3, lessonId: 4 },
+    lesson: { courseSlug: "ai-basics-beginner", lessonSlug: "04-your-first-prompt" },
     hue: 200,
   },
   {
@@ -40,7 +40,7 @@ const GLOSSARY_TERMS = [
       en: "When AI confidently generates false or fabricated information. A critical limitation to understand when using AI systems.",
       cs: "Když AI sebevědomě generuje nepravdivé nebo vymyšlené informace. Kritické omezení, které je třeba znát při používání AI.",
     },
-    lesson: { courseId: 3, lessonId: 5 },
+    lesson: { courseSlug: "ai-basics-beginner", lessonSlug: "05-the-dark-side" },
     hue: 0,
   },
   {
@@ -51,7 +51,7 @@ const GLOSSARY_TERMS = [
       en: "Computing systems inspired by biological brains, using layers of interconnected nodes to learn patterns from data.",
       cs: "Výpočetní systémy inspirované biologickým mozkem, používající vrstvy propojených uzlů k učení vzorů z dat.",
     },
-    lesson: { courseId: 3, lessonId: 2 },
+    lesson: { courseSlug: "ai-basics-beginner", lessonSlug: "02-how-does-ai-learn" },
     hue: 160,
   },
   {
@@ -62,7 +62,7 @@ const GLOSSARY_TERMS = [
       en: "The basic unit of text that AI models process. A token is roughly 4 characters or 0.75 words. Context window = how many tokens AI can 'remember'.",
       cs: "Základní jednotka textu, kterou AI modely zpracovávají. Token je přibližně 4 znaky nebo 0.75 slova. Kontextové okno = kolik tokenů si AI 'pamatuje'.",
     },
-    lesson: { courseId: 3, lessonId: 3 },
+    lesson: { courseSlug: "ai-basics-beginner", lessonSlug: "03-llms-explained" },
     hue: 330,
   },
   {
@@ -73,7 +73,7 @@ const GLOSSARY_TERMS = [
       en: "The revolutionary neural network architecture behind modern AI. Uses 'attention' to process all parts of input simultaneously.",
       cs: "Revoluční architektura neuronové sítě za moderní AI. Používá 'attention' pro zpracování všech částí vstupu současně.",
     },
-    lesson: { courseId: 3, lessonId: 3 },
+    lesson: { courseSlug: "ai-basics-beginner", lessonSlug: "03-llms-explained" },
     hue: 120,
   },
   {
@@ -84,7 +84,7 @@ const GLOSSARY_TERMS = [
       en: "Systematic errors in AI outputs caused by biased training data or algorithms. Can perpetuate discrimination if not addressed.",
       cs: "Systematické chyby v AI výstupech způsobené zkreslenými trénovacími daty nebo algoritmy. Mohou perpetuovat diskriminaci, pokud nejsou řešeny.",
     },
-    lesson: { courseId: 3, lessonId: 5 },
+    lesson: { courseSlug: "ai-basics-beginner", lessonSlug: "05-the-dark-side" },
     hue: 15,
   },
 
@@ -97,7 +97,7 @@ const GLOSSARY_TERMS = [
       en: "Security attack where malicious inputs trick AI into ignoring its instructions. Critical vulnerability in AI-powered applications.",
       cs: "Bezpečnostní útok, kde škodlivé vstupy oklamou AI, aby ignorovala své instrukce. Kritická zranitelnost v AI aplikacích.",
     },
-    lesson: { courseId: 2, lessonId: 2 },
+    lesson: { courseSlug: "practical-prompt-engineering", lessonSlug: "02-prompt-injection" },
     hue: 355,
   },
   {
@@ -108,7 +108,7 @@ const GLOSSARY_TERMS = [
       en: "Running AI models directly on your computer without internet. Tools like Ollama enable private, offline AI with full data control.",
       cs: "Spouštění AI modelů přímo na vašem počítači bez internetu. Nástroje jako Ollama umožňují soukromou, offline AI s plnou kontrolou dat.",
     },
-    lesson: { courseId: 2, lessonId: 4 },
+    lesson: { courseSlug: "practical-prompt-engineering", lessonSlug: "04-local-intelligence" },
     hue: 175,
   },
   {
@@ -119,7 +119,7 @@ const GLOSSARY_TERMS = [
       en: "Anthropic's agentic coding tool. Lives in your terminal, reads/writes files, runs commands, and builds entire features autonomously.",
       cs: "Agentický kódovací nástroj od Anthropic. Žije v terminálu, čte/píše soubory, spouští příkazy a buduje celé funkce autonomně.",
     },
-    lesson: { courseId: 2, lessonId: 6 },
+    lesson: { courseSlug: "practical-prompt-engineering", lessonSlug: "06-claude-code-mastery" },
     hue: 35,
   },
   {
@@ -130,7 +130,7 @@ const GLOSSARY_TERMS = [
       en: "AI-native code editor built on VS Code. Features inline AI suggestions, chat, and automatic code generation with full context awareness.",
       cs: "AI-nativní editor kódu postavený na VS Code. Nabízí inline AI návrhy, chat a automatické generování kódu s plným kontextovým povědomím.",
     },
-    lesson: { courseId: 2, lessonId: 5 },
+    lesson: { courseSlug: "practical-prompt-engineering", lessonSlug: "05-ai-powered-development" },
     hue: 270,
   },
   {
@@ -141,7 +141,7 @@ const GLOSSARY_TERMS = [
       en: "AI pair programmer by GitHub/Microsoft. Suggests code completions, explains code, and generates functions based on comments and context.",
       cs: "AI párový programátor od GitHub/Microsoft. Navrhuje doplnění kódu, vysvětluje kód a generuje funkce na základě komentářů a kontextu.",
     },
-    lesson: { courseId: 2, lessonId: 5 },
+    lesson: { courseSlug: "practical-prompt-engineering", lessonSlug: "05-ai-powered-development" },
     hue: 250,
   },
   {
@@ -152,7 +152,7 @@ const GLOSSARY_TERMS = [
       en: "Full-stack AI development agent by Sourcegraph. Autonomous coding with project understanding, multi-file edits, and git integration.",
       cs: "Full-stack AI vývojový agent od Sourcegraph. Autonomní kódování s pochopením projektu, multi-file úpravami a git integrací.",
     },
-    lesson: { courseId: 2, lessonId: 7 },
+    lesson: { courseSlug: "practical-prompt-engineering", lessonSlug: "07-antigravity-mastery" },
     hue: 310,
   },
   {
@@ -163,7 +163,7 @@ const GLOSSARY_TERMS = [
       en: "AI systems that can independently plan, use tools, and take actions to achieve goals. The frontier of AI capability in 2025.",
       cs: "AI systémy, které mohou samostatně plánovat, používat nástroje a provádět akce k dosažení cílů. Hranice AI schopností v roce 2025.",
     },
-    lesson: { courseId: 2, lessonId: 5 },
+    lesson: { courseSlug: "practical-prompt-engineering", lessonSlug: "05-ai-powered-development" },
     hue: 190,
   },
 
@@ -176,7 +176,7 @@ const GLOSSARY_TERMS = [
       en: "Prompting technique that asks AI to show step-by-step reasoning. Dramatically improves accuracy on complex tasks like math and logic.",
       cs: "Promptovací technika, která žádá AI, aby ukázala krokové uvažování. Dramaticky zlepšuje přesnost u složitých úkolů jako matematika a logika.",
     },
-    lesson: { courseId: 5, lessonId: 1 },
+    lesson: { courseSlug: "advanced-ai-techniques", lessonSlug: "01-chain-of-thought" },
     hue: 55,
   },
   {
@@ -187,7 +187,7 @@ const GLOSSARY_TERMS = [
       en: "Teaching AI by providing a few input-output examples before your actual task. The model learns the pattern and applies it to new inputs.",
       cs: "Učení AI poskytnutím několika příkladů vstup-výstup před vaším skutečným úkolem. Model se naučí vzorec a aplikuje ho na nové vstupy.",
     },
-    lesson: { courseId: 5, lessonId: 2 },
+    lesson: { courseSlug: "advanced-ai-techniques", lessonSlug: "02-few-shot" },
     hue: 95,
   },
   {
@@ -198,7 +198,7 @@ const GLOSSARY_TERMS = [
       en: "Advanced AI models with built-in 'thinking time' (o1, o3, Claude 3.5). Solve complex problems through extended internal reasoning.",
       cs: "Pokročilé AI modely s vestavěným 'časem na přemýšlení' (o1, o3, Claude 3.5). Řeší složité problémy rozšířeným interním uvažováním.",
     },
-    lesson: { courseId: 5, lessonId: 3 },
+    lesson: { courseSlug: "advanced-ai-techniques", lessonSlug: "03-reasoning-models" },
     hue: 140,
   },
 
@@ -211,7 +211,7 @@ const GLOSSARY_TERMS = [
       en: "Technique that enhances AI responses by retrieving relevant information from external knowledge bases before generating answers.",
       cs: "Technika vylepšující AI odpovědi načítáním relevantních informací z externích znalostních bází před generováním odpovědí.",
     },
-    lesson: { courseId: 1, lessonId: 1 },
+    lesson: { courseSlug: "ai-engineering-deep-dive", lessonSlug: "01-rag" },
     hue: 45,
   },
   {
@@ -222,7 +222,7 @@ const GLOSSARY_TERMS = [
       en: "Converting text/images into numbers (vectors) that capture meaning. Similar concepts have similar vectors. Foundation of semantic search.",
       cs: "Převod textu/obrázků na čísla (vektory), které zachycují význam. Podobné koncepty mají podobné vektory. Základ sémantického vyhledávání.",
     },
-    lesson: { courseId: 1, lessonId: 1 },
+    lesson: { courseSlug: "ai-engineering-deep-dive", lessonSlug: "01-rag" },
     hue: 70,
   },
   {
@@ -233,7 +233,7 @@ const GLOSSARY_TERMS = [
       en: "Process of further training a pre-trained AI model on specific data to specialize it for particular tasks or domains.",
       cs: "Proces dalšího trénování předtrénovaného AI modelu na specifických datech pro specializaci na konkrétní úkoly nebo domény.",
     },
-    lesson: { courseId: 1, lessonId: 2 },
+    lesson: { courseSlug: "ai-engineering-deep-dive", lessonSlug: "02-fine-tuning" },
     hue: 280,
   },
   {
@@ -244,7 +244,7 @@ const GLOSSARY_TERMS = [
       en: "Open-source workflow automation platform. Connect AI models with 400+ services using visual node-based programming.",
       cs: "Open-source platforma pro automatizaci workflow. Propojte AI modely s 400+ službami pomocí vizuálního programování.",
     },
-    lesson: { courseId: 1, lessonId: 3 },
+    lesson: { courseSlug: "ai-engineering-deep-dive", lessonSlug: "03-ai-automation" },
     hue: 320,
   },
   {
@@ -255,7 +255,7 @@ const GLOSSARY_TERMS = [
       en: "The 'memory' of an AI during conversation. Larger context = AI remembers more. GPT-4: 128K tokens, Claude: 200K tokens.",
       cs: "‚Paměť' AI během konverzace. Větší kontext = AI si pamatuje více. GPT-4: 128K tokenů, Claude: 200K tokenů.",
     },
-    lesson: { courseId: 3, lessonId: 4 },
+    lesson: { courseSlug: "ai-basics-beginner", lessonSlug: "04-your-first-prompt" },
     hue: 300,
   },
   {
@@ -266,7 +266,7 @@ const GLOSSARY_TERMS = [
       en: "Running a trained AI model to get predictions. The 'thinking' phase when you chat with ChatGPT or generate an image.",
       cs: "Spuštění natrénovaného AI modelu pro získání predikcí. Fáze 'přemýšlení' když chatujete s ChatGPT nebo generujete obrázek.",
     },
-    lesson: { courseId: 1, lessonId: 2 },
+    lesson: { courseSlug: "ai-engineering-deep-dive", lessonSlug: "02-fine-tuning" },
     hue: 230,
   },
 
@@ -279,7 +279,7 @@ const GLOSSARY_TERMS = [
       en: "Conversational AI interface in Microsoft 365 Copilot for building automations using natural language. Creates Power Automate flows from plain text descriptions.",
       cs: "Konverzační AI rozhraní v Microsoft 365 Copilot pro tvorbu automatizací pomocí přirozeného jazyka. Vytváří Power Automate flows z textových popisů.",
     },
-    lesson: { courseId: 4, lessonId: 2 },
+    lesson: { courseSlug: "microsoft-copilot-mastery", lessonSlug: "02-workflows-agent" },
     hue: 25,
   },
   {
@@ -290,7 +290,7 @@ const GLOSSARY_TERMS = [
       en: "Enterprise platform for building custom AI agents. Define Instructions (persona), Knowledge Sources (data), and Actions (capabilities) without code.",
       cs: "Podniková platforma pro tvorbu vlastních AI agentů. Definujte Instructions (personu), Knowledge Sources (data) a Actions (schopnosti) bez kódu.",
     },
-    lesson: { courseId: 4, lessonId: 3 },
+    lesson: { courseSlug: "microsoft-copilot-mastery", lessonSlug: "03-copilot-studio" },
     hue: 340,
   },
   {
@@ -301,7 +301,7 @@ const GLOSSARY_TERMS = [
       en: "External data that AI agents can read and reference. Includes SharePoint, OneDrive, websites, and APIs. Respects user permissions automatically.",
       cs: "Externí data, která AI agenti mohou číst a odkazovat. Zahrnuje SharePoint, OneDrive, weby a API. Automaticky respektuje uživatelská oprávnění.",
     },
-    lesson: { courseId: 4, lessonId: 3 },
+    lesson: { courseSlug: "microsoft-copilot-mastery", lessonSlug: "03-copilot-studio" },
     hue: 85,
   },
   {
@@ -312,7 +312,7 @@ const GLOSSARY_TERMS = [
       en: "Microsoft's workflow automation platform. Creates automated flows between apps and services. Backend engine for Workflows Agent and Copilot Studio Actions.",
       cs: "Automatizační platforma Microsoft. Vytváří automatizované toky mezi aplikacemi a službami. Backend engine pro Workflows Agent a Copilot Studio Actions.",
     },
-    lesson: { courseId: 4, lessonId: 2 },
+    lesson: { courseSlug: "microsoft-copilot-mastery", lessonSlug: "02-workflows-agent" },
     hue: 210,
   },
   {
@@ -323,7 +323,7 @@ const GLOSSARY_TERMS = [
       en: "What AI agents can DO beyond conversation: call Power Automate flows, connect to APIs (Jira, Salesforce), send Teams messages, update databases.",
       cs: "Co AI agenti mohou DĚLAT kromě konverzace: volat Power Automate flows, připojovat se k API (Jira, Salesforce), posílat Teams zprávy, aktualizovat databáze.",
     },
-    lesson: { courseId: 4, lessonId: 3 },
+    lesson: { courseSlug: "microsoft-copilot-mastery", lessonSlug: "03-copilot-studio" },
     hue: 145,
   },
   {
@@ -334,7 +334,7 @@ const GLOSSARY_TERMS = [
       en: "AI assistant integrated into Word, Excel, Outlook, Teams. Drafts documents, summarizes emails, creates presentations from your enterprise data.",
       cs: "AI asistent integrovaný do Word, Excel, Outlook, Teams. Píše dokumenty, shrnuje e-maily, vytváří prezentace z vašich firemních dat.",
     },
-    lesson: { courseId: 4, lessonId: 1 },
+    lesson: { courseSlug: "microsoft-copilot-mastery", lessonSlug: "01-ai-powered-workday" },
     hue: 50,
   },
 ];
@@ -344,7 +344,7 @@ interface GlossaryTerm {
   term: { en: string; cs: string };
   fullName: { en: string; cs: string };
   definition: { en: string; cs: string };
-  lesson: { courseId: number; lessonId: number };
+  lesson: { courseSlug: string; lessonSlug: string };
   hue: number;
 }
 
@@ -1054,7 +1054,7 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
 
               {/* CTA */}
               <Link
-                href={`/courses/${selectedTerm.lesson.courseId}/lessons/${selectedTerm.lesson.lessonId}`}
+                href={`/courses/${selectedTerm.lesson.courseSlug}/lessons/${selectedTerm.lesson.lessonSlug}`}
                 onClick={() => setSelectedTerm(null)}
               >
                 <Button
