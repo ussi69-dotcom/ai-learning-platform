@@ -31,13 +31,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Toto je seznam pravidel která se NEJČASTĚJI ztrácejí po komprimaci. Zkontroluj je!
 
-### TOP 5 Survival Rules (NIKDY nezapomeň):
+### TOP 6 Survival Rules (NIKDY nezapomeň):
 
 1. **📖 WORKING_CONTEXT.md FIRST** - Vždy přečti před akcí
 2. **🔇 THIN PROTOCOL** - Do chatu jen summary + paths, ne dumps
 3. **🎯 DELEGACE** - Content → Gemini, Hard bugs → GPT-5.2 (Codex)
 4. **✅ VERIFY BEFORE COMMIT** - `npm run verify` MUSÍ projít
 5. **❓ BIG CHANGES → ASK** - Velké změny bez souhlasu uživatele = zakázáno
+6. **🚀 PROD = `make deploy-prod`** - NIKDY `docker compose up` na produkci!
 
 ### Self-Check After Resumption:
 ```
@@ -98,6 +99,26 @@ Aktivuj když: Security změny | DB migrace | Breaking API | >30min stuck + 2 fa
 □ Velká změna? → Zeptej se uživatele
 □ MACP trigger? → Blind Ballot oběma agentům
 ```
+
+### 🚀 PRODUCTION DEPLOYMENT (KRITICKÉ!)
+
+**Když uživatel říká "produkce", "prod", "deploy" nebo "jsme na produkci":**
+
+```bash
+# ✅ SPRÁVNĚ - vždy použij make deploy-prod
+make deploy-prod
+
+# ❌ ŠPATNĚ - NIKDY nepoužívej docker compose přímo na produkci!
+docker compose up -d --build  # ZAKÁZÁNO NA PROD!
+```
+
+**Proč?**
+- `make deploy-prod` používá `docker-compose.prod.yml` s PROD volumes
+- `docker compose up` používá DEV `docker-compose.yml` s DEV volumes
+- DEV a PROD volumes jsou oddělené (`postgres_data` vs `postgres_data_prod`)
+- Záměna může způsobit ztrátu dat nebo nefunkční databázi
+
+**SELHÁNÍ 2025-12-22:** Použit DEV compose na PROD → DB nefunkční (špatný user)
 
 ---
 
