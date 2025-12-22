@@ -493,6 +493,29 @@ Labs must be "Copy-Paste" ready. Don't describe the prompt, write it exactly.
 2. Add files: `content.mdx`, `content.cs.mdx`, `meta.json`, `quiz.json`, `quiz.cs.json`
 3. Restart backend: `docker compose restart backend`
 
+### Course Images
+Course cover images are defined in `content/courses/[course-slug]/meta.json`:
+```json
+{
+  "title": "Course Title",
+  "image_url": "/images/ships/y-wing.png",
+  "difficulty_level": "LETS_ROCK"
+}
+```
+
+**Available Ship Images:** (`frontend/public/images/ships/`)
+- `xwing.png` - X-Wing (Beginner courses)
+- `y-wing.png` - Y-Wing (Intermediate courses)
+- `falcon.png` - Millennium Falcon
+- `tie_fighter.png` - TIE Fighter
+- `star_destroyer.png` - Star Destroyer (Advanced)
+- `death_star.png` - Death Star (Expert)
+- `venator.png` - Venator-class
+- `slave_one.png` - Slave I (Boba Fett)
+
+**Theme Support:** CourseIcon component auto-appends `_light` or `_dark` suffix for theme variants.
+**Fallback:** If no `image_url`, SVG icon is generated based on course slug.
+
 ## Environment Variables
 
 Required in `.env` file:
@@ -550,12 +573,56 @@ FIRST_SUPERUSER_PASSWORD=admin123
 **API Docs:** http://localhost:8000/docs (Swagger UI)
 
 **Key Endpoints:**
-- `POST /register` - User registration with email verification
-- `POST /login` - JWT token authentication
+- `POST /auth/register` - User registration with email verification (param: `?lang=cs|en`)
+- `GET /auth/verify` - Email verification (params: `?token=...&lang=cs|en`)
+- `POST /auth/token` - JWT token authentication (OAuth2 form data)
 - `GET /courses` - List all courses
 - `GET /lessons/{id}` - Get lesson content (supports `?lang=cs`)
 - `PUT /lessons/{id}/progress` - Update user progress
 - `POST /feedback` - Submit feedback
+
+### Admin Dashboard (`/admin/*`)
+
+Protected endpoints for platform administration. Access restricted to emails in `ADMIN_EMAILS` env var.
+
+**Configuration:**
+```bash
+# .env file - comma-separated list of admin emails
+ADMIN_EMAILS=admin@example.com,other@example.com
+```
+
+**Endpoints:**
+- `GET /admin/status` - System status (DB, Redis, user counts, content counts)
+- `GET /admin/users` - List users with stats
+- `GET /admin/users/{id}` - User detail
+- `GET /admin/users/{id}/progress` - User's lesson progress
+- `POST /admin/users/{id}/reset-progress` - Reset user progress
+- `DELETE /admin/users/{id}` - Delete user and all data
+- `POST /admin/users/{id}/verify` - Manually verify user email
+- `GET /admin/tests/list` - List available system tests
+- `POST /admin/tests/run/{test_id}` - Run single test
+- `GET /admin/tests/run` - Run all system tests
+- `POST /admin/feeds/refresh` - Manually refresh news feeds
+
+**System Tests:**
+```
+✅ database         - PostgreSQL connection
+✅ redis            - Redis connection
+✅ courses          - Course data exists
+✅ lessons          - Lesson data exists
+✅ news             - News items loaded
+✅ admin_user       - Admin user configured
+✅ email_config     - SMTP configuration
+✅ youtube_feed     - YouTube API connectivity
+✅ rss_feeds        - RSS feed connectivity
+✅ registration_flow - DB: Register → Verify → Delete
+✅ registration_api  - API: Register → Verify → Login → Delete
+```
+
+**Technical Notes:**
+- Registration API test uses internal nginx URL (`http://nginx/api`) to bypass Cloudflare
+- Email verification redirects to `/{lang}/login?verified=true` with locale prefix
+- Verify endpoint returns HTTP 303 (See Other) redirect
 
 ## Testing
 
