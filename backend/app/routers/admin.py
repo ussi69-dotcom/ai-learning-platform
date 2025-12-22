@@ -705,7 +705,7 @@ def _test_registration_api(db: Session) -> TestResult:
         with httpx.Client(timeout=10.0, verify=False) as client:
             # Step 1: Register via API
             register_resp = client.post(
-                f"{api_url}/register",
+                f"{api_url}/auth/register",
                 json={
                     "email": test_email,
                     "password": test_password,
@@ -740,9 +740,10 @@ def _test_registration_api(db: Session) -> TestResult:
                     duration_ms=int((time.time() - start) * 1000)
                 )
 
-            # Step 3: Verify email via API
-            verify_resp = client.get(f"{api_url}/verify-email/{verification_token}")
-            if verify_resp.status_code not in [200, 307, 302]:
+            # Step 3: Verify email via API (uses query param, not path param)
+            # Verify endpoint returns 303 See Other redirect to login page
+            verify_resp = client.get(f"{api_url}/auth/verify?token={verification_token}")
+            if verify_resp.status_code not in [200, 302, 303, 307]:
                 # Cleanup and fail
                 db.query(models.UserProgress).filter(models.UserProgress.user_id == user.id).delete()
                 db.delete(user)
@@ -754,9 +755,9 @@ def _test_registration_api(db: Session) -> TestResult:
                     duration_ms=int((time.time() - start) * 1000)
                 )
 
-            # Step 4: Login via API
+            # Step 4: Login via API (OAuth2 token endpoint)
             login_resp = client.post(
-                f"{api_url}/login",
+                f"{api_url}/auth/token",
                 data={"username": test_email, "password": test_password},
                 headers={"Content-Type": "application/x-www-form-urlencoded"}
             )
