@@ -22,6 +22,22 @@ codex1    # Plus (fallback)
 
 ---
 
+## 🧭 Codex Profile Cheat Sheet
+
+| Situation | Profile | Intent |
+|-----------|---------|--------|
+| Quick triage, small fix | `fast` | Speed, minimal overhead |
+| Pre-implementation review | `review` | Sanity check approach |
+| New endpoint / risky behavior | `tests` | Happy + failure paths |
+| Auth/permissions change | `security` | Enumerate authz pitfalls |
+| Bug >30 min / unclear root cause | `deep` | Root-cause analysis |
+| Multi-component planning | `orchestrator` | Decompose + plan |
+| Production incident | `hotfix` | Smallest safe fix |
+
+Claude model default: Opus (downgrade only if user asks for speed).
+
+---
+
 ## 🤖 Multi-Agent Workflow v5.1 (Dec 2025)
 
 ### "Asymmetric Context Segregation" Model
