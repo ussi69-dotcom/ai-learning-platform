@@ -61,7 +61,7 @@ export default function RegisterPage() {
 
     try {
       // New users start at PIECE_OF_CAKE, level up automatically via XP
-      await register(email, password, "PIECE_OF_CAKE", avatar);
+      await register(email, password, "PIECE_OF_CAKE", avatar, locale);
       router.push("/login?registered=true");
     } catch (err: any) {
       setError(getErrorMessage(err, tCommon("error")));

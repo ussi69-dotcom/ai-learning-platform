@@ -30,19 +30,20 @@ conf = ConnectionConfig(
     VALIDATE_CERTS=True
 )
 
-async def send_verification_email(email: EmailStr, token: str):
+async def send_verification_email(email: EmailStr, token: str, lang: str = "cs"):
     """
     Sends a verification email to the user.
     """
     # We point to the backend verification endpoint which will redirect to frontend
     # Use central config for the backend URL
     base_url = settings.BACKEND_PUBLIC_URL
-    
+
     # Ensure we don't double slashes if base_url ends with /
     if base_url.endswith('/'):
         base_url = base_url[:-1]
-        
-    verify_url = f"{base_url}/auth/verify?token={token}"
+
+    # Include lang in verify URL for proper redirect
+    verify_url = f"{base_url}/auth/verify?token={token}&lang={lang}"
     
     html = f"""
     <html>

@@ -690,7 +690,7 @@ def _test_rss_feeds() -> TestResult:
 
 
 def _test_registration_api(db: Session) -> TestResult:
-    """Test registration via actual API endpoints."""
+    """Test registration via actual API endpoints (uses internal localhost to bypass Cloudflare)."""
     import time
     import uuid
     import httpx
@@ -698,8 +698,8 @@ def _test_registration_api(db: Session) -> TestResult:
 
     test_email = f"apitest-{uuid.uuid4().hex[:8]}@e2e-test.local"
     test_password = "TestPassword123!"
-    base_url = os.getenv("FRONTEND_URL", "http://localhost")
-    api_url = f"{base_url}/api"
+    # Use internal URL to bypass Cloudflare - nginx routes /api to backend
+    api_url = "http://nginx/api"
 
     try:
         with httpx.Client(timeout=10.0, verify=False) as client:

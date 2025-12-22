@@ -46,3 +46,7 @@ CLAUDE.md.local
 
 # Perplexity assist images (local reference)
 .ai-context/Perplexity_assist/
+
+# Backups (sensitive data)
+backups/
+backup.sh

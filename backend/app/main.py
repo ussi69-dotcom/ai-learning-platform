@@ -132,21 +132,25 @@ async def stop_news_scheduler():
 
 @app.post("/auth/register", response_model=schemas.User)
 @limiter.limit("5/minute")
-async def register_user(request: Request, user: schemas.UserCreate, db: Session = Depends(database.get_db)):
+async def register_user(request: Request, user: schemas.UserCreate, lang: str = "cs", db: Session = Depends(database.get_db)):
     db_user = db.query(models.User).filter(models.User.email == user.email).first()
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
-    
+
+    # Validate lang
+    if lang not in ["cs", "en"]:
+        lang = "cs"
+
     hashed_password = auth.get_password_hash(user.password)
     is_production = is_production_env()
     verification_token = str(uuid.uuid4()) if is_production else None
 
     new_user = models.User(
-        email=user.email, 
+        email=user.email,
         hashed_password=hashed_password,
         difficulty=models.DifficultyLevel(user.difficulty),
         avatar=user.avatar,
-        is_verified=not is_production, # Skip verification in non-prod
+        is_verified=not is_production,  # Skip verification in non-prod
         verification_token=verification_token
     )
     db.add(new_user)
@@ -156,7 +160,7 @@ async def register_user(request: Request, user: schemas.UserCreate, db: Session 
     # Send verification email only in production.
     if is_production and verification_token:
         try:
-            await send_verification_email(new_user.email, verification_token)
+            await send_verification_email(new_user.email, verification_token, lang)
         except Exception as e:
             print(f"Failed to send email: {e}")
             # Don't fail registration, just log it. User can request resend later.
@@ -164,20 +168,23 @@ async def register_user(request: Request, user: schemas.UserCreate, db: Session 
     return new_user
 
 @app.get("/auth/verify")
-def verify_email(token: str, db: Session = Depends(database.get_db)):
+def verify_email(token: str, lang: str = "cs", db: Session = Depends(database.get_db)):
+    """Verify user email. Redirects to login page with locale prefix."""
+    frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
+    # Validate lang to prevent open redirect
+    if lang not in ["cs", "en"]:
+        lang = "cs"
+
     user = db.query(models.User).filter(models.User.verification_token == token).first()
     if not user:
-        # Redirect to error page or login with error
-        frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
-        return RedirectResponse(url=f"{frontend_url}/login?error=invalid_token", status_code=303)
-    
+        return RedirectResponse(url=f"{frontend_url}/{lang}/login?error=invalid_token", status_code=303)
+
     if not user.is_verified:
         user.is_verified = True
-        user.verification_token = None # Clear token
+        user.verification_token = None  # Clear token
         db.commit()
-    
-    frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
-    return RedirectResponse(url=f"{frontend_url}/login?verified=true", status_code=303)
+
+    return RedirectResponse(url=f"{frontend_url}/{lang}/login?verified=true", status_code=303)
 
 
 @app.post("/auth/token", response_model=schemas.Token)
