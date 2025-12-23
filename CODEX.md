@@ -28,7 +28,7 @@ git log -1 --oneline
 **Kdy mě NEVOLAT:**
 - Běžné kódování (Claude)
 - Content generation (Gemini)
-- Quick research (Perplexity)
+- Research (Gemini Deep Research via script or GPT-Researcher if installed)
 - Visual QA (Gemini - 2M context)
 
 ---
@@ -110,14 +110,25 @@ Každá moje odpověď MUSÍ obsahovat:
 
 ### Claude (Implementer)
 ```markdown
-## Task Brief pro Claude
+## Task Brief pro Claude (v5.3)
 ## Goal: [1 věta]
+## Skills: [doporučené Superpowers - viz tabulka níže]
 ## Acceptance criteria:
 - [ ] [criterion 1]
 - [ ] [criterion 2]
 ## Files to modify: [seznam]
 ## Expected outcome: [jak poznat success]
+## Verify: [konkrétní test/command]
 ```
+
+### Skill Recommendation Matrix
+| Task Type | Doporučené Skills |
+|-----------|-------------------|
+| Bug/Incident | `/systematic-debugging` + `/verification-before-completion` |
+| Feature/Refactor | `/writing-plans` → `/executing-plans` |
+| Codebase Discovery | `/dispatching-parallel-agents` |
+| Content Creation | `/subagent-driven-development` |
+| Any task completion | `/verification-before-completion` (always!) |
 
 ### Claude Opus (CLI Oponentura)
 ```bash
@@ -142,8 +153,8 @@ cat << 'EOF' | gemini -m gemini-3-pro-preview 2>&1
 EOF
 ```
 
-### Perplexity (Quick Research)
-- Primárně přes Claude Code (MCP) nebo přímo přes Perplexity API/script; v Codex lze doplnit přes `codex mcp add` (viz `.ai-context/workflows/MCP_SETUP.md`).
+### Research (No Perplexity)
+- Použij Gemini Deep Research script nebo GPT-Researcher (pokud je nainstalovaný) přes Claude Code.
 
 ### Poznámka k API klíčům
 Používej klíče z `.env` (neukládej je do configů). Pokud potřebuješ v CLI načíst env:

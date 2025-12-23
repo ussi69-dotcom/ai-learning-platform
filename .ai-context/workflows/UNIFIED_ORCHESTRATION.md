@@ -10,6 +10,7 @@ the orchestrator must pull in the other agent for review before closing.
 ## 0.1) User Directive Overrides
 
 - "pouzij codex / kamoce" = Codex is orchestrator and final gate.
+- "pouzij kamose" = Triad consult: Codex + Claude + Gemini each provide top-3 ideas; orchestrator consolidates and runs a quick vote for final top-3.
 - "pouzij claude" = Claude is implementer; Codex reviews if task is complex.
 - "MACP" = run MACP regardless of task size.
 - "rychle" = prioritize Claude for implementation, Codex for review only.
@@ -154,7 +155,7 @@ They do NOT report to the user. Orchestrator reviews and reports.
 - Fast code changes: Claude
 - Hard reasoning or root-cause: Codex
 - Content creation: Gemini 3 Pro (draft) -> Claude QA -> Codex gate
-- Quick research: Perplexity (URLs + facts)
+- Quick research: Gemini 3 Pro (short) or Context7 for docs
 - Deep research: Gemini Deep Research
 - Video evidence: YouTube MCP (metadata + transcript)
 - Anti-bot browse: Camoufox (only if normal fetch fails)
@@ -190,7 +191,7 @@ They do NOT report to the user. Orchestrator reviews and reports.
 ## 5) Parallelization Strategy
 
 Run in parallel when possible:
-- Research (Perplexity/Gemini) + Implementation (Claude) + QA plan (Codex)
+- Research (Gemini Deep Research/Gemini 3 Pro) + Implementation (Claude) + QA plan (Codex)
 - Visual QA in parallel with test runs
 
 Orchestrator merges results, resolves conflicts, and issues next tasks.
@@ -224,9 +225,35 @@ Orchestrator merges results, resolves conflicts, and issues next tasks.
   - MACP if any security/auth/DB changes
 
 - Research spike:
-  - Perplexity fast pass
+- Gemini 3 Pro fast pass
   - Gemini Deep Research if needed
   - Codex distills decisions + action plan
+
+## 5.2) Scenario → Superpowers Skill Mapping (v5.3)
+
+**Codex VŽDY doporučí 1-2 skills v Task Briefu pro Claude:**
+
+| Scenario | Claude Superpowers | Gemini Protocol |
+|----------|-------------------|-----------------|
+| Quick bugfix | - (too small) | - |
+| Complex debugging | `/systematic-debugging` + `/verification-before-completion` | - |
+| Feature/refactor | `/writing-plans` → `/executing-plans` | - |
+| Codebase discovery | `/dispatching-parallel-agents` | - |
+| Content upgrade | `/subagent-driven-development` | "Inquisitor Protocol" |
+| Visual regression | `/verification-before-completion` | "Pixel Defense" |
+| Release readiness | All verification skills | Full QA suite |
+
+**Skill Descriptions:**
+- `/systematic-debugging` - 4-phase root cause analysis (isolate → hypothesize → test → verify)
+- `/writing-plans` - Detailed plans with file paths, 2-5 min tasks, verification steps
+- `/executing-plans` - Batch execution with human checkpoints
+- `/dispatching-parallel-agents` - Coordinate concurrent subagent workflows
+- `/subagent-driven-development` - Two-stage review (spec compliance → code quality)
+- `/verification-before-completion` - Pre-completion checklist, ensures fix is genuine
+
+**Gemini Protocols:**
+- "Inquisitor Protocol" - Socratic content review (relevance, cognitive load, actionability)
+- "Pixel Defense" - Binary visual QA checklist (viewport, contrast, states, assets)
 
 ## 6) Claude Early-Exit Guard
 

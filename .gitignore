@@ -51,3 +51,4 @@ CLAUDE.md.local
 # Backups (sensitive data)
 backups/
 backup.sh
+.venv/

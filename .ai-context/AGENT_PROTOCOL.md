@@ -13,6 +13,7 @@
 
 **v6.0 Details:** See `workflows/WORKFLOW_V6_CLAUDE_FIRST.md`
 **Unified Orchestration (Codex + Claude consoles):** See `workflows/UNIFIED_ORCHESTRATION.md`
+**User directive:** "pouzij kamose" triggers a triad consult (Codex + Claude + Gemini) with independent top-3 ideas and a quick vote for final top-3.
 
 **Codex Accounts:**
 ```bash
@@ -64,8 +65,8 @@ Claude model default: Opus (downgrade only if user asks for speed).
 │  └───────────────┘   (file paths)       └───────────────┘       │
 │                                                                  │
 │  ┌───────────────┐  ┌───────────────┐                           │
-│  │  Perplexity   │  │ Gemini Deep   │                           │
-│  │  (Quick Res.) │  │ (60min Res.)  │                           │
+│  │ GPT-Researcher│  │ Gemini Deep   │                           │
+│  │  (optional)   │  │ (60min Res.)  │                           │
 │  └───────────────┘  └───────────────┘                           │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -77,8 +78,8 @@ Claude model default: Opus (downgrade only if user asks for speed).
 | **GPT-5.2** | Orchestrátor + Reasoning | ~128k | OpenAI Pro |
 | **Claude Code** | Implementer + Git + Daily Ops | ~200k | Claude Code |
 | **Gemini 3 Pro** | Visual QA + Content + Research | **2M** | Google AI Plus |
-| **Perplexity** | Quick Research + Facts | N/A | MCP |
 | **Gemini Deep Research** | 60-min Autonomous Research | N/A | Google AI Plus |
+| **GPT-Researcher** | Optional self-hosted research runner | N/A | Local |
 
 ### 🎯 Situational Orchestration
 
@@ -89,8 +90,8 @@ Claude model default: Opus (downgrade only if user asks for speed).
 | **Content creation** | Claude | Gemini 3 | Claude |
 | **Architecture decision** | GPT-5.2 | Claude | Gemini (alternatives) |
 | **Visual QA** | Claude | Claude | **Gemini** (2M ctx!) |
-| **Quick research** | Claude | Perplexity | Claude |
-| **Deep research** | Claude | Gemini Deep / Perplexity | Claude |
+| **Quick research** | Claude | Gemini 3 Pro (CLI) | Claude |
+| **Deep research** | Claude | Gemini Deep Research (script) | Claude |
 
 ### ⚡ Escalation Triggers (→ GPT-5.2)
 
@@ -326,6 +327,71 @@ Prevents: infinite ping-pong, token bloat, analysis paralysis.
 
 ---
 
+## 🦸 Claude Superpowers Integration (v5.3)
+
+**Plugin:** `obra/superpowers` - Strukturované workflow skills pro Claude Code
+
+### Skill → Task Mapping (GPT-5.2 VŽDY doporučí v Task Briefu)
+
+| Task Type | Claude Skills | Popis |
+|-----------|---------------|-------|
+| Bug/Incident | `/systematic-debugging` + `/verification-before-completion` | 4-phase root cause + checklist |
+| Feature/Refactor | `/writing-plans` → `/executing-plans` | Detailed plans → batch execution |
+| Codebase Discovery | `/dispatching-parallel-agents` | Coordinate parallel subagents |
+| Content Creation | `/subagent-driven-development` | Two-stage review (spec → quality) |
+| Any Completion | `/verification-before-completion` | Always verify before "done" |
+
+### Workflow Hierarchy (v5.3)
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  GPT-5.2 (MAKRO-ORCHESTRACE)                                    │
+│  - Cíle, rizika, acceptance criteria, "done" definice          │
+│  - Trade-offs, scope minimalizace, finální code review          │
+│  - VŽDY doporučí 1-2 skills v Task Briefu                       │
+│                              ↓                                  │
+├─────────────────────────────────────────────────────────────────┤
+│  Claude + Superpowers (MIKRO-ORCHESTRACE + EXECUTION)           │
+│  - Aktivuje doporučené skills                                   │
+│  - Strukturovaná implementace s checkpointy                     │
+│  - State Summary (10 řádků max) po dokončení                    │
+│                              ↓                                  │
+├─────────────────────────────────────────────────────────────────┤
+│  Gemini (QA GATE)                                               │
+│  - "Inquisitor Protocol" = Socratic content review              │
+│  - "Pixel Defense" = Binary visual QA (PASS/FAIL)               │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Gemini Handoff Formats
+
+**Pro Content Review:**
+```markdown
+**TASK:** Content Review
+**TARGET:** `content/courses/[course]/lessons/[id]/content.mdx`
+**AUDIENCE:** [Beginner/Intermediate/Advanced]
+**FOCUS:** [Specific aspect to review]
+```
+
+**Pro Visual QA:**
+```markdown
+**TASK:** Visual Inspection
+**SNAPSHOT:** `path/to/screenshot.png`
+**CONTEXT:** [What the screen shows]
+**EXPECTED:** [Specific elements to verify]
+```
+
+### Context Saving Rules (pro Claude)
+
+| Pravidlo | Proč |
+|----------|------|
+| Plán max 3-6 kroků | Méně ping-pong |
+| Žádné code dumps | Odkazuj na soubory/symboly |
+| State summary na konci | 10 řádků: hotovo/zbývá/rizika |
+| Explicit skill v promptu | Deterministické chování |
+
+---
+
 ## 🤖 Agent-Specific Instructions
 
 ### GPT-5.2 (Codex CLI)
@@ -442,18 +508,9 @@ python backend/scripts/gemini_deep_research.py "Research question"
 gemini -m deep-research-pro-preview-12-2025 "Research question"
 ```
 
-### Perplexity (MCP)
+### Perplexity (MCP) - Disabled
 
-**Kdy volat:**
-```
-✅ Quick facts (<5 min)
-✅ Dokumentace ověření
-✅ Aktuální trendy
-✅ Citace potřeba
-```
-
-**MCP Tools:**
-- `mcp__perplexity-ask__perplexity_ask` - Conversational research
+**Status:** Dočasně vypnuto (kredity). Nepoužívat v workflow.
 
 ---
 
@@ -519,7 +576,7 @@ Pro KAŽDÝ content/code output:
 ### 4. Stay Current
 - **VŽDY** ověř aktuální datum (dnes: použij systémové datum!)
 - Pro research, verze, trendy → použij **WebSearch** nebo **Context7 MCP**
-- Pro **Deep Research** (komplexní analýzy, srovnání, trendy) → použij **Perplexity MCP**
+- Pro **Deep Research** (komplexní analýzy, srovnání, trendy) → použij **Gemini Deep Research**
 - **NIKDY** nepoužívej zastaralé informace z knowledge cutoff
 
 ### 5. No Placeholder Code
@@ -666,22 +723,18 @@ Pro kompletní přehled dokumentace viz:
 |--------------|---------|---------|
 | **Rychlá fakta, jednoduché dotazy** | `WebSearch` | "Jaká je nejnovější verze React?" |
 | **Dokumentace knihovny** | `Context7 MCP` | "Jak použít useEffect v React 19?" |
-| **Deep Research, analýzy, srovnání** | `Perplexity MCP` | "Srovnej AI code assistants 2025" |
-| **Aktuální trendy, state-of-the-art** | `Perplexity MCP` | "Nejnovější techniky pro RAG" |
-| **Content research před generací** | `Perplexity MCP` → `Gemini` | Research → Content pipeline |
+| **Deep Research, analýzy, srovnání** | `Gemini Deep Research` | "Srovnej AI code assistants 2025" |
+| **Aktuální trendy, state-of-the-art** | `Gemini Deep Research` | "Nejnovější techniky pro RAG" |
+| **Content research před generací** | `Gemini Deep Research` → `Gemini` | Research → Content pipeline |
 
-### 🔬 Perplexity MCP Tools
-
-Po restartu Claude Code session jsou dostupné:
-
-| Tool | Kdy použít |
-|------|------------|
-| `mcp__perplexity-search__perplexity_search` | Rychlé vyhledávání s citacemi |
-| `mcp__perplexity-search__perplexity_research` | Deep Research - komplexní analýzy |
+**Poznámka (Perplexity vypnuto):**
+- Primární research = **Gemini Deep Research**.
+- Rychlé faktické dotazy → **Context7 MCP** nebo krátký Gemini prompt.
+- **GPT-Researcher** lze použít jako self-hosted fallback (vyžaduje konfiguraci + API klíče).
 
 ### 📋 Deep Research Workflow
 
-**Kdy MUSÍŠ použít Perplexity Deep Research:**
+**Kdy MUSÍŠ použít Gemini Deep Research:**
 1. **Content creation** - Před psaním lekce/článku → zjisti aktuální stav tématu
 2. **Technologická rozhodnutí** - "Jaký framework použít pro X?"
 3. **Competitive analysis** - Srovnání produktů, knihoven, přístupů
@@ -691,7 +744,7 @@ Po restartu Claude Code session jsou dostupné:
 **Příklad workflow:**
 ```
 1. Uživatel: "Napiš lekci o RAG"
-2. Claude: Použiju perplexity_research pro aktuální stav RAG technologií
+2. Claude: Použiju Gemini Deep Research pro aktuální stav RAG technologií
 3. Claude: Předám research Gemini pro generování obsahu
 4. Claude: QA review výsledku
 ```
@@ -716,9 +769,8 @@ Autonomní výzkumný agent od Google (Gemini 3 Pro), který:
 
 **Kdy NEPOUŽÍVAT:**
 ```
-❌ Rychlé dotazy (použij Perplexity nebo WebSearch)
 ❌ Low-latency chatbot interakce
-❌ Jednoduché extrakce faktů
+❌ Jednoduché extrakce faktů (raději Context7/short prompt)
 ```
 
 **Jak volat (CLI):**
