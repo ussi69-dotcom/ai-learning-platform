@@ -12,6 +12,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 2. □ URČI TYP ÚKOLU               → Content? Debug? Implementation?
 
+2b. □ ORCHESTRATOR = AKTIVNÍ KONZOLE (pokud user neurčí jinak)
+
 3. □ ZKONTROLUJ CRITICAL_RULES    → Delegace? Thin protocol? (sekce níže)
 
 4. □ PODMÍNĚNÉ LOADING            → Viz tabulka, přečti relevantní soubor
@@ -87,6 +89,8 @@ Toto je seznam pravidel která se NEJČASTĚJI ztrácejí po komprimaci. Zkontro
 ✅ VŽDY: Screenshot → .playwright-mcp/file.png → Gemini
 ```
 
+Pouzij checklisty "Inquisitor Protocol" a "Pixel Defense" z `.ai-context/workflows/UNIFIED_ORCHESTRATION.md` (Protocols Appendix).
+
 ### 🗳️ MACP Triggery (konzultuj GPT-5.2 + Gemini)
 
 Aktivuj když: Security změny | DB migrace | Breaking API | >30min stuck + 2 failed attempts
@@ -138,7 +142,7 @@ docker compose up -d --build  # ZAKÁZÁNO NA PROD!
 ## 🎯 Tvoje Role (v5.2)
 
 - **Primary Implementer + QA gate:** změny v repo, integrace, ověření (`npm run verify`, backend testy)
-- **Deleguj:** content + visual QA → Gemini CLI; quick research → Perplexity
+- **Deleguj:** content + visual QA → Gemini CLI; research → Gemini Deep Research (script) or GPT-Researcher (if installed)
 - **Eskaluj:** hard reasoning / záhadné bugy → GPT‑5.2 přes Codex
 - **Thin protocol:** do chatu jen shrnutí + cesty k artefaktům
 
@@ -183,8 +187,7 @@ codex exec -p orchestrator "Udělal jsem [X]. Ověř a řekni co dál."
 |--------------|---------|----------|
 | Rychlá fakta | WebSearch | ⚡ 5s |
 | Dokumentace knihovny | Context7 MCP | ⚡ 5s |
-| Quick research | Perplexity MCP | ⚡ 10s |
-| Deep research (short) | Gemini CLI | ⏱️ 2-5m |
+| Quick research | Gemini CLI (3 Pro) | ⏱️ 2-5m |
 | Deep research (long) | Gemini Deep Research | ⏱️ 20-60m |
 
 ### Codex Profile Decision Tree (10-second rule)
@@ -738,7 +741,7 @@ Update `NEXT_PUBLIC_API_URL` in `.env` if changing backend port.
 
 1. Clone repo on server (Ubuntu 24.04 + Docker)
 2. Create `.env` with production secrets
-3. Run: `docker compose -f docker-compose.prod.yml up -d --build`
+3. Run: `make deploy-prod` (wraps `docker-compose.prod.yml` with prod volumes)
 4. Nginx routes traffic to frontend (3000) and backend (8000)
 5. Configure SSL/TLS with Let's Encrypt (via reverse proxy)
 
@@ -753,8 +756,8 @@ Update `NEXT_PUBLIC_API_URL` in `.env` if changing backend port.
 ## Key Dependencies
 
 **Frontend:**
-- next 16.0.3
-- react 19.2.0
+- next 16.0.10
+- react 19.2.1
 - next-intl 4.5.5 (localization)
 - next-mdx-remote 5.0.0 (MDX rendering)
 - tailwindcss 4 (styling)

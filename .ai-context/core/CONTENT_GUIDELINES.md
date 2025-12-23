@@ -166,7 +166,7 @@ Pouzij tento proces jako **defaultni template** pro dalsi lekce (L2/L3 golden st
 - Definuj co je "golden": hook + learning curve + vizualy + labs + Holocron.
 
 ### 2) Research + Video Selection
-- Quick research (Perplexity) na nove videa/perly.
+- Quick research (Gemini 3 Pro / Context7) na nove videa/perly.
 - Pokud najdes nova videa: pridat do VideoSwitcher, oznacit CZ alternativu jako ALT.
 - Kdyz nejsou nova videa: pracuj s existujicimi (golden standard).
 
@@ -440,16 +440,16 @@ Our primary audience is technically curious and motivated, but not necessarily a
 
 ## 3. Quality Assurance Process
 
-The full QA workflow is defined in `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`.
+The full QA workflow is defined in `.ai-context/workflows/UNIFIED_ORCHESTRATION.md`.
 
 **Key Points:**
 1. **Claude Code = QA Gate & Integrator** - Reviews all content before publish and integrates changes
 2. **Gemini 3 Pro = Researcher & Draft Creator** - Deep research, content generation, visual QA
 3. **GPT‑5.2 (Codex) = Situational Orchestrator (when stuck)** - Hard reasoning / second opinion
 4. **Excellence Loop** - Iterate until 99% quality
-5. **Verification Checklist** - Follow `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md` + `CLAUDE.md`
+5. **Verification Checklist** - Follow `.ai-context/workflows/UNIFIED_ORCHESTRATION.md` + `CLAUDE.md`
 
-> ⚠️ **Never publish without passing the QA checklist in `.ai-context/workflows/MULTI_AGENT_WORKFLOW.md`.**
+> ⚠️ **Never publish without passing the QA checklist in `.ai-context/workflows/UNIFIED_ORCHESTRATION.md`.**
 
 ---
 
@@ -556,6 +556,7 @@ Collapsible hints for stuck users.
 ### SVG Pravidla
 
 * **NO Raster Images:** Use `<Diagram type="...">` (SVG).
+  * **Vyjimka:** Realne UI screenshoty pres `<MDXImage ... />` podle "UI Screenshot Rule".
 * **Mandatory Diagrams:** KAŽDÝ koncept = 1 diagram. Bez výjimek.
 * **Dark Mode:** Always use `fill-slate-600 dark:fill-slate-400` for compatibility.
 * **Registration:** New diagram types must be registered in `frontend/components/mdx/Diagram.tsx`.

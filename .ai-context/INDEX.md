@@ -9,6 +9,7 @@
 
 ## Situational
 - workflows/WORKFLOW_V6_MASTERPIECE.md (content upgrades)
+- workflows/WORKFLOW_V6_CLAUDE_FIRST.md (Claude-first workflow)
 - workflows/RELEASE_CHECKLIST.md (release readiness)
 - workflows/DATABASE_MIGRATIONS.md (schema changes)
 - workflows/INCIDENT_REPORTING.md (prod incidents)

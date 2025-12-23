@@ -1,15 +1,16 @@
 # Working Context
 
-**Last Updated:** 2025-12-23 14:17 (Agent: Codex GPT-5.2)
+**Last Updated:** 2025-12-23 23:47 (Agent: Codex GPT-5.2)
 
-## 🚦 Current Status: Mentor hotfix + visual QA complete (awaiting user confirmation)
-- **Boot sync:** WORKING_CONTEXT now matches `git log -1`.
-- **Latest commits:** `2738afb` (remove visual_tests artifacts), `5b3ebda` (ignore visual_tests artifacts), `2dcaea0` (consolidate agent docs + archive legacy), `0adbbfd` (add Codex profile cheat sheet).
-- **Active task:** none set in this session.
+## 🚦 Current Status: Doc stack audit (GPT_REVIEW_PROMPT)
+- **Boot sync:** Updated to match `git log -1` at `676679b`.
+- **Latest commits:** `676679b` (workflow v5.3 Superpowers integration), `b672118` (refresh lessons + diagram QA + /api alias), `2738afb` (remove visual_tests artifacts), `5b3ebda` (ignore visual_tests artifacts), `2dcaea0` (consolidate agent docs + archive legacy).
+- **Active task:** Apply doc fixes from audit (deploy conflict, Perplexity removal, MULTI_AGENT link update, orchestrator clarification, protocol definitions, index + dependency sync, always-on references, phase numbering + visual QA checklist, unified PASS/FAIL + GO/NO-GO/NEEDS-DECISION verdicts, expanded Superpowers mapping).
+- **Note:** Audit report saved: `.ai-context/reports/DOC_STACK_AUDIT_2025_12_23.md`.
 - **Note:** Executed T1-T5 for Gemini lesson gaps: added /api backend prefix, mobile fallback for local LLM diagram, updated pricing/model references, Copilot GA notes, archived old PPE structure, added diagram gallery + mobile render test, and documented deprecation/decay audit policy.
 - **Note:** Ran `npm run verify`: ESLint warnings only; TypeScript/build succeeded after fixing `frontend/components/AIMentor.tsx`. Moved local visual debug scripts out of `frontend/` to `scripts/visual/` to avoid lint errors.
 - **Note:** Ran full `npm run test:visual`: 108 passed, 9 skipped.
-- **Note:** Added "pouzij kamose" triad directive to orchestration docs; Perplexity API credits depleted (401). Fallback: Gemini Deep Research (updated in AGENT_PROTOCOL).
+- **Note:** Perplexity removed from workflow by user request; use Gemini Deep Research (script) or GPT-Researcher (optional).
 - **Note:** Gemini Deep Research attempt failed: CLI model returned "Requested entity was not found"; python script requires GOOGLE_API_KEY/GEMINI_API_KEY (not in `.env`). Created `.venv` and installed `google-genai` to enable script once key is provided.
 - **Note:** Ran Gemini 3 Pro (non-deep) research for CPU-only RAG mentor stack. Output saved to `/tmp/gemini-research-local-rag.txt`.
 - **Note:** Ran Gemini Deep Research via `backend/scripts/gemini_deep_research.py`. Report saved to `.ai-context/Perplexity_assist/gemini_research_20251222_205643.md`.
@@ -291,7 +292,7 @@
 |--------|---------|--------|
 | Playwright | `@playwright/mcp` | ✅ Connected |
 | Context7 | `@upstash/context7-mcp` | ✅ Connected |
-| Perplexity | `@modelcontextprotocol/server-perplexity-ask` | ✅ (API key set) |
+| Perplexity | `@modelcontextprotocol/server-perplexity-ask` | ⛔ Disabled (credits/user request) |
 | YouTube Data | `dannySubsense/youtube-mcp-server` | ✅ Installed (14 funkcí) |
 
 **YouTube MCP capabilities:** playlist items, video details, search, transcripts, channel videos, engagement analysis

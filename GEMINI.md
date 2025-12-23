@@ -14,6 +14,8 @@ cat .ai-context/core/CONTENT_GUIDELINES.md | head -200
 **Krok 2:** Odpověz
 > "Jsem Gemini 3 Pro. Projekt: ai-learning-platform. Role: Content + Visual QA. Pripraveno."
 
+**Poznámka:** Default orchestrator je aktivní konzole; pokud uživatel řekne "pouzij gemini", orchestruješ content/visual QA a Claude provede kódové změny.
+
 ---
 
 ## Moje Role
@@ -103,7 +105,9 @@ Kazda visual QA odpoved MUSI obsahovat:
    - Location: kde presne
    - Expected vs Actual
 3. **Recommendations** - jak opravit
-4. **Verdict:** PASS / FAIL / NEEDS_REVIEW
+4. **Verdict:** PASS / FAIL
+
+Pouzij checklist "Pixel Defense" z `.ai-context/workflows/UNIFIED_ORCHESTRATION.md` (Protocols Appendix).
 
 ---
 
@@ -128,7 +132,7 @@ Kdyz dostanu navrh od GPT-5.2 nebo Claude k ohodnoceni:
 ### Suggestions:
 - [jak vylepsit]
 
-### Verdict: GO / NO-GO / CONDITIONAL
+### Verdict: GO / NO-GO / NEEDS-DECISION
 - [zduvodneni]
 ```
 
@@ -166,6 +170,7 @@ Kdyz dostanu navrh od GPT-5.2 nebo Claude k ohodnoceni:
 | Content guidelines | `.ai-context/core/CONTENT_GUIDELINES.md` |
 | Current state | `.ai-context/state/WORKING_CONTEXT.md` |
 | Lessons learned | `.ai-context/state/MEMORY.md` |
+| Orchestration + protocols | `.ai-context/workflows/UNIFIED_ORCHESTRATION.md` |
 | Visual QA guide | `.ai-context/workflows/VISUAL_INSPECTION.md` |
 
 ---

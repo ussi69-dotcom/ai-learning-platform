@@ -64,6 +64,14 @@ All tests run on 3 viewports:
    - Commit updated snapshots
 3. **CI Integration**: Add `npm run test:visual` to CI pipeline
 
+### Pixel Defense Checklist (Manual Review)
+
+When doing manual or ad-hoc visual checks, use the Pixel Defense checklist
+from `.ai-context/workflows/UNIFIED_ORCHESTRATION.md` and report:
+- Verdict: PASS / FAIL
+- Screenshot paths only
+- Issues with precise locations
+
 ### Adding New Visual Tests
 
 ```typescript

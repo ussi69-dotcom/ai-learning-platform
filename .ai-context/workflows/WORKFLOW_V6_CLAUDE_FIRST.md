@@ -29,11 +29,11 @@
 │     │                │                │                         │
 │     ▼                ▼                ▼                         │
 │  ┌──────────┐  ┌──────────┐  ┌──────────────┐                  │
-│  │ Codex    │  │ Gemini   │  │ Perplexity   │                  │
-│  │ (GPT-5.2)│  │ 3 Pro    │  │              │                  │
+│  │ Codex    │  │ Gemini   │  │ Gemini Deep  │                  │
+│  │ (GPT-5.2)│  │ 3 Pro    │  │ Research     │                  │
 │  │          │  │          │  │              │                  │
-│  │ Reasoning│  │ Content  │  │ Research     │                  │
-│  │ Validator│  │ Generator│  │ Quick facts  │                  │
+│  │ Reasoning│  │ Content  │  │ Deep Research│                  │
+│  │ Validator│  │ Generator│  │ + Sources    │                  │
 │  │ Arch.    │  │ Visual QA│  │              │                  │
 │  │ decisions│  │ (2M ctx) │  │              │                  │
 │  └──────────┘  └──────────┘  └──────────────┘                  │
@@ -197,9 +197,9 @@ IF codex2 rate limited OR error:
 **When:** Content generation, visual QA, long-context analysis
 **How:** `gemini -m gemini-3-pro-preview "<prompt>"` or with `--file`
 
-### Perplexity
+### Gemini Deep Research / Context7
 **When:** Quick facts, current trends, documentation
-**How:** `mcp__perplexity__perplexity_ask` or `perplexity_research`
+**How:** `python backend/scripts/gemini_deep_research.py "<question>"` or Context7 MCP
 
 ---
 

@@ -169,4 +169,4 @@ Students start as **Padawans** (Users) and graduate as **Jedi Knights** (Builder
 ---
 
 **Last Updated:** Cycle 48 (2025-12-06) - Complete Phase 2 Restructure
-**Research Sources:** ChatGPT, Gemini Deep Research, Perplexity Pro, Reddit, YouTube
+**Research Sources:** ChatGPT, Gemini Deep Research, Context7, Reddit, YouTube

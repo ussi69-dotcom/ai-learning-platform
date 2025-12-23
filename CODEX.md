@@ -15,6 +15,8 @@ git log -1 --oneline
 **Krok 2:** Odpověz
 > "Jsem GPT-5.2 Orchestrator. Projekt: ai-learning-platform. Commit: [hash]. Čekám na Debug Packet."
 
+**Poznámka:** Default orchestrator je aktivní konzole; pokud uživatel řekne "pouzij codex", ber to jako explicitní orchestraci a finální gate.
+
 ---
 
 ## Moje Role (Situational Orchestrator)
@@ -192,6 +194,7 @@ set -a; source /home/deploy/ai-learning-platform/.env; set +a
 | Shared rules | `.ai-context/AGENT_PROTOCOL.md` |
 | Current state | `.ai-context/state/WORKING_CONTEXT.md` |
 | Lessons learned | `.ai-context/state/MEMORY.md` |
+| Orchestration + protocols | `.ai-context/workflows/UNIFIED_ORCHESTRATION.md` |
 | Architecture | `.ai-context/core/ARCHITECTURE.md` |
 
 ---

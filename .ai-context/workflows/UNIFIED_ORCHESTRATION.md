@@ -12,6 +12,7 @@ the orchestrator must pull in the other agent for review before closing.
 - "pouzij codex / kamoce" = Codex is orchestrator and final gate.
 - "pouzij kamose" = Triad consult: Codex + Claude + Gemini each provide top-3 ideas; orchestrator consolidates and runs a quick vote for final top-3.
 - "pouzij claude" = Claude is implementer; Codex reviews if task is complex.
+- "pouzij gemini" = Gemini orchestrates content/visual tasks; Claude handles code changes, Codex reviews if complex.
 - "MACP" = run MACP regardless of task size.
 - "rychle" = prioritize Claude for implementation, Codex for review only.
 - "bez HIL" = minimize questions; ask only when scope or risk is ambiguous.
@@ -231,25 +232,37 @@ Orchestrator merges results, resolves conflicts, and issues next tasks.
 
 ## 5.2) Scenario → Superpowers Skill Mapping (v5.3)
 
-**Codex VŽDY doporučí 1-2 skills v Task Briefu pro Claude:**
+**Codex doporučí minimální potřebný skill chain (1-4) v Task Briefu pro Claude:**
 
 | Scenario | Claude Superpowers | Gemini Protocol |
 |----------|-------------------|-----------------|
 | Quick bugfix | - (too small) | - |
-| Complex debugging | `/systematic-debugging` + `/verification-before-completion` | - |
-| Feature/refactor | `/writing-plans` → `/executing-plans` | - |
+| Complex debugging | `/systematic-debugging` → `/test-driven-development` → `/verification-before-completion` | - |
+| Feature/refactor | `/brainstorming` → `/writing-plans` → `/test-driven-development` → `/executing-plans` | - |
+| Feature (isolated) | `/using-git-worktrees` → (feature/refactor chain) | - |
 | Codebase discovery | `/dispatching-parallel-agents` | - |
 | Content upgrade | `/subagent-driven-development` | "Inquisitor Protocol" |
 | Visual regression | `/verification-before-completion` | "Pixel Defense" |
-| Release readiness | All verification skills | Full QA suite |
+| Release readiness | `/requesting-code-review` + `/finishing-a-development-branch` | Full QA suite |
+| Post-review | `/receiving-code-review` | - |
+
+**Defaults:**
+- `/brainstorming` is required before creative feature design; skip for simple bugfixes.
+- `/test-driven-development` is required for behavior changes or bug reproduction; optional for copy/style-only changes.
 
 **Skill Descriptions:**
+- `/brainstorming` - clarify requirements and design constraints before planning
 - `/systematic-debugging` - 4-phase root cause analysis (isolate → hypothesize → test → verify)
+- `/test-driven-development` - define tests first, then implement to pass
 - `/writing-plans` - Detailed plans with file paths, 2-5 min tasks, verification steps
 - `/executing-plans` - Batch execution with human checkpoints
 - `/dispatching-parallel-agents` - Coordinate concurrent subagent workflows
 - `/subagent-driven-development` - Two-stage review (spec compliance → code quality)
 - `/verification-before-completion` - Pre-completion checklist, ensures fix is genuine
+- `/requesting-code-review` - prepare diffs, evidence, and review questions
+- `/receiving-code-review` - apply feedback systematically with verification
+- `/finishing-a-development-branch` - cleanup, merge readiness, and release hygiene
+- `/using-git-worktrees` - isolate parallel feature work without context collision
 
 **Gemini Protocols:**
 - "Inquisitor Protocol" - Socratic content review (relevance, cognitive load, actionability)
@@ -309,3 +322,47 @@ Patch/Plan:
 Tests:
 Artifacts:
 ```
+
+## 10) Protocols Appendix
+
+### Inquisitor Protocol (Content Review)
+Purpose: Challenge content quality with a strict, Socratic pass/fail gate.
+
+Inputs:
+- Lesson draft (EN + CS)
+- Intended audience + level
+- Content guidelines (edutainment rules, labs, visuals)
+
+Checklist:
+1. Relevance: Every section ties to stated outcomes (no filler).
+2. Cognitive load: Concepts progress from simple to complex; no abrupt jumps.
+3. Actionability: Labs are copy-paste ready with clear success criteria.
+4. Evidence: Claims are current and verifiable (no stale model names).
+5. Parity: EN/CS structure and visuals are aligned.
+
+Output format:
+- Verdict: PASS / FAIL
+- Top 5 issues (severity: high/med/low)
+- 3 concrete fixes
+
+References:
+- `.ai-context/core/CONTENT_GUIDELINES.md`
+- `.ai-context/workflows/WORKFLOW_V6_MASTERPIECE.md`
+
+### Pixel Defense (Visual QA)
+Purpose: Binary visual QA gate for UI and lesson pages.
+
+Checklist:
+1. Readability: Text readable at 375px width without zoom.
+2. Layout integrity: No overlaps, clipping, or broken grids.
+3. Contrast: Text and UI controls meet expected contrast.
+4. Assets: Images/diagrams load and render correctly.
+5. Interactions: Buttons/links appear interactive and aligned.
+
+Output format:
+- Verdict: PASS / FAIL
+- Screenshot paths only
+- Issues list with precise locations
+
+References:
+- `.ai-context/workflows/VISUAL_INSPECTION.md`

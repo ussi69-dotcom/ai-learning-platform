@@ -26,7 +26,7 @@
 │  ├─ "Must-be-true" facts + "Don't-claim" list                       │
 │  └─ Rubric + pass thresholds                                        │
 ├─────────────────────────────────────────────────────────────────────┤
-│  PHASE 1: Research (Perplexity/YouTube → Codex extracts)            │
+│  PHASE 1: Research (Gemini/YouTube MCP → Codex extracts)            │
 │  ├─ Find must-have videos for topic                                 │
 │  ├─ Get transcripts from top videos                                 │
 │  └─ Codex extracts minimum claims + citations                       │
@@ -41,12 +41,17 @@
 │  ├─ Codex runs local QA (MDX/build/link checks)                     │
 │  └─ Codex updates issue_ledger                                      │
 ├─────────────────────────────────────────────────────────────────────┤
-│  PHASE 4: Visual QA (Claude Playwright, artifacts to files)         │
+│  PHASE 4: Multi-Agent QA (Gemini + Codex cross-check)               │
+│  ├─ Gemini rates draft vs rubric                                    │
+│  ├─ Codex cross-validates score                                     │
+│  └─ Disagreement → iterate or opposition review                     │
+├─────────────────────────────────────────────────────────────────────┤
+│  PHASE 5: Visual QA (Claude Playwright, artifacts to files)         │
 │  ├─ Claude runs Playwright → screenshots to disk                    │
 │  ├─ Output: short JSON/MD summary (pass/fail + paths)               │
 │  └─ Codex only reviews failures (targeted)                          │
 ├─────────────────────────────────────────────────────────────────────┤
-│  PHASE 5: Final Score (Gemini + Codex dual gate)                    │
+│  PHASE 6: Final Score (Gemini + Codex dual gate)                    │
 │  ├─ Gemini returns rubric JSON score                                │
 │  ├─ Codex independently scores + enforces hard gates                │
 │  └─ Both pass → MASTERPIECE | Else → loop to PHASE 3                │
@@ -117,11 +122,10 @@ EOF
 
 ## 📋 PHASE 1: Research
 
-### Step 1.1: Find Must-Have Videos (Perplexity)
+### Step 1.1: Find Must-Have Videos (Gemini 3 Pro)
 
 ```bash
-# Codex executes this:
-cat << 'EOF' | codex exec -p orchestrator 2>&1
+cat << 'EOF' | gemini -m gemini-3-pro-preview 2>&1
 I need to find the best educational videos for a lesson about [TOPIC].
 
 Requirements:
@@ -311,7 +315,7 @@ Rate this lesson against MASTERPIECE criteria:
 8. Technical Accuracy
 
 Overall Score: X/80
-Verdict: MASTERPIECE / NEEDS WORK / REJECT
+Verdict: MASTERPIECE / NEEDS WORK / REJECT (MASTERPIECE = PASS, others = FAIL)
 
 If not MASTERPIECE, list specific fixes needed.
 EOF
@@ -355,14 +359,14 @@ LOOP:
 
 ---
 
-## 📋 PHASE 4: Visual QA (Automation-First)
+## 📋 PHASE 5: Visual QA (Automation-First)
 
 **⚠️ CRITICAL: Minimize context cost!**
 
 - **DON'T** feed browser_snapshot/accessibility trees into LLM (14k+ tokens!)
 - **DO** save screenshots to files, output short summary
 
-### Step 4.1: Claude Captures Screenshots (Playwright)
+### Step 5.1: Claude Captures Screenshots (Playwright)
 
 ```bash
 # Claude runs Playwright and saves screenshots to disk.
@@ -381,7 +385,7 @@ mcp__playwright__browser_take_screenshot filename="visual_tests/lesson-XX-mobile
 mcp__playwright__browser_close  # ALWAYS close to free resources
 ```
 
-### Step 4.2: Output Summary (NOT full snapshot!)
+### Step 5.2: Output Summary (NOT full snapshot!)
 
 ```json
 {
@@ -392,7 +396,7 @@ mcp__playwright__browser_close  # ALWAYS close to free resources
 }
 ```
 
-### Step 4.3: Codex Reviews Failures Only
+### Step 5.3: Codex Reviews Failures Only
 
 ```bash
 # ONLY if issues found:
@@ -408,9 +412,9 @@ EOF
 
 ---
 
-## 📋 PHASE 5: Final Score (Dual Gate)
+## 📋 PHASE 6: Final Score (Dual Gate)
 
-### Step 5.1: Gemini Scores Content
+### Step 6.1: Gemini Scores Content
 
 ```bash
 cat << 'EOF' | gemini -m gemini-3-pro-preview 2>&1
@@ -430,13 +434,13 @@ Rate this lesson against MASTERPIECE criteria:
 | Edutainment Factor | ?/10 | |
 
 **TOTAL: ?/60**
-**Verdict:** MASTERPIECE (≥59) / NEEDS WORK (<59)
+**Verdict:** MASTERPIECE (PASS, ≥59) / NEEDS WORK (FAIL, <59)
 
 If not MASTERPIECE, list specific fixes as issue_ledger.
 EOF
 ```
 
-### Step 5.2: Codex Cross-Validates + Final Gate
+### Step 6.2: Codex Cross-Validates + Final Gate
 
 ```bash
 cat << 'EOF' | codex exec -p orchestrator 2>&1
@@ -473,7 +477,7 @@ Otherwise:
 EOF
 ```
 
-### Step 5.3: Loop or Complete
+### Step 6.3: Loop or Complete
 
 ```
 IF Codex says "MASTERPIECE CONFIRMED":
@@ -483,7 +487,7 @@ IF Codex says "MASTERPIECE CONFIRMED":
 
 ELSE:
   → Apply issue_ledger fixes (PHASE 3)
-  → Re-run PHASE 4-5
+  → Re-run PHASE 4-6
   → Max 2 iterations, then human review
 ```
 
@@ -501,8 +505,9 @@ Execute this workflow:
 2. PHASE 1: Research → Codex extracts claims
 3. PHASE 2: Gemini enriches → Codex pre-check → Claude opposition review
 4. PHASE 3: Codex implements → local QA
-5. PHASE 4: Visual QA (Claude Playwright → screenshots to files → summary only)
-6. PHASE 5: Dual gate (Gemini score + Codex score)
+5. PHASE 4: Multi-Agent QA (Gemini score → Codex cross-validate)
+6. PHASE 5: Visual QA (Claude Playwright → screenshots to files → summary only)
+7. PHASE 6: Dual gate (Gemini score + Codex score)
    - IF both ≥59/60 → Codex says "MASTERPIECE CONFIRMED"
    - ELSE → Loop to PHASE 3 (max 2x)
 7. Commit with message: "feat(content): upgrade [lesson] to MASTERPIECE"
@@ -552,7 +557,7 @@ Run once per quarter to prevent silent content rot:
 
 1. **Scan** for stale model names, pricing, or "preview" claims:
    - `rg -n "GPT-4|GPT-4o|Claude 3|o1|preview" content/`
-2. **Verify** 3-5 highest-risk lessons with WebSearch/Perplexity.
+2. **Verify** 3-5 highest-risk lessons with WebSearch/Gemini Deep Research.
 3. **Log findings** in `.ai-context/history/decay/YYYY-QX.md`.
 4. **Fix or schedule** updates; prioritize factual corrections first.
 

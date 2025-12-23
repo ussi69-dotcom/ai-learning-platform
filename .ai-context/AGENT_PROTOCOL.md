@@ -6,14 +6,15 @@
 
 ## 🔀 Workflow Selection
 
-| Workflow | Orchestrator | When to Use |
-|----------|--------------|-------------|
-| **v5.1** | GPT-5.2 (Codex) | Hard debugging, architecture decisions, security audits |
-| **v6.0** | Claude Code | Long autonomous sessions, implementation-heavy, minimal user interaction |
+| Workflow | Default Orchestrator | When to Use |
+|----------|----------------------|-------------|
+| **v5.1** | GPT-5.2 (Codex), unless active console/user override | Hard debugging, architecture decisions, security audits |
+| **v6.0** | Claude Code, unless active console/user override | Long autonomous sessions, implementation-heavy, minimal user interaction |
 
+**Default orchestrator:** The console you are actively using.
 **v6.0 Details:** See `workflows/WORKFLOW_V6_CLAUDE_FIRST.md`
 **Unified Orchestration (Codex + Claude consoles):** See `workflows/UNIFIED_ORCHESTRATION.md`
-**User directive:** "pouzij kamose" triggers a triad consult (Codex + Claude + Gemini) with independent top-3 ideas and a quick vote for final top-3.
+**User directives:** "pouzij codex", "pouzij claude", "pouzij gemini" (content/visual orchestrator), "pouzij kamose" triggers a triad consult (Codex + Claude + Gemini) with independent top-3 ideas and a quick vote for final top-3.
 
 **Codex Accounts:**
 ```bash
@@ -315,8 +316,8 @@ Prevents: infinite ping-pong, token bloat, analysis paralysis.
 ## Decision: [Topic]
 **Date:** YYYY-MM-DD
 **Agents consulted:** GPT-5.2, Gemini
-**GPT-5.2:** [GO/NO-GO] @ [X]% confidence - [brief reason]
-**Gemini:** [GO/NO-GO] @ [X]% confidence - [brief reason]
+**GPT-5.2:** [GO/NO-GO/NEEDS-DECISION] @ [X]% confidence - [brief reason]
+**Gemini:** [GO/NO-GO/NEEDS-DECISION] @ [X]% confidence - [brief reason]
 **Domain weights applied:** [which domain, who weighted higher]
 **Final decision:** [What was decided]
 **Rationale:** [Why]
