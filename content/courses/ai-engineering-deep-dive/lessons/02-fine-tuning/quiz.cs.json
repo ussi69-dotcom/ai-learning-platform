@@ -46,7 +46,7 @@
     "option_c": "Náklady jsou úplně stejné",
     "option_d": "Fine-tuned modely jsou po tréninku zdarma",
     "correct_answer": "B",
-    "explanation": "Fine-tuned modely účtují prémii za svou specializaci. Například fine-tuned GPT-4o-mini stojí přibližně 2x za token ve srovnání se základním modelem.",
+    "explanation": "Fine-tuned modely účtují prémii za svou specializaci. Například fine-tuned GPT-4.1 mini stojí znatelně více za token než základní model.",
     "order": 5
   },
   {

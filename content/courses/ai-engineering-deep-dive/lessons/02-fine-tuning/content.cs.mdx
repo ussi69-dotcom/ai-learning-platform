@@ -1,6 +1,6 @@
 # Fine-Tuning: Naučte AI mluvit VAŠÍM jazykem
 
-> **OpenAI účtuje $25 za fine-tuning GPT-4o-mini na 1 milion tokenů. Ale tady je tajemství: většina projektů to nepotřebuje.**
+> **OpenAI účtuje zhruba $5 za fine-tuning GPT-4.1 mini na 1 milion trénovacích tokenů. Ale tady je tajemství: většina projektů to nepotřebuje.**
 
 <Callout type="info">
 **Vaše mise:** Ovládněte umění fine-tuningu. Naučte se kdy ho použít, kdy se mu vyhnout, a jak připravit dataset pro naučení AI modelu novým dovednostem bez rozbití rozpočtu.
@@ -148,7 +148,7 @@ print(f"Soubor nahrán s ID: {file_upload.id}")
 ```python
 job = client.fine_tuning.jobs.create(
     training_file=file_upload.id,
-    model="gpt-4o-mini",  # Nebo "gpt-3.5-turbo"
+    model="gpt-4.1-mini",  # Nebo "gpt-4.1" pro vyšší kvalitu
     hyperparameters={"n_epochs": 3}
 )
 print(f"Job vytvořen s ID: {job.id}")
@@ -171,7 +171,7 @@ for event in events:
 ### Krok 5: Použijte váš nový model!
 ```python
 completion = client.chat.completions.create(
-    model="ft:gpt-4o-mini:your-org:custom:abc123",  # Název vašeho modelu
+    model="ft:gpt-4.1-mini:your-org:custom:abc123",  # Název vašeho modelu
     messages=[
         {"role": "system", "content": "Jsi expert Python programátor..."},
         {"role": "user", "content": "def hello():\n  print('Hello, World!')"}
@@ -188,15 +188,15 @@ print(completion.choices[0].message.content)
 
 Fine-tuning není zadarmo. Platíte za trénink **A** prémiové sazby za použití. Pojďme si to rozebrat:
 
-### Ceník GPT-4o-mini (k roku 2025)
+### Ceník GPT-4.1 mini (k roku 2025)
 
 | Typ nákladu | Cena za 1M tokenů |
 |-------------|-------------------|
-| **Trénink** | $25.00 |
-| **Input (fine-tuned)** | $0.30 |
-| **Output (fine-tuned)** | $1.20 |
+| **Trénink** | $5.00 |
+| **Input (fine-tuned)** | $0.80 |
+| **Output (fine-tuned)** | $3.20 |
 
-Srovnání se základním modelem: $0.15 input, $0.60 output. **Platíte ~2x za specializaci.**
+Srovnejte s cenami základního modelu na OpenAI pricing page. **Fine-tuned modely obvykle nesou prémii.**
 
 ---
 
@@ -221,7 +221,7 @@ Trénovací tokeny = 1 000 000 × 3 epochy = 3 000 000 tokenů
 
 ### Krok 2: Vypočítejte náklady na trénink
 ```
-Náklady na trénink = (3 000 000 / 1 000 000) × $25 = $75.00
+Náklady na trénink = (3 000 000 / 1 000 000) × $5 = $15.00
 ```
 
 ### Krok 3: Vypočítejte denní použití
@@ -229,15 +229,15 @@ Náklady na trénink = (3 000 000 / 1 000 000) × $25 = $75.00
 Denní Input = 5 000 × 150 = 750 000 tokenů
 Denní Output = 5 000 × 300 = 1 500 000 tokenů
 
-Denní Input náklady = (0.75M / 1M) × $0.30 = $0.225
-Denní Output náklady = (1.5M / 1M) × $1.20 = $1.80
-Denní celkem = $2.025
+Denní Input náklady = (0.75M / 1M) × $0.80 = $0.60
+Denní Output náklady = (1.5M / 1M) × $3.20 = $4.80
+Denní celkem = $5.40
 ```
 
 ### Krok 4: Vypočítejte měsíční celkem
 ```
-Měsíční použití = $2.025 × 30 = $60.75
-Celkem první měsíc = $75 + $60.75 = $135.75
+Měsíční použití = $5.40 × 30 = $162.00
+Celkem první měsíc = $15 + $162.00 = $177.00
 ```
 
 </Steps>

@@ -95,7 +95,7 @@ Microsoft offers several AI-building tools. Here's how Copilot Studio fits in:
 - Need non-Microsoft integrations primarily (consider custom dev)
 
 <Callout type="info">
-**M365 “Create Agent” vs Copilot Studio (full maker experience):** The lightweight builder inside Microsoft 365 Copilot is great for quick, declarative agents. In some tenants, you can open/export that agent in Copilot Studio for advanced features (topics, tools, evals, multi-agent). If the handoff isn’t available, rebuild in Copilot Studio directly.
+**M365 “Create Agent” vs Copilot Studio (full maker experience):** The lightweight builder inside Microsoft 365 Copilot is great for quick, declarative agents. The **Copy to Copilot Studio** handoff is generally available, but admins/region settings can still gate it. If the handoff isn’t available, rebuild in Copilot Studio directly.
 </Callout>
 
 <Callout type="tip">
@@ -698,7 +698,7 @@ Observe how the agent responds. A well-configured agent should:
 ## 9. Advanced Features (2025 Updates)
 
 <Callout type="info">
-**Availability Note (late 2025):** Some features (App Builder, Workflows Agent, or specific tools) may be in **Frontier/Preview** depending on your tenant and region. Always verify in the M365 admin center or Copilot Studio release notes.
+**Availability Note (late 2025):** Core agent building and **Copy to Copilot Studio** are GA, but some features (App Builder, Workflows Agent, or specific tools) may still be **Frontier/Preview** depending on your tenant and region. Always verify in the M365 admin center or Copilot Studio release notes.
 </Callout>
 
 ### Multimodal Agents
@@ -708,10 +708,10 @@ Where supported, Copilot Studio can provide:
 - **Voice Input:** Speak to agent in Teams
 - **Adaptive Cards:** Rich UI elements (buttons, forms, images)
 
-### Built-in Tools (Preview in some tenants)
+### Built-in Tools (availability varies by tenant)
 
-- **Code Interpreter:** Agent can generate and run Python to analyze files (Excel/CSV/PDF) and produce charts (availability varies by tenant).
-- **Computer Use:** Agent can operate legacy desktop/web apps without APIs via a virtual mouse/keyboard (availability varies by tenant).
+- **Code Interpreter:** Agent can generate and run Python to analyze files (Excel/CSV/PDF) and produce charts (GA in many tenants; availability varies by region).
+- **Computer Use:** Agent can operate legacy desktop/web apps without APIs via a virtual mouse/keyboard (Preview in some tenants).
 
 ### Agent Analytics
 
@@ -738,9 +738,9 @@ Run **built-in evaluations** with uploaded or AI-generated test sets:
 
 ### Model Choice & Tool Protocols
 
-- **Model choice (preview in some tenants):** Some tenants can choose between models (e.g., OpenAI GPT‑4o and Anthropic Claude 3.5). Higher quality often means higher cost/latency—map it to the use case.
-- **MCP server support (preview):** Model Context Protocol lets you connect standardized tools/data without custom wrappers.
-- **Tool integration:** Connectors/actions today; standardized tool protocols (e.g., MCP) are preview in some tenants.
+- **Model choice (tenant-gated):** Many tenants can choose between models (e.g., GPT-5 Chat and other enterprise-approved options). Higher quality often means higher cost/latency—map it to the use case.
+- **MCP server support (GA with exceptions):** Model Context Protocol lets you connect standardized tools/data without custom wrappers; some advanced integrations may still be preview.
+- **Tool integration:** Connectors/actions are GA; standardized tool protocols (e.g., MCP) may be preview in some tenants.
 
 <Diagram type="mcp-architecture" />
 

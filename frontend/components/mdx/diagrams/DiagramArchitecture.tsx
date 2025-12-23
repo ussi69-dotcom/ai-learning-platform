@@ -18,7 +18,26 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
     return (
       <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-3 sm:p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
-          <svg viewBox="0 0 800 300" className="w-full h-auto" role="img" aria-label="Local LLM Architecture: User -> UI -> Inference Engine -> Hardware">
+          <div className="block md:hidden space-y-4">
+            <div className="text-center text-lg font-bold text-slate-200">
+              {isCs ? 'Lokální LLM architektura' : 'Local LLM Architecture'}
+            </div>
+            <div className="grid gap-3 text-base">
+              <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3">
+                {isCs ? '1. Klient: Open WebUI / Python skript' : '1. Client: Open WebUI / Python Script'}
+              </div>
+              <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-4 py-3">
+                {isCs ? '2. Inference: Ollama + llama.cpp runtime' : '2. Inference: Ollama + llama.cpp runtime'}
+              </div>
+              <div className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3">
+                {isCs ? '3. Hardware: RAM/VRAM (16GB)' : '3. Hardware: RAM/VRAM (16GB)'}
+              </div>
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3">
+                {isCs ? '4. Model: Llama-3.2.gguf (Q4_K_M)' : '4. Model: Llama-3.2.gguf (Q4_K_M)'}
+              </div>
+            </div>
+          </div>
+          <svg viewBox="0 0 800 300" className="hidden md:block w-full h-auto" role="img" aria-label="Local LLM Architecture: User -> UI -> Inference Engine -> Hardware">
             <defs>
               <linearGradient id="arch-grad-blue" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#3b82f6" />
@@ -100,7 +119,7 @@ export default function DiagramArchitecture({ type }: DiagramProps) {
     return (
       <div className="my-8 flex justify-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] md:w-full md:static md:mx-0">
         <div className="relative p-4 md:p-6 rounded-none md:rounded-2xl bg-white/5 backdrop-blur-xl border-y md:border border-white/10 shadow-lg w-full max-w-none md:max-w-4xl">
-          <div className="md:hidden space-y-4">
+          <div className="block md:hidden space-y-4">
             <div className="text-center text-lg font-bold text-slate-200">🔌 MCP Architecture</div>
             <div className="grid gap-3 text-base">
               <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3">

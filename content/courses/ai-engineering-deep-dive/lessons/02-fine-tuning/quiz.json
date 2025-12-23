@@ -46,7 +46,7 @@
     "option_c": "Costs are exactly the same",
     "option_d": "Fine-tuned models are free to use after training",
     "correct_answer": "B",
-    "explanation": "Fine-tuned models charge a premium for their specialization. For example, fine-tuned GPT-4o-mini costs about 2x per token compared to the base model.",
+    "explanation": "Fine-tuned models charge a premium for their specialization. For example, fine-tuned GPT-4.1 mini costs noticeably more per token than the base model.",
     "order": 5
   },
   {

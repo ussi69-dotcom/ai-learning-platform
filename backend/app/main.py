@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Request
+from fastapi import FastAPI, Depends, HTTPException, status, Request, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -10,7 +10,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from . import models, schemas, database, auth
-from app.routers import sandbox, lessons, feedback, users, health, certificates, news, digest, admin
+from app.routers import sandbox, lessons, feedback, users, health, certificates, news, digest, admin, mentor
 from app.config import is_production_env
 
 # NOTE: Table creation removed - rely solely on Alembic migrations and seed.py
@@ -26,16 +26,27 @@ from app.limiter import limiter
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# Include Routers
-app.include_router(health.router, tags=["health"])
-app.include_router(sandbox.router)
-app.include_router(lessons.router)
-app.include_router(feedback.router)
-app.include_router(users.router)
-app.include_router(certificates.router, tags=["certificates"])
-app.include_router(news.router)
-app.include_router(digest.router)
-app.include_router(admin.router)
+# Include Routers (root + /api prefix for direct backend usage)
+router_specs = [
+    (health.router, {"tags": ["health"]}),
+    (sandbox.router, {}),
+    (lessons.router, {}),
+    (feedback.router, {}),
+    (users.router, {}),
+    (certificates.router, {"tags": ["certificates"]}),
+    (news.router, {}),
+    (digest.router, {}),
+    (admin.router, {}),
+    (mentor.router, {}),
+]
+
+for router, kwargs in router_specs:
+    app.include_router(router, **kwargs)
+
+api_router = APIRouter(prefix="/api")
+for router, kwargs in router_specs:
+    api_router.include_router(router, **kwargs)
+app.include_router(api_router)
 
 # Mount content directory for static assets (images, etc.)
 # This maps http://localhost:8000/content/ -> /app/content/

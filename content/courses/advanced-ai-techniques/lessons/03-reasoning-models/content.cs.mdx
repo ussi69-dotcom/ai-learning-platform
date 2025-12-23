@@ -21,13 +21,13 @@ Dnes se to mění. Vstupujeme do další evoluce umělé inteligence. Jdeme za h
 
 Psycholog Daniel Kahneman ve své průlomové knize „Myšlení, rychlé a pomalé" popsal dva způsoby lidského myšlení. Tento rámec je tou nejlepší analogií pro pochopení seismického posunu, který se právě teď v AI děje.
 
-*   **Systém 1 (Intuitivní pilot):** To je vaše instinktivní reakce. Je rychlá, automatická a bez námahy. Díky ní víte, že 2+2=4, poznáte tvář přítele nebo získáte „pocit" z konverzace. Většina LLM, od GPT-3.5 po Claude Sonnet, funguje primárně jako motory Systému 1. Jsou mistry v rozpoznávání vzorců a okamžité reakci.
+*   **Systém 1 (Intuitivní pilot):** To je vaše instinktivní reakce. Je rychlá, automatická a bez námahy. Díky ní víte, že 2+2=4, poznáte tvář přítele nebo získáte „pocit" z konverzace. Většina LLM, od GPT-5 mini po Claude Sonnet 4, funguje primárně jako motory Systému 1. Jsou mistry v rozpoznávání vzorců a okamžité reakci.
 
 *   **Systém 2 (Uvažující myslitel):** To je vaše vědomé, uvažující já. Je pomalé, náročné a analytické. Je to část vašeho mozku, která řeší složitý matematický problém, plánuje vícekrokový projekt nebo zvažuje pro a proti zásadního životního rozhodnutí. Toto je doména skutečných Reasoning modelů.
 
 <Diagram type="system1-vs-system2" />
 
-Toto není jen metafora; je to architektonická realita. Modely jako `o1` a `o3` série od OpenAI, a pravděpodobně i nadcházející GPT-5.2, jsou postaveny jinak. Nejenže „vyplivnou" nejpravděpodobnější další token. Dostanou „kognitivní rozpočet" – čas a výpočetní zdroje – na *přemýšlení* před odpovědí.
+Toto není jen metafora; je to architektonická realita. Modely jako `o3` a `o3-pro` od OpenAI a frontier GPT-5 reasoning varianty jsou postaveny jinak. Nejenže „vyplivnou" nejpravděpodobnější další token. Dostanou „kognitivní rozpočet" – čas a výpočetní zdroje – na *přemýšlení* před odpovědí.
 
 | Vlastnost | Konvenční LLM (Systém 1) | Reasoning Model (Systém 2) |
 | :--- | :--- | :--- |
@@ -70,7 +70,7 @@ Klasický model Systému 1 často u tohoto typu logické hádanky selže, proto�
 **Cíl:** Použijte logickou hádanku k odhalení rozdílu mezi modelem, který předpovídá, a modelem, který uvažuje.
 
 **Prompt:**
-Zkopírujte toto do standardního modelu (jako ChatGPT-4) a do špičkového reasoning modelu, pokud k němu máte přístup (jako nejnovější Claude Opus nebo budoucí GPT-5):
+Zkopírujte toto do standardního modelu (např. GPT-5 mini) a do špičkového reasoning modelu, pokud k němu máte přístup (např. Claude Opus 4 nebo OpenAI o3-pro):
 
 ```text
 V místnosti je pět lidí: Alice, Bob, Charlie, David a Eve.
@@ -104,9 +104,9 @@ Hranice AI je nyní bitvou o sílu uvažování. Zatímco specifikace jsou prom�
 
 | Model | Síla | Slabina | Jedi analogie |
 | :--- | :--- | :--- | :--- |
-| **GPT-5.2** | Nepřekonatelná logická konzistence a komplexní kód | Nejpomalejší; Nejvyšší náklady; „Přemýšlí příliš" o jednoduchých problémech | Mace Windu (Přesný, mocný a nekompromisní) |
-| **Claude Opus 4.5** | Nuancované etické a kreativní uvažování | Může být rozvláčný; potýká se s vysoce abstraktní matematikou | Obi-Wan Kenobi (Moudrý, spolehlivý, mistr obrany) |
-| **OpenAI o3** | Extrémní rychlost na reasoning model | Méně výkonný než vlajkové modely; „lehčí" myslitel | Qui-Gon Jinn (Nekonvenční, rychlý, následuje Živoucí Sílu) |
+| **GPT-5** | Nepřekonatelná logická konzistence a komplexní kód | Nejpomalejší; nejvyšší náklady; „přemýšlí příliš" o jednoduchých problémech | Mace Windu (Přesný, mocný a nekompromisní) |
+| **Claude Opus 4** | Nuancované etické a kreativní uvažování | Může být rozvláčný; potýká se s vysoce abstraktní matematikou | Obi-Wan Kenobi (Moudrý, spolehlivý, mistr obrany) |
+| **OpenAI o3-pro** | Hloubkové uvažování + silný tool use | Pomalejší; drahé pro dlouhé úlohy | Qui-Gon Jinn (Nekonvenční, rychlý, následuje Živoucí Sílu) |
 | **DeepSeek R1** | Open-source; vyniká ve vícekrokovém kódu | Méně obecných znalostí; vyžaduje více fine-tuningu | Zakázkově postavený Jedi Starfighter (Výkonný, ale potřebuje zručného pilota) |
 
 <Diagram type="reasoning-models-radar" />
@@ -189,7 +189,7 @@ if __name__ == "__main__":
 <Callout type="success">
 **Rada Jedi: Váš tým pro uvažování**
 
-Představte si svou sadu nástrojů AI jako Radu Jedi. Máte své rychlé, agilní rytíře Jedi (GPT-4, Claude Sonnet) pro každodenní úkoly. Ale pro problémy ohrožující galaxii – složité finanční modely, vícevrstvou právní analýzu, refaktorování kódu, na kterém závisí osud firmy – povoláte Mistry: reasoning modely. Použití správného Jedi pro správnou misi je cestou k moudrosti.
+Představte si svou sadu nástrojů AI jako Radu Jedi. Máte své rychlé, agilní rytíře Jedi (GPT-5 mini, Claude Sonnet 4) pro každodenní úkoly. Ale pro problémy ohrožující galaxii – složité finanční modely, vícevrstvou právní analýzu, refaktorování kódu, na kterém závisí osud firmy – povoláte Mistry: reasoning modely. Použití správného Jedi pro správnou misi je cestou k moudrosti.
 </Callout>
 
 Toto je jen začátek. Propast mezi AI Systému 1 a Systému 2 bude definovat příští desetiletí technologie. Naučit se tuto propast překlenout, vědět, kdy požádat o rychlou odpověď versus uvážený úsudek, je novou základní dovedností.

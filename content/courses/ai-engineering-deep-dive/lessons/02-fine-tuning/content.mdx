@@ -1,6 +1,6 @@
 # Fine-Tuning: Make AI Speak YOUR Language
 
-> **OpenAI charges $25 to fine-tune GPT-4o-mini on 1 million tokens. But here's the secret: most projects don't need it.**
+> **OpenAI charges about $5 to fine-tune GPT-4.1 mini per 1 million training tokens. But here's the secret: most projects don't need it.**
 
 <Callout type="info">
 **Your Mission:** Master the art of fine-tuning. Learn when to use it, when to avoid it, and how to prepare a dataset to teach an AI model new skills without breaking the bank.
@@ -148,7 +148,7 @@ print(f"File uploaded with ID: {file_upload.id}")
 ```python
 job = client.fine_tuning.jobs.create(
     training_file=file_upload.id,
-    model="gpt-4o-mini",  # Or "gpt-3.5-turbo"
+    model="gpt-4.1-mini",  # Or "gpt-4.1" for higher quality
     hyperparameters={"n_epochs": 3}
 )
 print(f"Job created with ID: {job.id}")
@@ -171,7 +171,7 @@ for event in events:
 ### Step 5: Use Your New Model!
 ```python
 completion = client.chat.completions.create(
-    model="ft:gpt-4o-mini:your-org:custom:abc123",  # Your model name
+    model="ft:gpt-4.1-mini:your-org:custom:abc123",  # Your model name
     messages=[
         {"role": "system", "content": "You are an expert Python programmer..."},
         {"role": "user", "content": "def hello():\n  print('Hello, World!')"}
@@ -188,15 +188,15 @@ print(completion.choices[0].message.content)
 
 Fine-tuning isn't free. You pay for training **AND** premium usage rates. Let's break it down:
 
-### GPT-4o-mini Pricing (as of 2025)
+### GPT-4.1 mini Pricing (as of 2025)
 
 | Cost Type | Price per 1M tokens |
 |-----------|---------------------|
-| **Training** | $25.00 |
-| **Input (fine-tuned)** | $0.30 |
-| **Output (fine-tuned)** | $1.20 |
+| **Training** | $5.00 |
+| **Input (fine-tuned)** | $0.80 |
+| **Output (fine-tuned)** | $3.20 |
 
-Compare to base model: $0.15 input, $0.60 output. **You pay ~2x for specialization.**
+Compare to base model pricing on the OpenAI pricing page. **Fine-tuned models usually carry a premium.**
 
 ---
 
@@ -221,7 +221,7 @@ Training tokens = 1,000,000 × 3 epochs = 3,000,000 tokens
 
 ### Step 2: Calculate Training Cost
 ```
-Training Cost = (3,000,000 / 1,000,000) × $25 = $75.00
+Training Cost = (3,000,000 / 1,000,000) × $5 = $15.00
 ```
 
 ### Step 3: Calculate Daily Usage
@@ -229,15 +229,15 @@ Training Cost = (3,000,000 / 1,000,000) × $25 = $75.00
 Daily Input = 5,000 × 150 = 750,000 tokens
 Daily Output = 5,000 × 300 = 1,500,000 tokens
 
-Daily Input Cost = (0.75M / 1M) × $0.30 = $0.225
-Daily Output Cost = (1.5M / 1M) × $1.20 = $1.80
-Daily Total = $2.025
+Daily Input Cost = (0.75M / 1M) × $0.80 = $0.60
+Daily Output Cost = (1.5M / 1M) × $3.20 = $4.80
+Daily Total = $5.40
 ```
 
 ### Step 4: Calculate Monthly Total
 ```
-Monthly Usage = $2.025 × 30 = $60.75
-Total First Month = $75 + $60.75 = $135.75
+Monthly Usage = $5.40 × 30 = $162.00
+Total First Month = $15 + $162.00 = $177.00
 ```
 
 </Steps>

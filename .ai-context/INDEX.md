@@ -13,6 +13,7 @@
 - workflows/DATABASE_MIGRATIONS.md (schema changes)
 - workflows/INCIDENT_REPORTING.md (prod incidents)
 - workflows/VISUAL_INSPECTION.md (visual QA)
+- workflows/DEPRECATION_POLICY.md (content archiving)
 - workflows/SUBAGENT_STRATEGY.md (subagent usage)
 - workflows/MCP_SETUP.md (tooling changes)
 - workflows/DEV_AND_DEPLOYMENT_GUIDE.md (deploy/dev)

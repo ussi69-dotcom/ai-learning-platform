@@ -546,6 +546,32 @@ Execute this workflow:
 
 ---
 
+## 🔁 Quarterly Decay Audit (Freshness Gate)
+
+Run once per quarter to prevent silent content rot:
+
+1. **Scan** for stale model names, pricing, or "preview" claims:
+   - `rg -n "GPT-4|GPT-4o|Claude 3|o1|preview" content/`
+2. **Verify** 3-5 highest-risk lessons with WebSearch/Perplexity.
+3. **Log findings** in `.ai-context/history/decay/YYYY-QX.md`.
+4. **Fix or schedule** updates; prioritize factual corrections first.
+
+This audit is independent of the MASTERPIECE workflow, but it must be run
+before any release candidate.
+
+---
+
+## 🗄️ Deprecation Policy (Content Hygiene)
+
+If content is superseded:
+1. **Move** deprecated lessons to `content/archive/` (outside build path).
+2. **Never** leave `_archive_*` folders inside `content/courses/`.
+3. **Document** the move in the commit message.
+
+See `.ai-context/workflows/DEPRECATION_POLICY.md` for full rules.
+
+---
+
 ## 🚨 CRITICAL: Model/Product Verification (POVINNÉ!)
 
 **PŘED zmíněním jakéhokoliv AI modelu nebo produktu v obsahu:**

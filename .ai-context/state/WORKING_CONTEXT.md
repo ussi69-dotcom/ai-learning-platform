@@ -1,6 +1,36 @@
 # Working Context
 
-**Last Updated:** 2025-12-21 23:43 (Agent: Codex GPT-5.2)
+**Last Updated:** 2025-12-23 14:17 (Agent: Codex GPT-5.2)
+
+## 🚦 Current Status: Mentor hotfix + visual QA complete (awaiting user confirmation)
+- **Boot sync:** WORKING_CONTEXT now matches `git log -1`.
+- **Latest commits:** `2738afb` (remove visual_tests artifacts), `5b3ebda` (ignore visual_tests artifacts), `2dcaea0` (consolidate agent docs + archive legacy), `0adbbfd` (add Codex profile cheat sheet).
+- **Active task:** none set in this session.
+- **Note:** Executed T1-T5 for Gemini lesson gaps: added /api backend prefix, mobile fallback for local LLM diagram, updated pricing/model references, Copilot GA notes, archived old PPE structure, added diagram gallery + mobile render test, and documented deprecation/decay audit policy.
+- **Note:** Ran `npm run verify`: ESLint warnings only; TypeScript/build succeeded after fixing `frontend/components/AIMentor.tsx`. Moved local visual debug scripts out of `frontend/` to `scripts/visual/` to avoid lint errors.
+- **Note:** Ran full `npm run test:visual`: 108 passed, 9 skipped.
+- **Note:** Added "pouzij kamose" triad directive to orchestration docs; Perplexity API credits depleted (401). Fallback: Gemini Deep Research (updated in AGENT_PROTOCOL).
+- **Note:** Gemini Deep Research attempt failed: CLI model returned "Requested entity was not found"; python script requires GOOGLE_API_KEY/GEMINI_API_KEY (not in `.env`). Created `.venv` and installed `google-genai` to enable script once key is provided.
+- **Note:** Ran Gemini 3 Pro (non-deep) research for CPU-only RAG mentor stack. Output saved to `/tmp/gemini-research-local-rag.txt`.
+- **Note:** Ran Gemini Deep Research via `backend/scripts/gemini_deep_research.py`. Report saved to `.ai-context/Perplexity_assist/gemini_research_20251222_205643.md`.
+- **Note:** Ran updated Gemini Deep Research for latest 7–9B models. Report saved to `.ai-context/Perplexity_assist/gemini_research_20251222_212627.md`.
+- **Note:** Ran Gemini Deep Research for Apriel-1.6-15B-Thinker. Report saved to `.ai-context/Perplexity_assist/gemini_research_20251222_215737.md`.
+- **Note:** Built `llama.cpp` in `/home/deploy/llama.cpp`, downloaded GGUF models to `/home/deploy/models`, and added helper scripts in `scripts/llm/`.
+- **Note:** Bench results (512 prompt / 128 gen, Q4_K_M): Qwen2.5 7B ~120.8 pp t/s, ~11.7 gen t/s; DeepSeek R1 Distill Qwen 7B ~120.6 pp t/s, ~11.7 gen t/s; Apriel 15B ~61.9 pp t/s, ~6.1 gen t/s. Raw JSON in `/tmp/bench-*.json`.
+- **Note:** Logged multi-agent brainstorm ideas in `.ai-context/IDEAS.md`.
+- **Note:** Built custom llama.cpp OpenBLAS image and fixed missing libmtmd/libcurl; mentor containers running and `/mentor/health` returns healthy.
+- **Note:** Playwright visual suite passes (`PLAYWRIGHT_BASE_URL=http://localhost:3001 npm run test:visual`).
+- **Note:** Incident report created: `.ai-context/history/incidents/2025-12-23-mentor-openblas-libmtmd.md`.
+- **Note:** Swapped mentor-fast model to `Qwen3-4B-Instruct-2507-Q4_K_M.gguf`.
+- **Note:** Removed other mentor modes/services; Qwen3 fast is the only model with UI info label.
+- **Note:** Qwen3 4B Q4_K_M bench (llama-bench, 512 prompt / 128 gen): ~202 prompt tok/s, ~20 gen tok/s. Results saved to `/tmp/bench-qwen3-4b-q4.json`.
+- **Note:** A/B bench threads: t16 prompt ~202 tok/s, gen ~20 tok/s; t12 prompt ~189 tok/s, gen ~20.7 tok/s → kept 16 threads. Results in `/tmp/bench-qwen3-4b-q4-t12.json`.
+- **Note:** Increased mentor max tokens to 320 and server n-predict to 320; added auto-continue on length to prevent truncated answers.
+- **Note:** Mentor UI expanded to near top bar, themed scrollbar, and suggestions now adapt to conversation context.
+- **Note:** Suggestion engine dedupes acronyms and adds follow-up prompts; mentor timeout raised to 60s to reduce offline 503s.
+- **Note:** Recreated backend container to pick up mentor timeout/tokens from `.env`; mentor chat now stable in repeated calls.
+- **Note:** AuthContext now provides safe defaults to avoid QA render 500s when provider is missing; Playwright visual suite passes again.
+- **Note:** Added single silent retry for mentor chat/suggestions on frontend; removed unused Phi/Deep/Apriel/Qwen2.5 models from `/home/deploy/models`.
 
 ## 🎯 Current Task: MASTERPIECE Upgrade - Beginner + Intermediate Complete
 **Started:** 2025-12-21 (Session 8)
@@ -187,7 +217,7 @@
 - L07: Mention mobile apps explicitly
 
 ---
-**Last Commit:** `c0c8adb` docs: update working context
+**Last Commit:** `2738afb` chore: remove visual_tests artifacts
 **Status:** 🟢 Global readability boost (nav, footer, progress, callouts, video metadata) applied; Lesson 01 visuals verified; `npm run verify` passes (lint warnings only).
 
 ---
@@ -687,6 +717,20 @@
 
 | Date       | Agent       | What                                                                                        |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------- |
+| 2025-12-23 | Codex GPT-5.2 | Mentor UI retry + cleaned unused models (Phi/Deep/Apriel) from disk |
+| 2025-12-23 | Codex GPT-5.2 | Hotfix: recreated backend to load mentor env vars; added AuthContext fallback; Playwright visual tests pass |
+| 2025-12-23 | Codex GPT-5.2 | Raised mentor timeout and improved suggestion generation (dedupe acronyms + follow-up prompts) |
+| 2025-12-23 | Codex GPT-5.2 | Expanded mentor UI height + themed scrollbar; suggestions now follow conversation; auto-continue prevents truncation |
+| 2025-12-23 | Codex GPT-5.2 | Benchmarked Qwen3 threads + increased max tokens/n-predict to avoid truncated answers |
+| 2025-12-23 | Codex GPT-5.2 | Simplified mentor to Qwen3-only fast mode, removed other services, and ran Qwen3 bench |
+| 2025-12-23 | Codex GPT-5.2 | Added Phi-3.5 mini fast mode + mentor-fast-phi service and UI toggle for side-by-side comparison |
+| 2025-12-23 | Codex GPT-5.2 | Switched mentor-fast to Qwen3 4B Q4_K_M model and verified health + fast chat endpoint |
+| 2025-12-23 | Codex GPT-5.2 | Built OpenBLAS llama.cpp image, fixed libmtmd/libcurl missing, mentor containers healthy; Playwright visual tests pass |
+| 2025-12-23 | Codex GPT-5.2 | Swapped fast mentor to 3B model + trimmed context/history budgets for faster CPU responses |
+| 2025-12-22 | Codex GPT-5.2 | Tuned llama.cpp server settings (ctx/batch/predict) for CPU responsiveness; recreated mentor services |
+| 2025-12-22 | Codex GPT-5.2 | Fixed nginx upstream DNS (dynamic resolver) to stop 502 after backend restarts |
+| 2025-12-22 | Codex GPT-5.2 | Added mentor health endpoint + release checklist smoke step + env var for cache size |
+| 2025-12-22 | Codex GPT-5.2 | Mentor hotfix: added retry + safer parsing, bounded RAG cache, fixed lesson ID handling, Playwright visual tests pass |
 | 2025-12-21 | Claude      | **MASTERPIECE ai-basics L05** - Dual gate (Gemini+Codex 59/60), Mata v. Avianca hook, Stochastic Parrots + RAG citations, model table GPT-5/o3, RAG warning fix |
 | 2025-12-21 | Claude      | **MASTERPIECE ai-basics L03** - VideoSwitcher 2→4 videos (Andrej Karpathy, IBM, CZ native), GPT-5.1→GPT-5, all 6 diagrams verified, Gemini 59/60 |
 | 2025-12-21 | Claude      | **MASTERPIECE ai-basics L02** - 5 new diagrams (neural-network, learning-types, supervised-flow, clustering, RL-loop), Lab 3 rewritten as RLHF Simulator, VideoSwitcher 4 videos, Gemini 59/60 |

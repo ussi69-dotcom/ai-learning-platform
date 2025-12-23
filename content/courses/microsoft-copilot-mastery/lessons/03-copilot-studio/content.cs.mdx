@@ -95,7 +95,7 @@ Microsoft nabízí několik AI nástrojů. Tady je, jak se Copilot Studio hodí 
 - Potřebuješ primárně integrace mimo Microsoft (zvaž vlastní vývoj)
 
 <Callout type="info">
-**M365 „Create Agent“ vs Copilot Studio (plný maker zážitek):** Lehký builder v Microsoft 365 Copilotu je skvělý pro rychlé deklarativní agenty. V některých tenantech lze agenta otevřít/exportovat do Copilot Studio pro pokročilé funkce (topics, nástroje, evaluace, multi-agent). Pokud handoff není dostupný, vytvoř agenta rovnou v Copilot Studio.
+**M365 „Create Agent“ vs Copilot Studio (plný maker zážitek):** Lehký builder v Microsoft 365 Copilotu je skvělý pro rychlé deklarativní agenty. **Copy to Copilot Studio** handoff je obecně GA, ale dostupnost může řídit admin nebo region. Pokud handoff není dostupný, vytvoř agenta rovnou v Copilot Studio.
 </Callout>
 
 <Callout type="tip">
@@ -698,7 +698,7 @@ Pozoruj, jak agent odpovídá. Správně nakonfigurovaný agent by měl:
 ## 9. Pokročilé Funkce (2025 Aktualizace)
 
 <Callout type="info">
-**Poznámka k dostupnosti (k pozdnímu 2025):** Některé funkce (App Builder, Workflows Agent nebo konkrétní nástroje) mohou být v **Frontier/Preview** podle tenantu a regionu. Vždy ověř v M365 admin centru nebo release notes Copilot Studio.
+**Poznámka k dostupnosti (k pozdnímu 2025):** Základní build agentů i **Copy to Copilot Studio** jsou GA, ale některé funkce (App Builder, Workflows Agent nebo konkrétní nástroje) mohou být v **Frontier/Preview** podle tenantu a regionu. Vždy ověř v M365 admin centru nebo release notes Copilot Studio.
 </Callout>
 
 ### Multimodal Agents
@@ -708,10 +708,10 @@ Pokud je to v tenant dostupné, Copilot Studio může podporovat:
 - **Voice Input:** Mluv k agentovi v Teams
 - **Adaptive Cards:** Bohaté UI elementy (tlačítka, formuláře, obrázky)
 
-### Vestavěné Nástroje (Preview v některých tenantech)
+### Vestavěné nástroje (dostupnost se liší)
 
-- **Code Interpreter:** Agent umí generovat a spouštět Python pro analýzu souborů (Excel/CSV/PDF) a tvorbu grafů (dostupnost se liší podle tenantu).
-- **Computer Use:** Agent umí ovládat legacy desktop/web aplikace bez API přes virtuální myš/klávesnici (dostupnost se liší podle tenantu).
+- **Code Interpreter:** Agent umí generovat a spouštět Python pro analýzu souborů (Excel/CSV/PDF) a tvorbu grafů (GA v mnoha tenantech; liší se dle regionu).
+- **Computer Use:** Agent umí ovládat legacy desktop/web aplikace bez API přes virtuální myš/klávesnici (Preview v některých tenantech).
 
 ### Agent Analytics
 
@@ -738,9 +738,9 @@ Spouštějte **vestavěné evaluace** s vlastním nebo AI-generovaným test sete
 
 ### Výběr modelů & Tool protokoly
 
-- **Výběr modelu (preview v některých tenantech):** Některé tenanty umí volit mezi modely (např. OpenAI GPT‑4o a Anthropic Claude 3.5). Vyšší kvalita často znamená vyšší náklad/latenci — mapuj to na use‑case.
-- **MCP Server Support (preview):** Model Context Protocol umožňuje napojit standardizované nástroje a data bez custom wrapperů.
-- **Integrace nástrojů:** Dnes konektory/akce; standardizované tool protokoly (např. MCP) jsou preview v některých tenantech.
+- **Výběr modelu (tenant‑gated):** Mnoho tenantů umí volit mezi modely (např. GPT‑5 Chat a další enterprise‑schválené volby). Vyšší kvalita často znamená vyšší náklad/latenci — mapuj to na use‑case.
+- **MCP server support (GA s výjimkami):** Model Context Protocol umožňuje napojit standardizované nástroje a data bez custom wrapperů; některé pokročilé integrace mohou být preview.
+- **Integrace nástrojů:** Konektory/akce jsou GA; standardizované tool protokoly (např. MCP) mohou být preview v některých tenantech.
 
 <Diagram type="mcp-architecture" />
 
