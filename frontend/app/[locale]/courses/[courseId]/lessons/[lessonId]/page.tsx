@@ -18,6 +18,7 @@ import FeedbackFAB from "@/components/FeedbackFAB";
 import FeedbackSubmissionModal from "@/components/FeedbackSubmissionModal";
 import FeedbackDetailModal from "@/components/FeedbackDetailModal";
 import FeedbackMarker from "@/components/FeedbackMarker";
+import AIMentor from "@/components/AIMentor";
 import axios from "axios";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -76,6 +77,12 @@ export default function LessonPage({
   } | null>(null);
   const [feedbackItems, setFeedbackItems] = useState<any[]>([]);
   const [selectedFeedback, setSelectedFeedback] = useState<any>(null);
+  const resolvedLessonId = Number.isFinite(Number(lesson?.id))
+    ? Number(lesson.id)
+    : Number.parseInt(lessonId, 10);
+  const resolvedCourseId = Number.isFinite(Number(course?.id))
+    ? Number(course.id)
+    : Number.parseInt(courseId, 10);
 
   // --- DEBUG LOGGING ---
   useEffect(() => {
@@ -164,8 +171,11 @@ export default function LessonPage({
           params: { lang: locale },
           headers: { Authorization: `Bearer ${token}` },
         });
+        const courseIdValue = Number.isFinite(Number(courseRes.data?.id))
+          ? Number(courseRes.data.id)
+          : Number.parseInt(courseId, 10);
         const courseLessons = allLessonsRes.data
-          .filter((l: any) => l.course_id === parseInt(courseId))
+          .filter((l: any) => l.course_id === courseIdValue)
           .sort((a: any, b: any) => a.order - b.order);
         setAllLessons(courseLessons);
 
@@ -173,8 +183,11 @@ export default function LessonPage({
         const progressRes = await axios.get(`${API_BASE}/users/me/progress`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        const lessonIdValue = Number.isFinite(Number(lessonRes.data?.id))
+          ? Number(lessonRes.data.id)
+          : Number.parseInt(lessonId, 10);
         const myProgress = progressRes.data.find(
-          (p: any) => p.lesson_id === parseInt(lessonId)
+          (p: any) => p.lesson_id === lessonIdValue
         );
         if (myProgress && myProgress.current_page) {
           setCurrentPage(myProgress.current_page);
@@ -286,7 +299,7 @@ export default function LessonPage({
   const isQuizPage = currentPage === slides.length;
   const currentContent = !isQuizPage ? slides[currentPage] : "";
 
-  const currentIndex = allLessons.findIndex((l) => l.id === parseInt(lessonId));
+  const currentIndex = allLessons.findIndex((l) => l.id === resolvedLessonId);
   const previousLesson = currentIndex > 0 ? allLessons[currentIndex - 1] : null;
   const nextLesson =
     currentIndex < allLessons.length - 1 ? allLessons[currentIndex + 1] : null;
@@ -336,7 +349,7 @@ export default function LessonPage({
       await axios.post(
         `${API_BASE}/feedback/${parentId}/reply`,
         {
-          lesson_id: parseInt(lessonId),
+          lesson_id: resolvedLessonId,
           slide_index: parent.slide_index,
           x_pos: parent.x_pos,
           y_pos: parent.y_pos,
@@ -521,8 +534,8 @@ export default function LessonPage({
               !isQuizPage &&
               !hasQuiz && (
                 <LessonComplete
-                  lessonId={parseInt(lessonId)}
-                  courseId={parseInt(courseId)}
+                  lessonId={resolvedLessonId}
+                  courseId={resolvedCourseId}
                   lessonTitle={lesson.title}
                 />
               )}
@@ -672,9 +685,10 @@ export default function LessonPage({
           onModeChange={setFeedbackMode}
           currentMode={feedbackMode}
           onPlaceFeedback={handlePlaceFeedback}
-          lessonId={parseInt(lessonId)}
+          lessonId={resolvedLessonId}
           slideIndex={currentPage}
         />
+        <AIMentor lessonId={resolvedLessonId} lessonTitle={lesson.title} />
 
         <FeedbackSubmissionModal
           isOpen={feedbackToPlace !== null}
@@ -686,7 +700,7 @@ export default function LessonPage({
             setFeedbackToPlace(null);
             setFeedbackMode("viewing");
           }}
-          lessonId={parseInt(lessonId)}
+          lessonId={resolvedLessonId}
           slideIndex={feedbackToPlace?.slideIndex || 0}
           x={feedbackToPlace?.x || 0}
           y={feedbackToPlace?.y || 0}

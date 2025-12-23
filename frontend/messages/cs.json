@@ -84,6 +84,26 @@
     "report_bug": "Nahlásit chybu / Zpětná vazba",
     "idle_hint": "Přetáhni na místo chyby · Klikni pro existující"
   },
+  "Mentor": {
+    "title": "AI Mentor",
+    "intro": "Ptej se k této lekci. Odpovím z kontextu lekce.",
+    "placeholder": "Zeptej se na tuto lekci...",
+    "send": "Odeslat",
+    "thinking": "Přemýšlím...",
+    "suggested": "Doporučené otázky",
+    "sources": "Zdroje",
+    "toggle": "Přepnout mentora",
+    "close": "Zavřít mentora",
+    "focus": "Zaměření:",
+    "mode_fast": "Rychlý",
+    "mode_reasoning": "Rozvaha",
+    "mode_deep": "Hloubka",
+    "model_info": "RAG model: Qwen3 4B",
+    "vibe_jedi": "Jedi mentor",
+    "vibe_sith": "Sith mentor",
+    "error": "Mentor je teď offline. Zkus to za chvilku.",
+    "fallback": "Rád pomůžu s touhle lekcí. Co chceš probrat?"
+  },
   "Lab": {
     "complete": "Laboratoř dokončena",
     "mastered": "Zvládl jsi tento experiment.",

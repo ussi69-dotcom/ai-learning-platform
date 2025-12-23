@@ -1,3 +1,11 @@
+x-llama-server: &llama_server
+  image: ai-learning-platform-llama-server-openblas
+  build:
+    context: .
+    dockerfile: docker/llama.cpp.openblas.Dockerfile
+    args:
+      LLAMA_CPP_REF: 8f48807380305a5985df78f67e29862664c9afec
+
 services:
   frontend:
     build:
@@ -46,6 +54,38 @@ services:
     depends_on:
       - db
       - redis
+
+  mentor-fast:
+    <<: *llama_server
+    container_name: mentor-fast
+    restart: unless-stopped
+    volumes:
+      - ${MENTOR_MODEL_DIR}:/models:ro
+    ports:
+      - "8081:8081"
+    command:
+      [
+        "--model",
+        "/models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8081",
+        "--threads",
+        "16",
+        "--threads-batch",
+        "16",
+        "--ctx-size",
+        "4096",
+        "--batch-size",
+        "1024",
+        "--ubatch-size",
+        "256",
+        "--n-predict",
+        "320",
+        "--flash-attn",
+        "auto"
+      ]
 
   db:
     image: postgres:15-alpine

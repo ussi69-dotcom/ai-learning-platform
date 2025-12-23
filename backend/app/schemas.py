@@ -1,7 +1,7 @@
 import enum
 import re
 from pydantic import BaseModel, field_validator, computed_field
-from typing import List, Optional
+from typing import List, Optional, Literal
 from datetime import datetime
 from app.models import FeedbackType, calculate_level_from_xp, get_next_level_xp, XP_THRESHOLDS, DifficultyLevel
 
@@ -231,6 +231,49 @@ class FeedbackItemResponse(FeedbackItemBase):
 
     class Config:
         from_attributes = True
+
+# --- MENTOR SCHEMAS ---
+
+class MentorMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str
+
+
+class MentorChatRequest(BaseModel):
+    message: str
+    history: List[MentorMessage] = []
+    mode: Optional[str] = "fast"
+    vibe: Optional[str] = "jedi"
+
+
+class MentorSource(BaseModel):
+    section: str
+    snippet: str
+    score: float
+
+
+class MentorChatResponse(BaseModel):
+    answer: str
+    mode: str
+    vibe: str
+    sources: List[MentorSource] = []
+    suggested_questions: List[str] = []
+
+
+class MentorSuggestionsResponse(BaseModel):
+    questions: List[str]
+
+
+class MentorHealthService(BaseModel):
+    mode: str
+    status: str
+    latency_ms: Optional[float] = None
+    detail: Optional[str] = None
+
+
+class MentorHealthResponse(BaseModel):
+    status: str
+    services: List[MentorHealthService]
 
 # --- CERTIFICATE SCHEMAS ---
 

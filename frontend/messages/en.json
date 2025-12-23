@@ -84,6 +84,26 @@
     "report_bug": "Report a Bug / Feedback",
     "idle_hint": "Drag to bug location · Click for existing"
   },
+  "Mentor": {
+    "title": "AI Mentor",
+    "intro": "Ask about this lesson. I'll answer using the lesson context.",
+    "placeholder": "Ask about this lesson...",
+    "send": "Send",
+    "thinking": "Thinking...",
+    "suggested": "Suggested questions",
+    "sources": "Sources",
+    "toggle": "Toggle mentor",
+    "close": "Close mentor",
+    "focus": "Focus:",
+    "mode_fast": "Fast",
+    "mode_reasoning": "Reasoning",
+    "mode_deep": "Deep",
+    "model_info": "RAG model: Qwen3 4B",
+    "vibe_jedi": "Jedi Mentor",
+    "vibe_sith": "Sith Mentor",
+    "error": "Mentor is offline right now. Try again in a moment.",
+    "fallback": "I can help with this lesson. What do you want to explore?"
+  },
   "Lab": {
     "complete": "Lab Completed",
     "mastered": "You have mastered this experiment.",

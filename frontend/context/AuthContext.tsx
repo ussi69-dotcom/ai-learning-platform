@@ -38,7 +38,23 @@ interface AuthContextType {
   dismissLevelUp: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const DEFAULT_AUTH_CONTEXT: AuthContextType = {
+  user: null,
+  token: null,
+  login: async () => {
+    throw new Error("AuthProvider not mounted.");
+  },
+  register: async () => {
+    throw new Error("AuthProvider not mounted.");
+  },
+  logout: () => {},
+  isLoading: true,
+  refreshUser: async () => {},
+  levelUpData: { show: false, newLevel: "" },
+  dismissLevelUp: () => {},
+};
+
+const AuthContext = createContext<AuthContextType>(DEFAULT_AUTH_CONTEXT);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -195,8 +211,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+  if (context === DEFAULT_AUTH_CONTEXT && process.env.NODE_ENV !== "production") {
+    console.warn("useAuth used without AuthProvider.");
   }
   return context;
 }

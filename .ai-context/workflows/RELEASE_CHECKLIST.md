@@ -19,6 +19,7 @@ Use this checklist before deploying significant changes to production.
   - [ ] Course navigation
   - [ ] Lesson completion
   - [ ] Quiz submission
+- [ ] Mentor smoke (fast/reasoning/deep) via `/mentor/health` or `/mentor/lessons/{id}/chat`
 - [ ] Visual regression check (if UI changes)
 
 ### Database
@@ -62,6 +63,7 @@ curl -s https://yourdomain.com/api/health | jq
 
 ### Post-Deploy Verification
 - [ ] Health endpoint returns 200
+- [ ] Mentor health endpoint returns 200 (fast/reasoning/deep)
 - [ ] Frontend loads without console errors
 - [ ] Login works
 - [ ] New feature/fix verified in prod
