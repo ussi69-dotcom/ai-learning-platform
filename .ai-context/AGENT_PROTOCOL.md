@@ -332,15 +332,22 @@ Prevents: infinite ping-pong, token bloat, analysis paralysis.
 
 **Plugin:** `obra/superpowers` - Strukturované workflow skills pro Claude Code
 
-### Skill → Task Mapping (GPT-5.2 VŽDY doporučí v Task Briefu)
+### Skill → Task Mapping (GPT-5.2 doporučí minimální skill chain 1-4 v Task Briefu)
 
 | Task Type | Claude Skills | Popis |
 |-----------|---------------|-------|
-| Bug/Incident | `/systematic-debugging` + `/verification-before-completion` | 4-phase root cause + checklist |
-| Feature/Refactor | `/writing-plans` → `/executing-plans` | Detailed plans → batch execution |
+| Bug/Incident | `/systematic-debugging` → `/test-driven-development` → `/verification-before-completion` | Root cause + test + verify |
+| Feature/Refactor | `/brainstorming` → `/writing-plans` → `/test-driven-development` → `/executing-plans` | Design → plan → test → execute |
+| Feature (isolated) | `/using-git-worktrees` → (feature chain) | Isolated parallel work |
 | Codebase Discovery | `/dispatching-parallel-agents` | Coordinate parallel subagents |
 | Content Creation | `/subagent-driven-development` | Two-stage review (spec → quality) |
-| Any Completion | `/verification-before-completion` | Always verify before "done" |
+| Visual Regression | `/verification-before-completion` | Pre-completion checklist |
+| Release Readiness | `/requesting-code-review` + `/finishing-a-development-branch` | Review + merge hygiene |
+| Post-Review | `/receiving-code-review` | Apply feedback systematically |
+
+**Defaults:**
+- `/brainstorming` required before creative feature design; skip for simple bugfixes
+- `/test-driven-development` required for behavior changes; optional for copy/style-only
 
 ### Workflow Hierarchy (v5.3)
 
