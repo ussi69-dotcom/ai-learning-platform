@@ -13,8 +13,8 @@ Read this first to understand the environment, preferences, and active protocols
 ┌─────────────────────────────────────────────────────────────────┐
 │  GPT-5.2 (Orchestrátor) ←→ Claude (Implementer)                 │
 │         ↓                         ↓                             │
-│  Gemini 3 Pro (Visual QA)    Playwright (local files)           │
-│  Perplexity (Quick Research)  Gemini Deep (60min Research)      │
+│  Gemini 3 Pro (Visual QA + Research) Playwright (local files)   │
+│  GPT-Researcher (optional)     Gemini Deep (60min Research)     │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -25,8 +25,8 @@ Read this first to understand the environment, preferences, and active protocols
 | **GPT-5.2** | Orchestrátor + Hard Reasoning | ~128k | Debugging, architecture, root cause |
 | **Claude Code** | Implementer + Git + Daily Ops | ~200k | Coding, QA, file ops |
 | **Gemini 3 Pro** | Visual QA + Content | **2M** | Screenshots (100+!), content gen |
-| **Perplexity** | Quick Research | N/A | Facts <5 min |
 | **Gemini Deep Research** | Autonomous Research | N/A | 20-60 min deep analysis |
+| **GPT-Researcher** | Optional self-hosted research | N/A | Local |
 
 ### Escalation Rules
 
@@ -56,7 +56,7 @@ ESKALUJ na GPT-5.2 když:
 - **Node.js:** v20.19.6 (via NVM)
 - **Stack:** Next.js 16.0.7, React 19.2.1, FastAPI, PostgreSQL 15, Redis 7, Docker Compose.
 - **Agent Mode:** Claude Code primary, Gemini CLI for content/visual QA, GPT‑5.2 via Codex CLI for hard reasoning
-- **MCP Tools:** Playwright (`@playwright/mcp`), Context7 (`@upstash/context7-mcp`), Perplexity
+- **MCP Tools:** Playwright (`@playwright/mcp`), Context7 (`@upstash/context7-mcp`)
 - **Network:** Zero Trust (UFW + Cloudflare Tunnel) - bind ports to `127.0.0.1:PORT`
 
 ### Dev Access Note (as of 2025-12-20)
@@ -165,7 +165,7 @@ Potřebuji help?
 │     └─ Posílej jen cesty k souborům, NE snapshoty do chatu!
 │
 ├─ Je to RESEARCH?
-│  ├─ Rychlé (<5 min) → Perplexity MCP
+│  ├─ Rychlé (<5 min) → Gemini 3 Pro CLI (short)
 │  ├─ Střední (5-20 min) → Gemini 3 Pro CLI
 │  └─ Hluboké (20-60 min) → Gemini Deep Research
 │
@@ -189,7 +189,7 @@ Potřebuji help?
 |--------------|---------|--------------|----------|
 | Rychlá fakta | `WebSearch` | Free | ⚡ Instant |
 | Dokumentace | `Context7 MCP` | Free | ⚡ Instant |
-| Quick research | `Perplexity MCP` | MCP | ⚡ 10s |
+| Quick research | `Gemini 3 Pro CLI` | Google AI Plus | ⏱️ 2-5m |
 | Deep research | `Gemini Deep Research` | Google AI Plus | ⏱️ 20-60 min |
 | Content generation | `Gemini 3 Pro CLI` | Google AI Plus | ⏱️ 1-3 min |
 | **Visual QA** | `Gemini 3 Pro CLI` | Google AI Plus | ⏱️ 30s |

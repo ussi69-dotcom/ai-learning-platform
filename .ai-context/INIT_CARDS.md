@@ -49,14 +49,14 @@ Situational:
 - .ai-context/templates/MACP_PROMPT.md (MACP review)
 - .ai-context/templates/VISUAL_QA_REQUEST.md (visual review)
 
-## Perplexity
+## Research (Gemini Deep Research)
 
 Always-on:
 - Task Brief (goal, constraints, citations needed)
 
 Situational:
 - .ai-context/workflows/WORKFLOW_V6_MASTERPIECE.md (research section)
-- .ai-context/workflows/MCP_SETUP.md (tool usage)
+- .ai-context/workflows/MCP_SETUP.md (tool usage if GPT-Researcher is added)
 
 ## Playwright Visual QA (local)
 

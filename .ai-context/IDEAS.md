@@ -28,6 +28,17 @@
 
 ## 📋 Pending
 
+### 🤝 Multi-Agent Brainstorm (Dec 22, 2025)
+- AI Mentor Chat (lesson-context, Jedi/Sith persona guidance)
+- Daily Challenge System (streaks + leaderboard + XP multipliers)
+- Interactive Prompt Playground (live prompt edits with diff/highlighted impact)
+- In-browser Lab Terminal (xterm.js embedded labs)
+- Force Alignment Profile (Light/Dark path unlocks + dynamic theme)
+- 3D Knowledge Graph (concept navigation as force-directed map)
+- Spaced Repetition + Micro-quests (SRS schedule + daily micro-tasks)
+- Interactive Diagrams (parameter sliders for live visuals)
+- Boss Fight Labs (auto-graded rubric + milestone moments)
+
 ## 📰 News & Updates
 
 - **AI News Feed**:
