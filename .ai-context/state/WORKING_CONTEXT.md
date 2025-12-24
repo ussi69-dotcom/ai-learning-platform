@@ -1,11 +1,11 @@
 # Working Context
 
-**Last Updated:** 2025-12-23 23:59 (Agent: Codex GPT-5.2)
+**Last Updated:** 2025-12-24 00:01 (Agent: Codex GPT-5.2)
 
 ## 🚦 Current Status: Doc stack audit (GPT_REVIEW_PROMPT)
 - **Boot sync:** Updated to match `git log -1` at `676679b`.
 - **Latest commits:** `676679b` (workflow v5.3 Superpowers integration), `b672118` (refresh lessons + diagram QA + /api alias), `2738afb` (remove visual_tests artifacts), `5b3ebda` (ignore visual_tests artifacts), `2dcaea0` (consolidate agent docs + archive legacy).
-- **Active task:** Mentor feature commit (backend API + RAG, frontend mentor UI, infra/docker + nginx, env + release checklist updates).
+- **Active task:** Archive one-off doc prompts/proposals (GPT_REVIEW_PROMPT, ORCHESTRATOR_HANDOFF, lessons_upgrade_proposal).
 - **Note:** Audit report saved: `.ai-context/reports/DOC_STACK_AUDIT_2025_12_23.md`.
 - **Note:** Executed T1-T5 for Gemini lesson gaps: added /api backend prefix, mobile fallback for local LLM diagram, updated pricing/model references, Copilot GA notes, archived old PPE structure, added diagram gallery + mobile render test, and documented deprecation/decay audit policy.
 - **Note:** Ran `npm run verify`: ESLint warnings only; TypeScript/build succeeded after fixing `frontend/components/AIMentor.tsx`. Moved local visual debug scripts out of `frontend/` to `scripts/visual/` to avoid lint errors.
