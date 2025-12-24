@@ -138,6 +138,27 @@ Kdyz dostanu navrh od GPT-5.2 nebo Claude k ohodnoceni:
 
 ---
 
+## 📱 Slack Notifikace
+
+**Nemám Slack MCP.** Po dokončení důležitého tasku deleguj na Clauda:
+
+```
+"Pošli Slack notifikaci:
+- Typ: task_done|research_done|error
+- Summary: [co jsem udělal/našel]
+- Detail: [cesta k výstupu]"
+```
+
+**Kdy notifikovat:**
+- Research dokončen (>10 min)
+- Content draft hotový
+- Visual QA s findings
+- MACP verdikt
+
+Viz `.ai-context/AGENT_PROTOCOL.md` sekce "Slack Notifikace" pro kompletní pravidla.
+
+---
+
 ## Thin Protocol (VZDY!)
 
 **NIKDY neposilej do chatu:**

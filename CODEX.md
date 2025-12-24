@@ -43,6 +43,21 @@ Každá moje odpověď MUSÍ obsahovat:
 3. **Doporučený fix** + alternativy
 4. **Rizika / rollback** plán
 5. **Verify** - konkrétní testy/flows k ověření
+6. **Notify** (pokud task >10 min) - deleguj na Clauda: "Pošli Slack notifikaci: [summary]"
+
+---
+
+## 📱 Slack Notifikace
+
+**Nemám Slack MCP.** Po dokončení důležitého tasku deleguj na Clauda:
+
+```
+"Pošli Slack notifikaci:
+- Typ: task_done|error|blocked
+- Summary: [co jsem udělal/našel]"
+```
+
+Viz `.ai-context/AGENT_PROTOCOL.md` sekce "Slack Notifikace" pro kompletní pravidla.
 
 ---
 

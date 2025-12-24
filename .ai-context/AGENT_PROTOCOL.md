@@ -854,6 +854,46 @@ print(interaction.output)  # Detailed research report
 
 ---
 
+## 📱 Slack Notifikace (via Claude)
+
+**Pouze Claude Code má Slack MCP.** Ostatní agenti delegují notifikace na Clauda.
+
+### Kdy notifikovat uživatele
+
+| Situace | Agent | Akce |
+|---------|-------|------|
+| **Task dokončen (>10 min)** | Kdokoliv | → Claude: "Pošli notifikaci: [summary]" |
+| **Testy selhaly** | Kdokoliv | → Claude: "Notify: testy failed [detail]" |
+| **Deploy complete** | Claude | Automaticky notifikuje |
+| **Blocked / need decision** | Kdokoliv | → Claude: "Notify: blocked on [X]" |
+| **Důležitý finding** | Kdokoliv | → Claude: "Notify user: [finding]" |
+| **Research hotový** | Gemini | → Claude: "Notify: research done, viz [path]" |
+| **MACP rozhodnutí** | Orchestrátor | → Claude: "Notify: MACP decision [X]" |
+
+### Formát delegace (pro Codex/Gemini)
+
+```
+Na konci tasku řekni Claudovi:
+
+"Pošli Slack notifikaci:
+- Typ: [task_done|error|blocked|info]
+- Summary: [1-2 věty]
+- Detail: [optional path nebo context]"
+```
+
+### Slack Channel
+
+- **Channel ID:** `C0A4WBKJU7R`
+- **Použití:** Všechny agent notifikace
+
+### Kdy NENOTIFIKOVAT
+
+- Triviální změny (<5 min práce)
+- Průběžné updatey (ty jdou do WORKING_CONTEXT)
+- Běžné commity bez special významu
+
+---
+
 ## 🛡️ Best Practices (Anti-Patterns)
 
 ### ❌ NIKDY nedělej:
@@ -872,8 +912,8 @@ print(interaction.output)  # Detailed research report
 
 ---
 
-*Version: 5.1*
+*Version: 5.2*
 *Created: 2025-12-06*
-*Last Updated: 2025-12-18*
+*Last Updated: 2025-12-24*
 *Maintained by: All agents*
 *Next review: Monthly or at major changes*
