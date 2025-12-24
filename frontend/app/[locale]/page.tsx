@@ -364,10 +364,10 @@ export default function HomePage() {
       {/* System Status Monitor */}
       <SystemStatus />
 
-      {/* Daily AI Digest from Perplexity + News Feed */}
+      {/* Daily AI Digest + News Feed */}
       <section className="w-full py-12 md:py-16 bg-slate-50/30 dark:bg-slate-900/20 border-y border-border/30">
         <div className="container px-4 mx-auto">
-          {/* Daily Summary - Curated by Perplexity AI */}
+          {/* Daily Summary - Curated by agents */}
           <DailySummary locale={locale} />
 
           {/* AI News Feed - Aggregated from YouTube, RSS, HN, arXiv */}

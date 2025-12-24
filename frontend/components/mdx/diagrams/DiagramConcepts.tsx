@@ -2546,8 +2546,8 @@ export default function DiagramConcepts({ type }: DiagramProps) {
             role="img"
             aria-label={
               isCs
-                ? "Multi-Agent Workflow v4.0: Claude orchestruje GPT-5.2, Gemini, Perplexity"
-                : "Multi-Agent Workflow v4.0: Claude orchestrates GPT-5.2, Gemini, Perplexity"
+                ? "Multi-Agent Workflow v5.2: Aktivní konzole orchestruje Codex, Claude Code, Gemini 3 Pro, Perplexity a Slack notifikace"
+                : "Multi-Agent Workflow v5.2: Active console orchestrates Codex, Claude Code, Gemini 3 Pro, Perplexity, and Slack notifications"
             }
           >
             <defs>
@@ -2581,7 +2581,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
               textAnchor="middle"
               className="text-lg font-bold fill-slate-700 dark:fill-slate-200"
             >
-              {isCs ? "🤖 Multi-Agent Workflow v4.0" : "🤖 Multi-Agent Workflow v4.0"}
+              {isCs ? "🤖 Multi-Agent Workflow v5.2" : "🤖 Multi-Agent Workflow v5.2"}
             </text>
 
             {/* ═══ ORCHESTRATOR (Top Center) ═══ */}
@@ -2594,7 +2594,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
               ORCHESTRATION LAYER
             </text>
 
-            {/* Claude Opus 4.5 - Orchestrator (larger, centered) */}
+            {/* Active Console - Orchestrator (larger, centered) */}
             <g transform="translate(225, 65)" filter="url(#glow-claude)">
               <rect
                 x="0"
@@ -2614,15 +2614,23 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                 textAnchor="middle"
                 className="text-sm font-bold fill-orange-600 dark:fill-orange-400"
               >
-                Claude Opus 4.5
+                {isCs ? "Aktivní konzole" : "Active Console"}
               </text>
               <text
                 x="125"
-                y="70"
+                y="67"
                 textAnchor="middle"
-                className="text-[10px] fill-orange-500 dark:fill-orange-300"
+                className="text-[9px] fill-orange-500 dark:fill-orange-300"
               >
-                {isCs ? "Orchestrátor • CLI • QA Gate • Safety" : "Orchestrator • CLI • QA Gate • Safety"}
+                {isCs ? "Codex • Claude • Gemini" : "Codex • Claude • Gemini"}
+              </text>
+              <text
+                x="125"
+                y="80"
+                textAnchor="middle"
+                className="text-[8px] fill-orange-500/80 dark:fill-orange-300/80"
+              >
+                {isCs ? "Orchestrator = aktivní CLI" : "Orchestrator = active CLI"}
               </text>
             </g>
 
@@ -2637,9 +2645,10 @@ export default function DiagramConcepts({ type }: DiagramProps) {
             </text>
 
             {/* Arrows from Orchestrator to Specialists */}
-            <line x1="290" y1="150" x2="155" y2="190" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="2" markerEnd="url(#arrowhead-maw)" />
-            <line x1="350" y1="150" x2="350" y2="190" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="2" markerEnd="url(#arrowhead-maw)" />
-            <line x1="410" y1="150" x2="545" y2="190" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="2" markerEnd="url(#arrowhead-maw)" />
+            <line x1="290" y1="150" x2="105" y2="190" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="2" markerEnd="url(#arrowhead-maw)" />
+            <line x1="330" y1="150" x2="285" y2="190" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="2" markerEnd="url(#arrowhead-maw)" />
+            <line x1="370" y1="150" x2="465" y2="190" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="2" markerEnd="url(#arrowhead-maw)" />
+            <line x1="410" y1="150" x2="595" y2="190" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="2" markerEnd="url(#arrowhead-maw)" />
 
             {/* GPT-5.2 Thinking - Reasoning specialist */}
             <g transform="translate(30, 195)">
@@ -2683,8 +2692,50 @@ export default function DiagramConcepts({ type }: DiagramProps) {
               </text>
             </g>
 
-            {/* Gemini CLI - Research & Content */}
+            {/* Claude Code - Implementation & QA */}
             <g transform="translate(210, 195)">
+              <rect
+                x="0"
+                y="0"
+                width="150"
+                height="85"
+                rx="10"
+                fill="#f97316"
+                fillOpacity="0.1"
+                stroke="#f97316"
+                strokeWidth="2"
+              />
+              <text x="75" y="28" textAnchor="middle" className="text-xl">
+                ⚙️
+              </text>
+              <text
+                x="75"
+                y="48"
+                textAnchor="middle"
+                className="text-[11px] font-bold fill-orange-600 dark:fill-orange-400"
+              >
+                Claude Code
+              </text>
+              <text
+                x="75"
+                y="65"
+                textAnchor="middle"
+                className="text-[9px] fill-slate-500 dark:fill-slate-400"
+              >
+                {isCs ? "Implementace, QA, Slack MCP" : "Implementation, QA, Slack MCP"}
+              </text>
+              <text
+                x="75"
+                y="78"
+                textAnchor="middle"
+                className="text-[8px] fill-orange-500/70"
+              >
+                {isCs ? "Doručuje změny" : "Shipping agent"}
+              </text>
+            </g>
+
+            {/* Gemini 3 Pro - Content & Visual QA */}
+            <g transform="translate(390, 195)">
               <rect
                 x="0"
                 y="0"
@@ -2713,7 +2764,7 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                 textAnchor="middle"
                 className="text-[9px] fill-slate-500 dark:fill-slate-400"
               >
-                {isCs ? "Research, Content Gen" : "Research, Content Gen"}
+                {isCs ? "Content, Visual QA" : "Content, Visual QA"}
               </text>
               <text
                 x="75"
@@ -2721,12 +2772,12 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                 textAnchor="middle"
                 className="text-[8px] fill-cyan-500/70"
               >
-                2M context
+                {isCs ? "2M kontext" : "2M context"}
               </text>
             </g>
 
-            {/* Perplexity Sonar - Quick Research */}
-            <g transform="translate(390, 195)">
+            {/* Perplexity - Manual Research */}
+            <g transform="translate(520, 195)">
               <rect
                 x="0"
                 y="0"
@@ -2736,82 +2787,71 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                 fill="#3b82f6"
                 fillOpacity="0.1"
                 stroke="#3b82f6"
-                strokeWidth="2"
+                strokeWidth="1.5"
+                strokeDasharray="4,2"
               />
-              <text x="75" y="28" textAnchor="middle" className="text-xl">
+              <text x="75" y="28" textAnchor="middle" className="text-lg">
                 ⚡
               </text>
               <text
                 x="75"
-                y="48"
-                textAnchor="middle"
-                className="text-[11px] font-bold fill-blue-600 dark:fill-blue-400"
-              >
-                Perplexity Sonar
-              </text>
-              <text
-                x="75"
-                y="65"
-                textAnchor="middle"
-                className="text-[9px] fill-slate-500 dark:fill-slate-400"
-              >
-                {isCs ? "Quick Research, Fakta" : "Quick Research, Facts"}
-              </text>
-              <text
-                x="75"
-                y="78"
-                textAnchor="middle"
-                className="text-[8px] fill-blue-500/70"
-              >
-                {isCs ? "Real-time citace" : "Real-time citations"}
-              </text>
-            </g>
-
-            {/* Gemini Deep Research - optional */}
-            <g transform="translate(570, 195)">
-              <rect
-                x="0"
-                y="0"
-                width="110"
-                height="85"
-                rx="10"
-                fill="#a855f7"
-                fillOpacity="0.1"
-                stroke="#a855f7"
-                strokeWidth="1.5"
-                strokeDasharray="4,2"
-              />
-              <text x="55" y="28" textAnchor="middle" className="text-lg">
-                🔬
-              </text>
-              <text
-                x="55"
                 y="46"
                 textAnchor="middle"
-                className="text-[9px] font-bold fill-purple-600 dark:fill-purple-400"
+                className="text-[10px] font-bold fill-blue-600 dark:fill-blue-400"
               >
-                Deep Research
+                Perplexity
               </text>
               <text
-                x="55"
+                x="75"
                 y="60"
                 textAnchor="middle"
                 className="text-[8px] fill-slate-500 dark:fill-slate-400"
               >
-                {isCs ? "Autonomní" : "Autonomous"}
+                {isCs ? "Manuální rešerše" : "Manual research"}
               </text>
               <text
-                x="55"
+                x="75"
                 y="73"
                 textAnchor="middle"
-                className="text-[7px] fill-purple-500/70"
+                className="text-[7px] fill-blue-500/70"
               >
-                20-60 min
+                {isCs ? "Opatrně s API" : "Mind API calls"}
               </text>
             </g>
 
-            {/* Arrow to Deep Research */}
-            <line x1="540" y1="237" x2="568" y2="237" className="stroke-purple-400/50 dark:stroke-purple-500/50" strokeWidth="1.5" strokeDasharray="3,2" markerEnd="url(#arrowhead-maw)" />
+            {/* Slack MCP - Human-in-the-loop */}
+            <g transform="translate(540, 310)">
+              <rect
+                x="0"
+                y="0"
+                width="140"
+                height="55"
+                rx="8"
+                fill="#0ea5e9"
+                fillOpacity="0.1"
+                stroke="#0ea5e9"
+                strokeWidth="1.5"
+              />
+              <text x="70" y="22" textAnchor="middle" className="text-sm">
+                🔔
+              </text>
+              <text
+                x="70"
+                y="38"
+                textAnchor="middle"
+                className="text-[9px] font-bold fill-sky-600 dark:fill-sky-400"
+              >
+                Slack MCP
+              </text>
+              <text
+                x="70"
+                y="50"
+                textAnchor="middle"
+                className="text-[7px] fill-slate-500 dark:fill-slate-400"
+              >
+                {isCs ? "Pouze Claude" : "Claude-only"}
+              </text>
+            </g>
 
             {/* ═══ SHARED PROTOCOL (Center) ═══ */}
             <g transform="translate(175, 310)">
@@ -2842,6 +2882,16 @@ export default function DiagramConcepts({ type }: DiagramProps) {
             <line x1="105" y1="280" x2="240" y2="305" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="1.5" markerEnd="url(#arrowhead-maw)" />
             <line x1="285" y1="280" x2="310" y2="305" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="1.5" markerEnd="url(#arrowhead-maw)" />
             <line x1="465" y1="280" x2="440" y2="305" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="1.5" markerEnd="url(#arrowhead-maw)" />
+            <line x1="595" y1="280" x2="520" y2="305" className="stroke-slate-400 dark:stroke-slate-500" strokeWidth="1.5" markerEnd="url(#arrowhead-maw)" />
+
+            {/* Arrow from Claude to Slack MCP */}
+            <polyline
+              points="285,280 285,300 540,300 540,338"
+              fill="none"
+              className="stroke-slate-400 dark:stroke-slate-500"
+              strokeWidth="1.5"
+              markerEnd="url(#arrowhead-maw)"
+            />
 
             {/* ═══ MEMORY SYSTEM (Bottom Row) ═══ */}
             <text
@@ -2960,8 +3010,8 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                 className="text-[8px] font-mono fill-slate-400 dark:fill-slate-500"
               >
                 {isCs
-                  ? "🎯 Routing: Reasoning→GPT-5.2 | Content→Gemini | Quick facts→Perplexity | Deep research→Gemini DR"
-                  : "🎯 Routing: Reasoning→GPT-5.2 | Content→Gemini | Quick facts→Perplexity | Deep research→Gemini DR"}
+                  ? "🎯 Routing: Reasoning→Codex | Build/QA→Claude | Content→Gemini | Quick research→Perplexity | Deep research→Gemini DR | Notify→Claude→Slack"
+                  : "🎯 Routing: Reasoning→Codex | Build/QA→Claude | Content→Gemini | Quick research→Perplexity | Deep research→Gemini DR | Notify→Claude→Slack"}
               </text>
             </g>
           </svg>

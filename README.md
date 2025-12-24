@@ -9,19 +9,92 @@ Gamifikovaná platforma pro výuku AI konceptů s českou lokalizací.
 
 > **Poznámka:** Nepotřebuješ Node.js ani Python lokálně - vše běží v Dockeru!
 >
-> 🤖 **Pro AI agenty (SSOT):** Začni v `.ai-context/AGENT_PROTOCOL.md` + `.ai-context/state/WORKING_CONTEXT.md`. Workflow v5.1: Claude Code = implementace/QA, GPT‑5.2 (Codex) = situational orchestrator (hard reasoning), Gemini 3 Pro = content + visual QA, Perplexity = quick research.
+> 🤖 **Pro AI agenty (SSOT):** Začni v `.ai-context/AGENT_PROTOCOL.md` + `.ai-context/state/WORKING_CONTEXT.md`. Workflow v5.2: orchestrátor = aktivní konzole (agent, se kterým mluvíš), Claude Code = implementace/QA + Slack notifikace, GPT‑5.2 (Codex) = reasoning/architektura, Gemini 3 Pro = content + visual QA, research přes Context7 / Gemini Deep Research / Perplexity (manual).
 > 🌟 **Vize Projektu:** Viz [.ai-context/core/VISION.md](.ai-context/core/VISION.md).
 
 ---
 
 ## 🌟 Klíčové Funkce
 
-- **AI-Native Workflow:** Platforma je spoluvytvářena agenty Claude Code (implementace/QA), GPT‑5.2 (hard reasoning/orchestrace), Gemini 3 Pro (content + visual QA) a Perplexity (quick research).
+- **AI-Native Workflow:** Multi-agent triáda (Codex = reasoning, Claude Code = implementace/QA, Gemini 3 Pro = content/visual QA) s human‑in‑the‑loop přes Slack a Perplexity pro manuální research + daily digest.
 - **Interactive AI Showcase:** Reálná demonstrace spolupráce Claude (Red Team) a Gemini (Blue Team) při řešení problémů.
 - **Live System Status:** Transparentní monitoring infrastruktury (PostgreSQL + Redis) přímo na webu.
 - **Gamifikace:** XP systém, úrovně obtížnosti (Piece of Cake až Damn I'm Good), vizuální progress.
 - **Built in Public:** Celý vývoj je dokumentován a integrován do příběhu platformy.
 - **Multi-stage Docker Build:** Optimalizované, bezpečné a malé production images.
+
+---
+
+## 🤝 Multi-Agent Workflow (pro začátečníky)
+
+Orchestrátor je vždy **agent, se kterým právě mluvíš v CLI**. Když chceš přepnout, řekni to explicitně. Bez klíčových slov orchestrátor rozhodne sám.
+
+### 1) Role v týmu
+
+| Role | Co dělá | Kdy ho použít |
+|------|---------|---------------|
+| **GPT‑5.2 (Codex)** | Reasoning, architektura, složité debugování | Když potřebuješ tvrdé rozhodnutí nebo rozpad problému |
+| **Claude Code** | Implementace, QA, git operace, Slack notifikace | Když potřebuješ doručit změnu nebo ověřit funkčnost |
+| **Gemini 3 Pro** | Content, vizuální QA, brainstorming | Když jde o lekce, copy, vizuál nebo research |
+| **Perplexity** | Manuální rychlý research | Když chceš rychle ověřit fakta (šetřit API) |
+| **Gemini Deep Research** | Dlouhý výzkum (20–60 min) | Když potřebuješ hlubokou rešerši |
+
+### 2) Jak to běží krok za krokem
+
+1. **Definuj cíl + DoD** (hotovo znamená co přesně?).
+2. **Orchestrátor navrhne plán** nebo si vyžádá upřesnění.
+3. **Delegace úkolů**: kód → Claude, content/vizuál → Gemini, rozhodnutí → Codex.
+4. **Implementace + QA** (testy, vizuální kontrola, sanity check).
+5. **Shrnutí + rozhodnutí** (GO/NO‑GO/NEEDS‑DECISION) a případná Slack notifikace.
+
+### 3) Klíčová slova (routing)
+
+- `pouzij gemini` → přepne orchestrátora na Gemini
+- `pouzij claude` → přepne orchestrátora na Claude
+- `prober s kamosi` → triad consult (Codex + Claude + Gemini)
+- `Notify: ...` → Slack notifikace přes Claude (viz níže)
+
+---
+
+## 👥 Human‑in‑the‑loop (Slack notifikace)
+
+Slack je náš **asynchronní dohled**. Pouze Claude Code má přímý Slack MCP; ostatní agenti delegují notifikace přes Claude.
+
+```
+Codex / Gemini / Claude
+        │ "Notify: ..."
+        ▼
+   Claude Code (Slack MCP)
+        ▼
+      Slack → 📱 User
+```
+
+**Konfigurace:**
+- **Workspace:** AI Notifications
+- **Team ID:** T0A5BQ6N3MG
+- **Channel ID:** C0A4WBKJU7R
+- **MCP Server:** @modelcontextprotocol/server-slack
+- **Config:** `.mcp.json` (gitignored)
+
+**Kdy notifikovat:**
+- Task dokončený (>10 min práce)
+- Testy failed
+- Deploy complete
+- Blocked / potřeba rozhodnutí
+- Research hotový (delegovat přes Claude)
+
+**Kdy nenotifikovat:**
+- Triviální změny (<5 min)
+- Průběžné status updatey (patří do `WORKING_CONTEXT.md`)
+- Běžné commity
+
+**Formát delegace:**
+```
+Pošli Slack notifikaci:
+- Typ: task_done | error | blocked | info | research_done
+- Summary: [1-2 věty co se stalo]
+- Detail: [optional - cesta k souboru nebo context]
+```
 
 ---
 
@@ -331,44 +404,39 @@ Vytvořeno při prvním seedování (`backend/seed.py`).
 
 ---
 
-## 🤖 Multi-Agent Workflow (v5.1) - December 2025
+## 🤖 Multi-Agent Workflow (v5.2) - December 2025
 
-Projekt využívá **5 specializovaných AI nástrojů** pro optimální výkon:
+Projekt běží na **aktivní orchestraci**: orchestrátor je vždy agent, se kterým právě mluvíš v CLI.
 
-### Architektura
+### Architektura (zjednodušeně)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  GPT‑5.2 (Codex) = Situational Orchestrator                      │
-│  - hard reasoning, root cause, arch trade-offs                   │
-└───────────────────────┬─────────────────────────────────────────┘
-                        │
-                        ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Claude Code = Primary Implementer + QA gate                     │
-│  - coding, git, integration, test/verify                         │
-│  - MCP: Playwright, Context7, Perplexity, YouTube Data           │
-└───────────────────┬───────────────────────────────┬─────────────┘
-                    │                               │
-                    ▼                               ▼
-   Gemini 3 Pro (CLI)                         Research Tools
-   - content + visual QA                      - Perplexity MCP (<5 min)
-   - 2M context                               - YouTube Data MCP (14 tools)
-   - MASTERPIECE workflow                     - Gemini Deep Research (20–60 min)
+│ Active Console = Orchestrator (Codex / Claude / Gemini)          │
+└───────────────┬───────────────────────────────┬─────────────────┘
+                │                               │
+                ▼                               ▼
+     Claude Code (implementace/QA + Slack)   Gemini 3 Pro (content/visual QA)
+                │
+                ▼
+          Slack MCP → 📱 User Mobile
+     Codex (GPT‑5.2) = reasoning/arch (na vyžádání)
 ```
+
+Perplexity používáme pro manuální quick research a daily digest (šetříme API volání).
 
 ### Kdy volat kterého agenta
 
-| Typ úlohy | Agent | Proč |
-|-----------|-------|------|
+| Typ úlohy | Agent/Tool | Proč |
+|-----------|------------|------|
 | **Hard reasoning** (architektura, debugging >30 min / 2+ failed) | GPT‑5.2 (Codex) | Nejlepší reasoning, root cause |
-| **Kódování** (implementace, refactor, QA gate) | Claude Code | Nejrychlejší pro každodenní práci v repo |
-| **Visual QA** (screenshoty, UI regressions) | Gemini 3 Pro (CLI) | 2M kontext, rychlá vizuální analýza |
-| **Content generation / MASTERPIECE** | Gemini 3 Pro (CLI) | Kvalitní drafty, edutainment focus |
-| **Quick research** (<5 min) | Perplexity MCP | Rychlé, s citacemi |
-| **YouTube research** (videa, transkripty, playlists) | YouTube Data MCP | 14 funkcí pro video research |
+| **Kódování** (implementace, refactor, QA gate) | Claude Code | Primární implementer + QA + git |
+| **Visual QA / content** | Gemini 3 Pro (CLI) | Vizuální kontrola, edutainment, copy |
+| **Docs research** | Context7 MCP | Rychlé a přesné API reference |
+| **Quick research (manual)** | Perplexity MCP | Rychlé ověření, používat střídmě |
+| **YouTube research** | YouTube Data MCP | 14 funkcí pro video research |
 | **Deep research** (20-60 min) | Gemini Deep Research | Autonomní dlouhý výzkum |
-| **Exploration/Planning** | Subagenti (volitelně) | Systematické prohledání / plánování |
+| **Slack notifikace** | Claude Code (Slack MCP) | Jediný agent s přímým Slack přístupem |
 
 ### Memory systém (2-tier)
 
@@ -398,7 +466,8 @@ MEMORY.md (Long-term)
 |--------|------|----------------|
 | **Playwright** | Visual QA, browser automation | `browser_navigate`, `browser_take_screenshot`, `browser_click` |
 | **Context7** | Dokumentace knihoven | `resolve-library-id`, `get-library-docs` |
-| **Perplexity** | Quick research | `perplexity_ask`, `perplexity_search` |
+| **Slack MCP** | Notifikace pro human‑in‑the‑loop | Delegace přes Claude Code |
+| **Perplexity** | Quick research / Daily digest | `perplexity_ask`, `perplexity_search` |
 | **YouTube Data** | Video research | `get_video_details`, `get_transcript`, `search_videos` (14 funkcí) |
 
 ### Scripts
@@ -409,6 +478,7 @@ python backend/scripts/gemini_deep_research.py "Your research question"
 
 # Daily Digest (Perplexity AI news aggregation)
 python backend/scripts/daily_digest_cron.py
+
 ```
 
 ### Pro vývojáře
@@ -429,4 +499,3 @@ Mrkni do `.ai-context/` pro:
 - `state/WORKING_CONTEXT.md` - aktuální stav projektu
 
 ---
-

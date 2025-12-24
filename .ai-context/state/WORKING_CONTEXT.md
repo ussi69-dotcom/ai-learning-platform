@@ -1,6 +1,6 @@
 # Working Context
 
-**Last Updated:** 2025-12-24 00:04 (Agent: Codex GPT-5.2)
+**Last Updated:** 2025-12-24 01:08 (Agent: Codex GPT-5.2)
 
 ## 🚦 Current Status: Doc stack cleanup + mentor follow-ups
 - **Boot sync:** Updated to match `git log -1` at `682d93c`.
@@ -10,7 +10,7 @@
 - **Note:** Executed T1-T5 for Gemini lesson gaps: added /api backend prefix, mobile fallback for local LLM diagram, updated pricing/model references, Copilot GA notes, archived old PPE structure, added diagram gallery + mobile render test, and documented deprecation/decay audit policy.
 - **Note:** Ran `npm run verify`: ESLint warnings only; TypeScript/build succeeded after fixing `frontend/components/AIMentor.tsx`. Moved local visual debug scripts out of `frontend/` to `scripts/visual/` to avoid lint errors.
 - **Note:** Ran full `npm run test:visual`: 108 passed, 9 skipped.
-- **Note:** Perplexity removed from workflow by user request; use Gemini Deep Research (script) or GPT-Researcher (optional).
+- **Note:** Perplexity re-enabled for manual quick research + daily digest; use sparingly to conserve API calls.
 - **Note:** Gemini Deep Research attempt failed: CLI model returned "Requested entity was not found"; python script requires GOOGLE_API_KEY/GEMINI_API_KEY (not in `.env`). Created `.venv` and installed `google-genai` to enable script once key is provided.
 - **Note:** Ran Gemini 3 Pro (non-deep) research for CPU-only RAG mentor stack. Output saved to `/tmp/gemini-research-local-rag.txt`.
 - **Note:** Ran Gemini Deep Research via `backend/scripts/gemini_deep_research.py`. Report saved to `.ai-context/Perplexity_assist/gemini_research_20251222_205643.md`.
@@ -292,7 +292,7 @@
 |--------|---------|--------|
 | Playwright | `@playwright/mcp` | ✅ Connected |
 | Context7 | `@upstash/context7-mcp` | ✅ Connected |
-| Perplexity | `@modelcontextprotocol/server-perplexity-ask` | ⛔ Disabled (credits/user request) |
+| Perplexity | `@modelcontextprotocol/server-perplexity-ask` | ⚠️ Manual only (API budget) |
 | YouTube Data | `dannySubsense/youtube-mcp-server` | ✅ Installed (14 funkcí) |
 
 **YouTube MCP capabilities:** playlist items, video details, search, transcripts, channel videos, engagement analysis

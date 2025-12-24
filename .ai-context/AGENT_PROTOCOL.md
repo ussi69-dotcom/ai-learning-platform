@@ -516,9 +516,9 @@ python backend/scripts/gemini_deep_research.py "Research question"
 gemini -m deep-research-pro-preview-12-2025 "Research question"
 ```
 
-### Perplexity (MCP) - Disabled
+### Perplexity (MCP) - Manual only
 
-**Status:** Dočasně vypnuto (kredity). Nepoužívat v workflow.
+**Status:** Používat střídmě (API kredity). Jen pro **rychlé manuální ověření** a **daily digest**.
 
 ---
 
@@ -731,12 +731,14 @@ Pro kompletní přehled dokumentace viz:
 |--------------|---------|---------|
 | **Rychlá fakta, jednoduché dotazy** | `WebSearch` | "Jaká je nejnovější verze React?" |
 | **Dokumentace knihovny** | `Context7 MCP` | "Jak použít useEffect v React 19?" |
+| **Rychlý research s citacemi (manual)** | `Perplexity MCP` | "Co je nového v LLM bezpečnosti?" |
 | **Deep Research, analýzy, srovnání** | `Gemini Deep Research` | "Srovnej AI code assistants 2025" |
 | **Aktuální trendy, state-of-the-art** | `Gemini Deep Research` | "Nejnovější techniky pro RAG" |
 | **Content research před generací** | `Gemini Deep Research` → `Gemini` | Research → Content pipeline |
 
-**Poznámka (Perplexity vypnuto):**
+**Poznámka (Perplexity = manuálně):**
 - Primární research = **Gemini Deep Research**.
+- Perplexity jen pro **rychlé manuální ověření** a **daily digest**.
 - Rychlé faktické dotazy → **Context7 MCP** nebo krátký Gemini prompt.
 - **GPT-Researcher** lze použít jako self-hosted fallback (vyžaduje konfiguraci + API klíče).
 

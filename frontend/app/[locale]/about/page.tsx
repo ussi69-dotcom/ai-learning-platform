@@ -13,6 +13,7 @@ import {
   Zap,
   Users,
   Sparkles,
+  Bell,
   Layout,
   Database,
   Layers,
@@ -42,7 +43,7 @@ export default function AboutPage() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  // Hash Scroll Handler - triggers on pathname/searchParams change (Perplexity pattern)
+  // Hash Scroll Handler - triggers on pathname/searchParams change
   useEffect(() => {
     const hash = window.location.hash;
     if (!hash) return;
@@ -183,7 +184,13 @@ export default function AboutPage() {
       name: t("TechStack.perplexity_name"),
       icon: <Zap className="w-6 h-6" />,
       desc: t("TechStack.perplexity_desc"),
-      color: "from-cyan-500 to-blue-500",
+      color: "from-blue-500 to-cyan-500",
+    },
+    {
+      name: t("TechStack.slack_name"),
+      icon: <Bell className="w-6 h-6" />,
+      desc: t("TechStack.slack_desc"),
+      color: "from-sky-500 to-blue-600",
     },
   ];
 
@@ -204,6 +211,20 @@ export default function AboutPage() {
       desc: t("edutainment_labs_desc"),
       icon: <Clipboard className="w-5 h-5" />,
     },
+  ];
+
+  const hitlNotifyItems = [
+    t("hitl_notify_done"),
+    t("hitl_notify_failed"),
+    t("hitl_notify_deploy"),
+    t("hitl_notify_blocked"),
+    t("hitl_notify_research"),
+  ];
+
+  const hitlSkipItems = [
+    t("hitl_skip_trivial"),
+    t("hitl_skip_status"),
+    t("hitl_skip_commits"),
   ];
 
   return (
@@ -370,7 +391,7 @@ export default function AboutPage() {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-sm font-mono text-primary mb-4">
               <Terminal className="w-4 h-4" />
-              <span>Claude Code CLI</span>
+              <span>{t("multiagent_badge")}</span>
             </div>
             <h2 className="text-3xl font-bold mb-4">{t("multiagent_title")}</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -442,6 +463,63 @@ export default function AboutPage() {
                       → {t("cicd_audit_desc")}
                     </span>
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Human-in-the-loop (Slack) */}
+        <div id="human-in-the-loop" className="mb-24 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sm font-mono text-sky-600 dark:text-sky-400 mb-4">
+              <Bell className="w-4 h-4" />
+              <span>Slack MCP</span>
+            </div>
+            <h2 className="text-3xl font-bold mb-4">{t("hitl_title")}</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              {t("hitl_desc")}
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-card/30 border-border/50">
+              <CardContent className="p-6 space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3 text-foreground">
+                      {t("hitl_notify_title")}
+                    </h3>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      {hitlNotifyItems.map((item) => (
+                        <li key={item} className="flex gap-2">
+                          <span className="text-emerald-500">●</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3 text-foreground">
+                      {t("hitl_skip_title")}
+                    </h3>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      {hitlSkipItems.map((item) => (
+                        <li key={item} className="flex gap-2">
+                          <span className="text-amber-500">●</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="rounded-lg bg-background/50 border border-border/30 p-4">
+                  <p className="text-xs font-mono text-muted-foreground mb-2">
+                    {t("hitl_format_label")}
+                  </p>
+                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono">
+                    {t("hitl_format_template")}
+                  </pre>
                 </div>
               </CardContent>
             </Card>
