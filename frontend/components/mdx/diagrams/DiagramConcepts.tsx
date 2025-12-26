@@ -880,6 +880,608 @@ export default function DiagramConcepts({ type }: DiagramProps) {
     );
   }
 
+  if (type === "rag-indexing-stack") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-none md:max-w-5xl">
+          <svg
+            viewBox="0 0 960 220"
+            className="w-full h-auto"
+            role="img"
+            aria-label="RAG indexing stack: ingest, clean, chunk, embed, vector store"
+          >
+            <defs>
+              <marker
+                id="arrowhead-indexing"
+                markerWidth="12"
+                markerHeight="12"
+                refX="10"
+                refY="4"
+                orient="auto"
+              >
+                <polygon points="0 0, 12 4, 0 8" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            <g transform="translate(40, 70)">
+              <rect x="0" y="0" width="150" height="70" rx="12" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="2" />
+              <text x="75" y="40" textAnchor="middle" className="text-sm font-bold fill-blue-200">Ingest</text>
+            </g>
+
+            <path d="M 190 105 L 240 105" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-indexing)" />
+
+            <g transform="translate(250, 70)">
+              <rect x="0" y="0" width="150" height="70" rx="12" fill="#a855f7" fillOpacity="0.15" stroke="#a855f7" strokeWidth="2" />
+              <text x="75" y="32" textAnchor="middle" className="text-sm font-bold fill-purple-200">Clean +</text>
+              <text x="75" y="52" textAnchor="middle" className="text-xs fill-purple-200">Metadata</text>
+            </g>
+
+            <path d="M 400 105 L 450 105" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-indexing)" />
+
+            <g transform="translate(460, 70)">
+              <rect x="0" y="0" width="150" height="70" rx="12" fill="#f59e0b" fillOpacity="0.15" stroke="#f59e0b" strokeWidth="2" />
+              <text x="75" y="32" textAnchor="middle" className="text-sm font-bold fill-amber-200">Chunk +</text>
+              <text x="75" y="52" textAnchor="middle" className="text-xs fill-amber-200">Enrich</text>
+            </g>
+
+            <path d="M 610 105 L 660 105" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-indexing)" />
+
+            <g transform="translate(670, 70)">
+              <rect x="0" y="0" width="120" height="70" rx="12" fill="#22c55e" fillOpacity="0.15" stroke="#22c55e" strokeWidth="2" />
+              <text x="60" y="40" textAnchor="middle" className="text-sm font-bold fill-green-200">Embed</text>
+            </g>
+
+            <path d="M 790 105 L 840 105" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-indexing)" />
+
+            <g transform="translate(850, 70)">
+              <rect x="-10" y="0" width="120" height="70" rx="12" fill="#14b8a6" fillOpacity="0.15" stroke="#14b8a6" strokeWidth="2" />
+              <text x="50" y="32" textAnchor="middle" className="text-sm font-bold fill-teal-200">Vector</text>
+              <text x="50" y="52" textAnchor="middle" className="text-xs fill-teal-200">Store</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "rag-hybrid-search") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-none md:max-w-5xl">
+          <svg
+            viewBox="0 0 960 280"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Hybrid RAG retrieval: Query -> BM25 + Dense -> Fusion -> Rerank -> Top Chunks"
+          >
+            <defs>
+              <marker
+                id="arrowhead-hybrid"
+                markerWidth="12"
+                markerHeight="12"
+                refX="10"
+                refY="4"
+                orient="auto"
+              >
+                <polygon points="0 0, 12 4, 0 8" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Query */}
+            <g transform="translate(40, 110)">
+              <rect x="0" y="0" width="140" height="60" rx="10" fill="#2563eb" fillOpacity="0.15" stroke="#2563eb" strokeWidth="2" />
+              <text x="70" y="36" textAnchor="middle" className="text-sm font-bold fill-blue-200">
+                User Query
+              </text>
+            </g>
+
+            {/* Split arrows */}
+            <path d="M 180 140 L 260 80" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-hybrid)" />
+            <path d="M 180 140 L 260 200" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-hybrid)" />
+
+            {/* BM25 */}
+            <g transform="translate(280, 50)">
+              <rect x="0" y="0" width="160" height="60" rx="10" fill="#f59e0b" fillOpacity="0.15" stroke="#f59e0b" strokeWidth="2" />
+              <text x="80" y="36" textAnchor="middle" className="text-sm font-bold fill-amber-200">
+                BM25 (Keyword)
+              </text>
+            </g>
+
+            {/* Dense */}
+            <g transform="translate(280, 170)">
+              <rect x="0" y="0" width="160" height="60" rx="10" fill="#a855f7" fillOpacity="0.15" stroke="#a855f7" strokeWidth="2" />
+              <text x="80" y="36" textAnchor="middle" className="text-sm font-bold fill-purple-200">
+                Dense (Vector)
+              </text>
+            </g>
+
+            {/* Fusion */}
+            <path d="M 440 80 L 520 120" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-hybrid)" />
+            <path d="M 440 200 L 520 160" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-hybrid)" />
+            <g transform="translate(540, 110)">
+              <rect x="0" y="0" width="150" height="60" rx="10" fill="#14b8a6" fillOpacity="0.15" stroke="#14b8a6" strokeWidth="2" />
+              <text x="75" y="26" textAnchor="middle" className="text-sm font-bold fill-teal-200">
+                Fusion (RRF)
+              </text>
+              <text x="75" y="44" textAnchor="middle" className="text-xs fill-teal-300">
+                merge + rank
+              </text>
+            </g>
+
+            {/* Rerank */}
+            <path d="M 690 140 L 760 140" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-hybrid)" />
+            <g transform="translate(780, 110)">
+              <rect x="0" y="0" width="140" height="60" rx="10" fill="#22c55e" fillOpacity="0.15" stroke="#22c55e" strokeWidth="2" />
+              <text x="70" y="36" textAnchor="middle" className="text-sm font-bold fill-green-200">
+                Rerank
+              </text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "rag-routing-hub") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-none md:max-w-5xl">
+          <svg
+            viewBox="0 0 960 280"
+            className="w-full h-auto"
+            role="img"
+            aria-label="RAG routing hub: query routed to vector store, SQL/graph, and web search"
+          >
+            <defs>
+              <marker
+                id="arrowhead-routing"
+                markerWidth="12"
+                markerHeight="12"
+                refX="10"
+                refY="4"
+                orient="auto"
+              >
+                <polygon points="0 0, 12 4, 0 8" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            <g transform="translate(40, 110)">
+              <rect x="0" y="0" width="150" height="60" rx="10" fill="#2563eb" fillOpacity="0.15" stroke="#2563eb" strokeWidth="2" />
+              <text x="75" y="36" textAnchor="middle" className="text-sm font-bold fill-blue-200">User Query</text>
+            </g>
+
+            <path d="M 190 140 L 300 140" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-routing)" />
+
+            <g transform="translate(320, 95)">
+              <rect x="0" y="0" width="160" height="90" rx="14" fill="#a855f7" fillOpacity="0.18" stroke="#a855f7" strokeWidth="2" />
+              <text x="80" y="45" textAnchor="middle" className="text-sm font-bold fill-purple-200">Router</text>
+              <text x="80" y="65" textAnchor="middle" className="text-xs fill-purple-200">Intent + Rules</text>
+            </g>
+
+            <path d="M 480 120 L 600 70" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-routing)" />
+            <path d="M 480 140 L 600 140" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-routing)" />
+            <path d="M 480 160 L 600 210" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-routing)" />
+
+            <g transform="translate(620, 40)">
+              <rect x="0" y="0" width="180" height="60" rx="10" fill="#22c55e" fillOpacity="0.15" stroke="#22c55e" strokeWidth="2" />
+              <text x="90" y="36" textAnchor="middle" className="text-sm font-bold fill-green-200">Vector Store</text>
+            </g>
+
+            <g transform="translate(620, 110)">
+              <rect x="0" y="0" width="180" height="60" rx="10" fill="#f59e0b" fillOpacity="0.15" stroke="#f59e0b" strokeWidth="2" />
+              <text x="90" y="36" textAnchor="middle" className="text-sm font-bold fill-amber-200">SQL / Graph</text>
+            </g>
+
+            <g transform="translate(620, 180)">
+              <rect x="0" y="0" width="180" height="60" rx="10" fill="#14b8a6" fillOpacity="0.15" stroke="#14b8a6" strokeWidth="2" />
+              <text x="90" y="36" textAnchor="middle" className="text-sm font-bold fill-teal-200">Web Search</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "rag-agentic-loop") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-none md:max-w-5xl">
+          <svg
+            viewBox="0 0 960 260"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Agentic RAG loop: Retrieve -> Grade -> Improve Query -> Retrieve -> Generate -> Answer"
+          >
+            <defs>
+              <marker
+                id="arrowhead-loop"
+                markerWidth="12"
+                markerHeight="12"
+                refX="10"
+                refY="4"
+                orient="auto"
+              >
+                <polygon points="0 0, 12 4, 0 8" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Retrieve */}
+            <g transform="translate(60, 100)">
+              <rect x="0" y="0" width="140" height="60" rx="10" fill="#f59e0b" fillOpacity="0.15" stroke="#f59e0b" strokeWidth="2" />
+              <text x="70" y="36" textAnchor="middle" className="text-sm font-bold fill-amber-200">
+                Retrieve
+              </text>
+            </g>
+
+            {/* Grade */}
+            <path d="M 200 130 L 270 130" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-loop)" />
+            <g transform="translate(290, 100)">
+              <rect x="0" y="0" width="140" height="60" rx="10" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="2" />
+              <text x="70" y="36" textAnchor="middle" className="text-sm font-bold fill-blue-200">
+                Grade
+              </text>
+            </g>
+
+            {/* Improve Query */}
+            <path d="M 430 130 L 500 130" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-loop)" />
+            <g transform="translate(520, 100)">
+              <rect x="0" y="0" width="160" height="60" rx="10" fill="#a855f7" fillOpacity="0.15" stroke="#a855f7" strokeWidth="2" />
+              <text x="80" y="36" textAnchor="middle" className="text-sm font-bold fill-purple-200">
+                Improve Query
+              </text>
+            </g>
+
+            {/* Loop back */}
+            <path d="M 600 100 C 600 40, 150 40, 150 100" stroke="#94a3b8" strokeWidth="2" fill="none" markerEnd="url(#arrowhead-loop)" />
+            <text x="360" y="32" textAnchor="middle" className="text-xs fill-slate-300">
+              low relevance → re-retrieve
+            </text>
+
+            {/* Generate */}
+            <path d="M 680 130 L 760 130" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-loop)" />
+            <g transform="translate(780, 100)">
+              <rect x="0" y="0" width="140" height="60" rx="10" fill="#22c55e" fillOpacity="0.15" stroke="#22c55e" strokeWidth="2" />
+              <text x="70" y="36" textAnchor="middle" className="text-sm font-bold fill-green-200">
+                Generate
+              </text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "rag-eval-triad") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-none md:max-w-4xl">
+          <svg
+            viewBox="0 0 640 320"
+            className="w-full h-auto"
+            role="img"
+            aria-label="RAG evaluation triad: Query, Context, Answer"
+          >
+            <defs>
+              <marker
+                id="arrowhead-triad"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="4"
+                orient="auto"
+              >
+                <polygon points="0 0, 10 4, 0 8" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {/* Triangle */}
+            <polygon points="320,40 80,260 560,260" fill="none" stroke="#94a3b8" strokeWidth="2" />
+
+            {/* Nodes */}
+            <g transform="translate(260, 20)">
+              <circle cx="60" cy="30" r="28" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeWidth="2" />
+              <text x="60" y="36" textAnchor="middle" className="text-sm font-bold fill-blue-200">Query</text>
+            </g>
+            <g transform="translate(40, 230)">
+              <circle cx="60" cy="30" r="28" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" strokeWidth="2" />
+              <text x="60" y="36" textAnchor="middle" className="text-sm font-bold fill-amber-200">Context</text>
+            </g>
+            <g transform="translate(500, 230)">
+              <circle cx="60" cy="30" r="28" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" strokeWidth="2" />
+              <text x="60" y="36" textAnchor="middle" className="text-sm font-bold fill-green-200">Answer</text>
+            </g>
+
+            {/* Edge labels */}
+            <text x="180" y="150" textAnchor="middle" className="text-xs fill-slate-300">Relevance</text>
+            <text x="460" y="150" textAnchor="middle" className="text-xs fill-slate-300">Faithfulness</text>
+            <text x="320" y="285" textAnchor="middle" className="text-xs fill-slate-300">Groundedness</text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "rag-late-chunking") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-none md:max-w-5xl">
+          <svg
+            viewBox="0 0 960 260"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Late chunking vs naive chunking pipelines"
+          >
+            <defs>
+              <marker
+                id="arrowhead-late-chunking"
+                markerWidth="12"
+                markerHeight="12"
+                refX="10"
+                refY="4"
+                orient="auto"
+              >
+                <polygon points="0 0, 12 4, 0 8" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            <text x="40" y="45" className="text-xs font-bold fill-slate-300">Naive</text>
+            <text x="40" y="175" className="text-xs font-bold fill-slate-300">Late Chunking</text>
+
+            {/* Top row */}
+            <g transform="translate(120, 20)">
+              <rect x="0" y="0" width="140" height="50" rx="10" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="2" />
+              <text x="70" y="30" textAnchor="middle" className="text-sm font-bold fill-blue-200">Document</text>
+            </g>
+            <path d="M 260 45 L 320 45" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-late-chunking)" />
+            <g transform="translate(330, 20)">
+              <rect x="0" y="0" width="140" height="50" rx="10" fill="#f59e0b" fillOpacity="0.15" stroke="#f59e0b" strokeWidth="2" />
+              <text x="70" y="30" textAnchor="middle" className="text-sm font-bold fill-amber-200">Chunk</text>
+            </g>
+            <path d="M 470 45 L 530 45" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-late-chunking)" />
+            <g transform="translate(540, 20)">
+              <rect x="0" y="0" width="140" height="50" rx="10" fill="#22c55e" fillOpacity="0.15" stroke="#22c55e" strokeWidth="2" />
+              <text x="70" y="30" textAnchor="middle" className="text-sm font-bold fill-green-200">Embed</text>
+            </g>
+            <path d="M 680 45 L 740 45" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-late-chunking)" />
+            <g transform="translate(750, 20)">
+              <rect x="0" y="0" width="140" height="50" rx="10" fill="#14b8a6" fillOpacity="0.15" stroke="#14b8a6" strokeWidth="2" />
+              <text x="70" y="30" textAnchor="middle" className="text-sm font-bold fill-teal-200">Vector Store</text>
+            </g>
+
+            {/* Bottom row */}
+            <g transform="translate(120, 150)">
+              <rect x="0" y="0" width="140" height="50" rx="10" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="2" />
+              <text x="70" y="30" textAnchor="middle" className="text-sm font-bold fill-blue-200">Document</text>
+            </g>
+            <path d="M 260 175 L 320 175" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-late-chunking)" />
+            <g transform="translate(330, 150)">
+              <rect x="0" y="0" width="160" height="50" rx="10" fill="#22c55e" fillOpacity="0.15" stroke="#22c55e" strokeWidth="2" />
+              <text x="80" y="30" textAnchor="middle" className="text-sm font-bold fill-green-200">Embed (Long)</text>
+            </g>
+            <path d="M 490 175 L 550 175" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-late-chunking)" />
+            <g transform="translate(560, 150)">
+              <rect x="0" y="0" width="140" height="50" rx="10" fill="#f59e0b" fillOpacity="0.15" stroke="#f59e0b" strokeWidth="2" />
+              <text x="70" y="30" textAnchor="middle" className="text-sm font-bold fill-amber-200">Pool Chunks</text>
+            </g>
+            <path d="M 700 175 L 760 175" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-late-chunking)" />
+            <g transform="translate(770, 150)">
+              <rect x="0" y="0" width="120" height="50" rx="10" fill="#14b8a6" fillOpacity="0.15" stroke="#14b8a6" strokeWidth="2" />
+              <text x="60" y="30" textAnchor="middle" className="text-sm font-bold fill-teal-200">Vector Store</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "rag-late-interaction") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-none md:max-w-4xl">
+          <svg
+            viewBox="0 0 800 220"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Late interaction: token-level matching between query and document"
+          >
+            <text x="60" y="35" className="text-xs font-bold fill-slate-300">Query tokens</text>
+            <text x="540" y="35" className="text-xs font-bold fill-slate-300">Doc tokens</text>
+
+            {/* Query tokens */}
+            {[0, 1, 2].map((i) => (
+              <rect
+                key={`q-${i}`}
+                x={60}
+                y={60 + i * 40}
+                width="120"
+                height="28"
+                rx="6"
+                fill="#3b82f6"
+                fillOpacity="0.2"
+                stroke="#3b82f6"
+                strokeWidth="2"
+              />
+            ))}
+            <text x="120" y="80" textAnchor="middle" className="text-xs fill-blue-200">Q1</text>
+            <text x="120" y="120" textAnchor="middle" className="text-xs fill-blue-200">Q2</text>
+            <text x="120" y="160" textAnchor="middle" className="text-xs fill-blue-200">Q3</text>
+
+            {/* Doc tokens */}
+            {[0, 1, 2, 3, 4].map((i) => (
+              <rect
+                key={`d-${i}`}
+                x={520}
+                y={50 + i * 30}
+                width="120"
+                height="22"
+                rx="6"
+                fill="#a855f7"
+                fillOpacity="0.2"
+                stroke="#a855f7"
+                strokeWidth="2"
+              />
+            ))}
+            <text x="580" y="66" textAnchor="middle" className="text-[10px] fill-purple-200">D1</text>
+            <text x="580" y="96" textAnchor="middle" className="text-[10px] fill-purple-200">D2</text>
+            <text x="580" y="126" textAnchor="middle" className="text-[10px] fill-purple-200">D3</text>
+            <text x="580" y="156" textAnchor="middle" className="text-[10px] fill-purple-200">D4</text>
+            <text x="580" y="186" textAnchor="middle" className="text-[10px] fill-purple-200">D5</text>
+
+            {/* MaxSim lines */}
+            <path d="M 180 74 L 520 66" stroke="#94a3b8" strokeWidth="1.5" />
+            <path d="M 180 114 L 520 126" stroke="#94a3b8" strokeWidth="1.5" />
+            <path d="M 180 154 L 520 156" stroke="#94a3b8" strokeWidth="1.5" />
+            <text x="350" y="40" textAnchor="middle" className="text-xs fill-slate-300">MaxSim matches</text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "rag-graph-pipeline") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-none md:max-w-5xl">
+          <svg
+            viewBox="0 0 960 200"
+            className="w-full h-auto"
+            role="img"
+            aria-label="GraphRAG pipeline: text to graph to community summaries to answer"
+          >
+            <defs>
+              <marker
+                id="arrowhead-graphrag"
+                markerWidth="12"
+                markerHeight="12"
+                refX="10"
+                refY="4"
+                orient="auto"
+              >
+                <polygon points="0 0, 12 4, 0 8" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            {[
+              { label: "Text", x: 30, color: "#3b82f6" },
+              { label: "Extract", x: 210, color: "#a855f7" },
+              { label: "Graph", x: 390, color: "#f59e0b" },
+              { label: "Summaries", x: 570, color: "#22c55e" },
+              { label: "Answer", x: 750, color: "#14b8a6" },
+            ].map((node, i) => (
+              <g key={node.label} transform={`translate(${node.x}, 70)`}>
+                <rect x="0" y="0" width="150" height="60" rx="12" fill={node.color} fillOpacity="0.15" stroke={node.color} strokeWidth="2" />
+                <text x="75" y="36" textAnchor="middle" className="text-sm font-bold fill-slate-200">{node.label}</text>
+                {i < 4 && (
+                  <path d="M 150 30 L 180 30" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-graphrag)" />
+                )}
+              </g>
+            ))}
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "rag-raptor-tree") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-none md:max-w-4xl">
+          <svg
+            viewBox="0 0 640 260"
+            className="w-full h-auto"
+            role="img"
+            aria-label="RAPTOR tree: summaries at multiple levels"
+          >
+            <circle cx="320" cy="40" r="26" fill="#22c55e" fillOpacity="0.2" stroke="#22c55e" strokeWidth="2" />
+            <text x="320" y="45" textAnchor="middle" className="text-xs font-bold fill-green-200">Root</text>
+
+            <circle cx="200" cy="120" r="24" fill="#a855f7" fillOpacity="0.2" stroke="#a855f7" strokeWidth="2" />
+            <circle cx="440" cy="120" r="24" fill="#a855f7" fillOpacity="0.2" stroke="#a855f7" strokeWidth="2" />
+            <text x="200" y="125" textAnchor="middle" className="text-[10px] fill-purple-200">Summary A</text>
+            <text x="440" y="125" textAnchor="middle" className="text-[10px] fill-purple-200">Summary B</text>
+
+            <circle cx="120" cy="210" r="20" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeWidth="2" />
+            <circle cx="240" cy="210" r="20" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeWidth="2" />
+            <circle cx="400" cy="210" r="20" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeWidth="2" />
+            <circle cx="520" cy="210" r="20" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeWidth="2" />
+
+            <text x="120" y="214" textAnchor="middle" className="text-[10px] fill-blue-200">Chunk</text>
+            <text x="240" y="214" textAnchor="middle" className="text-[10px] fill-blue-200">Chunk</text>
+            <text x="400" y="214" textAnchor="middle" className="text-[10px] fill-blue-200">Chunk</text>
+            <text x="520" y="214" textAnchor="middle" className="text-[10px] fill-blue-200">Chunk</text>
+
+            <path d="M 320 66 L 200 96" stroke="#94a3b8" strokeWidth="2" />
+            <path d="M 320 66 L 440 96" stroke="#94a3b8" strokeWidth="2" />
+            <path d="M 200 144 L 120 190" stroke="#94a3b8" strokeWidth="2" />
+            <path d="M 200 144 L 240 190" stroke="#94a3b8" strokeWidth="2" />
+            <path d="M 440 144 L 400 190" stroke="#94a3b8" strokeWidth="2" />
+            <path d="M 440 144 L 520 190" stroke="#94a3b8" strokeWidth="2" />
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "rag-multi-representation") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-slate-950/50 backdrop-blur-xl border border-white/10 shadow-2xl w-full max-w-none md:max-w-5xl">
+          <svg
+            viewBox="0 0 960 220"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Multi-representation indexing: summary index and full text retrieval"
+          >
+            <defs>
+              <marker
+                id="arrowhead-multi-rep"
+                markerWidth="12"
+                markerHeight="12"
+                refX="10"
+                refY="4"
+                orient="auto"
+              >
+                <polygon points="0 0, 12 4, 0 8" fill="#94a3b8" />
+              </marker>
+            </defs>
+
+            <g transform="translate(40, 80)">
+              <rect x="0" y="0" width="150" height="60" rx="10" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="2" />
+              <text x="75" y="36" textAnchor="middle" className="text-sm font-bold fill-blue-200">Document</text>
+            </g>
+
+            <path d="M 190 110 L 270 60" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-multi-rep)" />
+            <path d="M 190 110 L 270 160" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-multi-rep)" />
+
+            <g transform="translate(290, 30)">
+              <rect x="0" y="0" width="190" height="60" rx="10" fill="#a855f7" fillOpacity="0.15" stroke="#a855f7" strokeWidth="2" />
+              <text x="95" y="36" textAnchor="middle" className="text-sm font-bold fill-purple-200">Summary Index</text>
+            </g>
+
+            <g transform="translate(290, 130)">
+              <rect x="0" y="0" width="190" height="60" rx="10" fill="#f59e0b" fillOpacity="0.15" stroke="#f59e0b" strokeWidth="2" />
+              <text x="95" y="36" textAnchor="middle" className="text-sm font-bold fill-amber-200">Full Text Store</text>
+            </g>
+
+            <path d="M 480 60 L 560 60" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-multi-rep)" />
+            <g transform="translate(580, 30)">
+              <rect x="0" y="0" width="160" height="60" rx="10" fill="#22c55e" fillOpacity="0.15" stroke="#22c55e" strokeWidth="2" />
+              <text x="80" y="36" textAnchor="middle" className="text-sm font-bold fill-green-200">Retrieve</text>
+            </g>
+
+            <path d="M 740 60 L 780 110" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-multi-rep)" />
+            <path d="M 480 160 L 780 120" stroke="#94a3b8" strokeWidth="2.5" markerEnd="url(#arrowhead-multi-rep)" />
+
+            <g transform="translate(800, 90)">
+              <rect x="0" y="0" width="140" height="60" rx="10" fill="#14b8a6" fillOpacity="0.15" stroke="#14b8a6" strokeWidth="2" />
+              <text x="70" y="36" textAnchor="middle" className="text-sm font-bold fill-teal-200">Answer</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   if (type === "black-box") {
     return (
       <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
@@ -3012,6 +3614,598 @@ export default function DiagramConcepts({ type }: DiagramProps) {
                 {isCs
                   ? "🎯 Routing: Reasoning→Codex | Build/QA→Claude | Content→Gemini | Quick research→Perplexity | Deep research→Gemini DR | Notify→Claude→Slack"
                   : "🎯 Routing: Reasoning→Codex | Build/QA→Claude | Content→Gemini | Quick research→Perplexity | Deep research→Gemini DR | Notify→Claude→Slack"}
+              </text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // L00: Getting Started with AI - Decision Matrix
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (type === "ai-partner-decision-matrix") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
+          <svg
+            viewBox="0 0 700 320"
+            className="w-full h-auto"
+            role="img"
+            aria-label={isCs ? "Rozhodovací matice AI parťáků" : "AI Partner Decision Matrix"}
+          >
+            {/* Title */}
+            <text
+              x="350"
+              y="30"
+              textAnchor="middle"
+              className="text-xl font-bold fill-white"
+            >
+              {isCs ? "Kterou AI si vybrat?" : "Which AI Should You Choose?"}
+            </text>
+
+            {/* ChatGPT Box */}
+            <g transform="translate(50, 60)">
+              <rect
+                x="0"
+                y="0"
+                width="180"
+                height="100"
+                rx="12"
+                className="fill-green-500/10 stroke-green-500"
+                strokeWidth="2"
+              />
+              <text x="90" y="30" textAnchor="middle" className="text-2xl">
+                🤖
+              </text>
+              <text
+                x="90"
+                y="55"
+                textAnchor="middle"
+                className="text-base font-bold fill-green-400"
+              >
+                ChatGPT
+              </text>
+              <text
+                x="90"
+                y="75"
+                textAnchor="middle"
+                className="text-xs fill-slate-400"
+              >
+                {isCs ? "Největší komunita" : "Largest community"}
+              </text>
+              <text
+                x="90"
+                y="90"
+                textAnchor="middle"
+                className="text-xs fill-slate-400"
+              >
+                {isCs ? "Všestranný" : "Most versatile"}
+              </text>
+            </g>
+
+            {/* Claude Box */}
+            <g transform="translate(260, 60)">
+              <rect
+                x="0"
+                y="0"
+                width="180"
+                height="100"
+                rx="12"
+                className="fill-orange-500/10 stroke-orange-500"
+                strokeWidth="2"
+              />
+              <text x="90" y="30" textAnchor="middle" className="text-2xl">
+                🧠
+              </text>
+              <text
+                x="90"
+                y="55"
+                textAnchor="middle"
+                className="text-base font-bold fill-orange-400"
+              >
+                Claude
+              </text>
+              <text
+                x="90"
+                y="75"
+                textAnchor="middle"
+                className="text-xs fill-slate-400"
+              >
+                {isCs ? "Promyšlené odpovědi" : "Thoughtful responses"}
+              </text>
+              <text
+                x="90"
+                y="90"
+                textAnchor="middle"
+                className="text-xs fill-slate-400"
+              >
+                {isCs ? "Dlouhé dokumenty" : "Long documents"}
+              </text>
+            </g>
+
+            {/* Gemini Box */}
+            <g transform="translate(470, 60)">
+              <rect
+                x="0"
+                y="0"
+                width="180"
+                height="100"
+                rx="12"
+                className="fill-blue-500/10 stroke-blue-500"
+                strokeWidth="2"
+              />
+              <text x="90" y="30" textAnchor="middle" className="text-2xl">
+                ✨
+              </text>
+              <text
+                x="90"
+                y="55"
+                textAnchor="middle"
+                className="text-base font-bold fill-blue-400"
+              >
+                Gemini
+              </text>
+              <text
+                x="90"
+                y="75"
+                textAnchor="middle"
+                className="text-xs fill-slate-400"
+              >
+                {isCs ? "Google integrace" : "Google integration"}
+              </text>
+              <text
+                x="90"
+                y="90"
+                textAnchor="middle"
+                className="text-xs fill-slate-400"
+              >
+                {isCs ? "Multimodální" : "Multimodal"}
+              </text>
+            </g>
+
+            {/* Decision Flow */}
+            <g transform="translate(50, 180)">
+              <text
+                x="0"
+                y="0"
+                className="text-sm font-semibold fill-violet-400"
+              >
+                {isCs ? "→ Nejsi si jistý?" : "→ Not sure?"}
+              </text>
+              <text
+                x="0"
+                y="20"
+                className="text-xs fill-slate-300"
+              >
+                {isCs
+                  ? "Začni s ChatGPT nebo Claude. Můžeš kdykoliv přejít!"
+                  : "Start with ChatGPT or Claude. You can always switch!"}
+              </text>
+            </g>
+
+            <g transform="translate(350, 180)">
+              <text
+                x="0"
+                y="0"
+                className="text-sm font-semibold fill-violet-400"
+              >
+                {isCs ? "→ Používáš Google hodně?" : "→ Heavy Google user?"}
+              </text>
+              <text
+                x="0"
+                y="20"
+                className="text-xs fill-slate-300"
+              >
+                {isCs ? "Gemini se propojí s tvým Workspace" : "Gemini connects to your Workspace"}
+              </text>
+            </g>
+
+            {/* Bottom message */}
+            <g transform="translate(350, 260)">
+              <rect
+                x="-200"
+                y="-20"
+                width="400"
+                height="50"
+                rx="8"
+                className="fill-violet-500/10 stroke-violet-500/50"
+                strokeWidth="1"
+              />
+              <text
+                x="0"
+                y="5"
+                textAnchor="middle"
+                className="text-sm font-bold fill-violet-300"
+              >
+                {isCs
+                  ? "💡 Nejlepší AI je ta, kterou SKUTEČNĚ POUŽÍVÁŠ"
+                  : "💡 The best AI is the one you ACTUALLY USE"}
+              </text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // L00: Getting Started with AI - Thinking Partner Mindset
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (type === "thinking-partner-mindset") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
+          <svg
+            viewBox="0 0 700 280"
+            className="w-full h-auto"
+            role="img"
+            aria-label={isCs ? "Myšlenkový partner vs stroj na odpovědi" : "Thinking Partner vs Answer Machine"}
+          >
+            {/* Title */}
+            <text
+              x="350"
+              y="30"
+              textAnchor="middle"
+              className="text-xl font-bold fill-white"
+            >
+              {isCs ? "Změna mindsetu" : "The Mindset Shift"}
+            </text>
+
+            {/* Wrong Way - Left */}
+            <g transform="translate(50, 60)">
+              <rect
+                x="0"
+                y="0"
+                width="280"
+                height="180"
+                rx="12"
+                className="fill-red-500/10 stroke-red-500/50"
+                strokeWidth="2"
+              />
+              <text
+                x="140"
+                y="30"
+                textAnchor="middle"
+                className="text-lg font-bold fill-red-400"
+              >
+                ❌ {isCs ? "Špatně" : "Wrong Way"}
+              </text>
+
+              {/* User bubble */}
+              <rect
+                x="20"
+                y="50"
+                width="180"
+                height="35"
+                rx="8"
+                className="fill-slate-700"
+              />
+              <text x="110" y="72" textAnchor="middle" className="text-xs fill-white">
+                {isCs ? '"Napiš mi email"' : '"Write me an email"'}
+              </text>
+
+              {/* AI bubble */}
+              <rect
+                x="80"
+                y="95"
+                width="180"
+                height="35"
+                rx="8"
+                className="fill-slate-600"
+              />
+              <text x="170" y="117" textAnchor="middle" className="text-xs fill-slate-300">
+                {isCs ? "[Generický email]" : "[Generic email]"}
+              </text>
+
+              {/* Frustration */}
+              <text
+                x="140"
+                y="155"
+                textAnchor="middle"
+                className="text-2xl"
+              >
+                😤
+              </text>
+              <text
+                x="140"
+                y="175"
+                textAnchor="middle"
+                className="text-xs fill-red-400"
+              >
+                {isCs ? '"Tohle je na nic"' : '"This sucks"'}
+              </text>
+            </g>
+
+            {/* Arrow */}
+            <g transform="translate(340, 150)">
+              <text
+                x="10"
+                y="0"
+                className="text-3xl fill-violet-400"
+              >
+                →
+              </text>
+            </g>
+
+            {/* Right Way */}
+            <g transform="translate(370, 60)">
+              <rect
+                x="0"
+                y="0"
+                width="280"
+                height="180"
+                rx="12"
+                className="fill-green-500/10 stroke-green-500/50"
+                strokeWidth="2"
+              />
+              <text
+                x="140"
+                y="30"
+                textAnchor="middle"
+                className="text-lg font-bold fill-green-400"
+              >
+                ✅ {isCs ? "Správně" : "Right Way"}
+              </text>
+
+              {/* User bubble with context */}
+              <rect
+                x="10"
+                y="45"
+                width="260"
+                height="50"
+                rx="8"
+                className="fill-slate-700"
+              />
+              <text x="140" y="62" textAnchor="middle" className="text-[10px] fill-white">
+                {isCs
+                  ? '"Pomoz mi napsat email pro pekárnu.'
+                  : '"Help me write an email for my bakery.'}
+              </text>
+              <text x="140" y="78" textAnchor="middle" className="text-[10px] fill-white">
+                {isCs
+                  ? 'Zákazníci jsou zdravě orientovaní..."'
+                  : 'Health-conscious customers..."'}
+              </text>
+
+              {/* AI bubble */}
+              <rect
+                x="30"
+                y="105"
+                width="200"
+                height="35"
+                rx="8"
+                className="fill-slate-600"
+              />
+              <text x="130" y="127" textAnchor="middle" className="text-xs fill-slate-300">
+                {isCs ? "[Relevantní návrhy]" : "[Relevant suggestions]"}
+              </text>
+
+              {/* Success */}
+              <text
+                x="140"
+                y="165"
+                textAnchor="middle"
+                className="text-2xl"
+              >
+                🤝
+              </text>
+              <text
+                x="140"
+                y="182"
+                textAnchor="middle"
+                className="text-xs fill-green-400"
+              >
+                {isCs ? "Spolupráce!" : "Collaboration!"}
+              </text>
+            </g>
+
+            {/* Bottom insight */}
+            <text
+              x="350"
+              y="265"
+              textAnchor="middle"
+              className="text-sm fill-violet-300"
+            >
+              {isCs
+                ? "💡 Dej kontext → Sdílej preference → Začni konverzaci"
+                : "💡 Give context → Share preferences → Start a conversation"}
+            </text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // L00: Getting Started with AI - Tool to Colleague Progression
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (type === "tool-to-colleague-progression") {
+    return (
+      <div className="my-8 flex justify-center -mx-6 w-[calc(100%+3rem)] md:mx-0 md:w-full">
+        <div className="relative p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg w-full max-w-none md:max-w-3xl">
+          <svg
+            viewBox="0 0 700 200"
+            className="w-full h-auto"
+            role="img"
+            aria-label={isCs ? "Evoluce od nástroje ke kolegovi" : "Evolution from tool to colleague"}
+          >
+            {/* Title */}
+            <text
+              x="350"
+              y="25"
+              textAnchor="middle"
+              className="text-lg font-bold fill-white"
+            >
+              {isCs ? "Tvoje cesta s AI" : "Your AI Journey"}
+            </text>
+
+            {/* Stage 1: Stranger */}
+            <g transform="translate(70, 50)">
+              <circle
+                cx="60"
+                cy="50"
+                r="45"
+                className="fill-slate-500/20 stroke-slate-500"
+                strokeWidth="2"
+              />
+              <text x="60" y="45" textAnchor="middle" className="text-2xl">
+                🤷
+              </text>
+              <text
+                x="60"
+                y="70"
+                textAnchor="middle"
+                className="text-xs font-bold fill-slate-400"
+              >
+                {isCs ? "Cizinec" : "Stranger"}
+              </text>
+              <text
+                x="60"
+                y="115"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-500"
+              >
+                {isCs ? "Nevíš, co AI umí" : "Don't know AI's capabilities"}
+              </text>
+              <text
+                x="60"
+                y="130"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-500"
+              >
+                {isCs ? "Generické odpovědi" : "Generic responses"}
+              </text>
+            </g>
+
+            {/* Arrow 1 */}
+            <g transform="translate(185, 90)">
+              <path
+                d="M0,0 L60,0"
+                className="stroke-violet-500"
+                strokeWidth="2"
+                markerEnd="url(#arrowhead-progression)"
+              />
+              <text x="30" y="-10" textAnchor="middle" className="text-[9px] fill-violet-400">
+                {isCs ? "Pár hodin" : "Few hours"}
+              </text>
+            </g>
+
+            {/* Stage 2: Acquaintance */}
+            <g transform="translate(280, 50)">
+              <circle
+                cx="60"
+                cy="50"
+                r="45"
+                className="fill-blue-500/20 stroke-blue-500"
+                strokeWidth="2"
+              />
+              <text x="60" y="45" textAnchor="middle" className="text-2xl">
+                🤝
+              </text>
+              <text
+                x="60"
+                y="70"
+                textAnchor="middle"
+                className="text-xs font-bold fill-blue-400"
+              >
+                {isCs ? "Známý" : "Acquaintance"}
+              </text>
+              <text
+                x="60"
+                y="115"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-500"
+              >
+                {isCs ? "Znáš silné/slabé stránky" : "Know strengths/weaknesses"}
+              </text>
+              <text
+                x="60"
+                y="130"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-500"
+              >
+                {isCs ? "Lepší prompty" : "Better prompts"}
+              </text>
+            </g>
+
+            {/* Arrow 2 */}
+            <g transform="translate(395, 90)">
+              <path
+                d="M0,0 L60,0"
+                className="stroke-violet-500"
+                strokeWidth="2"
+                markerEnd="url(#arrowhead-progression)"
+              />
+              <text x="30" y="-10" textAnchor="middle" className="text-[9px] fill-violet-400">
+                {isCs ? "Týdny" : "Weeks"}
+              </text>
+            </g>
+
+            {/* Stage 3: Colleague */}
+            <g transform="translate(490, 50)">
+              <circle
+                cx="60"
+                cy="50"
+                r="45"
+                className="fill-green-500/20 stroke-green-500"
+                strokeWidth="2"
+              />
+              <text x="60" y="45" textAnchor="middle" className="text-2xl">
+                🧑‍💼
+              </text>
+              <text
+                x="60"
+                y="70"
+                textAnchor="middle"
+                className="text-xs font-bold fill-green-400"
+              >
+                {isCs ? "Kolega" : "Colleague"}
+              </text>
+              <text
+                x="60"
+                y="115"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-500"
+              >
+                {isCs ? 'Víš, jak AI "myslí"' : 'Know how AI "thinks"'}
+              </text>
+              <text
+                x="60"
+                y="130"
+                textAnchor="middle"
+                className="text-[10px] fill-slate-500"
+              >
+                {isCs ? "Odpovědi na míru" : "Tailored responses"}
+              </text>
+            </g>
+
+            {/* Arrow marker definition */}
+            <defs>
+              <marker
+                id="arrowhead-progression"
+                markerWidth="10"
+                markerHeight="7"
+                refX="9"
+                refY="3.5"
+                orient="auto"
+              >
+                <polygon
+                  points="0 0, 10 3.5, 0 7"
+                  className="fill-violet-500"
+                />
+              </marker>
+            </defs>
+
+            {/* Current position indicator */}
+            <g transform="translate(130, 170)">
+              <text
+                x="0"
+                y="0"
+                className="text-xs fill-yellow-400"
+              >
+                ⭐ {isCs ? "Jsi tady!" : "You are here!"}
               </text>
             </g>
           </svg>

@@ -1,0 +1,173 @@
+{
+  "title": "Getting Started with AI",
+  "title_cs": "Začínáme s AI",
+  "slug": "00-getting-started",
+  "order": 0,
+  "duration_minutes": 25,
+  "labs_count": 2,
+
+  "decision_context": {
+    "macp_date": "2025-12-26",
+    "agents_consulted": ["Gemini Pro", "Claude Opus 4.5"],
+    "domain": "Content/Pedagogy",
+    "weights": {"gemini": 0.6, "claude": 0.3, "codex": 0.1},
+    "gemini_recommendation": "New L02 (shift others)",
+    "claude_recommendation": "New L00 (preserve structure)",
+    "final_decision": "L00 - preserves existing lesson URLs and ordering",
+    "rationale": "L00 as 'Level Zero' onboarding doesn't break existing L01-L07 structure"
+  },
+
+  "video_sources": {
+    "primary_cz": {
+      "id": "aix-yVFbaMU",
+      "title": "AI v roce 2026: Začni správně, nebo to zabal!",
+      "channel": "Marek Bartoš",
+      "duration": "15:37",
+      "published": "2025-12-26",
+      "key_concepts": [
+        "Tříkroková strategie",
+        "Výběr AI parťáka",
+        "Přemýšlet nahlas",
+        "Z AI udělat kolegu"
+      ],
+      "fit": "PRIMARY - exactly matches lesson goals"
+    },
+    "primary_en": {
+      "id": "wv779vmyPVY",
+      "title": "How Stanford Teaches AI-Powered Creativity in Just 13 Minutes",
+      "channel": "EO (Jeremy Utley, Stanford d.school)",
+      "duration": "13:20",
+      "views": 2285000,
+      "published": "2025-04-27",
+      "key_concepts": [
+        "Mindset shift from assistant to thinking partner",
+        "AI will gaslight you if you let it",
+        "Biggest limitation is imagination, not technology",
+        "Treat AI like an eager intern"
+      ],
+      "fit": "BEST EN MATCH - Stanford expert, same philosophy as Bartoš"
+    },
+    "alternatives_en": [
+      {
+        "id": "yMOmmnjy3sE",
+        "title": "Stanford's Practical Guide to 10x Your AI Productivity",
+        "channel": "EO (Jeremy Utley)",
+        "views": 475000,
+        "duration": "24:43",
+        "key_concepts": ["5 techniques", "coaching not programming", "strategic thinking partner"],
+        "fit": "GOOD - longer version, same speaker"
+      },
+      {
+        "id": "9c7zh2MkslY",
+        "title": "You're Not Behind (Yet): How to Learn AI in 29 Minutes",
+        "channel": "Futurepedia",
+        "views": 697000,
+        "duration": "29:00",
+        "key_concepts": ["Don't chase every update", "Focus on fundamentals"],
+        "fit": "GOOD - beginner reassurance angle"
+      },
+      {
+        "id": "pwWBcsxEoLk",
+        "title": "You SUCK at Prompting AI (Here's the secret)",
+        "channel": "NetworkChuck",
+        "views": 401000,
+        "duration": "24:00",
+        "key_concepts": ["Real prompting techniques", "Official docs from Anthropic/Google/OpenAI"],
+        "fit": "SUPPLEMENTARY - practical prompting, more L04 material"
+      },
+      {
+        "id": "Gaf_jCnA6mc",
+        "title": "ChatGPT Tutorial: How to Use Chat GPT For Beginners",
+        "channel": "Charlie Chang",
+        "views": 4400000,
+        "duration": "27:51",
+        "key_concepts": ["Step-by-step tutorial", "Very beginner friendly"],
+        "fit": "SUPPLEMENTARY - pure tutorial, less mindset"
+      }
+    ]
+  },
+
+  "learning_outcomes": [
+    "Understand why most people fail with AI (wrong expectations)",
+    "Choose the right AI tool for your needs using decision framework",
+    "Set up a free account and have first meaningful conversation",
+    "Adopt the 'thinking partner' mindset instead of 'magic oracle'"
+  ],
+
+  "structure": {
+    "sections": [
+      {
+        "id": "hook",
+        "title": "Why Most People Fail with AI",
+        "minutes": 3,
+        "content_type": "narrative",
+        "key_point": "Wrong expectations → disappointment → abandonment"
+      },
+      {
+        "id": "step1",
+        "title": "Choose Your AI Partner",
+        "minutes": 8,
+        "content_type": "comparison + decision_framework",
+        "elements": ["Decision Matrix diagram", "Tool comparison table", "Free tier overview"]
+      },
+      {
+        "id": "step2",
+        "title": "Think Out Loud",
+        "minutes": 5,
+        "content_type": "mindset",
+        "key_point": "AI as thinking partner, not answer machine"
+      },
+      {
+        "id": "step3",
+        "title": "From Tool to Colleague",
+        "minutes": 4,
+        "content_type": "methodology",
+        "key_point": "Iteration and feedback loops"
+      },
+      {
+        "id": "lab1",
+        "title": "Lab: Setup Your AI Account",
+        "minutes": 3,
+        "content_type": "hands-on",
+        "outcome": "Student has working free account"
+      },
+      {
+        "id": "lab2",
+        "title": "Lab: Your First Real Conversation",
+        "minutes": 5,
+        "content_type": "hands-on",
+        "outcome": "Student completes meaningful AI interaction"
+      },
+      {
+        "id": "holocron",
+        "title": "Holocron: Getting Started Checklist",
+        "minutes": 2,
+        "content_type": "summary"
+      }
+    ]
+  },
+
+  "diagrams_required": [
+    "ai-partner-decision-matrix",
+    "thinking-partner-mindset",
+    "tool-to-colleague-progression"
+  ],
+
+  "masterpiece_rubric": {
+    "hook_strength": {"max": 10, "target": 9},
+    "learning_outcomes_clarity": {"max": 10, "target": 9},
+    "visual_density": {"max": 10, "target": 9},
+    "lab_quality": {"max": 10, "target": 9},
+    "evergreen_content": {"max": 10, "target": 9},
+    "bilingual_parity": {"max": 10, "target": 10}
+  },
+
+  "anti_patterns_to_avoid": [
+    "Specific product features that change monthly",
+    "Pricing details (link to official pages instead)",
+    "Model version numbers without verification date",
+    "Hype language ('revolutionary', 'game-changing')"
+  ],
+
+  "gap_this_fills": "Bridge between 'what is AI' (L01 theory) and 'use AI' (L04 prompting). Students need practical onboarding BEFORE deep theory."
+}

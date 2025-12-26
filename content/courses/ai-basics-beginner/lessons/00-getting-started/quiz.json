@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Why do most people fail with AI, according to this lesson?",
+    "option_a": "AI technology is too new and unreliable",
+    "option_b": "They treat AI like a search engine instead of a thinking partner",
+    "option_c": "AI is too expensive for regular users",
+    "option_d": "They don't have enough technical knowledge",
+    "correct_answer": "B",
+    "explanation": "Most people fail because they have wrong expectations. They treat AI like a search engine (ask → answer → close) instead of engaging in a real conversation with context and follow-ups.",
+    "order": 1
+  },
+  {
+    "question": "What is the 'thinking partner mindset' about?",
+    "option_a": "Letting AI make all decisions for you",
+    "option_b": "Giving context, sharing preferences, and having a conversation",
+    "option_c": "Using AI only for technical tasks",
+    "option_d": "Copying everything AI generates without changes",
+    "correct_answer": "B",
+    "explanation": "The thinking partner mindset means giving AI context about your situation, sharing your preferences, and engaging in back-and-forth conversation—not just asking for final answers.",
+    "order": 2
+  },
+  {
+    "question": "Which statement about choosing an AI tool is TRUE?",
+    "option_a": "ChatGPT is always the best choice for everyone",
+    "option_b": "You must pick one AI and never switch",
+    "option_c": "The best AI is the one you actually use",
+    "option_d": "Free tiers are too limited to be useful",
+    "correct_answer": "C",
+    "explanation": "There's no 'perfect' AI—the best one is whichever you actually use regularly. All major AI assistants (ChatGPT, Claude, Gemini) have capable free tiers, and skills transfer between them.",
+    "order": 3
+  },
+  {
+    "question": "What are the three stages of building a relationship with AI?",
+    "option_a": "Beginner → Intermediate → Expert",
+    "option_b": "Stranger → Acquaintance → Colleague",
+    "option_c": "User → Power User → Developer",
+    "option_d": "Free → Paid → Enterprise",
+    "correct_answer": "B",
+    "explanation": "The three stages are: Stranger (don't know AI's capabilities), Acquaintance (know strengths/weaknesses, better prompts), and Colleague (understand how AI 'thinks', get tailored responses).",
+    "order": 4
+  },
+  {
+    "question": "What should you do when AI gives you a bad answer?",
+    "option_a": "Give up and close the tab",
+    "option_b": "Switch to a different AI tool",
+    "option_c": "Complain that AI doesn't work",
+    "option_d": "Give more context and try again",
+    "correct_answer": "D",
+    "explanation": "When AI gives a bad answer, don't give up—give more context! AI performs better when it understands your situation, preferences, and goals. Iteration is key to getting good results.",
+    "order": 5
+  }
+]

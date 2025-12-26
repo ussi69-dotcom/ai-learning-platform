@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Proč většina lidí s AI selhává, podle této lekce?",
+    "option_a": "AI technologie je příliš nová a nespolehlivá",
+    "option_b": "Zacházejí s AI jako s vyhledávačem místo myšlenkového partnera",
+    "option_c": "AI je pro běžné uživatele příliš drahá",
+    "option_d": "Nemají dostatek technických znalostí",
+    "correct_answer": "B",
+    "explanation": "Většina lidí selhává kvůli špatným očekáváním. Zacházejí s AI jako s vyhledávačem (otázka → odpověď → zavřít) místo vedení skutečné konverzace s kontextem a doplňujícími otázkami.",
+    "order": 1
+  },
+  {
+    "question": "O čem je 'mindset myšlenkového partnera'?",
+    "option_a": "Nechat AI dělat všechna rozhodnutí za tebe",
+    "option_b": "Dávat kontext, sdílet preference a vést konverzaci",
+    "option_c": "Používat AI pouze na technické úkoly",
+    "option_d": "Kopírovat vše, co AI vygeneruje, bez změn",
+    "correct_answer": "B",
+    "explanation": "Mindset myšlenkového partnera znamená dávat AI kontext o tvé situaci, sdílet preference a zapojit se do konverzace tam a zpět—ne jen žádat o finální odpovědi.",
+    "order": 2
+  },
+  {
+    "question": "Které tvrzení o výběru AI nástroje je PRAVDIVÉ?",
+    "option_a": "ChatGPT je vždy nejlepší volba pro každého",
+    "option_b": "Musíš si vybrat jednu AI a nikdy nepřecházet",
+    "option_c": "Nejlepší AI je ta, kterou skutečně používáš",
+    "option_d": "Free tiery jsou příliš omezené na to, aby byly užitečné",
+    "correct_answer": "C",
+    "explanation": "Neexistuje 'perfektní' AI—nejlepší je ta, kterou skutečně pravidelně používáš. Všichni hlavní AI asistenti (ChatGPT, Claude, Gemini) mají schopné free tiery a dovednosti se přenášejí mezi nimi.",
+    "order": 3
+  },
+  {
+    "question": "Jaké jsou tři fáze budování vztahu s AI?",
+    "option_a": "Začátečník → Středně pokročilý → Expert",
+    "option_b": "Cizinec → Známý → Kolega",
+    "option_c": "Uživatel → Power User → Vývojář",
+    "option_d": "Free → Placený → Enterprise",
+    "correct_answer": "B",
+    "explanation": "Tři fáze jsou: Cizinec (nevíš, co AI umí), Známý (znáš silné/slabé stránky, lepší prompty) a Kolega (rozumíš, jak AI 'myslí', dostáváš odpovědi na míru).",
+    "order": 4
+  },
+  {
+    "question": "Co bys měl/a udělat, když ti AI dá špatnou odpověď?",
+    "option_a": "Vzdát to a zavřít záložku",
+    "option_b": "Přejít na jiný AI nástroj",
+    "option_c": "Stěžovat si, že AI nefunguje",
+    "option_d": "Dát více kontextu a zkusit to znovu",
+    "correct_answer": "D",
+    "explanation": "Když AI dá špatnou odpověď, nevzdávej to—dej více kontextu! AI funguje lépe, když rozumí tvé situaci, preferencím a cílům. Iterace je klíčem k dobrým výsledkům.",
+    "order": 5
+  }
+]
