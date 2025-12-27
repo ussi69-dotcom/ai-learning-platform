@@ -72,7 +72,7 @@ export default function CourseIcon({
           src={themeImage}
           alt="Course cover"
           fill
-          className={`object-${objectFit}`}
+          className={`object-${objectFit} mix-blend-multiply dark:mix-blend-screen dark:brightness-90 dark:contrast-110`}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority
           onError={() => {

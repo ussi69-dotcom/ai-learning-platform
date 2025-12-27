@@ -816,18 +816,18 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
   const { height: containerHeight, cubeSize } = dimensions;
 
   return (
-    <section className="w-full py-12 md:py-16 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-y border-white/10 overflow-hidden">
+    <section className="w-full py-12 md:py-16 bg-card/50 border-y border-border overflow-hidden">
       <div className="container px-4 mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-sm font-mono text-cyan-400 mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-sm font-mono text-primary mb-4">
             <Sparkles className="w-4 h-4" />
             <span>{t("interactiveGlossary")}</span>
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
             {t("title")}
           </h2>
-          <p className="text-slate-400 text-sm max-w-md mx-auto mb-4">
+          <p className="text-muted-foreground text-sm max-w-md mx-auto mb-4">
             {t("subtitle")}
           </p>
 
@@ -854,8 +854,8 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
               }}
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 physicsEnabled
-                  ? "bg-cyan-500/20 border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/30"
-                  : "bg-slate-700/50 border-slate-600/50 text-slate-400 hover:bg-slate-700/70 hover:text-slate-300"
+                  ? "bg-primary/20 border-primary/40 text-primary hover:bg-primary/30"
+                  : "bg-muted border-border text-muted-foreground hover:bg-muted/80 hover:text-foreground"
               } border`}
               title={
                 isLowPerf
@@ -886,16 +886,15 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
         {/* Physics Container */}
         <div
           ref={containerRef}
-          className="relative w-full overflow-hidden rounded-xl bg-gradient-to-b from-slate-800/30 to-slate-900/50 border border-white/5 transition-[height] duration-300"
+          className="relative w-full overflow-hidden rounded-xl glass-panel border border-border transition-[height] duration-300"
           style={{
             height: containerHeight,
-            background: "linear-gradient(180deg, rgba(15,23,42,0.3) 0%, rgba(15,23,42,0.6) 100%)",
           }}
         >
           {/* Ambient glow */}
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px]" />
-            <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-[80px]" />
+            <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[80px]" />
+            <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[80px]" />
           </div>
 
           {/* Ice Cubes - using refs for direct DOM updates */}
@@ -978,12 +977,12 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
           ))}
 
           {/* Floor reflection hint */}
-          <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-cyan-500/5 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none" />
         </div>
 
         {/* Performance indicator (dev only) */}
         {process.env.NODE_ENV === "development" && (
-          <div className="text-xs text-slate-500 mt-2 text-center">
+          <div className="text-xs text-muted-foreground mt-2 text-center">
             {prefersReducedMotion && "🚫 Reduced motion (no physics)"}
             {!prefersReducedMotion && physicsEnabled && "✨ Physics enabled"}
             {!prefersReducedMotion && !physicsEnabled && "📦 Static layout (physics off)"}
@@ -1024,7 +1023,7 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
               {/* Close button */}
               <button
                 onClick={() => setSelectedTerm(null)}
-                className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+                className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
               >
                 <X size={20} />
               </button>
@@ -1043,12 +1042,12 @@ export default function AIGlossary({ locale }: AIGlossaryProps) {
               </div>
 
               {/* Full name */}
-              <h3 className="text-xl font-semibold text-white mb-3">
+              <h3 className="text-xl font-semibold text-foreground mb-3">
                 {selectedTerm.fullName[lang]}
               </h3>
 
               {/* Definition */}
-              <p className="text-slate-300 leading-relaxed mb-6">
+              <p className="text-muted-foreground leading-relaxed mb-6">
                 {selectedTerm.definition[lang]}
               </p>
 

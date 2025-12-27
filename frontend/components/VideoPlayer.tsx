@@ -296,7 +296,7 @@ export const VideoPlayer = ({
                 {activeVideo.title}
               </div>
               {activeVideo.author && (
-                <div className="text-sm text-slate-600 dark:text-slate-300 flex items-center gap-1">
+                <div className="text-sm text-muted-foreground flex items-center gap-1">
                   <User className="w-3 h-3" aria-hidden="true" />
                   <span>{activeVideo.author}</span>
                 </div>
@@ -335,19 +335,19 @@ export const VideoPlayer = ({
               onClick={() => setIsExpanded(!isExpanded)}
               className="w-full flex items-center justify-between px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-200"
             >
-              <div className="flex items-center gap-2 text-slate-800 dark:text-slate-100">
+              <div className="flex items-center gap-2 text-foreground">
                 <Film className="w-5 h-5 text-primary" aria-hidden="true" />
                 <span className="text-base font-semibold">
                   {locale === "cs"
                     ? "Další doporučená videa"
                     : "More recommended videos"}
                 </span>
-                <span className="text-sm font-medium text-slate-700 dark:text-slate-200 bg-white/10 px-2 py-0.5 rounded-full">
+                <span className="text-sm font-medium text-muted-foreground bg-white/10 px-2 py-0.5 rounded-full">
                   {alternativeVideos.length}
                 </span>
               </div>
               <ChevronDown
-                className={`w-4 h-4 text-slate-600 dark:text-slate-300 transition-transform duration-200 ${
+                className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
                   isExpanded ? "rotate-180" : ""
                 }`}
                 aria-hidden="true"
@@ -439,7 +439,7 @@ function VideoCard({
             className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 ${
               video.isMain
                 ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
-                : "bg-violet-500/20 text-violet-400 border border-violet-500/30"
+                : "bg-primary/20 text-primary border border-primary/30"
             }`}
           >
             {video.isMain ? (
