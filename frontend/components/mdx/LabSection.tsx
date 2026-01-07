@@ -1,4 +1,5 @@
 "use client";
+import { getApiBaseUrl } from "@/lib/utils";
 
 import React, { useState } from 'react';
 import { Check, FlaskConical } from 'lucide-react';
@@ -32,7 +33,7 @@ export default function LabSection({ title, difficulty = "Builder", children }: 
 
     const checkStatus = async () => {
       try {
-        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const API_BASE = getApiBaseUrl();
         const res = await axios.get(`${API_BASE}/users/me/progress`, {
            headers: { Authorization: `Bearer ${token}` }
         });
@@ -51,7 +52,7 @@ export default function LabSection({ title, difficulty = "Builder", children }: 
   const handleComplete = async () => {
     if (!isCompleted && token && lessonId) {
       try {
-        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const API_BASE = getApiBaseUrl();
         // Call secure endpoint with lab_id
         await axios.post(`${API_BASE}/lessons/${lessonId}/lab/complete`, 
           { lab_id: labId }, 

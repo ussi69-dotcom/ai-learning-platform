@@ -1,4 +1,5 @@
 "use client";
+import { getApiBaseUrl } from "@/lib/utils";
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import {
@@ -27,7 +28,7 @@ interface NewsStats {
   en_total?: number;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = getApiBaseUrl();
 const VISUAL_TEST_ITEMS: NewsItem[] = [
   {
     id: 1,

@@ -1,4 +1,5 @@
 "use client";
+import { getApiBaseUrl } from "@/lib/utils";
 
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
@@ -28,7 +29,7 @@ export default function LessonComplete({
     const checkStatus = async () => {
       if (!token) return;
       try {
-        const res = await fetch("http://localhost:8000/users/me/progress", {
+        const res = await fetch(`${getApiBaseUrl()}/users/me/progress`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {
@@ -48,7 +49,7 @@ export default function LessonComplete({
     setIsLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:8000/lessons/${lessonId}/complete`,
+        `${getApiBaseUrl()}/lessons/${lessonId}/complete`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },

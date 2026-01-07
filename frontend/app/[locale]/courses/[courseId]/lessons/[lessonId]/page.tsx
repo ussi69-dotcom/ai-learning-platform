@@ -1,4 +1,5 @@
 "use client";
+import { getApiBaseUrl } from "@/lib/utils";
 
 import { useState, useEffect, use, useMemo } from "react";
 import { useRouter } from "@/i18n/routing"; // Updated import for routing
@@ -140,7 +141,7 @@ export default function LessonPage({
 
       try {
         const API_BASE =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+          getApiBaseUrl();
 
         // 1. Load Lesson
         const lessonRes = await axios.get(`${API_BASE}/lessons/${lessonId}`, {
@@ -209,7 +210,7 @@ export default function LessonPage({
     const saveProgress = setTimeout(async () => {
       try {
         const API_BASE =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+          getApiBaseUrl();
         await axios.post(
           `${API_BASE}/lessons/${lessonId}/progress?page=${currentPage}`,
           {},
@@ -239,7 +240,7 @@ export default function LessonPage({
     const fetchFeedback = async () => {
       try {
         const API_BASE =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+          getApiBaseUrl();
         const res = await axios.get(`${API_BASE}/feedback`, {
           params: { lesson_id: lessonId, slide_index: currentPage },
           headers: { Authorization: `Bearer ${token}` },
@@ -312,7 +313,7 @@ export default function LessonPage({
   const handleVote = async (id: number, direction: "up" | "down") => {
     try {
       const API_BASE =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+        getApiBaseUrl();
       await axios.post(`${API_BASE}/feedback/${id}/vote`, null, {
         params: { direction },
         headers: { Authorization: `Bearer ${token}` },
@@ -337,7 +338,7 @@ export default function LessonPage({
   const handleReply = async (parentId: number, message: string) => {
     try {
       const API_BASE =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+        getApiBaseUrl();
       // We need to construct the full object, but the endpoint expects FeedbackItemCreate
       // which needs lesson_id, slide_index, x_pos, y_pos, type, message.
       // For a reply, x/y/type might be inherited or irrelevant but required by schema.
@@ -381,7 +382,7 @@ export default function LessonPage({
   const handleDelete = async (id: number) => {
     try {
       const API_BASE =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+        getApiBaseUrl();
       await axios.delete(`${API_BASE}/feedback/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });

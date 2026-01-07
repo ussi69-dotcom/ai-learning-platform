@@ -63,7 +63,13 @@ def get_cors_origins():
         except json.JSONDecodeError:
             pass
     # Default: dev origins
-    return ["http://localhost:3000", "http://frontend:3000"]
+    return [
+        "http://localhost:3000",
+        "http://localhost:3333",
+        "http://frontend:3000",
+        "https://learnai.cz",
+        "https://www.learnai.cz",
+    ]
 
 app.add_middleware(
     CORSMiddleware,

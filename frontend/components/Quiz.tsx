@@ -1,4 +1,5 @@
 "use client";
+import { getApiBaseUrl } from "@/lib/utils";
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -40,7 +41,7 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
     if (!token || !lessonId) return;
     const checkStatus = async () => {
         try {
-            const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+            const API_BASE = getApiBaseUrl();
             const res = await axios.get(`${API_BASE}/users/me/progress`, {
                headers: { Authorization: `Bearer ${token}` }
             });
@@ -89,7 +90,7 @@ export default function Quiz({ quizzes, onComplete }: QuizProps) {
       
       if (token && lessonId) {
         try {
-          const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+          const API_BASE = getApiBaseUrl();
           await axios.post(`${API_BASE}/lessons/${lessonId}/quiz/complete`, 
             { score: percentage },
             { headers: { Authorization: `Bearer ${token}` } }

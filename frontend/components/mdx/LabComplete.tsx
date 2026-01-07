@@ -1,4 +1,5 @@
 "use client";
+import { getApiBaseUrl } from "@/lib/utils";
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
@@ -29,7 +30,7 @@ export default function LabComplete({ labId }: LabCompleteProps) {
 
     const checkStatus = async () => {
       try {
-        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const API_BASE = getApiBaseUrl();
         const res = await axios.get(`${API_BASE}/users/me/progress`, {
            headers: { Authorization: `Bearer ${token}` }
         });
@@ -50,7 +51,7 @@ export default function LabComplete({ labId }: LabCompleteProps) {
     setIsLoading(true);
 
     try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const API_BASE = getApiBaseUrl();
       await axios.post(`${API_BASE}/lessons/${lessonId}/lab/complete`, 
         { lab_id: labId },
         { headers: { Authorization: `Bearer ${token}` } }

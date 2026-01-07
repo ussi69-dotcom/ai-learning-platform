@@ -1,4 +1,5 @@
 "use client";
+import { getApiBaseUrl } from "@/lib/utils";
 
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
@@ -94,7 +95,7 @@ export default function HomePage() {
 
       try {
         const API_BASE =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+          getApiBaseUrl();
         const response = await axios.get(`${API_BASE}/courses/`, {
           params: { lang: locale },
           headers: {
@@ -124,7 +125,7 @@ export default function HomePage() {
       }
       try {
         const API_BASE =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+          getApiBaseUrl();
         const response = await axios.get(`${API_BASE}/users/me/last-lesson`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -153,7 +154,7 @@ export default function HomePage() {
     const fetchFeedback = async () => {
       try {
         const API_BASE =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+          getApiBaseUrl();
         const res = await axios.get(`${API_BASE}/feedback`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -174,7 +175,7 @@ export default function HomePage() {
   const handleVote = async (id: number, direction: "up" | "down") => {
     try {
       const API_BASE =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+        getApiBaseUrl();
       await axios.post(`${API_BASE}/feedback/${id}/vote`, null, {
         params: { direction },
         headers: { Authorization: `Bearer ${token}` },
@@ -196,7 +197,7 @@ export default function HomePage() {
   const handleReply = async (parentId: number, message: string) => {
     try {
       const API_BASE =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+        getApiBaseUrl();
       const parent =
         feedbackItems.find((i) => i.id === parentId) || selectedFeedback;
       if (!parent) return;
@@ -234,7 +235,7 @@ export default function HomePage() {
   const handleDelete = async (id: number) => {
     try {
       const API_BASE =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+        getApiBaseUrl();
       await axios.delete(`${API_BASE}/feedback/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });

@@ -1,4 +1,5 @@
 "use client";
+import { getApiBaseUrl } from "@/lib/utils";
 
 import { KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
@@ -59,7 +60,7 @@ export default function AIMentor({ lessonId, lessonTitle }: AIMentorProps) {
   };
 
   const apiBase = useMemo(
-    () => process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000",
+    () => getApiBaseUrl(),
     []
   );
 

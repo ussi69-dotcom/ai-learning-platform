@@ -1,4 +1,5 @@
 "use client";
+import { getApiBaseUrl } from "@/lib/utils";
 
 import { useState, useEffect } from 'react';
 import { useRouter } from '@/i18n/routing';
@@ -45,7 +46,7 @@ export default function ProfilePage() {
     const fetchAchievements = async () => {
       if (!token) return;
       try {
-        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const API_BASE = getApiBaseUrl();
         const response = await axios.get(`${API_BASE}/achievements?lang=${locale}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -62,7 +63,7 @@ export default function ProfilePage() {
   const handleUpdateAvatar = async (avatarId: string) => {
     setIsUpdating(true);
     try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const API_BASE = getApiBaseUrl();
       await axios.put(
         `${API_BASE}/users/me/avatar`,
         { avatar: avatarId },
@@ -80,7 +81,7 @@ export default function ProfilePage() {
   const handleDeleteAccount = async () => {
     setIsDeleting(true);
     try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const API_BASE = getApiBaseUrl();
       await axios.delete(
         `${API_BASE}/users/me`,
         { headers: { Authorization: `Bearer ${token}` } }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { getApiBaseUrl } from "@/lib/utils";
 
 interface MDXImageProps {
   src: string;
@@ -8,7 +9,7 @@ interface MDXImageProps {
   lessonSlug?: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_BASE_URL = getApiBaseUrl();
 
 export default function MDXImage({ src, alt, caption, courseSlug, lessonSlug }: MDXImageProps) {
   let finalSrc = src;

@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
+import { getApiBaseUrl } from '@/lib/utils';
 
 import { useRouter } from 'next/navigation';
 
@@ -67,7 +68,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
   const router = useRouter();
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+  // Smart API URL detection based on how user accesses the app
+  const getApiBase = useCallback(() => getApiBaseUrl(), []);
 
   const dismissLevelUp = useCallback(() => {
     setLevelUpData({ show: false, newLevel: "" });
@@ -118,7 +120,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const fetchCurrentUser = async (authToken: string, checkLevelUp: boolean = false) => {
     try {
-      const response = await axios.get(`${API_BASE}/users/me?t=${Date.now()}`, {
+      const response = await axios.get(`${getApiBase()}/users/me?t=${Date.now()}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -152,11 +154,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const login = async (email: string, password: string) => {
-    const formData = new FormData();
-    formData.append('username', email); // OAuth2 uses 'username' field
-    formData.append('password', password);
+    // Use URLSearchParams for proper x-www-form-urlencoded encoding
+    const params = new URLSearchParams();
+    params.append('username', email); // OAuth2 uses 'username' field
+    params.append('password', password);
 
-    const response = await axios.post(`${API_BASE}/auth/token`, formData, {
+    const response = await axios.post(`${getApiBase()}/auth/token`, params, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
@@ -171,7 +174,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const register = async (email: string, password: string, difficulty: string, avatar: string, lang: string = "cs") => {
-    const response = await axios.post(`${API_BASE}/auth/register?lang=${lang}`, {
+    const response = await axios.post(`${getApiBase()}/auth/register?lang=${lang}`, {
       email,
       password,
       difficulty,

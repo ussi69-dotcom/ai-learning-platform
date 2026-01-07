@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getApiBaseUrl } from "@/lib/utils";
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Bug, Lightbulb, StickyNote, HelpCircle, X } from 'lucide-react';
@@ -43,7 +44,7 @@ export default function FeedbackSubmissionModal({
     setError('');
 
     try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const API_BASE = getApiBaseUrl();
       await axios.post(
         `${API_BASE}/feedback`,
         {

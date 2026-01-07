@@ -1,4 +1,5 @@
 "use client";
+import { getApiBaseUrl } from "@/lib/utils";
 
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
@@ -55,7 +56,7 @@ export default function CoursePage({
 
       try {
         const API_BASE =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+          getApiBaseUrl();
 
         // Fetch course with auth token
         const courseRes = await fetch(
@@ -128,7 +129,7 @@ export default function CoursePage({
       const fetchFeedback = async () => {
         try {
           const API_BASE =
-            process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+            getApiBaseUrl();
           // Use lessonId=0 and slideIndex=-1 for generic course feedback
           const res = await fetch(
             `${API_BASE}/feedback/?lesson_id=0&slide_index=-1`,
@@ -349,7 +350,7 @@ export default function CoursePage({
               const fetchFeedback = async () => {
                 try {
                   const API_BASE =
-                    process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+                    getApiBaseUrl();
                   const res = await fetch(
                     `${API_BASE}/feedback/?lesson_id=0&slide_index=-1`,
                     {
@@ -390,7 +391,7 @@ export default function CoursePage({
             onDelete={async (id) => {
               try {
                 const API_BASE =
-                  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+                  getApiBaseUrl();
                 await fetch(`${API_BASE}/feedback/${id}`, {
                   method: "DELETE",
                   headers: { Authorization: `Bearer ${token}` },
@@ -404,7 +405,7 @@ export default function CoursePage({
             onReply={async () => {
               // Refresh feedback to get new reply
               const API_BASE =
-                process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+                getApiBaseUrl();
               const res = await fetch(
                 `${API_BASE}/feedback/?lesson_id=0&slide_index=-1`,
                 {

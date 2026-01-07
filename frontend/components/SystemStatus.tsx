@@ -1,4 +1,5 @@
 "use client";
+import { getApiBaseUrl } from "@/lib/utils";
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -24,7 +25,7 @@ export default function SystemStatus() {
   useEffect(() => {
     const fetchHealth = async () => {
       try {
-        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const API_BASE = getApiBaseUrl();
         const response = await axios.get<HealthResponse>(`${API_BASE}/health`);
         setHealthData(response.data);
       } catch (error) {

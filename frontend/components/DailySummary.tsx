@@ -1,4 +1,5 @@
 "use client";
+import { getApiBaseUrl } from "@/lib/utils";
 
 import { useState, useEffect } from "react";
 import { Sparkles, ExternalLink } from "lucide-react";
@@ -24,7 +25,7 @@ interface DailySummaryProps {
   locale: string;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = getApiBaseUrl();
 const VISUAL_TEST_DIGEST: DailyDigest = {
   id: 999,
   digest_date: "2025-01-15",
