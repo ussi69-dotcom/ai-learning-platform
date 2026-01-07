@@ -52,3 +52,4 @@ CLAUDE.md.local
 backups/
 backup.sh
 .venv/
+frontend/visual_tests/
