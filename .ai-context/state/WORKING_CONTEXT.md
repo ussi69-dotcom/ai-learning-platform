@@ -1,6 +1,6 @@
 # Working Context
 
-**Last Updated:** 2025-12-24 01:08 (Agent: Codex GPT-5.2)
+**Last Updated:** 2026-01-07 07:28 (Agent: Manual)
 
 ## 🚦 Current Status: Doc stack cleanup + mentor follow-ups
 - **Boot sync:** Updated to match `git log -1` at `682d93c`.
@@ -218,7 +218,7 @@
 - L07: Mention mobile apps explicitly
 
 ---
-**Last Commit:** `2738afb` chore: remove visual_tests artifacts
+**Last Commit:** `11242af` feat(mentor): integrate BitNet 1.58-bit models + fix Redis replica issue
 **Status:** 🟢 Global readability boost (nav, footer, progress, callouts, video metadata) applied; Lesson 01 visuals verified; `npm run verify` passes (lint warnings only).
 
 ---
