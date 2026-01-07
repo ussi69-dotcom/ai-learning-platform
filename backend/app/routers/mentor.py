@@ -8,7 +8,7 @@ from app.services import mentor_client, mentor_prompts, mentor_rag
 
 router = APIRouter()
 
-VALID_MODES = {"fast"}
+VALID_MODES = {"fast", "think"}
 VALID_VIBES = {"jedi", "sith"}
 VALID_LANGS = {"en", "cs"}
 
@@ -32,10 +32,14 @@ def normalize_lang(lang: str | None) -> str:
 
 
 def select_context_limits(mode: str) -> tuple[int, int]:
+    if mode == "think":
+        return settings.MENTOR_MAX_CONTEXT_CHUNKS_THINK, settings.MENTOR_CONTEXT_CHARS_THINK
     return settings.MENTOR_MAX_CONTEXT_CHUNKS_FAST, settings.MENTOR_CONTEXT_CHARS_FAST
 
 
 def select_history_limits(mode: str) -> tuple[int, int]:
+    if mode == "think":
+        return settings.MENTOR_MAX_HISTORY_THINK, settings.MENTOR_HISTORY_CHARS_THINK
     return settings.MENTOR_MAX_HISTORY_FAST, settings.MENTOR_HISTORY_CHARS_FAST
 
 
@@ -157,7 +161,7 @@ def mentor_chat(
     response_model=schemas.MentorHealthResponse,
 )
 def mentor_health():
-    modes = ["fast"]
+    modes = ["fast", "think"]
     services = [mentor_client.check_health(mode) for mode in modes]
     status_label = "healthy" if all(s["status"] == "healthy" for s in services) else "degraded"
     return schemas.MentorHealthResponse(status=status_label, services=services)

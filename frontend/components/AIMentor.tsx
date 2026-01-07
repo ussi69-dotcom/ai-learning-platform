@@ -3,12 +3,12 @@
 import { KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 import { useLocale, useTranslations } from "next-intl";
-import { Sparkles, Send, X } from "lucide-react";
+import { Sparkles, Send, X, Zap, Brain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
 
-type MentorMode = "fast";
+type MentorMode = "fast" | "think";
 type MentorVibe = "jedi" | "sith";
 
 type MentorSource = {
@@ -38,7 +38,7 @@ export default function AIMentor({ lessonId, lessonTitle }: AIMentorProps) {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const mode: MentorMode = "fast";
+  const [mode, setMode] = useState<MentorMode>("fast");
   const [vibe, setVibe] = useState<MentorVibe>("jedi");
   const [error, setError] = useState<string | null>(null);
 
@@ -182,8 +182,38 @@ export default function AIMentor({ lessonId, lessonTitle }: AIMentorProps) {
               <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
                 {vibe === "jedi" ? t("vibe_jedi") : t("vibe_sith")}
               </p>
+              <div className="flex items-center gap-2 mt-2">
+                <button
+                  type="button"
+                  onClick={() => setMode("fast")}
+                  className={cn(
+                    "flex items-center gap-1 text-xs px-2 py-1 rounded-full border transition",
+                    mode === "fast"
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "border-border/60 text-muted-foreground hover:border-primary/60 hover:text-primary"
+                  )}
+                  disabled={isLoading}
+                >
+                  <Zap className="h-3 w-3" />
+                  {t("mode_fast")}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMode("think")}
+                  className={cn(
+                    "flex items-center gap-1 text-xs px-2 py-1 rounded-full border transition",
+                    mode === "think"
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "border-border/60 text-muted-foreground hover:border-primary/60 hover:text-primary"
+                  )}
+                  disabled={isLoading}
+                >
+                  <Brain className="h-3 w-3" />
+                  {t("mode_think")}
+                </button>
+              </div>
               <p className="text-xs text-muted-foreground mt-1">
-                {t("model_info")}
+                {mode === "fast" ? t("model_info_fast") : t("model_info_think")}
               </p>
               {lessonTitle && (
                 <p className="text-xs text-muted-foreground mt-1">

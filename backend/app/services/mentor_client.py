@@ -15,10 +15,14 @@ class MentorClientError(RuntimeError):
 
 
 def select_base_url(mode: str) -> str:
+    if mode == "think":
+        return settings.MENTOR_THINK_URL
     return settings.MENTOR_FAST_URL
 
 
 def select_timeout(mode: str) -> float:
+    if mode == "think":
+        return settings.MENTOR_TIMEOUT_THINK
     return settings.MENTOR_TIMEOUT_FAST
 
 

@@ -55,37 +55,75 @@ services:
       - db
       - redis
 
-  mentor-fast:
-    <<: *llama_server
-    container_name: mentor-fast
+  # Legacy llama.cpp mentor (commented out, replaced by BitNet)
+  # mentor-fast:
+  #   <<: *llama_server
+  #   container_name: mentor-fast
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${MENTOR_MODEL_DIR}:/models:ro
+  #   ports:
+  #     - "8081:8081"
+  #   command:
+  #     [
+  #       "--model",
+  #       "/models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+  #       "--host",
+  #       "0.0.0.0",
+  #       "--port",
+  #       "8081",
+  #       "--threads",
+  #       "16",
+  #       "--threads-batch",
+  #       "16",
+  #       "--ctx-size",
+  #       "4096",
+  #       "--batch-size",
+  #       "1024",
+  #       "--ubatch-size",
+  #       "256",
+  #       "--n-predict",
+  #       "320",
+  #       "--flash-attn",
+  #       "auto"
+  #     ]
+
+  # BitNet Mentor Services - 1.58-bit LLMs (1.37x-6.17x faster than FP16)
+  mentor-fast-bitnet:
+    build:
+      context: .
+      dockerfile: docker/bitnet.Dockerfile
+    container_name: mentor-fast-bitnet
     restart: unless-stopped
     volumes:
-      - ${MENTOR_MODEL_DIR}:/models:ro
+      - ${BITNET_MODEL_DIR:-./models/bitnet}:/models:ro
+      - ./docker/bitnet_api_wrapper.py:/app/bitnet_api_wrapper.py:ro
     ports:
       - "8081:8081"
-    command:
-      [
-        "--model",
-        "/models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
-        "--host",
-        "0.0.0.0",
-        "--port",
-        "8081",
-        "--threads",
-        "16",
-        "--threads-batch",
-        "16",
-        "--ctx-size",
-        "4096",
-        "--batch-size",
-        "1024",
-        "--ubatch-size",
-        "256",
-        "--n-predict",
-        "320",
-        "--flash-attn",
-        "auto"
-      ]
+    environment:
+      - MODEL_PATH=/models/bitnet_b1_58-3B
+      - PORT=8081
+      - HOST=0.0.0.0
+    working_dir: /app/BitNet
+    command: ["python3", "/app/bitnet_api_wrapper.py"]
+
+  mentor-think-bitnet:
+    build:
+      context: .
+      dockerfile: docker/bitnet.Dockerfile
+    container_name: mentor-think-bitnet
+    restart: unless-stopped
+    volumes:
+      - ${BITNET_MODEL_DIR:-./models/bitnet}:/models:ro
+      - ./docker/bitnet_api_wrapper.py:/app/bitnet_api_wrapper.py:ro
+    ports:
+      - "8082:8082"
+    environment:
+      - MODEL_PATH=/models/Llama3-8B-1.58-100B-tokens
+      - PORT=8082
+      - HOST=0.0.0.0
+    working_dir: /app/BitNet
+    command: ["python3", "/app/bitnet_api_wrapper.py"]
 
   db:
     image: postgres:15-alpine
@@ -106,6 +144,8 @@ services:
     restart: unless-stopped
     volumes:
       - redis_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
 
   nginx:
     image: nginx:alpine

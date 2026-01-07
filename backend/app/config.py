@@ -114,14 +114,16 @@ class Settings(BaseSettings):
             
         return v
 
-    # MENTOR (Local LLM + RAG)
+    # MENTOR (Local LLM + RAG) - BitNet 1.58-bit models
     MENTOR_FAST_URL: str = os.getenv("MENTOR_FAST_URL", "http://localhost:8081")
+    MENTOR_THINK_URL: str = os.getenv("MENTOR_THINK_URL", "http://localhost:8082")
     MENTOR_DEFAULT_MODE: str = os.getenv("MENTOR_DEFAULT_MODE", "fast")
     MENTOR_MAX_TOKENS: int = int(os.getenv("MENTOR_MAX_TOKENS") or 512)
     MENTOR_TEMPERATURE: float = float(os.getenv("MENTOR_TEMPERATURE") or 0.4)
     MENTOR_TOP_P: float = float(os.getenv("MENTOR_TOP_P") or 0.9)
     MENTOR_TIMEOUT_SECONDS: float = float(os.getenv("MENTOR_TIMEOUT_SECONDS") or 25)
-    MENTOR_TIMEOUT_FAST: float = float(os.getenv("MENTOR_TIMEOUT_FAST") or 25)
+    MENTOR_TIMEOUT_FAST: float = float(os.getenv("MENTOR_TIMEOUT_FAST") or 30)
+    MENTOR_TIMEOUT_THINK: float = float(os.getenv("MENTOR_TIMEOUT_THINK") or 60)
     MENTOR_TIMEOUT_REASONING: float = float(os.getenv("MENTOR_TIMEOUT_REASONING") or 45)
     MENTOR_TIMEOUT_DEEP: float = float(os.getenv("MENTOR_TIMEOUT_DEEP") or 90)
     MENTOR_CHUNK_CHARS: int = int(os.getenv("MENTOR_CHUNK_CHARS") or 1400)
@@ -130,6 +132,7 @@ class Settings(BaseSettings):
     MENTOR_MAX_HISTORY: int = int(os.getenv("MENTOR_MAX_HISTORY") or 6)
     MENTOR_INDEX_CACHE_SIZE: int = int(os.getenv("MENTOR_INDEX_CACHE_SIZE") or 64)
     MENTOR_MAX_CONTEXT_CHUNKS_FAST: int = int(os.getenv("MENTOR_MAX_CONTEXT_CHUNKS_FAST") or 2)
+    MENTOR_MAX_CONTEXT_CHUNKS_THINK: int = int(os.getenv("MENTOR_MAX_CONTEXT_CHUNKS_THINK") or 4)
     MENTOR_MAX_CONTEXT_CHUNKS_REASONING: int = int(
         os.getenv("MENTOR_MAX_CONTEXT_CHUNKS_REASONING") or 3
     )
@@ -137,14 +140,17 @@ class Settings(BaseSettings):
         os.getenv("MENTOR_MAX_CONTEXT_CHUNKS_DEEP") or MENTOR_MAX_CONTEXT_CHUNKS
     )
     MENTOR_MAX_HISTORY_FAST: int = int(os.getenv("MENTOR_MAX_HISTORY_FAST") or 2)
+    MENTOR_MAX_HISTORY_THINK: int = int(os.getenv("MENTOR_MAX_HISTORY_THINK") or 6)
     MENTOR_MAX_HISTORY_REASONING: int = int(os.getenv("MENTOR_MAX_HISTORY_REASONING") or 4)
     MENTOR_MAX_HISTORY_DEEP: int = int(os.getenv("MENTOR_MAX_HISTORY_DEEP") or MENTOR_MAX_HISTORY)
     MENTOR_CONTEXT_CHARS_FAST: int = int(os.getenv("MENTOR_CONTEXT_CHARS_FAST") or 700)
+    MENTOR_CONTEXT_CHARS_THINK: int = int(os.getenv("MENTOR_CONTEXT_CHARS_THINK") or 1400)
     MENTOR_CONTEXT_CHARS_REASONING: int = int(
         os.getenv("MENTOR_CONTEXT_CHARS_REASONING") or 1000
     )
     MENTOR_CONTEXT_CHARS_DEEP: int = int(os.getenv("MENTOR_CONTEXT_CHARS_DEEP") or 1400)
     MENTOR_HISTORY_CHARS_FAST: int = int(os.getenv("MENTOR_HISTORY_CHARS_FAST") or 500)
+    MENTOR_HISTORY_CHARS_THINK: int = int(os.getenv("MENTOR_HISTORY_CHARS_THINK") or 1200)
     MENTOR_HISTORY_CHARS_REASONING: int = int(
         os.getenv("MENTOR_HISTORY_CHARS_REASONING") or 800
     )
