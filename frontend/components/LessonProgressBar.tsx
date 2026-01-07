@@ -29,10 +29,10 @@ export default function LessonProgressBar({
               relative group flex-1 h-2 rounded-full transition-all duration-300
               ${
                 isCurrent
-                  ? "bg-violet-600 dark:bg-red-600 shadow-[0_0_10px_rgba(124,58,237,0.5)] dark:shadow-[0_0_10px_rgba(220,38,38,0.5)] ring-2 ring-violet-500/30 dark:ring-red-500/30 h-3" // Větší aktivní
+                  ? "bg-primary glow ring-2 ring-primary/30 h-3" // Větší aktivní
                   : isActive
-                  ? "bg-violet-500 dark:bg-red-500 hover:bg-violet-600 dark:hover:bg-red-400"
-                  : "bg-slate-400/80 dark:bg-slate-600/70 hover:bg-slate-500/80 dark:hover:bg-slate-500/70"
+                  ? "bg-primary/80 hover:bg-primary"
+                  : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
               }
             `}
             aria-label={`Go to page ${i + 1}`}

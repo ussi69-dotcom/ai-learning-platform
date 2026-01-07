@@ -1,6 +1,6 @@
 # Working Context
 
-**Last Updated:** 2026-01-07 12:07 (Agent: Manual)
+**Last Updated:** 2026-01-07 16:23 (Agent: Manual)
 
 ## 🚦 Current Status: Doc stack cleanup + mentor follow-ups
 - **Boot sync:** Updated to match `git log -1` at `682d93c`.
@@ -218,7 +218,7 @@
 - L07: Mention mobile apps explicitly
 
 ---
-**Last Commit:** `bd52b20` chore: ignore visual tests + update backend tests
+**Last Commit:** `e2c2fcd` fix(theme): update NavBar to use LightsaberToggle and cosmic theme
 **Status:** 🟢 Global readability boost (nav, footer, progress, callouts, video metadata) applied; Lesson 01 visuals verified; `npm run verify` passes (lint warnings only).
 
 ---
