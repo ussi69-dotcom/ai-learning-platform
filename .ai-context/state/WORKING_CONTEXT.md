@@ -218,7 +218,7 @@
 - L07: Mention mobile apps explicitly
 
 ---
-**Last Commit:** `b0677ba` docs: add RAG lesson reports and working context
+**Last Commit:** `18ad17e` feat(skills): add Claude Code skills
 **Status:** 🟢 Global readability boost (nav, footer, progress, callouts, video metadata) applied; Lesson 01 visuals verified; `npm run verify` passes (lint warnings only).
 
 ---
