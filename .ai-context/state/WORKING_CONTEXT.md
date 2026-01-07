@@ -1,6 +1,6 @@
 # Working Context
 
-**Last Updated:** 2026-01-07 07:28 (Agent: Manual)
+**Last Updated:** 2026-01-07 12:06 (Agent: Manual)
 
 ## 🚦 Current Status: Doc stack cleanup + mentor follow-ups
 - **Boot sync:** Updated to match `git log -1` at `682d93c`.
@@ -218,7 +218,7 @@
 - L07: Mention mobile apps explicitly
 
 ---
-**Last Commit:** `8329ebe` feat(mentor): wire up BitNet backend + frontend integration
+**Last Commit:** `4295d4b` fix(infra): smart API URL + port 3333 + CORS
 **Status:** 🟢 Global readability boost (nav, footer, progress, callouts, video metadata) applied; Lesson 01 visuals verified; `npm run verify` passes (lint warnings only).
 
 ---

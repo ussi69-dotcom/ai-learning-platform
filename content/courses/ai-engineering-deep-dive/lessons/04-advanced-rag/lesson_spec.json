@@ -1,0 +1,193 @@
+{
+  "lesson": {
+    "course_id": "ai-engineering-deep-dive",
+    "lesson_number": 4,
+    "lesson_path": "content/courses/ai-engineering-deep-dive/lessons/04-advanced-rag/",
+    "title": "Advanced RAG Architectures",
+    "target_level": "advanced",
+    "estimated_minutes": 40,
+    "labs_count": 3,
+    "focus_topics": [
+      "graphrag",
+      "knowledge-graphs",
+      "raptor",
+      "hierarchical-retrieval",
+      "colbert",
+      "late-interaction",
+      "multi-representation",
+      "query-routing",
+      "evaluation",
+      "ablation"
+    ],
+    "existing_diagrams": [
+      "rag-graph-pipeline",
+      "rag-raptor-tree",
+      "rag-late-interaction",
+      "rag-multi-representation",
+      "rag-eval-triad"
+    ],
+    "last_updated": "2025-12-26"
+  },
+  "learning_outcomes": [
+    "Explain when GraphRAG outperforms flat chunk retrieval and when it is overkill.",
+    "Implement a hierarchical retrieval pipeline (RAPTOR-style) and evaluate its impact on Recall@K.",
+    "Compare dense retrieval, cross-encoder reranking, and late-interaction (ColBERT-style) using a small benchmark set.",
+    "Design a multi-representation index that separates search-friendly summaries from generation-ready full passages.",
+    "Run an ablation study to identify which retrieval upgrades actually improved grounded answers."
+  ],
+  "key_facts": [
+    {
+      "id": "graphrag-latest-2025",
+      "fact": "GraphRAG combines knowledge-graph construction with retrieval to answer multi-hop and global questions; verify current (2024-2025) open-source implementations and recommended pipelines before positioning it as default.",
+      "time_sensitive": true,
+      "as_of": "2025-12-26",
+      "verification_notes": [
+        "Confirm active GraphRAG repositories and their maintenance status.",
+        "Verify when graph traversal improves recall/faithfulness vs adding latency/complexity."
+      ]
+    },
+    {
+      "id": "raptor-canonical-2025",
+      "fact": "RAPTOR-style hierarchical retrieval uses recursive summarization and tree search to retrieve both coarse and fine-grained context; verify canonical papers and tooling support in 2025.",
+      "time_sensitive": true,
+      "as_of": "2025-12-26",
+      "verification_notes": [
+        "Confirm reproducible baselines and common failure modes (summary drift).",
+        "Verify recommended tree depth, chunk sizes, and summarization prompts."
+      ]
+    },
+    {
+      "id": "colbertv2-late-interaction-2025",
+      "fact": "ColBERTv2-style late-interaction retrieval (token-level MaxSim) can improve precision but increases storage and latency; verify 2024-2025 benchmarks and practical deployments before recommending it.",
+      "time_sensitive": true,
+      "as_of": "2025-12-26",
+      "verification_notes": [
+        "Confirm current best-maintained implementations (e.g., RAGatouille).",
+        "Validate trade-offs vs modern dense retrievers and cross-encoder rerankers."
+      ]
+    }
+  ],
+  "rubric": {
+    "total_points": 60,
+    "scoring_scale": {
+      "0": "Missing or broken",
+      "5": "Adequate but generic",
+      "8": "MASTERPIECE-level (meets gate)",
+      "10": "Exceptional (wow factor)"
+    },
+    "categories": [
+      {
+        "name": "Hook",
+        "max_points": 10,
+        "pass_min": 8,
+        "checks": [
+          "Hook lands in the first 30 seconds (bold claim or provocative question).",
+          "Frames a real failure case where basic RAG fails.",
+          "Sets a mission and payoff for advanced retrieval architectures."
+        ]
+      },
+      {
+        "name": "Structure",
+        "max_points": 10,
+        "pass_min": 8,
+        "checks": [
+          "Clear progression: GraphRAG → RAPTOR → ColBERT → comparisons → decision matrix.",
+          "Key terms defined once and reused consistently.",
+          "Ends with a Holocron summary and actionable checklist."
+        ]
+      },
+      {
+        "name": "Labs",
+        "max_points": 10,
+        "pass_min": 8,
+        "checks": [
+          "Labs are missions with copy/paste prompts or code and expected outputs.",
+          "At least one lab is a retrieval ablation study.",
+          "At least one lab compares precision/recall across retrievers."
+        ]
+      },
+      {
+        "name": "Visuals",
+        "max_points": 10,
+        "pass_min": 8,
+        "checks": [
+          "Visual anchor every 3–5 paragraphs.",
+          "Diagrams readable on mobile (no tiny text, no overlap).",
+          "Each advanced architecture has a dedicated diagram."
+        ]
+      },
+      {
+        "name": "Accuracy",
+        "max_points": 10,
+        "pass_min": 8,
+        "checks": [
+          "Time-sensitive claims verified or explicitly marked with sources.",
+          "No outdated model/product references in current recommendations.",
+          "Trade-offs are honest (latency, storage, complexity)."
+        ]
+      },
+      {
+        "name": "Engagement",
+        "max_points": 10,
+        "pass_min": 8,
+        "checks": [
+          "Uses tension (failure modes) and aha moments.",
+          "Includes at least 2 interactive moments or self-checks.",
+          "Avoids long blocks of unbroken exposition."
+        ]
+      }
+    ],
+    "masterpiece_gate": {
+      "min_total": 59,
+      "min_category_score": 8,
+      "rules": [
+        "Any category score below 8/10 fails the MASTERPIECE gate even if total >= 59.",
+        "MASTERPIECE requires total >= 59/60."
+      ]
+    }
+  },
+  "must_be_true_facts": [
+    {
+      "id": "rag-retrieval-vs-generation",
+      "fact": "Retrieval quality (recall/precision) constrains generation faithfulness; poor retrieval forces guessing.",
+      "sources": [
+        {
+          "type": "paper",
+          "title": "Passage Re-ranking with BERT",
+          "citation": "Nogueira, R., & Cho, K. (2019). arXiv:1901.04085.",
+          "url": "https://arxiv.org/abs/1901.04085"
+        }
+      ]
+    },
+    {
+      "id": "raptor-paper",
+      "fact": "RAPTOR proposes recursive clustering and summarization to retrieve both global and local context from long documents.",
+      "sources": [
+        {
+          "type": "paper",
+          "title": "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval",
+          "citation": "Sarthi, P. et al. (2023). arXiv:2309.07952.",
+          "url": "https://arxiv.org/abs/2309.07952"
+        }
+      ]
+    },
+    {
+      "id": "colbert-paper",
+      "fact": "ColBERT uses late interaction (MaxSim) between query and passage token embeddings to improve retrieval precision.",
+      "sources": [
+        {
+          "type": "paper",
+          "title": "ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT",
+          "citation": "Khattab, O., & Zaharia, M. (2020). arXiv:2004.12832.",
+          "url": "https://arxiv.org/abs/2004.12832"
+        }
+      ]
+    }
+  ],
+  "dont_claim": [
+    "Don't present GraphRAG as universally superior; it trades simplicity for multi-hop reasoning.",
+    "Don't claim RAPTOR or ColBERT are default recommendations without verifying 2025 tooling and benchmarks.",
+    "Don't use time-sensitive model names, context limits, or pricing without verification.",
+    "Don't imply retrieval upgrades automatically improve answer faithfulness without evaluation evidence."
+  ]
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "question": "Na jaký typ dotazů je GraphRAG výrazně lepší než naivní RAG?",
+    "option_a": "Jednoduché dohledání klíčového slova v jednom dokumentu",
+    "option_b": "Globální nebo multi-hop otázky napříč mnoha dokumenty",
+    "option_c": "SQL dotazy nad tabulkami",
+    "option_d": "Strojový překlad",
+    "correct_answer": "B",
+    "explanation": "GraphRAG staví knowledge graph a shrnutí komunit, takže zvládá globální a multi-hop otázky, kde naivní retrieval selhává.",
+    "order": 1
+  },
+  {
+    "question": "Jaký je hlavní mechanismus RAPTORu?",
+    "option_a": "Nahrazuje embeddingy za SQL",
+    "option_b": "Buduje rekurzivní strom shrnutí ze shluků chunků",
+    "option_c": "Úplně vypíná reranking",
+    "option_d": "Funguje jen na obrázky",
+    "correct_answer": "B",
+    "explanation": "RAPTOR shlukuje chunky, shrnuje je, znovu embedduje a rekurzivně vytváří hierarchii.",
+    "order": 2
+  },
+  {
+    "question": "Jak se ColBERT liší od standardních bi-encoder embeddingů?",
+    "option_a": "Všechno komprimuje do jednoho menšího vektoru",
+    "option_b": "Porovnává query a dokument na úrovni tokenů (late interaction)",
+    "option_c": "Vypíná vektorové vyhledávání",
+    "option_d": "Vyžaduje fine-tuning generátoru",
+    "correct_answer": "B",
+    "explanation": "ColBERT zachovává token vektory a používá MaxSim při dotazu, což zvyšuje přesnost.",
+    "order": 3
+  },
+  {
+    "question": "Jaký problém řeší contextual retrieval?",
+    "option_a": "Pomalou inference na GPU",
+    "option_b": "Ztrátu významu chunků bez okolního kontextu",
+    "option_c": "Škálování vektorových databází",
+    "option_d": "Prompt injection",
+    "correct_answer": "B",
+    "explanation": "Contextual retrieval přidá ke každému chunku krátké shrnutí kontextu, aby dával smysl i izolovaně.",
+    "order": 4
+  },
+  {
+    "question": "V multi-representation indexování, co indexujeme a co vracíme?",
+    "option_a": "Indexujeme shrnutí; vracíme celý rodičovský text",
+    "option_b": "Indexujeme celý text; vracíme shrnutí",
+    "option_c": "Indexujeme obrázky; vracíme text",
+    "option_d": "Indexujeme dotazy; vracíme embeddingy",
+    "correct_answer": "A",
+    "explanation": "Index je optimalizovaný pro vyhledávání, ale do generování posíláme plný kontext.",
+    "order": 5
+  },
+  {
+    "question": "V RAG triádě, co měří Faithfulness (věrnost)?",
+    "option_a": "Jestli je odpověď užitečná",
+    "option_b": "Jestli je odpověď podložená retrievovaným kontextem",
+    "option_c": "Jestli je latence nízká",
+    "option_d": "Jestli je model levný",
+    "correct_answer": "B",
+    "explanation": "Faithfulness kontroluje, že odpověď vychází pouze z poskytnutých důkazů.",
+    "order": 6
+  },
+  {
+    "question": "Která volba je nejlepší pro globální syntézu napříč velkými korpusy?",
+    "option_a": "Naivní RAG",
+    "option_b": "GraphRAG",
+    "option_c": "Pouze prompt caching",
+    "option_d": "Fine-tuning",
+    "correct_answer": "B",
+    "explanation": "GraphRAG je navržen pro globální syntézu a multi-hop uvažování nad velkými datasety.",
+    "order": 7
+  }
+]

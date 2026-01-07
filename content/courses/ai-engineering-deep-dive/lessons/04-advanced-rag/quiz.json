@@ -1,0 +1,72 @@
+[
+  {
+    "question": "Which type of query is GraphRAG specifically designed to handle better than naive RAG?",
+    "option_a": "Simple keyword lookups in a single document",
+    "option_b": "Global or multi-hop questions across many documents",
+    "option_c": "SQL queries for structured tables",
+    "option_d": "Machine translation",
+    "correct_answer": "B",
+    "explanation": "GraphRAG builds a knowledge graph and community summaries to answer global and multi-hop questions that naive chunk retrieval misses.",
+    "order": 1
+  },
+  {
+    "question": "What is the core mechanism of RAPTOR?",
+    "option_a": "It replaces embeddings with SQL",
+    "option_b": "It builds a recursive tree of summaries from clustered chunks",
+    "option_c": "It removes reranking entirely",
+    "option_d": "It only works on images",
+    "correct_answer": "B",
+    "explanation": "RAPTOR clusters chunks, summarizes them, re-embeds, and recurses to build a hierarchical tree for retrieval.",
+    "order": 2
+  },
+  {
+    "question": "How does ColBERT differ from standard bi-encoder embeddings?",
+    "option_a": "It compresses everything into a single smaller vector",
+    "option_b": "It matches query and document at the token level (late interaction)",
+    "option_c": "It disables vector search",
+    "option_d": "It requires fine-tuning the generator",
+    "correct_answer": "B",
+    "explanation": "ColBERT keeps token vectors and uses MaxSim at query time for higher precision.",
+    "order": 3
+  },
+  {
+    "question": "What problem does contextual retrieval solve?",
+    "option_a": "Slow GPU inference",
+    "option_b": "Chunks losing meaning without surrounding context",
+    "option_c": "Vector databases not scaling",
+    "option_d": "Prompt injection",
+    "correct_answer": "B",
+    "explanation": "Contextual retrieval prepends a short context summary to each chunk before embedding so it remains meaningful in isolation.",
+    "order": 4
+  },
+  {
+    "question": "In multi-representation indexing, what is indexed vs. retrieved?",
+    "option_a": "Index the summary; retrieve the full parent text",
+    "option_b": "Index the full text; retrieve the summary",
+    "option_c": "Index images; retrieve text",
+    "option_d": "Index queries; retrieve embeddings",
+    "correct_answer": "A",
+    "explanation": "You index a search-optimized representation but pass full context to the LLM for generation.",
+    "order": 5
+  },
+  {
+    "question": "In the RAG triad, what does Faithfulness measure?",
+    "option_a": "Whether the answer is useful",
+    "option_b": "Whether the answer is supported by the retrieved context",
+    "option_c": "Whether retrieval latency is low",
+    "option_d": "Whether the model is cheap",
+    "correct_answer": "B",
+    "explanation": "Faithfulness checks that the answer is grounded in the retrieved evidence, not hallucinated.",
+    "order": 6
+  },
+  {
+    "question": "Which option is the best default for global synthesis across large corpora?",
+    "option_a": "Naive RAG",
+    "option_b": "GraphRAG",
+    "option_c": "Prompt caching only",
+    "option_d": "Fine-tuning",
+    "correct_answer": "B",
+    "explanation": "GraphRAG is built for global synthesis and multi-hop reasoning across large datasets.",
+    "order": 7
+  }
+]

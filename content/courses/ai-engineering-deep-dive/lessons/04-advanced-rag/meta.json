@@ -1,0 +1,18 @@
+{
+  "title": "Advanced RAG Architectures",
+  "title_cs": "Pokročilé architektury RAG",
+  "description": "Go beyond basic RAG with GraphRAG, RAPTOR, and ColBERT-style retrieval. Learn when each architecture wins and how to prove it with evaluation.",
+  "description_cs": "Posuňte RAG na další úroveň s GraphRAG, RAPTOR a ColBERT-style retrievalem. Naučte se, kdy který přístup vyhrává a jak to dokázat evaluací.",
+  "order": 4,
+  "duration_minutes": 40,
+  "video_url": "https://www.youtube.com/embed/knDDGYHnnSI",
+  "tags": ["rag", "graphrag", "raptor", "colbert", "late-interaction", "hierarchical-retrieval", "knowledge-graphs", "evaluation"],
+  "prerequisites": ["01-rag"],
+  "learning_objectives": [
+    "Decide when GraphRAG is worth the added complexity",
+    "Build a RAPTOR-style hierarchical retrieval pipeline",
+    "Compare dense retrieval, reranking, and late-interaction methods",
+    "Design multi-representation indexes for search vs generation",
+    "Validate improvements with ablation-based evaluation"
+  ]
+}

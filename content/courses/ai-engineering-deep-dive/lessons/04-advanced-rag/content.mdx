@@ -1,0 +1,587 @@
+# Advanced RAG Architectures
+
+<Callout type="info">
+**Mission:** Go beyond naive semantic search. Master GraphRAG, RAPTOR, late interaction, and contextual retrieval so you can answer global questions and multi-hop queries with evidence.
+
+⏳ **Reading Time:** 40 min | 🧪 **[3] Labs Included**
+</Callout>
+
+<VideoSwitcher alternatives={[{"id":"knDDGYHnnSI","title":"GraphRAG (AI Engineer)"},{"id":"bpeeqbBIH1A","title":"RAPTOR (TwoSetAI)"},{"id":"xTzUn3G9YA0","title":"ColBERT Late Interaction (Prompt Engineering)"},{"id":"tmiBae2goJM","title":"Contextual Retrieval (Prompt Engineering)"}]} />
+
+## ⚡ The Retrieval Lie
+
+**Your model didn't hallucinate. Your retrieval lied.**
+A naive RAG pipeline pulls a handful of similar chunks and hopes the answer is in there. That works for point lookups. It collapses when the answer is *distributed* across many documents or requires multi-hop reasoning.
+
+Two failure modes you will now solve:
+- **Global questions:** "What are the main themes in 500 interviews?"
+- **Multi-hop questions:** "How does the CEO's relationship with Company A affect the lawsuit in Document B?"
+
+<Callout type="info">
+**Baseline first:** Hybrid search (BM25 + dense) plus reranking is the minimum advanced baseline. The architectures below are for when that still fails.
+</Callout>
+
+---
+
+## Contextual Retrieval + Multi-Representation Indexes
+
+Contextual Retrieval enriches each chunk with a short context summary **before** embedding. Multi-representation indexing then separates **search text** from **generation text**.
+
+<Diagram type="rag-multi-representation" />
+
+*Caption: Contextual summaries improve recall while keeping generation grounded.*
+
+<Callout type="tip">
+**Takeaway:** Add context before embedding to reduce ambiguous chunks. **Trade-off:** Higher ingestion cost and longer prompts.
+</Callout>
+
+*Example:* Chunk "Refunds require approval" → context summary "Refund policy requires finance approval" (embedded); full chunk returned for generation.
+
+**Distinction:** Contextual Retrieval changes *what you embed*. Multi-representation changes *what you store and return*.
+
+**Contextualization prompt (template):**
+```text
+<document>
+{FULL_DOCUMENT}
+</document>
+<chunk>
+{CHUNK_TEXT}
+</chunk>
+Write a short context summary to situate this chunk for retrieval.
+```
+
+**Pattern:**
+- **Search representation:** short summary (fast, high recall)
+- **Generation representation:** full passage (high fidelity)
+
+Source: [Anthropic Contextual Retrieval](https://www.anthropic.com/engineering/contextual-retrieval)
+
+---
+
+<Callout type="info">
+**Checkpoint:** Your chunks are ambiguous and lose context. What do you add?  
+**Answer:** Contextual Retrieval + multi-representation indexing.
+</Callout>
+
+## GraphRAG: Structured Retrieval for Global Questions
+
+GraphRAG converts unstructured text into a knowledge graph so the model can reason over **entities + relationships**, not just similar chunks.
+
+**GraphRAG in 5 steps:**
+1. **Extract:** LLM identifies entities and relationships.
+2. **Graph Build:** Create nodes + edges.
+3. **Cluster:** Detect communities (Leiden clustering).
+4. **Summarize:** LLM creates community summaries.
+5. **Query:** Use community summaries for global questions.
+
+<Diagram type="rag-graph-pipeline" />
+
+*Caption: GraphRAG turns scattered entities into a queryable structure.*
+
+<Callout type="tip">
+**Takeaway:** Graph summaries enable global questions. **Trade-off:** Expensive indexing + slower graph queries.
+</Callout>
+
+*Example:* Edge `Nova Health --acquired--> PulseAI` enables multi-hop questions across filings.
+
+**Trade-off:** GraphRAG is powerful but expensive to index and slower for global queries. Use it only when the question truly requires graph-wide synthesis.
+
+<Callout type="tip">
+**Decision Box: When to use GraphRAG?**
+- **Use it if:** You need global synthesis or multi-hop reasoning across large corpora.
+- **Skip it if:** You only need direct fact lookup (vector search is cheaper).
+</Callout>
+
+Sources: [GraphRAG Repo](https://github.com/microsoft/graphrag) | [Docs](https://microsoft.github.io/graphrag/) | [Blog](https://www.microsoft.com/en-us/research/blog/graphrag-new-tool-for-complex-data-discovery-now-on-github/)
+
+---
+
+<Callout type="info">
+**Checkpoint:** You need multi-hop reasoning across hundreds of filings. Which architecture?  
+**Answer:** GraphRAG.
+</Callout>
+
+## Lab Setup (one-time)
+
+```bash
+pip install openai==2.14.0 networkx==3.6.1 scikit-learn==1.8.0 ragatouille==0.0.9.post2
+export OPENAI_MODEL="gpt-5"
+# Optional offline mode for Labs 2-3 (no API/weights download)
+export OFFLINE=1
+```
+
+Use a model ID you have access to (example shown above).
+
+---
+
+## 🔬 Lab 1: Build a Mini GraphRAG Extractor
+
+**Objective:** Turn a small corpus into nodes + edges you can query.
+
+**The Prompt:**
+```text
+You are a knowledge graph extractor.
+Return JSON with two arrays: nodes and edges.
+- nodes: {"id","type","label"}
+- edges: {"from","to","relation"}
+
+TEXT:
+1) "Nova Health acquired PulseAI in 2023."
+2) "PulseAI's CTO, Mira Chen, previously worked at Helios Labs."
+3) "Helios Labs partners with Nova Health on diagnostics."
+```
+
+**Expected Output (shape):**
+```json
+{
+  "nodes": [
+    {"id":"Nova Health","type":"org","label":"Nova Health"},
+    {"id":"PulseAI","type":"org","label":"PulseAI"},
+    {"id":"Mira Chen","type":"person","label":"Mira Chen"},
+    {"id":"Helios Labs","type":"org","label":"Helios Labs"}
+  ],
+  "edges": [
+    {"from":"Nova Health","to":"PulseAI","relation":"acquired"},
+    {"from":"Mira Chen","to":"PulseAI","relation":"cto_of"},
+    {"from":"Mira Chen","to":"Helios Labs","relation":"worked_at"},
+    {"from":"Helios Labs","to":"Nova Health","relation":"partners_with"}
+  ]
+}
+```
+
+**Env:** Set `OPENAI_MODEL` to a model ID you have access to.
+
+**LLM call pattern (Python):**
+```python
+import json
+import os
+from openai import OpenAI
+
+client = OpenAI()
+
+prompt = """
+You are a knowledge graph extractor.
+Return JSON with two arrays: nodes and edges.
+- nodes: {"id","type","label"}
+- edges: {"from","to","relation"}
+
+TEXT:
+1) "Nova Health acquired PulseAI in 2023."
+2) "PulseAI's CTO, Mira Chen, previously worked at Helios Labs."
+3) "Helios Labs partners with Nova Health on diagnostics."
+""".strip()
+
+model = os.environ["OPENAI_MODEL"]
+
+response = client.chat.completions.create(
+    model=model,
+    messages=[{"role": "user", "content": prompt}],
+    response_format={"type": "json_object"},
+    temperature=0.2,
+)
+data = json.loads(response.choices[0].message.content)
+
+expected_nodes = {"Nova Health", "PulseAI", "Mira Chen", "Helios Labs"}
+expected_edges = {
+    ("Nova Health", "PulseAI", "acquired"),
+    ("Mira Chen", "PulseAI", "cto_of"),
+    ("Mira Chen", "Helios Labs", "worked_at"),
+    ("Helios Labs", "Nova Health", "partners_with"),
+}
+actual_nodes = {n["id"] for n in data["nodes"]}
+actual_edges = {(e["from"], e["to"], e["relation"]) for e in data["edges"]}
+assert actual_nodes == expected_nodes
+assert actual_edges == expected_edges
+```
+
+**Graph build (Python):**
+```python
+import networkx as nx
+
+g = nx.Graph()
+for node in data["nodes"]:
+    g.add_node(node["id"], type=node["type"])
+for edge in data["edges"]:
+    g.add_edge(edge["from"], edge["to"], relation=edge["relation"])
+
+print(list(g.neighbors("Nova Health")))
+```
+
+**Expected Output:**
+```
+['PulseAI', 'Helios Labs']
+```
+
+**💡 Aha Moment:** Once you have entities + edges, you can answer "How is Nova Health connected to Helios?" without semantic guessing.
+
+<LabComplete labId="lab-rag-adv-1" />
+
+---
+
+## RAPTOR: Hierarchical Retrieval
+
+RAPTOR builds a **tree of summaries** so you can retrieve both high-level themes *and* precise details from the same corpus.
+
+**How RAPTOR works:**
+1. Cluster chunks by similarity.
+2. Summarize each cluster.
+3. Re-embed summaries.
+4. Recurse to build a hierarchy.
+
+**Concrete example (mini-tree):**
+```
+Root summary: "Enterprise ops add delays to onboarding and refunds."
+├─ Cluster A (Payments/Refunds)
+│  ├─ "Payments were delayed by 3–5 days due to bank verification."
+│  └─ "Refunds require approval from finance and legal."
+└─ Cluster B (Onboarding)
+   ├─ "Onboarding for Enterprise clients includes a 2-week security review."
+   └─ "Credit checks may extend onboarding by a week."
+```
+
+<Diagram type="rag-raptor-tree" />
+
+*Caption: A summary tree lets you search both themes and details.*
+
+<Callout type="tip">
+**Takeaway:** Hierarchies recover global context without losing local facts. **Trade-off:** Recursive summarization cost + maintenance.
+</Callout>
+
+*Example:* Leaf "Refunds require approval" → cluster summary "Refunds need finance approval" → root summary "Enterprise ops add delays."
+
+At query time, you can search a **flattened index** of all layers or traverse **top-down** from root summaries to leaf chunks.
+
+**Trade-off:** RAPTOR boosts global recall but adds token cost during indexing because of recursive summarization.
+
+Source: [RAPTOR Paper](https://arxiv.org/abs/2309.07952)
+
+---
+
+<Callout type="info">
+**Checkpoint:** You need themes + details from long documents. Which architecture?  
+**Answer:** RAPTOR.
+</Callout>
+
+## 🔬 Lab 2: Build a RAPTOR Summary Tree
+
+**Objective:** Create a 2-level summary tree from raw chunks.
+
+**Input Chunks:**
+```
+A) "Payments were delayed by 3–5 days due to bank verification."
+B) "Refunds require approval from finance and legal."
+C) "Onboarding for Enterprise clients includes a 2-week security review."
+D) "Support SLAs: priority P1 within 1 hour; P2 within 8 hours."
+E) "Enterprise customers get a dedicated TAM."
+F) "Credit checks may extend onboarding by a week."
+```
+
+**Task:**
+1) Cluster into 2–3 groups.
+2) Summarize each group in 1–2 sentences.
+3) Create a root summary that covers all clusters.
+
+**Expected Output (structure):**
+```
+Cluster 1 (Payments/Refunds): summary ...
+Cluster 2 (Onboarding/Enterprise): summary ...
+Cluster 3 (Support SLAs): summary ...
+Root summary: ...
+```
+
+**RAPTOR scaffold (Python):**
+```python
+import os
+from openai import OpenAI
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.cluster import KMeans
+
+client = OpenAI()
+model = os.environ["OPENAI_MODEL"]
+
+chunks = [
+    "Payments were delayed by 3–5 days due to bank verification.",
+    "Refunds require approval from finance and legal.",
+    "Onboarding for Enterprise clients includes a 2-week security review.",
+    "Support SLAs: priority P1 within 1 hour; P2 within 8 hours.",
+    "Enterprise customers get a dedicated TAM.",
+    "Credit checks may extend onboarding by a week.",
+]
+
+X = TfidfVectorizer().fit_transform(chunks)
+kmeans = KMeans(n_clusters=3, random_state=42).fit(X)
+
+clusters = {i: [] for i in range(3)}
+for chunk, label in zip(chunks, kmeans.labels_):
+    clusters[label].append(chunk)
+
+def summarize_cluster(texts):
+    prompt = (
+        "Summarize these statements in 1-2 sentences:\n"
+        + "\n".join(f"- {t}" for t in texts)
+    )
+    response = client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.2,
+    )
+    return response.choices[0].message.content.strip()
+
+def label_cluster(texts):
+    joined = " ".join(texts).lower()
+    if "refund" in joined or "payment" in joined:
+        return "Payments/Refunds"
+    if "onboarding" in joined or "enterprise" in joined or "credit" in joined:
+        return "Onboarding/Enterprise"
+    return "Support SLAs"
+
+labeled = {label_cluster(v): v for v in clusters.values()}
+assert {"Payments/Refunds", "Onboarding/Enterprise", "Support SLAs"} <= set(labeled.keys())
+
+def summarize_cluster_offline(texts):
+    return " | ".join(texts[:2])
+
+use_offline = os.getenv("OFFLINE") == "1"
+summaries = {
+    k: (summarize_cluster_offline(v) if use_offline else summarize_cluster(v))
+    for k, v in labeled.items()
+}
+root_summary = " | ".join(summaries.values())
+assert "refund" in root_summary.lower()
+assert "onboarding" in root_summary.lower() or "enterprise" in root_summary.lower()
+
+print(labeled)
+print("Clusters:", sorted(labeled.keys()))
+print(summaries)
+print(root_summary)
+```
+
+**Expected Output (snippet):**
+```
+Clusters: ['Onboarding/Enterprise', 'Payments/Refunds', 'Support SLAs']
+```
+
+**Offline Output (snippet, OFFLINE=1):**
+```
+Summaries: {'Payments/Refunds': 'Payments were delayed by 3–5 days due to bank verification. | Refunds require approval from finance and legal.'}
+Root summary: Payments were delayed by 3–5 days due to bank verification. | Refunds require approval from finance and legal. | ...
+```
+
+**💡 Aha Moment:** Hierarchical summaries let you answer both "What are our SLAs?" and "What do enterprise customers get?" from the same tree.
+
+<LabComplete labId="lab-rag-adv-2" />
+
+---
+
+## ColBERT: Late Interaction for Precision
+
+Dense embeddings compress a whole passage into one vector. **ColBERT** keeps token vectors and matches them with **MaxSim** at query time. That means higher precision without full cross-encoder cost.
+
+Plain English: every query token compares against every document token, and the best matches win.
+
+<Diagram type="rag-late-interaction" />
+
+*Caption: Late interaction keeps token vectors for precision retrieval.*
+
+<Callout type="tip">
+**Takeaway:** Precision rises by matching query tokens directly. **Trade-off:** Storage grows and search is heavier.
+</Callout>
+
+*Example:* Query token "refund" matches doc token "refunds" via MaxSim.
+
+**Trade-off:** Precision goes up, but storage grows because you keep vectors for many tokens.
+
+Source: [ColBERT Paper](https://arxiv.org/abs/2004.12832) | [RAGatouille](https://github.com/AnswerDotAI/RAGatouille)
+
+---
+
+<Callout type="info">
+**Checkpoint:** You need exact wording for refunds or compliance. Which architecture?  
+**Answer:** ColBERT.
+</Callout>
+
+## Decision Flow: Which Architecture When?
+
+**Start:** Hybrid search + reranking.
+
+1) **Answers are wrong because chunks are ambiguous.**  
+→ **Contextual Retrieval**  
+*Example:* Legal definitions without nearby context.
+
+2) **You need global synthesis or multi-hop reasoning across many docs.**  
+→ **GraphRAG**  
+*Example:* "How are these companies connected across 500 filings?"
+
+3) **You need a high-level theme + details from long docs.**  
+→ **RAPTOR**  
+*Example:* "Summarize all onboarding risks, then drill into refunds."
+
+4) **You need exact wording / precise matches.**  
+→ **ColBERT**  
+*Example:* "What is the exact refund window for enterprise licenses?"
+
+If none apply, stick with the baseline.
+
+---
+
+## Mini Pipeline: Decision → Retrieval → Answer
+
+**Question:** "What is the refund window for enterprise licenses?"
+
+**Decision:** **ColBERT** (precision wording).
+
+**Retrieved artifacts (token hits):**
+- **[H1]** "Enterprise licenses include a 30-day evaluation with full refund."
+- **[H2]** "Refund requests require finance approval."
+
+**Grounded answer:** Enterprise licenses include a **30-day evaluation with full refund**, but refund requests still require **finance approval**. [H1][H2]
+
+---
+
+## 🔬 Lab 3: Retrieval Ablation (Dense vs ColBERT)
+
+**Objective:** Decide which retriever actually improves grounded answers.
+
+**Query:**
+```
+"What is the refund window for enterprise licenses?"
+```
+
+**Dense Retrieval Top-3:**
+```
+1) "Refunds are processed within 14 days." (generic)
+2) "Enterprise license keys are non-transferable." (partial)
+3) "Digital purchases are final after 7 days." (wrong)
+```
+
+**ColBERT Top-3:**
+```
+1) "Enterprise licenses include a 30-day evaluation with full refund." (relevant)
+2) "Refund requests require finance approval." (relevant)
+3) "Digital purchases are final after 7 days." (wrong)
+```
+
+**Task:**
+Score relevance (0–2) for each chunk and choose the best retriever.
+
+**Sparse baseline (TF-IDF):**
+```python
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+docs = [
+    "Refunds are processed within 14 days.",
+    "Enterprise license keys are non-transferable.",
+    "Digital purchases are final after 7 days.",
+]
+query = "refund window for enterprise licenses"
+
+X = TfidfVectorizer().fit_transform(docs + [query])
+scores = cosine_similarity(X[-1], X[:-1]).ravel()
+print(scores)
+top_idx = scores.argmax()
+assert top_idx == 0  # TF-IDF picks the generic refund chunk
+print("TF-IDF top:", docs[top_idx])
+```
+
+**Expected Outcome:**
+- TF-IDF ranks the generic refund chunk highest.
+- ColBERT ranks the enterprise license chunk highest.
+- Decision: Use ColBERT for this domain.
+
+**Expected Output (snippet):**
+```
+TF-IDF top: Refunds are processed within 14 days.
+```
+
+**Answer key (per chunk):**
+- Dense: 0, 1, 0
+- ColBERT: 2, 1, 0
+
+**Ablation scoring table:**
+| Retriever | Scores | Total |
+|-----------|--------|-------|
+| Dense | 0, 1, 0 | 1 |
+| ColBERT | 2, 1, 0 | 4 |
+
+<Callout type="warning">
+**Install note:** `ragatouille` can be brittle on some systems (CUDA/OS deps). If install fails, set `OFFLINE=1` to use fallback hits or use the expected outcome above.
+</Callout>
+
+**RAGatouille starter (Python):**
+```python
+import os
+
+if os.getenv("OFFLINE") == "1":
+    hits = [
+        {"content": "Enterprise licenses include a 30-day evaluation with full refund."},
+        {"content": "Refund requests require finance approval."},
+        {"content": "Digital purchases are final after 7 days."},
+    ]
+else:
+    from ragatouille import RAGPretrainedModel
+    rag = RAGPretrainedModel.from_pretrained("colbertv2.0")
+    rag.index(collection=docs, index_name="rag-adv")
+    hits = rag.search(query, k=5)
+
+for hit in hits:
+    print(hit["content"])
+assert "30-day" in hits[0]["content"]
+print("ColBERT top:", hits[0]["content"])
+```
+
+**Expected Output (snippet):**
+```
+ColBERT top: Enterprise licenses include a 30-day evaluation with full refund.
+```
+
+**💡 Aha Moment:** Precision gains are measurable. Don’t guess — ablate.
+
+<LabComplete labId="lab-rag-adv-3" />
+
+---
+
+## Evaluation & Ablation
+
+If you cannot measure it, you cannot trust it.
+
+<Diagram type="rag-eval-triad" />
+
+*Caption: Measure retrieval, grounding, and answer quality together.*
+
+<Callout type="tip">
+**Takeaway:** You can’t trust a retriever you don’t measure. **Trade-off:** Evaluation adds latency and cost.
+</Callout>
+
+*Example:* Context 0.8, Faithfulness 0.9, Answer relevance 0.7 → tune retriever, not the model.
+
+Track three signals:
+- **Context Relevance** (retrieval quality)
+- **Faithfulness** (groundedness)
+- **Answer Relevance** (usefulness)
+
+**Ablation rule:** Change one component at a time and re-score the triad. If scores don't move, the upgrade is noise.
+
+<Callout type="warning">
+**Lost-in-the-middle still bites:** Put critical evidence first/last and keep K small.
+</Callout>
+
+Source: [Lost in the Middle Paper](https://arxiv.org/abs/2307.03172)
+
+---
+
+## Architecture Decision Matrix
+
+| Architecture | Best For | Pros | Cons |
+|-------------|----------|------|------|
+| **Naive RAG** | Simple fact lookup | Fast, cheap | Misses global context |
+| **GraphRAG** | Global synthesis | Connects distant concepts | Expensive indexing |
+| **RAPTOR** | Long-doc summarization | Hierarchical recall | Complex maintenance |
+| **ColBERT** | High-precision domains | Excellent exactness | Storage heavy |
+| **Contextual Retrieval** | Ambiguous chunks | Fixes lost context | Higher ingestion cost |
+
+<ConceptCard title="Holocron: Context Wins" icon="💎">
+The biggest upgrades often happen **before** retrieval. Clean data, strong metadata, and contextualized chunks can outperform fancy models.
+
+**Rule:** Fix the index first, then optimize the retriever.
+</ConceptCard>

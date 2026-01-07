@@ -1,0 +1,459 @@
+{
+  "lesson": {
+    "course_id": "ai-engineering-deep-dive",
+    "lesson_number": 1,
+    "lesson_path": "content/courses/ai-engineering-deep-dive/lessons/01-rag/",
+    "title": "Retrieval-Augmented Generation (RAG)",
+    "target_level": "intermediate",
+    "estimated_minutes": 45,
+    "labs_count": 4,
+    "focus_topics": [
+      "rag",
+      "indexing",
+      "chunking",
+      "contextual-retrieval",
+      "late-chunking",
+      "retrieval",
+      "hybrid-search",
+      "reranking",
+      "late-interaction",
+      "colbert-v2",
+      "graphrag",
+      "raptor",
+      "evaluation",
+      "long-context-tradeoffs",
+      "agentic-rag",
+      "vector-databases"
+    ],
+    "existing_diagrams": [
+      "rag-architecture",
+      "rag-indexing-stack",
+      "rag-hybrid-search",
+      "rag-routing-hub",
+      "rag-agentic-loop",
+      "rag-eval-triad",
+      "rag-late-chunking",
+      "rag-late-interaction",
+      "rag-graph-pipeline",
+      "context-window"
+    ],
+    "last_updated": "2025-12-26"
+  },
+  "learning_outcomes": [
+    "Choose between RAG, long-context (+ caching), fine-tuning, and tool-use for a given workload, and justify the decision using freshness, privacy, cost, latency, and traceability constraints.",
+    "Implement a minimal indexing pipeline (load → chunk → embed → store) with stable document IDs, metadata, and a reproducible re-indexing strategy.",
+    "Configure hybrid retrieval (BM25 + dense) and demonstrate a measurable improvement in Recall@K on a small evaluation set.",
+    "Add a precision layer (reranker or late-interaction retriever) and measure improvements in Context Precision and/or nDCG compared to baseline retrieval.",
+    "Apply contextual retrieval and late chunking, run an ablation, and explain when each helps or hurts retrieval quality.",
+    "Design an evaluation harness that scores Recall@K, Context Precision, Answer Faithfulness, and Answer Relevance, and define production gates for regression prevention.",
+    "Implement a corrective/agentic RAG loop that blocks generation when evidence is weak, triggers re-retrieval, and reduces unsupported claims in evaluation logs.",
+    "Explain GraphRAG and RAPTOR-style hierarchical retrieval and identify when they outperform flat chunk retrieval (and when they add unnecessary complexity)."
+  ],
+  "key_facts": [
+    {
+      "id": "colbert-v2-status-2025",
+      "fact": "ColBERTv2-style late-interaction retrieval (token-level MaxSim) is still a practical high-precision option; verify its 2024–2025 benchmark position and the best-maintained open-source implementations before presenting it as a recommended approach.",
+      "time_sensitive": true,
+      "as_of": "2025-12-25",
+      "verification_notes": [
+        "Confirm accuracy/latency tradeoffs vs modern dense retrievers on BEIR/MTEB-style tasks.",
+        "Confirm how ColBERT-style indices scale (storage, latency) and what hardware assumptions are reasonable in 2025."
+      ]
+    },
+    {
+      "id": "late-chunking-current-best-practice-2025",
+      "fact": "‘Late chunking’ (token-level embedding first, then pooling into chunk representations) can reduce boundary breakage vs naive chunking; verify the current best-practice algorithm and library support (and whether it is still called ‘late chunking’) before teaching it as a default.",
+      "time_sensitive": true,
+      "as_of": "2025-12-25",
+      "verification_notes": [
+        "Find at least one credible technical write-up or paper and cross-check that the lesson’s description matches it.",
+        "Validate where it helps (long docs, table-heavy docs) and where it may not (short FAQ chunks)."
+      ]
+    },
+    {
+      "id": "anthropic-contextual-retrieval-2024-2025",
+      "fact": "Anthropic popularized ‘contextual retrieval’ (adding a short context summary to each chunk before embedding); verify Anthropic’s exact recommended procedure, reported gains, and any updated guidance in 2024–2025 docs/blog posts.",
+      "time_sensitive": true,
+      "as_of": "2025-12-25",
+      "verification_notes": [
+        "Confirm whether the recommended summary length, placement, and metadata strategy changed since initial publication.",
+        "Verify any quantitative claims (benchmark/task) before including them as numbers."
+      ]
+    },
+    {
+      "id": "graphrag-latest-2025",
+      "fact": "GraphRAG approaches (graph construction + retrieval over graph structure) evolved rapidly; verify the latest Microsoft/academic ‘GraphRAG’ implementations, recommended graph-building pipelines, and evaluation results before positioning it as ‘the’ modern approach.",
+      "time_sensitive": true,
+      "as_of": "2025-12-25",
+      "verification_notes": [
+        "Confirm open-source project names/repos and whether they are actively maintained.",
+        "Verify when GraphRAG is worth it (multi-hop/global questions) vs when it is overkill (simple policy Q&A)."
+      ]
+    },
+    {
+      "id": "raptor-latest-2025",
+      "fact": "RAPTOR-style hierarchical retrieval (recursive summarization + tree search) has multiple variants; verify the current canonical paper(s), reproducible baselines, and whether ‘RAPTOR’ is still a recommended default in 2025 tooling.",
+      "time_sensitive": true,
+      "as_of": "2025-12-25",
+      "verification_notes": [
+        "Confirm how modern RAG frameworks (e.g., LlamaIndex/LangChain) implement hierarchical retrieval and what parameters matter.",
+        "Verify failure modes (summary drift, information loss) and how to mitigate them."
+      ]
+    },
+    {
+      "id": "lancedb-features-2025",
+      "fact": "LanceDB became a common modern choice for local/embedded vector search; verify its current (2025) support for hybrid search, filtering, index types, and production-readiness claims before recommending it.",
+      "time_sensitive": true,
+      "as_of": "2025-12-25",
+      "verification_notes": [
+        "Confirm current docs for hybrid search and the expected deployment footprint.",
+        "Verify the recommended index types and performance guidance for 2025."
+      ]
+    },
+    {
+      "id": "milvus-2x-hybrid-and-bm25-2025",
+      "fact": "Milvus 2.x introduced/expanded hybrid retrieval features; verify the exact Milvus 2.x version and supported hybrid/BM25 workflows in 2025 before adding it to the ‘vector DB selection’ section.",
+      "time_sensitive": true,
+      "as_of": "2025-12-25",
+      "verification_notes": [
+        "Confirm how Milvus recommends doing hybrid retrieval and whether BM25 is built-in or via an integration.",
+        "Confirm operational guidance (index build time, replication, resource needs)."
+      ]
+    },
+    {
+      "id": "rag-vs-long-context-context-windows-2025",
+      "fact": "‘RAG vs long context’ guidance depends on real model context limits; verify the current maximum context windows and pricing/latency tradeoffs for models that advertise very large contexts (e.g., ~200k to ~2M tokens) before using numbers in the decision matrix.",
+      "time_sensitive": true,
+      "as_of": "2025-12-25",
+      "verification_notes": [
+        "Confirm which models actually support the advertised context (and under what plan/endpoint).",
+        "Verify that ‘lost-in-the-middle’ and chunk ordering issues still apply at these context sizes."
+      ]
+    },
+    {
+      "id": "lost-in-the-middle-still-relevant-2025",
+      "fact": "Even with very long contexts, models can under-attend to mid-context evidence (‘lost in the middle’); verify current best practices (chunk ordering, compression, citation prompting) and whether vendors provide mitigations as of 2025.",
+      "time_sensitive": true,
+      "as_of": "2025-12-25",
+      "verification_notes": [
+        "Confirm current vendor guidance on long-context retrieval/compression and any context-caching features.",
+        "Validate with at least one recent reproduction or vendor/academic write-up."
+      ]
+    },
+    {
+      "id": "rag-evaluation-tooling-2025",
+      "fact": "RAG evaluation tooling (Ragas/TruLens/DeepEval or equivalents) changed quickly; verify the current recommended metrics, defaults, and integration patterns in 2025 before baking them into labs or screenshots.",
+      "time_sensitive": true,
+      "as_of": "2025-12-25",
+      "verification_notes": [
+        "Confirm which framework is actively maintained and best fits the course stack.",
+        "Verify metric definitions (faithfulness/groundedness) and known pitfalls of LLM-as-judge."
+      ]
+    },
+    {
+      "id": "reranking-models-and-licensing-2025",
+      "fact": "Popular reranking models (hosted APIs and open models) evolve and licensing changes; verify the current recommended rerankers for production (and their licensing) before listing specific model names in 2025 content.",
+      "time_sensitive": true,
+      "as_of": "2025-12-25",
+      "verification_notes": [
+        "Confirm performance vs latency tradeoffs and what is feasible on CPU-only deployments.",
+        "Confirm whether a given reranker is suitable for multilingual (EN/CS) corpora."
+      ]
+    },
+    {
+      "id": "acl-and-permission-filtering-required",
+      "fact": "Production RAG must enforce document-level permissions (ACLs) at retrieval time to prevent data leakage; verify best-practice patterns (pre-filtering, post-filtering, per-tenant indexes) and include at least one explicit warning section.",
+      "time_sensitive": false,
+      "verification_notes": [
+        "Confirm how common vector DBs implement metadata filters and what is safe vs foot-gun.",
+        "Add ‘what can go wrong’ examples (cross-tenant leakage) without including sensitive details."
+      ]
+    }
+  ],
+  "rubric": {
+    "total_points": 60,
+    "scoring_scale": {
+      "0": "Missing or broken",
+      "5": "Adequate but generic",
+      "8": "MASTERPIECE-level (meets gate)",
+      "10": "Exceptional (wow factor)"
+    },
+    "categories": [
+      {
+        "name": "Hook",
+        "max_points": 10,
+        "pass_min": 8,
+        "checks": [
+          "Hook lands in the first 30 seconds (bold claim or provocative question).",
+          "Motivates RAG with a concrete failure story (hallucination/knowledge cutoff/private data).",
+          "Sets a clear mission for the learner and previews the payoff.",
+          "Includes at least one memorable line, analogy, or mini-demo prompt."
+        ]
+      },
+      {
+        "name": "Structure",
+        "max_points": 10,
+        "pass_min": 8,
+        "checks": [
+          "Progression is clear: indexing → retrieval → reranking → generation → evaluation → agentic loop.",
+          "Key terms are defined once and reused consistently (chunk, recall@K, groundedness).",
+          "Decision points are explicit (when to use RAG vs long context vs fine-tune).",
+          "Ends with a Holocron summary and actionable checklist."
+        ]
+      },
+      {
+        "name": "Labs",
+        "max_points": 10,
+        "pass_min": 8,
+        "checks": [
+          "Labs are ‘missions’ with copy/paste prompts or code, expected outputs, and time-box guidance.",
+          "At least one lab teaches debugging a retrieval failure (not just ‘happy path’).",
+          "At least one lab introduces evaluation/metrics and shows how to detect regressions.",
+          "Labs align to outcomes and escalate difficulty without big jumps."
+        ]
+      },
+      {
+        "name": "Visuals",
+        "max_points": 10,
+        "pass_min": 8,
+        "checks": [
+          "Visual anchor every 3–5 paragraphs (diagrams, tables, concept cards).",
+          "Diagrams are readable on mobile (no tiny text, no overlap).",
+          "Complex concepts have at least one explanatory diagram (hybrid search, agentic loop, eval triad).",
+          "Any UI-specific step includes a real screenshot (if applicable)."
+        ]
+      },
+      {
+        "name": "Accuracy",
+        "max_points": 10,
+        "pass_min": 8,
+        "checks": [
+          "Claims about ‘2024–2025’ techniques are either cited or marked as ‘verify’ with a source plan.",
+          "No outdated or misleading model/product references in ‘current’ recommendations.",
+          "Distinguishes recall vs precision vs faithfulness (and does not conflate them).",
+          "Explains limitations honestly (RAG reduces hallucinations; does not guarantee truth)."
+        ]
+      },
+      {
+        "name": "Engagement",
+        "max_points": 10,
+        "pass_min": 8,
+        "checks": [
+          "Uses story beats, tension (failure modes), and ‘aha moments’ to sustain attention.",
+          "Includes at least 2 interactive moments (quick question, prediction, or mini self-check).",
+          "Keeps energy high with callouts, bold formatting, and concrete examples.",
+          "Avoids long, unbroken exposition blocks; balances text, visuals, and labs."
+        ]
+      }
+    ],
+    "masterpiece_gate": {
+      "min_total": 59,
+      "min_category_score": 8,
+      "rules": [
+        "Any category score below 8/10 fails the MASTERPIECE gate even if total ≥59.",
+        "MASTERPIECE requires total ≥59/60."
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "id": "no-colbert-v2-explicit",
+      "gap": "ColBERT v2 / late-interaction retrieval is not explicitly explained or contrasted with embedding-based retrieval and cross-encoder reranking.",
+      "evidence_in_current_lesson": "The lesson mentions ‘Late interaction’ as an indexing pattern but never names ColBERTv2 or explains token-level MaxSim vs dense embeddings.",
+      "recommendation": "Add a short ‘Late Interaction (ColBERT-style)’ section + a comparison table: dense vs rerank vs late-interaction (accuracy, latency, storage).",
+      "priority": "P1"
+    },
+    {
+      "id": "vector-db-table-missing-lancedb-milvus",
+      "gap": "Vector DB selection table is missing common 2025 choices (LanceDB, Milvus 2.x) and modern ‘hybrid search built-in’ capabilities.",
+      "evidence_in_current_lesson": "Current table includes Pinecone/Chroma/Weaviate/Qdrant/pgvector only.",
+      "recommendation": "Update the table with LanceDB + Milvus 2.x (+ a brief ‘when to choose’ column).",
+      "priority": "P1"
+    },
+    {
+      "id": "contextual-retrieval-needs-source",
+      "gap": "Contextual retrieval is presented without a source and without clarifying which parts are vendor-specific guidance vs general technique.",
+      "evidence_in_current_lesson": "‘Contextual Retrieval (2024+)’ section describes the method but provides no citation and no parameter guidance.",
+      "recommendation": "Add a source link (Anthropic or equivalent) + a tiny parameter box (summary length, metadata fields, when to skip).",
+      "priority": "P0"
+    },
+    {
+      "id": "late-chunking-needs-source-and-clarity",
+      "gap": "Late chunking is presented as a 2025 technique but lacks citation and may be underspecified (what is pooled, what is stored).",
+      "evidence_in_current_lesson": "‘Late Chunking (2025)’ section is 2–3 sentences, no reference, no constraints.",
+      "recommendation": "Add a diagram + a ‘what changes vs classic chunking’ explanation + one verified source.",
+      "priority": "P0"
+    },
+    {
+      "id": "graphrag-too-brief",
+      "gap": "GraphRAG is mentioned but not taught (no pipeline, no example, no tradeoffs).",
+      "evidence_in_current_lesson": "GraphRAG appears as one bullet in ‘Agentic RAG’ patterns.",
+      "recommendation": "Add a compact ‘GraphRAG in 5 steps’ section + a ‘when to use’ decision box + one recent (2024–2025) source.",
+      "priority": "P1"
+    },
+    {
+      "id": "rag-vs-long-context-matrix-outdated-by-2025-context",
+      "gap": "The long-context vs RAG matrix does not mention very-long-context models (~200k–~2M tokens) and the real constraints (cost, latency, lost-in-the-middle, privacy).",
+      "evidence_in_current_lesson": "Matrix uses fixed thresholds (<200k, >1M) without referencing current model capabilities.",
+      "recommendation": "Update matrix with ‘verify current model context limits’ callout and include a cost/latency mini-model (tokens × price × caching).",
+      "priority": "P1"
+    },
+    {
+      "id": "evaluation-tooling-missing",
+      "gap": "Evaluation explains metrics but does not show a concrete tooling path or an example log that distinguishes retrieval failure vs generation failure.",
+      "evidence_in_current_lesson": "No mention of modern evaluation tools (Ragas/TruLens/DeepEval) or a minimal eval script.",
+      "recommendation": "Add a short ‘Evaluation Stack’ section with one recommended tool + a tiny pseudo-log example.",
+      "priority": "P1"
+    },
+    {
+      "id": "cz-typo-recall-atk",
+      "gap": "Czech version contains a visible typo that breaks a key metric label.",
+      "evidence_in_current_lesson": "In the CZ checklist, ‘Recall @K’ appears as ‘Recall @package-lock.json’.",
+      "recommendation": "Fix the typo to ‘Recall @K’ and re-run a quick visual spot-check for the checklist section.",
+      "priority": "P0"
+    },
+    {
+      "id": "videos-not-curated-for-2025",
+      "gap": "VideoSwitcher is not constrained to 2024–2025 and may not match the lesson’s ‘2025’ advanced claims (late chunking, GraphRAG).",
+      "evidence_in_current_lesson": "Current videos are general RAG intros and may not cover newer techniques.",
+      "recommendation": "Add at least 1–2 recent (2024–2025) videos for advanced RAG (GraphRAG, contextual retrieval, evaluation) plus a CZ alternative if available.",
+      "priority": "P2"
+    }
+  ],
+  "research_queries": [
+    {
+      "type": "web",
+      "query": "ColBERTv2 late interaction MaxSim paper arXiv",
+      "why": "Get canonical citation + exact mechanism description for ColBERTv2."
+    },
+    {
+      "type": "web",
+      "query": "ColBERTv2 BEIR benchmark 2024 2025 comparison dense retrievers",
+      "why": "Verify whether ColBERTv2 is still competitive in 2025 and avoid outdated SOTA claims."
+    },
+    {
+      "type": "youtube",
+      "query": "ColBERTv2 late interaction retrieval tutorial 2024",
+      "why": "Find a high-quality explainer or demo suitable for VideoSwitcher."
+    },
+    {
+      "type": "web",
+      "query": "Anthropic contextual retrieval summarize chunk before embedding",
+      "why": "Verify Anthropic’s published guidance and any reported results."
+    },
+    {
+      "type": "web",
+      "query": "late chunking token embeddings pooling retrieval 2024 2025",
+      "why": "Verify the current definition of ‘late chunking’ and find a credible source."
+    },
+    {
+      "type": "web",
+      "query": "Microsoft GraphRAG repository documentation 2025",
+      "why": "Find the actively maintained GraphRAG implementation and recommended pipeline steps."
+    },
+    {
+      "type": "youtube",
+      "query": "GraphRAG tutorial demo 2024 2025",
+      "why": "Find an approachable video that shows GraphRAG end-to-end."
+    },
+    {
+      "type": "web",
+      "query": "RAPTOR hierarchical retrieval recursive summarization paper",
+      "why": "Identify the canonical RAPTOR paper and correct terminology."
+    },
+    {
+      "type": "web",
+      "query": "LanceDB documentation hybrid search full text search 2025",
+      "why": "Verify LanceDB capabilities and current docs for inclusion in the vector DB table."
+    },
+    {
+      "type": "web",
+      "query": "Milvus 2.x hybrid search BM25 documentation 2025",
+      "why": "Verify Milvus 2.x hybrid retrieval support and recommended workflows."
+    },
+    {
+      "type": "web",
+      "query": "Gemini 2 million token context window documentation pricing 2025",
+      "why": "Verify long-context limits and cost/latency tradeoffs before updating the decision matrix."
+    },
+    {
+      "type": "web",
+      "query": "Claude 200k context window documentation 2025",
+      "why": "Verify long-context limits and any constraints (endpoint, plan, latency)."
+    },
+    {
+      "type": "web",
+      "query": "RAG evaluation Ragas TruLens DeepEval best practices 2025",
+      "why": "Pick an actively maintained evaluation tool and up-to-date metric guidance."
+    },
+    {
+      "type": "web",
+      "query": "lost in the middle long context mitigation chunk ordering 2024 2025",
+      "why": "Update best practices for long-context prompting and chunk ordering."
+    }
+  ],
+  "prerequisites": {
+    "required_knowledge": [
+      "Basic prompting and system instructions",
+      "Familiarity with embeddings and vector similarity",
+      "Comfort with API-style workflows"
+    ]
+  },
+  "must_be_true_facts": [
+    {
+      "id": "rag-query-time-grounding",
+      "fact": "RAG conditions generation on retrieved external documents at query time, allowing new information to be injected without retraining.",
+      "sources": [
+        {
+          "type": "paper",
+          "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+          "citation": "Lewis, P. et al. (2020). arXiv:2005.11401.",
+          "url": "https://arxiv.org/abs/2005.11401"
+        }
+      ]
+    },
+    {
+      "id": "hybrid-search-benefit",
+      "fact": "Hybrid retrieval combines sparse keyword matching (BM25) with dense vector similarity to improve recall for exact terms and semantic matches.",
+      "sources": [
+        {
+          "type": "paper",
+          "title": "The Probabilistic Relevance Framework: BM25 and Beyond",
+          "citation": "Robertson, S., & Zaragoza, H. (2009). Foundations and Trends in IR.",
+          "url": "https://doi.org/10.1561/1500000019"
+        }
+      ]
+    },
+    {
+      "id": "bert-reranking-improves-precision",
+      "fact": "Neural rerankers (e.g., BERT cross-encoders) can substantially improve precision by jointly encoding query+passage, after an initial high-recall retrieval stage.",
+      "sources": [
+        {
+          "type": "paper",
+          "title": "Passage Re-ranking with BERT",
+          "citation": "Nogueira, R., & Cho, K. (2019). arXiv:1901.04085.",
+          "url": "https://arxiv.org/abs/1901.04085"
+        }
+      ]
+    },
+    {
+      "id": "lost-in-the-middle-paper",
+      "fact": "Language models can perform worse when relevant evidence is placed in the middle of long contexts (‘lost in the middle’), motivating chunk ordering and compression strategies.",
+      "sources": [
+        {
+          "type": "paper",
+          "title": "Lost in the Middle: How Language Models Use Long Contexts",
+          "citation": "Liu, N. F. et al. (2023). arXiv:2307.03172.",
+          "url": "https://arxiv.org/abs/2307.03172"
+        }
+      ]
+    }
+  ],
+  "dont_claim": [
+    "Don’t claim RAG eliminates hallucinations; it only reduces them when retrieval is correct and grounding rules are enforced.",
+    "Don’t present dense vector search as sufficient for exact-match terms; hybrid search is often required for IDs, acronyms, and regulatory language.",
+    "Don’t imply long-context models make retrieval obsolete; selection, ordering, and faithfulness checks still matter (and ‘lost in the middle’ remains a risk).",
+    "Don’t include time-sensitive model names, context limits, or pricing without verifying from vendor docs as of 2025.",
+    "Don’t promise citations are always correct without verification; retrieved sources can be irrelevant, outdated, or incorrect."
+  ]
+}

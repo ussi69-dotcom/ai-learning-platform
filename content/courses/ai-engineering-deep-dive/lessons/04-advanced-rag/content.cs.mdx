@@ -1,0 +1,587 @@
+# Pokročilé architektury RAG
+
+<Callout type="info">
+**Mise:** Jděte za hranice naivního sémantického vyhledávání. Zvládněte GraphRAG, RAPTOR, pozdní interakci (late interaction) a kontextové vyhledávání, abyste dokázali odpovídat na globální otázky a dotazy s více kroky (multi-hop) pomocí důkazů.
+
+⏳ **Čas čtení:** 40 min | 🧪 **[3] Labů celkem**
+</Callout>
+
+<VideoSwitcher alternatives={[{"id":"knDDGYHnnSI","title":"GraphRAG (AI Engineer)"},{"id":"bpeeqbBIH1A","title":"RAPTOR (TwoSetAI)"},{"id":"xTzUn3G9YA0","title":"ColBERT Late Interaction (Prompt Engineering)"},{"id":"tmiBae2goJM","title":"Contextual Retrieval (Prompt Engineering)"}]} />
+
+## ⚡ Lež o vyhledávání
+
+**Váš model nehalucinoval. Lhalo vaše vyhledávání.**
+Naivní RAG pipeline vytáhne hrstku podobných chunků a doufá, že v nich je odpověď. To funguje pro bodové vyhledávání. Zhroutí se však, když je odpověď *distribuována* přes mnoho dokumentů nebo vyžaduje uvažování ve více krocích.
+
+Dva režimy selhání, které nyní vyřešíte:
+- **Globální otázky:** "Jaká jsou hlavní témata v 500 rozhovorech?"
+- **Otázky s více kroky (multi-hop):** "Jak vztah generálního ředitele se společností A ovlivňuje soudní spor v dokumentu B?"
+
+<Callout type="info">
+**Nejprve baseline:** Hybridní vyhledávání (BM25 + dense) a reranking jsou minimum. Architektury níže řeší situace, kdy baseline pořád selhává.
+</Callout>
+
+---
+
+## Kontextové vyhledávání + Indexy s více reprezentacemi
+
+Kontextové vyhledávání obohatí každý chunk o krátké kontextové shrnutí **před** vytvořením embeddingu. Indexování s více reprezentacemi pak odděluje **text pro vyhledávání** od **textu pro generování**.
+
+<Diagram type="rag-multi-representation" />
+
+*Popisek: Kontextová shrnutí zvyšují recall a drží generování ukotvené.*
+
+<Callout type="tip">
+**Takeaway:** Přidejte kontext před embedding, aby chunky nebyly nejasné. **Trade-off:** Vyšší náklady na ingestování a delší prompty.
+</Callout>
+
+*Příklad:* Chunk „Vrácení peněz vyžaduje schválení“ → kontext „Refund policy vyžaduje finance“ (embed); celý chunk se vrátí pro generování.
+
+**Rozdíl:** Contextual Retrieval mění *co embedujete*. Multi-representation mění *co ukládáte a vracíte*.
+
+**Šablona kontextualizačního promptu:**
+```text
+<document>
+{FULL_DOCUMENT}
+</document>
+<chunk>
+{CHUNK_TEXT}
+</chunk>
+Napiš krátké kontextové shrnutí, které zasadí tento chunk do celého dokumentu.
+```
+
+**Vzorec:**
+- **Reprezentace pro vyhledávání:** krátké shrnutí (rychlé, vysoký recall)
+- **Reprezentace pro generování:** celá pasáž (vysoká věrnost)
+
+Zdroj: [Anthropic Contextual Retrieval](https://www.anthropic.com/engineering/contextual-retrieval)
+
+---
+
+<Callout type="info">
+**Checkpoint:** Chunky jsou nejasné a chybí kontext. Co přidáte?  
+**Odpověď:** Kontextové vyhledávání + multi-representation index.
+</Callout>
+
+## GraphRAG: Strukturované vyhledávání pro globální otázky
+
+GraphRAG převádí nestrukturovaný text na znalostní graf, takže model může uvažovat nad **entitami + vztahy**, nejen nad podobnými chunky.
+
+**GraphRAG v 5 krocích:**
+1. **Extrakce:** LLM identifikuje entity a vztahy.
+2. **Tvorba grafu:** Vytvoření uzlů + hran.
+3. **Shlukování:** Detekce komunit (Leiden clustering).
+4. **Shrnutí:** LLM vytvoří shrnutí komunit.
+5. **Dotazování:** Použití shrnutí komunit pro globální otázky.
+
+<Diagram type="rag-graph-pipeline" />
+
+*Popisek: GraphRAG převádí rozptýlené entity do struktury pro dotazy.*
+
+<Callout type="tip">
+**Takeaway:** Shrnutí komunit umožní globální otázky. **Trade-off:** Drahá indexace + pomalejší dotazy nad grafem.
+</Callout>
+
+*Příklad:* Hrana `Nova Health --ziskala--> PulseAI` umožní multi-hop dotazy napříč dokumenty.
+
+**Trade-off:** GraphRAG je silný, ale drahý na indexaci a pomalejší pro globální dotazy. Používejte ho jen tehdy, když otázka opravdu vyžaduje grafovou syntézu.
+
+<Callout type="tip">
+**Rozhodovací box: Kdy použít GraphRAG?**
+- **Použijte jej, pokud:** Potřebujete globální syntézu nebo uvažování ve více krocích napříč velkými korpusy.
+- **Přeskočte jej, pokud:** Potřebujete pouze přímé vyhledání faktů (vektorové vyhledávání je levnější).
+</Callout>
+
+Zdroje: [GraphRAG Repo](https://github.com/microsoft/graphrag) | [Dokumentace](https://microsoft.github.io/graphrag/) | [Blog](https://www.microsoft.com/en-us/research/blog/graphrag-new-tool-for-complex-data-discovery-now-on-github/)
+
+---
+
+<Callout type="info">
+**Checkpoint:** Potřebujete multi-hop uvažování napříč stovkami dokumentů. Co zvolíte?  
+**Odpověď:** GraphRAG.
+</Callout>
+
+## Nastavení laboratoří (jednorázově)
+
+```bash
+pip install openai==2.14.0 networkx==3.6.1 scikit-learn==1.8.0 ragatouille==0.0.9.post2
+export OPENAI_MODEL="gpt-5"
+# Volitelný offline režim pro Laby 2-3 (bez API/stažení vah)
+export OFFLINE=1
+```
+
+Použijte model, ke kterému máte přístup (příklad výše).
+
+---
+
+## 🔬 Laboratoř 1: Vytvoření mini extraktoru GraphRAG
+
+**Cíl:** Přeměnit malý korpus na uzly + hrany, na které se můžete dotazovat.
+
+**Prompt:**
+```text
+Jsi extraktor znalostního grafu.
+Vrať JSON se dvěma poli: nodes (uzly) a edges (hrany).
+- nodes: {"id","type","label"}
+- edges: {"from","to","relation"}
+
+TEXT:
+1) "Nova Health získala PulseAI v roce 2023."
+2) "CTO PulseAI, Mira Chen, dříve pracovala v Helios Labs."
+3) "Helios Labs spolupracuje s Nova Health na diagnostice."
+```
+
+**Očekávaný výstup (tvar):**
+```json
+{
+  "nodes": [
+    {"id":"Nova Health","type":"org","label":"Nova Health"},
+    {"id":"PulseAI","type":"org","label":"PulseAI"},
+    {"id":"Mira Chen","type":"person","label":"Mira Chen"},
+    {"id":"Helios Labs","type":"org","label":"Helios Labs"}
+  ],
+  "edges": [
+    {"from":"Nova Health","to":"PulseAI","relation":"ziskala"},
+    {"from":"Mira Chen","to":"PulseAI","relation":"cto_spolecnosti"},
+    {"from":"Mira Chen","to":"Helios Labs","relation":"pracovala_v"},
+    {"from":"Helios Labs","to":"Nova Health","relation":"spolupracuje_s"}
+  ]
+}
+```
+
+**Env:** Nastavte `OPENAI_MODEL` na model, ke kterému máte přístup.
+
+**Vzor volání LLM (Python):**
+```python
+import json
+import os
+from openai import OpenAI
+
+client = OpenAI()
+
+prompt = """
+Jsi extraktor znalostního grafu.
+Vrať JSON se dvěma poli: nodes (uzly) a edges (hrany).
+- nodes: {"id","type","label"}
+- edges: {"from","to","relation"}
+
+TEXT:
+1) "Nova Health získala PulseAI v roce 2023."
+2) "CTO PulseAI, Mira Chen, dříve pracovala v Helios Labs."
+3) "Helios Labs spolupracuje s Nova Health na diagnostice."
+""".strip()
+
+model = os.environ["OPENAI_MODEL"]
+
+response = client.chat.completions.create(
+    model=model,
+    messages=[{"role": "user", "content": prompt}],
+    response_format={"type": "json_object"},
+    temperature=0.2,
+)
+data = json.loads(response.choices[0].message.content)
+
+expected_nodes = {"Nova Health", "PulseAI", "Mira Chen", "Helios Labs"}
+expected_edges = {
+    ("Nova Health", "PulseAI", "ziskala"),
+    ("Mira Chen", "PulseAI", "cto_spolecnosti"),
+    ("Mira Chen", "Helios Labs", "pracovala_v"),
+    ("Helios Labs", "Nova Health", "spolupracuje_s"),
+}
+actual_nodes = {n["id"] for n in data["nodes"]}
+actual_edges = {(e["from"], e["to"], e["relation"]) for e in data["edges"]}
+assert actual_nodes == expected_nodes
+assert actual_edges == expected_edges
+```
+
+**Vytvoření grafu (Python):**
+```python
+import networkx as nx
+
+g = nx.Graph()
+for node in data["nodes"]:
+    g.add_node(node["id"], type=node["type"])
+for edge in data["edges"]:
+    g.add_edge(edge["from"], edge["to"], relation=edge["relation"])
+
+print(list(g.neighbors("Nova Health")))
+```
+
+**Očekávaný výstup:**
+```
+['PulseAI', 'Helios Labs']
+```
+
+**💡 Aha Moment:** Jakmile máte entity + hrany, můžete odpovědět na otázku "Jak je Nova Health spojena s Helios?" bez sémantického hádání.
+
+<LabComplete labId="lab-rag-adv-1" />
+
+---
+
+## RAPTOR: Hierarchické vyhledávání
+
+RAPTOR buduje **strom shrnutí**, takže můžete z jednoho korpusu získat jak témata na vysoké úrovni, *tak* přesné detaily.
+
+**Jak RAPTOR funguje:**
+1. Shlukování chunků podle podobnosti.
+2. Shrnutí každého shluku.
+3. Vytvoření embeddingů shrnutí.
+4. Rekurze pro vybudování hierarchie.
+
+**Konkrétní příklad (mini-strom):**
+```
+Kořenové shrnutí: "Enterprise procesy prodlužují onboarding i refundy."
+├─ Shluk A (Platby/Refundy)
+│  ├─ "Platby se zpozdily o 3–5 dní kvůli bankovní verifikaci."
+│  └─ "Refundy vyžadují schválení financí a právního."
+└─ Shluk B (Onboarding)
+   ├─ "Onboarding pro Enterprise klienty zahrnuje 2týdenní security review."
+   └─ "Credit checky mohou onboarding prodloužit o týden."
+```
+
+<Diagram type="rag-raptor-tree" />
+
+*Popisek: Strom shrnutí umožní dotaz na témata i detaily.*
+
+<Callout type="tip">
+**Takeaway:** Hierarchie vrací globální kontext bez ztráty detailů. **Trade-off:** Rekurzivní shrnutí stojí čas a tokeny.
+</Callout>
+
+*Příklad:* List „Refundy vyžadují schválení“ → shluk „Refundy vyžadují finance“ → kořen „Enterprise procesy prodlužují onboarding i refundy“.
+
+Při dotazu můžete prohledávat **zploštěný index** všech vrstev nebo jít **shora dolů** od kořenových shrnutí k listovým chunkům.
+
+**Trade-off:** RAPTOR zvyšuje globální recall, ale při indexaci stojí více tokenů kvůli rekurzivnímu shrnování.
+
+Zdroj: [RAPTOR Paper](https://arxiv.org/abs/2309.07952)
+
+---
+
+<Callout type="info">
+**Checkpoint:** Potřebujete témata + detaily z dlouhých dokumentů. Co zvolíte?  
+**Odpověď:** RAPTOR.
+</Callout>
+
+## 🔬 Laboratoř 2: Vytvoření stromu shrnutí RAPTOR
+
+**Cíl:** Vytvořit 2úrovňový strom shrnutí ze surových chunků.
+
+**Vstupní chunky:**
+```
+A) "Platby byly zpožděny o 3–5 dní kvůli bankovnímu ověření."
+B) "Vrácení peněz vyžaduje schválení od finančního a právního oddělení."
+C) "Onboarding pro Enterprise klienty zahrnuje 2týdenní bezpečnostní prověrku."
+D) "SLA podpory: priorita P1 do 1 hodiny; P2 do 8 hodin."
+E) "Enterprise zákazníci získají dedikovaného TAM (Technical Account Manager)."
+F) "Úvěrové kontroly mohou prodloužit onboarding o týden."
+```
+
+**Úkol:**
+1) Shlukněte do 2–3 skupin.
+2) Shrňte každou skupinu do 1–2 vět.
+3) Vytvořte kořenové shrnutí, které pokrývá všechny shluky.
+
+**Očekávaný výstup (struktura):**
+```
+Shluk 1 (Platby/Vrácení peněz): shrnutí ...
+Shluk 2 (Onboarding/Enterprise): shrnutí ...
+Shluk 3 (SLA podpory): shrnutí ...
+Kořenové shrnutí: ...
+```
+
+**RAPTOR scaffold (Python):**
+```python
+import os
+from openai import OpenAI
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.cluster import KMeans
+
+client = OpenAI()
+model = os.environ["OPENAI_MODEL"]
+
+chunks = [
+    "Platby byly zpožděny o 3–5 dní kvůli bankovnímu ověření.",
+    "Vrácení peněz vyžaduje schválení od finančního a právního oddělení.",
+    "Onboarding pro Enterprise klienty zahrnuje 2týdenní bezpečnostní prověrku.",
+    "SLA podpory: priorita P1 do 1 hodiny; P2 do 8 hodin.",
+    "Enterprise zákazníci získají dedikovaného TAM.",
+    "Úvěrové kontroly mohou prodloužit onboarding o týden.",
+]
+
+X = TfidfVectorizer().fit_transform(chunks)
+kmeans = KMeans(n_clusters=3, random_state=42).fit(X)
+
+clusters = {i: [] for i in range(3)}
+for chunk, label in zip(chunks, kmeans.labels_):
+    clusters[label].append(chunk)
+
+def summarize_cluster(texts):
+    prompt = (
+        "Shrň tyto věty do 1-2 vět:\n"
+        + "\n".join(f"- {t}" for t in texts)
+    )
+    response = client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.2,
+    )
+    return response.choices[0].message.content.strip()
+
+def label_cluster(texts):
+    joined = " ".join(texts).lower()
+    if "vrácení peněz" in joined or "platby" in joined:
+        return "Platby/Refundy"
+    if "onboarding" in joined or "enterprise" in joined or "úvěrové" in joined:
+        return "Onboarding/Enterprise"
+    return "SLA podpory"
+
+labeled = {label_cluster(v): v for v in clusters.values()}
+assert {"Platby/Refundy", "Onboarding/Enterprise", "SLA podpory"} <= set(labeled.keys())
+
+def summarize_cluster_offline(texts):
+    return " | ".join(texts[:2])
+
+use_offline = os.getenv("OFFLINE") == "1"
+summaries = {
+    k: (summarize_cluster_offline(v) if use_offline else summarize_cluster(v))
+    for k, v in labeled.items()
+}
+root_summary = " | ".join(summaries.values())
+assert "refund" in root_summary.lower() or "vrácení" in root_summary.lower()
+assert "onboarding" in root_summary.lower() or "enterprise" in root_summary.lower()
+
+print(labeled)
+print("Shluky:", sorted(labeled.keys()))
+print(summaries)
+print(root_summary)
+```
+
+**Očekávaný výstup (ukázka):**
+```
+Shluky: ['Onboarding/Enterprise', 'Platby/Refundy', 'SLA podpory']
+```
+
+**Offline výstup (ukázka, OFFLINE=1):**
+```
+Summaries: {'Platby/Refundy': 'Platby byly zpožděny o 3–5 dní kvůli bankovnímu ověření. | Vrácení peněz vyžaduje schválení od finančního a právního oddělení.'}
+Root summary: Platby byly zpožděny o 3–5 dní kvůli bankovnímu ověření. | Vrácení peněz vyžaduje schválení od finančního a právního oddělení. | ...
+```
+
+**💡 Aha Moment:** Hierarchická shrnutí vám umožní odpovědět na "Jaké jsou naše SLA?" i "Co získají enterprise zákazníci?" ze stejného stromu.
+
+<LabComplete labId="lab-rag-adv-2" />
+
+---
+
+## ColBERT: Pozdní interakce pro přesnost
+
+Husté (dense) embeddingy komprimují celou pasáž do jednoho vektoru. **ColBERT** zachovává vektory tokenů a porovnává je pomocí **MaxSim** v čase dotazu. To znamená vyšší přesnost bez nákladů plného cross-encoderu.
+
+Jednoduše: každý token dotazu se porovnává s každým tokenem dokumentu a vyhrávají nejlepší shody.
+
+<Diagram type="rag-late-interaction" />
+
+*Popisek: Pozdní interakce drží vektory tokenů pro přesnost.*
+
+<Callout type="tip">
+**Takeaway:** Přesnost roste díky přímému párování tokenů. **Trade-off:** Větší úložiště a pomalejší vyhledávání.
+</Callout>
+
+*Příklad:* Token dotazu „refund“ se páruje s tokenem „refundy“ přes MaxSim.
+
+**Trade-off:** Přesnost roste, ale úložiště bobtná, protože držíte vektory pro mnoho tokenů.
+
+Zdroj: [ColBERT Paper](https://arxiv.org/abs/2004.12832) | [RAGatouille](https://github.com/AnswerDotAI/RAGatouille)
+
+---
+
+<Callout type="info">
+**Checkpoint:** Potřebujete přesné znění pro refundy nebo compliance. Co zvolíte?  
+**Odpověď:** ColBERT.
+</Callout>
+
+## Rozhodovací flow: Kterou architekturu kdy?
+
+**Start:** Hybridní vyhledávání + reranking.
+
+1) **Odpovědi jsou špatně, protože chunky jsou nejasné.**  
+→ **Kontextové vyhledávání**  
+*Příklad:* Právní definice bez okolního kontextu.
+
+2) **Potřebujete globální syntézu nebo multi-hop uvažování napříč mnoha dokumenty.**  
+→ **GraphRAG**  
+*Příklad:* „Jak jsou tyto firmy propojené v 500 filings?“
+
+3) **Potřebujete téma + detaily z dlouhých dokumentů.**  
+→ **RAPTOR**  
+*Příklad:* „Shrň všechna onboarding rizika a pak zanoř refundy.“
+
+4) **Potřebujete přesné znění / přesné shody.**  
+→ **ColBERT**  
+*Příklad:* „Jaké je přesné refund okno pro enterprise licence?“
+
+Pokud nic z toho neplatí, zůstaňte u baseline.
+
+---
+
+## Mini pipeline: Rozhodnutí → Retrieval → Odpověď
+
+**Dotaz:** „Jaké je refund okno pro enterprise licence?“
+
+**Rozhodnutí:** **ColBERT** (přesné znění).
+
+**Artefakty z vyhledávání (token hity):**
+- **[H1]** „Enterprise licence zahrnují 30denní zkušební dobu s plným vrácením peněz.“
+- **[H2]** „Žádosti o vrácení peněz vyžadují schválení financí.“
+
+**Podložená odpověď:** Enterprise licence mají **30denní zkušební dobu s plným refundem**, ale žádosti o refund stále vyžadují **schválení financí**. [H1][H2]
+
+---
+
+## 🔬 Laboratoř 3: Ablace vyhledávání (Dense vs ColBERT)
+
+**Cíl:** Rozhodnout, který retriever skutečně zlepšuje podložené odpovědi.
+
+**Dotaz:**
+```
+"Jaké je okno pro vrácení peněz u enterprise licencí?"
+```
+
+**Dense Retrieval Top-3:**
+```
+1) "Vrácení peněz se zpracovává do 14 dnů." (obecné)
+2) "Klíče k enterprise licencím jsou nepřenosné." (částečné)
+3) "Digitální nákupy jsou po 7 dnech konečné." (špatně)
+```
+
+**ColBERT Top-3:**
+```
+1) "Enterprise licence zahrnují 30denní zkušební dobu s plným vrácením peněz." (relevantní)
+2) "Žádosti o vrácení peněz vyžadují schválení financí." (relevantní)
+3) "Digitální nákupy jsou po 7 dnech konečné." (špatně)
+```
+
+**Úkol:**
+Ohodnoťte relevanci (0–2) pro každý chunk a vyberte nejlepší retriever.
+
+**Řídký baseline (TF-IDF):**
+```python
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+docs = [
+    "Vrácení peněz se zpracovává do 14 dnů.",
+    "Klíče k enterprise licencím jsou nepřenosné.",
+    "Digitální nákupy jsou po 7 dnech konečné.",
+]
+query = "okno pro vrácení peněz u enterprise licencí"
+
+X = TfidfVectorizer().fit_transform(docs + [query])
+scores = cosine_similarity(X[-1], X[:-1]).ravel()
+print(scores)
+top_idx = scores.argmax()
+assert top_idx == 0  # TF-IDF vybere obecnou refund větu
+print("TF-IDF top:", docs[top_idx])
+```
+
+**Očekávaný výsledek:**
+- TF-IDF řadí nejvýš obecnou refund větu.
+- ColBERT řadí nejvýš větu o enterprise licenci.
+- Rozhodnutí: Pro tuto doménu použijte ColBERT.
+
+**Očekávaný výstup (ukázka):**
+```
+TF-IDF top: Vrácení peněz se zpracovává do 14 dnů.
+```
+
+**Klíč (po chuncích):**
+- Dense: 0, 1, 0
+- ColBERT: 2, 1, 0
+
+**Ablace – tabulka skóre:**
+| Retriever | Skóre | Celkem |
+|-----------|-------|--------|
+| Dense | 0, 1, 0 | 1 |
+| ColBERT | 2, 1, 0 | 4 |
+
+<Callout type="warning">
+**Poznámka k instalaci:** `ragatouille` je na některých systémech křehký (CUDA/OS závislosti). Pokud instalace selže, nastavte `OFFLINE=1` pro fallback hity nebo použijte očekávaný výsledek výše.
+</Callout>
+
+**RAGatouille start (Python):**
+```python
+import os
+
+if os.getenv("OFFLINE") == "1":
+    hits = [
+        {"content": "Enterprise licence zahrnují 30denní zkušební dobu s plným vrácením peněz."},
+        {"content": "Žádosti o vrácení peněz vyžadují schválení financí."},
+        {"content": "Digitální nákupy jsou po 7 dnech konečné."},
+    ]
+else:
+    from ragatouille import RAGPretrainedModel
+    rag = RAGPretrainedModel.from_pretrained("colbertv2.0")
+    rag.index(collection=docs, index_name="rag-adv")
+    hits = rag.search(query, k=5)
+
+for hit in hits:
+    print(hit["content"])
+assert "30denní" in hits[0]["content"]
+print("ColBERT top:", hits[0]["content"])
+```
+
+**Očekávaný výstup (ukázka):**
+```
+ColBERT top: Enterprise licence zahrnují 30denní zkušební dobu s plným vrácením peněz.
+```
+
+**💡 Aha Moment:** Zisky v přesnosti jsou měřitelné. Nehádejte – provádějte ablace.
+
+<LabComplete labId="lab-rag-adv-3" />
+
+---
+
+## Evaluace a Ablace
+
+Pokud to nemůžete změřit, nemůžete tomu věřit.
+
+<Diagram type="rag-eval-triad" />
+
+*Popisek: Měřte retrieval, ukotvenost a kvalitu odpovědi společně.*
+
+<Callout type="tip">
+**Takeaway:** Retriever bez měření je loterie. **Trade-off:** Evaluace přidává latenci i cenu.
+</Callout>
+
+*Příklad:* Kontext 0.8, Věrnost 0.9, Relevance odpovědi 0.7 → vylepšete retriever, ne model.
+
+Sledujte tři signály:
+- **Relevance kontextu** (kvalita vyhledávání)
+- **Věrnost** (podloženost)
+- **Relevance odpovědi** (užitečnost)
+
+**Pravidlo ablace:** Měňte vždy jen jednu komponentu a znovu skórujte triádu. Pokud se skóre nehýbe, upgrade je šum.
+
+<Callout type="warning">
+**Lost-in-the-middle (ztraceno uprostřed) stále kouše:** Důležité důkazy dávejte na začátek/konec a udržujte K malé.
+</Callout>
+
+Zdroj: [Lost in the Middle Paper](https://arxiv.org/abs/2307.03172)
+
+---
+
+## Rozhodovací matice architektury
+
+| Architektura | Nejlepší pro | Plusy | Mínusy |
+|-------------|----------|------|------|
+| **Naivní RAG** | Jednoduché hledání faktů | Rychlé, levné | Chybí globální kontext |
+| **GraphRAG** | Globální syntéza | Spojuje vzdálené koncepty | Drahé indexování |
+| **RAPTOR** | Shrnování dlouhých dokumentů | Hierarchický recall | Složitá údržba |
+| **ColBERT** | Domény s vysokou přesností | Vynikající přesnost | Náročné na úložiště |
+| **Kontextové vyhledávání** | Nejednoznačné chunky | Opravuje ztracený kontext | Vyšší náklady na ingestování |
+
+<ConceptCard title="Holocron: Kontext vítězí" icon="💎">
+K největším vylepšením často dochází **před** vyhledáváním. Čistá data, silná metadata a kontextualizované chunky mohou překonat i ty nejmodernější modely.
+
+**Pravidlo:** Nejprve opravte index, teprve potom optimalizujte retriever.
+</ConceptCard>
