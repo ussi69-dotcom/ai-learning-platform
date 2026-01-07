@@ -218,7 +218,7 @@
 - L07: Mention mobile apps explicitly
 
 ---
-**Last Commit:** `11242af` feat(mentor): integrate BitNet 1.58-bit models + fix Redis replica issue
+**Last Commit:** `e6bda73` feat(mentor): add BitNet 1.58-bit LLM with Fast/Think modes
 **Status:** 🟢 Global readability boost (nav, footer, progress, callouts, video metadata) applied; Lesson 01 visuals verified; `npm run verify` passes (lint warnings only).
 
 ---
