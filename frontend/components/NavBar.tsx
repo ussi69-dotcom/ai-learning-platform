@@ -3,7 +3,7 @@
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
-import JediSithToggle from "./JediSithToggle";
+import LightsaberToggle from "./LightsaberToggle";
 import XPAvatarBadge, { getBadgeLevel, BADGE_TIERS } from "./XPAvatarBadge";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslations } from "next-intl";
@@ -29,7 +29,7 @@ export default function NavBar() {
   const badge = BADGE_TIERS[badgeLevel];
 
   return (
-    <nav className="border-b bg-white/80 dark:bg-slate-950/90 backdrop-blur-md border-slate-200 dark:border-slate-800 sticky top-0 z-50 transition-colors duration-300">
+    <nav className="border-b bg-card/80 backdrop-blur-md border-border sticky top-0 z-50 transition-colors duration-300">
       {/* SVG Gradients */}
       <svg width="0" height="0" className="absolute">
         <defs>
@@ -83,8 +83,8 @@ export default function NavBar() {
 
           {/* Right: Controls */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Theme Toggle - horizontal on mobile */}
-            <JediSithToggle />
+            {/* Theme Toggle - Lightsaber */}
+            <LightsaberToggle />
 
             {/* Language Switcher */}
             <LanguageSwitcher />
@@ -124,13 +124,13 @@ export default function NavBar() {
                     <span className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-wide">
                       {t("profile") || "Profil"}
                     </span>
-                    <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-0.5">
+                    <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden mt-0.5">
                       <div
                         className={`h-full bg-gradient-to-r ${badge.gradient} transition-all duration-500`}
                         style={{ width: `${getXPProgress(user.xp || 0)}%` }}
                       />
                     </div>
-                    <span className="text-[9px] sm:text-[10px] text-slate-500 dark:text-slate-400 font-semibold">
+                    <span className="text-[9px] sm:text-[10px] text-muted-foreground font-semibold">
                       {user.xp || 0} XP
                     </span>
                   </div>
@@ -141,7 +141,7 @@ export default function NavBar() {
                   variant="ghost"
                   size="sm"
                   onClick={logout}
-                  className="p-1.5 sm:p-2 text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30"
+                  className="p-1.5 sm:p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                   title={t("logout") || "Logout"}
                 >
                   <svg
