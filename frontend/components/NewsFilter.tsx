@@ -79,7 +79,7 @@ export default function NewsFilter({ value, onChange, counts, locale }: NewsFilt
               "flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all",
               "border border-border hover:border-primary/50",
               isActive
-                ? "bg-gradient-to-r from-violet-600/20 via-indigo-600/20 to-violet-600/20 border-primary text-primary dark:from-red-600/20 dark:via-red-600/20 dark:to-red-600/20 dark:border-red-500 dark:text-red-400"
+                ? "bg-primary/10 border-primary text-primary"
                 : "bg-background/50 text-muted-foreground hover:text-foreground"
             )}
           >
@@ -90,7 +90,7 @@ export default function NewsFilter({ value, onChange, counts, locale }: NewsFilt
                 className={cn(
                   "text-xs px-1.5 py-0.5 rounded-full",
                   isActive
-                    ? "bg-primary/20 text-primary dark:bg-red-500/20 dark:text-red-400"
+                    ? "bg-primary/20 text-primary"
                     : "bg-muted text-muted-foreground"
                 )}
               >

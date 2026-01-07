@@ -69,9 +69,9 @@ export default function LessonComplete({
 
   if (isCompleted && !showBadge) {
     return (
-      <div className="mt-8 p-6 bg-violet-500/10 border border-violet-500/20 rounded-xl text-center animate-fade-in glass-panel">
+      <div className="mt-8 p-6 bg-primary/10 border border-primary/20 rounded-xl text-center animate-fade-in glass-panel">
         <div className="text-4xl mb-2">🎉</div>
-        <h3 className="text-xl font-bold text-violet-600 mb-1">
+        <h3 className="text-xl font-bold text-primary mb-1">
           Lesson Completed!
         </h3>
         <p className="text-muted-foreground">
@@ -101,8 +101,7 @@ export default function LessonComplete({
             ${
               isLoading
                 ? "bg-muted text-muted-foreground cursor-not-allowed"
-                : "bg-green-600 text-white hover:bg-green-500 hover:scale-105 hover:shadow-xl active:scale-95 hover:shadow-green-500/20 " +
-                  "dark:bg-yellow-500 dark:text-yellow-950 dark:hover:bg-yellow-400 dark:hover:shadow-yellow-500/20" /* Sith Gold */
+                : "btn-glow hover:scale-105 active:scale-95"
             }
           `}
         >

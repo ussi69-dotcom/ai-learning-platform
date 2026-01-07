@@ -207,7 +207,7 @@ export default function NewsCard({ item, locale }: NewsCardProps) {
         <a href={item.source_url} target="_blank" rel="noopener noreferrer" className="block">
           <Button
             size="sm"
-            className="w-full bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:from-violet-700 hover:via-indigo-700 hover:to-violet-700 dark:from-red-600 dark:via-red-600 dark:to-red-600 dark:hover:from-red-700 dark:hover:via-red-700 dark:hover:to-red-700"
+            className="w-full btn-glow"
           >
             {isVideo ? <Play className="w-4 h-4 mr-2" /> : <ExternalLink className="w-4 h-4 mr-2" />}
             {ctaLabel}

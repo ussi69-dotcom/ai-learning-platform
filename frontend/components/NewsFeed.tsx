@@ -312,7 +312,7 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-violet-600 via-indigo-500 to-violet-700 dark:from-red-600 dark:via-red-500 dark:to-red-800 bg-clip-text text-transparent">
+          <h2 className="text-2xl md:text-3xl font-bold text-gradient">
             {title}
           </h2>
           <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>
@@ -436,7 +436,7 @@ export default function NewsFeed({ locale }: NewsFeedProps) {
           <Button
             variant="outline"
             onClick={() => setExpanded(!expanded)}
-            className="gap-2 border-violet-500/30 hover:border-violet-500/50 hover:bg-violet-500/5 dark:border-red-500/30 dark:hover:border-red-500/50 dark:hover:bg-red-500/5"
+            className="gap-2 border-primary/30 hover:border-primary/50 hover:bg-primary/5"
           >
             {expanded ? (
               <>

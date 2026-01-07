@@ -91,7 +91,7 @@ export default function CourseCarousel({
       <Card
         className={`hover:border-primary/50 transition-all duration-300 group overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm relative h-full ${
           isRecommended
-            ? "ring-2 ring-yellow-500/50 dark:ring-yellow-400/50"
+            ? "ring-2 ring-primary/50"
             : ""
         }`}
       >
@@ -110,7 +110,7 @@ export default function CourseCarousel({
           </div>
           {/* Recommended badge */}
           {isRecommended && (
-            <span className="absolute top-2 left-2 text-[10px] font-bold bg-yellow-500 text-black px-2 py-1 rounded-full flex items-center gap-1 shadow-lg">
+            <span className="absolute top-2 left-2 text-[10px] font-bold bg-primary text-primary-foreground px-2 py-1 rounded-full flex items-center gap-1 shadow-lg">
               <Star size={10} fill="currentColor" />
               {t("recommended")}
             </span>
@@ -150,7 +150,7 @@ export default function CourseCarousel({
           <Link href={`/courses/${course.id}`}>
             <Button
               size="sm"
-              className="w-full text-xs bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 hover:opacity-90 text-white dark:bg-none dark:bg-red-700 dark:hover:bg-red-600 dark:shadow-[0_0_10px_rgba(220,38,38,0.4)] border-none"
+              className="w-full text-xs btn-glow"
             >
               {t("startArrow")}
             </Button>
@@ -235,7 +235,7 @@ export default function CourseCarousel({
           <Button
             variant="outline"
             onClick={() => setExpanded(!expanded)}
-            className="gap-2 border-violet-500/30 hover:border-violet-500/50 hover:bg-violet-500/5 dark:border-red-500/30 dark:hover:border-red-500/50 dark:hover:bg-red-500/5"
+            className="gap-2 border-primary/30 hover:border-primary/50 hover:bg-primary/5"
           >
             {expanded ? (
               <>
